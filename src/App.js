@@ -7,7 +7,8 @@ import StockChart from './StockChart';
 //import GetURLInfo from "./GetURLInfo";
 import './App.css';
 import './react-tables.css';
-
+import StockTable from './Stock-table';
+import data from "./mock-data.json";
 
 
 //<Stock StockSymbol="IBM" API_KEY = 'C542IZRPH683PFNZ' />
@@ -30,32 +31,12 @@ function App() {
   const date = new Date();
   let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 //             <td>{Moment(this.props.stat.dateFrom).format('yyy-MM-DD')}</td>
-
+  
   return (
-    <div className="App">
-      <table>
-        <thead>
-          <tr>
-            <th>Symnol</th>
-            <th>Name</th>
-            <th>Lasr price</th>
-            <th>PE</th>
-            <th>GPE</th>
-            <th>update</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>IBM</td>
-            <td>International Business Machines</td>
-            <td>100</td>
-            <td>30</td>
-            <td>50</td>
-            <td>{date1}</td>
-          </tr>
-        </tbody>
-      </table>  
-
+    <div className="App-continer">
+      <div>
+        <StockTable/>
+      </div>
       <div>
          <StockChart StockSymbol="IBM" API_KEY = 'C542IZRPH683PFNZ' />
       </div>      

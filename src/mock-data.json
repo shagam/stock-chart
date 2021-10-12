@@ -1,0 +1,16 @@
+[
+    {
+        "symbol": "qqq",
+        "lastPrice": 350,
+        "PE": 35,
+        "GPE": 50,
+        "update": "12-11-2021"
+    },
+    {
+        "symbol": "amzn",
+        "lastPrice": 30,
+        "PE": 35,
+        "GPE": 50,
+        "update": "12-11-2021"
+    }
+]
