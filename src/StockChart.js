@@ -19,13 +19,14 @@ class StockChart extends React.Component {
 
     fetchStock() {
         const pointerToThis = this;
-        console.log (pointerToThis);
+        //console.log (pointerToThis);
         const API_KEY = this.props["API_KEY"];
-        const StockSymbol = this.props["StockSymbol"];
+        //const StockSymbol = this.props["StockSymbol"];
+        const StockSymbol = localStorage.getItem ('StockSymbol');
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
-        let periodLower = `Time Series (${period[1][1]})`; 
-        console.log (`${this.props}`);
+        //let periodLower = `Time Series (${period[1][1]})`; 
+        //console.log (`${this.props}`);
 
 
         let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
@@ -43,9 +44,9 @@ class StockChart extends React.Component {
             )
             .then(
                 function (data) {
-                    console.log(`${API_KEY}`);
-                    console.log(`${periodLower}`);
-                    console.log(data);
+                    //console.log(`${API_KEY}`);
+                    //console.log(`${periodLower}`);
+                    //console.log(data);
 
                     //let periodTag = 'Time Series (Daily)';
                     let periodTag = 'Weekly Adjusted Time Series';

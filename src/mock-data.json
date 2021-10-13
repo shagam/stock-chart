@@ -1,13 +1,12 @@
 [
     {
-        "symbol": "qqq",
-        "lastPrice": 350,
-        "PE": 35,
-        "GPE": 50,
-        "update": "12-11-2021"
+        "id": 1,
+        "symbol": "qqq"
+     
     },
     {
-        "symbol": "amzn",
+        "id": 2,
+        "symbol": "AMZN",
         "lastPrice": 30,
         "PE": 35,
         "GPE": 50,
