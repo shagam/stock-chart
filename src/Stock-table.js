@@ -58,7 +58,7 @@ const StockTable = (StockSymbol) => {
       setContacts(newContacts); 
 
       const contactStr = JSON.stringify(newContacts);
-      localStorage.setItem('stockTable', `${contactStr}`);
+      localStorage.setItem('stockChart', `${contactStr}`);
       console.log (newContacts);
     }
 
@@ -79,8 +79,8 @@ const StockTable = (StockSymbol) => {
       // graph
       console.log({symbol});
       window.$StockSymbol = `${symbol}`;
-      localStorage.setItem ('StockSymbol', `${symbol}`);
-      document.cookie = `StockSymbol=${symbol}`
+      localStorage.setItem ('StockChart', `${symbol}`);
+      //document.cookie = `StockSymbol=${symbol}`
       //this.props.StockSymbol = {symbol};
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
       

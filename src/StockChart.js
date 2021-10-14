@@ -22,7 +22,7 @@ class StockChart extends React.Component {
         //console.log (pointerToThis);
         const API_KEY = this.props["API_KEY"];
         //const StockSymbol = this.props["StockSymbol"];
-        const StockSymbol = localStorage.getItem ('StockSymbol');
+        const StockSymbol = localStorage.getItem ('StockChart');
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
         //let periodLower = `Time Series (${period[1][1]})`; 
