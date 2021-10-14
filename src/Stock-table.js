@@ -3,6 +3,8 @@ import { nanoid } from 'nanoid';
 import './App.css';
 import './react-tables.css';
 import data from "./mock-data.json";
+import Overview from "./Overview.js";
+
 //import StockChart from './StockChart';
 
 
@@ -13,7 +15,7 @@ const StockTable = (StockSymbol) => {
     
     const data1 = JSON.parse(localStorage.getItem('stockTable'));
 
-    const [contacts, setContacts] = useState(data);
+    const [contacts, setContacts] = useState(data1);
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
@@ -79,6 +81,7 @@ const StockTable = (StockSymbol) => {
       document.cookie = `StockSymbol=${symbol}`
       //this.props.StockSymbol = {symbol};
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
+      
     }
 
 
@@ -112,7 +115,7 @@ const StockTable = (StockSymbol) => {
            ))}
          </tbody>
         </table>
-        <h2>Add stock symbol</h2>
+        <h3>Add stock symbol</h3>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"

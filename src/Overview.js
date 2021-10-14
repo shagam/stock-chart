@@ -1,7 +1,7 @@
 //
 
 import React from 'react';
-import GetURLInfo from "./GetURLInfo";
+//import GetURLInfo from "./GetURLInfo";
 
 
 // https://quant.stackexchange.com/questions/26162/where-can-i-get-a-list-of-all-yahoo-finance-stocks-symbols
@@ -24,7 +24,8 @@ class Overview extends React.Component {
         //const pointerToThis = this;
         //console.log (pointerToThis);
         const API_KEY = this.props["API_KEY"];
-        const StockSymbol = this.props["StockSymbol"]; 
+        const StockSymbol = this.props["StockSymbol"];
+        //const StockSymbol = localStorage.getItem('StockSymbol'); 
         console.log (`${this.props}`);
 
 
@@ -32,8 +33,7 @@ class Overview extends React.Component {
         //let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${StockSymbol}&apikey=${API_KEY}`;
         let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo`
 
-     
-        if (StockSymbol)
+    
         fetch(API_Call)
             .then(
                 function(response) {
@@ -45,20 +45,8 @@ class Overview extends React.Component {
                 function (data) {
                     console.log(`${API_KEY}`);
                     console.log(data);
-; 
-
-                    /*
-                    for (var key in data[`${periodTag}`]) {
-                        stockChartXValuesFunction.push(key);
-                        stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
-                    }
-
-                    //console.log (stockChartXValuesFunction)
-                    pointerToThis.setState({
-                        //stockChartXValues: stockChartXValuesFunction,
-                        //stockChartYValues: stockChartYValuesFunction
-                    });
-                    */
+                    const dataStr = JSON.stringify(data);
+                    localStorage.setItem('overview-', `${dataStr}`);
                 }
             )
     }
