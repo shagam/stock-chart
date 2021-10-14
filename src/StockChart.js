@@ -56,6 +56,7 @@ class StockChart extends React.Component {
                         stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
                     }
                     //console.log (stockChartXValuesFunction)
+                    //console.log (stockChartYValuesFunction)
                     pointerToThis.setState({
                         stockChartXValues: stockChartXValuesFunction,
                         stockChartYValues: stockChartYValuesFunction
@@ -66,7 +67,7 @@ class StockChart extends React.Component {
 
     render() {
         if (this.props.StockSymbol == null)
-            return null;
+           return null;
         return (
           <div>
 
