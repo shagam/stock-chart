@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { nanoid } from 'nanoid';
+//import { nanoid } from 'nanoid';
 import './App.css';
 import './react-tables.css';
 import data from "./mock-data.json";
@@ -42,7 +42,6 @@ const StockTable = (StockSymbol) => {
       event.preventDefault();
 
       const newContact = {
-        id: nanoid(),
         symbol: addFormData.symbol
         //lastPrice: 0,
         //PE: 0,
@@ -60,19 +59,19 @@ const StockTable = (StockSymbol) => {
       console.log (newContacts);
     }
 
-    const handleDeleteClick = (contactId) => {
+    const handleDeleteClick = (symbol) => {
       const newContacts = [...contacts];
 
-      const index = contacts.findIndex((contact)=> contact.id === contactId)
+      const index = contacts.findIndex((contact)=> contact.symbol === symbol)
       newContacts.splice(index, 1);
       setContacts(newContacts);
     }
 
-    const handleChartClick = (contactId) => {
+    const handleChartClick = (symbol) => {
       //const newContacts = [...contacts];
 
-      const index = contacts.findIndex((contact)=> contact.id === contactId);
-      const symbol = contacts[index].symbol;
+      const index = contacts.findIndex((contact)=> contact.symbol === symbol);
+      //const symbol = contacts[index].symbol;
 
       // graph
       console.log({symbol});
@@ -103,8 +102,8 @@ const StockTable = (StockSymbol) => {
               <tr>               
                 <td>{contact.symbol}</td>
                 <td>
-                  <button type="button" onClick={()=>handleDeleteClick(contact.id)}>delete</button>
-                  <button type="button" onClick={()=>handleChartClick(contact.id)}>chart</button>
+                  <button type="button" onClick={()=>handleDeleteClick(contact.symbol)}>delete</button>
+                  <button type="button" onClick={()=>handleChartClick(contact.symbol)}>chart</button>
                 </td>
                 <td>{contact.lastPrice}</td>
 
