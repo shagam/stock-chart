@@ -24,7 +24,7 @@ import StockTable from './Stock-table';
 
 function App() {
   //const StockSymbol = window.$StockSymbol;
-  const StockSymbol = localStorage.getItem('StockSymbol');
+  const StockSymbol = localStorage.getItem('StockChart');
   const API_KEY='C542IZRPH683PFNZ';  
   //let url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${StockSymbol}&apikey=${API_KEY}`
   //const date = new Date();
