@@ -13,7 +13,11 @@ const StockTable = (StockSymbol) => {
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
     
-    const data1 = JSON.parse(localStorage.getItem('stockTable'));
+    var data1 = JSON.parse(localStorage.getItem('stockTable'));
+
+    if (data1 === null || JSON.stringify(data1).length === 0)
+      data1 = JSON.parse('[{"symbol": "qqq"}]');
+
 
     const [contacts, setContacts] = useState(data1);
 
@@ -53,7 +57,6 @@ const StockTable = (StockSymbol) => {
       const newContacts = [...contacts, newContact];
       setContacts(newContacts); 
 
-      localStorage.setItem('testKey', 'testVal');
       const contactStr = JSON.stringify(newContacts);
       localStorage.setItem('stockTable', `${contactStr}`);
       console.log (newContacts);
@@ -70,7 +73,7 @@ const StockTable = (StockSymbol) => {
     const handleChartClick = (symbol) => {
       //const newContacts = [...contacts];
 
-      const index = contacts.findIndex((contact)=> contact.symbol === symbol);
+      //const index = contacts.findIndex((contact)=> contact.symbol === symbol);
       //const symbol = contacts[index].symbol;
 
       // graph
@@ -105,7 +108,7 @@ const StockTable = (StockSymbol) => {
                   <button type="button" onClick={()=>handleDeleteClick(contact.symbol)}>delete</button>
                   <button type="button" onClick={()=>handleChartClick(contact.symbol)}>chart</button>
                 </td>
-                <td>{contact.lastPrice}</td>
+                <td>{contact.price}</td>
 
                 <td>{contact.PE}</td>
                 <td>{contact.GPE}</td>

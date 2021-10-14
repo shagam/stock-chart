@@ -1,11 +1,9 @@
 [
     {
-        "id": 1,
         "symbol": "qqq"
      
     },
     {
-        "id": 2,
         "symbol": "AMZN",
         "lastPrice": 30,
         "PE": 35,
