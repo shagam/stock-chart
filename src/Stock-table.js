@@ -19,7 +19,7 @@ const StockTable = (StockSymbol) => {
       data1 = JSON.parse('[{"symbol": "qqq"}]');
 
 
-    const [contacts, setContacts] = useState(data1);
+    const [stocks, setStockss] = useState(data1);
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
@@ -45,7 +45,7 @@ const StockTable = (StockSymbol) => {
     const handleAddFormSubmit = (event) => {
       event.preventDefault();
 
-      const newContact = {
+      const newStock = {
         symbol: addFormData.symbol
         //lastPrice: 0,
         //PE: 0,
@@ -54,27 +54,23 @@ const StockTable = (StockSymbol) => {
 
       };
 
-      const newContacts = [...contacts, newContact];
-      setContacts(newContacts); 
+      const newStocks = [...stocks, newStock];
+      setStockss(newStocks); 
 
-      const contactStr = JSON.stringify(newContacts);
-      localStorage.setItem('stockChart', `${contactStr}`);
-      console.log (newContacts);
+      const stocksStr = JSON.stringify(newStocks);
+      localStorage.setItem('stockTable', `${stocksStr}`);
+      console.log (newStocks);
     }
 
     const handleDeleteClick = (symbol) => {
-      const newContacts = [...contacts];
+      const newStocks = [...stocks];
 
-      const index = contacts.findIndex((contact)=> contact.symbol === symbol)
-      newContacts.splice(index, 1);
-      setContacts(newContacts);
+      const index = stocks.findIndex((stock)=> stock.symbol === symbol)
+      newStocks.splice(index, 1);
+      setStockss(newStocks);
     }
 
     const handleChartClick = (symbol) => {
-      //const newContacts = [...contacts];
-
-      //const index = contacts.findIndex((contact)=> contact.symbol === symbol);
-      //const symbol = contacts[index].symbol;
 
       // graph
       console.log({symbol});
@@ -101,18 +97,18 @@ const StockTable = (StockSymbol) => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {stocks.map((stock) => (
               <tr>               
-                <td>{contact.symbol}</td>
+                <td>{stock.symbol}</td>
                 <td>
-                  <button type="button" onClick={()=>handleDeleteClick(contact.symbol)}>delete</button>
-                  <button type="button" onClick={()=>handleChartClick(contact.symbol)}>chart</button>
+                  <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>delete</button>
+                  <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
                 </td>
-                <td>{contact.price}</td>
+                <td>{stock.price}</td>
 
-                <td>{contact.PE}</td>
-                <td>{contact.GPE}</td>
-                <td>{contact.update}</td>
+                <td>{stock.PE}</td>
+                <td>{stock.GPE}</td>
+                <td>{stock.update}</td>
               </tr>
            ))}
          </tbody>
