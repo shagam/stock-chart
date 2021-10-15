@@ -25,13 +25,14 @@ class Overview extends React.Component {
         //console.log (pointerToThis);
         const API_KEY = this.props["API_KEY"];
         const StockSymbol = this.props["StockSymbol"];
+        const callBack = this.props["callBack"];
         //const StockSymbol = localStorage.getItem('StockSymbol'); 
         console.log (`${this.props}`);
 
 
         //let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
         //let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${StockSymbol}&apikey=${API_KEY}`;
-        let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo`
+        let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${StockSymbol}&apikey=${API_KEY}`
 
     
         fetch(API_Call)
@@ -43,10 +44,11 @@ class Overview extends React.Component {
             )
             .then(
                 function (data) {
-                    console.log(`${API_KEY}`);
-                    console.log(data);
+                    //console.log(`${API_KEY}`);
+                    //console.log(data);
                     const dataStr = JSON.stringify(data);
-                    localStorage.setItem('overview-', `${dataStr}`);
+                    localStorage.setItem('overview', `${dataStr}`);
+                    callBack(data);
                 }
             )
     }
