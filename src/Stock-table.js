@@ -31,8 +31,13 @@ const StockTable = (StockSymbol) => {
 
     })
 
-
-    const handleAddFormChange = (event) => {
+    const handleCallBack = (childData) => {
+      //console.log (childData);
+      console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], childData["EPS"],
+      childData["PERatio"], childData["PEGRatio"], childData["Beta"], childData["MarketCapitalization"]);
+    }
+    
+      const handleAddFormChange = (event) => {
       event.preventDefault();
       const fieldName = event.target.getAttribute("name");
       const fieldValue = event.target.value;
@@ -79,7 +84,7 @@ const StockTable = (StockSymbol) => {
       //document.cookie = `StockSymbol=${symbol}`
       //this.props.StockSymbol = {symbol};
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
-      
+      //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
     }
 
 
@@ -98,7 +103,7 @@ const StockTable = (StockSymbol) => {
           </thead>
           <tbody>
             {stocks.map((stock) => (
-              <tr>               
+              <tr>            
                 <td>{stock.symbol}</td>
                 <td>
                   <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>delete</button>
