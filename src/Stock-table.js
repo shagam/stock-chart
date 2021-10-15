@@ -5,39 +5,68 @@ import './react-tables.css';
 import data from "./mock-data.json";
 import Overview from "./Overview.js";
 
-//import StockChart from './StockChart';
+import StockChart from "./StockChart";
+//<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
+//<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-
-
-const StockTable = (StockSymbol) => {  
+const StockTable = (StockSymbol, API_KEY) => {  
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    
+  
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "qqq"}]');
 
 
-    const [stocks, setStockss] = useState(data1);
+    const [stocks, setStocks] = useState(data1);
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
       symbol: '',
-      lastPrice: 0,
+      Exchange: '',
+      Sector: '',
+      lastPrice: 0,      
       PE: 0,
-      GPE: 0,
+      PEG: 0,
+      BETA: 0,      
       update: ''
 
     })
 
     const handleCallBack = (childData) => {
-      //console.log (childData);
-      console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], childData["EPS"],
-      childData["PERatio"], childData["PEGRatio"], childData["Beta"], childData["MarketCapitalization"]);
+      console.log (childData);
+      const symbol = childData["Symbol"];
+      const date = new Date();
+      let date1 = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+      const newStock = {
+        symbol: childData["Symbol"],
+        Exchange: childData["Exchange"],
+        Sector: childData["Sector"],
+        lastPrice: "0",
+        PE: childData["PERatio"],
+        EG: childData["PEGRatio"],
+        BETA: childData["Beta"],
+        update: date1
+      };
+      console.log(newStock.stringify);
+      const index = stocks.findIndex((stock)=> stock.symbol === symbol);
+      console.log ('index= ', index);
+      const newStocks = [...stocks];
+      newStocks.splice(index, 1);
+      const newStocks__ = [...stocks, newStock];
+      setStocks(newStocks__); 
+      const stocksStr = JSON.stringify(newStocks__);
+      localStorage.setItem('stockTable', `${stocksStr}`);
+      
+      console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], 
+        childData["PERatio"], childData["PEGRatio"], childData["Beta"]);
+        //stocks[index].PE, stocks[index].PEG );
     }
+
     
-      const handleAddFormChange = (event) => {
+    const handleAddFormChange = (event) => {
       event.preventDefault();
       const fieldName = event.target.getAttribute("name");
       const fieldValue = event.target.value;
@@ -60,7 +89,7 @@ const StockTable = (StockSymbol) => {
       };
 
       const newStocks = [...stocks, newStock];
-      setStockss(newStocks); 
+      setStocks(newStocks); 
 
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
@@ -72,17 +101,16 @@ const StockTable = (StockSymbol) => {
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol)
       newStocks.splice(index, 1);
-      setStockss(newStocks);
+      setStocks(newStocks);
+      const stocksStr = JSON.stringify(newStocks);
+      localStorage.setItem('stockTable', `${stocksStr}`);
     }
 
     const handleChartClick = (symbol) => {
-
-      // graph
       console.log({symbol});
-      window.$StockSymbol = `${symbol}`;
-      localStorage.setItem ('StockChart', `${symbol}`);
+      //window.$StockSymbol = `${symbol}`;
+      //localStorage.setItem ('StockChart', `${symbol}`);
       //document.cookie = `StockSymbol=${symbol}`
-      //this.props.StockSymbol = {symbol};
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
       //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
     }
@@ -94,10 +122,13 @@ const StockTable = (StockSymbol) => {
           <thead>
             <tr>
               <th>symbol</th>
-              <th>actions</th>              
-              <th>price</th>
+              <th>actions</th>
+              <th>Exchange</th>          
+              <th>Sector</th>              
+              <th>LastPrice</th>
               <th>PE</th>
-              <th>GPE</th>
+              <th>PEG</th>
+              <th>BETA</th>              
               <th>update</th>
             </tr>
           </thead>
@@ -109,10 +140,12 @@ const StockTable = (StockSymbol) => {
                   <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>delete</button>
                   <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
                 </td>
+                <td>{stock.Exchange}</td>
+                <td>{stock.Sector}</td>                
                 <td>{stock.price}</td>
-
                 <td>{stock.PE}</td>
-                <td>{stock.GPE}</td>
+                <td>{stock.PEG}</td>
+                <td>{stock.BETA}</td>                
                 <td>{stock.update}</td>
               </tr>
            ))}
@@ -129,6 +162,10 @@ const StockTable = (StockSymbol) => {
           />
           <button type="submit"> Add</button>
         </form>
+        <div>
+
+         
+        </div>
       </div>
     ) 
 }
