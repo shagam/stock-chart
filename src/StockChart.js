@@ -34,7 +34,13 @@ class StockChart extends React.Component {
 
         let stockChartXValuesFunction = [];
         let stockChartYValuesFunction = [];
-      
+        
+        let histValues ='';
+        const histStr = localStorage.getItem (`${StockSymbol}` + '_chart');
+        if (histStr) {
+            //console.log (histStr);
+            histValues = JSON.parse(histStr);
+        }
         fetch(API_Call)
             .then(
                 function(response) {
@@ -43,10 +49,9 @@ class StockChart extends React.Component {
                 }
             )
             .then(
-                function (data) {
-                    //console.log(`${API_KEY}`);
-                    //console.log(`${periodLower}`);
-                    //console.log(data);
+                (data) => {
+                    const dataStr = JSON.stringify(data);
+                    localStorage.setItem (`${StockSymbol}` + '_chart', dataStr);
 
                     //let periodTag = 'Time Series (Daily)';
                     let periodTag = 'Weekly Adjusted Time Series';
