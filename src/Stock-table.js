@@ -9,9 +9,10 @@ import StockChart from "./StockChart";
 //<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (StockSymbol, API_KEY) => {  
+const StockTable = (API_KEY) => {  
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    var chartSymbol = '';
   
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
@@ -110,9 +111,9 @@ const StockTable = (StockSymbol, API_KEY) => {
     }
 
     const handleChartClick = (symbol) => {
-      console.log({symbol});
-      //window.$StockSymbol = `${symbol}`;
-      localStorage.setItem ('StockChart', `${symbol}`);
+      chartSymbol = `${symbol}`;
+      console.log('chartSymbol ' + `${chartSymbol}`);      
+      localStorage.setItem ('StockChart', `${symbol}`); // temp for App.js
       //document.cookie = `StockSymbol=${symbol}`
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
       //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
