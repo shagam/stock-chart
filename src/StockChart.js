@@ -40,6 +40,20 @@ class StockChart extends React.Component {
         if (histStr) {
             //console.log (histStr);
             histValues = JSON.parse(histStr);
+  
+            //let periodTag = 'Time Series (Daily)';
+            let periodTag = 'Weekly Adjusted Time Series';
+            //let periodTag = 'Monthly Adjusted Time Series';
+            for (var key in histValues[`${periodTag}`]) {
+                stockChartXValuesFunction.push(key);
+                stockChartYValuesFunction.push(histValues[`${periodTag}`][key]['1. open']);
+            }
+                //console.log (stockChartXValuesFunction)
+                //console.log (stockChartYValuesFunction)
+                pointerToThis.setState({
+                    stockChartXValues: stockChartXValuesFunction,
+                    stockChartYValues: stockChartYValuesFunction
+                });
         }
         fetch(API_Call)
             .then(
