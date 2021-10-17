@@ -43,15 +43,14 @@ const handleCallBack = (childData) => {
 
   return (
     <div className="App-continer">
-      <div>
-       
+      <div>       
         <StockTable API_KEY = {API_KEY}/>
       </div>
       <div>
          <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
       </div>      
       <div>
- 
+        <Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/>
       </div>
 
     </div>
