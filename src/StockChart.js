@@ -21,8 +21,8 @@ class StockChart extends React.Component {
         const pointerToThis = this;
         //console.log (pointerToThis);
         const API_KEY = this.props["API_KEY"];
-        //const StockSymbol = this.props["StockSymbol"];
-        const StockSymbol = localStorage.getItem ('StockChart');
+        const StockSymbol = this.props["StockSymbol"];
+        //const StockSymbol = localStorage.getItem ('StockChart');
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
         //let periodLower = `Time Series (${period[1][1]})`; 
@@ -36,7 +36,7 @@ class StockChart extends React.Component {
         let stockChartYValuesFunction = [];
         
         let histValues ='';
-        const histStr = localStorage.getItem (`${StockSymbol}` + '_chart');
+        const histStr = localStorage.getItem (this.props["StockSymbol"] + '_chart');
         if (histStr) {
             //console.log (histStr);
             histValues = JSON.parse(histStr);
@@ -65,8 +65,8 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
-                    if ({StockSymbol})
-                        localStorage.setItem (`${StockSymbol}` + '_chart', dataStr);
+                    //if ({StockSymbol})
+                        //localStorage.setItem (`${StockSymbol}` + '_chart', dataStr);
 
                     //let periodTag = 'Time Series (Daily)';
                     let periodTag = 'Weekly Adjusted Time Series';
@@ -102,7 +102,7 @@ class StockChart extends React.Component {
                  },
 
               ]}
-              layout={{ width: 720, height: 400, title: this.props.StockSymbol }}
+              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
             />
 
           </div>
