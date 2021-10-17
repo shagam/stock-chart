@@ -34,11 +34,14 @@ const StockTable = (StockSymbol, API_KEY) => {
 
     })
 
+    function getDate() {
+      const date = new Date();
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;      
+    }
+
     const handleCallBack = (childData) => {
       console.log (childData);
       const symbol = childData["Symbol"];
-      const date = new Date();
-      let date1 = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 
       const newStock = {
         symbol: childData["Symbol"],
@@ -48,7 +51,7 @@ const StockTable = (StockSymbol, API_KEY) => {
         PE: childData["PERatio"],
         EG: childData["PEGRatio"],
         BETA: childData["Beta"],
-        update: date1
+        update: getDate()
       };
       console.log(newStock.stringify);
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
