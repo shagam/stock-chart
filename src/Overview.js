@@ -33,6 +33,7 @@ class Overview extends React.Component {
         fetch(API_Call)
             .then(
                 function(response) {
+                    if(response.stringify != null)
                     console.log(response.json);
                     return response.json();
                 }
@@ -42,8 +43,12 @@ class Overview extends React.Component {
                     //console.log(`${API_KEY}`);
                     //console.log(data);
                     const dataStr = JSON.stringify(data);
-                    localStorage.setItem(`${StockSymbol}` + '_overview', `${dataStr}`);
-                    callBack(data);
+                    if (`${StockSymbol}` != null && data != null && data['symbol'] != null) {
+                      localStorage.setItem(`${StockSymbol}` + '_overview', `${dataStr}`);
+                      callBack(data);
+                    }
+                    else
+                        console.log ('fetch no data');
                 }
             )
     }

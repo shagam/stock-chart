@@ -69,7 +69,7 @@ const StockTable = (API_KEY) => {
         //stocks[index].PE, stocks[index].PEG );
     }
 
-    
+    // two handlers for adding new symbol
     const handleAddFormChange = (event) => {
       event.preventDefault();
       const fieldName = event.target.getAttribute("name");
@@ -84,12 +84,8 @@ const StockTable = (API_KEY) => {
       event.preventDefault();
 
       const newStock = {
-        symbol: addFormData.symbol
-        //lastPrice: 0,
-        //PE: 0,
-        //GPE: 0,
-        //update: ""
-
+        symbol: addFormData.symbol,
+        update: "_" + getDate()  
       };
 
       const newStocks = [...stocks, newStock];
