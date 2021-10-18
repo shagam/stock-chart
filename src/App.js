@@ -26,7 +26,7 @@ import Overview from "./Overview";
 */
 
 function App() {
-  const warning = 'Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day';
+  const ALPHA_WARNING = 'Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day';
   
   //const StockSymbol = window.$StockSymbol;
   const StockSymbol = localStorage.getItem('StockChart');
@@ -46,13 +46,13 @@ const handleCallBack = (childData) => {
   return (
     <div className="App-continer">
       <div>       
-        <StockTable API_KEY = {API_KEY}/>
+        <StockTable API_KEY = {API_KEY} WARN = {ALPHA_WARNING}/>
       </div>
       <div>
-         <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
+         <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} WARN = {ALPHA_WARNING} />
       </div>      
       <div>
-        <Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/>
+        <Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack} WARN = {ALPHA_WARNING}/>
       </div>
 
     </div>
