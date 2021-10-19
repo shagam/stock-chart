@@ -1,14 +1,14 @@
 
-import React from 'react';
+import React, {useState} from 'react';
 
-import StockChart from './StockChart';
-//import StockList from './StockList';
-//import Overview from './Overview'
-//import GetURLInfo from "./GetURLInfo";
+
 import './App.css';
 import './react-tables.css';
 import StockTable from './Stock-table';
+
+import StockChart from './StockChart';
 import Overview from "./Overview";
+import AlphaVantage from './AlphaVantage';
 
 //<Stock StockSymbol="IBM" API_KEY = 'C542IZRPH683PFNZ' />
  
@@ -22,7 +22,8 @@ import Overview from "./Overview";
       <div>
         <Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/>  
         <Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
-      </div>
+             <StockTable_ API_KEY = {API_KEY} WARN = {ALPHA_WARNING}/>
+        </div>
 */
 
 function App() {
@@ -49,10 +50,13 @@ const handleCallBack = (childData) => {
         <StockTable API_KEY = {API_KEY} WARN = {ALPHA_WARNING}/>
       </div>
       <div>
-         <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} WARN = {ALPHA_WARNING} />
+         <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} callBack = {handleCallBack} WARN = {ALPHA_WARNING} />
       </div>      
       <div>
         <Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack} WARN = {ALPHA_WARNING}/>
+      </div>
+      <div>       
+        <AlphaVantage />
       </div>
 
     </div>
