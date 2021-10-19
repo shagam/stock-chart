@@ -65,8 +65,8 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
-                    //if ({StockSymbol})
-                        //localStorage.setItem (`${StockSymbol}` + '_chart', dataStr);
+                    if ({StockSymbol} != null && data != null && data['Symbol'] != null)
+                        localStorage.setItem (`${StockSymbol}` + '_chart', dataStr);
 
                     //let periodTag = 'Time Series (Daily)';
                     let periodTag = 'Weekly Adjusted Time Series';
