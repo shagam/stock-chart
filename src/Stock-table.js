@@ -9,7 +9,7 @@ import StockChart from "./StockChart";
 //<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (API_KEY) => {  
+const StockTable = (API_KEY) => { 
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
     var chartSymbol = '';
@@ -18,14 +18,12 @@ const StockTable = (API_KEY) => {
 
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "qqq"}]');
-
-
     const [stocks, setStocks] = useState(data1);
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', Exchange: '', Sector: '', lastPrice: 0, PE: 0, PEG: 0, BETA: 0,      
-      wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
+      wk: 1234, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
     function getDate() {
@@ -37,7 +35,8 @@ const StockTable = (API_KEY) => {
       //console.log (childData);
       const symbol = childData["Symbol"];
 
-      const index = stocks.findIndex((stock)=> stock.symbol === symbol);      
+      const index = stocks.findIndex((stock)=> stock.symbol === symbol);
+      console.log (stocks);      
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
@@ -47,23 +46,23 @@ const StockTable = (API_KEY) => {
         PE: childData["PERatio"],
         PEG: childData["PEGRatio"],
         BETA: childData["Beta"],
-        wk: stocks[index].wk,
-        wk2: stocks[index].wk2,
-        mon: stocks[index].mon,
-        mon3: stocks[index].mon3,
-        mon6: stocks[index].mon6,
-        year: stocks[index].year,
-        year2: stocks[index].year2,
-        year5: stocks[index].year5,
-        year10: stocks[index].year10  
+        wk: 0, //stocks[index].wk,
+        wk2: 0, //stocks[index].wk2,
+        mon: 0, //stocks[index].mon,
+        mon3: 0, //stocks[index].mon3,
+        mon6: 0, //stocks[index].mon6,
+        year: 0, //stocks[index].year,
+        year2: 0, //stocks[index].year2,
+        year5: 0, //stocks[index].year5,
+        year10: 0 //stocks[index].year10  
       };
 
-      console.log (stocks[0]);
+      console.log (stocks[stocks.length - 1]);
       const newStocks = [...stocks];
-      newStocks.splice(index, 1);
-      const newStocks__ = [...newStocks, newStock];
-      setStocks(newStocks__); 
-      const stocksStr = JSON.stringify(newStocks__);
+      newStocks.splice(index, 1, newStock);
+      //const newStocks__ = [...newStocks, newStock];
+      setStocks(newStocks); 
+      const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
       
       // console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], 
@@ -87,7 +86,8 @@ const StockTable = (API_KEY) => {
 
       const newStock = {
         symbol: addFormData.symbol,
-        update: "_" + getDate()  
+        update: "_" + getDate(),
+        wk: 1234 
       };
 
       const newStocks = [...stocks, newStock];
@@ -132,6 +132,10 @@ const StockTable = (API_KEY) => {
             function (data) {
                 if (data != null)
                   console.log(data);
+                if (`${chartSymbol}` == null)
+                  console.log ('chartSymbol null');
+                else if (data['Symbol'] == null)
+                  console.log ('data Symbol missing');
                 if (`${chartSymbol}` != null && data['Symbol'] != null) {
                   const dataStr = JSON.stringify(data);
                   localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
@@ -145,6 +149,9 @@ const StockTable = (API_KEY) => {
 
     return (
       <div className="App-continer">
+        <div>
+
+        </div>
         <table>
           <thead>
             <tr>
