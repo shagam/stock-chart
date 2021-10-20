@@ -50,7 +50,7 @@ const StockTable = (API_KEY) => {
         Sector: childData["Sector"],
         lastPrice: "0",
         PE: childData["PERatio"],
-        EG: childData["PEGRatio"],
+        PEG: childData["PEGRatio"],
         BETA: childData["Beta"],
         update: getDate()
       };
@@ -59,7 +59,7 @@ const StockTable = (API_KEY) => {
       console.log ('index= ', index);
       const newStocks = [...stocks];
       newStocks.splice(index, 1);
-      const newStocks__ = [...stocks, newStock];
+      const newStocks__ = [...newStocks, newStock];
       setStocks(newStocks__); 
       const stocksStr = JSON.stringify(newStocks__);
       localStorage.setItem('stockTable', `${stocksStr}`);
@@ -113,8 +113,33 @@ const StockTable = (API_KEY) => {
       //document.cookie = `StockSymbol=${symbol}`
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
       //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
-    }
 
+
+    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${chartSymbol}&apikey=${API_KEY}`
+    
+    fetch(API_Call)
+        .then(
+            function(response) {
+                if(response.stringify != null)
+                console.log(response.json);
+                return response.json();
+            }
+        )
+        .then(
+            function (data) {
+                //console.log(`${API_KEY}`);
+                //console.log(data);
+                const dataStr = JSON.stringify(data);
+                if (`${chartSymbol}` != null && data != null && data['Symbol'] != null) {
+                  localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
+                  handleCallBack (data);
+
+                }
+                else
+                    console.log ('fetch no data');
+            }
+        )
+      }
 
     return (
       <div className="App-continer">
