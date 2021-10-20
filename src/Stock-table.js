@@ -24,15 +24,8 @@ const StockTable = (API_KEY) => {
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
-      symbol: '',
-      Exchange: '',
-      Sector: '',
-      lastPrice: 0,      
-      PE: 0,
-      PEG: 0,
-      BETA: 0,      
-      update: ''
-
+      symbol: '', update: '', Exchange: '', Sector: '', lastPrice: 0, PE: 0, PEG: 0, BETA: 0,      
+      wk: 0, wk2: 0, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
     function getDate() {
@@ -148,13 +141,22 @@ const StockTable = (API_KEY) => {
             <tr>
               <th>symbol</th>
               <th>actions</th>
+              <th>update</th>
               <th>Exchange</th>          
               <th>Sector</th>              
-              <th>LastPrice</th>
+              <th>Price</th>
               <th>PE</th>
               <th>PEG</th>
               <th>BETA</th>              
-              <th>update</th>
+              <th>wk</th>
+              <th>2wk</th>
+              <th>mon</th>
+              <th>3mon</th>
+              <th>6mon</th>
+              <th>year</th>
+              <th>2year</th>
+              <th>5year</th>
+              <th>10year</th>            
             </tr>
           </thead>
           <tbody>
@@ -165,13 +167,22 @@ const StockTable = (API_KEY) => {
                   <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>delete</button>
                   <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
                 </td>
+                <td>{stock.update}</td>
                 <td>{stock.Exchange}</td>
                 <td>{stock.Sector}</td>                
                 <td>{stock.price}</td>
                 <td>{stock.PE}</td>
                 <td>{stock.PEG}</td>
                 <td>{stock.BETA}</td>                
-                <td>{stock.update}</td>
+                <td>{stock.wk}</td>
+                <td>{stock.wk2}</td>
+                <td>{stock.mon}</td>
+                <td>{stock.mon3}</td>
+                <td>{stock.mon6}</td>
+                <td>{stock.year}</td>
+                <td>{stock.year2}</td>
+                <td>{stock.year5}</td>
+                <td>{stock.year10}</td>                
               </tr>
            ))}
          </tbody>
