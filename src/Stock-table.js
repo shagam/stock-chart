@@ -25,7 +25,7 @@ const StockTable = (API_KEY) => {
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', Exchange: '', Sector: '', lastPrice: 0, PE: 0, PEG: 0, BETA: 0,      
-      wk: 0, wk2: 0, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
+      wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
     function getDate() {
@@ -37,19 +37,28 @@ const StockTable = (API_KEY) => {
       //console.log (childData);
       const symbol = childData["Symbol"];
 
+      const index = stocks.findIndex((stock)=> stock.symbol === symbol);      
       const newStock = {
         symbol: childData["Symbol"],
+        update: getDate(),
         Exchange: childData["Exchange"],
         Sector: childData["Sector"],
         lastPrice: "0",
         PE: childData["PERatio"],
         PEG: childData["PEGRatio"],
         BETA: childData["Beta"],
-        update: getDate()
+        wk: stocks[index].wk,
+        wk2: stocks[index].wk2,
+        mon: stocks[index].mon,
+        mon3: stocks[index].mon3,
+        mon6: stocks[index].mon6,
+        year: stocks[index].year,
+        year2: stocks[index].year2,
+        year5: stocks[index].year5,
+        year10: stocks[index].year10  
       };
-      console.log(newStock.stringify);
-      const index = stocks.findIndex((stock)=> stock.symbol === symbol);
-      console.log ('index= ', index);
+
+      console.log (stocks[0]);
       const newStocks = [...stocks];
       newStocks.splice(index, 1);
       const newStocks__ = [...newStocks, newStock];
