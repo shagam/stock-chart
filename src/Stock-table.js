@@ -84,6 +84,12 @@ const StockTable = (API_KEY, WARN) => {
     const handleAddFormSubmit = (event) => {
       event.preventDefault();
 
+      const index = stocks.findIndex((stock)=> stock.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
+      if (index > 0) {
+        console.log ('Duplicate symbol: ' + addFormData.symbol);
+        return;
+      }
+
       const newStock = {
         symbol: addFormData.symbol,
         update: "_" + getDate(),
