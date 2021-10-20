@@ -9,7 +9,7 @@ import StockChart from "./StockChart";
 //<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (API_KEY) => { 
+const StockTable = (API_KEY, WARN) => { 
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
     var chartSymbol = '';
@@ -130,10 +130,18 @@ const StockTable = (API_KEY) => {
         )
         .then(
             function (data) {
-                if (data != null)
+              if (`${chartSymbol}` == null)
+              console.log ('chartSymbol null');
+              if (data != null) {
                   console.log(data);
-                if (`${chartSymbol}` == null)
-                  console.log ('chartSymbol null');
+                  const dataStr = JSON.stringify(data);
+                  const index =  (dataStr.search('API call frequency'))
+                  if (index > 0) {
+                    console.log ('Alphvantage too frequent calls ' + `${index}`);
+                    return;
+                  }
+                }
+
                 else if (data['Symbol'] == null)
                   console.log ('data Symbol missing');
                 if (`${chartSymbol}` != null && data['Symbol'] != null) {
