@@ -34,7 +34,7 @@ const StockTable = (API_KEY) => {
     }
 
     const handleCallBack = (childData) => {
-      console.log (childData);
+      //console.log (childData);
       const symbol = childData["Symbol"];
 
       const newStock = {
@@ -57,8 +57,8 @@ const StockTable = (API_KEY) => {
       const stocksStr = JSON.stringify(newStocks__);
       localStorage.setItem('stockTable', `${stocksStr}`);
       
-      console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], 
-        childData["PERatio"], childData["PEGRatio"], childData["Beta"]);
+      // console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], 
+      //   childData["PERatio"], childData["PEGRatio"], childData["Beta"]);
         //stocks[index].PE, stocks[index].PEG );
     }
 
@@ -113,20 +113,20 @@ const StockTable = (API_KEY) => {
     fetch(API_Call)
         .then(
             function(response) {
-                if(response.stringify != null)
-                console.log(response.json);
-                return response.json();
+                if (response != null) {
+                  console.log(response);
+                  return response.json();
+                }
             }
         )
         .then(
             function (data) {
-                //console.log(`${API_KEY}`);
-                //console.log(data);
-                const dataStr = JSON.stringify(data);
-                if (`${chartSymbol}` != null && data != null && data['Symbol'] != null) {
+                if (data != null)
+                  console.log(data);
+                if (`${chartSymbol}` != null && data['Symbol'] != null) {
+                  const dataStr = JSON.stringify(data);
                   localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
                   handleCallBack (data);
-
                 }
                 else
                     console.log ('fetch no data');
