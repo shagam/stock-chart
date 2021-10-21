@@ -9,10 +9,9 @@ import StockChart from "./StockChart";
 //<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (API_KEY, WARN) => { 
+const StockTable = (API_KEY, S_WARN, chartSymbol) => { 
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    var chartSymbol = '';
   
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
@@ -31,7 +30,12 @@ const StockTable = (API_KEY, WARN) => {
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;      
     }
 
-    const handleCallBack = (childData) => {
+    const handleCallBackForHistory = (childData) => {
+    
+    
+    }
+
+    const handleCallBackForOverview = (childData) => {
       //console.log (childData);
       const symbol = childData["Symbol"];
 
@@ -150,10 +154,10 @@ const StockTable = (API_KEY, WARN) => {
 
                 else if (data['Symbol'] == null)
                   console.log ('data Symbol missing');
-                if (`${chartSymbol}` != null && data['Symbol'] != null) {
+                else if (`${chartSymbol}` != null && data['Symbol'] != null) {
                   const dataStr = JSON.stringify(data);
                   localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
-                  handleCallBack (data);
+                  handleCallBackForOverview (data);
                 }
                 else
                     console.log ('fetch no data');
@@ -164,7 +168,6 @@ const StockTable = (API_KEY, WARN) => {
     return (
       <div className="App-continer">
         <div>
-
         </div>
         <table>
           <thead>
@@ -230,7 +233,7 @@ const StockTable = (API_KEY, WARN) => {
         </form>
         <div>
 
-         
+          <StockChart StockSymbol={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForOverview} S_WARN = 'Alpha' /> 
         </div>
       </div>
     ) 
