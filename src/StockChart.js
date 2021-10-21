@@ -9,7 +9,9 @@ class StockChart extends React.Component {
 
         this.state = {
             stockChartXValues: [],
-            stockChartYValues: []
+            stockChartYValues: [],
+            histArray: [],
+            hist: ""
         }
     }
 
@@ -19,9 +21,10 @@ class StockChart extends React.Component {
 
     fetchStock() {
         const pointerToThis = this;
-        //console.log (pointerToThis);
+
         const API_KEY = this.props["API_KEY"];
         const StockSymbol = this.props["StockSymbol"];
+        console.log ('StockSymbol ' + `${StockSymbol}`);
         //const StockSymbol = localStorage.getItem ('StockChart');
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
@@ -75,6 +78,54 @@ class StockChart extends React.Component {
                         stockChartXValuesFunction.push(key);
                         stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
                     }
+                    //this.state.hist += " now: " + stockChartYValuesFunction[0];
+                    var num;
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1];
+                    num = num.toFixed(3);
+                    this.state.hist += " 1w (" + num + ")    ";
+                    this.state.histArray.push (num);
+                    
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[2];
+                    num = num.toFixed(3);
+                    this.state.hist += " 2w (" + num + ")    ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[4];
+                    num = num.toFixed(3);
+                    this.state.hist += " m (" + num + ")    ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[13];
+                    num = num.toFixed(3);
+                    this.state.hist += " 3m (" + num + ")    ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[26];
+                    num = num.toFixed(3);
+                    this.state.hist += " 6m (" + num + ")    ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[52];
+                    num = num.toFixed(3);
+                    this.state.hist += " y (" + num + ")    ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[104];
+                    num = num.toFixed(3);
+                    this.state.hist += " 2y (" + num + ")   ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[260];
+                    num = num.toFixed(3);
+                    this.state.hist += " 5y (" + num + ")    ";
+                    this.state.histArray.push (num);
+
+                    num = stockChartYValuesFunction[0] / stockChartYValuesFunction[520];
+                    num = num.toFixed(3);
+                    if (num != 'NaN')
+                    this.state.hist += " 10y (" + num + ")";
+                    this.state.histArray.push (num);
+
                     //console.log (stockChartXValuesFunction)
                     //console.log (stockChartYValuesFunction)
                     pointerToThis.setState({
@@ -91,6 +142,8 @@ class StockChart extends React.Component {
         return (
           <div>
 
+                <h4>historical gain: {this.state.hist}</h4>
+
             <Plot
               data={[
                 {
@@ -104,7 +157,6 @@ class StockChart extends React.Component {
               ]}
               layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
             />
-
           </div>
         );
     }
