@@ -107,23 +107,26 @@ class StockChart extends React.Component {
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[52];
                     num = num.toFixed(3);
-                    this.state.hist += " y (" + num + ")    ";
+                    if (num != 'NaN')                    
+                        this.state.hist += " y (" + num + ")    ";
                     this.state.histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[104];
                     num = num.toFixed(3);
-                    this.state.hist += " 2y (" + num + ")   ";
+                    if (num != 'NaN')
+                        this.state.hist += " 2y (" + num + ")   ";
                     this.state.histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[260];
                     num = num.toFixed(3);
-                    this.state.hist += " 5y (" + num + ")    ";
+                    if (num != 'NaN')                    
+                        this.state.hist += " 5y (" + num + ")    ";
                     this.state.histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[520];
                     num = num.toFixed(3);
                     if (num != 'NaN')
-                    this.state.hist += " 10y (" + num + ")";
+                        this.state.hist += " 10y (" + num + ")";
                     this.state.histArray.push (num);
 
                     //console.log (stockChartXValuesFunction)
