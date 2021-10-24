@@ -21,43 +21,20 @@ class StockChart extends React.Component {
 
     fetchStock() {
         const pointerToThis = this;
-
+        const callBack = this.props["callBack"]; 
         const API_KEY = this.props["API_KEY"];
         const StockSymbol = this.props["StockSymbol"];
-        console.log ('StockSymbol ' + `${StockSymbol}`);
+        console.log ('StockSymbol ' + `${this.props["StockSymbol"]}`);
         //const StockSymbol = localStorage.getItem ('StockChart');
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
-        //let periodLower = `Time Series (${period[1][1]})`; 
-        //console.log (`${this.props}`);
 
 
         let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
-        //let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${StockSymbol}&apikey=${API_KEY}`;
 
         let stockChartXValuesFunction = [];
         let stockChartYValuesFunction = [];
         
-        let histValues ='';
-        const histStr = localStorage.getItem (this.props["StockSymbol"] + '_chart');
-        if (histStr) {
-            //console.log (histStr);
-            histValues = JSON.parse(histStr);
-  
-            //let periodTag = 'Time Series (Daily)';
-            let periodTag = 'Weekly Adjusted Time Series';
-            //let periodTag = 'Monthly Adjusted Time Series';
-            for (var key in histValues[`${periodTag}`]) {
-                stockChartXValuesFunction.push(key);
-                stockChartYValuesFunction.push(histValues[`${periodTag}`][key]['1. open']);
-            }
-                //console.log (stockChartXValuesFunction)
-                //console.log (stockChartYValuesFunction)
-                pointerToThis.setState({
-                    stockChartXValues: stockChartXValuesFunction,
-                    stockChartYValues: stockChartYValuesFunction
-                });
-        }
         fetch(API_Call)
             .then(
                 function(response) {
@@ -68,8 +45,10 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
-                    if ({StockSymbol} != null && data != null)
+                    if ({StockSymbol} !== null && data !== null) {
+                        //this.recordedHist.setState ({StockSymbol}, data);
                         localStorage.setItem (`${StockSymbol}` + '_priceHistory', dataStr);
+                    }
 
                     //let periodTag = 'Time Series (Daily)';
                     let periodTag = 'Weekly Adjusted Time Series';
@@ -78,7 +57,8 @@ class StockChart extends React.Component {
                         stockChartXValuesFunction.push(key);
                         stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
                     }
-                    //this.state.hist += " now: " + stockChartYValuesFunction[0];
+                   
+                    this.state.histArray= [];
                     var num;
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1];
                     num = num.toFixed(3);
@@ -107,28 +87,30 @@ class StockChart extends React.Component {
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[52];
                     num = num.toFixed(3);
-                    if (num != 'NaN')                    
+                    if (num !== 'NaN')                    
                         this.state.hist += " y (" + num + ")    ";
                     this.state.histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[104];
                     num = num.toFixed(3);
-                    if (num != 'NaN')
+                    if (num !== 'NaN')
                         this.state.hist += " 2y (" + num + ")   ";
                     this.state.histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[260];
                     num = num.toFixed(3);
-                    if (num != 'NaN')                    
+                    if (num !== 'NaN')                    
                         this.state.hist += " 5y (" + num + ")    ";
                     this.state.histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[520];
                     num = num.toFixed(3);
-                    if (num != 'NaN')
+                    if (num !== 'NaN')
                         this.state.hist += " 10y (" + num + ")";
                     this.state.histArray.push (num);
 
+                    // send historical value back to caller
+                    callBack (this.state.histArray);
                     //console.log (stockChartXValuesFunction)
                     //console.log (stockChartYValuesFunction)
                     pointerToThis.setState({
@@ -144,9 +126,7 @@ class StockChart extends React.Component {
            return null;
         return (
           <div>
-
-                <h4>historical gain: {this.state.hist}</h4>
-
+            <h4> historical_gain: {this.state.hist} </h4>
             <Plot
               data={[
                 {
