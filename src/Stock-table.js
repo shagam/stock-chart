@@ -171,7 +171,7 @@ const StockTable = (API_KEY, WARN) => {
     return (
       <div className="App-continer">
         <div>
-        <p4> chartSymbol {chartSymbol}</p4>
+        <h4> chartSymbol {chartSymbol}</h4>
         </div>
         <table>
           <thead>
