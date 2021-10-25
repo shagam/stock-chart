@@ -32,7 +32,8 @@ const StockTable = (API_KEY, WARN) => {
     }
 
     const handleCallBackForHistory = (childData) => {
-      console.log ('historyValues: ' + {childData} + ' chartSymbol ' + {chartSymbol});
+      const str = JSON.stringify (childData);
+      console.log ('historyValues: ' + {str} + ' chartSymbol ' + {chartSymbol});
     
     }
 
@@ -130,43 +131,47 @@ const StockTable = (API_KEY, WARN) => {
       //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
 
 
-    // let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${chartSymbol}&apikey=${API_KEY}`
+    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
     
-    // fetch(API_Call)
-    //     .then(
-    //         function(response) {
-    //             if (response != null) {
-    //               console.log(response);
-    //               return response.json();
-    //             }
-    //         }
-    //     )
-    //     .then(
-    //         function (data) {
-    //           if (`${chartSymbol}` == null)
-    //           console.log ('chartSymbol null');
-    //           if (data != null) {
-    //               console.log(data);
-    //               const dataStr = JSON.stringify(data);
-    //               const index =  (dataStr.search('API call frequency'))
-    //               if (index > 0) {
-    //                 console.log ('Alphvantage too frequent calls ' + `${index}`);
-    //                 return;
-    //               }
-    //             }
+    if (`${chartSymbol}` == null)
+      console.log('chartSymbol == null');
+    else {
+    fetch(API_Call)
+        .then(
+            function(response) {
+                if (response != null) {
+                  console.log(response);
+                  return response.json();
+                }
+            }
+        )
+        .then(
+            function (data) {
+              if (`${chartSymbol}` == null)
+              console.log ('chartSymbol null');
+              if (data != null) {
+                  const dataStr = JSON.stringify(data);
+                  console.log(dataStr.substring(0, 200));
+                  const index =  (dataStr.search('API call frequency'))
+                  if (index > 0) {
+                    console.log (`Alphvantage too frequent calls ${index}`);
+                    return;
+                  }
+                }
 
-    //             else if (data['Symbol'] == null)
-    //               console.log ('data Symbol missing');
-    //             else if (`${chartSymbol}` != null && data['Symbol'] != null) {
-    //               const dataStr = JSON.stringify(data);
-    //               localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
-    //               handleCallBackForOverview (data);
-    //             }
-    //             else
-    //                 console.log ('fetch no data');
-    //         }
-    //     )
+                else if (data['Symbol'] == null)
+                  console.log ('data Symbol missing');
+                else if (`${chartSymbol}` != null && data['Symbol'] != null) {
+                  const dataStr = JSON.stringify(data);
+                  localStorage.setItem(`${chartSymbol} _overview ${dataStr}`);
+                  handleCallBackForOverview (data);
+                }
+                else
+                    console.log ('fetch no data');
+            }
+        )
        }
+      }
 
     return (
       <div className="App-continer">
