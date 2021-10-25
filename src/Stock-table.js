@@ -161,11 +161,11 @@ const StockTable = (API_KEY, WARN) => {
                   }
                 }
 
-                else if (data['Symbol'] == null)
+                if (data['Symbol'] == null)
                   console.log ('data Symbol missing');
                 else if (`${chartSymbol}` != null && data['Symbol'] != null) {
                   const dataStr = JSON.stringify(data);
-                  localStorage.setItem(`${chartSymbol} _overview ${dataStr}`);
+                  localStorage.setItem(`${chartSymbol}_overview`, `${dataStr}`);
                   handleCallBackForOverview (data);
                 }
                 else
