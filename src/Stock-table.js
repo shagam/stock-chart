@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 //import { nanoid } from 'nanoid';
 import './App.css';
 import './react-tables.css';
@@ -9,7 +9,7 @@ import StockChart from "./StockChart";
 //<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (API_KEY, S_WARN, chartSymbol) => { 
+const StockTable = (API_KEY, WARN) => { 
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   
@@ -18,6 +18,7 @@ const StockTable = (API_KEY, S_WARN, chartSymbol) => {
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "qqq"}]');
     const [stocks, setStocks] = useState(data1);
+    const [chartSymbol, setChartSymbol] = useState("");
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
@@ -31,7 +32,7 @@ const StockTable = (API_KEY, S_WARN, chartSymbol) => {
     }
 
     const handleCallBackForHistory = (childData) => {
-    
+      console.log ('historyValues: ' + {childData} + ' chartSymbol ' + {chartSymbol});
     
     }
 
@@ -118,56 +119,59 @@ const StockTable = (API_KEY, S_WARN, chartSymbol) => {
       localStorage.setItem('stockTable', `${stocksStr}`);
     }
 
+    // click chart button
     const handleChartClick = (symbol) => {
-      chartSymbol = `${symbol}`;
-      console.log('chartSymbol ' + `${chartSymbol}`);      
+      setChartSymbol (`${symbol}`);
       localStorage.setItem ('StockChart', `${symbol}`); // temp for App.js
+      console.log('symbol ' + `${symbol}` + " chartSymbol " + `${chartSymbol}`);      
+
       //document.cookie = `StockSymbol=${symbol}`
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
       //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
 
 
-    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${chartSymbol}&apikey=${API_KEY}`
+    // let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${chartSymbol}&apikey=${API_KEY}`
     
-    fetch(API_Call)
-        .then(
-            function(response) {
-                if (response != null) {
-                  console.log(response);
-                  return response.json();
-                }
-            }
-        )
-        .then(
-            function (data) {
-              if (`${chartSymbol}` == null)
-              console.log ('chartSymbol null');
-              if (data != null) {
-                  console.log(data);
-                  const dataStr = JSON.stringify(data);
-                  const index =  (dataStr.search('API call frequency'))
-                  if (index > 0) {
-                    console.log ('Alphvantage too frequent calls ' + `${index}`);
-                    return;
-                  }
-                }
+    // fetch(API_Call)
+    //     .then(
+    //         function(response) {
+    //             if (response != null) {
+    //               console.log(response);
+    //               return response.json();
+    //             }
+    //         }
+    //     )
+    //     .then(
+    //         function (data) {
+    //           if (`${chartSymbol}` == null)
+    //           console.log ('chartSymbol null');
+    //           if (data != null) {
+    //               console.log(data);
+    //               const dataStr = JSON.stringify(data);
+    //               const index =  (dataStr.search('API call frequency'))
+    //               if (index > 0) {
+    //                 console.log ('Alphvantage too frequent calls ' + `${index}`);
+    //                 return;
+    //               }
+    //             }
 
-                else if (data['Symbol'] == null)
-                  console.log ('data Symbol missing');
-                else if (`${chartSymbol}` != null && data['Symbol'] != null) {
-                  const dataStr = JSON.stringify(data);
-                  localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
-                  handleCallBackForOverview (data);
-                }
-                else
-                    console.log ('fetch no data');
-            }
-        )
-      }
+    //             else if (data['Symbol'] == null)
+    //               console.log ('data Symbol missing');
+    //             else if (`${chartSymbol}` != null && data['Symbol'] != null) {
+    //               const dataStr = JSON.stringify(data);
+    //               localStorage.setItem(`${chartSymbol}` + '_overview', `${dataStr}`);
+    //               handleCallBackForOverview (data);
+    //             }
+    //             else
+    //                 console.log ('fetch no data');
+    //         }
+    //     )
+       }
 
     return (
       <div className="App-continer">
         <div>
+        <p4> chartSymbol {chartSymbol}</p4>
         </div>
         <table>
           <thead>
@@ -232,8 +236,7 @@ const StockTable = (API_KEY, S_WARN, chartSymbol) => {
           <button type="submit"> Add</button>
         </form>
         <div>
-
-          <StockChart StockSymbol={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForOverview} S_WARN = 'Alpha' /> 
+          <StockChart StockSymbol = {chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} S_WARN = 'Alpha' /> 
         </div>
       </div>
     ) 
