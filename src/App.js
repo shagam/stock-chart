@@ -48,7 +48,7 @@ const handleCallBack = (childData) => {
         <StockTable API_KEY = {API_KEY} WARN = {ALPHA_WARNING}/>
       </div>
       <div>
-         {/* <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} callBack = {handleCallBack} WARN = {ALPHA_WARNING} /> */}
+         <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} callBack = {handleCallBack} WARN = {ALPHA_WARNING} />
       </div>      
       <div>
 
