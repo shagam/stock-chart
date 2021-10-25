@@ -43,6 +43,9 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
+                    if (dataStr.indexOf ('Invalid API call. ') !== -1)
+                        console.log (`API_Call ${API_Call}`);    
+                    console.log (dataStr.substr(0, 230));
                     if (`${this.props.StockSymbol}` !== null && data !== null) {
                         //this.recordedHist.setState ({StockSymbol}, data);
                         localStorage.setItem (`${this.props.StockSymbol} + _priceHistory`, dataStr);
@@ -109,7 +112,7 @@ class StockChart extends React.Component {
                     histArray.push (num);
 
                     // send historical value back to caller
-                    callBack (histArray);
+                    //callBack (histArray);
 
                     pointerToThis.setState({
                         stockChartXValues: stockChartXValuesFunction,
