@@ -10,7 +10,7 @@ class StockChart extends React.Component {
         this.state = {
             stockChartXValues: [],
             stockChartYValues: [],
-            hist: ""
+            histStr: ""
         }
     }
 
@@ -57,55 +57,55 @@ class StockChart extends React.Component {
                     }
                    
                     var histArray = [];
-                    this.state.hist = "";
+                    this.setState ({histStr: ""});
                     var num;
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1];
                     num = num.toFixed(3);
-                    this.state.hist += " 1w (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " 1w (" + num + ")  "});
                     histArray.push (num);
                     
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[2];
                     num = num.toFixed(3);
-                    this.state.hist += " 2w (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " 2w (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[4];
                     num = num.toFixed(3);
-                    this.state.hist += " m (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " m (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[13];
                     num = num.toFixed(3);
-                    this.state.hist += " 3m (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " 3m (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[26];
                     num = num.toFixed(3);
-                    this.state.hist += " 6m (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " 6m (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[52];
                     num = num.toFixed(3);
                     if (num !== 'NaN')                    
-                        this.state.hist += " y (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " y (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[104];
                     num = num.toFixed(3);
                     if (num !== 'NaN')
-                        this.state.hist += " 2y (" + num + ")   ";
+                    this.setState ({histStr: this.state.histStr + " 2y (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[260];
                     num = num.toFixed(3);
                     if (num !== 'NaN')                    
-                        this.state.hist += " 5y (" + num + ")    ";
+                    this.setState ({histStr: this.state.histStr + " 5y (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[520];
                     num = num.toFixed(3);
                     if (num !== 'NaN')
-                        this.state.hist += " 10y (" + num + ")";
+                    this.setState ({histStr: this.state.histStr + " 10y (" + num + ")"});
                     histArray.push (num);
 
                     // send historical value back to caller
@@ -124,7 +124,7 @@ class StockChart extends React.Component {
            return null;
         return (
           <div>
-            <h4> historical_gain: {this.state.hist} </h4>
+            <h4> historical_gain: {this.state.histStr} </h4>
             <Plot
               data={[
                 {
