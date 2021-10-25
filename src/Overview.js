@@ -44,7 +44,7 @@ class Overview extends React.Component {
                     //console.log(data);
                     const dataStr = JSON.stringify(data);
                     if (`${StockSymbol}` != null && data != null && data['Symbol'] != null) {
-                      localStorage.setItem(`${StockSymbol}` + '_overview', `${dataStr}`);
+                      localStorage.setItem(`${StockSymbol}  _overview`, `${dataStr}`);
                       callBack(data);
                     }
                     else

@@ -123,7 +123,7 @@ const StockTable = (API_KEY, WARN) => {
     const handleChartClick = (symbol) => {
       setChartSymbol (`${symbol}`);
       localStorage.setItem ('StockChart', `${symbol}`); // temp for App.js
-      console.log(`symbol  + ${symbol} +  chartSymbol  + ${chartSymbol}`);      
+      console.log(`symbol: ${symbol} chartSymbol: ${chartSymbol}`);      
 
       //document.cookie = `StockSymbol=${symbol}`
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
