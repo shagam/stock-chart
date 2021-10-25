@@ -140,7 +140,9 @@ const StockTable = (API_KEY, WARN) => {
         .then(
             function(response) {
                 if (response != null) {
-                  console.log(response);
+                  const respStr = JSON.stringify (response);
+                  if (respStr.indexOf('redirected: false, status: 200, ok:') !== -1)
+                    console.log(response);
                   return response.json();
                 }
             }
