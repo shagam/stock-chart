@@ -22,13 +22,13 @@ class StockChart extends React.Component {
         const pointerToThis = this;
         const callBack = this.props["callBack"]; 
         const API_KEY = this.props["API_KEY"];
-        const StockSymbol = this.props["StockSymbol"];
+        //const StockSymbol = this.props.StockSymbol;
         console.log (`StockSymbol ${this.props["StockSymbol"]}`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
 
 
-        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
 
         let stockChartXValuesFunction = [];
         let stockChartYValuesFunction = [];
@@ -43,9 +43,9 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
-                    if ({StockSymbol} !== null && data !== null) {
+                    if (`${this.props.StockSymbol}` !== null && data !== null) {
                         //this.recordedHist.setState ({StockSymbol}, data);
-                        localStorage.setItem (`${StockSymbol} + _priceHistory`, dataStr);
+                        localStorage.setItem (`${this.props.StockSymbol} + _priceHistory`, dataStr);
                     }
 
                     //let periodTag = 'Time Series (Daily)';
