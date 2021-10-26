@@ -18,14 +18,14 @@ const StockTable = (API_KEY, WARN) => {
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "goog"}]');
     const [stocks, setStocks] = useState(data1);
-    var [chartSymbol, setChartSymbol] = useState("");
+    const [chartSymbol, setChartSymbol] = useState("");
     const [stocksHistory, setStocksHistory] = useState({});
     const [stocksOverview, setStocksOverview] = useState({});
 
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
-      symbol: '', update: '', Exchange: '', Sector: '', lastPrice: 0, PE: 0, PEG: 0, BETA: 0,      
+      symbol: '', update: '', Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0, BETA: 0,      
       wk: 1234, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
@@ -42,11 +42,11 @@ const StockTable = (API_KEY, WARN) => {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
         Exchange: stocks[index].Exchange,
-        //  Sector: stocks[index].Sector,
-        // lastPrice: stocks[index].lastPrice,
-        // PE: stocks[index].PE,
-        // PEG: stocks[index].PEG,
-        // BETA: stocks[index].BETA,
+        Sector: stocks[index].Sector,
+        lastPrice: stocks[index].lastPrice,
+        PE: stocks[index].PE,
+        PEG: stocks[index].PEG,
+        BETA: stocks[index].BETA,
         wk: childData[0], //stocks[index].wk,
         wk2: childData[1], //stocks[index].wk2,
         mon: childData[2], //stocks[index].mon,
@@ -79,7 +79,7 @@ const StockTable = (API_KEY, WARN) => {
         update: getDate(),
         Exchange: childData["Exchange"],
         Sector: childData["Sector"],
-        lastPrice: "0",
+        lastPrice: stocks[index].lastPrice,
         PE: childData["PERatio"],
         PEG: childData["PEGRatio"],
         BETA: childData["Beta"],
@@ -131,6 +131,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
+        lastPrice: -1,
         wk: 1,
         wk2: 2,
         mon: 4,
@@ -162,7 +163,7 @@ const StockTable = (API_KEY, WARN) => {
 
     // click chart button
     const handleChartClick = (symbol) => {
-      chartSymbol = symbol;
+      //chartSymbol = symbol;
       setChartSymbol (symbol);
 
       //callBack ("tableCallBack");
@@ -230,8 +231,8 @@ const StockTable = (API_KEY, WARN) => {
               <th>actions</th>
               <th>update</th>
               <th>Exchange</th>          
-              <th>Sector</th>              
-              <th>Price</th>
+              {/* <th>Sector</th>              
+              <th>Price</th> */}
               <th>PE</th>
               <th>PEG</th>
               <th>BETA</th>              
@@ -256,8 +257,8 @@ const StockTable = (API_KEY, WARN) => {
                 </td>
                 <td>{stock.update}</td>
                 <td>{stock.Exchange}</td>
-                <td>{stock.Sector}</td>                
-                <td>{stock.price}</td>
+                {/* <td>{stock.Sector}</td>                
+                <td>{stock.price}</td> */}
                 <td>{stock.PE}</td>
                 <td>{stock.PEG}</td>
                 <td>{stock.BETA}</td>                
@@ -286,7 +287,7 @@ const StockTable = (API_KEY, WARN) => {
           <button type="submit"> Add</button>
         </form>
         <div>
-          <StockChart StockSymbol = {chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
+          <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
         </div>
       </div>
     ) 
