@@ -20,15 +20,16 @@ class StockChart extends React.Component {
 
     fetchStock() {
         const pointerToThis = this;
-        const callBack = this.props["callBack"]; 
+        const callBack = this.props.callBack; 
         const API_KEY = this.props["API_KEY"];
+        const API_KEY_ = 'BC9UV9YUBWM3KQGF';
         //const StockSymbol = this.props.StockSymbol;
         console.log (`StockSymbol ${this.props["StockSymbol"]}`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
 
 
-        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
 
         let stockChartXValuesFunction = [];
         let stockChartYValuesFunction = [];
@@ -36,7 +37,9 @@ class StockChart extends React.Component {
         fetch(API_Call)
             .then(
                 function(response) {
-                    //console.log(response);
+                    const respStr = JSON.stringify (response);
+                    if (respStr.indexOf (' status: 200, ok: true') !== -1)
+                        console.log(response);
                     return response.json();
                 }
             )
@@ -112,8 +115,8 @@ class StockChart extends React.Component {
                     histArray.push (num);
 
                     // send historical value back to caller
-                    //callBack (histArray);
-
+                    callBack (`${histArray}`, `${this.props.StockSymbol}`);
+                    //console.log (histArray);
                     pointerToThis.setState({
                         stockChartXValues: stockChartXValuesFunction,
                         stockChartYValues: stockChartYValuesFunction
@@ -127,7 +130,7 @@ class StockChart extends React.Component {
            return null;
         return (
           <div>
-            <h4> historical_gain: {this.state.histStr} </h4>
+            <h4> historical_gain({this.props.StockSymbol}): {this.state.histStr} </h4>
             <Plot
               data={[
                 {
