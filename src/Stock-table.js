@@ -68,20 +68,20 @@ const StockTable = (API_KEY, WARN) => {
       localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
 
-    const handleCallBackForOverview = (childData__)  => {
-      const symbol = childData__["Symbol"];
+    const handleCallBackForOverview = (childData)  => {
+      const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
       console.log (stocks);      
       const newStock = {
-        symbol: childData__["Symbol"],
+        symbol: childData["Symbol"],
         update: getDate(),
-        Exchange: childData__["Exchange"],
-        Sector: childData__["Sector"],
+        Exchange: childData["Exchange"],
+        Sector: childData["Sector"],
         lastPrice: "0",
-        PE: childData__["PERatio"],
-        PEG: childData__["PEGRatio"],
-        BETA: childData__["Beta"],
+        PE: childData["PERatio"],
+        PEG: childData["PEGRatio"],
+        BETA: childData["Beta"],
         wk: stocks[index].wk,
         wk2: stocks[index].wk2,
         mon: stocks[index].mon,
@@ -101,7 +101,7 @@ const StockTable = (API_KEY, WARN) => {
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
 
-      stocksOverview [`${symbol}`] = {childData: childData__};
+      stocksOverview [`${symbol}`] = childData;
       const stocksOverviewStr = JSON.stringify(stocksOverview);
       localStorage.setItem('stocksOverview', `${stocksOverviewStr}`);
      
