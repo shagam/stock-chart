@@ -10,6 +10,7 @@ class StockChart extends React.Component {
         this.state = {
             stockChartXValues: [],
             stockChartYValues: [],
+            stocksChartHistory: {},
             histStr: ""
         }
     }
@@ -46,12 +47,16 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
+                    this.state.stocksChartHistory[`${this.props.StockSymbol}`] = data;
+                    const stocksHistoryStr = JSON.stringify(this.state.stocksChartHistory); 
+                    localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
+
                     if (dataStr.indexOf ('Invalid API call. ') !== -1)
                         console.log (`API_Call ${API_Call}`);    
                     console.log (dataStr.substr(0, 230));
                     if (`${this.props.StockSymbol}` !== null && data !== null) {
                         //this.recordedHist.setState ({StockSymbol}, data);
-                        localStorage.setItem (`${this.props.StockSymbol} + _priceHistory`, dataStr);
+                        localStorage.setItem (`${this.props.StockSymbol}_priceHistory`, dataStr);
                     }
 
                     //let periodTag = 'Time Series (Daily)';
