@@ -18,9 +18,10 @@ const StockTable = (API_KEY, WARN) => {
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "goog"}]');
     const [stocks, setStocks] = useState(data1);
-    const [chartSymbol, setChartSymbol] = useState("");
+    var [chartSymbol, setChartSymbol] = useState("");
     const [stocksHistory, setStocksHistory] = useState({});
     const [stocksOverview, setStocksOverview] = useState({});
+
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
@@ -38,10 +39,10 @@ const StockTable = (API_KEY, WARN) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
       const index = stocks.findIndex((stock)=> stock.symbol === sym);
       const newStock = {
-        symbol: `${sym}`, //stocks[index].symbol,
+        symbol: sym, //stocks[index].symbol,
         update: getDate(),
-        // Exchange: stocks[index].Exchange,
-        // Sector: stocks[index].Sector,
+        Exchange: stocks[index].Exchange,
+        //  Sector: stocks[index].Sector,
         // lastPrice: stocks[index].lastPrice,
         // PE: stocks[index].PE,
         // PEG: stocks[index].PEG,
@@ -58,12 +59,12 @@ const StockTable = (API_KEY, WARN) => {
       };
 
       const newStocks = [...stocks];
-      //newStocks.splice(index, 1, newStock);
+      newStocks.splice(index, 1, newStock);
       setStocks(newStocks); 
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
-
-      stocksHistory [`${chartSymbol}`] = {childData};
+      if (chartSymbol !== null)
+        stocksHistory [chartSymbol] = childData;
       const stocksHistoryStr = JSON.stringify(stocksHistory);
       localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
@@ -72,7 +73,7 @@ const StockTable = (API_KEY, WARN) => {
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
-      console.log (stocks);      
+      //console.log (stocks);      
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
@@ -93,17 +94,17 @@ const StockTable = (API_KEY, WARN) => {
         year10: stocks[index].year10  
       };
 
-      console.log (stocks[stocks.length - 1]);
+      //console.log (stocks[stocks.length - 1]);
       const newStocks = [...stocks];
       newStocks.splice(index, 1, newStock);
       //const newStocks__ = [...newStocks, newStock];
       setStocks(newStocks); 
       const stocksStr = JSON.stringify(newStocks);
-      localStorage.setItem('stockTable', `${stocksStr}`);
+      localStorage.setItem('stockTable', stocksStr);
 
       stocksOverview [symbol] = childData;
       const stocksOverviewStr = JSON.stringify(stocksOverview);
-      localStorage.setItem('stocksOverview', `${stocksOverviewStr}`);
+      localStorage.setItem('stocksOverview', stocksOverviewStr);
      
      }
 
@@ -122,7 +123,7 @@ const StockTable = (API_KEY, WARN) => {
       event.preventDefault();
 
       const index = stocks.findIndex((stock)=> stock.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
-      if (index > 0) {
+      if (index !== -1) {
         console.log ('Duplicate symbol: ' + addFormData.symbol);
         return;
       }
@@ -145,7 +146,7 @@ const StockTable = (API_KEY, WARN) => {
       setStocks(newStocks); 
 
       const stocksStr = JSON.stringify(newStocks);
-      localStorage.setItem('stockTable', `${stocksStr}`);
+      localStorage.setItem('stockTable', stocksStr);
       console.log (newStocks);
     }
 
@@ -156,13 +157,16 @@ const StockTable = (API_KEY, WARN) => {
       newStocks.splice(index, 1);
       setStocks(newStocks);
       const stocksStr = JSON.stringify(newStocks);
-      localStorage.setItem('stockTable', `${stocksStr}`);
+      localStorage.setItem('stockTable', stocksStr);
     }
 
     // click chart button
     const handleChartClick = (symbol) => {
-      setChartSymbol (`${symbol}`);
-      localStorage.setItem ('StockChart', `${symbol}`); // temp for App.js
+      chartSymbol = symbol;
+      setChartSymbol (symbol);
+
+      //callBack ("tableCallBack");
+      localStorage.setItem ('chartSymbol', symbol); // temp for App.js
       console.log(`symbol: ${symbol} chartSymbol: ${chartSymbol}`);      
 
       //document.cookie = `StockSymbol=${symbol}`
