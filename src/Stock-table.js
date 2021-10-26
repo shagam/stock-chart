@@ -101,7 +101,7 @@ const StockTable = (API_KEY, WARN) => {
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
 
-      stocksOverview [`${symbol}`] = childData;
+      stocksOverview [symbol] = childData;
       const stocksOverviewStr = JSON.stringify(stocksOverview);
       localStorage.setItem('stocksOverview', `${stocksOverviewStr}`);
      
