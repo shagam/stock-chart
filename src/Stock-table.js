@@ -28,16 +28,41 @@ const StockTable = (API_KEY, WARN) => {
 
     function getDate() {
       const date = new Date();
-      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;      
+      return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
     }
 
-    const handleCallBackForHistory = (childData) => {
-      const str = JSON.stringify (childData);
-      console.log ('historyValues: ' + {str} + ' chartSymbol ' + {chartSymbol});
-    
+    // enter history values into table
+    const handleCallBackForHistory = (childData, sym) => {
+      console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
+      const index = stocks.findIndex((stock)=> stock.symbol === sym);
+      const newStock = {
+        symbol: sym, //stocks[index].symbol,
+        update: getDate(),
+        // Exchange: stocks[index].Exchange,
+        // Sector: stocks[index].Sector,
+        // lastPrice: stocks[index].lastPrice,
+        // PE: stocks[index].PE,
+        // PEG: stocks[index].PEG,
+        // BETA: stocks[index].BETA,
+        wk: childData[0], //stocks[index].wk,
+        wk2: childData[1], //stocks[index].wk2,
+        mon: childData[2], //stocks[index].mon,
+        mon3: childData[3], //stocks[index].mon3,
+        mon6: childData[4], //stocks[index].mon6,
+        year: childData[5], //stocks[index].year,
+        year2: childData[6], //stocks[index].year2,
+        year5: childData[7], //stocks[index].year5,
+        year10: childData[8] //stocks[index].year10  
+      };
+
+      const newStocks = [...stocks];
+      newStocks.splice(index, 1, newStock);
+      setStocks(newStocks); 
+      const stocksStr = JSON.stringify(newStocks);
+      localStorage.setItem('stockTable', `${stocksStr}`);
     }
 
-    const handleCallBackForOverview = (childData) => {
+    const handleCallBackForOverview = (childData)  => {
       //console.log (childData);
       const symbol = childData["Symbol"];
 
