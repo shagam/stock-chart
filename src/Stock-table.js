@@ -19,6 +19,8 @@ const StockTable = (API_KEY, WARN) => {
       data1 = JSON.parse('[{"symbol": "qqq"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
+    const [stocksHistory, setStocksHistory] = useState({});
+    const [stocksOverview, setStocksOverview] = useState({});
 
     //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
@@ -36,7 +38,7 @@ const StockTable = (API_KEY, WARN) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
       const index = stocks.findIndex((stock)=> stock.symbol === sym);
       const newStock = {
-        symbol: sym, //stocks[index].symbol,
+        symbol: `${sym}`, //stocks[index].symbol,
         update: getDate(),
         // Exchange: stocks[index].Exchange,
         // Sector: stocks[index].Sector,
@@ -56,14 +58,17 @@ const StockTable = (API_KEY, WARN) => {
       };
 
       const newStocks = [...stocks];
-      newStocks.splice(index, 1, newStock);
+      //newStocks.splice(index, 1, newStock);
       setStocks(newStocks); 
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
+
+      stocksHistory [`${chartSymbol}`] = {childData};
+      const stocksHistoryStr = JSON.stringify(stocksHistory);
+      localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
 
     const handleCallBackForOverview = (childData)  => {
-      //console.log (childData);
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
@@ -95,11 +100,12 @@ const StockTable = (API_KEY, WARN) => {
       setStocks(newStocks); 
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
-      
-      // console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], 
-      //   childData["PERatio"], childData["PEGRatio"], childData["Beta"]);
-        //stocks[index].PE, stocks[index].PEG );
-    }
+
+      stocksOverview [`${symbol}`] = {childData};
+      const stocksOverviewStr = JSON.stringify(stocksOverview);
+      localStorage.setItem('stocksOverview', `${stocksOverviewStr}`);
+     
+     }
 
     // two handlers for adding new symbol
     const handleAddFormChange = (event) => {
@@ -122,7 +128,7 @@ const StockTable = (API_KEY, WARN) => {
       }
 
       const newStock = {
-        symbol: addFormData.symbol,
+        symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
         wk: 1234 
       };
@@ -190,7 +196,7 @@ const StockTable = (API_KEY, WARN) => {
                   console.log ('data Symbol missing');
                 else if (`${chartSymbol}` != null && data['Symbol'] != null) {
                   const dataStr = JSON.stringify(data);
-                  localStorage.setItem(`${chartSymbol}_overview`, `${dataStr}`);
+                  localStorage.setItem(`${symbol}_overview`, `${dataStr}`);
                   handleCallBackForOverview (data);
                 }
                 else
