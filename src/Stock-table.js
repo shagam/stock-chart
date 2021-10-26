@@ -6,7 +6,7 @@ import data from "./mock-data.json";
 import Overview from "./Overview.js";
 
 import StockChart from "./StockChart";
-//<StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} />
+//<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
 const StockTable = (API_KEY, WARN) => { 
@@ -16,7 +16,7 @@ const StockTable = (API_KEY, WARN) => {
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
-      data1 = JSON.parse('[{"symbol": "qqq"}]');
+      data1 = JSON.parse('[{"symbol": "goog"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
     const [stocksHistory, setStocksHistory] = useState({});
@@ -68,29 +68,29 @@ const StockTable = (API_KEY, WARN) => {
       localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
 
-    const handleCallBackForOverview = (childData)  => {
-      const symbol = childData["Symbol"];
+    const handleCallBackForOverview = (childData__)  => {
+      const symbol = childData__["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
       console.log (stocks);      
       const newStock = {
-        symbol: childData["Symbol"],
+        symbol: childData__["Symbol"],
         update: getDate(),
-        Exchange: childData["Exchange"],
-        Sector: childData["Sector"],
+        Exchange: childData__["Exchange"],
+        Sector: childData__["Sector"],
         lastPrice: "0",
-        PE: childData["PERatio"],
-        PEG: childData["PEGRatio"],
-        BETA: childData["Beta"],
-        wk: 0, //stocks[index].wk,
-        wk2: 0, //stocks[index].wk2,
-        mon: 0, //stocks[index].mon,
-        mon3: 0, //stocks[index].mon3,
-        mon6: 0, //stocks[index].mon6,
-        year: 0, //stocks[index].year,
-        year2: 0, //stocks[index].year2,
-        year5: 0, //stocks[index].year5,
-        year10: 0 //stocks[index].year10  
+        PE: childData__["PERatio"],
+        PEG: childData__["PEGRatio"],
+        BETA: childData__["Beta"],
+        wk: stocks[index].wk,
+        wk2: stocks[index].wk2,
+        mon: stocks[index].mon,
+        mon3: stocks[index].mon3,
+        mon6: stocks[index].mon6,
+        year: stocks[index].year,
+        year2: stocks[index].year2,
+        year5: stocks[index].year5,
+        year10: stocks[index].year10  
       };
 
       console.log (stocks[stocks.length - 1]);
@@ -101,7 +101,7 @@ const StockTable = (API_KEY, WARN) => {
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
 
-      stocksOverview [`${symbol}`] = {childData};
+      stocksOverview [`${symbol}`] = {childData: childData__};
       const stocksOverviewStr = JSON.stringify(stocksOverview);
       localStorage.setItem('stocksOverview', `${stocksOverviewStr}`);
      
@@ -130,7 +130,15 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
-        wk: 1234 
+        wk: 1,
+        wk2: 2,
+        mon: 4,
+        mon3: 13,
+        mon6: 26,
+        year: 52,
+        year2: 104,
+        year5: 260,
+        year10: 520  
       };
 
       const newStocks = [...stocks, newStock];
@@ -195,8 +203,8 @@ const StockTable = (API_KEY, WARN) => {
                 if (data['Symbol'] == null)
                   console.log ('data Symbol missing');
                 else if (`${chartSymbol}` != null && data['Symbol'] != null) {
-                  const dataStr = JSON.stringify(data);
-                  localStorage.setItem(`${symbol}_overview`, `${dataStr}`);
+                  // const dataStr = JSON.stringify(data);
+                  // localStorage.setItem(`${symbol}_overview`, `${dataStr}`);
                   handleCallBackForOverview (data);
                 }
                 else
@@ -274,7 +282,7 @@ const StockTable = (API_KEY, WARN) => {
           <button type="submit"> Add</button>
         </form>
         <div>
-          <StockChart StockSymbol = {chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} S_WARN = 'Alpha' /> 
+          <StockChart StockSymbol = {chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
         </div>
       </div>
     ) 
