@@ -21,16 +21,22 @@ class StockChart extends React.Component {
 
     fetchStock() {
         const pointerToThis = this;
-        const callBack = this.props.callBack; 
+        const callBack = this.props.callBack;
+        const callBackToGetSymbol = this.props.symbolCallBack;
         const API_KEY = this.props["API_KEY"];
         const API_KEY_ = 'BC9UV9YUBWM3KQGF';
         //const StockSymbol = this.props.StockSymbol;
-        console.log (`StockSymbol ${this.props["StockSymbol"]}`);
+        console.log (`StockSymbol (${this.props["StockSymbol"]})`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
 
 
         let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
+
+        if (this.props.StockSymbol == null) {
+            console.log (`Invalid symbol  (${this.props.StockSymbol})  `);
+            return null;            
+        }
 
         let stockChartXValuesFunction = [];
         let stockChartYValuesFunction = [];
@@ -47,12 +53,14 @@ class StockChart extends React.Component {
             .then(
                 (data) => {
                     const dataStr = JSON.stringify(data);
-                    this.state.stocksChartHistory[`${this.props.StockSymbol}`] = data;
+                    this.state.stocksChartHistory[this.props.StockSymbol] = data;
                     const stocksHistoryStr = JSON.stringify(this.state.stocksChartHistory); 
                     localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
 
-                    if (dataStr.indexOf ('Invalid API call. ') !== -1)
-                        console.log (`Invalid API_Call ${API_Call}`);    
+                    if (dataStr.indexOf ('Invalid API call. ') !== -1) {
+                        console.log (`Invalid API_Call symbol=(${this.props.StockSymbol}) ${API_Call} `);
+                        return;
+                    } 
                     console.log (dataStr.substr(0, 230));
                     // if (`${this.props.StockSymbol}` !== null && data !== null) {
                     //     //this.recordedHist.setState ({StockSymbol}, data);
@@ -125,16 +133,16 @@ class StockChart extends React.Component {
                     histArray.push (num);
 
                     // send historical value back to caller
-                    callBack (`${histArray}`, `${this.props.StockSymbol}`);
+                    callBack (histArray, this.props.StockSymbol);
                     //console.log (histArray);
                 }
             )
     }
 
     render() {
-        if (this.props.StockSymbol == null) {
-            console.log (`Invalid StockSymbol ${this.props.StockSymbol}`);
-           return null;
+        if (this.props.StockSymbol === null) {
+            console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
+            return null;
         }
         return (
           <div>
