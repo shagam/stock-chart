@@ -66,7 +66,12 @@ class StockChart extends React.Component {
                         stockChartXValuesFunction.push(key);
                         stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
                     }
-                   
+                    pointerToThis.setState({
+                        stockChartXValues: stockChartXValuesFunction,
+                        stockChartYValues: stockChartYValuesFunction
+                    });
+
+                    // build histArray to be sent to table, and hist to be displayed with chart
                     var histArray = [];
                     this.setState ({histStr: ""});
                     var num;
@@ -122,10 +127,6 @@ class StockChart extends React.Component {
                     // send historical value back to caller
                     callBack (`${histArray}`, `${this.props.StockSymbol}`);
                     //console.log (histArray);
-                    pointerToThis.setState({
-                        stockChartXValues: stockChartXValuesFunction,
-                        stockChartYValues: stockChartYValuesFunction
-                    });
                 }
             )
     }
