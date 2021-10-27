@@ -38,6 +38,10 @@ const StockTable = (API_KEY, WARN) => {
     const handleCallBackForHistory = (childData, sym) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
       const index = stocks.findIndex((stock)=> stock.symbol === sym);
+      if (index === -1) {
+        console.log (`invald chartSymbol (${sym})` );
+        return chartSymbol;
+      }
       const newStock = {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
@@ -73,7 +77,7 @@ const StockTable = (API_KEY, WARN) => {
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
-      //console.log (stocks);      
+      console.log (`Symbol (${symbol}) index (${index})`);      
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
@@ -94,18 +98,18 @@ const StockTable = (API_KEY, WARN) => {
         year10: stocks[index].year10  
       };
 
-      //console.log (stocks[stocks.length - 1]);
+      //console.log (stocks[index]);
       const newStocks = [...stocks];
       newStocks.splice(index, 1, newStock);
       //const newStocks__ = [...newStocks, newStock];
       setStocks(newStocks); 
+      //console.log (stocks[index]);
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', stocksStr);
 
       stocksOverview [symbol] = childData;
       const stocksOverviewStr = JSON.stringify(stocksOverview);
       localStorage.setItem('stocksOverview', stocksOverviewStr);
-     
      }
 
     // two handlers for adding new symbol
@@ -199,21 +203,18 @@ const StockTable = (API_KEY, WARN) => {
                   const dataStr = JSON.stringify(data);
                   console.log(dataStr.substring(0, 200));
                   const index =  (dataStr.search('API call frequency'))
-                  if (index > 0) {
+                  if (index !== -1) {
                     console.log (`Alphvantage too frequent calls ${index}`);
                     return;
                   }
+
+                if (data['Symbol'] == null) {
+                  console.log ('data Symbol missing');
+                  return;
                 }
 
-                if (data['Symbol'] == null)
-                  console.log ('data Symbol missing');
-                else if (`${chartSymbol}` != null && data['Symbol'] != null) {
-                  // const dataStr = JSON.stringify(data);
-                  // localStorage.setItem(`${symbol}_overview`, `${dataStr}`);
                   handleCallBackForOverview (data);
                 }
-                else
-                    console.log ('fetch no data');
             }
         )
        }
