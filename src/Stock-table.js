@@ -22,8 +22,6 @@ const StockTable = (API_KEY, WARN) => {
     const [stocksHistory, setStocksHistory] = useState({});
     const [stocksOverview, setStocksOverview] = useState({});
 
-
-    //console.log(`${data1}`);
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0, BETA: 0,      
       wk: 1234, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
@@ -33,7 +31,7 @@ const StockTable = (API_KEY, WARN) => {
       const date = new Date();
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
     }
-
+ 
     // enter history values into table
     const handleCallBackForHistory = (childData, sym) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
@@ -73,7 +71,7 @@ const StockTable = (API_KEY, WARN) => {
       localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
 
-    const handleCallBackForOverview = (childData)  => {
+    const handleOverview = (childData)  => {
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
@@ -213,7 +211,7 @@ const StockTable = (API_KEY, WARN) => {
                   return;
                 }
 
-                  handleCallBackForOverview (data);
+                  handleOverview (data);
                 }
             }
         )
@@ -223,7 +221,7 @@ const StockTable = (API_KEY, WARN) => {
     return (
       <div className="App-continer">
         <div>
-        <h4> chartSymbol {chartSymbol}</h4>
+        {/* <h4> chartSymbol {chartSymbol}</h4> */}
         </div>
         <table>
           <thead>
@@ -276,13 +274,13 @@ const StockTable = (API_KEY, WARN) => {
            ))}
          </tbody>
         </table>
-        <h3>Add stock symbol</h3>
+        {/* <h3>Add stock symbol</h3> */}
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
             required="requird"
-            placeholder="enter stock symbol..."
+            placeholder="enter stock symbol to add ..."
             onChange={handleAddFormChange}
           />
           <button type="submit"> Add</button>
