@@ -71,50 +71,50 @@ class StockChart extends React.Component {
                     this.setState ({histStr: ""});
                     var num;
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     this.setState ({histStr: this.state.histStr + " 1w (" + num + ")  "});
                     histArray.push (num);
                     
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[2];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     this.setState ({histStr: this.state.histStr + " 2w (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[4];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     this.setState ({histStr: this.state.histStr + " m (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[13];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     this.setState ({histStr: this.state.histStr + " 3m (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[26];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     this.setState ({histStr: this.state.histStr + " 6m (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[52];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     if (num !== 'NaN')                    
                     this.setState ({histStr: this.state.histStr + " y (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[104];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     if (num !== 'NaN')
                     this.setState ({histStr: this.state.histStr + " 2y (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[260];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     if (num !== 'NaN')                    
                     this.setState ({histStr: this.state.histStr + " 5y (" + num + ")  "});
                     histArray.push (num);
 
                     num = stockChartYValuesFunction[0] / stockChartYValuesFunction[520];
-                    num = num.toFixed(3);
+                    num = num.toFixed(2);
                     if (num !== 'NaN')
                     this.setState ({histStr: this.state.histStr + " 10y (" + num + ")"});
                     histArray.push (num);
