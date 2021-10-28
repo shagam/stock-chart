@@ -24,7 +24,7 @@ const StockTable = (API_KEY, WARN) => {
 
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0, BETA: 0,      
-      wk: 1234, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
+      gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
     function getDate() {
@@ -49,6 +49,7 @@ const StockTable = (API_KEY, WARN) => {
         PE: stocks[index].PE,
         PEG: stocks[index].PEG,
         BETA: stocks[index].BETA,
+        // gap
         wk: childData[0], //stocks[index].wk,
         wk2: childData[1], //stocks[index].wk2,
         mon: childData[2], //stocks[index].mon,
@@ -85,6 +86,7 @@ const StockTable = (API_KEY, WARN) => {
         PE: childData["PERatio"],
         PEG: childData["PEGRatio"],
         BETA: childData["Beta"],
+        // gap
         wk: stocks[index].wk,
         wk2: stocks[index].wk2,
         mon: stocks[index].mon,
@@ -234,7 +236,8 @@ const StockTable = (API_KEY, WARN) => {
               <th>Price</th> */}
               <th>PE</th>
               <th>PEG</th>
-              <th>BETA</th>              
+              <th>BETA</th>
+              <th>gap</th> 
               <th>wk</th>
               <th>2wk</th>
               <th>mon</th>
@@ -261,6 +264,7 @@ const StockTable = (API_KEY, WARN) => {
                 <td>{stock.PE}</td>
                 <td>{stock.PEG}</td>
                 <td>{stock.BETA}</td>                
+                <td></td>
                 <td>{stock.wk}</td>
                 <td>{stock.wk2}</td>
                 <td>{stock.mon}</td>
