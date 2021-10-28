@@ -237,6 +237,13 @@ const StockTable = (API_KEY, WARN) => {
         )
        }
       }
+  
+      const conditionalChart = () => {
+        if ((chartSymbol != ""))
+          return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
+          else
+            return null;
+      }
 
     return (
       <div className="App-continer">
@@ -307,9 +314,10 @@ const StockTable = (API_KEY, WARN) => {
           />
           <button type="submit"> Add</button>
         </form>
-        <div>
-          <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
-        </div>
+          {conditionalChart()}
+
+          {/* <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' />  */}
+
       </div>
     ) 
 }
