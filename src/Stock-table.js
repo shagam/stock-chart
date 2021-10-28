@@ -10,10 +10,6 @@ import StockChart from "./StockChart";
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
 const StockTable = (API_KEY, WARN) => { 
-    //const date = new Date();
-    //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-  
-    console.log (Date().valueOf(), " ", Date.now());
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
