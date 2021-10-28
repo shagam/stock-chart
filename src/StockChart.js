@@ -25,6 +25,8 @@ class StockChart extends React.Component {
         const callBackToGetSymbol = this.props.symbolCallBack;
         const API_KEY = this.props["API_KEY"];
         const API_KEY_ = 'BC9UV9YUBWM3KQGF';
+        const chartSymbolCount = this.props.chartSymbolCount;
+
         //const StockSymbol = this.props.StockSymbol;
         console.log (`StockSymbol (${this.props["StockSymbol"]})`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -144,13 +146,13 @@ class StockChart extends React.Component {
     }
 
     render() {
-        // if (this.props.StockSymbol === null) {
-        //     console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
-        //     return null;
-        // }
+        if (this.props.StockSymbol == "") {
+            console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
+            return null;
+        }
         return (
           <div>
-            <h4> historical_gain({this.props.StockSymbol}): {this.state.histStr} </h4>
+            <h4> clickCount: ({this.props.chartSymbolCount}), historical_gain({this.props.StockSymbol}): {this.state.histStr}  </h4>
             <Plot
               data={[
                 {
