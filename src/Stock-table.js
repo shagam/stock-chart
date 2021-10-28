@@ -13,18 +13,23 @@ const StockTable = (API_KEY, WARN) => {
     //const date = new Date();
     //let date1 = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
   
+    console.log (Date().valueOf(), " ", Date.now());
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "goog"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
+    
     const [stocksHistory, setStocksHistory] = useState({});
+    const [stocksHistoryMili, setStocksHistoryMili] = useState({});
+
     const [stocksOverview, setStocksOverview] = useState({});
+    const [stocksOverviewMili, setStocksOverviewMili] = useState({});
 
     const [addFormData, setAddFormData] = useState({
-      symbol: '', update: '', Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0, BETA: 0,      
-      gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
+      symbol: '', update: '', now: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
+       BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
     const isEmpty = (str) => {
@@ -51,6 +56,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
+        now: Date.now(),
         Exchange: stocks[index].Exchange,
         // Sector: stocks[index].Sector,
         // lastPrice: stocks[index].lastPrice,
@@ -88,6 +94,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
+        now: Date.now(),
         Exchange: childData["Exchange"],
         // Sector: childData["Sector"],
         // lastPrice: stocks[index].lastPrice,
@@ -115,9 +122,15 @@ const StockTable = (API_KEY, WARN) => {
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', stocksStr);
 
+      // save overview per symbol
       stocksOverview [symbol] = childData;
       const stocksOverviewStr = JSON.stringify(stocksOverview);
       localStorage.setItem('stocksOverview', stocksOverviewStr);
+
+      // save time of overview
+      stocksOverviewMili [symbol] = Date.now();
+      const stocksOverviewMiliStr = JSON.stringify(stocksOverviewMili);
+      localStorage.setItem('stocksOverviewMili', stocksOverviewMiliStr);      
      }
 
     // two handlers for adding new symbol
@@ -143,6 +156,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
+        now: Date.now(),
         //lastPrice: -1,
         wk: 1,
         wk2: 2,
