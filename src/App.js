@@ -26,7 +26,7 @@ function App() {
   const ALPHA_WARNING = 'Alpha Vantage! Our standard API call frequency is 5 calls per minute and 500 calls per day';
   
   //const StockSymbol = window.$StockSymbol;
-  const StockSymbol = localStorage.getItem('StockChart');
+  const StockSymbol = localStorage.getItem('chartSymbol');
   const API_KEY='C542IZRPH683PFNZ';  
   //let url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${StockSymbol}&apikey=${API_KEY}`
   //const date = new Date();
