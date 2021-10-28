@@ -27,6 +27,14 @@ const StockTable = (API_KEY, WARN) => {
       gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
+    const isEmpty = (str) => {
+      if (str == null)
+          return true;
+      if (str === "")
+          return true;
+      return false;
+    }
+
     function getDate() {
       const date = new Date();
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
@@ -66,7 +74,7 @@ const StockTable = (API_KEY, WARN) => {
       setStocks(newStocks); 
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
-      if (chartSymbol !== null)
+      if (! isEmpty (chartSymbol))
         stocksHistory [chartSymbol] = childData;
       const stocksHistoryStr = JSON.stringify(stocksHistory);
       localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
@@ -181,8 +189,8 @@ const StockTable = (API_KEY, WARN) => {
 
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
     
-    if (`${chartSymbol}` == null)
-      console.log('chartSymbol == null');
+    if (isEmpty(chartSymbol))
+      console.log(`chartSymbol undef (${chartSymbol})`);
     else {
     fetch(API_Call)
         .then(
@@ -197,8 +205,8 @@ const StockTable = (API_KEY, WARN) => {
         )
         .then(
             function (data) {
-              if (`${chartSymbol}` == null)
-              console.log ('chartSymbol null');
+              if (isEmpty (chartSymbol))
+                console.log(`chartSymbol undef (${chartSymbol})`);
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   console.log(dataStr.substring(0, 200));
@@ -208,8 +216,8 @@ const StockTable = (API_KEY, WARN) => {
                     return;
                   }
 
-                if (data['Symbol'] == null) {
-                  console.log ('data Symbol missing');
+                if (isEmpty (data['Symbol'])) {
+                  console.log(`Symbol undef (${data['Symbol']})`);                  
                   return;
                 }
 
