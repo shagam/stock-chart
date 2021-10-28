@@ -33,8 +33,16 @@ class StockChart extends React.Component {
 
         let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
 
-        if (this.props.StockSymbol == null) {
-            console.log (`Invalid symbol  (${this.props.StockSymbol})  `);
+        const isEmpty = (str) => {
+            if (str == null)
+                return true;
+            if (str === "")
+                return true;
+            return false;
+        }
+
+        if (isEmpty (this.props.StockSymbol)) {
+            console.log (`undef symbol  (${this.props.StockSymbol})  `);
             return null;            
         }
 
@@ -62,11 +70,7 @@ class StockChart extends React.Component {
                         return;
                     } 
                     console.log (dataStr.substr(0, 230));
-                    // if (`${this.props.StockSymbol}` !== null && data !== null) {
-                    //     //this.recordedHist.setState ({StockSymbol}, data);
-                    //     localStorage.setItem (`${this.props.StockSymbol}_priceHistory`, dataStr);
-                    // }
-
+       
                     //let periodTag = 'Time Series (Daily)';
                     let periodTag = 'Weekly Adjusted Time Series';
                     //let periodTag = 'Monthly Adjusted Time Series';
@@ -140,10 +144,10 @@ class StockChart extends React.Component {
     }
 
     render() {
-        if (this.props.StockSymbol === null) {
-            console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
-            return null;
-        }
+        // if (this.props.StockSymbol === null) {
+        //     console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
+        //     return null;
+        // }
         return (
           <div>
             <h4> historical_gain({this.props.StockSymbol}): {this.state.histStr} </h4>
