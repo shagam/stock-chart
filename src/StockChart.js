@@ -13,9 +13,11 @@ class StockChart extends React.Component {
             stocksChartHistory: {},
             histStr: ""
         }
+        console.log ('constructor');
     }
 
     componentDidMount() {
+        console.log ('componentDidMount');
         this.fetchStock();
     }
 
@@ -25,7 +27,6 @@ class StockChart extends React.Component {
         const callBackToGetSymbol = this.props.symbolCallBack;
         const API_KEY = this.props["API_KEY"];
         const API_KEY_ = 'BC9UV9YUBWM3KQGF';
-        const chartSymbolCount = this.props.chartSymbolCount;
 
         //const StockSymbol = this.props.StockSymbol;
         console.log (`StockSymbol (${this.props["StockSymbol"]})`);
@@ -146,13 +147,14 @@ class StockChart extends React.Component {
     }
 
     render() {
-        if (this.props.StockSymbol == "") {
+        console.log ('render');
+        if (this.props.StockSymbol === "") {
             console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
-            return null;
+            //return null;
         }
         return (
           <div>
-            <h4> clickCount: ({this.props.chartSymbolCount}), historical_gain({this.props.StockSymbol}): {this.state.histStr}  </h4>
+            <h4>  historical_gain({this.props.StockSymbol}): {this.state.histStr}  </h4>
             <Plot
               data={[
                 {
