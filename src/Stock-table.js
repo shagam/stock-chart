@@ -3,9 +3,11 @@ import React, {useState, useEffect} from 'react';
 import './App.css';
 import './react-tables.css';
 import data from "./mock-data.json";
-import Overview from "./Overview.js";
-
+//import Overview from "./Overview.js";
+import {useTable, useSortBy} from 'react-table'
+//import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
+import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
@@ -145,7 +147,7 @@ const StockTable = (API_KEY, WARN) => {
 
       const index = stocks.findIndex((stock)=> stock.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
       if (index !== -1) {
-        console.log ('Duplicate symbol: ' + addFormData.symbol);
+        alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
         return;
       }
 
@@ -219,9 +221,10 @@ const StockTable = (API_KEY, WARN) => {
                 console.log(`chartSymbol undef (${chartSymbol})`);
               if (data != null) {
                   const dataStr = JSON.stringify(data);
-                  console.log(dataStr.substring(0, 200));
+                  //console.log(dataStr.substring(0, 200));
                   const index =  (dataStr.search('API call frequency'))
                   if (index !== -1) {
+                    alert (dataStr);
                     console.log (`Alphvantage too frequent calls ${index}`);
                     return;
                   }
