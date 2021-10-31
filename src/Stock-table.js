@@ -205,8 +205,8 @@ const StockTable = (API_KEY, WARN) => {
 
     if (isEmpty(chartSymbol))
       console.log(`chartSymbol undef (${chartSymbol})`);
-    else if (Date.now() - stocks[index].now < 1000 * 3600)
-      console.log ("Overview info still relevant (" + `${symbol})`);
+    else if (Date.now() - stocks[index].now < 1000 * 3600)  // is overview info older than an hour
+      console.log ("Overview info still fresh (less than an hour old) (" + `${symbol})`);
     else {
     fetch(API_Call)
         .then(
