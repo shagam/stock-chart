@@ -145,7 +145,7 @@ const StockTable = (API_KEY, WARN) => {
     const handleAddFormSubmit = (event) => {
       event.preventDefault();
 
-      const index = stocks.findIndex((stock)=> stock.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
+      const index = stocks.findIndex((stock)=> stock.symbol === addFormData.symbol);
       if (index !== -1) {
         alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
         return;
@@ -201,8 +201,12 @@ const StockTable = (API_KEY, WARN) => {
 
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
     
+    const index = stocks.findIndex((stock)=> stock.symbol === symbol)
+
     if (isEmpty(chartSymbol))
       console.log(`chartSymbol undef (${chartSymbol})`);
+    else if (Date.now() - stocks[index].now < 1000 * 3600)
+      console.log ("Overview info still relevant (" + `${symbol})`);
     else {
     fetch(API_Call)
         .then(
