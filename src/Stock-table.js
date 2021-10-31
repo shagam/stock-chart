@@ -222,7 +222,7 @@ const StockTable = (API_KEY, WARN) => {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   //console.log(dataStr.substring(0, 200));
-                  const index =  (dataStr.search('API call frequency'))
+                  const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
                     alert (dataStr);
                     console.log (`Alphvantage too frequent calls ${index}`);
