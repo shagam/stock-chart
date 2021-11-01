@@ -13,7 +13,7 @@ class StockChart extends React.Component {
             stocksChartHistory: {},
             histStr: ""
         }
-        console.log ('constructor', this.props.StockSymbol);
+        console.log ('constructor ', this.props.StockSymbol);
     }
 
     componentDidMount() {
@@ -67,9 +67,9 @@ class StockChart extends React.Component {
                     this.state.stocksChartHistory[this.props.StockSymbol] = data;
                     const stocksHistoryStr = JSON.stringify(this.state.stocksChartHistory); 
                     localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
-
-                    if (dataStr.indexOf ('Invalid API call. ') !== -1) {
-                        console.log (`Invalid API_Call symbol=(${this.props.StockSymbol}) ${API_Call} `);
+                    // too frequent AlphaVantage api calls
+                    if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
+                        alert (`${dataStr} (${this.props.StockSymbol}) ${API_Call} `);
                         return;
                     } 
                     console.log (dataStr.substr(0, 230));
