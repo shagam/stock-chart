@@ -7,6 +7,8 @@ import data from "./mock-data.json";
 import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
+import Dummy from "./dummy"
+
 import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
@@ -206,7 +208,7 @@ const StockTable = (API_KEY, WARN) => {
     if (isEmpty(chartSymbol))
       console.log(`chartSymbol undef (${chartSymbol})`);
     else if (Date.now() - stocks[index].now < 1000 * 3600)  // is overview info older than an hour
-      console.log ("Overview info still fresh (less than an hour old) (" + `${symbol})`);
+      alert ("Overview info still fresh (less than an hour old) (" + `${symbol})`);
     else {
     fetch(API_Call)
         .then(
@@ -246,6 +248,13 @@ const StockTable = (API_KEY, WARN) => {
       const conditionalChart = () => {
         if ((chartSymbol != ""))
           return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
+          else
+            return null;
+      }
+
+      const conditionalDummy = () => {
+        if ((chartSymbol != ""))
+          return         <Dummy StockSymbol ={chartSymbol}  /> 
           else
             return null;
       }
