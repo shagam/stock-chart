@@ -156,7 +156,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
-        now: Date.now(),
+        //now: Date.now(),
         //lastPrice: -1,
         wk: 1,
         wk2: 2,
