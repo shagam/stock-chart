@@ -147,7 +147,8 @@ const StockTable = (API_KEY, WARN) => {
     const handleAddFormSubmit = (event) => {
       event.preventDefault();
 
-      const index = stocks.findIndex((stock)=> stock.symbol === addFormData.symbol);
+      const index = stocks.findIndex((stock)=> stock.symbol === addFormData.symbol.toUpperCase());
+      console.log (addFormData.symbol)
       if (index !== -1) {
         alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
         return;
