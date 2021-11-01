@@ -287,8 +287,8 @@ const StockTable = (API_KEY, WARN) => {
               <tr>            
                 <td>{stock.symbol}</td>
                 <td>
-                  <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>delete</button>
-                  <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
+                  <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>del</button>
+                  <button type="button" onClick={()=>handleChartClick(stock.symbol)}>info</button>
                 </td>
                 <td>{stock.update}</td>
                 <td>{stock.Exchange}</td>
