@@ -1,3 +1,4 @@
+@typescript-eslint/no-unused-vars
 import React, {useState, useEffect} from 'react';
 //import { nanoid } from 'nanoid';
 import './App.css';
@@ -210,6 +211,7 @@ const StockTable = (API_KEY, WARN) => {
     else if (Date.now() - stocks[index].now < 1000 * 3600)  // is overview info older than an hour
       alert ("Overview info still fresh (less than an hour old) (" + `${symbol})`);
     else {
+      console.log(`Overview info (${chartSymbol})`);      
     fetch(API_Call)
         .then(
             function(response) {
