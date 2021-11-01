@@ -7,30 +7,35 @@ class AlphaVantage extends Component {
         this.state = {
             id: ''
         }
+        console.log('AlphaVantage constructor');
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
-        const data = this.state
-        console.log("final data is: ", data);
+        this.setState({
+            id: event.target.value
+        })
+        console.log("final data is: ", this.state.id);
     }
 
     handleInputChange = (event) => {
         event.preventDefault();
-        console.log(event);
-        console.log(event.target.name + " " + event.target.value);
+        // console.log(event);
+        // console.log(event.target.name + " " + event.target.value);
         this.setState({
             id: event.target.value
         })
     }
 
     componentDidMount(event) {
+        console.log('AlphaVantage componentDidMount');
         this.setState({
             //[event.target.name]: event.target.value            
             //id: ''//'C542IZRPH683PFNZ'
         })
     }
     render () {
+        console.log('AlphaVantage render');
         const {name: id} = this.state;
         return (
             <div>
