@@ -13,7 +13,7 @@ class StockChart extends React.Component {
             stocksChartHistory: {},
             histStr: ""
         }
-        console.log ('constructor');
+        console.log ('constructor', this.props.StockSymbol);
     }
 
     componentDidMount() {
@@ -28,7 +28,7 @@ class StockChart extends React.Component {
         const API_KEY = this.props["API_KEY"];
         const API_KEY_ = 'BC9UV9YUBWM3KQGF';
 
-        //const StockSymbol = this.props.StockSymbol;
+        const StockSymbol = this.props.StockSymbol;
         console.log (`StockSymbol (${this.props["StockSymbol"]})`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
