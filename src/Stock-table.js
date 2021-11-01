@@ -1,4 +1,4 @@
-@typescript-eslint/no-unused-vars
+
 import React, {useState, useEffect} from 'react';
 //import { nanoid } from 'nanoid';
 import './App.css';
@@ -8,7 +8,6 @@ import data from "./mock-data.json";
 import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
-import Dummy from "./dummy"
 
 import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
@@ -208,8 +207,8 @@ const StockTable = (API_KEY, WARN) => {
 
     if (isEmpty(chartSymbol))
       console.log(`chartSymbol undef (${chartSymbol})`);
-    else if (Date.now() - stocks[index].now < 1000 * 3600)  // is overview info older than an hour
-      alert ("Overview info still fresh (less than an hour old) (" + `${symbol})`);
+    else if (Date.now() - stocks[index].now < 1000 * 10)  // is overview info older than an hour
+      alert ("Overview info still fresh (less than ten sec old) (" + `${symbol})`);
     else {
       console.log(`Overview info (${chartSymbol})`);      
     fetch(API_Call)
@@ -250,13 +249,6 @@ const StockTable = (API_KEY, WARN) => {
       const conditionalChart = () => {
         if ((chartSymbol != ""))
           return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
-          else
-            return null;
-      }
-
-      const conditionalDummy = () => {
-        if ((chartSymbol != ""))
-          return         <Dummy StockSymbol ={chartSymbol}  /> 
           else
             return null;
       }
