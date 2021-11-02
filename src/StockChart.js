@@ -28,7 +28,6 @@ class StockChart extends React.Component {
         const API_KEY = this.props["API_KEY"];
         const API_KEY_ = 'BC9UV9YUBWM3KQGF';
 
-        const StockSymbol = this.props.StockSymbol;
         console.log (`StockSymbol (${this.props["StockSymbol"]})`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
@@ -166,7 +165,7 @@ class StockChart extends React.Component {
                  },
 
               ]}
-              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
+              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.state.StockSymbol }}
             />
           </div>
         );
