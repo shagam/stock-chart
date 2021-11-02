@@ -25,3 +25,5 @@ table th {
     background-color: #4caf50;
     color: white;
 }
+
+thead th { position: sticky; top: 0; }
