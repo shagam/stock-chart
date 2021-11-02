@@ -148,7 +148,7 @@ const StockTable = (API_KEY, WARN) => {
       event.preventDefault();
 
       const index = stocks.findIndex((stock)=> stock.symbol === addFormData.symbol.toUpperCase());
-      console.log (addFormData.symbol)
+      //console.log (addFormData.symbol)
       if (index !== -1) {
         alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
         return;
@@ -255,11 +255,10 @@ const StockTable = (API_KEY, WARN) => {
       }
 
     return (
-      <div className="App-continer">
-        <div>
+      <div class="App-container">
+        <div class="tbl">
         {/* <h4> chartSymbol {chartSymbol}</h4> */}
-        </div>
-        <table>
+        <table class="stickyHead">
           <thead>
             <tr>
               <th>symbol</th>
@@ -313,12 +312,13 @@ const StockTable = (API_KEY, WARN) => {
            ))}
          </tbody>
         </table>
+        </div>
         {/* <h3>Add stock symbol</h3> */}
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
-            required="requird"
+            required="required"
             placeholder="enter stock symbol to add ..."
             onChange={handleAddFormChange}
           />

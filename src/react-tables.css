@@ -27,3 +27,7 @@ table th {
     position: sticky; top: 0;
 }
 
+div.tbl {
+  height: 450px;
+  overflow-y: auto;
+}
