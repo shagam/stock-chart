@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 //import { nanoid } from 'nanoid';
 import './App.css';
 import './react-tables.css';
@@ -8,6 +8,7 @@ import data from "./mock-data.json";
 import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
+import Stock_chart from "./Stock-chart";
 
 import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
@@ -44,6 +45,7 @@ const StockTable = (API_KEY, WARN) => {
       const date = new Date();
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
     }
+    //console.log (React.version);
  
     // enter history values into table
     const handleCallBackForHistory = (childData, sym) => {
