@@ -28,7 +28,7 @@ const StockTable = (API_KEY, WARN) => {
     const [stocksOverviewMili, setStocksOverviewMili] = useState({});
 
     const [addFormData, setAddFormData] = useState({
-      symbol: '', update: '', now: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
+      symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
        BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
 
@@ -56,7 +56,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
-        now: Date.now(),
+        nowHist: Date.now(),
         Exchange: stocks[index].Exchange,
         // Sector: stocks[index].Sector,
         // lastPrice: stocks[index].lastPrice,
@@ -94,7 +94,7 @@ const StockTable = (API_KEY, WARN) => {
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
-        now: Date.now(),
+        nowOverview: Date.now(),
         Exchange: childData["Exchange"],
         // Sector: childData["Sector"],
         // lastPrice: stocks[index].lastPrice,
@@ -283,6 +283,7 @@ const StockTable = (API_KEY, WARN) => {
               <th>10year</th>            
             </tr>
           </thead>
+
           <tbody>
             {stocks.map((stock) => (
               <tr>            
