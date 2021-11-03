@@ -1,53 +1,50 @@
-import React, { Component } from 'react'
-import './App.css';
+import React, {useState} from 'react';
+// import './App.css';
+import './alphaVantage.css'
 
-class AlphaVantage extends Component {
-    constructor (props) {
-        super(props)
-        this.state = {
-            id: ''
-        }
-        console.log('AlphaVantage constructor');
-    }
 
-    handleSubmit = (event) => {
+const  AlphaVantage = (alphaCallBack) => { 
+    var aleph = localStorage.getItem('alphVAntage');
+    const [alpha, setAlpha] = useState(aleph);
+    console.log(`AlphaVantage localStorage ${alpha}`); 
+
+    const handleAddFormChange = (event) => {
         event.preventDefault();
-        this.setState({
-            id: event.target.value
-        })
-        console.log("final data is: ", this.state.id);
-    }
+        const fieldName = event.target.getAttribute("name");
+        const fieldValue = event.target.value;
 
-    handleInputChange = (event) => {
-        event.preventDefault();
         // console.log(event);
-        // console.log(event.target.name + " " + event.target.value);
-        this.setState({
-            id: event.target.value
-        })
+        console.log(event.target.name + " " + event.target.value);
+        setAlpha (event.target.value);
     }
 
-    componentDidMount(event) {
-        console.log('AlphaVantage componentDidMount');
-        this.setState({
-            //[event.target.name]: event.target.value            
-            //id: ''//'C542IZRPH683PFNZ'
-        })
+    const handleAddFormSubmit = (event) => {
+        event.preventDefault();
+        setAlpha(event.target.value);
+        console.log("final data is: ", alpha);
+        localStorage.setItem('alphVAntage', `${alpha}`);
+        alphaCallBack (alpha);
+
     }
-    render () {
-        console.log('AlphaVantage render');
-        const {name: id} = this.state;
-        return (
-            <div>
-            <p>Enter id (get from www.alphavantage.co): {id} </p>
-            <form onSubmit = {this.handleSubmit}>
-                <input type='text' name='id' placeholder='enter alpha vintage id ...'
-                        onChange={this.handleInputChange} value={this.state.id} />
-               <button type="submit"> Enter </button>
-            </form>
-            </div>
-        )
-    }
+
+    //console.log('AlphaVantage render');
+
+    return (
+      <div class = 'alpha'>
+        <label for='test'> Enter id (get from www.alphavantage.co): {alpha} </label>
+        <form onSubmit = {handleAddFormSubmit}>
+          <input
+            type="text"
+            name="symbol"
+            required="required"
+            placeholder="enter stock symbol to add ..."
+            onChange={handleAddFormChange}
+          />
+          <button type="submit"> Add</button>
+        </form>
+
+      </div>
+    )
 }
 
 export default AlphaVantage

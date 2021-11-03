@@ -326,7 +326,8 @@ const StockTable = (API_KEY) => {
           />
           <button type="submit"> Add</button>
         </form>
-          {conditionalChart()}
+
+        {conditionalChart()}
       </div>
     ) 
 }

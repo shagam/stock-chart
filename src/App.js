@@ -27,15 +27,20 @@ function App() {
  
   //const StockSymbol = window.$StockSymbol;
   const StockSymbol = localStorage.getItem('chartSymbol');
-  const API_KEY='C542IZRPH683PFNZ';  
-
-
+  const API_KEY = localStorage.getItem('alphvantage');
+  if (API_KEY === "")
+    API_KEY='C542IZRPH683PFNZ';  
 
 const handleCallBack = (childData) => {
   //this.setState({msg: childData})
   console.log (childData);
   // console.log (childData["Symbol"], childData["Exchange"], childData["Sector"], childData["EPS"],
   // childData["PERatio"], childData["PEGRatio"], childData["Beta"], childData["MarketCapitalization"]);
+}
+
+const alphaCallBack = (key) => {
+  API_KEY = key;
+  console.log ('callBack API_KEY: ' + `${API_KEY}`);
 }
 
   return (
@@ -47,7 +52,7 @@ const handleCallBack = (childData) => {
          {/* <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} callBack = {handleCallBack}  /> */}
       </div>      
       <div>
-        {/* <AlphaVantage/> */}
+        <AlphaVantage alphaCallBack = {alphaCallBack} />
       </div>
 
     </div>
