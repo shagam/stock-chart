@@ -34,3 +34,23 @@ div.tbl {
   height: 55vh;
   overflow-y: auto;
 }
+
+label {
+  display: block;
+  padding-top: 1px;
+  padding-left: 15px;
+  text-indent: -15px;
+  float: left;
+  margin-right: 30px;
+}
+
+/* div.alpha {
+  padding-top: 20px;
+  display: inline;
+  padding: 0px;
+} */
+
+form {
+  padding-top: 10px;
+}
+
