@@ -16,7 +16,7 @@ table td, tble th {
 
 table tr:nth-child(even){background-color: #e2e2e2;}
 
-table tr:hover {background-color: #ddd;}
+table tr:hover {background-color: #ccc;}
 
 table th {
     padding-top: 12px;
