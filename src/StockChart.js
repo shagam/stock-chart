@@ -165,7 +165,7 @@ class StockChart extends React.Component {
                  },
 
               ]}
-              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.state.StockSymbol }}
+              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
             />
           </div>
         );
