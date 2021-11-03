@@ -23,8 +23,7 @@ const  AlphaVantage = (alphaCallBack) => {
         setAlpha(event.target.value);
         console.log("final data is: ", alpha);
         localStorage.setItem('alphVAntage', `${alpha}`);
-        alphaCallBack (alpha);
-
+        //alphaCallBack (alpha);
     }
 
     //console.log('AlphaVantage render');
@@ -39,6 +38,7 @@ const  AlphaVantage = (alphaCallBack) => {
             required="required"
             placeholder="enter stock symbol to add ..."
             onChange={handleAddFormChange}
+            value={alpha}
           />
           <button type="submit"> Add</button>
         </form>
