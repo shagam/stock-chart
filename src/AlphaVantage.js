@@ -36,7 +36,7 @@ const  AlphaVantage = (alphaCallBack) => {
             type="text"
             name="symbol"
             required="required"
-            placeholder="enter stock symbol to add ..."
+            placeholder="enter alphaVantage key to add ..."
             onChange={handleAddFormChange}
             value={alpha}
           />
