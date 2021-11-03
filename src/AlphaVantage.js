@@ -30,7 +30,7 @@ const  AlphaVantage = (alphaCallBack) => {
 
     return (
       <div class = 'alpha'>
-        <label for='test'> Enter id (get from www.alphavantage.co): {alpha} </label>
+        <label> Enter key (get from www.alphavantage.co): {alpha} </label>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
@@ -40,7 +40,7 @@ const  AlphaVantage = (alphaCallBack) => {
             onChange={handleAddFormChange}
             value={alpha}
           />
-          <button type="submit"> Add</button>
+          <button type="submit"> Enter</button>
         </form>
 
       </div>
