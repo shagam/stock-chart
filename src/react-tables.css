@@ -26,8 +26,11 @@ table th {
     color: white;
     position: sticky; top: 0;
 }
+/* div.App-container {
+  height: 100vh;
+} */
 
 div.tbl {
-  height: 450px;
+  height: 55vh;
   overflow-y: auto;
 }
