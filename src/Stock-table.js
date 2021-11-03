@@ -14,7 +14,7 @@ import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (API_KEY, WARN) => { 
+const StockTable = (API_KEY) => { 
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
@@ -251,7 +251,7 @@ const StockTable = (API_KEY, WARN) => {
   
       const conditionalChart = () => {
         if ((chartSymbol != ""))
-          return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' /> 
+          return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} /> 
           else
             return null;
       }
@@ -327,9 +327,6 @@ const StockTable = (API_KEY, WARN) => {
           <button type="submit"> Add</button>
         </form>
           {conditionalChart()}
-
-          {/* <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} WARN = 'Alpha' />  */}
-
       </div>
     ) 
 }
