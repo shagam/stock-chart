@@ -27,7 +27,8 @@ function App() {
  
   //const StockSymbol = window.$StockSymbol;
   const StockSymbol = localStorage.getItem('chartSymbol');
-  const API_KEY = localStorage.getItem('alphvantage');
+  var API_KEY = localStorage.getItem('alphaVantage');
+  console.log (`read API_KEY: ${API_KEY}`)
   if (API_KEY === "")
     API_KEY='C542IZRPH683PFNZ';  
 
@@ -40,7 +41,7 @@ const handleCallBack = (childData) => {
 
 const alphaCallBack = (key) => {
   API_KEY = key;
-  console.log ('callBack API_KEY: ' + `${API_KEY}`);
+  console.log (`callBack API_KEY: ${API_KEY}`);
 }
 
   return (

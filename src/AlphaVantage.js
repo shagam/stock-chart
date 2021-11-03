@@ -4,14 +4,14 @@ import './alphaVantage.css'
 
 
 const  AlphaVantage = (alphaCallBack) => { 
-    var aleph = localStorage.getItem('alphVAntage');
+    var aleph = localStorage.getItem('alphaVantage');
     const [alpha, setAlpha] = useState(aleph);
     console.log(`AlphaVantage localStorage ${alpha}`); 
 
     const handleAddFormChange = (event) => {
         event.preventDefault();
-        const fieldName = event.target.getAttribute("name");
-        const fieldValue = event.target.value;
+        // const fieldName = event.target.getAttribute("name");
+        // const fieldValue = event.target.value;
 
         // console.log(event);
         console.log(event.target.name + " " + event.target.value);
@@ -22,7 +22,7 @@ const  AlphaVantage = (alphaCallBack) => {
         event.preventDefault();
         setAlpha(event.target.value);
         console.log("final data is: ", alpha);
-        localStorage.setItem('alphVAntage', `${alpha}`);
+        localStorage.setItem('alphaVantage', `${alpha}`);
         //alphaCallBack (alpha);
     }
 

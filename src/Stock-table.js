@@ -3,14 +3,14 @@ import React, {useState} from 'react';
 //import { nanoid } from 'nanoid';
 import './App.css';
 import './react-tables.css';
-import data from "./mock-data.json";
+//import data from "./mock-data.json";
 //import Overview from "./Overview.js";
 import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
 // import Stock_chart from "./Stock-chart";
 
-import { findAllInRenderedTree } from 'react-dom/test-utils';
+//import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
@@ -46,7 +46,8 @@ const StockTable = (API_KEY) => {
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
     }
     //console.log (React.version);
- 
+      console.log (API_KEY);
+
     // enter history values into table
     const handleCallBackForHistory = (childData, sym) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
@@ -89,6 +90,7 @@ const StockTable = (API_KEY) => {
     }
 
     const handleOverview = (childData)  => {
+      console.log (JSON.stringify(childData).substring(0,200));
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
@@ -213,7 +215,8 @@ const StockTable = (API_KEY) => {
     // else if (Date.now() - stocks[index].now < 1000 * 10)  // is overview info older than an hour
     //   alert ("Overview info still fresh (less than ten sec old) (" + `${symbol})`);
     else {
-      console.log(`Overview info (${chartSymbol})`);      
+      console.log(`Overview info (${chartSymbol})`);
+    console.log (`${API_Call}`);            
     fetch(API_Call)
         .then(
             function(response) {
@@ -227,8 +230,6 @@ const StockTable = (API_KEY) => {
         )
         .then(
             function (data) {
-              if (isEmpty (chartSymbol))
-                console.log(`chartSymbol undef (${chartSymbol})`);
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
@@ -237,10 +238,10 @@ const StockTable = (API_KEY) => {
                     return;
                   }
 
-                if (isEmpty (data['Symbol'])) {
-                  console.log(`Symbol undef (${data['Symbol']})`);                  
-                  return;
-                }
+                  if (isEmpty (data['Symbol'])) {
+                    console.log(`Symbol undef (${data['Symbol']})`);                  
+                    return;
+                  }
 
                   handleOverview (data);
                 }
@@ -250,7 +251,7 @@ const StockTable = (API_KEY) => {
       }
   
       const conditionalChart = () => {
-        if ((chartSymbol != ""))
+        if ((chartSymbol !== ""))
           return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} /> 
           else
             return null;
