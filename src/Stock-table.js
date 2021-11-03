@@ -8,7 +8,7 @@ import data from "./mock-data.json";
 import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
-import Stock_chart from "./Stock-chart";
+// import Stock_chart from "./Stock-chart";
 
 import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />

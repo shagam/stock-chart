@@ -4,7 +4,7 @@ import './App.css';
 import './react-tables.css';
 import StockTable from './Stock-table';
 import StockChart from './StockChart';
-import Stock_chart from './Stock-chart';
+// import Stock_chart from './Stock-chart';
 import AlphaVantage from './AlphaVantage';
 
 //<Stock StockSymbol="IBM" API_KEY = 'C542IZRPH683PFNZ' />
