@@ -13,27 +13,28 @@ class StockChart extends React.Component {
             stocksChartHistory: {},
             histStr: ""
         }
-        console.log ('constructor ', this.props.StockSymbol);
+        console.log ('constructor ', this.props.StockSymbol, Date.now());
     }
 
     componentDidMount() {
-        console.log ('componentDidMount');
+        console.log ('componentDidMount ', this.props.StockSymbol, Date.now());
         this.fetchStock();
     }
 
     fetchStock() {
         const pointerToThis = this;
         const callBack = this.props.callBack;
-        const callBackToGetSymbol = this.props.symbolCallBack;
+        //const callBackToGetSymbol = this.props.symbolCallBack;
         const API_KEY = this.props["API_KEY"];
         const API_KEY_ = 'BC9UV9YUBWM3KQGF';
 
-        console.log (`StockSymbol (${this.props["StockSymbol"]})`);
+        //console.log (`${this.props.StockSymbol}`);
         const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
         let periodCapital = period[1][0];  
 
 
-        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
+        let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${this.props.StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+        console.log (API_KEY);
 
         const isEmpty = (str) => {
             if (str == null)
@@ -146,7 +147,7 @@ class StockChart extends React.Component {
     }
 
     render() {
-        console.log ('render');
+        console.log ('render', Date.now());
         if (this.props.StockSymbol === "") {
             console.log (`Invalid StockSymbol (${this.props.StockSymbol})`);
             //return null;
