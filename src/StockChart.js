@@ -64,8 +64,8 @@ class StockChart extends React.Component {
                 (data) => {
                     const dataStr = JSON.stringify(data);
                     this.state.stocksChartHistory[this.props.StockSymbol] = data;
-                    const stocksHistoryStr = JSON.stringify(this.state.stocksChartHistory); 
-                    localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
+                    //const stocksHistoryStr = JSON.stringify(this.state.stocksChartHistory); 
+                    //localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
                     // too frequent AlphaVantage api calls
                     if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
                         alert (`${dataStr} (${this.props.StockSymbol}) ${API_Call} `);

@@ -22,11 +22,11 @@ const StockTable = (API_KEY) => {
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
     
-    const [stocksHistory, setStocksHistory] = useState({});
-    const [stocksHistoryMili, setStocksHistoryMili] = useState({});
+    //const [stocksHistory, setStocksHistory] = useState({});
+    //const [stocksHistoryMili, setStocksHistoryMili] = useState({});
 
     const [stocksOverview, setStocksOverview] = useState({});
-    const [stocksOverviewMili, setStocksOverviewMili] = useState({});
+    //const [stocksOverviewMili, setStocksOverviewMili] = useState({});
 
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
@@ -81,12 +81,13 @@ const StockTable = (API_KEY) => {
       const newStocks = [...stocks];
       newStocks.splice(index, 1, newStock);
       setStocks(newStocks); 
+
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
-      if (! isEmpty (chartSymbol))
-        stocksHistory [chartSymbol] = childData;
-      const stocksHistoryStr = JSON.stringify(stocksHistory);
-      localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
+      // if (! isEmpty (chartSymbol))
+      //   stocksHistory [chartSymbol] = childData;
+      // const stocksHistoryStr = JSON.stringify(stocksHistory);
+      // localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
 
     const handleOverview = (childData)  => {
@@ -94,7 +95,7 @@ const StockTable = (API_KEY) => {
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
-      console.log (`Symbol (${symbol}) index (${index})`);      
+      //console.log (`Symbol (${symbol}) index (${index})`);      
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
@@ -122,6 +123,7 @@ const StockTable = (API_KEY) => {
       newStocks.splice(index, 1, newStock);
       //const newStocks__ = [...newStocks, newStock];
       setStocks(newStocks); 
+
       //console.log (stocks[index]);
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', stocksStr);
@@ -132,9 +134,9 @@ const StockTable = (API_KEY) => {
       localStorage.setItem('stocksOverview', stocksOverviewStr);
 
       // save time of overview
-      stocksOverviewMili [symbol] = Date.now();
-      const stocksOverviewMiliStr = JSON.stringify(stocksOverviewMili);
-      localStorage.setItem('stocksOverviewMili', stocksOverviewMiliStr);      
+      // stocksOverviewMili [symbol] = Date.now();
+      // const stocksOverviewMiliStr = JSON.stringify(stocksOverviewMili);
+      // localStorage.setItem('stocksOverviewMili', stocksOverviewMiliStr);      
      }
 
     // two handlers for adding new symbol
@@ -316,7 +318,7 @@ const StockTable = (API_KEY) => {
          </tbody>
         </table>
         </div>
-        {/* <h3>Add stock symbol</h3> */}
+        <label>Add stock symbol   </label>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
