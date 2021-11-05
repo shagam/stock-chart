@@ -1,6 +1,7 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
 import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
+import "./StockChart.css";
 
 // https://quant.stackexchange.com/questions/26162/where-can-i-get-a-list-of-all-yahoo-finance-stocks-symbols
 
@@ -155,21 +156,23 @@ class StockChart extends React.Component {
             //return null;
         }
         return (
-          <div>
+          <div className = 'hist'>
             <h4>  historical_gain({this.props.StockSymbol}): {this.state.histString}  </h4>
-            <Plot
-              data={[
-                {
-                  x: this.state.stockChartXValues,
-                  y: this.state.stockChartYValues,
-                  type: 'scatter',
-                  mode: 'lines+markers',
-                  marker: { color: 'red' },
-                 },
+            <div className = 'chart'>
+                <Plot
+                data={[
+                    {
+                    x: this.state.stockChartXValues,
+                    y: this.state.stockChartYValues,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: { color: 'red' },
+                    },
 
-              ]}
-              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
-            />
+                ]}
+                layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
+                />
+            </div>
           </div>
         );
     }

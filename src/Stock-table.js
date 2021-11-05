@@ -261,10 +261,10 @@ const StockTable = (API_KEY) => {
       }
 
     return (
-      <div class="App-container">
-        <div class="tbl">
+      <div className="App-container">
+        <div className="tbl">
         {/* <h4> chartSymbol {chartSymbol}</h4> */}
-        <table class="stickyHead">
+        <table className="stickyHead">
           <thead>
             <tr>
               <th>symbol</th>
