@@ -6,6 +6,7 @@ import StockTable from './Stock-table';
 import StockChart from './StockChart';
 // import Stock_chart from './Stock-chart';
 import AlphaVantage from './AlphaVantage';
+import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 //<Stock StockSymbol="IBM" API_KEY = 'C542IZRPH683PFNZ' />
  
@@ -27,10 +28,10 @@ function App() {
  
   //const StockSymbol = window.$StockSymbol;
   const StockSymbol = localStorage.getItem('chartSymbol');
-  var API_KEY = localStorage.getItem('alphaVantage');
-  console.log (`read API_KEY: ${API_KEY}`)
-  if (API_KEY === "")
-    API_KEY='C542IZRPH683PFNZ';  
+  var c_API_KEY = localStorage.getItem('alphaVantage');
+  console.log (`read API_KEY: ${c_API_KEY}`)
+  if (c_API_KEY === "")
+    c_API_KEY='C542IZRPH683PFNZ';  
 
 const handleCallBack = (childData) => {
   //this.setState({msg: childData})
@@ -40,14 +41,14 @@ const handleCallBack = (childData) => {
 }
 
 const alphaCallBack = (key) => {
-  API_KEY = key;
-  console.log (`callBack API_KEY: ${API_KEY}`);
+  c_API_KEY = key;
+  console.log (`callBack API_KEY: ${c_API_KEY}`);
 }
 
   return (
     <div className="App-continer">
       <div>       
-        <StockTable API_KEY = {API_KEY} />
+        <StockTable c_API_KEY = {c_API_KEY} />
       </div>
       <div>
          {/* <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} callBack = {handleCallBack}  /> */}

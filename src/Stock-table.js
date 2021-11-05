@@ -9,6 +9,7 @@ import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
 // import Stock_chart from "./Stock-chart";
+import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 //import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
