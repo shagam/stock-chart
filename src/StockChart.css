@@ -5,3 +5,9 @@ div.chart {
 div.hist {
   padding-top: -20px;
 }
+
+div.chart {
+  height: 35vh;
+  width: 100vw;
+  overflow: auto;
+}
