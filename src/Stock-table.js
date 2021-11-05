@@ -15,7 +15,7 @@ import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (API_KEY) => { 
+const StockTable = (c_API_KEY) => { 
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
@@ -47,7 +47,7 @@ const StockTable = (API_KEY) => {
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
     }
     //console.log (React.version);
-      console.log (API_KEY);
+      console.log (c_API_KEY);
 
     // enter history values into table
     const handleCallBackForHistory = (childData, sym) => {
@@ -209,7 +209,7 @@ const StockTable = (API_KEY) => {
       //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
 
 
-    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
+    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${c_API_KEY}`
     
     const index = stocks.findIndex((stock)=> stock.symbol === symbol)
 
@@ -255,7 +255,7 @@ const StockTable = (API_KEY) => {
   
       const conditionalChart = () => {
         if ((chartSymbol !== ""))
-          return         <StockChart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} /> 
+          return         <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
           else
             return null;
       }
