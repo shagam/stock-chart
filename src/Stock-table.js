@@ -19,7 +19,7 @@ const StockTable = (c_API_KEY) => {
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
-      data1 = JSON.parse('[{"symbol": "goog"}]');
+      data1 = JSON.parse('[{"symbol": "GOOG"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
     
@@ -54,7 +54,7 @@ const StockTable = (c_API_KEY) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
       const index = stocks.findIndex((stock)=> stock.symbol === sym);
       if (index === -1) {
-        console.log (`invald chartSymbol (${sym})` );
+        alert (`invald chartSymbol (${sym}) trying to updatehistory values` );
         return chartSymbol;
       }
       const newStock = {
