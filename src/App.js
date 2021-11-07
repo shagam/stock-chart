@@ -42,6 +42,7 @@ const handleCallBack = (childData) => {
 
 const alphaCallBack = (key) => {
   c_API_KEY = key;
+  alert ('App. API_KEY: ' + c_API_KEY)
   console.log (`callBack API_KEY: ${c_API_KEY}`);
 }
 
