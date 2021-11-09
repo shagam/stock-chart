@@ -54,7 +54,7 @@ const StockTable = (c_API_KEY) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
       const index = stocks.findIndex((stock)=> stock.symbol === sym);
       if (index === -1) {
-        alert (`invald chartSymbol (${sym}) trying to updatehistory values` );
+        alert (`stock-table, history call back, invald chartSymbol (${sym}) trying to updatehistory values` );
         return chartSymbol;
       }
       const newStock = {
@@ -236,7 +236,7 @@ const StockTable = (c_API_KEY) => {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   if (dataStr == '{}')
-                    alert (`info invalid symbol ${symbol}`);
+                    alert (`info invalid symbol=${symbol} data="${dataStr}"`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
                     alert (dataStr);
