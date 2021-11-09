@@ -218,7 +218,7 @@ const StockTable = (c_API_KEY) => {
     // else if (Date.now() - stocks[index].now < 1000 * 10)  // is overview info older than an hour
     //   alert ("Overview info still fresh (less than ten sec old) (" + `${symbol})`);
     else {
-      console.log(`Overview info (${chartSymbol})`);
+      console.log(`Overview info (${symbol})`);
     console.log (`${API_Call}`);            
     fetch(API_Call)
         .then(
@@ -235,6 +235,8 @@ const StockTable = (c_API_KEY) => {
             function (data) {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
+                  if (dataStr == '{}')
+                    alert (`invalid symbol ${symbol}`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
                     alert (dataStr);
