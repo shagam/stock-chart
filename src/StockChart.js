@@ -76,7 +76,7 @@ class StockChart extends React.Component {
                     }
                     
                     if (dataStr.search('Error Message":"Invalid API call. Please retry or visit the documentation') != -1) {
-                        alert (`invalid symbol (${this.props.StockSymbol}) \n${dataStr}`);
+                        alert (`Chart invalid symbol (${this.props.StockSymbol}) \n${dataStr}`);
                     }
                     console.log (dataStr.substr(0, 230));
        

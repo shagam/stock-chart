@@ -236,7 +236,7 @@ const StockTable = (c_API_KEY) => {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   if (dataStr == '{}')
-                    alert (`invalid symbol ${symbol}`);
+                    alert (`info invalid symbol ${symbol}`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
                     alert (dataStr);
