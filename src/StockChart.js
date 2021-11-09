@@ -73,7 +73,11 @@ class StockChart extends React.Component {
                     if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
                         alert (`${dataStr} (${this.props.StockSymbol}) ${API_Call} `);
                         return;
-                    } 
+                    }
+                    
+                    if (dataStr.search('Error Message":"Invalid API call. Please retry or visit the documentation') != -1) {
+                        alert (`invalid symbol (${this.props.StockSymbol}) \n${dataStr}`);
+                    }
                     console.log (dataStr.substr(0, 230));
        
                     //let periodTag = 'Time Series (Daily)';
