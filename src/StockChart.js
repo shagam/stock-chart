@@ -161,7 +161,7 @@ class StockChart extends React.Component {
         }
         return (
           <div className = 'hist'>
-            <h4>  historical_gain({this.props.StockSymbol}): {this.state.histString}  </h4>
+            {/* <h4>  historical_gain({this.props.StockSymbol}): {this.state.histString}  </h4> */}
             <div className = 'chart'>
                 <Plot
                 data={[
@@ -174,7 +174,7 @@ class StockChart extends React.Component {
                     },
 
                 ]}
-                layout={{ width: 800, height: 400, title: 'stock_symbol:   ' + this.props.StockSymbol }}
+                layout={{ width: 500, height: 300, title: 'stock_symbol:   ' + this.props.StockSymbol }}
                 />
             </div>
           </div>
