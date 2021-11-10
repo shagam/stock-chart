@@ -10,6 +10,7 @@ import {useTable, useSortBy} from 'react-table'
 import StockChart from "./StockChart";
 // import Stock_chart from "./Stock-chart";
 import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
+import AlphaVantage from './AlphaVantage';
 
 //import { findAllInRenderedTree } from 'react-dom/test-utils';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
@@ -42,6 +43,12 @@ const StockTable = (c_API_KEY) => {
       return false;
     }
 
+    const alphaCallBack = (key) => {
+      c_API_KEY = key;
+      //alert ('App. API_KEY: ' + c_API_KEY)
+      console.log (`callBack API_KEY: ${c_API_KEY}`);
+    }
+    
     function getDate() {
       const date = new Date();
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
@@ -236,7 +243,7 @@ const StockTable = (c_API_KEY) => {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   if (dataStr == '{}')
-                    alert (`info invalid symbol=${symbol} data="${dataStr}"`);
+                    console.log (`info invalid symbol=${symbol} data="${dataStr}"`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
                     alert (dataStr);
@@ -334,6 +341,7 @@ const StockTable = (c_API_KEY) => {
         </form>
 
         {conditionalChart()}
+        {AlphaVantage (alphaCallBack)}
       </div>
     ) 
 }

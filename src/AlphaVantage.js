@@ -23,7 +23,7 @@ const  AlphaVantage = (alphaCallBack) => {
         setAlpha(event.target.value);
         console.log("final data is: ", alpha);
         localStorage.setItem('alphaVantage', `${alpha}`);
-        //alphaCallBack (alpha);
+        alphaCallBack (alpha);
     }
 
     //console.log('AlphaVantage render');

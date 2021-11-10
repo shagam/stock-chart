@@ -5,7 +5,7 @@ import './react-tables.css';
 import StockTable from './Stock-table';
 import StockChart from './StockChart';
 // import Stock_chart from './Stock-chart';
-import AlphaVantage from './AlphaVantage';
+// import AlphaVantage from './AlphaVantage';
 import {c_stockSymbol as c_StockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 //<Stock StockSymbol="IBM" API_KEY = 'C542IZRPH683PFNZ' />
@@ -25,7 +25,7 @@ import {c_stockSymbol as c_StockSymbol, c_API_KEY, c_callBack} from './Constants
 */
 
 function App() {
- 
+
   //const StockSymbol = window.$StockSymbol;
   const StockSymbol = localStorage.getItem('chartSymbol');
   var c_API_KEY = localStorage.getItem('alphaVantage');
@@ -40,11 +40,11 @@ const handleCallBack = (childData) => {
   // childData["PERatio"], childData["PEGRatio"], childData["Beta"], childData["MarketCapitalization"]);
 }
 
-const alphaCallBack = (key) => {
-  c_API_KEY = key;
-  alert ('App. API_KEY: ' + c_API_KEY)
-  console.log (`callBack API_KEY: ${c_API_KEY}`);
-}
+// const alphaCallBack = (key) => {
+//   c_API_KEY = key;
+//   //alert ('App. API_KEY: ' + c_API_KEY)
+//   console.log (`callBack API_KEY: ${c_API_KEY}`);
+// }
 
   return (
     <div className="App-continer">
@@ -55,7 +55,8 @@ const alphaCallBack = (key) => {
          {/* <StockChart StockSymbol={StockSymbol} API_KEY = {API_KEY} callBack = {handleCallBack}  /> */}
       </div>      
       <div>
-        <AlphaVantage alphaCallBack = {alphaCallBack} />
+        {/* <AlphaVantage alphaCallBack = {alphaCallBack} /> */}
+        {/* {AlphaVantage (alphaCallBack)} */}
       </div>
 
     </div>
