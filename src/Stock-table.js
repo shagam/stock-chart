@@ -24,6 +24,8 @@ const StockTable = (c_API_KEY) => {
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
     
+    const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
+
     //const [stocksHistory, setStocksHistory] = useState({});
     //const [stocksHistoryMili, setStocksHistoryMili] = useState({});
 
@@ -34,6 +36,11 @@ const StockTable = (c_API_KEY) => {
       symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
        BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
     })
+
+    const getAPI_KEY = () => {
+      const index = Math.floor (Math.random () * API_KEY_array.length);
+      return API_KEY_array[index];
+    }
 
     const isEmpty = (str) => {
       if (str == null)
