@@ -335,13 +335,13 @@ const StockTable = (c_API_KEY) => {
          </tbody>
         </table>
         </div>
-        <label>Add stock symbol   </label>
+        <label>Add stock symbol</label>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
             required="required"
-            placeholder="enter stock symbol to add ..."
+            placeholder="stock symbol to add ..."
             onChange={handleAddFormChange}
           />
           <button type="submit"> Add</button>
