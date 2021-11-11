@@ -29,7 +29,7 @@ const  AlphaVantage = (alphaCallBack) => {
     //console.log('AlphaVantage render');
 
     return (
-      <div class = 'alpha'>
+      <div className = 'alpha'>
         <label> Enter key (get from www.alphavantage.co): {alpha} </label>
         <form onSubmit = {handleAddFormSubmit}>
           <input
