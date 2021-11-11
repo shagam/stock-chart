@@ -1,6 +1,6 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
-import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
+import { c_API_KEY} from './Constants'
 import "./StockChart.css";
 
 // https://quant.stackexchange.com/questions/26162/where-can-i-get-a-list-of-all-yahoo-finance-stocks-symbols
@@ -75,7 +75,7 @@ class StockChart extends React.Component {
                         return;
                     }
                     
-                    if (dataStr.search('Error Message":"Invalid API call. Please retry or visit the documentation') != -1) {
+                    if (dataStr.search('Error Message":"Invalid API call. Please retry or visit the documentation') !== -1) {
                         alert (`Chart invalid symbol (${this.props.StockSymbol}) \n${dataStr}`);
                     }
                     console.log (dataStr.substr(0, 230));
