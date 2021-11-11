@@ -3,7 +3,7 @@ import React from 'react';
 import './App.css';
 import './react-tables.css';
 import StockTable from './Stock-table';
-import StockChart from './StockChart';
+//import StockChart from './StockChart';
 // import Stock_chart from './Stock-chart';
 // import AlphaVantage from './AlphaVantage';
 import {c_stockSymbol as c_StockSymbol, c_API_KEY, c_callBack} from './Constants'

@@ -8,13 +8,14 @@ const Stock_chart = (props) => {
   const StockSymbol = props.StockSymbol;
   const c_API_KEY = props.API_KEY;
   const callBack = props.callBack;
+  const lastTime = props.lastTime;
   
-  //console.log (`Stock-chart props ${StockSymbol} ${c_API_KEY}`);
+  //console.log (`Stock-chart props ${StockSymbol}`);
 
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [histString, setHistString] = useState ("");
-  const [stocksChartHistory, setStocksChartHistory] = useState ([]);
+  const [stocksChartHistory, setStocksChartHistory] = useState ({});
   const [privSymbol, setPrevSymbol] = useState ("");
   
   const isEmpty = (str) => {
@@ -32,19 +33,20 @@ const Stock_chart = (props) => {
   const fetchStock = () => {
     //const pointerToThis = this;
 
+    const dat = stocksChartHistory[StockSymbol];
+    const timeDiff = Date.now() - lastTime;
+
+    if (dat != null)
+      console.log ('found history ', timeDiff); // 10 minutes
+
+    if (dat == null || timeDiff < 1000 * 60 * 10) {
+
     const API_KEY_ = 'BC9UV9YUBWM3KQGF';
-
-
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
 
-    if (isEmpty (StockSymbol)) {
-        console.log (`undef symbol  (${StockSymbol})  `);
-        return null;            
-    }
 
     let stockChartXValuesFunction = [];
     let stockChartYValuesFunction = [];
@@ -64,7 +66,8 @@ const Stock_chart = (props) => {
                 stocksChartHistory[StockSymbol] = data;
                 const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
                 localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
-                
+                //console.log ('history ' + stocksHistoryStr);
+
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
                     alert (`${dataStr} (${StockSymbol}) ${API_Call} `);
@@ -145,6 +148,8 @@ const Stock_chart = (props) => {
                 //console.log (histArray);
             }
         )
+          }
+          else console.log (' skip api for ', StockSymbol);
         }
 
         if (StockSymbol !== privSymbol) {
