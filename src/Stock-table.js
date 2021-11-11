@@ -32,6 +32,7 @@ const StockTable = (c_API_KEY) => {
 
     const [stocksOverview, setStocksOverview] = useState({});
     //const [stocksOverviewMili, setStocksOverviewMili] = useState({});
+    var index = 0;
 
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
@@ -169,7 +170,8 @@ const StockTable = (c_API_KEY) => {
     const handleAddFormSubmit = (event) => {
       event.preventDefault();
 
-      const index = stocks.findIndex((stock)=> stock.symbol === addFormData.symbol.toUpperCase());
+      //index is used also to get time of history update
+      index = stocks.findIndex((stock)=> stock.symbol === addFormData.symbol.toUpperCase());
       //console.log (addFormData.symbol)
       if (index !== -1) {
         alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
@@ -226,7 +228,7 @@ const StockTable = (c_API_KEY) => {
 
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${c_API_KEY}`
     
-    const index = stocks.findIndex((stock)=> stock.symbol === symbol)
+    index = stocks.findIndex((stock)=> stock.symbol === symbol)
 
     if (isEmpty(chartSymbol))
       console.log(`chartSymbol undef (${chartSymbol})`);
@@ -278,7 +280,7 @@ const StockTable = (c_API_KEY) => {
         }
         // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
         
-        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
       }
 
     return (
