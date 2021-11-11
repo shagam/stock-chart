@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Plot from 'react-plotly.js';
 import "./StockChart.css";
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
@@ -9,8 +9,7 @@ const Stock_chart = (props) => {
   const c_API_KEY = props.API_KEY;
   const callBack = props.callBack;
   
-  console.log (StockSymbol, c_API_KEY, callBack);
-
+  //console.log (`Stock-chart props ${StockSymbol} ${c_API_KEY}`);
 
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
@@ -26,7 +25,7 @@ const Stock_chart = (props) => {
     return false;
   }
 
-  console.log (JSON.stringify(`${StockSymbol}`));
+  //console.log (JSON.stringify(`${StockSymbol}`));
   if (isEmpty (`${StockSymbol}`))
     alert ("symbol Udef");
 
@@ -142,16 +141,17 @@ const Stock_chart = (props) => {
                 setHistString (histStr);
 
                 // send historical value back to caller
-                //c_callBack (histArray, StockSymbol);
+                callBack (histArray, StockSymbol);
                 //console.log (histArray);
             }
         )
         }
 
-        if (StockSymbol != privSymbol) {
-          console.log ('priv ', StockSymbol, privSymbol);
+        if (StockSymbol !== privSymbol) {
+          console.log ('priv chart', StockSymbol, privSymbol);
           setPrevSymbol (StockSymbol);
-          setTimeout (fetchStock(), 200);
+          //setTimeout (fetchStock(), 0);
+          fetchStock();
         }
       
         return (
