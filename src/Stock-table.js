@@ -8,8 +8,8 @@ import './react-tables.css';
 import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
-// import Stock_chart from "./Stock-chart";
-import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
+import Stock_chart from "./Stock-chart";
+// import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 import AlphaVantage from './AlphaVantage';
 
 //import { findAllInRenderedTree } from 'react-dom/test-utils';
@@ -23,7 +23,8 @@ const StockTable = (c_API_KEY) => {
       data1 = JSON.parse('[{"symbol": "GOOG"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
-    
+    const [privSymbol, setPrevSymbol] = useState ("");
+
     const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
 
     //const [stocksHistory, setStocksHistory] = useState({});
@@ -68,7 +69,7 @@ const StockTable = (c_API_KEY) => {
       console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
       const index = stocks.findIndex((stock)=> stock.symbol === sym);
       if (index === -1) {
-        alert (`stock-table, history call back, invald chartSymbol (${sym}) trying to updatehistory values` );
+        alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
         return chartSymbol;
       }
       const newStock = {
@@ -249,11 +250,12 @@ const StockTable = (c_API_KEY) => {
             function (data) {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
-                  if (dataStr == '{}')
+                  if (dataStr === '{}')
                     console.log (`info invalid symbol=${symbol} data="${dataStr}"`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
-                    alert (dataStr);
+                    alert (API_Call, dataStr);
+                    //alert (dataStr);
                     return;
                   }
 
@@ -270,10 +272,20 @@ const StockTable = (c_API_KEY) => {
       }
   
       const conditionalChart = () => {
-        if ((chartSymbol !== ""))
-          return         <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
-          else
-            return null;
+        if ((chartSymbol === ""))  {
+          console.log ('chartSymbol undef');
+          return null;
+        }
+        return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+
+        // console.log ('priv table ', chartSymbol, privSymbol);
+        // if (chartSymbol != privSymbol) {
+        //   setPrevSymbol (chartSymbol);
+        //   console.log ('priv table__ ', chartSymbol, privSymbol);
+
+          // {Stock_chart (chartSymbol, /*c_API_KEY,*/ handleCallBackForHistory)} 
+          return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+          //setTimeout (fetchStock(), 200);
       }
 
     return (
