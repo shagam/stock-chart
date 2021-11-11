@@ -23,7 +23,7 @@ const StockTable = (c_API_KEY) => {
       data1 = JSON.parse('[{"symbol": "GOOG"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
-    const [privSymbol, setPrevSymbol] = useState ("");
+    //const [privSymbol, setPrevSymbol] = useState ("");
 
     const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
 
@@ -276,16 +276,9 @@ const StockTable = (c_API_KEY) => {
           console.log ('chartSymbol undef');
           return null;
         }
-        return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
-
-        // console.log ('priv table ', chartSymbol, privSymbol);
-        // if (chartSymbol != privSymbol) {
-        //   setPrevSymbol (chartSymbol);
-        //   console.log ('priv table__ ', chartSymbol, privSymbol);
-
-          // {Stock_chart (chartSymbol, /*c_API_KEY,*/ handleCallBackForHistory)} 
-          return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
-          //setTimeout (fetchStock(), 200);
+        // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+        
+        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
       }
 
     return (
