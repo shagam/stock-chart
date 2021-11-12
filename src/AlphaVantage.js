@@ -6,7 +6,7 @@ import './alphaVantage.css'
 const  AlphaVantage = (alphaCallBack) => { 
     var aleph = localStorage.getItem('alphaVantage');
     const [alpha, setAlpha] = useState(aleph);
-    console.log(`AlphaVantage localStorage ${alpha}`); 
+    //console.log(`AlphaVantage localStorage ${alpha}`); 
 
     const handleAddFormChange = (event) => {
         event.preventDefault();
