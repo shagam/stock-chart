@@ -38,7 +38,7 @@ const  AlphaVantage = (alphaCallBack) => {
             required="required"
             placeholder="enter alphaVantage key to add ..."
             onChange={handleAddFormChange}
-            value={alpha}
+            // value={alpha}
           />
           <button type="submit"> Enter</button>
         </form>

@@ -16,7 +16,7 @@ const StockTable = () => {
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
-      data1 = JSON.parse('[{"symbol": "GOOG"}]');
+      data1 = JSON.parse('[{"symbol": "GOOG"},{"symbol": "FB"},{"symbol": "AMZN"},{"symbol": "QQQ"}]');
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");;
 
@@ -271,9 +271,9 @@ const StockTable = () => {
           console.log ('chartSymbol undef');
           return null;
         }
-        return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+        // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
         
-        // return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
+        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
       }
 
     return (
