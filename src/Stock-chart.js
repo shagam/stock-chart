@@ -6,7 +6,7 @@ import "./StockChart.css";
 const Stock_chart = (props) => { 
   //StockSymbol, /*c_API_KEY,*/ c_callBack
   const StockSymbol = props.StockSymbol;
-  const c_API_KEY = props.API_KEY;
+  const API_KEY = props.API_KEY;
   const callBack = props.callBack;
   const lastTime = props.lastTime;
   
@@ -41,11 +41,11 @@ const Stock_chart = (props) => {
 
     if (dat == null || timeDiff < 1000 * 60 * 10) {
 
-    const API_KEY_ = 'BC9UV9YUBWM3KQGF';
+    //const API_KEY_ = 'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
 
 
     let stockChartXValuesFunction = [];
