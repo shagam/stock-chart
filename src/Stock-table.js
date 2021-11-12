@@ -9,12 +9,8 @@ import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
 import StockChart from "./StockChart";
 import Stock_chart from "./Stock-chart";
-// import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
-import AlphaVantage from './AlphaVantage';
 
-//import { findAllInRenderedTree } from 'react-dom/test-utils';
-//<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
-//<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
+import AlphaVantage from './AlphaVantage';
 
 const StockTable = () => { 
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
@@ -22,16 +18,11 @@ const StockTable = () => {
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "GOOG"}]');
     const [stocks, setStocks] = useState(data1);
-    const [chartSymbol, setChartSymbol] = useState("");
-    //const [privSymbol, setPrevSymbol] = useState ("");
+    const [chartSymbol, setChartSymbol] = useState("");;
 
     const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
-
-    //const [stocksHistory, setStocksHistory] = useState({});
-    //const [stocksHistoryMili, setStocksHistoryMili] = useState({});
-
     const [stocksOverview, setStocksOverview] = useState({});
-    //const [stocksOverviewMili, setStocksOverviewMili] = useState({});
+
     var index = 0;
 
     const [addFormData, setAddFormData] = useState({
@@ -280,9 +271,9 @@ const StockTable = () => {
           console.log ('chartSymbol undef');
           return null;
         }
-        // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+        return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
         
-        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
+        // return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
       }
 
     return (
