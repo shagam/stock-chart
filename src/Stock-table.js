@@ -16,7 +16,7 @@ import AlphaVantage from './AlphaVantage';
 //<StockChart  ={StockSymbol} API_KEY = {API_KEY} />
 //<Overview StockSymbol={StockSymbol}  API_KEY = {API_KEY}  callBack = {handleCallBack}/> 
 
-const StockTable = (c_API_KEY) => { 
+const StockTable = () => { 
     var data1 = JSON.parse(localStorage.getItem('stockTable'));
 
     if (data1 === null || JSON.stringify(data1).length === 0)
@@ -41,8 +41,11 @@ const StockTable = (c_API_KEY) => {
 
     const getAPI_KEY = () => {
       const index = Math.floor (Math.random () * API_KEY_array.length);
+      console.log ('API_KEY: ' + API_KEY_array[index]); 
       return API_KEY_array[index];
     }
+
+    var c_API_KEY = getAPI_KEY();
 
     const isEmpty = (str) => {
       if (str == null)
@@ -63,7 +66,6 @@ const StockTable = (c_API_KEY) => {
       return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
     }
     //console.log (React.version);
-      console.log (c_API_KEY);
 
     // enter history values into table
     const handleCallBackForHistory = (childData, sym) => {
