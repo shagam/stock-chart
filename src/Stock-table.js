@@ -18,7 +18,9 @@ const StockTable = () => {
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "GOOG"},{"symbol": "FB"},{"symbol": "AMZN"},{"symbol": "QQQ"}]');
     const [stocks, setStocks] = useState(data1);
-    const [chartSymbol, setChartSymbol] = useState("");;
+    const [chartSymbol, setChartSymbol] = useState("");
+    const [infoSymbol, setInfoSymbol] = useState("");
+    const [flag, setFlag] = useState("");
 
     const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
     const [stocksOverview, setStocksOverview] = useState({});
@@ -207,12 +209,15 @@ const StockTable = () => {
 
     // click chart button
     const handleChartClick = (symbol) => {
-      //chartSymbol = symbol;
       setChartSymbol (symbol);
+      localStorage.setItem ('chartSymbol', symbol); 
+    }
 
+    const handleInfoClick = (symbol) => {
+      setInfoSymbol (symbol);
       //callBack ("tableCallBack");
-      localStorage.setItem ('chartSymbol', symbol); // temp for App.js
-      console.log(`symbol: ${symbol} chartSymbol: ${chartSymbol}`);      
+      localStorage.setItem ('infoSymbol', symbol); 
+      console.log(`symbol: ${symbol} chartSymbol: ${infoSymbol}`);      
 
       //document.cookie = `StockSymbol=${symbol}`
       //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
@@ -223,8 +228,8 @@ const StockTable = () => {
     
     index = stocks.findIndex((stock)=> stock.symbol === symbol)
 
-    if (isEmpty(chartSymbol))
-      console.log(`chartSymbol undef (${chartSymbol})`);
+    if (isEmpty(infoSymbol))
+      console.log(`chartSymbol undef (${infoSymbol})`);
     // else if (Date.now() - stocks[index].now < 1000 * 10)  // is overview info older than an hour
     //   alert ("Overview info still fresh (less than ten sec old) (" + `${symbol})`);
     else {
@@ -310,8 +315,9 @@ const StockTable = () => {
               <tr>            
                 <td>{stock.symbol}</td>
                 <td>
-                  <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>del</button>
-                  <button type="button" onClick={()=>handleChartClick(stock.symbol)}>info</button>
+                  <button type="button" onClick={()=>handleInfoClick(stock.symbol)}>info</button>     
+                  <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
+                  <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>del</button>                  
                 </td>
                 <td>{stock.update}</td>
                 <td>{stock.Exchange}</td>
