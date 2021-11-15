@@ -74,7 +74,7 @@ const StockTable = () => {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
         nowHist: Date.now(),
-        Exchange: stocks[index].Exchange,
+        Exchange: stocks[index],
         // Sector: stocks[index].Sector,
         // lastPrice: stocks[index].lastPrice,
         PE: stocks[index].PE,
@@ -110,12 +110,13 @@ const StockTable = () => {
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
-      //console.log (`Symbol (${symbol}) index (${index})`);      
+      //console.log (`Symbol (${symbol}) index (${index})`); 
+      const exch = childData["Exchange"];      
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
         nowOverview: Date.now(),
-        Exchange: childData["Exchange"],
+        Exchange: exch.substring(0,4),
         // Sector: childData["Sector"],
         // lastPrice: stocks[index].lastPrice,
         PE: childData["PERatio"],
@@ -319,7 +320,7 @@ const StockTable = () => {
               <th>symbol</th>
               <th>actions</th>
               {/* <th>update</th> */}
-              <th>Exchange</th>          
+              <th>Excha</th>          
               {/* <th>Sector</th>              
               <th>Price</th> */}
               <th>PE</th>
