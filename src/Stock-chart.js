@@ -142,6 +142,13 @@ const Stock_chart = (props) => {
                 if (num !== 'NaN')
                 histStr += " 10y (" + num + ")";
                 histArray.push (num);
+
+                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1040];
+                num = num.toFixed(2);
+                if (num !== 'NaN')
+                histStr += " 20y (" + num + ")";
+                histArray.push (num);
+
                 setHistString (histStr);
 
                 // send historical value back to caller

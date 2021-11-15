@@ -32,7 +32,7 @@ const StockTable = () => {
 
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
-       BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
+       BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0, year20: 0          
     })
 
     const getAPI_KEY = () => {
@@ -89,7 +89,8 @@ const StockTable = () => {
         year: childData[5], //stocks[index].year,
         year2: childData[6], //stocks[index].year2,
         year5: childData[7], //stocks[index].year5,
-        year10: childData[8] //stocks[index].year10  
+        year10: childData[8], //stocks[index].year10,
+        year20: childData[9] //stocks[index].year20 
       };
 
       const newStocks = [...stocks];
@@ -129,7 +130,8 @@ const StockTable = () => {
         year: stocks[index].year,
         year2: stocks[index].year2,
         year5: stocks[index].year5,
-        year10: stocks[index].year10  
+        year10: stocks[index].year10,
+        year20: stocks[index].year20 
       };
 
       //console.log (stocks[index]);
@@ -333,6 +335,7 @@ const StockTable = () => {
               <th>2year</th>
               <th>5year</th>
               <th>10year</th>            
+              <th>20year</th>              
             </tr>
           </thead>
 
@@ -361,7 +364,8 @@ const StockTable = () => {
                 <td>{stock.year}</td>
                 <td>{stock.year2}</td>
                 <td>{stock.year5}</td>
-                <td>{stock.year10}</td>                
+                <td>{stock.year10}</td>
+                <td>{stock.year20}</td> 
               </tr>
            ))}
          </tbody>
