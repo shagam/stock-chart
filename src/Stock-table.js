@@ -280,7 +280,7 @@ const StockTable = () => {
                     console.log (`info invalid symbol=${symbol} data="${dataStr}"`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
-                    alert (API_Call, dataStr);
+                    alert (dataStr + `\n\n${API_Call}`);
                     //alert (dataStr);
                     return;
                   }

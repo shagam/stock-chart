@@ -70,7 +70,7 @@ const Stock_chart = (props) => {
 
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                    alert (`${dataStr} (${StockSymbol}) ${API_Call} `);
+                    alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
                     return;
                 }
                 if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
