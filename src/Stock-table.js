@@ -178,17 +178,16 @@ const StockTable = () => {
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
-        //now: Date.now(),
-        //lastPrice: -1,
-        wk: 1,
-        wk2: 2,
-        mon: 4,
-        mon3: 13,
-        mon6: 26,
-        year: 52,
-        year2: 104,
-        year5: 260,
-        year10: 520  
+
+        // wk: 1,
+        // wk2: 2,
+        // mon: 4,
+        // mon3: 13,
+        // mon6: 26,
+        // year: 52,
+        // year2: 104,
+        // year5: 260,
+        // year10: 520  
       };
 
       const newStocks = [...stocks, newStock];
@@ -317,7 +316,7 @@ const StockTable = () => {
             <tr>
               <th>symbol</th>
               <th>actions</th>
-              <th>update</th>
+              {/* <th>update</th> */}
               <th>Exchange</th>          
               {/* <th>Sector</th>              
               <th>Price</th> */}
@@ -346,7 +345,7 @@ const StockTable = () => {
                   <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
                   <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>del</button>                  
                 </td>
-                <td>{stock.update}</td>
+                {/* <td>{stock.update}</td> */}
                 <td>{stock.Exchange}</td>
                 {/* <td>{stock.Sector}</td>                
                 <td>{stock.price}</td> */}
