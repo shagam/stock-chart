@@ -75,6 +75,7 @@ const Stock_chart = (props) => {
                 }
                 if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
                   alert (dataStr.substr(0, 35) + ` symbol(${StockSymbol}) \n\n${API_Call}`);
+                  return;
                 }
   
                 //let periodTag = 'Time Series (Daily)';
