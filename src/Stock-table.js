@@ -329,13 +329,13 @@ const StockTable = () => {
               <th>wk</th>
               <th>2wk</th>
               <th>mon</th>
-              <th>3mon</th>
-              <th>6mon</th>
+              <th>3mn</th>
+              <th>6mn</th>
               <th>year</th>
-              <th>2year</th>
-              <th>5year</th>
-              <th>10year</th>            
-              <th>20year</th>              
+              <th>2yr</th>
+              <th>5yr</th>
+              <th>10yr</th>            
+              <th>20yr</th>              
             </tr>
           </thead>
 
