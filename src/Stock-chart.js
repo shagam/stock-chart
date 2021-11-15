@@ -39,7 +39,7 @@ const Stock_chart = (props) => {
     if (dat != null)
       console.log ('found history ', timeDiff); // 10 minutes
 
-    if (dat == null || timeDiff < 1000 * 60 * 10) {
+    // if (dat == null || timeDiff < 1000 * 60 * 10) {
 
     const API_KEY_ = 'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -148,8 +148,8 @@ const Stock_chart = (props) => {
                 //console.log (histArray);
             }
         )
-          }
-          else console.log (' skip api for ', StockSymbol);
+          // }
+          // else console.log (' skip api for ', StockSymbol);
         }
 
         if (StockSymbol !== privSymbol) {
