@@ -68,15 +68,11 @@ const Stock_chart = (props) => {
                 localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
                 //console.log ('history ' + stocksHistoryStr);
 
+                
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-<<<<<<< HEAD
                     alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
                     return;
-=======
-                  alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
-                  return;
->>>>>>> 8aa30c670defbcd86480b819b84e0ec8a1bd18f1
                 }
                 if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
                   alert (dataStr.substr(0, 35) + ` symbol(${StockSymbol}) \n\n${API_Call}`);
