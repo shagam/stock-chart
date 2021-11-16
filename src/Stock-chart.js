@@ -70,11 +70,17 @@ const Stock_chart = (props) => {
 
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
+<<<<<<< HEAD
                     alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
                     return;
+=======
+                  alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
+                  return;
+>>>>>>> 8aa30c670defbcd86480b819b84e0ec8a1bd18f1
                 }
                 if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                  console.log ({API_Call}, dataStr.substr(0, 230));
+                  alert (dataStr.substr(0, 35) + ` symbol(${StockSymbol}) \n\n${API_Call}`);
+                  return;
                 }
   
                 //let periodTag = 'Time Series (Daily)';
@@ -141,6 +147,13 @@ const Stock_chart = (props) => {
                 if (num !== 'NaN')
                 histStr += " 10y (" + num + ")";
                 histArray.push (num);
+
+                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1040];
+                num = num.toFixed(2);
+                if (num !== 'NaN')
+                histStr += " 20y (" + num + ")";
+                histArray.push (num);
+
                 setHistString (histStr);
 
                 // send historical value back to caller

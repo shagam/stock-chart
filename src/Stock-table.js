@@ -32,7 +32,7 @@ const StockTable = () => {
 
     const [addFormData, setAddFormData] = useState({
       symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
-       BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0            
+       BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0, year20: 0          
     })
 
     const getAPI_KEY = () => {
@@ -74,7 +74,7 @@ const StockTable = () => {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
         nowHist: Date.now(),
-        Exchange: stocks[index].Exchange,
+        Exchange: stocks[index].Exchange.substring(0.4),
         // Sector: stocks[index].Sector,
         // lastPrice: stocks[index].lastPrice,
         PE: stocks[index].PE,
@@ -89,7 +89,8 @@ const StockTable = () => {
         year: childData[5], //stocks[index].year,
         year2: childData[6], //stocks[index].year2,
         year5: childData[7], //stocks[index].year5,
-        year10: childData[8] //stocks[index].year10  
+        year10: childData[8], //stocks[index].year10,
+        year20: childData[9] //stocks[index].year20 
       };
 
       const newStocks = [...stocks];
@@ -109,12 +110,13 @@ const StockTable = () => {
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
-      //console.log (`Symbol (${symbol}) index (${index})`);      
+      //console.log (`Symbol (${symbol}) index (${index})`); 
+      const exch = childData["Exchange"];      
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
         nowOverview: Date.now(),
-        Exchange: childData["Exchange"],
+        Exchange: exch.substring(0,4),
         // Sector: childData["Sector"],
         // lastPrice: stocks[index].lastPrice,
         PE: childData["PERatio"],
@@ -129,7 +131,8 @@ const StockTable = () => {
         year: stocks[index].year,
         year2: stocks[index].year2,
         year5: stocks[index].year5,
-        year10: stocks[index].year10  
+        year10: stocks[index].year10,
+        year20: stocks[index].year20 
       };
 
       //console.log (stocks[index]);
@@ -178,17 +181,16 @@ const StockTable = () => {
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
         update: "_" + getDate(),
-        //now: Date.now(),
-        //lastPrice: -1,
-        wk: 1,
-        wk2: 2,
-        mon: 4,
-        mon3: 13,
-        mon6: 26,
-        year: 52,
-        year2: 104,
-        year5: 260,
-        year10: 520  
+
+        // wk: 1,
+        // wk2: 2,
+        // mon: 4,
+        // mon3: 13,
+        // mon6: 26,
+        // year: 52,
+        // year2: 104,
+        // year5: 260,
+        // year10: 520  
       };
 
       const newStocks = [...stocks, newStock];
@@ -317,8 +319,8 @@ const StockTable = () => {
             <tr>
               <th>symbol</th>
               <th>actions</th>
-              <th>update</th>
-              <th>Exchange</th>          
+              {/* <th>update</th> */}
+              <th>Excha</th>          
               {/* <th>Sector</th>              
               <th>Price</th> */}
               <th>PE</th>
@@ -328,12 +330,13 @@ const StockTable = () => {
               <th>wk</th>
               <th>2wk</th>
               <th>mon</th>
-              <th>3mon</th>
-              <th>6mon</th>
+              <th>3mn</th>
+              <th>6mn</th>
               <th>year</th>
-              <th>2year</th>
-              <th>5year</th>
-              <th>10year</th>            
+              <th>2yr</th>
+              <th>5yr</th>
+              <th>10yr</th>            
+              <th>20yr</th>              
             </tr>
           </thead>
 
@@ -346,7 +349,7 @@ const StockTable = () => {
                   <button type="button" onClick={()=>handleChartClick(stock.symbol)}>chart</button>
                   <button type="button" onClick={()=>handleDeleteClick(stock.symbol)}>del</button>                  
                 </td>
-                <td>{stock.update}</td>
+                {/* <td>{stock.update}</td> */}
                 <td>{stock.Exchange}</td>
                 {/* <td>{stock.Sector}</td>                
                 <td>{stock.price}</td> */}
@@ -362,7 +365,8 @@ const StockTable = () => {
                 <td>{stock.year}</td>
                 <td>{stock.year2}</td>
                 <td>{stock.year5}</td>
-                <td>{stock.year10}</td>                
+                <td>{stock.year10}</td>
+                <td>{stock.year20}</td> 
               </tr>
            ))}
          </tbody>
