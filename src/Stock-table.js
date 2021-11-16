@@ -17,14 +17,17 @@ const StockTable = () => {
 
     if (data1 === null || JSON.stringify(data1).length === 0)
       data1 = JSON.parse('[{"symbol": "GOOG"},{"symbol": "FB"},{"symbol": "AMZN"},{"symbol": "QQQ"}]');
+
+
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
     const [infoSymbol, setInfoSymbol] = useState("");
     const [flag, setFlag] = useState("");
-
+    const [chartData, setChartData] = useState ({});
     const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
     const [stocksOverview, setStocksOverview] = useState({});
-
+    //const [, setChartData] = useState ();
+    //var chartData = {};
     var index = 0;
 
     const [addFormData, setAddFormData] = useState({
@@ -38,8 +41,7 @@ const StockTable = () => {
       return API_KEY_array[index];
     }
 
-    var c_API_KEY = getAPI_KEY();
-
+    var API_KEY = 'C542IZRPH683PFNZ';
     const isEmpty = (str) => {
       if (str == null)
           return true;
@@ -49,9 +51,9 @@ const StockTable = () => {
     }
 
     const alphaCallBack = (key) => {
-      c_API_KEY = key;
+      API_KEY = key;
       //alert ('App. API_KEY: ' + c_API_KEY)
-      console.log (`callBack API_KEY: ${c_API_KEY}`);
+      console.log (`callBack API_KEY: ${API_KEY}`);
     }
     
     function getDate() {
@@ -103,7 +105,7 @@ const StockTable = () => {
     }
 
     const handleOverview = (childData)  => {
-      console.log (JSON.stringify(childData).substring(0,200));
+      console.log (JSON.stringify(childData).substring(0,100));
       const symbol = childData["Symbol"];
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
@@ -210,21 +212,45 @@ const StockTable = () => {
     // click chart button
     const handleChartClick = (symbol) => {
       setChartSymbol (symbol);
-      localStorage.setItem ('chartSymbol', symbol); 
+      localStorage.setItem ('chartSymbol', symbol);
+
+      // let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${symbol}&outputsize=compact&apikey=${API_KEY}`;
+
+      // fetch(API_Call)
+      // .then(
+      //     function(response) {
+      //         const respStr = JSON.stringify (response);
+      //         if (respStr.indexOf (' status: 100, ok: true') !== -1)
+      //             console.log(response);
+      //         return response.json();
+      //     }
+      // )
+      // .then(
+      //     (data) => {
+      //         const dataStr = JSON.stringify(data);
+      //         if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
+      //             alert (`${dataStr} (${this.props.StockSymbol}) ${API_Call} `);
+      //             return;
+      //         }
+              
+      //         if (dataStr.search('Error Message":"Invalid API call. Please retry or visit the documentation') !== -1) {
+      //             alert (`Chart invalid symbol (${this.props.StockSymbol}) \n${dataStr}`);
+      //         }
+
+      //         setChartData (data); // pass raw data to Stock-chart.js
+      //         //console.log (JSON.stringify (chartData));
+      //       }
+      // )
     }
 
+    // get stock overview
     const handleInfoClick = (symbol) => {
       setInfoSymbol (symbol);
       //callBack ("tableCallBack");
       localStorage.setItem ('infoSymbol', symbol); 
       console.log(`symbol: ${symbol} chartSymbol: ${infoSymbol}`);      
 
-      //document.cookie = `StockSymbol=${symbol}`
-      //<StockChart StockSymbol={symbol} API_KEY = 'C542IZRPH683PFNZ' />
-      //Overview('StockSymbol'=`${symbol}`, 'callBack' = {handleCallBack})
-
-
-    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${c_API_KEY}`
+    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
     
     index = stocks.findIndex((stock)=> stock.symbol === symbol)
 
@@ -254,7 +280,7 @@ const StockTable = () => {
                     console.log (`info invalid symbol=${symbol} data="${dataStr}"`);
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
-                    alert (API_Call, dataStr);
+                    alert (dataStr + `\n\n${API_Call}`);
                     //alert (dataStr);
                     return;
                   }
@@ -272,13 +298,14 @@ const StockTable = () => {
       }
   
       const conditionalChart = () => {
+
         if ((chartSymbol === ""))  {
           console.log ('chartSymbol undef');
           return null;
         }
         // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
-        
-        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
+
+        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}   data1 = {chartData} /> 
       }
 
     return (

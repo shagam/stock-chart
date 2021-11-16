@@ -39,13 +39,13 @@ const Stock_chart = (props) => {
     if (dat != null)
       console.log ('found history ', timeDiff); // 10 minutes
 
-    if (dat == null || timeDiff < 1000 * 60 * 10) {
+    // if (dat == null || timeDiff < 1000 * 60 * 10) {
 
-    //const API_KEY_ = 'BC9UV9YUBWM3KQGF';
+    const API_KEY_ = 'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY}`;
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
 
 
     let stockChartXValuesFunction = [];
@@ -70,7 +70,7 @@ const Stock_chart = (props) => {
 
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                    alert (`${dataStr} (${StockSymbol}) ${API_Call} `);
+                    alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
                     return;
                 }
                 if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
@@ -148,8 +148,8 @@ const Stock_chart = (props) => {
                 //console.log (histArray);
             }
         )
-          }
-          else console.log (' skip api for ', StockSymbol);
+          // }
+          // else console.log (' skip api for ', StockSymbol);
         }
 
         if (StockSymbol !== privSymbol) {
