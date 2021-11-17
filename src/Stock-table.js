@@ -1,15 +1,12 @@
 
 import React, {useState} from 'react';
-//import { nanoid } from 'nanoid';
 import './App.css';
 import './react-tables.css';
 //import data from "./mock-data.json";
-//import Overview from "./Overview.js";
-import {useTable, useSortBy} from 'react-table'
+//import {useTable, useSortBy} from 'react-table'
 //import {COLUMNS} from './columns'
-import StockChart from "./StockChart";
+//import StockChart from "./StockChart";
 import Stock_chart from "./Stock-chart";
-
 import AlphaVantage from './AlphaVantage';
 
 const StockTable = () => { 
@@ -22,12 +19,9 @@ const StockTable = () => {
     const [stocks, setStocks] = useState(data1);
     const [chartSymbol, setChartSymbol] = useState("");
     const [infoSymbol, setInfoSymbol] = useState("");
-    const [flag, setFlag] = useState("");
-    const [chartData, setChartData] = useState ({});
+
     const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF'];  
-    const [stocksOverview, setStocksOverview] = useState({});
-    //const [, setChartData] = useState ();
-    //var chartData = {};
+    const [stocksOverview] = useState({});
     var index = 0;
 
     const [addFormData, setAddFormData] = useState({
@@ -99,10 +93,6 @@ const StockTable = () => {
 
       const stocksStr = JSON.stringify(newStocks);
       localStorage.setItem('stockTable', `${stocksStr}`);
-      // if (! isEmpty (chartSymbol))
-      //   stocksHistory [chartSymbol] = childData;
-      // const stocksHistoryStr = JSON.stringify(stocksHistory);
-      // localStorage.setItem('stocksHistory', `${stocksHistoryStr}`);
     }
 
     const handleOverview = (childData)  => {
@@ -146,7 +136,7 @@ const StockTable = () => {
       localStorage.setItem('stockTable', stocksStr);
 
       // save overview per symbol
-      stocksOverview [symbol] = childData;
+      stocksOverview[symbol] = childData;
       const stocksOverviewStr = JSON.stringify(stocksOverview);
       localStorage.setItem('stocksOverview', stocksOverviewStr);
 
@@ -180,17 +170,7 @@ const StockTable = () => {
 
       const newStock = {
         symbol: addFormData.symbol.toUpperCase(),
-        update: "_" + getDate(),
-
-        // wk: 1,
-        // wk2: 2,
-        // mon: 4,
-        // mon3: 13,
-        // mon6: 26,
-        // year: 52,
-        // year2: 104,
-        // year5: 260,
-        // year10: 520  
+        update: "_" + getDate()
       };
 
       const newStocks = [...stocks, newStock];
@@ -215,34 +195,6 @@ const StockTable = () => {
     const handleChartClick = (symbol) => {
       setChartSymbol (symbol);
       localStorage.setItem ('chartSymbol', symbol);
-
-      // let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED&symbol=${symbol}&outputsize=compact&apikey=${API_KEY}`;
-
-      // fetch(API_Call)
-      // .then(
-      //     function(response) {
-      //         const respStr = JSON.stringify (response);
-      //         if (respStr.indexOf (' status: 100, ok: true') !== -1)
-      //             console.log(response);
-      //         return response.json();
-      //     }
-      // )
-      // .then(
-      //     (data) => {
-      //         const dataStr = JSON.stringify(data);
-      //         if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-      //             alert (`${dataStr} (${this.props.StockSymbol}) ${API_Call} `);
-      //             return;
-      //         }
-              
-      //         if (dataStr.search('Error Message":"Invalid API call. Please retry or visit the documentation') !== -1) {
-      //             alert (`Chart invalid symbol (${this.props.StockSymbol}) \n${dataStr}`);
-      //         }
-
-      //         setChartData (data); // pass raw data to Stock-chart.js
-      //         //console.log (JSON.stringify (chartData));
-      //       }
-      // )
     }
 
     // get stock overview
@@ -307,7 +259,7 @@ const StockTable = () => {
         }
         // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
 
-        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}   data1 = {chartData} /> 
+        return <Stock_chart StockSymbol ={chartSymbol} API_KEY = {API_KEY} callBack = {handleCallBackForHistory} lastTime = {stocks[index].nowHist}  /> 
       }
 
     return (
