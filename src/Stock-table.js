@@ -74,7 +74,7 @@ const StockTable = () => {
         symbol: sym, //stocks[index].symbol,
         update: getDate(),
         nowHist: Date.now(),
-        Exchange: stocks[index].Exchange.substring(0.4),
+        Exchange: stocks[index].Exchange,
         // Sector: stocks[index].Sector,
         // lastPrice: stocks[index].lastPrice,
         PE: stocks[index].PE,
