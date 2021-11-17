@@ -111,12 +111,12 @@ const StockTable = () => {
 
       const index = stocks.findIndex((stock)=> stock.symbol === symbol);
       //console.log (`Symbol (${symbol}) index (${index})`); 
-      const exch = childData["Exchange"];      
+    
       const newStock = {
         symbol: childData["Symbol"],
         update: getDate(),
         nowOverview: Date.now(),
-        Exchange: exch.substring(0,4),
+        Exchange: childData["Exchange"].substring(0,4),
         // Sector: childData["Sector"],
         // lastPrice: stocks[index].lastPrice,
         PE: childData["PERatio"],
