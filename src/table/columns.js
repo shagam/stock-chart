@@ -1,64 +1,171 @@
 export const COLUMNS = [
   {
-    Header: 'symbol',
+    Header: 'symb',
+    Footer: 'symb',    
     accessor: 'symbol'
   },
   {
-    Header: 'Exchange',
+    Header: 'Exch',
+    Footer: 'Exch',    
     accessor: 'Exchange'
   },
   {
     Header: 'PE',
+    Footer: 'PE',
     accessor: 'PE'
   },
   {
     Header: 'PEG',
+    Footer: 'PEG',
     accessor: 'PEG'
   },
   {
     Header: 'BETA',
+    Footer: 'BETA',
     accessor: 'BETA'
   },
   {
     Header: 'wk',
+    Footer: 'wk',    
     accessor: 'wk'
   },
   {
-    Header: 'wk2',
+    Header: '2wk',
+    Footer: '2wk',    
     accessor: 'wk2'
   },  
   {
-    Header: 'mon',
+    Header: 'mn',
+    Footer: 'mn',    
     accessor: 'mon'
   },
   {
-    Header: 'mon3',
+    Header: '3mn',
+    Footer: '3mn',    
     accessor: 'mon3'
   },
   {
-    Header: 'mon6',
+    Header: '6mn',
+    Footer: '6mn',   
     accessor: 'mon6'
   },
   {
-    Header: 'year',
+    Header: 'yr',
+    Footer: 'yr',
     accessor: 'year'
   },
   {
-    Header: 'year2',
-    accessor: 'year2'
+    Header: '2yr',
+    Footer: '2yr',
+    accessor: 'year2',
   },
   {
-    Header: 'year5',
+    Header: '5yr',
+    Footer: '5yr',    
     accessor: 'year5'
   },
   {
-    Header: 'year10',
+    Header: '10yr',
+    Footer: '10yr',    
     accessor: 'year10'
   },
   {
-    Header: 'year20',
+    Header: '20yr',
+    Footer: '20yr',    
     accessor: 'year20'
   } 
 ] 
 
+
+
+export const GROUPED_COLUMNS = [
+  {
+    Header: 'Overview',
+    Footer: 'Overview',    
+    columns: [
+      {
+        Header: 'symb',
+        Footer: 'symb',    
+        accessor: 'symbol'
+      },
+      {
+        Header: 'Exch',
+        Footer: 'Exch',    
+        accessor: 'Exchange'
+      },
+      {
+        Header: 'PE',
+        Footer: 'PE',
+        accessor: 'PE'
+      },
+      {
+        Header: 'PEG',
+        Footer: 'PEG',
+        accessor: 'PEG'
+      },
+      {
+        Header: 'BETA',
+        Footer: 'BETA',
+        accessor: 'BETA'
+      },
+    ]
+  },
+  
+  {
+    Header: 'Gain',
+    Footer: 'gain',    
+    columns: [
+      {
+        Header: 'wk',
+        Footer: 'wk',    
+        accessor: 'wk'
+      },
+      {
+        Header: '2wk',
+        Footer: '2wk',    
+        accessor: 'wk2'
+      },  
+      {
+        Header: 'mn',
+        Footer: 'mn',    
+        accessor: 'mon'
+      },
+      {
+        Header: '3mn',
+        Footer: '3mn',    
+        accessor: 'mon3'
+      },
+      {
+        Header: '6mn',
+        Footer: '6mn',   
+        accessor: 'mon6'
+      },
+      {
+        Header: 'yr',
+        Footer: 'yr',
+        accessor: 'year'
+      },
+      {
+        Header: '2yr',
+        Footer: '2yr',
+        accessor: 'year2',
+      },
+      {
+        Header: '5yr',
+        Footer: '5yr',    
+        accessor: 'year5'
+      },
+      {
+        Header: '10yr',
+        Footer: '10yr',    
+        accessor: 'year10'
+      },
+      {
+        Header: '20yr',
+        Footer: '20yr',    
+        accessor: 'year20'
+      }    
+    ]
+  }
+]
 
