@@ -1,7 +1,7 @@
 [
     {
+        "id": 0,
         "symbol": "QQQ",
-        "update": "2021-11-17 20:36",
         "Exchange": "NASD",
         "PE": 28.72,
         "BETA": 1.044,
@@ -15,8 +15,8 @@
         "year5": 3.93    
     },
     {
+        "id": 1,
         "symbol": "AMZN",
-        "update": "2021-11-17 20:36",
         "Exchange": "NASD",
         "PE": 35,
         "GPE": 50,
@@ -33,8 +33,8 @@
         "year20": 3.93         
     },
     {
+        "id": 2,
         "symbol": "GOOG",
-        "update": "2021-11-17 20:36",
         "Exchange": "NASD",
         "PE": 35,
         "GPE": 50,
