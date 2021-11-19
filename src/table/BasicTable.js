@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react'
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useSortBy, useGlobalFilter } from 'react-table'
 import MOCK_DATA from './mock-data.json'
 import { COLUMNS, GROUPED_COLUMNS } from './columns'
 import './table.css'
-
+import GlobalFilter from './GlobalFilter'
 
 export const BasicTable = () => {
 
@@ -21,15 +21,20 @@ export const BasicTable = () => {
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
+    prepareRow,
+    state,
+    setGlobalFilter,
   } = useTable ({
     columns,
     data,
   },
-  useSortBy)
+  useGlobalFilter, useSortBy)
 
+  const { globalFilter } = state
 
   return (
+    <>
+    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map ((headerGroup) => (
@@ -59,5 +64,6 @@ export const BasicTable = () => {
           })}
       </tbody>
     </table>
+    </>
   )
 }
