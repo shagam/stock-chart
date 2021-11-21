@@ -1,9 +1,10 @@
 import React, {useMemo} from 'react'
-import { useTable, useSortBy, useGlobalFilter } from 'react-table'
+import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 import MOCK_DATA from './mock-data.json'
 import { COLUMNS, GROUPED_COLUMNS } from './columns'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
+import CheckBox from './CheckBox'
 
 export const BasicTable = () => {
 
@@ -24,11 +25,27 @@ export const BasicTable = () => {
     prepareRow,
     state,
     setGlobalFilter,
+    selectedFlatRows,
   } = useTable ({
     columns,
     data,
   },
-  useGlobalFilter, useSortBy)
+  useGlobalFilter, useSortBy, useRowSelect, (hooks) => {
+    hooks.visibleColumns.push((columns) => {
+      return [
+        {
+          id: 'selection',
+          Header: ({getToggleAllRowsSelectedProps}) => (
+            <CheckBox {...getToggleAllRowsSelectedProps()} />
+          ),
+          Cell: ({row}) => (
+            <CheckBox {...row.getToggleRowSelectedProps()} />
+          )
+        }, 
+        ...columns
+      ]
+    })
+  })
 
   const { globalFilter } = state
 
@@ -63,7 +80,19 @@ export const BasicTable = () => {
             )
           })}
       </tbody>
+
     </table>
+    <pre>
+      <code>
+        {JSON.stringify (
+          {
+            selectedFlatRows: selectedFlatRows.map((row) => row.original),
+          },
+          null,
+          2
+        )}
+      </code>
+    </pre>
     </>
   )
 }
