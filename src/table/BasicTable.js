@@ -13,7 +13,7 @@ import {nanoid} from 'nanoid';
 export const BasicTable = (props) => {
 
 
-  const columns = useMemo(() => GROUPED_COLUMNS, [])  
+  const columns = useMemo(() => COLUMNS, [])  
   var data = useMemo(() => MOCK_DATA, []);
   //const [rows, setRows] = useState (data);
 
