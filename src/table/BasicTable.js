@@ -36,16 +36,11 @@ export const BasicTable = (props) => {
   }
 
   const handleDeleteClick = (row, symbol) => {
-    const index = rows.findIndex((row)=> row.original.symbol === symbol);
-    //const newRows = [...rows];
-    //console.log (rows);    
+    const index = rows.findIndex((row)=> row.original.symbol === symbol);  
     rows.splice(index, 1);
     console.log (rows);
-    //const rowsStr = JSON.stringify(rows);
-    //window.location.reload(false);
-    //setUpdateCount( updateCount + 1);
-    //clearSelectedRows={};
     props.callBack(-1);
+    saveTable();
   }
 
   // two handlers for adding new symbol
@@ -81,8 +76,20 @@ export const BasicTable = (props) => {
     rows.push (newStock);
     // const stocksStr = JSON.stringify(rows);
     // localStorage.setItem ('stocks', stocksStr);
+    saveTable();
     props.callBack(1);
     //setUpdateCount( updateCount + 1);
+  }
+
+  const saveTable = () => {
+    const stocks = [];
+    for (let i = 0; i < rows.length; i++) {
+      //console.log (rows[i].original);
+      var newStock = JSON.stringify (rows[i].original)
+      stocks.push(newStock);
+    }
+    const stocksStr = JSON.stringify(stocks);
+    localStorage.setItem ('stocks', stocksStr);
   }
 
   var {
