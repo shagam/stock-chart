@@ -19,6 +19,18 @@ export const COLUMNS = [
     Footer: 'PEG',
     accessor: 'PEG'
   },
+   {
+    Header: 'TrailPE',
+    accessor: 'TrailPE'
+  },
+  {
+    Header: 'ForwPE',
+    accessor: 'ForwPE'
+  },
+  {
+    Header: 'Div',
+    accessor: 'Div'
+  },
   {
     Header: 'BETA',
     Footer: 'BETA',

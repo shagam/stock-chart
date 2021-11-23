@@ -85,14 +85,8 @@ export const BasicTable = (props) => {
     //setUpdateCount( updateCount + 1);
   }
 
-
-  const tableInstance = useTable ({
-    columns,
-    data
-  })
-
   var {
-    clearSelectedRows,
+    // clearSelectedRows,
     getTableProps,
     getTableBodyProps,
     headerGroups,
@@ -100,7 +94,7 @@ export const BasicTable = (props) => {
     prepareRow,
     state,
     setGlobalFilter,
-    selectedFlatRows,
+    // selectedFlatRows,
     allColumns, getToggleHideAllColumnsProps,
   } = useTable ({
     columns,
