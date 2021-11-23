@@ -6,7 +6,7 @@ import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import {nanoid} from 'nanoid';
-import cloneDeep from 'lodash/cloneDeep';
+//import cloneDeep from 'lodash/cloneDeep';
 
 //setHiddenColumns   setHiddenColumns: Function(Array<ColumnId: String> | Function(oldHiddenColumns) => Array<ColumnId:
 
@@ -21,6 +21,11 @@ export const BasicTable = (props) => {
     // symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
     //  BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0, year20: 0          
   })
+
+  //setHiddenColumns: Function(Array<ColumnId: String> | Function(oldHiddenColumns) => Array<ColumnId: String>) => void
+  //toggleHideColumn: Function(columnId: String, ?value: Boolean) => void
+  //toggleHideAllColumns: Function(?value: Boolean) => void
+  //toggleHideColumn: Function(columnId: String, ?value: Boolean) => void
 
   const handleInfoClick = (sym) => {
 
@@ -67,15 +72,15 @@ export const BasicTable = (props) => {
     }
     
     //var newStock = cloneDeep (rows[0]);
-    newStock.id = nanoid();
+    //newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
     newStock.cells = null;
     newStock.allCells = [];
 
     rows.push (newStock);
-    const stocksStr = JSON.stringify(newStock);
-    localStorage.setItem (stocksStr, 'stock');
+    // const stocksStr = JSON.stringify(rows);
+    // localStorage.setItem ('stocks', stocksStr);
     props.callBack(1);
     //setUpdateCount( updateCount + 1);
   }
@@ -96,34 +101,33 @@ export const BasicTable = (props) => {
     state,
     setGlobalFilter,
     selectedFlatRows,
+    allColumns, getToggleHideAllColumnsProps,
   } = useTable ({
     columns,
     data,
   },
   useGlobalFilter, useSortBy, useRowSelect,
-  //  (hooks) => {
-  //   hooks.visibleColumns.push((columns) => {
-  //     return [
-  //       {
-  //         // id: 'selection',
-  //         // Header: ({getToggleAllRowsSelectedProps}) => (
-  //         //   <CheckBox {...getToggleAllRowsSelectedProps()} />
-  //         // ),
-  //         // Cell: ({row}) => (
-  //         //   <button type="button" onClick={()=>handleDeleteClick(row, row.original.symbol)}>del</button>                  
-  //         //   // <CheckBox {...row.getToggleRowSelectedProps()} />
-  //         // )
-  //       }, 
-  //       ...columns
-  //     ]
-  //   })
-  // }
   )
 
   const { globalFilter } = state
 
   return (
     <>
+    <div>
+      <div>
+        <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All
+      </div>
+      {
+        allColumns.map(column => (
+          <div key={column.id}>
+            <label>
+              <input type='checkbox' {...column.getToggleHiddenProps()} />
+              {column.Header}
+            </label>
+          </div>
+        ))
+      }
+    </div>
     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
     <table {...getTableProps()}>
       <thead>
