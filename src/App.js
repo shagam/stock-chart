@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import StockTable from './Stock-table';
+// import StockTable from './Stock-table';
 import {BasicTable} from './table/BasicTable' 
 
 function App() {
