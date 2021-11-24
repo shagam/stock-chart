@@ -6,7 +6,7 @@ import "./StockChart.css";
 const Stock_chart = (props) => { 
   //StockSymbol, /*c_API_KEY,*/ c_callBack
   const StockSymbol = props.StockSymbol;
-  const API_KEY = props.API_KEY;
+  // const API_KEY = props.API_KEY;
   const callBack = props.callBack;
   const lastTime = props.lastTime;
   
@@ -27,9 +27,10 @@ const Stock_chart = (props) => {
   }
 
   //console.log (JSON.stringify(`${StockSymbol}`));
-  if (isEmpty (`${StockSymbol}`))
-    alert ("symbol Udef");
-
+  if (isEmpty (`${StockSymbol}`)) {
+    alert ("(Stock-chart.js) symbol Udef");
+    return "err"; //<error "(Stock-chart.js) symbol Udef"/>;
+  }
   const fetchStock = () => {
     //const pointerToThis = this;
 
