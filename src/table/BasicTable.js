@@ -5,6 +5,8 @@ import { COLUMNS, GROUPED_COLUMNS } from './columns'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
+import Stock_chart from '../Stock-chart'
+import AlphaVantage from '../AlphaVantage'
 import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
 
@@ -58,8 +60,8 @@ export const BasicTable = (props) => {
       
       //const index = rows.findIndex((row)=> row.original.symbol === symbol);  
 
-      console.log(`Overview info (${symbol})`);
-      console.log (`${API_Call}`);            
+      //console.log(`Overview info (${symbol})`);
+      //console.log (`${API_Call}`);            
       fetch(API_Call)
           .then(
               function(response) {
@@ -90,6 +92,29 @@ export const BasicTable = (props) => {
           )
          }
   
+         const handleCallBackForHistory = (childData, sym) => {
+            console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
+            const index = rows.findIndex((row)=> row.original.symbol === sym);            
+            if (index === -1) {
+              alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
+              return chartSymbol;
+            }
+
+            rows[index].valuesnowHist = Date.now();
+            rows[index].values.wk = childData[0]; //stocks[index].wk;
+            rows[index].values.wk2 = childData[1]; //stocks[index].wk2;
+            rows[index].values.mon = childData[2]; //stocks[index].mon;
+            rows[index].values.mon3 = childData[3]; //stocks[index].mon3;
+            rows[index].values.mon6 = childData[4]; //stocks[index].mon6;
+            rows[index].values.year = childData[5]; //stocks[index].year;
+            rows[index].values.year2 = childData[6]; //stocks[index].year2;
+            rows[index].values.year5 = childData[7]; //stocks[index].year5;
+            rows[index].values.year10 = childData[8]; //stocks[index].year10;
+            rows[index].values.year20 = childData[9]; //stocks[index].year20; 
+            props.callBack(-1); // force refresh
+            saveTable();
+        }
+
         const handleOverview = (childData)  => {
           if (childData === null || childData === {} || childData["Exchange"] == null) {
             console.log ('ChildData missing');
@@ -120,7 +145,9 @@ export const BasicTable = (props) => {
             
 
   const handleChartClick = (sym) => {
-  
+    setChartSymbol (sym);
+    localStorage.setItem ('chartSymbol', sym);
+    props.callBack(-1);
   }
 
   const handleDeleteClick = (row, symbol) => {
@@ -228,6 +255,14 @@ export const BasicTable = (props) => {
   
   )
 
+  const conditionalChart = () => {
+    if ((chartSymbol === ""))  {
+      console.log ('(BasicTable) chartSymbol undef');
+      return null;
+    }
+    // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+    return <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory}  /> 
+  }
 
   const { globalFilter } = state
 
@@ -295,6 +330,11 @@ export const BasicTable = (props) => {
           <button type="submit"> Add</button>
         </form>
    </div>
+   <div>
+    <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory}  />
+    {/* {conditionalChart}     */}
+    {/* {AlphaVantage (alphaCallBack)} */}
+    </div>
     </>
   )
 }
