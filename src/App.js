@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App-continer">
       <div>       
-        <StockTable />
+        {/* <StockTable /> */}
       </div>
       <div>
         <BasicTable callBack = {handleCallBack} />
