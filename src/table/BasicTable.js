@@ -13,8 +13,24 @@ import {nanoid} from 'nanoid';
 export const BasicTable = (props) => {
 
 
-  const columns = useMemo(() => COLUMNS, [])  
-  var data = useMemo(() => MOCK_DATA, []);
+  const columns = useMemo(() => COLUMNS, []);
+  var  data = useMemo(() => MOCK_DATA, []);
+
+  const dataStored = useMemo(() => localStorage.getItem('stocks', []));
+  const dataStoredParsed = JSON.parse(dataStored);
+  // console.log ('loaded');
+  //   if (dataStored !== null)
+  //     data = dataStoredParsed;
+
+    //data = JSON.parse('[{"symbol": "GOOG"},{"symbol": "FB"},{"symbol": "AMZN"},{"symbol": "QQQ"}]');
+
+  // if (dataStored !== null)
+
+  // else
+  //   data = useMemo(() => MOCK_DATA, []);
+
+
+
   //const [rows, setRows] = useState (data);
 
   const [addFormData, setAddFormData] = useState({
@@ -28,7 +44,7 @@ export const BasicTable = (props) => {
   //toggleHideColumn: Function(columnId: String, ?value: Boolean) => void
 
   const handleInfoClick = (sym) => {
-
+    //restoreTable();
   }
 
   const handleChartClick = (sym) => {
@@ -90,7 +106,20 @@ export const BasicTable = (props) => {
     }
     const stocksStr = JSON.stringify(stocks);
     localStorage.setItem ('stocks', stocksStr);
+    localStorage.setItem ('state', JSON.stringify(state));
   }
+
+  const restoreTable = () => {
+    const stocksStr = localStorage.getItem ('stocks');
+    const stocks = JSON.parse (stocksStr);    
+    for (let i = 0; i < stocks.length; i++) {
+      //console.log (rows[i].original);
+      stocks.push(stocks[i]);
+    }
+    //state = JSON.parse(localStorage.getItem ('state'));
+  }
+
+  //restoreTable();
 
   var {
     // clearSelectedRows,
@@ -108,7 +137,25 @@ export const BasicTable = (props) => {
     data,
   },
   useGlobalFilter, useSortBy, useRowSelect,
+  //  (hooks) => {
+  //   hooks.visibleColumns.push((columns) => {
+  //     return [
+  //       {
+  //         id: 'selection',
+  //         Header: ({getToggleAllRowsSelectedProps}) => (
+  //           <CheckBox {...getToggleAllRowsSelectedProps()} />
+  //         ),
+  //         Cell: ({row}) => (
+  //           <CheckBox {...row.getToggleRowSelectedProps()} />
+  //         )
+  //       }, 
+  //       ...columns
+  //     ]
+  //   })
+  // }
+  
   )
+
 
   const { globalFilter } = state
 
