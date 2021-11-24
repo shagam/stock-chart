@@ -91,8 +91,8 @@ export const BasicTable = (props) => {
          }
   
         const handleOverview = (childData)  => {
-          if (childData === null) {
-            console.log ('Child dat missing');
+          if (childData === null || childData === {} || childData["Exchange"] == null) {
+            console.log ('ChildData missing');
             return;
           }
           console.log (JSON.stringify(childData).substring(0,100));
