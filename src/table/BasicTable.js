@@ -86,7 +86,7 @@ export const BasicTable = (props) => {
           )
          }
   
-         const handleCallBackForHistory = (childData, sym) => {
+         const handleCallBackForHistory = (childData, sym, splits) => {
             console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
             const index = rows.findIndex((row)=> row.original.symbol === sym);            
             if (index === -1) {
@@ -109,6 +109,7 @@ export const BasicTable = (props) => {
             rows[index].values.year10 = childData[8]; //stocks[index].year10;
             rows[index].values.year20 = childData[9]; //stocks[index].year20; 
             rows[index].values.nowChart = Date.now();
+            rows[index].values.splits = splits;
             props.callBack(-1); // force refresh
             saveTable();
         }

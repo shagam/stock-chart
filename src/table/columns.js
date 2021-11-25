@@ -90,6 +90,11 @@ export const COLUMNS = [
     Header: '20yr',
     Footer: '20yr',    
     accessor: 'year20'
+  },
+  {
+    Header: 'splits ??',
+    Footer: 'splis',    
+    accessor: 'splits'
   } 
 ] 
 

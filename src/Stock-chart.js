@@ -63,12 +63,12 @@ const Stock_chart = (props) => {
         )
         .then(
             (data) => {
-                const dataStr = JSON.stringify(data);
+              const dataStr = JSON.stringify(data);
+              console.log(API_Call);
+              console.log (dataStr);
                 stocksChartHistory[StockSymbol] = data;
                 const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
                 localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
-                //console.log ('history ' + stocksHistoryStr);
-
                 
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
@@ -79,21 +79,32 @@ const Stock_chart = (props) => {
                   alert (dataStr.substr(0, 35) + ` symbol(${StockSymbol}) \n\n${API_Call}`);
                   return;
                 }
-  
+
                 //let periodTag = 'Time Series (Daily)';
                 let periodTag = 'Weekly Adjusted Time Series';
                 //let periodTag = 'Monthly Adjusted Time Series';
+                let i = 0;
+                var splits = "";
                 for (var key in data[`${periodTag}`]) {
                     stockChartXValuesFunction.push(key);
                     stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
+                    if (i > 0) {
+                      let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                      if (ratio > 1.8 || ratio < 0.6) {
+                        ratio = ratio.toFixed(2);
+                        splits += `date=${key} ratio=${ratio} week=${i}, `;
+                      }
+                    }
+                    i++;
                 }
 
                 setStockChartXValues (stockChartXValuesFunction);
                 setStockChartYValues (stockChartYValuesFunction);
 
-
                 // build histArray to be sent to table, and hist to be displayed with chart
                 var histArray = [];
+                //histArray.push (splits);
+
                 var histStr = "";
                 var num;
                 num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1];
@@ -154,7 +165,7 @@ const Stock_chart = (props) => {
                 //setHistString (histStr);
 
                 // send historical value back to caller
-                callBack (histArray, StockSymbol);
+                callBack (histArray, StockSymbol, splits);
                 //console.log (histArray);
             }
         )
