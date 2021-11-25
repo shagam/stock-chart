@@ -19,4 +19,11 @@ table th {
   text-align: left;
   background-color: #04AA6D;
   color: white;
+  position: sticky;
+  top: 0;
 }
+
+/* div.tbl {
+  height: 55vh;
+  overflow-y: auto;
+} */
