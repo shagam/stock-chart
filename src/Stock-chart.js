@@ -28,7 +28,7 @@ const Stock_chart = (props) => {
 
   //console.log (JSON.stringify(`${StockSymbol}`));
   if (isEmpty (`${StockSymbol}`)) {
-    alert ("(Stock-chart.js) symbol Udef");
+    console.log ("(Stock-chart.js) symbol Udef");
     return "err"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
   const fetchStock = () => {
@@ -151,7 +151,7 @@ const Stock_chart = (props) => {
                 histStr += " 20y (" + num + ")";
                 histArray.push (num);
 
-                setHistString (histStr);
+                //setHistString (histStr);
 
                 // send historical value back to caller
                 callBack (histArray, StockSymbol);

@@ -42,12 +42,6 @@ export const BasicTable = (props) => {
     //  BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0, year20: 0          
   })
 
-  //setHiddenColumns: Function(Array<ColumnId: String> | Function(oldHiddenColumns) => Array<ColumnId: String>) => void
-  //toggleHideColumn: Function(columnId: String, ?value: Boolean) => void
-  //toggleHideAllColumns: Function(?value: Boolean) => void
-  //toggleHideColumn: Function(columnId: String, ?value: Boolean) => void
-
-
     // get stock overview
     const handleInfoClick = (symbol) => {
       setInfoSymbol (symbol);
@@ -100,6 +94,9 @@ export const BasicTable = (props) => {
               return chartSymbol;
             }
 
+            if (Date.now() - rows[index].values.nowChart < 1000)
+              return "duplicate";
+
             rows[index].valuesnowHist = Date.now();
             rows[index].values.wk = childData[0]; //stocks[index].wk;
             rows[index].values.wk2 = childData[1]; //stocks[index].wk2;
@@ -111,6 +108,7 @@ export const BasicTable = (props) => {
             rows[index].values.year5 = childData[7]; //stocks[index].year5;
             rows[index].values.year10 = childData[8]; //stocks[index].year10;
             rows[index].values.year20 = childData[9]; //stocks[index].year20; 
+            rows[index].values.nowChart = Date.now();
             props.callBack(-1); // force refresh
             saveTable();
         }
@@ -131,8 +129,8 @@ export const BasicTable = (props) => {
           rows[index].values.ForwPE = childData["ForwardPE"];
           rows[index].values.Div = childData["DividendYield"];
           rows[index].values.BETA = childData["Beta"];;
-          rows[index].values.nowOverview = Date.now();
           rows[index].values.target = childData["AnalystTargetPrice"];
+          rows[index].values.nowOverview = Date.now();
 
           //console.log (`Symbol (${symbol}) index (${index})`);
           props.callBack(-1); 
@@ -182,7 +180,7 @@ export const BasicTable = (props) => {
     }
     
     //var newStock = cloneDeep (rows[0]);
-    //newStock.id = nanoid();
+    newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
     newStock.cells = null;
@@ -309,9 +307,11 @@ export const BasicTable = (props) => {
                 {row.cells.map((cell) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
+                  <div>
                   <button type="button" onClick={()=>handleDeleteClick(row, row.original.symbol)}>del</button>
                   <button type="button" onClick={()=>handleInfoClick(row.original.symbol)}>info</button>     
                   <button type="button" onClick={()=>handleChartClick(row.original.symbol)}>chart</button> 
+                  </div>
               </tr>
             )
           })}
