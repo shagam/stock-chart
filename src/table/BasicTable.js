@@ -194,6 +194,7 @@ export const BasicTable = (props) => {
     //setUpdateCount( updateCount + 1);
   }
 
+
   const saveTable = () => {
     const stocks = [];
     for (let i = 0; i < rows.length; i++) {
@@ -210,13 +211,15 @@ export const BasicTable = (props) => {
     const stocksStr = localStorage.getItem ('stocks');
     const stocks = JSON.parse (stocksStr);    
     for (let i = 0; i < stocks.length; i++) {
-      //console.log (rows[i].original);
-      stocks.push(stocks[i]);
+      console.log (stocks[i]);
+      
+      //rows.push(stocks[i]);
     }
     //state = JSON.parse(localStorage.getItem ('state'));
+    //setHiddenColumns(state1.hiddenColumns);
   }
 
-  //restoreTable();
+  restoreTable();
 
   var {
     // clearSelectedRows,
@@ -282,6 +285,7 @@ export const BasicTable = (props) => {
       }
     </div>
     <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+    <div className="tbl">
     <table {...getTableProps()}>
       <thead>
         {headerGroups.map ((headerGroup) => (
@@ -317,6 +321,7 @@ export const BasicTable = (props) => {
           })}
       </tbody>
     </table>
+    </div>
     <div>
        <label>Add stock symbol </label>
        <form onSubmit = {handleAddFormSubmit}>
