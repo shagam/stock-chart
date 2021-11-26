@@ -172,7 +172,7 @@ export const BasicTable = (props) => {
     event.preventDefault();
     var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     prepareRow(newStock);
-    const index = rows.findIndex((row)=> row.original.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
+    const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
 
     //console.log (addFormData.symbol)
     if (index !== -1) {
@@ -194,33 +194,6 @@ export const BasicTable = (props) => {
     props.callBack(1);
     //setUpdateCount( updateCount + 1);
   }
-
-
-  const saveTable = () => {
-    const stocks = [];
-    for (let i = 0; i < rows.length; i++) {
-      //console.log (rows[i].original);
-      var newStock = JSON.stringify (rows[i].original)
-      stocks.push(newStock);
-    }
-    const stocksStr = JSON.stringify(stocks);
-    localStorage.setItem ('stocks', stocksStr);
-    localStorage.setItem ('state', JSON.stringify(state));
-  }
-
-  const restoreTable = () => {
-    const stocksStr = localStorage.getItem ('stocks');
-    const stocks = JSON.parse (stocksStr);    
-    for (let i = 0; i < stocks.length; i++) {
-      console.log (stocks[i]);
-      
-      //rows.push(stocks[i]);
-    }
-    //state = JSON.parse(localStorage.getItem ('state'));
-    //setHiddenColumns(state1.hiddenColumns);
-  }
-
-  restoreTable();
 
   var {
     // clearSelectedRows,
@@ -257,6 +230,48 @@ export const BasicTable = (props) => {
   
   )
 
+
+  const saveTable = () => {
+    const stocks = [];
+    for (let i = 0; i < rows.length; i++) {
+      //console.log (rows[i].original);
+      //var newStock = JSON.stringify (rows[i].values)
+      stocks.push(rows[i].values);
+    }
+    const stocksStr = JSON.stringify(stocks);
+    localStorage.setItem ('stocks', stocksStr);
+    localStorage.setItem ('state', JSON.stringify(state));
+  }
+
+
+  const restoreTable = () => {
+    if (rows === undefined)
+      return;
+    const stocksStr = localStorage.getItem ('stocks');
+    const stocks = JSON.parse(stocksStr);
+    if (stocks.length > 0) {
+    //   rows.splice (0, rows.length);    
+      for (let i = 0; i < stocks.length; i++) {
+        const sym = stocks[i]["symbol"];
+        const index = rows.findIndex((row)=> row.values.symbol == sym);
+        if (index !== -1)
+        rows.splice (index, 1);   
+        console.log (stocks[i]);
+
+        var newStock = JSON.parse (`{"id":"0","original":{"symbol":"${sym}"},"index":0,"values":{"symbol":"${sym}"}}`);
+        newStock.values = stocks[i];
+        newStock.original = stocks[i];
+        prepareRow(newStock);
+        //newStock.values.symbol = sym;
+        rows.push(newStock);
+      }  
+    }
+    //state = JSON.parse(localStorage.getItem ('state'));
+    //setHiddenColumns(state1.hiddenColumns);
+  }
+
+  restoreTable();
+
   const conditionalChart = () => {
     if ((chartSymbol === ""))  {
       console.log ('(BasicTable) chartSymbol undef');
@@ -272,7 +287,9 @@ export const BasicTable = (props) => {
     <>
     <div>
       <div>
-        <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All
+        <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
+        <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All,  
       </div>
       {
         allColumns.map(column => (
@@ -285,7 +302,7 @@ export const BasicTable = (props) => {
         ))
       }
     </div>
-    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+
     <div className="tbl">
     <table {...getTableProps()}>
       <thead>
