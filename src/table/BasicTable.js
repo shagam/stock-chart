@@ -168,6 +168,21 @@ export const BasicTable = (props) => {
     setAddFormData(newFormData);
   }
 
+  const getUniqueId = () => {
+    var idList = [];
+    for (let i = 0; i < rows.length; i++) {
+      idList.push (rows[i].id);
+    }
+    idList.sort((a, b) => (a > b) ? 1 : -1);
+    // search for hole
+    for (let i = 0; i < rows.length - 1; i++) {
+      if (rows[i].id + 1 != rows[i+1].id)
+        return rows[i].id + 1;
+    }
+    return idList[idList.length - 1] + 1;
+    //console.log (idList);
+  }
+
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
     var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
@@ -181,7 +196,7 @@ export const BasicTable = (props) => {
     }
     
     //var newStock = cloneDeep (rows[0]);
-    newStock.id = nanoid();
+    newStock.id = getUniqueId(); //anoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
     newStock.cells = null;
@@ -206,6 +221,7 @@ export const BasicTable = (props) => {
     setGlobalFilter,
     // selectedFlatRows,
     allColumns, getToggleHideAllColumnsProps,
+    setHiddenColumns,
   } = useTable ({
     columns,
     data,
@@ -250,15 +266,15 @@ export const BasicTable = (props) => {
     const stocksStr = localStorage.getItem ('stocks');
     const stocks = JSON.parse(stocksStr);
     if (stocks.length > 0) {
-    //   rows.splice (0, rows.length);    
+       rows.splice (0, rows.length);    
       for (let i = 0; i < stocks.length; i++) {
         const sym = stocks[i]["symbol"];
-        const index = rows.findIndex((row)=> row.values.symbol == sym);
-        if (index !== -1)
-        rows.splice (index, 1);   
-        console.log (stocks[i]);
+        // const index = rows.findIndex((row)=> row.values.symbol == sym);
+        // if (index !== -1)
+        //   rows.splice (index, 1);   
+        //console.log (stocks[i]);
 
-        var newStock = JSON.parse (`{"id":"0","original":{"symbol":"${sym}"},"index":0,"values":{"symbol":"${sym}"}}`);
+        var newStock = JSON.parse (`{"id":${i},"original":{"symbol":"${sym}"},"index":0,"values":{"symbol":"${sym}"}}`);
         newStock.values = stocks[i];
         newStock.original = stocks[i];
         prepareRow(newStock);
@@ -266,7 +282,8 @@ export const BasicTable = (props) => {
         rows.push(newStock);
       }  
     }
-    //state = JSON.parse(localStorage.getItem ('state'));
+    //setHiddenColumns ([] /*["TrailPE", "ForwPE"]*/);
+    const state1 = JSON.parse(localStorage.getItem ('state'));
     //setHiddenColumns(state1.hiddenColumns);
   }
 
