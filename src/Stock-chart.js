@@ -94,8 +94,8 @@ const Stock_chart = (props) => {
                       if (ratio > 1.8) {
                         ratio = ratio.toFixed(2);
                         splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                        const  split = {ratio: ratio, date: key, week: i};
-                        splitArray.push(split); 
+                        // const  split = {ratio1: ratio, date: key, week: i};
+                        // splitArray.push(split); 
                       }                        
                     }
                     i++;
