@@ -85,18 +85,22 @@ const Stock_chart = (props) => {
                 //let periodTag = 'Monthly Adjusted Time Series';
                 let i = 0;
                 var splits = "";
+                var splitArray = [];
                 for (var key in data[`${periodTag}`]) {
                     stockChartXValuesFunction.push(key);
                     stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
                     if (i > 0) {
                       let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                      if (ratio > 1.8 || ratio < 0.6) {
+                      if (ratio > 1.8) {
                         ratio = ratio.toFixed(2);
-                        splits += `date=${key} ratio=${ratio} week=${i}, `;
-                      }
+                        splits += `date=${key}  ratio=${ratio} week=${i}, `;
+                        const  split = {ratio: ratio, date: key, week: i};
+                        splitArray.push(split); 
+                      }                        
                     }
                     i++;
                 }
+                console.log (splitArray); 
 
                 setStockChartXValues (stockChartXValuesFunction);
                 setStockChartYValues (stockChartYValuesFunction);
