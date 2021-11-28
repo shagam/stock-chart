@@ -65,7 +65,7 @@ const Stock_chart = (props) => {
             (data) => {
               const dataStr = JSON.stringify(data);
               console.log(API_Call);
-              console.log (dataStr);
+              console.log (dataStr.substring(0,150));
                 stocksChartHistory[StockSymbol] = data;
                 const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
                 localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
