@@ -66,9 +66,9 @@ const Stock_chart = (props) => {
               const dataStr = JSON.stringify(data);
               console.log(API_Call);
               console.log (dataStr.substring(0,150));
-                stocksChartHistory[StockSymbol] = data;
-                const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
-                localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
+                // stocksChartHistory[StockSymbol] = data;
+                // const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
+                // localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
                 
                 // too frequent AlphaVantage api calls
                 if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
@@ -94,8 +94,8 @@ const Stock_chart = (props) => {
                       if (ratio > 1.8) {
                         ratio = ratio.toFixed(2);
                         splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                        // const  split = {ratio1: ratio, date: key, week: i};
-                        // splitArray.push(split); 
+                        const  split = {ratio1: ratio, date: key, week: i};
+                        splitArray.push(split); 
                       }                        
                     }
                     i++;
