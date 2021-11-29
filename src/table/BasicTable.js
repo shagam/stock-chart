@@ -135,6 +135,7 @@ export const BasicTable = (props) => {
 
           //console.log (`Symbol (${symbol}) index (${index})`);
           props.callBack(-1); 
+          saveTable();
 
           // save overview per symbol
           // stocksOverview[symbol] = childData;
@@ -152,7 +153,7 @@ export const BasicTable = (props) => {
   const handleDeleteClick = (row, symbol) => {
     const index = rows.findIndex((row)=> row.original.symbol === symbol);  
     rows.splice(index, 1);
-    console.log (rows);
+    //console.log (rows);
     props.callBack(-1);
     saveTable();
   }
@@ -176,7 +177,7 @@ export const BasicTable = (props) => {
     idList.sort((a, b) => (a > b) ? 1 : -1);
     // search for hole
     for (let i = 0; i < rows.length - 1; i++) {
-      if (rows[i].id + 1 != rows[i+1].id)
+      if (rows[i].id + 1 !== rows[i+1].id)
         return rows[i].id + 1;
     }
     return idList[idList.length - 1] + 1;
@@ -265,7 +266,7 @@ export const BasicTable = (props) => {
       return;
     const stocksStr = localStorage.getItem ('stocks');
     const stocks = JSON.parse(stocksStr);
-    if (stocks.length > 0) {
+    if (stocks !== null && stocks.length > 0) {
        rows.splice (0, rows.length);    
       for (let i = 0; i < stocks.length; i++) {
         const sym = stocks[i]["symbol"];
@@ -287,7 +288,7 @@ export const BasicTable = (props) => {
     //setHiddenColumns(state1.hiddenColumns);
   }
 
-  restoreTable();
+ restoreTable();
 
   const conditionalChart = () => {
     if ((chartSymbol === ""))  {
