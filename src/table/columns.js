@@ -42,6 +42,11 @@ export const COLUMNS = [
     accessor: 'target'
   },
   {
+    Header: '',
+    Footer: '',    
+    accessor: 'gap'
+  },
+  {
     Header: 'wk',
     Footer: 'wk',    
     accessor: 'wk'

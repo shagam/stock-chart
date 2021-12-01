@@ -239,9 +239,14 @@ export const BasicTable = (props) => {
     // selectedFlatRows,
     allColumns, getToggleHideAllColumnsProps,
     setHiddenColumns,
+    toggleHidden,
   } = useTable ({
     columns,
     data,
+    initialState: {
+      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","splits","year10","year20"]
+    }
+
   },
   useGlobalFilter, useSortBy, useRowSelect,
   //  (hooks) => {
@@ -261,8 +266,6 @@ export const BasicTable = (props) => {
   //   })
   // }  
   )
-
-
 
   const saveTable = () => {
     const stocks = [];
@@ -298,11 +301,12 @@ export const BasicTable = (props) => {
         //newStock.values.symbol = sym;
         rows.push(newStock);
       }
-      //setHiddenColumns([]/*state1.hiddenColumns*/);  
+;  
     }
 
     const state1 = JSON.parse(localStorage.getItem ('state'));
-
+    //toggleHidden('BETA');
+    //setHiddenColumns([])  
   }
 
  restoreTable();
