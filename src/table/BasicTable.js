@@ -243,9 +243,9 @@ export const BasicTable = (props) => {
   //       ...columns
   //     ]
   //   })
-  // }
-  
+  // }  
   )
+
 
 
   const saveTable = () => {
