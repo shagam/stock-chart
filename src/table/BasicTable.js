@@ -72,7 +72,7 @@ export const BasicTable = (props) => {
                 if (data != null) {
                     const dataStr = JSON.stringify(data);
                     if (dataStr === '{}')
-                      console.log (`info invalid symbol=${symbol} data="${dataStr}"`);
+                      alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
                     const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                     if (index !== -1) {
                       alert (dataStr + `\n\n${API_Call}`);
