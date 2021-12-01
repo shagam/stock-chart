@@ -121,22 +121,38 @@ export const BasicTable = (props) => {
           }
           console.log (JSON.stringify(childData).substring(0,100));
           const symbol = childData["Symbol"];
-    
-          const index = rows.findIndex((row)=> row.original.symbol === symbol);  
-          rows[index].values.Exchange = childData["Exchange"].substring(0,4);
-          rows[index].values.PE = childData["PERatio"];
-          rows[index].values.PEG = childData["PEGRatio"];  
-          rows[index].values.TrailPE = childData["TrailingPE"];
-          rows[index].values.ForwPE = childData["ForwardPE"];
-          rows[index].values.Div = childData["DividendYield"];
-          rows[index].values.BETA = childData["Beta"];;
-          rows[index].values.target = childData["AnalystTargetPrice"];
-          rows[index].values.nowOverview = Date.now();
+          const index = rows.findIndex((row)=> row.original.symbol === symbol);
 
-          //console.log (`Symbol (${symbol}) index (${index})`);
-          props.callBack(-1); 
+          var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
+          prepareRow(newStock);
+          newStock.id = rows[index].id;
+          newStock.values.symbol = symbol;
+          newStock.values.Exchange = childData["Exchange"].substring(0,4);
+          newStock.values.PE = childData["PERatio"];
+          newStock.values.PEG = childData["PEGRatio"]; 
+          newStock.values.TrailPE = childData["TrailingPE"];
+          newStock.values.ForwPE = childData["ForwardPE"];
+          newStock.values.Div = childData["DividendYield"];
+          newStock.values.BETA = childData["Beta"];;
+          newStock.values.target = childData["AnalystTargetPrice"];
+          newStock.values.nowOverview = Date.now();
+
+          newStock.values.wk = rows[index].values.wk;
+          newStock.values.wk2 = rows[index].values.wk2;
+          newStock.values.mon = rows[index].values.mon;
+          newStock.values.mon3 = rows[index].values.mon3;
+          newStock.values.mon6 = rows[index].values.mon6;
+          newStock.values.year = rows[index].values.year;
+          newStock.values.year2 = rows[index].values.year2;
+          newStock.values.year5 = rows[index].values.year5;
+          newStock.values.year10 = rows[index].values.year10;
+          newStock.values.year20 = rows[index].values.year20; 
+          newStock.values.splits = rows[index].values.splits;
+          newStock.values.nowChart = Date.now();
+          //rows[index] = newStock;
+          rows.splice (index, 1, newStock);
           saveTable();
-
+          props.callBack(-1); 
           // save overview per symbol
           // stocksOverview[symbol] = childData;
           // const stocksOverviewStr = JSON.stringify(stocksOverview);
@@ -211,7 +227,7 @@ export const BasicTable = (props) => {
     //setUpdateCount( updateCount + 1);
   }
 
-  var {
+  const {
     // clearSelectedRows,
     getTableProps,
     getTableBodyProps,
@@ -281,14 +297,16 @@ export const BasicTable = (props) => {
         prepareRow(newStock);
         //newStock.values.symbol = sym;
         rows.push(newStock);
-      }  
+      }
+      //setHiddenColumns([]/*state1.hiddenColumns*/);  
     }
-    //setHiddenColumns ([] /*["TrailPE", "ForwPE"]*/);
+
     const state1 = JSON.parse(localStorage.getItem ('state'));
-    //setHiddenColumns(state1.hiddenColumns);
+
   }
 
  restoreTable();
+ //setHiddenColumns (["TrailPE", "ForwPE"]);
 
   const conditionalChart = () => {
     if ((chartSymbol === ""))  {
