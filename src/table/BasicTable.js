@@ -110,8 +110,8 @@ export const BasicTable = (props) => {
             rows[index].values.year20 = childData[9]; //stocks[index].year20; 
             rows[index].values.nowChart = Date.now();
             rows[index].values.splits = splits;
-            props.callBack(-1); // force refresh
             saveTable();
+            props.callBack(-1); // force refresh
         }
 
         const handleOverview = (childData)  => {
