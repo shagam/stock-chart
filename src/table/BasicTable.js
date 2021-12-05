@@ -16,6 +16,7 @@ export const BasicTable = (props) => {
 
   const [chartSymbol, setChartSymbol] = useState("");
   const [infoSymbol, setInfoSymbol] = useState("");
+  const [chartData, setChartData] = useState("");
 
   const columns = useMemo(() => COLUMNS, []);
   var  data = useMemo(() => MOCK_DATA, []);
@@ -163,8 +164,48 @@ export const BasicTable = (props) => {
   const handleChartClick = (sym) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
-    props.callBack(-1);
-  }
+
+    const API_KEY_ = 'BC9UV9YUBWM3KQGF';
+    const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
+    let periodCapital = period[1][0];  
+
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${chartSymbol}&outputsize=compact&apikey=${API_KEY_}`;
+
+    
+    fetch(API_Call)
+        .then(
+            function(response) {
+                const respStr = JSON.stringify (response);
+                if (respStr.indexOf (' status: 200, ok: true') !== -1)
+                    console.log(response);
+                return response.json();
+            }
+        )
+        .then(
+            (data_) => {
+              const dataStr = JSON.stringify(data_);
+              console.log(API_Call);
+              console.log (dataStr.substring(0,150));
+              // stocksChartHistory[StockSymbol] = data;
+              // const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
+              // localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
+              
+              // too frequent AlphaVantage api calls
+              if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
+                  alert (`${dataStr} (${chartSymbol}) \n\n${API_Call} `);
+                  return;
+              }
+              if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
+                alert (dataStr.substr(0, 35) + ` symbol(${chartSymbol}) \n\n${API_Call}`);
+                return;
+              }
+
+              setChartData (data_);
+              //props.callBack(-1);
+            }
+        )
+      }
+  
 
   const handleDeleteClick = (row, symbol) => {
     const index = rows.findIndex((row)=> row.original.symbol === symbol);  
@@ -394,7 +435,8 @@ export const BasicTable = (props) => {
         </form>
    </div>
    <div>
-    <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory}  />
+     {console.log (chartData.stringify)}
+    <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory} dat = {chartData} />
     {/* {conditionalChart}     */}
     {/* {AlphaVantage (alphaCallBack)} */}
     </div>

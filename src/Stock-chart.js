@@ -9,7 +9,8 @@ const Stock_chart = (props) => {
   // const API_KEY = props.API_KEY;
   const callBack = props.callBack;
   const lastTime = props.lastTime;
-  
+  const chartData = props.dat;
+
   //console.log (`Stock-chart props ${StockSymbol}`);
 
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -18,6 +19,10 @@ const Stock_chart = (props) => {
   const [stocksChartHistory, setStocksChartHistory] = useState ({});
   const [privSymbol, setPrevSymbol] = useState ("");
   
+
+  if (chartData === '' || chartData == null)
+    return null;
+
   const isEmpty = (str) => {
     if (str == null)
         return true;
@@ -34,6 +39,9 @@ const Stock_chart = (props) => {
   const fetchStock = () => {
     //const pointerToThis = this;
 
+    let stockChartXValuesFunction = [];
+    let stockChartYValuesFunction = [];
+
     const dat = stocksChartHistory[StockSymbol];
     const timeDiff = Date.now() - lastTime;
 
@@ -41,54 +49,16 @@ const Stock_chart = (props) => {
       console.log ('found history ', timeDiff); // 10 minutes
 
     // if (dat == null || timeDiff < 1000 * 60 * 10) {
-
-    const API_KEY_ = 'BC9UV9YUBWM3KQGF';
-    const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
-    let periodCapital = period[1][0];  
-
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${StockSymbol}&outputsize=compact&apikey=${API_KEY_}`;
-
-
-    let stockChartXValuesFunction = [];
-    let stockChartYValuesFunction = [];
-    
-    fetch(API_Call)
-        .then(
-            function(response) {
-                const respStr = JSON.stringify (response);
-                if (respStr.indexOf (' status: 200, ok: true') !== -1)
-                    console.log(response);
-                return response.json();
-            }
-        )
-        .then(
-            (data) => {
-              const dataStr = JSON.stringify(data);
-              console.log(API_Call);
-              console.log (dataStr.substring(0,150));
-                // stocksChartHistory[StockSymbol] = data;
-                // const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
-                // localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
-                
-                // too frequent AlphaVantage api calls
-                if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                    alert (`${dataStr} (${StockSymbol}) \n\n${API_Call} `);
-                    return;
-                }
-                if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                  alert (dataStr.substr(0, 35) + ` symbol(${StockSymbol}) \n\n${API_Call}`);
-                  return;
-                }
-
-                //let periodTag = 'Time Series (Daily)';
+   
+                 //let periodTag = 'Time Series (Daily)';
                 let periodTag = 'Weekly Adjusted Time Series';
                 //let periodTag = 'Monthly Adjusted Time Series';
                 let i = 0;
                 var splits = "";
                 var splitArray = [];
-                for (var key in data[`${periodTag}`]) {
+                for (var key in chartData[`${periodTag}`]) {
                     stockChartXValuesFunction.push(key);
-                    stockChartYValuesFunction.push(data[`${periodTag}`][key]['1. open']);
+                    stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
                     if (i > 0) {
                       let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
                       if (ratio > 1.8) {
@@ -172,10 +142,10 @@ const Stock_chart = (props) => {
                 callBack (histArray, StockSymbol, splits);
                 //console.log (histArray);
             }
-        )
+        
           // }
           // else console.log (' skip api for ', StockSymbol);
-        }
+        
 
         if (StockSymbol !== privSymbol) {
           console.log ('priv chart', StockSymbol, privSymbol);
