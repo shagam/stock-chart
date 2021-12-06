@@ -19,9 +19,10 @@ export const BasicTable = (props) => {
   const [chartData, setChartData] = useState("");
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const columns = useMemo(() => COLUMNS, []);
-  var  data = useMemo(() => MOCK_DATA, []);
+  //var  data = useMemo(() => MOCK_DATA, []);
+  var  data = useMemo(() => JSON.parse (localStorage.getItem("stocks")), []);
 
- 
+  
   const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
   const getAPI_KEY = () => {
     setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
@@ -277,7 +278,7 @@ export const BasicTable = (props) => {
     }
     
     //var newStock = cloneDeep (rows[0]);
-    newStock.id = getUniqueId(); //anoid();
+    newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
     newStock.cells = null;
@@ -373,7 +374,7 @@ export const BasicTable = (props) => {
     //setHiddenColumns([])  
   }
 
- restoreTable();
+ //restoreTable();
  //setHiddenColumns (["TrailPE", "ForwPE"]);
 
   const conditionalChart = () => {
