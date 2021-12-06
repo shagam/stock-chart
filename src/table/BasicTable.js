@@ -46,7 +46,7 @@ export const BasicTable = (props) => {
       //const index = rows.findIndex((row)=> row.original.symbol === symbol);  
 
       //console.log(`Overview info (${symbol})`);
-      //console.log (`${API_Call}`);            
+      console.log (`${API_Call}`);            
       fetch(API_Call)
           .then(
               function(response) {
@@ -159,7 +159,7 @@ export const BasicTable = (props) => {
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${chartSymbol}&outputsize=compact&apikey=${API_KEY_}`;
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
 
     
     fetch(API_Call)
@@ -182,11 +182,13 @@ export const BasicTable = (props) => {
               
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                  alert (`${dataStr} (${chartSymbol}) \n\n${API_Call} `);
+                  alert (`${dataStr} (${sym}) \n\n${API_Call} `);
+                  setChartData ('');
                   return;
               }
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                alert (dataStr.substr(0, 35) + ` symbol(${chartSymbol}) \n\n${API_Call}`);
+                alert (dataStr.substr(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
+                setChartData ('');
                 return;
               }
 
@@ -425,7 +427,7 @@ export const BasicTable = (props) => {
         </form>
    </div>
    <div>
-     {console.log (chartData.stringify)}
+     {/* {console.log (chartSymbol)} */}
     <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory} dat = {chartData} />
     {/* {conditionalChart}     */}
     {/* {AlphaVantage (alphaCallBack)} */}
