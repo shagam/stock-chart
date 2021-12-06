@@ -17,31 +17,21 @@ export const BasicTable = (props) => {
   const [chartSymbol, setChartSymbol] = useState("");
   const [infoSymbol, setInfoSymbol] = useState("");
   const [chartData, setChartData] = useState("");
-
+  const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const columns = useMemo(() => COLUMNS, []);
   var  data = useMemo(() => MOCK_DATA, []);
 
-  const dataStored = useMemo(() => localStorage.getItem('stocks', []));
-  const dataStoredParsed = JSON.parse(dataStored);
-  // console.log ('loaded');
-  //   if (dataStored !== null)
-  //     data = dataStoredParsed;
-
-    //data = JSON.parse('[{"symbol": "GOOG"},{"symbol": "FB"},{"symbol": "AMZN"},{"symbol": "QQQ"}]');
-
-  // if (dataStored !== null)
-
-  // else
-  //   data = useMemo(() => MOCK_DATA, []);
-
-
+ 
+  const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
+  const getAPI_KEY = () => {
+    setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
+    //console.log ('API_KEY: ' + API_KEY_array[apiKeyIndex]); 
+    return API_KEY_array[apiKeyIndex];
+  }
 
   //const [rows, setRows] = useState (data);
 
-  const [addFormData, setAddFormData] = useState({
-    // symbol: '', update: '', nowInfo: -1, nowHist: -1, Exchange: '', /*Sector: '', lastPrice: 0,*/ PE: 0, PEG: 0,
-    //  BETA: 0, gap: "", wk: -1, wk2: 20, mon: 0, mon3: 0, mon6: 0, year: 0, year2: 0, year5: 0, year10: 0, year20: 0          
-  })
+  const [addFormData, setAddFormData] = useState({    })
 
     // get stock overview
     const handleInfoClick = (symbol) => {
@@ -49,7 +39,7 @@ export const BasicTable = (props) => {
       //callBack ("tableCallBack");
       localStorage.setItem ('infoSymbol', symbol); 
       console.log(`symbol: ${symbol} chartSymbol: ${infoSymbol}`);      
-      var API_KEY = 'C542IZRPH683PFNZ';
+      var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
 
       let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
       
@@ -165,7 +155,7 @@ export const BasicTable = (props) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
 
-    const API_KEY_ = 'BC9UV9YUBWM3KQGF';
+    const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
