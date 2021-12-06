@@ -70,7 +70,8 @@ const Stock_chart = (props) => {
                     }
                     i++;
                 }
-                console.log (splitArray); 
+                // if (splitArray.length > 0)
+                //   console.log (splitArray); 
 
                 setStockChartXValues (stockChartXValuesFunction);
                 setStockChartYValues (stockChartYValuesFunction);
