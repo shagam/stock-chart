@@ -172,8 +172,8 @@ export const BasicTable = (props) => {
             }
         )
         .then(
-            (data_) => {
-              const dataStr = JSON.stringify(data_);
+            (chartData) => {
+              const dataStr = JSON.stringify(chartData);
               console.log(API_Call);
               console.log (dataStr.substring(0,150));
               // stocksChartHistory[StockSymbol] = data;
@@ -192,7 +192,38 @@ export const BasicTable = (props) => {
                 return;
               }
 
-              setChartData (data_);
+              var stockChartYValuesFunction = [];
+              let periodTag = 'Weekly Adjusted Time Series';
+              //let periodTag = 'Monthly Adjusted Time Series';
+              let i = 0;
+              var splits = "";
+              var splitArray = [];
+              for (var key in chartData[`${periodTag}`]) {
+                  stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
+                  if (i > 0) {
+                    let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                    if (ratio > 1.8) {
+                      ratio = ratio.toFixed(2);
+                      splits += `date=${key}  ratio=${ratio} week=${i}, `;
+                      const  split = {ratio1: ratio, date: key, week: i};
+                      splitArray.push(split); 
+                    }                        
+                  }
+                  i++;
+              }
+              var histArray = [];
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
+              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
+              handleCallBackForHistory (histArray, sym, splits);
+              setChartData (chartData);
               //props.callBack(-1);
             }
         )

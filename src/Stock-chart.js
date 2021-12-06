@@ -7,7 +7,7 @@ const Stock_chart = (props) => {
   //StockSymbol, /*c_API_KEY,*/ c_callBack
   const StockSymbol = props.StockSymbol;
   // const API_KEY = props.API_KEY;
-  const callBack = props.callBack;
+  //const callBack = props.callBack;
   const lastTime = props.lastTime;
   const chartData = props.dat;
 
@@ -15,7 +15,7 @@ const Stock_chart = (props) => {
 
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
-  const [histString, setHistString] = useState ("");
+  //const [histString, setHistString] = useState ("");
   const [stocksChartHistory, setStocksChartHistory] = useState ({});
   const [privSymbol, setPrevSymbol] = useState ("");
   
@@ -76,76 +76,7 @@ const Stock_chart = (props) => {
                 setStockChartXValues (stockChartXValuesFunction);
                 setStockChartYValues (stockChartYValuesFunction);
 
-                // build histArray to be sent to table, and hist to be displayed with chart
-                var histArray = [];
-                //histArray.push (splits);
-
-                var histStr = "";
-                var num;
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1];
-                num = num.toFixed(2);
-                histStr += " 1w (" + num + ")  ";
-                histArray.push (num);
-                
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[2];
-                num = num.toFixed(2);
-                histStr += " 2w (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[4];
-                num = num.toFixed(2);
-                histStr += " m (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[13];
-                num = num.toFixed(2);
-                histStr += " 3m (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[26];
-                num = num.toFixed(2);
-                histStr += " 6m (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[52];
-                num = num.toFixed(2);
-                if (num !== 'NaN')                    
-                histStr += " y (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[104];
-                num = num.toFixed(2);
-                if (num !== 'NaN')
-                histStr += " 2y (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[260];
-                num = num.toFixed(2);
-                if (num !== 'NaN')                    
-                histStr += " 5y (" + num + ")  ";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[520];
-                num = num.toFixed(2);
-                if (num !== 'NaN')
-                histStr += " 10y (" + num + ")";
-                histArray.push (num);
-
-                num = stockChartYValuesFunction[0] / stockChartYValuesFunction[1040];
-                num = num.toFixed(2);
-                if (num !== 'NaN')
-                histStr += " 20y (" + num + ")";
-                histArray.push (num);
-
-                //setHistString (histStr);
-
-                // send historical value back to caller
-                callBack (histArray, StockSymbol, splits);
-                //console.log (histArray);
-            }
-        
-          // }
-          // else console.log (' skip api for ', StockSymbol);
+             }
         
 
         if (StockSymbol !== privSymbol) {
