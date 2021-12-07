@@ -19,10 +19,13 @@ export const BasicTable = (props) => {
   const [chartData, setChartData] = useState("");
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const columns = useMemo(() => COLUMNS, []);
-  //var  data = useMemo(() => MOCK_DATA, []);
-  var  data = useMemo(() => JSON.parse (localStorage.getItem("stocks")), []);
+  var  data = useMemo(() => MOCK_DATA, []);
+  //var  data = useMemo(() => JSON.parse (localStorage.getItem("stocks")), []);
 
-  
+//   const columns = useMemo(() => {
+//     var xxx = COLUMNS;
+//  }, []);
+
   const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
   const getAPI_KEY = () => {
     setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
@@ -159,7 +162,10 @@ export const BasicTable = (props) => {
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
-
+    if (sym === '' || sym === undefined) {
+      console.log('undef', sym);
+      alert ('sym undef ', sym);
+    }
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
 
     
@@ -348,6 +354,7 @@ export const BasicTable = (props) => {
   const restoreTable = () => {
     if (rows === undefined)
       return;
+    //const defaultStocks = ['AMZN','GOOG','IBM','MRNA','PFE','QQQ','VOO','DIA'];
     const stocksStr = localStorage.getItem ('stocks');
     const stocks = JSON.parse(stocksStr);
     if (stocks !== null && stocks.length > 0) {
@@ -363,10 +370,9 @@ export const BasicTable = (props) => {
         newStock.values = stocks[i];
         newStock.original = stocks[i];
         prepareRow(newStock);
-        //newStock.values.symbol = sym;
         rows.push(newStock);
       }
-;  
+  
     }
 
     const state1 = JSON.parse(localStorage.getItem ('state'));
