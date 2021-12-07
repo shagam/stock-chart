@@ -19,8 +19,15 @@ export const BasicTable = (props) => {
   const [chartData, setChartData] = useState("");
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const columns = useMemo(() => COLUMNS, []);
-  var  data = useMemo(() => MOCK_DATA, []);
-  //var  data = useMemo(() => JSON.parse (localStorage.getItem("stocks")), []);
+  var  data;// = useMemo(() => MOCK_DATA, []);
+  var xxxx = localStorage.getItem("stocks");
+  var mmmmm = useMemo; 
+  if (!xxxx) 
+  {
+      data = mmmmm(() => MOCK_DATA, []);
+  }
+  else   
+      data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
 //   const columns = useMemo(() => {
 //     var xxx = COLUMNS;
