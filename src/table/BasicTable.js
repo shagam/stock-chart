@@ -10,7 +10,6 @@ import AlphaVantage from '../AlphaVantage'
 import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
 
-//setHiddenColumns   setHiddenColumns: Function(Array<ColumnId: String> | Function(oldHiddenColumns) => Array<ColumnId:
 
 export const BasicTable = (props) => {
 
@@ -18,6 +17,8 @@ export const BasicTable = (props) => {
   const [infoSymbol, setInfoSymbol] = useState("");
   const [chartData, setChartData] = useState("");
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
+  const [API_KEY, setAPI_KEY] = useState('');
+
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = localStorage.getItem("stocks");
@@ -29,12 +30,19 @@ export const BasicTable = (props) => {
   else   
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
-//   const columns = useMemo(() => {
-//     var xxx = COLUMNS;
-//  }, []);
-
+  const alphaCallBack = (key) => {
+    setAPI_KEY (key);
+    localStorage.setItem("alphaVantage", key);
+  }      
   const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
   const getAPI_KEY = () => {
+    if (API_KEY !== '')
+      return API_KEY;
+
+    const key = localStorage.getItem("alphaVantage");
+    if (key !== undefined && key !== '')
+      setAPI_KEY (key);
+
     setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
     //console.log ('API_KEY: ' + API_KEY_array[apiKeyIndex]); 
     return API_KEY_array[apiKeyIndex];
@@ -52,9 +60,7 @@ export const BasicTable = (props) => {
       console.log(`symbol: ${symbol} chartSymbol: ${infoSymbol}`);      
       var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
 
-      let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`
-      
-      //const index = rows.findIndex((row)=> row.original.symbol === symbol);  
+      let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
       //console.log(`Overview info (${symbol})`);
       console.log (`${API_Call}`);            
@@ -208,7 +214,7 @@ export const BasicTable = (props) => {
 
               var stockChartYValuesFunction = [];
               let periodTag = 'Weekly Adjusted Time Series';
-              //let periodTag = 'Monthly Adjusted Time Series';
+
               let i = 0;
               var splits = "";
               var splitArray = [];
@@ -316,13 +322,11 @@ export const BasicTable = (props) => {
     setGlobalFilter,
     // selectedFlatRows,
     allColumns, getToggleHideAllColumnsProps,
-    setHiddenColumns,
-    toggleHidden,
   } = useTable ({
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","splits","year10","year20"]
+      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year10","year20","splits"]
     }
 
   },
@@ -382,22 +386,20 @@ export const BasicTable = (props) => {
   
     }
 
-    const state1 = JSON.parse(localStorage.getItem ('state'));
-    //toggleHidden('BETA');
-    //setHiddenColumns([])  
+    const state1 = JSON.parse(localStorage.getItem ('state')); 
   }
 
  //restoreTable();
  //setHiddenColumns (["TrailPE", "ForwPE"]);
 
-  const conditionalChart = () => {
-    if ((chartSymbol === ""))  {
-      console.log ('(BasicTable) chartSymbol undef');
-      return null;
-    }
-    // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
-    return <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory}  /> 
-  }
+  // const conditionalChart = () => {
+  //   if ((chartSymbol === ""))  {
+  //     console.log ('(BasicTable) chartSymbol undef');
+  //     return null;
+  //   }
+  //   // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
+  //   return <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory}  /> 
+  // }
 
   const { globalFilter } = state
 
@@ -475,7 +477,7 @@ export const BasicTable = (props) => {
      {/* {console.log (chartSymbol)} */}
     <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory} dat = {chartData} />
     {/* {conditionalChart}     */}
-    {/* {AlphaVantage (alphaCallBack)} */}
+    {AlphaVantage (alphaCallBack)}
     </div>
     </>
   )
