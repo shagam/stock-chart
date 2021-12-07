@@ -20,9 +20,9 @@ export const BasicTable = (props) => {
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
-  var xxxx = localStorage.getItem("stocks");
+  var stocksFromLocalStorage = localStorage.getItem("stocks");
   var mmmmm = useMemo; 
-  if (!xxxx) 
+  if (!stocksFromLocalStorage) 
   {
       data = mmmmm(() => MOCK_DATA, []);
   }
