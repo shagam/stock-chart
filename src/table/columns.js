@@ -100,7 +100,18 @@ export const COLUMNS = [
     Header: 'splits ??',
     Footer: 'splis',    
     accessor: 'splits'
-  } 
+  },
+  {
+    Header: 'info_date',
+    Footer: 'info_date',    
+    accessor: 'info_date'
+  },
+  {
+    Header: 'gain_date',
+    Footer: 'gain_date',    
+    accessor: 'gain_date'
+  },
+
 ] 
 
 

@@ -52,6 +52,11 @@ export const BasicTable = (props) => {
 
   const [addFormData, setAddFormData] = useState({    })
 
+  function getDate() {
+    const date = new Date();
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
+  }
+
     // get stock overview
     const handleInfoClick = (symbol) => {
       setInfoSymbol (symbol);
@@ -106,6 +111,7 @@ export const BasicTable = (props) => {
               return "duplicate";
 
             rows[index].valuesnowHist = Date.now();
+            rows[index].values.gain_date = getDate();
             rows[index].values.wk = childData[0]; //stocks[index].wk;
             rows[index].values.wk2 = childData[1]; //stocks[index].wk2;
             rows[index].values.mon = childData[2]; //stocks[index].mon;
@@ -157,6 +163,7 @@ export const BasicTable = (props) => {
           newStock.values.year20 = rows[index].values.year20; 
           newStock.values.splits = rows[index].values.splits;
           newStock.values.nowChart = Date.now();
+          newStock.values.info_date = getDate();
           //rows[index] = newStock;
           rows.splice (index, 1, newStock);
           saveTable();
@@ -326,7 +333,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year10","year20","splits"]
+      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year10","year20","splits","info_date","gain_date"]
     }
 
   },
