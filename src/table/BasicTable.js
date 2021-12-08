@@ -110,8 +110,9 @@ export const BasicTable = (props) => {
             if (Date.now() - rows[index].values.nowChart < 1000)
               return "duplicate";
 
-            rows[index].valuesnowHist = Date.now();
+            rows[index].values.nowHist = Date.now();
             rows[index].values.gain_date = getDate();
+
             rows[index].values.wk = childData[0]; //stocks[index].wk;
             rows[index].values.wk2 = childData[1]; //stocks[index].wk2;
             rows[index].values.mon = childData[2]; //stocks[index].mon;
@@ -149,7 +150,10 @@ export const BasicTable = (props) => {
           newStock.values.Div = childData["DividendYield"];
           newStock.values.BETA = childData["Beta"];;
           newStock.values.target = childData["AnalystTargetPrice"];
+
           newStock.values.nowOverview = Date.now();
+          newStock.values.nowHist = rows[index].values.nowHist;
+          newStock.values.gain_date =  rows[index].values.gain_date;
 
           newStock.values.wk = rows[index].values.wk;
           newStock.values.wk2 = rows[index].values.wk2;
@@ -162,7 +166,7 @@ export const BasicTable = (props) => {
           newStock.values.year10 = rows[index].values.year10;
           newStock.values.year20 = rows[index].values.year20; 
           newStock.values.splits = rows[index].values.splits;
-          newStock.values.nowChart = Date.now();
+
           newStock.values.info_date = getDate();
           //rows[index] = newStock;
           rows.splice (index, 1, newStock);
