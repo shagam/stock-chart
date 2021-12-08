@@ -18,6 +18,7 @@ export const BasicTable = (props) => {
   const [chartData, setChartData] = useState("");
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
+  const [splitsFlag, setSplitsFlag] = useState('');
 
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
@@ -127,6 +128,10 @@ export const BasicTable = (props) => {
             rows[index].values.splits = splits;
             saveTable();
             props.callBack(-1); // force refresh
+            if (splits == '')
+              setSplitsFlag('');
+            else
+              setSplitsFlag(' splits ??');
         }
 
         const handleOverview = (childData)  => {
@@ -486,7 +491,7 @@ export const BasicTable = (props) => {
    </div>
    <div>
      {/* {console.log (chartSymbol)} */}
-    <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory} dat = {chartData} />
+    <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory} dat = {chartData}     splitsFlag = {splitsFlag} />
     {/* {conditionalChart}     */}
     {AlphaVantage (alphaCallBack)}
     </div>
