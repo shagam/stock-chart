@@ -10,6 +10,9 @@ const Stock_chart = (props) => {
   //const callBack = props.callBack;
   const lastTime = props.lastTime;
   const chartData = props.dat;
+  var splitsFlag = props.splitsFlag;
+  if (splitsFlag !== '')
+    splitsFlag =  ' ' + splitsFlag + ' distort graph and table';
 
   //console.log (`Stock-chart props ${StockSymbol}`);
 
@@ -85,7 +88,12 @@ const Stock_chart = (props) => {
           //setTimeout (fetchStock(), 0);
           fetchStock();
         }
-      
+        var graphColor;
+        if (splitsFlag == '')
+          graphColor = 'green';
+        else
+          graphColor = 'red';
+
         return (
           <div>
             {/* <h4>  historical_gain({StockSymbol}): {histString}  </h4> */}
@@ -96,11 +104,12 @@ const Stock_chart = (props) => {
                   y: stockChartYValues,
                   type: 'scatter',
                   mode: 'lines+markers',
-                  marker: { color: 'red' },
+                  marker: { color: graphColor },
                  },
 
               ]}
-              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol }}
+              layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + splitsFlag,
+            }}
             />
           </div>
         );
