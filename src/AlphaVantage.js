@@ -15,7 +15,7 @@ const  AlphaVantage = (alphaCallBack) => {
 
         // console.log(event);
         console.log(event.target.name + " " + event.target.value.toUpperCase());
-        setAlpha (event.target.value.toUpperCase());
+        //setAlpha (event.target.value.toUpperCase());
     }
 
     const handleAddFormSubmit = (event) => {
