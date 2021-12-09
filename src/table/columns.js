@@ -42,8 +42,8 @@ export const COLUMNS = [
     accessor: 'target'
   },
   {
-    Header: '',
-    Footer: '',    
+    Header: '-',
+    Footer: '-',    
     accessor: 'gap'
   },
   {

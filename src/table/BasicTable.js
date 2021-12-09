@@ -63,9 +63,13 @@ export const BasicTable = (props) => {
       setInfoSymbol (symbol);
       //callBack ("tableCallBack");
       localStorage.setItem ('infoSymbol', symbol); 
-      console.log(`symbol: ${symbol} chartSymbol: ${infoSymbol}`);      
+      console.log(`symbol: ${symbol} infoSymbol: ${infoSymbol}`);
+      if (symbol === '' || symbol === undefined) {
+        alert (`bug, info sym vanished (${symbol})`);
+        return;
+      }
+      
       var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
-
       let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
       //console.log(`Overview info (${symbol})`);
@@ -85,15 +89,16 @@ export const BasicTable = (props) => {
               function (data) {
                 if (data != null) {
                     const dataStr = JSON.stringify(data);
-                    if (dataStr === '{}')
+                    if (dataStr === '{}') {
                       alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
+                      return;
+                    }
                     const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                     if (index !== -1) {
                       alert (dataStr + `\n\n${API_Call}`);
                       //alert (dataStr);
                       return;
                     }
-  
                     handleOverview (data);
                   }
               }
@@ -187,14 +192,16 @@ export const BasicTable = (props) => {
   const handleChartClick = (sym) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
+    console.log(`symbol: ${sym} chartSymbol: ${chartSymbol}`); 
+    if (sym === '' || sym === undefined) {
+      alert (`bug, chart sym vanished (${sym})`);
+      return;
+    }
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
-    if (sym === '' || sym === undefined) {
-      console.log('undef', sym);
-      alert ('sym undef ', sym);
-    }
+
     let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
 
     
