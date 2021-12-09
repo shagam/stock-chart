@@ -254,7 +254,11 @@ export const BasicTable = (props) => {
                   }
                   i++;
               }
+
               splits = JSON.stringify(splitArray);
+              if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 208)
+                splits = '';
+
               var histArray = [];
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));

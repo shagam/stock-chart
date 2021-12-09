@@ -23,7 +23,7 @@ const Stock_chart = (props) => {
   const [privSymbol, setPrevSymbol] = useState ("");
   
   if (chartData === '' || chartData == null) {
-    alert (`chartData empty (${chartData}.stringify())`);
+    console.log (`chartData empty (${chartData})`);
     return "empty cartData";
   }
 
