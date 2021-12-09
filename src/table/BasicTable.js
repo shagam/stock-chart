@@ -481,9 +481,9 @@ export const BasicTable = (props) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
                   <div>
-                  <button type="button" onClick={()=>handleDeleteClick(row, row.original.symbol)}>del</button>
-                  <button type="button" onClick={()=>handleInfoClick(row.original.symbol)}>info</button>     
-                  <button type="button" onClick={()=>handleChartClick(row.original.symbol)}>chart</button> 
+                  <button type="button" onClick={()=>handleDeleteClick(row, row.values.symbol)}>del</button>
+                  <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
+                  <button type="button" onClick={()=>handleChartClick(row.values.symbol)}>chart</button> 
                   </div>
               </tr>
             )
