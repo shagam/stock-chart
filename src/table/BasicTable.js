@@ -429,7 +429,7 @@ export const BasicTable = (props) => {
   return (
     <>
     <div>
-      <div>
+      <div className="buttons">
         <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
         <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All,  
