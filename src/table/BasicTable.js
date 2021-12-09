@@ -133,7 +133,7 @@ export const BasicTable = (props) => {
             rows[index].values.splits = splits;
             saveTable();
             props.callBack(-1); // force refresh
-            if (splits == '')
+            if (splits === '' || splits.length === 0)
               setSplitsFlag('');
             else
               setSplitsFlag(' splits ??');
@@ -247,15 +247,17 @@ export const BasicTable = (props) => {
                     let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
                     if (ratio > 1.8 || ratio < 0.6) {
                       ratio = ratio.toFixed(2);
-                      splits += `date=${key}  ratio=${ratio} week=${i}, `;
+                      //splits += `date=${key}  ratio=${ratio} week=${i}, `;
                       const  split = {ratio1: ratio, date: key, week: i};
                       splitArray.push(split); 
                     }                        
                   }
                   i++;
               }
-
-              splits = JSON.stringify(splitArray);
+              if (splitArray.length > 0)
+                splits = JSON.stringify(splitArray);
+              else
+                splits = '';  
               if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 208)
                 splits = '';
 
@@ -351,7 +353,6 @@ export const BasicTable = (props) => {
     setGlobalFilter,
     // selectedFlatRows,
     allColumns, getToggleHideAllColumnsProps,
-    getRowId,
   } = useTable ({
     columns,
     data,
@@ -506,7 +507,7 @@ export const BasicTable = (props) => {
    </div>
    <div>
      {/* {console.log (chartSymbol)} */}
-    <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory} dat = {chartData}     splitsFlag = {splitsFlag} />
+    <Stock_chart StockSymbol ={chartSymbol} dat = {chartData}     splitsFlag = {splitsFlag} />
     {/* {conditionalChart}     */}
     {AlphaVantage (alphaCallBack)}
     </div>
