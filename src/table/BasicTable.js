@@ -110,7 +110,7 @@ export const BasicTable = (props) => {
             const index = rows.findIndex((row)=> row.original.symbol === sym);            
             if (index === -1) {
               alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
-              return chartSymbol;
+              return;
             }
 
             if (Date.now() - rows[index].values.nowChart < 1000)
@@ -226,12 +226,12 @@ export const BasicTable = (props) => {
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
                   alert (`${dataStr} (${sym}) \n\n${API_Call} `);
-                  setChartData ('');
+                  //setChartData ('');
                   return;
               }
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
                 alert (dataStr.substr(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
-                setChartData ('');
+                //setChartData ('');
                 return;
               }
 
@@ -245,7 +245,7 @@ export const BasicTable = (props) => {
                   stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
                   if (i > 0) {
                     let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                    if (ratio > 1.8) {
+                    if (ratio > 1.8 || ratio < 0.6) {
                       ratio = ratio.toFixed(2);
                       splits += `date=${key}  ratio=${ratio} week=${i}, `;
                       const  split = {ratio1: ratio, date: key, week: i};
@@ -254,6 +254,7 @@ export const BasicTable = (props) => {
                   }
                   i++;
               }
+              splits = JSON.stringify(splitArray);
               var histArray = [];
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
@@ -295,15 +296,15 @@ export const BasicTable = (props) => {
   const getUniqueId = () => {
     var idList = [];
     for (let i = 0; i < rows.length; i++) {
-      idList.push (rows[i].id);
+      idList.push (rows[i].id * 1);
     }
     idList.sort((a, b) => (a > b) ? 1 : -1);
     // search for hole
     for (let i = 0; i < rows.length - 1; i++) {
-      if (rows[i].id + 1 !== rows[i+1].id)
-        return rows[i].id + 1;
+      if ((rows[i].id * 1 + 1) !== rows[i+1].id)
+        return rows[i].id * 1 + 1;
     }
-    return idList[idList.length - 1] + 1;
+    return idList[idList.length - 1] * 1 + 1;
     //console.log (idList);
   }
 
@@ -320,6 +321,7 @@ export const BasicTable = (props) => {
     }
     
     //var newStock = cloneDeep (rows[0]);
+    //newStock.id = getUniqueId();
     newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
@@ -345,6 +347,7 @@ export const BasicTable = (props) => {
     setGlobalFilter,
     // selectedFlatRows,
     allColumns, getToggleHideAllColumnsProps,
+    getRowId,
   } = useTable ({
     columns,
     data,
@@ -465,6 +468,7 @@ export const BasicTable = (props) => {
       <tbody {...getTableBodyProps()}>
         {
           rows.map(row => {
+
             prepareRow(row)
             return (
               <tr
