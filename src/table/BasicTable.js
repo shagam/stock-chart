@@ -22,7 +22,7 @@ export const BasicTable = (props) => {
 
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
-  var stocksFromLocalStorage = localStorage.getItem("stocks");
+  var stocksFromLocalStorage = useMemo(() => localStorage.getItem("stocks"));
   var mmmmm = useMemo; 
   if (!stocksFromLocalStorage) 
   {
@@ -248,7 +248,7 @@ export const BasicTable = (props) => {
                     if (ratio > 1.8 || ratio < 0.6) {
                       ratio = ratio.toFixed(2);
                       //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                      const  split = {ratio1: ratio, date: key, week: i};
+                      const  split = {ratio: ratio, date: key, week: i};
                       splitArray.push(split); 
                     }                        
                   }
@@ -297,21 +297,6 @@ export const BasicTable = (props) => {
     const newFormData = { ...addFormData};
     newFormData[fieldName] = fieldValue;
     setAddFormData(newFormData);
-  }
-
-  const getUniqueId = () => {
-    var idList = [];
-    for (let i = 0; i < rows.length; i++) {
-      idList.push (rows[i].id * 1);
-    }
-    idList.sort((a, b) => (a > b) ? 1 : -1);
-    // search for hole
-    for (let i = 0; i < rows.length - 1; i++) {
-      if ((rows[i].id * 1 + 1) !== rows[i+1].id)
-        return rows[i].id * 1 + 1;
-    }
-    return idList[idList.length - 1] * 1 + 1;
-    //console.log (idList);
   }
 
   const handleAddFormSubmit = (event) => {
@@ -391,37 +376,6 @@ export const BasicTable = (props) => {
     localStorage.setItem ('stocks', stocksStr);
     localStorage.setItem ('state', JSON.stringify(state));
   }
-
-
-  const restoreTable = () => {
-    if (rows === undefined)
-      return;
-    //const defaultStocks = ['AMZN','GOOG','IBM','MRNA','PFE','QQQ','VOO','DIA'];
-    const stocksStr = localStorage.getItem ('stocks');
-    const stocks = JSON.parse(stocksStr);
-    if (stocks !== null && stocks.length > 0) {
-       rows.splice (0, rows.length);    
-      for (let i = 0; i < stocks.length; i++) {
-        const sym = stocks[i]["symbol"];
-        // const index = rows.findIndex((row)=> row.values.symbol == sym);
-        // if (index !== -1)
-        //   rows.splice (index, 1);   
-        //console.log (stocks[i]);
-
-        var newStock = JSON.parse (`{"id":${i},"original":{"symbol":"${sym}"},"index":0,"values":{"symbol":"${sym}"}}`);
-        newStock.values = stocks[i];
-        newStock.original = stocks[i];
-        prepareRow(newStock);
-        rows.push(newStock);
-      }
-  
-    }
-
-    const state1 = JSON.parse(localStorage.getItem ('state')); 
-  }
-
- //restoreTable();
- //setHiddenColumns (["TrailPE", "ForwPE"]);
 
   // const conditionalChart = () => {
   //   if ((chartSymbol === ""))  {
