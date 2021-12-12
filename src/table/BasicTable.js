@@ -14,8 +14,8 @@ import {nanoid} from 'nanoid';
 export const BasicTable = (props) => {
 
   const [chartSymbol, setChartSymbol] = useState("");
-  const [infoSymbol, setInfoSymbol] = useState("");
   const [chartData, setChartData] = useState("");
+  
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
@@ -60,10 +60,10 @@ export const BasicTable = (props) => {
 
     // get stock overview
     const handleInfoClick = (symbol) => {
-      setInfoSymbol (symbol);
+
       //callBack ("tableCallBack");
       localStorage.setItem ('infoSymbol', symbol); 
-      console.log(`symbol: ${symbol} infoSymbol: ${infoSymbol}`);
+      console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
       if (symbol === '' || symbol === undefined) {
         alert (`bug, info sym vanished (${symbol})`);
         return;
