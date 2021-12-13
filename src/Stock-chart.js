@@ -5,18 +5,13 @@ import "./StockChart.css";
 
 const Stock_chart = (props) => { 
   const StockSymbol = props.StockSymbol;
-  const chartData = props.dat;
+  //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
   if (splitsFlag !== '')
     splitsFlag =  ' ' + splitsFlag + ' distort graph and table';
 
   //console.log (`Stock-chart props ${StockSymbol}`);
   
-  console.log ('chartData', chartData);
-  if (chartData === '' || chartData == null) {
-    console.log (`chartData empty (${chartData})`);
-    return "chartData empty"
-  }
 
   const isEmpty = (str) => {
     if (str == null)
@@ -32,21 +27,7 @@ const Stock_chart = (props) => {
     return "err"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
 
-  let stockChartXValues = [];
-  let stockChartYValues = [];
-
-  const fetchStock = () => {
-      //let periodTag = 'Time Series (Daily)';
-    let periodTag = 'Weekly Adjusted Time Series';
-    //let periodTag = 'Monthly Adjusted Time Series';
-    for (var key in chartData[`${periodTag}`]) {
-        stockChartXValues.push(key);
-        stockChartYValues.push(chartData[`${periodTag}`][key]['1. open']);
-     }
-  }      
-
-  fetchStock();
-
+ 
   var graphColor;
   if (splitsFlag === '')
     graphColor = 'green';
@@ -59,8 +40,8 @@ const Stock_chart = (props) => {
       <Plot
         data={[
           {
-            x: stockChartXValues,
-            y: stockChartYValues,
+            x: props.stockChartXValues,
+            y: props.stockChartYValues,
             type: 'scatter',
             mode: 'lines+markers',
             marker: { color: graphColor },

@@ -14,12 +14,14 @@ import {nanoid} from 'nanoid';
 export const BasicTable = (props) => {
 
   const [chartSymbol, setChartSymbol] = useState("");
-  const [chartData, setChartData] = useState("");
-  
+  //const [chartData, setChartData] = useState("");
+  const [stockChartXValues, setStockChartXValues] = useState ([]);
+  const [stockChartYValues, setStockChartYValues] = useState ([]);
+
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
-
+  const [splitsCalc, setSplitsCalc] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = useMemo(() => localStorage.getItem("stocks"));
@@ -235,14 +237,18 @@ export const BasicTable = (props) => {
                 return;
               }
 
+              var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
               let periodTag = 'Weekly Adjusted Time Series';
 
+              // prepare historical data for plotly chart
               let i = 0;
               var splits = "";
               var splitArray = [];
               for (var key in chartData[`${periodTag}`]) {
+                  stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
+
                   if (i > 0) {
                     let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
                     if (ratio > 1.8 || ratio < 0.6) {
@@ -254,6 +260,24 @@ export const BasicTable = (props) => {
                   }
                   i++;
               }
+
+              // compensate for splis
+              if (splitArray.length > 0 && splitsCalc) {
+                for (let i = 0; i < splitArray.length; i++) {
+                  var ratio = splitArray[i].ratio;
+                  if (ratio > 1)
+                    ratio = Math.round (ratio);
+                  else
+                    ratio = 1 / Math.round (1/ratio);                  
+                  for ( let j = splitArray[i].week; j < stockChartYValuesFunction.length; j++) {
+                      stockChartYValuesFunction[j] /= ratio;
+                      chartData[`${periodTag}`][key]['1. open'] /= ratio;
+                  }
+                }
+              }
+              setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
+              setStockChartYValues (stockChartYValuesFunction);
+              
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
               else
@@ -261,7 +285,7 @@ export const BasicTable = (props) => {
               if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 208)
                 splits = '';
 
-              var histArray = [];
+              var histArray = [];  // data for stocks table.
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
@@ -273,8 +297,6 @@ export const BasicTable = (props) => {
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
               handleCallBackForHistory (histArray, sym, splits);
-              setChartData (chartData);
-              //props.callBack(-1);
             }
         )
       }
@@ -342,7 +364,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year10","year20","splits","info_date","gain_date"]
+      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year20","splits","info_date","gain_date"]
     }
 
   },
@@ -388,13 +410,22 @@ export const BasicTable = (props) => {
 
   const { globalFilter } = state
 
+ const handleChange = () => {setSplitsCalc(! splitsCalc)}
+
   return (
     <>
     <div>
       <div className="buttons">
+        <label>
+          <input
+            type="checkbox" checked={splitsCalc}
+            onChange={handleChange}
+          />splits
+        </label>
+ 
         <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
-        <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All,  
+        <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All, 
       </div>
       {
         allColumns.map(column => (
@@ -461,7 +492,7 @@ export const BasicTable = (props) => {
    </div>
    <div>
      {/* {console.log (chartSymbol)} */}
-    <Stock_chart StockSymbol ={chartSymbol} dat = {chartData}     splitsFlag = {splitsFlag} />
+    <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
     {/* {conditionalChart}     */}
     {AlphaVantage (alphaCallBack)}
     </div>
