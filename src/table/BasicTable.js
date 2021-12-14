@@ -406,15 +406,6 @@ export const BasicTable = (props) => {
     localStorage.setItem ('state', JSON.stringify(state));
   }
 
-  // const conditionalChart = () => {
-  //   if ((chartSymbol === ""))  {
-  //     console.log ('(BasicTable) chartSymbol undef');
-  //     return null;
-  //   }
-  //   // return  <StockChart StockSymbol ={chartSymbol} API_KEY = {c_API_KEY} callBack = {handleCallBackForHistory} /> 
-  //   return <Stock_chart StockSymbol ={chartSymbol} callBack = {handleCallBackForHistory}  /> 
-  // }
-
   const { globalFilter } = state
 
  const handleChange = () => {setSplitsCalc(! splitsCalc)}
