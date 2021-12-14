@@ -1,3 +1,4 @@
+
 [
     {
         "symbol": "AMZN"       
@@ -16,22 +17,47 @@
     },
     {
         "symbol": "TSLA" 
-    },
-    {
-        "symbol": "IBM" 
-    },
-    {
-        "symbol": "MSFT" 
-    },
-  
+    },  
     
     {
-        "symbol": "IWM"
+        "symbol": "TSM"       
     },
     {
-        "symbol": "IWR"
+        "symbol": "QS"  
     },
     {
-        "symbol": "IYE"
+        "symbol": "MU"  
+    },
+
+    {
+        "symbol": "SPY"  
+    },
+    {
+        "symbol": "SWKS"  
+    },
+    {
+        "symbol": "QRVO"  
+    },
+    {
+        "symbol": "ABT"  
+    },
+    {
+        "symbol": "LRCX"  
+    },
+ 
+
+    {
+        "symbol": "MRNA"  
+    },
+    {
+        "symbol": "PFE"  
+    },
+    {
+        "symbol": "JNJ"  
+    },
+ 
+    {
+        "symbol": "QQQ"
     }
+
 ]
