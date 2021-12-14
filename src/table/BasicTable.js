@@ -109,7 +109,7 @@ export const BasicTable = (props) => {
   
          const handleCallBackForHistory = (childData, sym, splits) => {
             console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
-            const index = rows.findIndex((row)=> row.original.symbol === sym);            
+            const index = rows.findIndex((row)=> row.values.symbol === sym);            
             if (index === -1) {
               alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
               return;
@@ -155,7 +155,7 @@ export const BasicTable = (props) => {
           }
           console.log (JSON.stringify(childData).substring(0,100));
           const symbol = childData["Symbol"];
-          const index = rows.findIndex((row)=> row.original.symbol === symbol);
+          const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
           var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
           prepareRow(newStock);
@@ -310,7 +310,11 @@ export const BasicTable = (props) => {
   
 
   const handleDeleteClick = (row, symbol) => {
-    const index = rows.findIndex((row)=> row.original.symbol === symbol);  
+    const index = rows.findIndex((row)=> row.values.symbol === symbol);
+    if (index === -1) {
+      alert ('symbol not found ', symbol);
+      return;
+    } 
     rows.splice(index, 1);
     //console.log (rows);
     props.callBack(-1);
@@ -397,8 +401,6 @@ export const BasicTable = (props) => {
   const saveTable = () => {
     const stocks = [];
     for (let i = 0; i < rows.length; i++) {
-      //console.log (rows[i].original);
-      //var newStock = JSON.stringify (rows[i].values)
       stocks.push(rows[i].values);
     }
     const stocksStr = JSON.stringify(stocks);
