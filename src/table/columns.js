@@ -97,9 +97,14 @@ export const COLUMNS = [
     accessor: 'year20'
   },
   {
-    Header: 'splits ??',
-    Footer: 'splis',    
-    accessor: 'splits'
+    Header: 'splits_list ??',
+    Footer: 'splis_list',    
+    accessor: 'splits_list'
+  },
+  {
+    Header: 'splits',
+    Footer: 'splits',    
+    accessor: 'splits_calc'
   },
   {
     Header: 'info_date',

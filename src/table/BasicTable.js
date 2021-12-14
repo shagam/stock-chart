@@ -132,7 +132,14 @@ export const BasicTable = (props) => {
             rows[index].values.year10 = childData[8]; //stocks[index].year10;
             rows[index].values.year20 = childData[9]; //stocks[index].year20; 
             rows[index].values.nowChart = Date.now();
-            rows[index].values.splits = splits;
+            rows[index].values.splits_list = splits;
+            if (splits === '')
+              rows[index].values.splits_calc = '';
+            else if (splitsCalc)
+              rows[index].values.splits_calc = 'calc';
+            else
+              rows[index].values.splits_calc = 'raw';
+            //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
             saveTable();
             props.callBack(-1); // force refresh
             if (splits === '' || splits.length === 0)
@@ -177,8 +184,8 @@ export const BasicTable = (props) => {
           newStock.values.year5 = rows[index].values.year5;
           newStock.values.year10 = rows[index].values.year10;
           newStock.values.year20 = rows[index].values.year20; 
-          newStock.values.splits = rows[index].values.splits;
-
+          newStock.values.splits_list = rows[index].values.splits_list;
+          newStock.values.splits_calc =  rows[index].values.splits_calc;
           newStock.values.info_date = getDate();
           //rows[index] = newStock;
           rows.splice (index, 1, newStock);
@@ -364,7 +371,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year20","splits","info_date","gain_date"]
+      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
     }
 
   },
@@ -420,7 +427,7 @@ export const BasicTable = (props) => {
           <input
             type="checkbox" checked={splitsCalc}
             onChange={handleChange}
-          />splits
+          /> calc-splits
         </label>
  
         <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
