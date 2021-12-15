@@ -24,7 +24,7 @@ export const BasicTable = (props) => {
   const [splitsCalc, setSplitsCalc] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
-  var stocksFromLocalStorage = useMemo(() => localStorage.getItem("stocks"));
+  var stocksFromLocalStorage = useMemo(() => localStorage.getItem("stocks"), []);
   var mmmmm = useMemo; 
   if (stocksFromLocalStorage === "[]") 
   {
