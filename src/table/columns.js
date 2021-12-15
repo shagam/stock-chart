@@ -15,17 +15,17 @@ export const COLUMNS = [
     accessor: 'PE'
   },
   {
-    Header: 'PEG',
-    Footer: 'PEG',
-    accessor: 'PEG'
-  },
-   {
+    Header: 'ForwPE',
+    accessor: 'ForwPE'
+  },  
+  {
     Header: 'TrailPE',
     accessor: 'TrailPE'
   },
   {
-    Header: 'ForwPE',
-    accessor: 'ForwPE'
+    Header: 'PEG',
+    Footer: 'PEG',
+    accessor: 'PEG'
   },
   {
     Header: 'Div',
