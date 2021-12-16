@@ -24,15 +24,15 @@ export const BasicTable = (props) => {
   const [splitsCalc, setSplitsCalc] = useState(true);
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
-  var stocksFromLocalStorage = useMemo(() => localStorage.getItem("stocks"), []);
+  var stocksFromLocalStorage = localStorage.getItem("stocks");
   var mmmmm = useMemo; 
-  if (stocksFromLocalStorage === "[]") 
+  if (! stocksFromLocalStorage) 
   {
       data = mmmmm(() => MOCK_DATA, []);
   }
-  else {  
+  else 
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
-  }
+
   const alphaCallBack = (key) => {
     setAPI_KEY (key);
     localStorage.setItem("alphaVantage", key);
