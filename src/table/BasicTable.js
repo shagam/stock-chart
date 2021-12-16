@@ -404,7 +404,10 @@ export const BasicTable = (props) => {
       stocks.push(rows[i].values);
     }
     const stocksStr = JSON.stringify(stocks);
-    localStorage.setItem ('stocks', stocksStr);
+    if (stocks.length > 0)
+      localStorage.setItem ('stocks', stocksStr);
+    else
+      localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
   }
 
