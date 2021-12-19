@@ -254,7 +254,8 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
-
+                  if (i > 1040)
+                    continue;  //ignore splis before 20 years
                   if (i > 0) {
                     let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
                     if (ratio > 1.8 || ratio < 0.6) {
