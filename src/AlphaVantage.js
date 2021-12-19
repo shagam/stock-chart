@@ -20,7 +20,7 @@ const  AlphaVantage = (alphaCallBack) => {
 
     const handleAddFormSubmit = (event) => {
         event.preventDefault();
-        setAlpha(event.target.value);
+
         console.log("final data is: ", alpha);
         localStorage.setItem('alphaVantage', `${alpha}`);
         alphaCallBack (alpha);
