@@ -24,7 +24,7 @@ const Stock_chart = (props) => {
   //console.log (JSON.stringify(`${StockSymbol}`));
   if (isEmpty (`${StockSymbol}`)) {
     console.log ("(Stock-chart.js) symbol Udef");
-    return "err"; //<error "(Stock-chart.js) symbol Udef"/>;
+    return "Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
 
  
