@@ -356,7 +356,8 @@ export const BasicTable = (props) => {
     // const stocksStr = JSON.stringify(rows);
     // localStorage.setItem ('stocks', stocksStr);
     saveTable();
-    props.callBack(1);
+    window.location.reload();
+    //props.callBack(1);
     //setUpdateCount( updateCount + 1);
   }
 
@@ -375,7 +376,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
+      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","BETA","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
     }
 
   },
