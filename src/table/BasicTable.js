@@ -35,7 +35,6 @@ export const BasicTable = (props) => {
 
   const alphaCallBack = (key) => {
     setAPI_KEY (key);
-    localStorage.setItem("alphaVantage", key);
   }      
   const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
   const getAPI_KEY = () => {
