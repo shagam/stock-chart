@@ -156,40 +156,22 @@ export const BasicTable = (props) => {
           const symbol = childData["Symbol"];
           const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
-          var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-          prepareRow(newStock);
-          newStock.id = rows[index].id;
-          newStock.values.symbol = symbol;
-          newStock.values.Exchange = childData["Exchange"].substring(0,4);
-          newStock.values.PE = childData["PERatio"];
-          newStock.values.PEG = childData["PEGRatio"]; 
-          newStock.values.TrailPE = childData["TrailingPE"];
-          newStock.values.ForwPE = childData["ForwardPE"];
-          newStock.values.Div = childData["DividendYield"];
-          newStock.values.BETA = childData["Beta"];;
-          newStock.values.target = childData["AnalystTargetPrice"];
+          rows[index].values.Exchange = childData["Exchange"].substring(0,4);
+          rows[index].values.PE = childData["PERatio"];
+          rows[index].values.PEG = childData["PEGRatio"]; 
+          rows[index].values.TrailPE = childData["TrailingPE"];
+          rows[index].values.ForwPE = childData["ForwardPE"];
+          rows[index].values.Div = childData["DividendYield"];
+          rows[index].values.BETA = childData["Beta"];;
+          rows[index].values.target = childData["AnalystTargetPrice"];
+          rows[index].values.Industry = childData["Industry"];
 
-          newStock.values.nowOverview = Date.now();
-          newStock.values.nowHist = rows[index].values.nowHist;
-          newStock.values.gain_date =  rows[index].values.gain_date;
-
-          newStock.values.wk = rows[index].values.wk;
-          newStock.values.wk2 = rows[index].values.wk2;
-          newStock.values.mon = rows[index].values.mon;
-          newStock.values.mon3 = rows[index].values.mon3;
-          newStock.values.mon6 = rows[index].values.mon6;
-          newStock.values.year = rows[index].values.year;
-          newStock.values.year2 = rows[index].values.year2;
-          newStock.values.year5 = rows[index].values.year5;
-          newStock.values.year10 = rows[index].values.year10;
-          newStock.values.year20 = rows[index].values.year20; 
-          newStock.values.splits_list = rows[index].values.splits_list;
-          newStock.values.splits_calc =  rows[index].values.splits_calc;
-          newStock.values.info_date = getDate();
-          //rows[index] = newStock;
-          rows.splice (index, 1, newStock);
+          rows[index].values.nowOverview = Date.now();;
+          rows[index].values.info_date = getDate();
+         
           saveTable();
-          props.callBack(-1); 
+          props.callBack(-1);
+     
           // save overview per symbol
           // stocksOverview[symbol] = childData;
           // const stocksOverviewStr = JSON.stringify(stocksOverview);
@@ -376,7 +358,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","TrailPE","ForwPE","ForwPE","Div","BETA","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
     }
 
   },

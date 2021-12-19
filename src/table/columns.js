@@ -10,6 +10,11 @@ export const COLUMNS = [
     accessor: 'Exchange'
   },
   {
+    Header: 'Industry',
+    Footer: 'Industry',    
+    accessor: 'Industry'
+  },
+  {
     Header: 'PE',
     Footer: 'PE',
     accessor: 'PE'
