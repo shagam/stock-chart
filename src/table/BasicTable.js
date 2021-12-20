@@ -162,9 +162,12 @@ export const BasicTable = (props) => {
           rows[index].values.TrailPE = childData["TrailingPE"];
           rows[index].values.ForwPE = childData["ForwardPE"];
           rows[index].values.Div = childData["DividendYield"];
-          rows[index].values.BETA = childData["Beta"];;
+          rows[index].values.BETA = childData["Beta"];
+          rows[index].values.EVToEBITDA = childData["EVToEBITDA"];
+          rows[index].values.EVToRevenue = childData["EVToRevenue"];
           rows[index].values.target = childData["AnalystTargetPrice"];
           rows[index].values.Industry = childData["Industry"];
+          //Sector         
 
           rows[index].values.nowOverview = Date.now();;
           rows[index].values.info_date = getDate();
@@ -358,7 +361,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
     }
 
   },

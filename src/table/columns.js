@@ -42,6 +42,16 @@ export const COLUMNS = [
     accessor: 'BETA'
   },
   {
+    Header: 'EV/EBITDA',
+    Footer: 'EV/EBITDA',    
+    accessor: 'EVToEBITDA'
+  },
+  {
+    Header: 'EV/Revenue',
+    Footer: 'EV/Revenue',    
+    accessor: 'EVToRevenue'
+  },
+  {
     Header: 'targt',
     Footer: 'terget',    
     accessor: 'target'
