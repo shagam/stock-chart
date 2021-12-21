@@ -1,0 +1,46 @@
+###  Synopsis
+
+stock-chart is used to compare stocks ans etf in american stock market NYSE  and NASDAQ
+The tool. It is designed for long term investors.
+The compare bench mark is QQQ, NASDAQ hitech average.
+User should hold only stocks that perform equal or better to QQQ
+
+The code reside on my home server. http://84.228.164.65:3000
+
+###  Raw data source
+
+The tool gets the data from AlphVantage.co API.
+The user need to get his own <key> from AlphVatage.co site.
+The key should be entered at the bottom. Otherwise you are sharing my key.
+Free key allows 5 queies per minute and 500 per day.
+
+###  Credits 
+
+The tool was developed by eli.shagam@gmil.com/  
+Pls send any bug report or enhancement request to eli.shagam@gmil.com 
+
+### usage and testing instructions
+
+* Load  url to browser http://84.228.164.65:3000
+* Delete a stock symbol
+* Add a stock symbol  
+* Press <info>  button 
+* Press <chart> button
+* Chosse colomns by selecting or unselecting check boxes at the top 
+* Sort a column by pressing the column title.
+* Global Search/filter string.
+* Persistance. close the browser tab, and reload again. verify same table.
+
+* The chart at the bottom shows the last <chart> click.
+  The chart uses plotly tool. It allows zooming
+
+* The tool is built on top of javaScript, react library. react-table, plotly.
+
+### Warning, PittFall
+
+AlphaVantage.co ignores splits and unsplits, and provide nominal stock or etf price.
+The tool try to guess splits by looking into sharp rise or falls.
+The button <calc-splis>  allows to by pass these calcolations.
+
+Before relyng on the tool, the user MUST compre the values with the 
+google finance, or finance.yahoo.com
