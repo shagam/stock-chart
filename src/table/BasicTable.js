@@ -324,6 +324,11 @@ export const BasicTable = (props) => {
     const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
 
     //console.log (addFormData.symbol)
+    const re = new RegExp('^[a-zA-Z0-9]*$');  // Verify valid symbol in englis letters
+    if (! re.test (addFormData.symbol)) {
+      alert (`Invalid symbol: ${addFormData.symbol}`);
+      return;
+    }
     if (index !== -1) {
       alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
       return;
@@ -361,7 +366,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","EVToEBITDA","","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
     }
 
   },
