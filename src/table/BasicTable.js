@@ -241,6 +241,7 @@ export const BasicTable = (props) => {
           rows[index].values.EVToRevenue = childData["EVToRevenue"];
           rows[index].values.target = childData["AnalystTargetPrice"];
           rows[index].values.Industry = childData["Industry"];
+          rows[index].values.PriceToBookRatio = childData["PriceToBookRatio"];
           //Sector         
 
           rows[index].values.nowOverview = Date.now();;
@@ -443,7 +444,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","EVToEBITDA","","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
     }
 
   },

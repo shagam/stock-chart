@@ -52,6 +52,11 @@ export const COLUMNS = [
     accessor: 'EVToRevenue'
   },
   {
+    Header: 'PriceToBookRatio',
+    Footer: 'PriceToBookRatio',    
+    accessor: 'PriceToBookRatio'
+  },
+  {
     Header: 'targt',
     Footer: 'terget',    
     accessor: 'target'
