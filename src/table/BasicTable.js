@@ -11,7 +11,7 @@ import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
 
 import {db} from './firebase-config'
-import {collection, getDocs} from "firebase/firestore";
+import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from "firebase/firestore";
 
 export const BasicTable = (props) => {
 
@@ -43,30 +43,64 @@ export const BasicTable = (props) => {
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
 
-      useEffect (() => {
-        
-        const getGain = async () => {
-          const gain = await getDocs(gainRef)
-          setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
-          gain.docs.map((doc) => (
-            console.log (doc.id, doc.data(), doc.data().symbol)
-            //  doc.gain_update_date, doc.gain_update_mili
-            ))
-        }
-        getGain();
+  // read from firebase
+  useEffect (() => { 
+    const getGain = async () => {
+      const gain = await getDocs(gainRef)
+      setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
+      gain.docs.map((doc) => (
+        console.log (doc.id, doc.data(), doc.data().symbol)
+        //  doc.gain_update_date, doc.gain_update_mili
+        ))
+    }
+    getGain();
 
-        const getInfo = async () => {
-          const info = await getDocs(infoRef)
-          setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
-          info.docs.map((doc) => (
-            console.log (doc.id, doc.data(), doc.data().symbol)
-          ))
-        }
-        getInfo();
-
-      }, [])
+    const getInfo = async () => {
+      const info = await getDocs(infoRef)
+      setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
+      info.docs.map((doc) => (
+        console.log (doc.id, doc.data(), doc.data().symbol)
+      ))
+    }
+    getInfo();
+  }, [])
     
+  const gainAdd = async (symbol, newGain) => {
+    let id = '';
+    for (let i = 0; i < stocksGain.length; i++) {
+      if (stocksGain[i].symbol === symbol) {
+        id = stocksGain[i].id;
+        break;
+      }
+    }
+    if (id === '') // not found: add
+      await addDoc (gainRef, {ymbol: symbol, data: newGain })
+    else { // found update
+      const gainDoc = doc(db, "gain-history", id)
+      await updateDoc (gainDoc, newGain);
+    }
+  }
 
+  const gainDel = async (id) => {
+    const gainDoc = doc(db, "gain-history", id)
+    await deleteDoc (gainDoc);
+  }
+
+  const infoAdd = async (symbol, newInfo) => {
+    let id = '';
+    for (let i = 0; i < stocksInfo.length; i++) {
+      if (stocksInfo[i].symbol === symbol) {
+        id = stocksInfo[i].id;
+        break;
+      }
+    }
+    if (id === '') // not found add
+      await addDoc (infoRef, {symbol: symbol, data: newInfo })
+    else { // found: update
+      const gainDoc = doc(db, "stock-info", id)
+      await updateDoc (gainDoc, newInfo);
+    }
+  }
 
   const alphaCallBack = (key) => {
     setAPI_KEY (key);
@@ -209,6 +243,7 @@ export const BasicTable = (props) => {
          
           saveTable();
           props.callBack(-1);
+          infoAdd (symbol, childData);  // save in firestore
      
           // save overview per symbol
           // stocksOverview[symbol] = childData;
@@ -304,7 +339,9 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
-              
+
+              gainAdd (sym, chartData);  // save in firestore
+
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
               else
