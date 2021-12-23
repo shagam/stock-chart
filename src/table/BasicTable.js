@@ -262,6 +262,8 @@ export const BasicTable = (props) => {
          
           saveTable();
           props.callBack(-1);
+          childData.Address = '';   // Clear some data to decrese traffic
+          childData.Description = '';
           infoAdd (symbol, childData);  // save in firestore
      
           // save overview per symbol
