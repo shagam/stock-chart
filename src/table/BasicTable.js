@@ -12,6 +12,7 @@ import {nanoid} from 'nanoid';
 
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from "firebase/firestore";
+import { validateArgCount } from '@firebase/util'
 
 export const BasicTable = (props) => {
 
@@ -64,42 +65,46 @@ export const BasicTable = (props) => {
     }
     getInfo();
   }, [])
-    
-  const gainAdd = async (symbol, newGain) => {
-    let id = '';
+ 
+
+  const getGainDocId = (symbol) => {
     for (let i = 0; i < stocksGain.length; i++) {
-      if (stocksGain[i].symbol === symbol) {
-        id = stocksGain[i].id;
-        break;
-      }
+      if (stocksGain[i].symbol === symbol)
+        return stocksGain[i].id
     }
-    if (id === '') // not found: add
-      await addDoc (gainRef, {ymbol: symbol, data: newGain })
+    return '';
+  }
+  const gainAdd = async (symbol, newGain, splits) => {
+    let id = getGainDocId (symbol);
+    if (id === '') // not found: delete
+      await addDoc (gainRef, {symbol: symbol, data: newGain, splits: splits })
     else { // found update
-      const gainDoc = doc(db, "gain-history", id)
-      await updateDoc (gainDoc, newGain);
+      var gainDoc = doc(db, "gain-history", id);
+      await updateDoc (gainDoc,  {symbol: symbol, data: newGain, splits: splits });
+      //await deleteDoc (gainDoc);
     }
+    const gain = await getDocs(gainRef)
+    setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
-  const gainDel = async (id) => {
-    const gainDoc = doc(db, "gain-history", id)
-    await deleteDoc (gainDoc);
-  }
-
-  const infoAdd = async (symbol, newInfo) => {
-    let id = '';
+  const getInfoDocId = (symbol) => {
     for (let i = 0; i < stocksInfo.length; i++) {
-      if (stocksInfo[i].symbol === symbol) {
-        id = stocksInfo[i].id;
-        break;
-      }
+      if (stocksInfo[i].symbol === symbol)
+        return stocksInfo[i].id;
     }
+    return '';
+  }
+  const infoAdd = async (symbol, newInfo) => {
+    const id = getInfoDocId (symbol);
     if (id === '') // not found add
       await addDoc (infoRef, {symbol: symbol, data: newInfo })
     else { // found: update
       const gainDoc = doc(db, "stock-info", id)
-      await updateDoc (gainDoc, newInfo);
+      await updateDoc (gainDoc, {symbol: symbol, data: newInfo });
+      // await deleteDoc (gainDoc); // temp fix for format change)
     }
+    const info = await getDocs(infoRef)
+    setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
   const alphaCallBack = (key) => {
@@ -340,7 +345,6 @@ export const BasicTable = (props) => {
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
 
-              gainAdd (sym, chartData);  // save in firestore
 
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
@@ -361,6 +365,7 @@ export const BasicTable = (props) => {
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
               handleCallBackForHistory (histArray, sym, splits);
+              gainAdd (sym,  histArray, splits);  // save in firestore
             }
         )
       }
