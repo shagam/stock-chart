@@ -1,9 +1,13 @@
 ###  Synopsis
 
-stock-chart is used to compare stocks ans etf in american stock market NYSE  and NASDAQ
-The tool. It is designed for long term investors.
-The compare bench mark is QQQ, NASDAQ hitech average.
+stock-chart is used to compare stocks and etf in american stock market NYSE and NASDAQ
+The tool is designed for long term investors.
+The compare bench mark is QQQ, NASDAQ hi-tech average.
 User should hold only stocks that perform equal or better to QQQ
+The columns: wk, mon, 3mon, yr, 2 yr, 5yr, 10r  shows the gain proportion.
+
+gain of 2 means the stock price doubled during that period.
+Other fields can be found on google.
 
 The code reside on my home server. http://84.228.164.65:3000
 

@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react'
+import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 import MOCK_DATA from './mock-data.json'
 import { COLUMNS, GROUPED_COLUMNS } from './columns'
@@ -10,6 +10,8 @@ import AlphaVantage from '../AlphaVantage'
 import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
 
+import {db} from './firebase-config'
+import {collection, getDocs} from "firebase/firestore";
 
 export const BasicTable = (props) => {
 
@@ -22,6 +24,13 @@ export const BasicTable = (props) => {
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
   const [splitsCalc, setSplitsCalc] = useState(true);
+
+  const [stocksGain, setStocksGain] = useState([]);
+  const [stocksInfo, setStocksInfo] = useState([]);
+  const gainRef = collection(db, "gain-history")
+  const infoRef = collection(db, "stock-info")
+
+
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = localStorage.getItem("stocks");
@@ -32,6 +41,32 @@ export const BasicTable = (props) => {
   }
   else 
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
+
+
+      useEffect (() => {
+        
+        const getGain = async () => {
+          const gain = await getDocs(gainRef)
+          setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
+          gain.docs.map((doc) => (
+            console.log (doc.id, doc.data(), doc.data().symbol)
+            //  doc.gain_update_date, doc.gain_update_mili
+            ))
+        }
+        getGain();
+
+        const getInfo = async () => {
+          const info = await getDocs(infoRef)
+          setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
+          info.docs.map((doc) => (
+            console.log (doc.id, doc.data(), doc.data().symbol)
+          ))
+        }
+        getInfo();
+
+      }, [])
+    
+
 
   const alphaCallBack = (key) => {
     setAPI_KEY (key);
