@@ -67,11 +67,18 @@ export const BasicTable = (props) => {
   }, [])
  
 
-  const getGainDocId = (symbol) => {
+ 
+  const getGainDocIndex = (symbol) => {
     for (let i = 0; i < stocksGain.length; i++) {
       if (stocksGain[i].symbol === symbol)
-        return stocksGain[i].id
+        return i;
     }
+    return -1;
+  }
+ const getGainDocId = (symbol) => {
+    const index = getGainDocIndex (symbol);   
+    if (index >= 0)
+      return stocksGain[index].id;
     return '';
   }
   const gainAdd = async (symbol, newGain, splits) => {
@@ -87,11 +94,17 @@ export const BasicTable = (props) => {
     setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
-  const getInfoDocId = (symbol) => {
+  const getInfoDocIndx = (symbol) => {
     for (let i = 0; i < stocksInfo.length; i++) {
       if (stocksInfo[i].symbol === symbol)
-        return stocksInfo[i].id;
+        return i;
     }
+    return -1;
+  }
+  const getInfoDocId = (symbol) => {
+    const i = getInfoDocIndx (symbol);
+    if (i >= 0)
+        return stocksInfo[i].id;
     return '';
   }
   const infoAdd = async (symbol, newInfo) => {
@@ -421,8 +434,17 @@ export const BasicTable = (props) => {
     newStock.allCells = [];
 
     rows.push (newStock);
-    // const stocksStr = JSON.stringify(rows);
-    // localStorage.setItem ('stocks', stocksStr);
+
+    //get info from firebase
+    var ind = getGainDocIndex (newStock.values.symbol);
+    if (ind >= 0) {
+      handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits); 
+    }
+    ind = getInfoDocIndx (newStock.values.symbol);
+    if (ind >= 0) {
+      handleOverview (stocksInfo[ind].data); 
+    }
+  
     saveTable();
     window.location.reload();
     //props.callBack(1);
