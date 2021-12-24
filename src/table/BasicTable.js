@@ -9,6 +9,7 @@ import Stock_chart from '../Stock-chart'
 import AlphaVantage from '../AlphaVantage'
 import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
+import axios from 'axios'
 
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from "firebase/firestore";
@@ -46,6 +47,21 @@ export const BasicTable = (props) => {
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
       // const cafeList = document.querySelector("#gain-history")
+
+
+  const [ip, setIP] = useState('');
+
+  //creating function to load ip address from the API
+  const getData = async () => {
+    if (ip !== '') {
+      console.log('ip ', ip.IPv4)
+      return;
+    }
+
+    const res = await axios.get('https://geolocation-db.com/json/')
+    console.log('ip ', res.data);
+    setIP(res.data.IPv4)
+  } 
 
   function getOneGain (symbol) {
     //where ('symbol', '==', symbol)
@@ -275,7 +291,7 @@ export const BasicTable = (props) => {
           childData.Address = '';   // Clear some data to decrese traffic
           childData.Description = '';
           infoAdd (symbol, childData);  // save in firestore
-     
+          getData();
           // save overview per symbol
           // stocksOverview[symbol] = childData;
           // const stocksOverviewStr = JSON.stringify(stocksOverview);
