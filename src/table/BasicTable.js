@@ -13,6 +13,8 @@ import {nanoid} from 'nanoid';
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from "firebase/firestore";
 import { validateArgCount } from '@firebase/util'
+//import {} from "https:///www.gstatc"
+
 
 export const BasicTable = (props) => {
 
@@ -43,27 +45,35 @@ export const BasicTable = (props) => {
   else 
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
+      // const cafeList = document.querySelector("#gain-history")
+
+  function getOneGain (symbol) {
+    //where ('symbol', '==', symbol)
+    db.collection("gain-history").get().then((snapshot) => {
+      snapshot.docs.forEach ((doc) => {
+        console.log (doc.data());
+
+      });
+      }
+    );
+  }
+   
 
   // read from firebase
   useEffect (() => { 
     const getGain = async () => {
       const gain = await getDocs(gainRef)
       setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
-      gain.docs.map((doc) => (
-        console.log (doc.id, doc.data(), doc.data().symbol)
-        //  doc.gain_update_date, doc.gain_update_mili
-        ))
+      console.log ('firebase read gain: ', gain.length);
     }
-    getGain();
+    //getGain();
 
     const getInfo = async () => {
       const info = await getDocs(infoRef)
       setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
-      info.docs.map((doc) => (
-        console.log (doc.id, doc.data(), doc.data().symbol)
-      ))
+      console.log ('firebase read info: ', info.length);
     }
-    getInfo();
+    //getInfo();
   }, [])
  
 
@@ -438,6 +448,7 @@ export const BasicTable = (props) => {
     rows.push (newStock);
 
     //get info from firebase
+    //const dat = getOneGain (newStock.values.symbol);
     var ind = getGainDocIndex (newStock.values.symbol);
     if (ind >= 0) {
       handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits); 
