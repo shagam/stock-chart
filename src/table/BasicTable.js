@@ -52,9 +52,9 @@ export const BasicTable = (props) => {
   const [ip, setIP] = useState('');
 
   //creating function to load ip address from the API
-  const getData = async () => {
-    if (ip !== '') {
-      console.log('ip ', ip.IPv4)
+  const getIp = async () => {
+    if (ip !== '' && ip !== undefined) {
+      console.log('ip ', ip)
       return;
     }
 
@@ -62,6 +62,7 @@ export const BasicTable = (props) => {
     console.log('ip ', res.data);
     setIP(res.data.IPv4)
   } 
+  getIp();
 
   function getOneGain (symbol) {
     //where ('symbol', '==', symbol)
@@ -76,27 +77,28 @@ export const BasicTable = (props) => {
    
 
   // read from firebase
+  const getFirebaseGain = async () => {
+    const gain = await getDocs(gainRef)
+    setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
+    console.log ('firebase read gain: ', gain.length);
+  }
+  const getFirebaseInfo = async () => {
+    const info = await getDocs(infoRef)
+    setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
+    console.log ('firebase read info: ', info.length);
+  }
+
   useEffect (() => { 
-    const getGain = async () => {
-      const gain = await getDocs(gainRef)
-      setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
-      console.log ('firebase read gain: ', gain.length);
-    }
     //getGain();
 
-    const getInfo = async () => {
-      const info = await getDocs(infoRef)
-      setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
-      console.log ('firebase read info: ', info.length);
-    }
-    //getInfo();
+     //getInfo();
   }, [])
  
 
  
   const getGainDocIndex = (symbol) => {
     for (let i = 0; i < stocksGain.length; i++) {
-      if (stocksGain[i].symbol === symbol)
+      if (stocksGain[i]._symbol === symbol)
         return i;
     }
     return -1;
@@ -110,10 +112,10 @@ export const BasicTable = (props) => {
   const gainAdd = async (symbol, newGain, splits) => {
     let id = getGainDocId (symbol);
     if (id === '') // not found: delete
-      await addDoc (gainRef, {symbol: symbol, data: newGain, splits: splits })
+      await addDoc (gainRef, {_symbol: symbol, _ip: ip, data: newGain, splits: splits })
     else { // found update
       var gainDoc = doc(db, "gain-history", id);
-      await updateDoc (gainDoc,  {symbol: symbol, data: newGain, splits: splits });
+      await updateDoc (gainDoc,  {_symbol: symbol, _ip: ip, data: newGain, splits: splits });
       //await deleteDoc (gainDoc);
     }
     const gain = await getDocs(gainRef)
@@ -122,7 +124,7 @@ export const BasicTable = (props) => {
 
   const getInfoDocIndx = (symbol) => {
     for (let i = 0; i < stocksInfo.length; i++) {
-      if (stocksInfo[i].symbol === symbol)
+      if (stocksInfo[i]._symbol === symbol)
         return i;
     }
     return -1;
@@ -136,10 +138,10 @@ export const BasicTable = (props) => {
   const infoAdd = async (symbol, newInfo) => {
     const id = getInfoDocId (symbol);
     if (id === '') // not found add
-      await addDoc (infoRef, {symbol: symbol, data: newInfo })
+      await addDoc (infoRef, {_symbol: symbol, _ip: ip, data: newInfo })
     else { // found: update
       const gainDoc = doc(db, "stock-info", id)
-      await updateDoc (gainDoc, {symbol: symbol, data: newInfo });
+      await updateDoc (gainDoc, {_symbol: symbol, _ip: ip, data: newInfo });
       // await deleteDoc (gainDoc); // temp fix for format change)
     }
     const info = await getDocs(infoRef)
@@ -291,7 +293,6 @@ export const BasicTable = (props) => {
           childData.Address = '';   // Clear some data to decrese traffic
           childData.Description = '';
           infoAdd (symbol, childData);  // save in firestore
-          getData();
           // save overview per symbol
           // stocksOverview[symbol] = childData;
           // const stocksOverviewStr = JSON.stringify(stocksOverview);
@@ -340,7 +341,7 @@ export const BasicTable = (props) => {
                   return;
               }
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                alert (dataStr.substr(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
+                alert (dataStr.substring(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
                 //setChartData ('');
                 return;
               }
@@ -465,10 +466,12 @@ export const BasicTable = (props) => {
 
     //get info from firebase
     //const dat = getOneGain (newStock.values.symbol);
+    getFirebaseGain();
     var ind = getGainDocIndex (newStock.values.symbol);
     if (ind >= 0) {
       handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits); 
     }
+    getFirebaseInfo();
     ind = getInfoDocIndx (newStock.values.symbol);
     if (ind >= 0) {
       handleOverview (stocksInfo[ind].data); 
