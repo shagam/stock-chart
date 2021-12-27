@@ -54,16 +54,15 @@ export const BasicTable = (props) => {
 
   //creating function to load ip address from the API
   const getIp = async () => {
-    // if (ip !== '' && ip !== undefined) {
-    //   console.log('ip ', ip)
-    //   return;
-    // }
+    if (ip !== '' && ip !== undefined) {
+      console.log('ip ', ip)
+      return;
+    }
 
     const res = await axios.get('https://geolocation-db.com/json/')
     console.log('ip ', res.data);
     setIP(res.data)
   } 
-  getIp();
 
   function getOneGain (symbol) {
     //where ('symbol', '==', symbol)
@@ -91,7 +90,7 @@ export const BasicTable = (props) => {
 
   useEffect (() => { 
     //getGain();
-
+    getIp();
      //getInfo();
   }, [])
  
