@@ -478,7 +478,7 @@ export const BasicTable = (props) => {
     }
   
     saveTable();
-    window.location.reload();
+    //window.location.reload();
     //props.callBack(1);
     //setUpdateCount( updateCount + 1);
   }
