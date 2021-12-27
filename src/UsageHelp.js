@@ -1,36 +1,26 @@
 
-import React, {useState, useMemo} from 'react'
-import HELP_FILE from './StockChart.usage'
+import React, {useState, useEffect} from 'react'
+import txt from './StockChart.usage'
 
 
-export const UsageHelp = () => {
+const UsageHelp = () => {
   const [usageHelp, setUsageHelp] = useState(false);
+  const [helpText, setHelpText] = useState("One\nTwo\nThree");
 
-  const helpText = useMemo(() => HELP_FILE, []);
-
-  let fileReader;
+  
   const usageHelpChange = () => {setUsageHelp (! usageHelp)}
 
-  const handleFileRead = (e) => {
-    const content = fileReader.result;
-    console.log(content)
-    // … do something with the 'content' …
-  };
-  
-  const handleFileChosen = (file) => {
-    fileReader = new FileReader();
-    fileReader.onloadend = handleFileRead;
-    fileReader.readAsText(file);
-  };
-  
+  // read helpFile into helpText
+  useEffect (() => { 
+    fetch (txt)
+    .then (r => r.text())
+    .then (text => {
+      setHelpText(text);
+      //console.log (text)
+    })
+  }, [])
+
   return <div className='upload-expense'>
-    <input
-      type='file'
-      id='file'
-      className='input-file'
-      accept='.csv'
-      onChange={e => handleFileChosen(e.target.files[0])}
-    />
     <label>
           <input
             type="checkbox" checked={usageHelp}
@@ -38,9 +28,12 @@ export const UsageHelp = () => {
           /> usageHelp
     </label>
     <div>
-      {usageHelp && {helpText}}
+      {usageHelp &&
+        <div className='text'>
+         {helpText}  
+        </div>
+      }
     </div>
-
   </div>;
 };
 

@@ -92,7 +92,7 @@ export const BasicTable = (props) => {
     //getGain();
     getIp();
      //getInfo();
-  }, [])
+  })
  
 
  
@@ -621,7 +621,7 @@ export const BasicTable = (props) => {
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
     {/* {conditionalChart}     */}
     {AlphaVantage (alphaCallBack)}
-    {/* <UsageHelp/> */}
+    <UsageHelp/>
     </div> 
     </>
   )
