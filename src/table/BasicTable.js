@@ -53,14 +53,14 @@ export const BasicTable = (props) => {
 
   //creating function to load ip address from the API
   const getIp = async () => {
-    if (ip !== '' && ip !== undefined) {
-      console.log('ip ', ip)
-      return;
-    }
+    // if (ip !== '' && ip !== undefined) {
+    //   console.log('ip ', ip)
+    //   return;
+    // }
 
     const res = await axios.get('https://geolocation-db.com/json/')
     console.log('ip ', res.data);
-    setIP(res.data.IPv4)
+    setIP(res.data)
   } 
   getIp();
 
@@ -466,12 +466,12 @@ export const BasicTable = (props) => {
 
     //get info from firebase
     //const dat = getOneGain (newStock.values.symbol);
-    getFirebaseGain();
+    //getFirebaseGain();
     var ind = getGainDocIndex (newStock.values.symbol);
     if (ind >= 0) {
       handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits); 
     }
-    getFirebaseInfo();
+    //getFirebaseInfo();
     ind = getInfoDocIndx (newStock.values.symbol);
     if (ind >= 0) {
       handleOverview (stocksInfo[ind].data); 
