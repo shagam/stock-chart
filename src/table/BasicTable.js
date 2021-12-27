@@ -109,13 +109,13 @@ export const BasicTable = (props) => {
       return stocksGain[index].id;
     return '';
   }
-  const gainAdd = async (symbol, newGain, splits) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, newGain, splits) => {
     let id = getGainDocId (symbol);
     if (id === '') // not found: delete
-      await addDoc (gainRef, {_symbol: symbol, _ip: ip, data: newGain, splits: splits })
+      await addDoc (gainRef, {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits })
     else { // found update
       var gainDoc = doc(db, "gain-history", id);
-      await updateDoc (gainDoc,  {_symbol: symbol, _ip: ip, data: newGain, splits: splits });
+      await updateDoc (gainDoc,  {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits });
       //await deleteDoc (gainDoc);
     }
     const gain = await getDocs(gainRef)
@@ -135,13 +135,13 @@ export const BasicTable = (props) => {
         return stocksInfo[i].id;
     return '';
   }
-  const infoAdd = async (symbol, newInfo) => {
+  const firebaseInfoAdd = async (symbol, updateDate, updateMili, newInfo) => {
     const id = getInfoDocId (symbol);
     if (id === '') // not found add
-      await addDoc (infoRef, {_symbol: symbol, _ip: ip, data: newInfo })
+      await addDoc (infoRef, {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
     else { // found: update
       const gainDoc = doc(db, "stock-info", id)
-      await updateDoc (gainDoc, {_symbol: symbol, _ip: ip, data: newInfo });
+      await updateDoc (gainDoc, {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
       // await deleteDoc (gainDoc); // temp fix for format change)
     }
     const info = await getDocs(infoRef)
@@ -285,14 +285,14 @@ export const BasicTable = (props) => {
           rows[index].values.PriceToBookRatio = childData["PriceToBookRatio"];
           //Sector         
 
-          rows[index].values.nowOverview = Date.now();;
+          rows[index].values.nowOverview = Date.now();
           rows[index].values.info_date = getDate();
          
           saveTable();
           props.callBack(-1);
           childData.Address = '';   // Clear some data to decrese traffic
           childData.Description = '';
-          infoAdd (symbol, childData);  // save in firestore
+          firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
           // save overview per symbol
           // stocksOverview[symbol] = childData;
           // const stocksOverviewStr = JSON.stringify(stocksOverview);
@@ -408,7 +408,7 @@ export const BasicTable = (props) => {
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
               handleCallBackForHistory (histArray, sym, splits);
-              gainAdd (sym,  histArray, splits);  // save in firestore
+              firebaseGainAdd (sym, getDate(), Date.now(), histArray, splits);  // save in firestore
             }
         )
       }
