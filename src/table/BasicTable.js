@@ -99,7 +99,7 @@ export const BasicTable = (props) => {
  
   const getGainDocIndex = (symbol) => {
     for (let i = 0; i < stocksGain.length; i++) {
-      if (stocksGain[i]._symbol === symbol)
+      if (stocksGain[i].__symbol === symbol)
         return i;
     }
     return -1;
@@ -113,10 +113,10 @@ export const BasicTable = (props) => {
   const firebaseGainAdd = async (symbol, updateDate, updateMili, newGain, splits) => {
     let id = getGainDocId (symbol);
     if (id === '') // not found: delete
-      await addDoc (gainRef, {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits })
+      await addDoc (gainRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits })
     else { // found update
       var gainDoc = doc(db, "gain-history", id);
-      await updateDoc (gainDoc,  {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits });
+      await updateDoc (gainDoc,  {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits });
       //await deleteDoc (gainDoc);
     }
     const gain = await getDocs(gainRef)
@@ -125,7 +125,7 @@ export const BasicTable = (props) => {
 
   const getInfoDocIndx = (symbol) => {
     for (let i = 0; i < stocksInfo.length; i++) {
-      if (stocksInfo[i]._symbol === symbol)
+      if (stocksInfo[i].__symbol === symbol)
         return i;
     }
     return -1;
@@ -139,10 +139,10 @@ export const BasicTable = (props) => {
   const firebaseInfoAdd = async (symbol, updateDate, updateMili, newInfo) => {
     const id = getInfoDocId (symbol);
     if (id === '') // not found add
-      await addDoc (infoRef, {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
+      await addDoc (infoRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
     else { // found: update
       const gainDoc = doc(db, "stock-info", id)
-      await updateDoc (gainDoc, {_symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
+      await updateDoc (gainDoc, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
       // await deleteDoc (gainDoc); // temp fix for format change)
     }
     const info = await getDocs(infoRef)
