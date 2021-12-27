@@ -12,7 +12,7 @@ import {nanoid} from 'nanoid';
 import axios from 'axios'
 
 import {db} from './firebase-config'
-import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc} from "firebase/firestore";
+import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where} from "firebase/firestore";
 import { validateArgCount } from '@firebase/util'
 //import {} from "https:///www.gstatc"
 
