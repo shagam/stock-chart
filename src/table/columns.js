@@ -1,7 +1,7 @@
 export const COLUMNS = [
   {
-    Header: 'symb',
-    Footer: 'symb',    
+    Header: 'symbol',
+    Footer: 'symbol',    
     accessor: 'symbol'
   },
   {
