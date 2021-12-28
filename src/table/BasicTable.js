@@ -541,19 +541,6 @@ export const BasicTable = (props) => {
   return (
     <>
     <div>
-      <div>
-        <label>Add stock symbol </label>
-        <form onSubmit = {handleAddFormSubmit}>
-          <input
-            type="text"
-            name="symbol"
-            required="required"
-            placeholder="stock symbol to add ..."
-            onChange={handleAddFormChange}
-          />
-          <button type="submit"> Add</button>
-        </form>
-      </div>
 
       <div className="buttons">
         <label>
@@ -578,6 +565,19 @@ export const BasicTable = (props) => {
         ))
       }
     </div>
+    <div>
+        {/* <label>Add stock symbol </label> */}
+        <form onSubmit = {handleAddFormSubmit}>
+          <input
+            type="text"
+            name="symbol"
+            required="required"
+            placeholder="Add stock symbol ..."
+            onChange={handleAddFormChange}
+          />
+          <button type="submit"> Add</button>
+        </form>
+      </div>
 
     <div className="tbl">
     <table {...getTableProps()}>
