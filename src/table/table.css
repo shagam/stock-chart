@@ -16,18 +16,19 @@ table tr:hover {background-color: #ddd;}
 table th {
   padding-top: 12px;
   padding-bottom: 12px;
-  text-align: left;
+  text-align: center;
   background-color: #04AA6D;
   color: white;
   position: sticky;
   top: 0;
 }
 
-/* div.tbl {
-  height: 55vh;
-  overflow-y: auto;
+div.tbl {
+  text-align: center;  
+  /* height: 55vh;
+  overflow-y: auto; */
 }
 
 div.button {
   position: absolute;
-} */
+}
