@@ -27,10 +27,12 @@ const UsageHelp = () => {
             onChange={usageHelpChange}
           /> usageHelp
     </label>
-    <div>
+    <div className='txt'>
       {usageHelp &&
-        <div className='text'>
-         {helpText}  
+        <div className='text'> 
+          <textarea>
+            {helpText}  
+          </textarea>
         </div>
       }
     </div>

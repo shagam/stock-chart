@@ -1,4 +1,10 @@
-div.txt {
+div.text {
   white-space: pre-wrap;
+  width: 400px;
+  height: 100%;
+}
+div.txt {
+  width: 400px;
+  height: 100%;
 
 }
