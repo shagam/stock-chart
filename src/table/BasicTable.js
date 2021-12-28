@@ -7,7 +7,7 @@ import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
 import AlphaVantage from '../AlphaVantage'
-import UsageHelp from '../UsageHelp'
+import Manual from '../Manual'
 import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
 import axios from 'axios'
@@ -621,7 +621,7 @@ export const BasicTable = (props) => {
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
     {/* {conditionalChart}     */}
     {AlphaVantage (alphaCallBack)}
-    <UsageHelp/>
+    <Manual/>
     </div> 
     </>
   )

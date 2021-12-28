@@ -1,21 +1,22 @@
 
 import React, {useState, useEffect} from 'react'
-import txt from './StockChart.usage'
+import txt from './Manual.text'
+import './Manual.css'
 
 
-const UsageHelp = () => {
-  const [usageHelp, setUsageHelp] = useState(false);
-  const [helpText, setHelpText] = useState("One\nTwo\nThree");
+const Manual = () => {
+  const [ManualFlag, setManualFlag] = useState(false);
+  const [manualText, setManualText] = useState("One\nTwo\nThree");
 
   
-  const usageHelpChange = () => {setUsageHelp (! usageHelp)}
+  const usageHelpChange = () => {setManualFlag (! ManualFlag)}
 
   // read helpFile into helpText
   useEffect (() => { 
     fetch (txt)
     .then (r => r.text())
     .then (text => {
-      setHelpText(text);
+      setManualText(text);
       //console.log (text)
     })
   }, [])
@@ -23,15 +24,15 @@ const UsageHelp = () => {
   return <div className='upload-expense'>
     <label>
           <input
-            type="checkbox" checked={usageHelp}
+            type="checkbox" checked={ManualFlag}
             onChange={usageHelpChange}
-          /> usageHelp
+          /> manual
     </label>
     <div className='txt'>
-      {usageHelp &&
+      {ManualFlag &&
         <div className='text'> 
           <textarea>
-            {helpText}  
+            {manualText}  
           </textarea>
         </div>
       }
@@ -39,4 +40,4 @@ const UsageHelp = () => {
   </div>;
 };
 
-export default UsageHelp;
+export default Manual;
