@@ -32,7 +32,7 @@ const Stock_chart = (props) => {
   if (splitsFlag === '')
     graphColor = 'green';
   else
-    graphColor = 'red';
+    graphColor = 'purple';
 
   return (
     <div>
