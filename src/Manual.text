@@ -1,12 +1,15 @@
 ###  Synopsis
 
-stock-chart is used to compare stocks and etf in american stock market NYSE and NASDAQ
-The tool is designed for long term investors.
-The compare bench mark is QQQ, NASDAQ hi-tech average.
-User should hold only stocks that perform equal or better to QQQ
-The columns: wk, mon, 3mon, yr, 2 yr, 5yr, 10r  shows the gain proportion.
+http://84.228.164.65:3000   URL Stock-chart on my home computer.
 
-gain of 2 means the stock price doubled during that period.
+stock-chart is used to compare stocks and ETF in American stock market NYSE and NASDAQ
+The tool is designed for long term investors.
+
+The bench mark for comparison, is QQQ, NASDAQ hi-tech average.
+User should hold only stocks that perform better than QQQ, or invest in QQQ
+The columns: wk, mon, 3mon, yr, 2yr, 5yr, 10r  shows the gain proportion.
+
+A gain of 2, means the stock price doubled during that period.
 Other fields can be found on google.
 
 The code reside on my home server. http://84.228.164.65:3000
@@ -16,7 +19,7 @@ The code reside on my home server. http://84.228.164.65:3000
 The tool gets the data from AlphVantage.co API.
 The user need to get his own <key> from AlphVatage.co site.
 The key should be entered at the bottom. Otherwise you are sharing my key.
-Free key allows 5 queies per minute and 500 per day.
+Free key allows free 5 queries per minute and 500 per day. 
 
 ###  Credits 
 
@@ -25,26 +28,32 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
 
 ### usage and testing instructions
 
-* Load  url to browser http://84.228.164.65:3000
+* Load  URL to browser http://84.228.164.65:3000
 * Delete a stock symbol
 * Add a stock symbol  
-* Press <info>  button 
-* Press <chart> button
-* Chosse colomns by selecting or unselecting check boxes at the top 
+* Press <info>  button, to bring overview data from AlphVantage.co (Not for ETF)
+* Press <chart> button, to bring gain data from AlphVantage.co
+* Choose columns by selecting or deselecting check boxes at the top 
 * Sort a column by pressing the column title.
 * Global Search/filter string.
-* Persistance. close the browser tab, and reload again. verify same table.
+* Persistence. close the browser tab, and reload again. verify same data.
 
 * The chart at the bottom shows the last <chart> click.
-  The chart uses plotly tool. It allows zooming
+  The chart uses Plotly library. It allows zooming, and revert zoom.
 
-* The tool is built on top of javaScript, react library. react-table, plotly.
+* The tool is built on top of JavaScript, React.JS library. react-table, Plotly, Redux.
 
-### Warning, PittFall
+### Warning, Pitfall
 
-AlphaVantage.co ignores splits and unsplits, and provide nominal stock or etf price.
+AlphaVantage.co ignores splits and reverse-splits, and provide nominal stock or ETF price.
 The tool try to guess splits by looking into sharp rise or falls.
-The button <calc-splis>  allows to by pass these calcolations.
+The button <calc-splits>  allows to by pass these calculations.
 
-Before relyng on the tool, the user MUST compre the values with the 
+Before relying on the tool, the user MUST compare the values with the 
 google finance, or finance.yahoo.com
+
+###  Stock Deep fall analysis (Not built yet)
+
+The tool gets a date (Number of weeks back from today)
+It calculate how deep a stock fell, during the Covid19 correction of March 2020,
+And how long (weeks),it took to recover, climb back after the correction.
