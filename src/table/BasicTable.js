@@ -478,7 +478,7 @@ export const BasicTable = (props) => {
     }
   
     saveTable();
-    //window.location.reload();
+    window.location.reload();
     //props.callBack(1);
     //setUpdateCount( updateCount + 1);
   }
@@ -541,6 +541,20 @@ export const BasicTable = (props) => {
   return (
     <>
     <div>
+      <div>
+        <label>Add stock symbol </label>
+        <form onSubmit = {handleAddFormSubmit}>
+          <input
+            type="text"
+            name="symbol"
+            required="required"
+            placeholder="stock symbol to add ..."
+            onChange={handleAddFormChange}
+          />
+          <button type="submit"> Add</button>
+        </form>
+      </div>
+
       <div className="buttons">
         <label>
           <input
@@ -603,19 +617,7 @@ export const BasicTable = (props) => {
       </tbody>
     </table>
     </div>
-    <div>
-       <label>Add stock symbol </label>
-       <form onSubmit = {handleAddFormSubmit}>
-          <input
-            type="text"
-            name="symbol"
-            required="required"
-            placeholder="stock symbol to add ..."
-            onChange={handleAddFormChange}
-          />
-          <button type="submit"> Add</button>
-        </form>
-   </div>
+  
    <div>
      {/* {console.log (chartSymbol)} */}
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
