@@ -31,8 +31,14 @@ const Manual = () => {
     <div className='txt'>
       {ManualFlag &&
         <div className='text'> 
-          <textarea>
-            {manualText}  
+          <textarea
+            type='text'
+            name='manual'
+            cols='90'
+            rows='30'
+            readOnly
+            defaultValue={manualText}
+          >
           </textarea>
         </div>
       }
