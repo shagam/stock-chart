@@ -215,13 +215,16 @@ export const BasicTable = (props) => {
                       //alert (dataStr);
                       return;
                     }
-                    handleOverview (data);
+                        
+                    const updateMili = Date.now();
+                    const updateDate = getDate();
+                    handleOverview (data, updateDate, updateMili);
                   }
               }
           )
          }
   
-         const handleCallBackForHistory = (childData, sym, splits) => {
+         const handleCallBackForHistory = (childData, sym, splits, updateDate, updateMili) => {
             console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
             const index = rows.findIndex((row)=> row.values.symbol === sym);            
             if (index === -1) {
@@ -232,8 +235,8 @@ export const BasicTable = (props) => {
             if (Date.now() - rows[index].values.nowChart < 1000)
               return "duplicate";
 
-            rows[index].values.nowHist = Date.now();
-            rows[index].values.gain_date = getDate();
+            rows[index].values.nowHist = updateMili;
+            rows[index].values.gain_date = updateDate;
 
             rows[index].values.wk = childData[0]; //stocks[index].wk;
             rows[index].values.wk2 = childData[1]; //stocks[index].wk2;
@@ -262,7 +265,7 @@ export const BasicTable = (props) => {
               setSplitsFlag(' splits ??');
         }
 
-        const handleOverview = (childData)  => {
+        const handleOverview = (childData, updateDate, updateMili)  => {
           if (childData === null || childData === {} || childData["Exchange"] == null) {
             console.log ('ChildData missing');
             return;
@@ -285,8 +288,8 @@ export const BasicTable = (props) => {
           rows[index].values.PriceToBookRatio = childData["PriceToBookRatio"];
           //Sector         
 
-          rows[index].values.nowOverview = Date.now();
-          rows[index].values.info_date = getDate();
+          rows[index].values.nowOverview = updateMili;
+          rows[index].values.info_date = updateDate;
          
           saveTable();
           props.callBack(-1);
@@ -407,7 +410,10 @@ export const BasicTable = (props) => {
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
-              handleCallBackForHistory (histArray, sym, splits);
+
+              const updateMili = Date.now();
+              const updateDate = getDate();
+              handleCallBackForHistory (histArray, sym, splits, updateDate, updateMili);
               firebaseGainAdd (sym, getDate(), Date.now(), histArray, splits);  // save in firestore
             }
         )
@@ -441,7 +447,6 @@ export const BasicTable = (props) => {
     event.preventDefault();
     var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     prepareRow(newStock);
-    const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
 
     //console.log (addFormData.symbol)
     const re = new RegExp('^[a-zA-Z0-9]*$');  // Verify valid symbol in englis letters
@@ -449,11 +454,7 @@ export const BasicTable = (props) => {
       alert (`Invalid symbol: ${addFormData.symbol}`);
       return;
     }
-    if (index !== -1) {
-      alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
-      return;
-    }
-    
+  
     //var newStock = cloneDeep (rows[0]);
     //newStock.id = getUniqueId();
     newStock.id = nanoid();
@@ -462,19 +463,29 @@ export const BasicTable = (props) => {
     newStock.cells = null;
     newStock.allCells = [];
 
+    const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
+    if (index !== -1) {
+      alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
+      return;
+    }
+
     rows.push (newStock);
 
     //get info from firebase
     //const dat = getOneGain (newStock.values.symbol);
     //getFirebaseGain();
+    
+    const updateMili = Date.now();
+    const updateDate = getDate();
+
     var ind = getGainDocIndex (newStock.values.symbol);
     if (ind >= 0) {
-      handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits); 
+      handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits, updateDate, updateMili); 
     }
     //getFirebaseInfo();
     ind = getInfoDocIndx (newStock.values.symbol);
     if (ind >= 0) {
-      handleOverview (stocksInfo[ind].data); 
+      handleOverview (stocksInfo[ind].data, updateDate, updateMili); 
     }
   
     saveTable();
