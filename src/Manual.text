@@ -12,7 +12,6 @@ The columns: wk, mon, 3mon, yr, 2yr, 5yr, 10r  shows the gain proportion.
 A gain of 2, means the stock price doubled during that period.
 Other fields can be found on google.
 
-The code reside on my home server. http://84.228.164.65:3000
 
 ###  Raw data source
 
@@ -33,6 +32,7 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
 * Add a stock symbol  
 * Press <info>  button, to bring overview data from AlphVantage.co (Not for ETF)
 * Press <chart> button, to bring gain data from AlphVantage.co
+*     Pressing chart should also draw a chart.
 * Choose columns by selecting or deselecting check boxes at the top 
 * Sort a column by pressing the column title.
 * Global Search/filter string.
@@ -45,12 +45,16 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
 
 ### Warning, Pitfall
 
-AlphaVantage.co ignores splits and reverse-splits, and provide nominal stock or ETF price.
-The tool try to guess splits by looking into sharp rise or falls.
-The button <calc-splits>  allows to by pass these calculations.
 
-Before relying on the tool, the user MUST compare the values with the 
+Before relying on the tool, the user MUST compare the values with other providers like,
 google finance, or finance.yahoo.com
+
+AlphaVantage.co ignores splits and reverse-splits, and provide nominal stock or ETF price.
+The tool tries to guess splits by looking into sharp falls, or sharp rise.
+The button <calc-splits>  allows to by pass these calculations.
+The guessed splits column, can be shown by checkbox <splits_list>.
+
+Purlpe chart means splits discovered, and chart and gain value maniplulated.
 
 ###  Stock Deep fall analysis (Not built yet)
 
