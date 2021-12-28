@@ -20,11 +20,11 @@ export const COLUMNS = [
     accessor: 'PE'
   },
   {
-    Header: 'ForwPE',
+    Header: 'PE(F)',
     accessor: 'ForwPE'
   },  
   {
-    Header: 'TrailPE',
+    Header: 'PE(TTM)',
     accessor: 'TrailPE'
   },
   {
