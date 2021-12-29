@@ -524,10 +524,9 @@ export const BasicTable = (props) => {
       return;
     }
 
-    rows.push (newStock);
-    firebaseGetAndFill();        
+    rows.push (newStock);      
     saveTable();
-    //window.location.reload();
+    window.location.reload();
   }
 
   const {

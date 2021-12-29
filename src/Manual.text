@@ -28,11 +28,14 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
 ### usage and testing instructions
 
 * Load  URL to browser http://84.228.164.65:3000
-* Delete a stock symbol
-* Add a stock symbol  
+  First time users, a sample list of stocks will be loaded. 
+* press <firebaseGet> twice.  to get data which other user retrieved.
+  the information may be old. check the columns info_date & gain_date 
 * Press <info>  button, to bring overview data from AlphVantage.co (Not for ETF)
 * Press <chart> button, to bring gain data from AlphVantage.co
 *     Pressing chart should also draw a chart.
+* Delete a stock symbol
+* Add a stock symbol  
 * Choose columns by selecting or deselecting check boxes at the top 
 * Sort a column by pressing the column title.
 * Global Search/filter string.
@@ -45,7 +48,6 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
 
 ### Warning, Pitfall
 
-
 Before relying on the tool, the user MUST compare the values with other providers like,
 google finance, or finance.yahoo.com
 
@@ -55,6 +57,8 @@ The button <calc-splits>  allows to by pass these calculations.
 The guessed splits column, can be shown by checkbox <splits_list>.
 
 Purlpe chart means splits discovered, and chart and gain value maniplulated.
+
+
 
 ###  Stock Deep fall analysis (Not built yet)
 
