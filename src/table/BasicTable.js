@@ -31,7 +31,11 @@ export const BasicTable = (props) => {
   const [splitsCalc, setSplitsCalc] = useState(true);
 
   const [stocksGain, setStocksGain] = useState([]);
-  const [stocksInfo, setStocksInfo] = useState([]);;
+  const [stocksGainOne, setStocksGainOne] = useState({});
+  const [stocksInfo, setStocksInfo] = useState([]);
+  const [stocksInfoOne, setStocksInfoOne] = useState({});
+  const [firebaseFillMili, setFirebaseFillMili] = useState(0);
+
   const gainRef = collection(db, "gain-history")
   const infoRef = collection(db, "stock-info")
 
@@ -55,7 +59,7 @@ export const BasicTable = (props) => {
   //creating function to load ip address from the API
   const getIp = async () => {
     if (ip !== '' && ip !== undefined) {
-      console.log('ip ', ip)
+      //console.log('ip ', ip)
       return;
     }
 
@@ -64,33 +68,44 @@ export const BasicTable = (props) => {
     setIP(res.data)
   } 
 
-  const getOneGain = async (symbol) => {
+  const firebaseGainGetOne = async (symbol) => {
+    try {
       var userQuery = query (gainRef, where('__symbol', '==', symbol));
-      const gain = await getDocs(userQuery); 
-      //gain.waitFor();
-      //gain.docs.map((doc) =>({...doc.data(), id: doc.id}))
-      console.log (gain.docs[0].data());
-      return gain.docs[0].data();
+      const gain = await getDocs(userQuery);
+      //gain.docs.map((doc) =>({...doc.data(), id: doc.id})
+      if (gain.docs.length > 0) {
+        var newJason = stocksGainOne;
+        newJason[symbol] = gain.docs[0].data();
+        setStocksGainOne (newJason);
+        console.log (gain.docs[0].data())
+        return gain.docs[0].data();
+      }
+    } catch(e) { console.log (e)}
   }
 
-  const getOneInfo = async (symbol) => {
+  const firebaseInfoGetOne = async (symbol) => {
     try {
       var userQuery = query (infoRef, where('__symbol', '==', symbol));
       const info = await getDocs(userQuery);
-      //await info.waitFor (); 
-      console.log (info.docs[0].data());
-      return info.docs[0].data();
+      if (info.docs.length > 0) {
+        var newJason = stocksInfoOne;
+        newJason[symbol] =  info.docs[0].data();
+        setStocksInfoOne (newJason);       
+        //await info.waitFor (); 
+        console.log (info.docs[0].data());
+        return info.docs[0].data();
+      }
     } catch(e) { console.log (e)}
   }
 
 
   // read from firebase
-  const getFirebaseGain = async () => {
+  const firebaseGainGetAll = async () => {
     const gain = await getDocs(gainRef)
     setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
     console.log ('firebase read gain: ', gain.length);
   }
-  const getFirebaseInfo = async () => {
+  const firebaseInfoGetAll = async () => {
     const info = await getDocs(infoRef)
     setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
     console.log ('firebase read info: ', info.length);
@@ -100,6 +115,7 @@ export const BasicTable = (props) => {
     //getGain();
     getIp();
      //getInfo();
+
   })
  
 
@@ -155,6 +171,38 @@ export const BasicTable = (props) => {
     const info = await getDocs(infoRef)
     setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
+
+  const firebaseGetAndFill = () => {
+    // allow reads once a minute
+    // if (Date.now() - firebaseFillMili < 1000*60)
+    //   return;
+    // setFirebaseFillMili(Date.now());
+    for (let i = 0; i < rows.length; i++) {
+      // get from firebase 
+      if (rows[i].values.info_date === undefined) {
+        firebaseInfoGetOne((rows[i].values.symbol));
+      }
+      if (rows[i].values.gain_date === undefined) {
+        firebaseGainGetOne((rows[i].values.symbol));
+      }
+    }
+    // fill
+    console.log (stocksInfoOne);
+    console.log (stocksGainOne);     
+    for (let i = 0; i < rows.length; i++) {
+      const symbol = rows[i].values.symbol;
+      // fill info
+      var ref = stocksInfoOne[symbol];
+      if (ref !== undefined && rows[i].values.info_date === undefined)
+        handleOverview (ref.data, ref.__updateDate, ref.__updateMili)
+   
+      // fill gain
+      ref = stocksGainOne[symbol];
+      if (ref !== undefined && rows[i].values.info_gain === undefined)
+        handleCallBackForHistory (ref.data, ref.__symbol, ref.splits, ref.__updateDate, ref.__updateMili);
+    }
+  }
+
 
   const alphaCallBack = (key) => {
     setAPI_KEY (key);
@@ -437,6 +485,7 @@ export const BasicTable = (props) => {
     rows.splice(index, 1);
     //console.log (rows);
     props.callBack(-1);
+    firebaseGetAndFill();
     saveTable();
   }
 
@@ -463,14 +512,6 @@ export const BasicTable = (props) => {
       return;
     }
 
-    const oneGain = getOneGain (addFormData.symbol);
-    while (oneGain.Promise === undefined) {}
-    console.log (oneGain)
-
-    const oneInfo = getOneInfo (addFormData.symbol);
-    while (oneInfo.Promise === undefined) {}
-    console.log (oneInfo)  
-
     newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
@@ -485,27 +526,11 @@ export const BasicTable = (props) => {
 
     rows.push (newStock);
 
-    //get info from firebase
-    //const dat = getOneGain (newStock.values.symbol);
-    //getFirebaseGain();
-    
-    const updateMili = Date.now();
-    const updateDate = getDate();
-
-    var ind = getGainDocIndex (newStock.values.symbol);
-    if (ind >= 0) {
-      handleCallBackForHistory (stocksGain[ind].data, newStock.values.symbol, stocksGain[ind].splits, updateDate, updateMili); 
-    }
-    //getFirebaseInfo();
-    ind = getInfoDocIndx (newStock.values.symbol);
-    if (ind >= 0) {
-      handleOverview (stocksInfo[ind].data, updateDate, updateMili); 
-    }
-  
+    const oneGain = firebaseGainGetOne (addFormData.symbol);
+    const oneInfo = firebaseInfoGetOne (addFormData.symbol);
+    firebaseGetAndFill();        
     saveTable();
     //window.location.reload();
-    //props.callBack(1);
-    //setUpdateCount( updateCount + 1);
   }
 
   const {
