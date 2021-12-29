@@ -13,7 +13,7 @@ import {nanoid} from 'nanoid';
 import axios from 'axios'
 
 import {db} from './firebase-config'
-import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where} from "firebase/firestore";
+import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, orderByChild, firestore} from "firebase/firestore";
 import { validateArgCount } from '@firebase/util'
 //import {} from "https:///www.gstatc"
 
@@ -31,7 +31,7 @@ export const BasicTable = (props) => {
   const [splitsCalc, setSplitsCalc] = useState(true);
 
   const [stocksGain, setStocksGain] = useState([]);
-  const [stocksInfo, setStocksInfo] = useState([]);
+  const [stocksInfo, setStocksInfo] = useState([]);;
   const gainRef = collection(db, "gain-history")
   const infoRef = collection(db, "stock-info")
 
@@ -64,17 +64,32 @@ export const BasicTable = (props) => {
     setIP(res.data)
   } 
 
-  function getOneGain (symbol) {
-    //where ('symbol', '==', symbol)
-    db.collection("gain-history").get().then((snapshot) => {
-      snapshot.docs.forEach ((doc) => {
-        console.log (doc.data());
-
-      });
-      }
-    );
+  const getOneGain = async (symbol) => {
+    try {
+      var userQuery = query (gainRef, where('__symbol', '==', symbol));
+      const gain = await getDocs(userQuery); 
+      //gain.docs.map((doc) =>({...doc.data(), id: doc.id}))
+      console.log (gain.docs[0].data());
+      return gain.docs[0].data();
+    } catch (e) {
+      console.log (e);
+      return null;
+    }
   }
-   
+
+  const getOneInfo = async (symbol) => {
+    try {
+      var userQuery = query (infoRef, where('__symbol', '==', symbol));
+      const gain = await getDocs(userQuery); 
+      //gain.docs.map((doc) =>({...doc.data(), id: doc.id}))
+      console.log (gain.docs[0].data());
+      return gain.docs[0].data();
+    } catch (e) {
+      console.log (e);
+      return null;
+    }
+  }
+
 
   // read from firebase
   const getFirebaseGain = async () => {
@@ -454,9 +469,12 @@ export const BasicTable = (props) => {
       alert (`Invalid symbol: ${addFormData.symbol}`);
       return;
     }
-  
-    //var newStock = cloneDeep (rows[0]);
-    //newStock.id = getUniqueId();
+    try {
+    const oneGain = getOneGain (addFormData.symbol);
+    const oneInfo = getOneInfo (addFormData.symbol);
+    } catch (e) {
+      console.log (e)
+    }
     newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
@@ -489,7 +507,7 @@ export const BasicTable = (props) => {
     }
   
     saveTable();
-    window.location.reload();
+    //window.location.reload();
     //props.callBack(1);
     //setUpdateCount( updateCount + 1);
   }
