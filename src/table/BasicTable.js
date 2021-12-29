@@ -65,29 +65,22 @@ export const BasicTable = (props) => {
   } 
 
   const getOneGain = async (symbol) => {
-    try {
       var userQuery = query (gainRef, where('__symbol', '==', symbol));
       const gain = await getDocs(userQuery); 
+      //gain.waitFor();
       //gain.docs.map((doc) =>({...doc.data(), id: doc.id}))
       console.log (gain.docs[0].data());
       return gain.docs[0].data();
-    } catch (e) {
-      console.log (e);
-      return null;
-    }
   }
 
   const getOneInfo = async (symbol) => {
     try {
       var userQuery = query (infoRef, where('__symbol', '==', symbol));
-      const gain = await getDocs(userQuery); 
-      //gain.docs.map((doc) =>({...doc.data(), id: doc.id}))
-      console.log (gain.docs[0].data());
-      return gain.docs[0].data();
-    } catch (e) {
-      console.log (e);
-      return null;
-    }
+      const info = await getDocs(userQuery);
+      //await info.waitFor (); 
+      console.log (info.docs[0].data());
+      return info.docs[0].data();
+    } catch(e) { console.log (e)}
   }
 
 
@@ -469,12 +462,15 @@ export const BasicTable = (props) => {
       alert (`Invalid symbol: ${addFormData.symbol}`);
       return;
     }
-    try {
+
     const oneGain = getOneGain (addFormData.symbol);
+    while (oneGain.Promise === undefined) {}
+    console.log (oneGain)
+
     const oneInfo = getOneInfo (addFormData.symbol);
-    } catch (e) {
-      console.log (e)
-    }
+    while (oneInfo.Promise === undefined) {}
+    console.log (oneInfo)  
+
     newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
