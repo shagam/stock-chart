@@ -194,12 +194,12 @@ export const BasicTable = (props) => {
       // fill info
       var ref = stocksInfoOne[symbol];
       if (ref !== undefined && rows[i].values.info_date === undefined)
-        handleOverview (ref.data, ref.__updateDate, ref.__updateMili)
+        handleOverview (ref.data, ref._updateDate, ref._updateMili)
    
       // fill gain
       ref = stocksGainOne[symbol];
       if (ref !== undefined && rows[i].values.info_gain === undefined)
-        handleCallBackForHistory (ref.data, ref.__symbol, ref.splits, ref.__updateDate, ref.__updateMili);
+        handleCallBackForHistory (ref.data, ref.__symbol, ref.splits, ref._updateDate, ref._updateMili);
     }
   }
 
@@ -525,9 +525,6 @@ export const BasicTable = (props) => {
     }
 
     rows.push (newStock);
-
-    const oneGain = firebaseGainGetOne (addFormData.symbol);
-    const oneInfo = firebaseInfoGetOne (addFormData.symbol);
     firebaseGetAndFill();        
     saveTable();
     //window.location.reload();
@@ -613,7 +610,8 @@ export const BasicTable = (props) => {
             onChange={handleChange}
           /> calc-splits
         </label>
- 
+        <button type="button" onClick={()=>firebaseGetAndFill()}>firebaseGet    </button>
+
         <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
         <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All, 
