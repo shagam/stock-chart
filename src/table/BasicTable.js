@@ -30,9 +30,9 @@ export const BasicTable = (props) => {
   const [splitsFlag, setSplitsFlag] = useState('');
   const [splitsCalc, setSplitsCalc] = useState(true);
 
-  const [stocksGain, setStocksGain] = useState([]);
+  //const [stocksGain, setStocksGain] = useState([]);
   const [stocksGainOne, setStocksGainOne] = useState({});
-  const [stocksInfo, setStocksInfo] = useState([]);
+  //const [stocksInfo, setStocksInfo] = useState([]);
   const [stocksInfoOne, setStocksInfoOne] = useState({});
   const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
@@ -76,8 +76,7 @@ export const BasicTable = (props) => {
       if (gain.docs.length > 0) {
         var latestIndex = 0;
         if (gain.docs.length > 1) {
-          console.log ('duplicates ', gain.docs.length, gain.docs[0].data());
-          console.log ('duplicates ', gain.docs.length, gain.docs[1].data()); 
+          console.log ('duplicates ', gain.docs.length, gain.docs[0].data()); 
           var updateMili = 0;
           // search for latest
           for (let i = 0; i < gain.docs.length; i++) {
@@ -95,13 +94,13 @@ export const BasicTable = (props) => {
             await deleteDoc (gainDoc);    
           }               
         }
-        var newJason = stocksGainOne;
-        newJason[symbol] = gain.docs[latestIndex].data();
+        var newJason = stocksGainOne; // jason of all stocks
+        newJason[symbol] = gain.docs[latestIndex];
         setStocksGainOne (newJason);
         console.log (gain.docs[latestIndex].data())
         return gain.docs[latestIndex].data();
       }
-    } catch(e) { console.log (e)}
+    } catch(e) { console.log (e); alert (e)}
   }
 
   const firebaseInfoGetOne = async (symbol) => {
@@ -130,27 +129,27 @@ export const BasicTable = (props) => {
           }
         }
         var newJason = stocksInfoOne;
-        newJason[symbol] =  info.docs[latestIndex].data();
+        newJason[symbol] =  info.docs[latestIndex];
         setStocksInfoOne (newJason);       
         //await info.waitFor (); 
         //console.log (info.docs[latestIndex].data());
         return info.docs[latestIndex].data();
       }
-    } catch(e) { console.log (e)}
+    } catch(e) {console.log (e); alert (e)}
   }
 
 
   // read from firebase
-  const firebaseGainGetAll = async () => {
-    const gain = await getDocs(gainRef)
-    setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
-    console.log ('firebase read gain: ', gain.length);
-  }
-  const firebaseInfoGetAll = async () => {
-    const info = await getDocs(infoRef)
-    setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
-    console.log ('firebase read info: ', info.length);
-  }
+  // const firebaseGainGetAll = async () => {
+  //   const gain = await getDocs(gainRef)
+  //   setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
+  //   console.log ('firebase read gain: ', gain.length);
+  // }
+  // const firebaseInfoGetAll = async () => {
+  //   const info = await getDocs(infoRef)
+  //   setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
+  //   console.log ('firebase read info: ', info.length);
+  // }
 
   useEffect (() => { 
     //getGain();
@@ -161,56 +160,59 @@ export const BasicTable = (props) => {
  
 
  
-  const getGainDocIndex = (symbol) => {
-    for (let i = 0; i < stocksGain.length; i++) {
-      if (stocksGain[i].__symbol === symbol)
-        return i;
-    }
-    return -1;
-  }
-  const getGainDocId = (symbol) => {
-    const index = getGainDocIndex (symbol);   
-    if (index >= 0)
-      return stocksGain[index].id;
-    return '';
-  }
+  // const getGainDocIndex = (symbol) => {
+  //   for (let i = 0; i < stocksGain.length; i++) {
+  //     if (stocksGain[i].__symbol === symbol)
+  //       return i;
+  //   }
+  //   return -1;
+  // }
+  // const getGainDocId = (symbol) => {
+  //   const index = getGainDocIndex (symbol);   
+  //   if (index >= 0)
+  //     return stocksGain[index].id;
+  //   return '';
+  // }
   const firebaseGainAdd = async (symbol, updateDate, updateMili, newGain, splits) => {
-    let id = getGainDocId (symbol);
-    if (id === '') // not found: delete
+    console.log (stocksGainOne);
+    if (stocksGainOne[symbol] === undefined) //not found
       await addDoc (gainRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits })
     else { // found update
+      const id = stocksGainOne[symbol].id;
       var gainDoc = doc(db, "gain-history", id);
       await updateDoc (gainDoc,  {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits });
       //await deleteDoc (gainDoc);
     }
-    const gain = await getDocs(gainRef)
-    setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
+    //const gain = await getDocs(gainRef)
+    //setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
-  const getInfoDocIndx = (symbol) => {
-    for (let i = 0; i < stocksInfo.length; i++) {
-      if (stocksInfo[i].__symbol === symbol)
-        return i;
-    }
-    return -1;
-  }
-  const getInfoDocId = (symbol) => {
-    const i = getInfoDocIndx (symbol);
-    if (i >= 0)
-        return stocksInfo[i].id;
-    return '';
-  }
+  // const getInfoDocIndx = (symbol) => {
+  //   for (let i = 0; i < stocksInfo.length; i++) {
+  //     if (stocksInfo[i].__symbol === symbol)
+  //       return i;
+  //   }
+  //   return -1;
+  // }
+  // const getInfoDocId = (symbol) => {
+  //   const i = getInfoDocIndx (symbol);
+  //   if (i >= 0)
+  //       return stocksInfo[i].id;
+  //   return '';
+  // }
   const firebaseInfoAdd = async (symbol, updateDate, updateMili, newInfo) => {
-    const id = getInfoDocId (symbol);
-    if (id === '') // not found add
+    console.log (stocksInfoOne);
+    try{
+    if (stocksInfoOne[symbol] === undefined) 
       await addDoc (infoRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
     else { // found: update
-      const infoDoc = doc(db, "stock-info", id)
+      const infoDoc = doc(db, "stock-info", stocksInfoOne[symbol].id)
       await updateDoc (infoDoc, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
       // await deleteDoc (infoDoc); // temp fix for format change)
     }
-    const info = await getDocs(infoRef)
-    setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
+    //const info = await getDocs(infoRef)
+  } catch(e) {console.log (e); alert(e)}
+    //setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
   const firebaseGetAndFill = () => {
@@ -227,12 +229,12 @@ export const BasicTable = (props) => {
       // fill info
       var ref = stocksInfoOne[symbol];
       if (ref !== undefined && rows[i].values.info_date === undefined)
-        handleOverview (ref.data, ref._updateDate, ref._updateMili)
+        handleOverview (ref.data().data, ref.data()._updateDate, ref.data()._updateMili)
    
       // fill gain
       ref = stocksGainOne[symbol];
       if (ref !== undefined && rows[i].values.info_gain === undefined)
-        handleCallBackForHistory (ref.data, ref.__symbol, ref.splits, ref._updateDate, ref._updateMili);
+        handleCallBackForHistory (ref.data().data, ref.data().__symbol, ref.data().splits, ref.data()._updateDate, ref.data()._updateMili);
     }
 
     // get missing data, for next round
@@ -245,6 +247,8 @@ export const BasicTable = (props) => {
         firebaseGainGetOne((rows[i].values.symbol));
       }
     }
+    console.log (stocksInfoOne);
+    console.log (stocksGainOne);   
    }
 
 
