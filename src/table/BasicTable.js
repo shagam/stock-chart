@@ -74,14 +74,32 @@ export const BasicTable = (props) => {
       const gain = await getDocs(userQuery);
       //gain.docs.map((doc) =>({...doc.data(), id: doc.id})
       if (gain.docs.length > 0) {
+        var latestIndex = 0;
         if (gain.docs.length > 1) {
           console.log ('duplicates ', gain.docs.length, gain.docs[0].data());
+          console.log ('duplicates ', gain.docs.length, gain.docs[1].data()); 
+          var updateMili = 0;
+          // search for latest
+          for (let i = 0; i < gain.docs.length; i++) {
+            if (gain.docs[i].data()._updateMili > updateMili) {
+              updateMili = gain.docs[i].data()._updateMili;
+              latestIndex = i;
+            }
+          }
+          // delete all dups except latest
+          for (let i = 0; i < gain.docs.length; i++) {
+            if (i === latestIndex)
+              continue;
+            const id = gain.docs[i].id;
+            var gainDoc = doc(db, "gain-history", gain.docs[i].id);
+            await deleteDoc (gainDoc);    
+          }               
         }
         var newJason = stocksGainOne;
-        newJason[symbol] = gain.docs[0].data();
+        newJason[symbol] = gain.docs[latestIndex].data();
         setStocksGainOne (newJason);
-        console.log (gain.docs[0].data())
-        return gain.docs[0].data();
+        console.log (gain.docs[latestIndex].data())
+        return gain.docs[latestIndex].data();
       }
     } catch(e) { console.log (e)}
   }
@@ -91,15 +109,32 @@ export const BasicTable = (props) => {
       var userQuery = query (infoRef, where('__symbol', '==', symbol));
       const info = await getDocs(userQuery);
       if (info.docs.length > 0) {
+        var latestIndex = 0;
         if (info.docs.length > 1) {
           console.log ('duplicates', info.docs.length, info.docs[0].data());
+          var updateMili = 0;
+          // search for latest
+          for (let i = 0; i < info.docs.length; i++) {
+            if (info.docs[i].data()._updateMili > updateMili) {
+              updateMili = info.docs[i].data()._updateMili;
+              latestIndex = i;
+            }
+          }
+          // delete all dups except latest
+          for (let i = 0; i < info.docs.length; i++) {
+            if (i === latestIndex)
+              continue;
+            const id = info.docs[i].id;
+            var infoDoc = doc(db, "stock-info", info.docs[i].id);
+            await deleteDoc (infoDoc);    
+          }
         }
         var newJason = stocksInfoOne;
-        newJason[symbol] =  info.docs[0].data();
+        newJason[symbol] =  info.docs[latestIndex].data();
         setStocksInfoOne (newJason);       
         //await info.waitFor (); 
-        console.log (info.docs[0].data());
-        return info.docs[0].data();
+        //console.log (info.docs[latestIndex].data());
+        return info.docs[latestIndex].data();
       }
     } catch(e) { console.log (e)}
   }
@@ -170,9 +205,9 @@ export const BasicTable = (props) => {
     if (id === '') // not found add
       await addDoc (infoRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
     else { // found: update
-      const gainDoc = doc(db, "stock-info", id)
-      await updateDoc (gainDoc, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
-      // await deleteDoc (gainDoc); // temp fix for format change)
+      const infoDoc = doc(db, "stock-info", id)
+      await updateDoc (infoDoc, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
+      // await deleteDoc (infoDoc); // temp fix for format change)
     }
     const info = await getDocs(infoRef)
     setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
