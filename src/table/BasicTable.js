@@ -74,6 +74,9 @@ export const BasicTable = (props) => {
       const gain = await getDocs(userQuery);
       //gain.docs.map((doc) =>({...doc.data(), id: doc.id})
       if (gain.docs.length > 0) {
+        if (gain.docs.length > 1) {
+          console.log ('duplicates ', gain.docs.length, gain.docs[0].data());
+        }
         var newJason = stocksGainOne;
         newJason[symbol] = gain.docs[0].data();
         setStocksGainOne (newJason);
@@ -88,6 +91,9 @@ export const BasicTable = (props) => {
       var userQuery = query (infoRef, where('__symbol', '==', symbol));
       const info = await getDocs(userQuery);
       if (info.docs.length > 0) {
+        if (info.docs.length > 1) {
+          console.log ('duplicates', info.docs.length, info.docs[0].data());
+        }
         var newJason = stocksInfoOne;
         newJason[symbol] =  info.docs[0].data();
         setStocksInfoOne (newJason);       
@@ -127,7 +133,7 @@ export const BasicTable = (props) => {
     }
     return -1;
   }
- const getGainDocId = (symbol) => {
+  const getGainDocId = (symbol) => {
     const index = getGainDocIndex (symbol);   
     if (index >= 0)
       return stocksGain[index].id;
@@ -177,18 +183,10 @@ export const BasicTable = (props) => {
     // if (Date.now() - firebaseFillMili < 1000*60)
     //   return;
     // setFirebaseFillMili(Date.now());
-    for (let i = 0; i < rows.length; i++) {
-      // get from firebase 
-      if (rows[i].values.info_date === undefined) {
-        firebaseInfoGetOne((rows[i].values.symbol));
-      }
-      if (rows[i].values.gain_date === undefined) {
-        firebaseGainGetOne((rows[i].values.symbol));
-      }
-    }
-    // fill
+
     console.log (stocksInfoOne);
     console.log (stocksGainOne);     
+    // fill in table missing values
     for (let i = 0; i < rows.length; i++) {
       const symbol = rows[i].values.symbol;
       // fill info
@@ -201,7 +199,18 @@ export const BasicTable = (props) => {
       if (ref !== undefined && rows[i].values.info_gain === undefined)
         handleCallBackForHistory (ref.data, ref.__symbol, ref.splits, ref._updateDate, ref._updateMili);
     }
-  }
+
+    // get missing data, for next round
+    for (let i = 0; i < rows.length; i++) {
+      // get from firebase 
+      if (rows[i].values.info_date === undefined) {
+        firebaseInfoGetOne((rows[i].values.symbol));
+      }
+      if (rows[i].values.gain_date === undefined) {
+        firebaseGainGetOne((rows[i].values.symbol));
+      }
+    }
+   }
 
 
   const alphaCallBack = (key) => {
