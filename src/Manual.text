@@ -44,8 +44,6 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
 * The chart at the bottom shows the last <chart> click.
   The chart uses Plotly library. It allows zooming, and revert zoom.
 
-* The tool is built on top of JavaScript, React.JS library. react-table, Plotly, Redux.
-  react-datepicker
   
 ### Warning, Pitfall
 
@@ -59,10 +57,18 @@ The guessed splits column, can be shown by checkbox <splits_list>.
 
 Purlpe chart means splits discovered, and chart and gain value maniplulated.
 
+###  used pckages
+
+The tool is built on top of JavaScript, React.JS library. react-table, Plotly, Redux, react-datepicker
 
 
 ###  Stock Deep fall analysis (Not built yet)
 
-The tool gets a date (Number of weeks back from today)
-It calculate how deep a stock fell, during the Covid19 correction of March 2020,
-And how long (weeks),it took to recover, climb back after the correction.
+Set date before the crash  defaulr 5 Feb 2020
+Turn on columns: Drop, recoverWeek
+Press <chart> for a few stocks.
+
+The tool finds the Deep (Lowest value)
+Then it searches for highst value before Drop
+THen it searches walks week by week to find when stock recovered.
+
