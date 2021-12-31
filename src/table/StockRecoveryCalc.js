@@ -41,7 +41,7 @@ const StockRecoveryCalc = (props) => {
     var highPriceBeforeDeep = 0;
     var highPriceBeforeDeepWeek = 0;
 
-    var dropPrice = props.stockChartYValues[startBeforeDropWeek];
+    var dropPrice = Number(props.stockChartYValues[startBeforeDropWeek]);
     var dropWeek = 0;
     
     var highPriceAfterDeep = 0;
@@ -55,32 +55,35 @@ const StockRecoveryCalc = (props) => {
 
 
     // search for deepPrice
-    for (let i = startBeforeDropWeek; i > 0; i--) {
+    for (var i = startBeforeDropWeek; i > 0; i--) {
       // search for lowestPrrice 
-      if (dropPrice > props.stockChartYValues[i]) {
-        dropPrice = props.stockChartYValues[i];
+      const price = Number(props.stockChartYValues[i]);
+      if (dropPrice > price) {
+        dropPrice = price;
         dropWeek = i;
       }
     }
     console.log ('StockSymbol: ', props.StockSymbol);
+    console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
     console.log ('dropPrice: ', dropPrice, ' dropWeek: ', dropWeek);
 
     // search for higest befor deep
-    for (let i = dropWeek; i <= startBeforeDropWeek; i++) {    
-      // searc for recover week
-      if (highPriceBeforeDeep < props.stockChartYValues[i]) {  // at least weeks to recover
-        highPriceBeforeDeep  = props.stockChartYValues[i];
+    for (let i = dropWeek; i <= startBeforeDropWeek; i++) { 
+      const price = Number(props.stockChartYValues[i]);
+      if (highPriceBeforeDeep < price) {  // at least weeks to recover
+        highPriceBeforeDeep  = price;
         highPriceBeforeDeepWeek = i;
       }
     }
-    console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
+
 
     // check for highest price after drop
     for (let i = dropWeek; i > 0; i--) {      
-      if (highPriceAfterDeep < props.stockChartYValues[i]) {
-        highPriceAfterDeep = props.stockChartYValues[i];
+      const price = Number(props.stockChartYValues[i]);
+      if (highPriceAfterDeep < price) {
+        highPriceAfterDeep = price;
         recoverWeek = i;
-        if (props.stockChartYValues[i] > props.stockChartYValues[highPriceBeforeDeepWeek])
+        if (price > Number (props.stockChartYValues[highPriceBeforeDeepWeek]))
           break; // recovery found
       }
     }
