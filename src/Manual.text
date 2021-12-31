@@ -62,7 +62,7 @@ Purlpe chart means splits discovered, and chart and gain value maniplulated.
 The tool is built on top of JavaScript, React.JS library. react-table, Plotly, Redux, react-datepicker
 
 
-###  Stock Deep fall analysis (Not built yet)
+###  Stock crash (Deep fall) and recovery weeks analysis
 
 Set date before the crash  defaulr 5 Feb 2020
 Turn on columns: Drop, recoverWeek
