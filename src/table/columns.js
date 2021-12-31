@@ -136,6 +136,16 @@ export const COLUMNS = [
     Footer: 'gain_date',    
     accessor: 'gain_date'
   },
+  {
+    Header: 'drop',
+    Footer: 'drop',    
+    accessor: 'drop'
+  },
+  {
+    Header: 'recoverWeek',
+    Footer: 'recoverWeek',    
+    accessor: 'recoverWeek'
+  },
 
 ] 
 

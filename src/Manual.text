@@ -45,7 +45,8 @@ Pls send any bug report or enhancement request to eli.shagam@gmil.com
   The chart uses Plotly library. It allows zooming, and revert zoom.
 
 * The tool is built on top of JavaScript, React.JS library. react-table, Plotly, Redux.
-
+  react-datepicker
+  
 ### Warning, Pitfall
 
 Before relying on the tool, the user MUST compare the values with other providers like,

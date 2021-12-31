@@ -6,6 +6,7 @@ import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
+import StockRecoveryCalc from './StockRecoveryCalc'
 import AlphaVantage from '../AlphaVantage'
 import Manual from '../Manual'
 import {nanoid} from 'nanoid';
@@ -221,8 +222,8 @@ export const BasicTable = (props) => {
     //   return;
     // setFirebaseFillMili(Date.now());
 
-    console.log (stocksInfoOne);
-    console.log (stocksGainOne);     
+    // console.log (stocksInfoOne);
+    // console.log (stocksGainOne);     
     // fill in table missing values
     for (let i = 0; i < rows.length; i++) {
       const symbol = rows[i].values.symbol;
@@ -593,7 +594,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek"]
     }
 
   },
@@ -627,6 +628,18 @@ export const BasicTable = (props) => {
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
+  }
+
+  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek) => {
+    //console.log (stockSymbol, drop, deepWeek, recoverWeek);
+    const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
+    if (index === -1) {
+      alert ('crash recover symbol not found ', stockSymbol);
+      return;
+    } 
+    // rows[index]values.
+    rows[index].values.drop = drop;
+    rows[index].values.recoverWeek = recoverWeek;
   }
 
   const { globalFilter } = state
@@ -718,8 +731,11 @@ export const BasicTable = (props) => {
    <div>
      {/* {console.log (chartSymbol)} */}
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
-    {/* {conditionalChart}     */}
+
     {AlphaVantage (alphaCallBack)}
+
+    <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
+
     <Manual/>
     </div> 
     </>
