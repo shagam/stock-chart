@@ -57,7 +57,7 @@ The guessed splits column, can be shown by checkbox <splits_list>.
 
 Purlpe chart means splits discovered, and chart and gain value maniplulated.
 
-###  used pckages
+###  used packages
 
 The tool is built on top of JavaScript, React.JS library. react-table, Plotly, Redux, react-datepicker
 

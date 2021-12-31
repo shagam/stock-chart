@@ -34,7 +34,7 @@ const Manual = () => {
           <textarea
             type='text'
             name='manual'
-            cols='90'
+            cols='80'
             rows='30'
             readOnly
             defaultValue={manualText}
