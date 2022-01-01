@@ -63,7 +63,8 @@ const StockRecoveryCalc = (props) => {
         dropWeek = i;
       }
     }
-    console.log ('StockSymbol: ', props.StockSymbol);
+    console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropWeek]);
+
     console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
     console.log ('dropPrice: ', dropPrice, ' dropWeek: ', dropWeek);
 
