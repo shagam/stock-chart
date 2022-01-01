@@ -9,6 +9,8 @@ import Stock_chart from '../Stock-chart'
 import StockRecoveryCalc from './StockRecoveryCalc'
 import AlphaVantage from '../AlphaVantage'
 import Manual from '../Manual'
+import FirebaseManage from './FirebaseManage'
+
 import {nanoid} from 'nanoid';
 //import cloneDeep from 'lodash/cloneDeep';
 import axios from 'axios'
@@ -735,7 +737,7 @@ export const BasicTable = (props) => {
     {AlphaVantage (alphaCallBack)}
 
     <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
-
+    <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows}/>
     <Manual/>
     </div> 
     </>
