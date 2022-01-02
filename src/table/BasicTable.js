@@ -631,7 +631,7 @@ export const BasicTable = (props) => {
     //console.log (stockSymbol, drop, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
     if (index === -1) {
-      alert ('crash recover symbol not found ', stockSymbol);
+      alert (`crash recovery symbol not found (${stockSymbol})`);
       return;
     } 
     // rows[index]values.
@@ -641,7 +641,7 @@ export const BasicTable = (props) => {
 
   const { globalFilter } = state
 
- const handleChange = () => {setSplitsCalc(! splitsCalc)}
+  const handleChange = () => {setSplitsCalc(! splitsCalc)}
 
   return (
     <>
@@ -686,7 +686,7 @@ export const BasicTable = (props) => {
             placeholder="Add stock symbol ..."
             onChange={handleAddFormChange}
           />
-          <button type="submit"> Add  rows ({rows.length})  </button>
+          <button type="submit"> Add  ({rows.length})  </button>
       </form>
       
       </div>

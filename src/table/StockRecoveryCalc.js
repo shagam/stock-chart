@@ -15,9 +15,8 @@ const StockRecoveryCalc = (props) => {
 
  //  2007, 11, 1  2008 deep
 
-
-
-   const searchDeepValue = () => {
+  
+  const searchDeepValue = () => {
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -46,13 +45,6 @@ const StockRecoveryCalc = (props) => {
     
     var highPriceAfterDeep = 0;
     var recoverWeek = 0;
-
-    
-    if (props.stockChartYValues.length === 0)
-      return 'recover no props yValues';
-    if (props.StockSymbol === '')
-      return 'recover no props.symbol';
-
 
     // search for deepPrice
     for (var i = startBeforeDropWeek; i > 0; i--) {
@@ -98,11 +90,15 @@ const StockRecoveryCalc = (props) => {
     props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek);
   }
 
-  searchDeepValue (); 
-  // format("yyyy-MM-dd");
+  //  skip search if no symbol
+  if (props.StockSymbol !== '' && props.StockSymbol !== undefined  
+  && props.stockChartYValues.length !== 0)
+    searchDeepValue (); 
+
+
   return (
     <div>
-      <label>Before crash  </label>
+       Date before crash
       <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
     </div>
   )
