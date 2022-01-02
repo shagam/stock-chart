@@ -12,6 +12,7 @@ import Manual from '../Manual'
 import FirebaseManage from './FirebaseManage'
 
 import {nanoid} from 'nanoid';
+import {format} from "date-fns"
 //import cloneDeep from 'lodash/cloneDeep';
 import axios from 'axios'
 
@@ -227,6 +228,7 @@ export const BasicTable = (props) => {
     // console.log (stocksInfoOne);
     // console.log (stocksGainOne);     
     // fill in table missing values
+    // turn on columns so used can decide if up to date
     var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
     allColumns[ind].toggleHidden();
     ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
@@ -285,7 +287,8 @@ export const BasicTable = (props) => {
 
   function getDate() {
     const date = new Date();
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
+    var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
+    return formattedDate;    
   }
 
     // get stock overview

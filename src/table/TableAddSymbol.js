@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 //import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 import {nanoid} from 'nanoid';
+import {format} from "date-fns"
 
 const AddSymbolToTable = (props) => {
   
@@ -8,7 +9,8 @@ const AddSymbolToTable = (props) => {
 
   function getDate() {
     const date = new Date();
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;      
+    var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
+    return formattedDate;  
   }
 
   // two handlers for adding new symbol
