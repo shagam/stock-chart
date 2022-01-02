@@ -41,6 +41,7 @@ const FirebaseManage = (props) => {
 
         <h3> Firebase Manage table rows={props.rows.length}</h3>
         <h3>gain: {stocksGain.length} info: {stocksInfo.length}</h3>
+        <h3>ip: {props.ip.IPv4}</h3>
         <button type="button" onClick={()=>removeDuplicates()}>removeDuplicates    </button>
       </div>
     </>
