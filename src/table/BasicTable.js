@@ -646,35 +646,24 @@ export const BasicTable = (props) => {
   return (
     <>
 
-
-        <label id="calc_splits_label_id" className="stock_button_class">
+        <label id="calc_splits_label_id">
           <input
             type="checkbox" checked={splitsCalc}
             onChange={handleChange}
           /> 
-          calc-splits
+          calc_splits
         </label>
+
         <button type="button" className="stock_button_class" onClick={()=>firebaseGetAndFill()}>firebaseGet    </button>
 
-        <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
+        <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
+             
         <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
           
         <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All  
 
-    {/* <label>Add stock symbol </label> */}
-    <form id="add_stock_id" onSubmit = {handleAddFormSubmit}>
-          <input
-            type="text"
-            name="symbol"
-            required="required"
-            placeholder="Add stock symbol ..."
-            onChange={handleAddFormChange}
-          />
-          <button type="submit"> Add</button>
-        </form>
 
-      {/* </div > */}
-    
+
       <div id="columnToggle">
         {
         allColumns.map(column => (
@@ -688,7 +677,20 @@ export const BasicTable = (props) => {
         }
       </div>
 
-    <div id="tbl">
+      <div id="add_stock_id">
+      <form  onSubmit = {handleAddFormSubmit}>
+          <input
+            type="text"
+            name="symbol"
+            required="required"
+            placeholder="Add stock symbol ..."
+            onChange={handleAddFormChange}
+          />
+          <button type="submit"> Add  rows ({rows.length})  </button>
+      </form>
+      
+      </div>
+         
     <table id="stockTable" {...getTableProps()}>
       <thead>
         {headerGroups.map ((headerGroup) => (
@@ -725,7 +727,6 @@ export const BasicTable = (props) => {
           })}
       </tbody>
     </table>
-    </div>
   
    <div>
      {/* {console.log (chartSymbol)} */}
@@ -736,7 +737,7 @@ export const BasicTable = (props) => {
 
       <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
-      <div className="firebase">
+      <div id="firebase_id">
         <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne}/>
       </div>
 
