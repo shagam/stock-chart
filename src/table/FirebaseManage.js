@@ -16,19 +16,42 @@ const FirebaseManage = (props) => {
 
   //read from firebase
   const firebaseGainGetAll = async () => {
-    const gain = await getDocs(props.gainRef)
+    const gain = await getDocs(props.gainRef);
     setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
     console.log ('firebase read gain: ', gain.docs.length);
+    setStocksGain(gain.docs.map((doc) =>(
+      console.log (doc.data().__symbol)
+      //props.firebaseGainGetOne(doc.data().__symbol)
+      )));
+
+
+
   }
+
   const firebaseInfoGetAll = async () => {
     const info = await getDocs(props.infoRef)
     setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
     console.log ('firebase read info: ', info.docs.length);
+
+
   }
 
   const removeDuplicates = () => {
     firebaseGainGetAll();
     firebaseInfoGetAll();
+   
+    // if (stocksGain.length)
+    // stocksGain.docs.map((doc) =>({
+    //   // const a = doc.data();
+    //   // console.log (doc.data());
+    //   // // props.firebaseGainGetOne(doc.data().__symbol);
+    //   // props.firebaseInfoGetOne(doc.data().__symbol);
+    // }))
+
+
+
+    // props.firebaseGainGetOne
+    // props.firebaseInfoGetOne
 
     console.log ('stocksGain (count): ', stocksGain.length, 'stocksInfo (count): ', stocksInfo.length);
   }

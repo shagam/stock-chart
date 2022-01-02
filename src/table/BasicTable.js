@@ -72,11 +72,13 @@ export const BasicTable = (props) => {
     setIP(res.data)
   } 
 
+    // get one symbol GAIN from firebase  and clean duplicates
   const firebaseGainGetOne = async (symbol) => {
     try {
+      // get one symbol gain from firebase
       var userQuery = query (gainRef, where('__symbol', '==', symbol));
       const gain = await getDocs(userQuery);
-      //gain.docs.map((doc) =>({...doc.data(), id: doc.id})
+
       if (gain.docs.length > 0) {
         var latestIndex = 0;
         if (gain.docs.length > 1) {
@@ -102,11 +104,11 @@ export const BasicTable = (props) => {
         newJason[symbol] = gain.docs[latestIndex];
         setStocksGainOne (newJason);
         console.log (gain.docs[latestIndex].data())
-        return gain.docs[latestIndex].data();
       }
     } catch(e) { console.log (e); alert (e)}
   }
 
+  // get one symbol INFO from firebase  and clean duplicates
   const firebaseInfoGetOne = async (symbol) => {
     try {
       var userQuery = query (infoRef, where('__symbol', '==', symbol));
@@ -135,25 +137,9 @@ export const BasicTable = (props) => {
         var newJason = stocksInfoOne;
         newJason[symbol] =  info.docs[latestIndex];
         setStocksInfoOne (newJason);       
-        //await info.waitFor (); 
-        //console.log (info.docs[latestIndex].data());
-        return info.docs[latestIndex].data();
       }
     } catch(e) {console.log (e); alert (e)}
   }
-
-
-  // read from firebase
-  // const firebaseGainGetAll = async () => {
-  //   const gain = await getDocs(gainRef)
-  //   setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
-  //   console.log ('firebase read gain: ', gain.length);
-  // }
-  // const firebaseInfoGetAll = async () => {
-  //   const info = await getDocs(infoRef)
-  //   setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
-  //   console.log ('firebase read info: ', info.length);
-  // }
 
   useEffect (() => { 
     //getGain();
@@ -162,7 +148,6 @@ export const BasicTable = (props) => {
 
   })
  
-
  
   // const getGainDocIndex = (symbol) => {
   //   for (let i = 0; i < stocksGain.length; i++) {
@@ -675,7 +660,6 @@ export const BasicTable = (props) => {
       </div>
 
     <div>
-
       <div className="buttons">
         <label>
           <input
@@ -752,7 +736,7 @@ export const BasicTable = (props) => {
       <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div className="firebase">
-        <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows}/>
+        <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne}/>
       </div>
 
       <Manual/>
