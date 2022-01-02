@@ -659,7 +659,6 @@ export const BasicTable = (props) => {
         </form>
       </div>
 
-    <div>
       <div className="buttons">
         <label>
           <input
@@ -673,6 +672,7 @@ export const BasicTable = (props) => {
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
         <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All, 
       </div >
+    
       <div className="columnToggle">
         {
         allColumns.map(column => (
@@ -685,10 +685,9 @@ export const BasicTable = (props) => {
         ))
         }
       </div>
-    </div>
- 
-    <div className="tbl">
-    <table {...getTableProps()}>
+
+    <div id="tbl">
+    <table id="stockTable" {...getTableProps()}>
       <thead>
         {headerGroups.map ((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -703,13 +702,13 @@ export const BasicTable = (props) => {
         ))}
       </thead>
     
-      <tbody {...getTableBodyProps()}>
+      <tbody id="tableBodyId" {...getTableBodyProps()}>
         {
           rows.map(row => {
 
             prepareRow(row)
             return (
-              <tr
+              <tr id='stock_row_id'
                 {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>

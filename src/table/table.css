@@ -9,9 +9,15 @@ table td, table th {
   padding: 8px;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+table tr:nth-child(even){
+  background-color: #f2f2f2;
+}
 
 table tr:hover {background-color: #ddd;}
+
+/* table tr {
+  width: 100%!important;
+} */
 
 table th {
   padding-top: 12px;
@@ -23,8 +29,13 @@ table th {
   top: 0;
 }
 
-div.tbl {
-  text-align: center; 
+table tbody {
+  /* background: pink; */
+  width: 100%!important;
+}
+
+#tbl {
+  /* text-align: center;  */
   /* height: 55vh;
   overflow-y: auto; */
 }
@@ -34,8 +45,8 @@ div.button {
   position: absolute;
 }
 
-div.columnToggle___ {
-  left: 0;
+div.columnToggl___ {
+  left: 10px;
   position: sticky;
   position: left;
   /* border: 2px solid black; */
@@ -43,11 +54,27 @@ div.columnToggle___ {
 }
 
 
-table {
-  border: 2px solid green;
-  /* outline: 2px solid black;  */
-}
-
 div.firebase {
   border: 2px solid black;
+}
+
+#stockTable {
+  border: 2px solid green;
+  display: block;
+  height: 55vh;
+  width: 100%;
+  /* min-width: 1900px; */
+  overflow-y: scroll;
+  /* background: yellow; */
+  text-align: center;
+}
+
+#tableBodyId {
+  background: lightblue;
+  /* display: block; */
+}
+
+#stock_row_id {
+  width: 100%!important;
+  /* color: red; */
 }
