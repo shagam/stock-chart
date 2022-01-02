@@ -645,9 +645,24 @@ export const BasicTable = (props) => {
 
   return (
     <>
-    <div>
-        {/* <label>Add stock symbol </label> */}
-        <form onSubmit = {handleAddFormSubmit}>
+
+
+        <label id="calc_splits_label_id" className="stock_button_class">
+          <input
+            type="checkbox" checked={splitsCalc}
+            onChange={handleChange}
+          /> 
+          calc-splits
+        </label>
+        <button type="button" className="stock_button_class" onClick={()=>firebaseGetAndFill()}>firebaseGet    </button>
+
+        <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
+        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
+          
+        <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All  
+
+    {/* <label>Add stock symbol </label> */}
+    <form id="add_stock_id" onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
@@ -657,27 +672,14 @@ export const BasicTable = (props) => {
           />
           <button type="submit"> Add</button>
         </form>
-      </div>
 
-      <div className="buttons">
-        <label>
-          <input
-            type="checkbox" checked={splitsCalc}
-            onChange={handleChange}
-          /> calc-splits
-        </label>
-        <button type="button" onClick={()=>firebaseGetAndFill()}>firebaseGet    </button>
-
-        <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
-        <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All, 
-      </div >
+      {/* </div > */}
     
-      <div className="columnToggle">
+      <div id="columnToggle">
         {
         allColumns.map(column => (
-          <div key={column.id}>
-            <label>
+          <div id="columnToggle_id" key={column.id}>
+            <label id="column_Label_id">
               <input type='checkbox' {...column.getToggleHiddenProps()} />
               {column.Header}
             </label>
