@@ -688,8 +688,9 @@ export const BasicTable = (props) => {
         <button type="button" onClick={()=>saveTable()}>saveTable    </button>   rows ({rows.length}),      
         <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}  />
         <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All, 
-      </div>
-      {
+      </div >
+      <div className="columnToggle">
+        {
         allColumns.map(column => (
           <div key={column.id}>
             <label>
@@ -698,7 +699,8 @@ export const BasicTable = (props) => {
             </label>
           </div>
         ))
-      }
+        }
+      </div>
     </div>
  
     <div className="tbl">
@@ -742,13 +744,18 @@ export const BasicTable = (props) => {
   
    <div>
      {/* {console.log (chartSymbol)} */}
+
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
 
-    {AlphaVantage (alphaCallBack)}
+      {AlphaVantage (alphaCallBack)}
 
-    <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
-    <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows}/>
-    <Manual/>
+      <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
+
+      <div className="firebase">
+        <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows}/>
+      </div>
+
+      <Manual/>
     </div> 
     </>
   )
