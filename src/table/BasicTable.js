@@ -227,6 +227,13 @@ export const BasicTable = (props) => {
     // console.log (stocksInfoOne);
     // console.log (stocksGainOne);     
     // fill in table missing values
+    var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
+    allColumns[ind].toggleHidden();
+    ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
+    allColumns[ind].toggleHidden();
+
+    //allColumns[ind].getToggleHiddenProps().checked = ! allColumns[ind].getToggleHiddenProps().checked;
+
     for (let i = 0; i < rows.length; i++) {
       const symbol = rows[i].values.symbol;
       // fill info
