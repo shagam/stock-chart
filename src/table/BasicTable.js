@@ -103,7 +103,7 @@ export const BasicTable = (props) => {
         var newJason = stocksGainOne; // jason of all stocks
         newJason[symbol] = gain.docs[latestIndex];
         setStocksGainOne (newJason);
-        console.log (gain.docs[latestIndex].data())
+        //console.log (gain.docs[latestIndex].data())
       }
     } catch(e) { console.log (e); alert (e)}
   }
