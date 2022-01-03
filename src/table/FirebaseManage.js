@@ -2,7 +2,7 @@ import React, {useState, useMemo, useEffect} from 'react'
 
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, orderByChild, firestore} from "firebase/firestore";
-
+import {nanoid} from 'nanoid';
 
 const FirebaseManage = (props) => {
   const [stocksGain, setStocksGain] = useState([]);
@@ -146,10 +146,51 @@ const FirebaseManage = (props) => {
         ));
       const gain = await getDocs(userQuery);
       console.log (gain.docs.length);
-
+      var found_stocks_array = [];
       for (let i = 0; i < gain.docs.length; i++) {
-        console.log ('best-stocks', i, gain.docs[i].data().__symbol);
+        const symbol = gain.docs[i].data().__symbol;
+        
+        const symIndex = props.rows.findIndex((row)=> row.values.symbol === symbol); 
+        if (symIndex !== -1) {
+          console.log ('stock alreay in table ', i, symbol);
+          continue; // already in table
+        }
+       
+        console.log ('stock equ QQQ added ', i, symbol);
+        found_stocks_array.push(symbol);
+        // var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
+    
+        // newStock.id = nanoid();
+        // newStock.values.symbol = symbol;
+        // newStock.original.symbol = symbol;
+        // newStock.cells = null;
+        // newStock.allCells = [];
+        // newStock.values.updateDate = gain.docs[i].data()._updateDate;
+        // newStock.values.updateMili = gain.docs[i].data()._updateMili;
+
+        // newStock.values.wk = gain.docs[i].data().wk;
+        // newStock.values.wk2 = gain.docs[i].data().wk2;
+        // newStock.values.mon = gain.docs[i].data().mon;
+        // newStock.values.mon3 = gain.docs[i].data().mon3;
+        // newStock.values.mon6 = gain.docs[i].data().mon6;
+        // newStock.values.year = gain.docs[i].data().year;
+        // newStock.values.year2 = gain.docs[i].data().year2;
+        // newStock.values.year5 = gain.docs[i].data().year5;
+        // newStock.values.year10 = gain.docs[i].data().year10;
+        // newStock.values.year20 = gain.docs[i].data().year20;
+        // newStock.values.splits = gain.docs[i].data().splits;
+
+        // try {
+        // props.prepareRow(newStock);
+        // props.rows.push (newStock);
+        // } catch (e) {
+        //   console.log (e)
+        //   alert ('adding best stocks' + e);
+        // }
+        // window.location.reload();
       }
+      if (found_stocks_array.length > 0)
+        alert (`stock with gain compare to QQQ:    [${found_stocks_array}]`)
     } catch(e) { console.log (e); alert (e)}
   }
 
