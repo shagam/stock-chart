@@ -522,9 +522,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
-    var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-    prepareRow(newStock);
-
+  
     //console.log (addFormData.symbol)
     const re = new RegExp('^[a-zA-Z0-9\.]*$');  // Verify valid symbol in englis letters
     if (! re.test (addFormData.symbol)) {
@@ -532,18 +530,22 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
       return;
     }
 
-    newStock.id = nanoid();
-    newStock.values.symbol = addFormData.symbol.toUpperCase();
-    newStock.original.symbol = addFormData.symbol.toUpperCase();
-    newStock.cells = null;
-    newStock.allCells = [];
-
+    // check for duplicate symbol
     const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
     if (index !== -1) {
       alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
       return;
     }
 
+    var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
+    prepareRow(newStock);
+
+    newStock.id = nanoid();
+    newStock.values.symbol = addFormData.symbol.toUpperCase();
+    newStock.original.symbol = addFormData.symbol.toUpperCase();
+    newStock.cells = null;
+    newStock.allCells = [];
+    
     rows.push (newStock);
     firebaseGetAndFill();      
     saveTable();
@@ -713,7 +715,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
       <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div id="firebase_id">
-        <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne}/>
+        <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne}/>
       </div>
 
       <Manual/>
