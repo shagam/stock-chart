@@ -127,24 +127,50 @@ const FirebaseManage = (props) => {
    // console.log ("ipList: ", ipList.length);
   }
 
+  // get all stocks better than QQQ
+  const firebaseGainGetBest = async (symbol) => {
+    try {
+      // get one symbol gain from firebase
+      const QQQ_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
+      if (QQQ_index === -1) {
+        alert ('QQQ missing in table');
+        return; // cannot compare with QQQ
+      }
+      console.log (props.rows[QQQ_index].values.mon6)  
+      var userQuery = query (props.gainRef, where(
+        'data[4]', '>', props.rows[QQQ_index].values.mon6 || //mon6
+        'data[5]', '>', props.rows[QQQ_index].values.year || //year
+        'data[6]', '>', props.rows[QQQ_index].values.year2 || //year2
+        'data[7]', '>', props.rows[QQQ_index].values.year5 || //year5
+        'data[8]', '>', props.rows[QQQ_index].values.year10 //year10
+        ));
+      const gain = await getDocs(userQuery);
+      console.log (gain.docs.length);
+
+      for (let i = 0; i < gain.docs.length; i++) {
+        console.log ('best-stocks', i, gain.docs[i].data().__symbol);
+      }
+    } catch(e) { console.log (e); alert (e)}
+  }
 
   const usageHelpChange = () => {setIpDisplayFlag (! ipDisplayFlag)}
 
   return (
-
     <>
       <div>
-        <h4> Firebase Manage  ip: {props.ip.IPv4}</h4>
-        <h4> table rows={props.rows.length} gain: {stocksGain.length}, info: {stocksInfo.length} ipList: {ipList.length} </h4>
-        <button type="button" onClick={()=>removeDuplicates()}>removeDuplicates    </button>
+        <h4> Firebase Manage  ip: {props.ip.IPv4},  stocks={props.rows.length},
+          gain: {stocksGain.length}, info: {stocksInfo.length}, ipList: {ipList.length} </h4>
+
+          <button type="button" onClick={()=>firebaseGainGetBest()}> stocks-better-then-QQQ    </button>
+          <button type="button" onClick={()=>removeDuplicates()}>removeDuplicates    </button>
       </div>
 
       <label>
-          <input
-            type="checkbox" checked={ipDisplayFlag}
-            onChange={usageHelpChange}
-          /> ip-display
+          <input type="checkbox" checked={ipDisplayFlag}  onChange={usageHelpChange} /> ip-display
       </label>
+
+
+
 
       {ipDisplayFlag &&
         <div className='text'> 
