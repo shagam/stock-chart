@@ -552,7 +552,7 @@ export const BasicTable = (props) => {
     prepareRow(newStock);
 
     //console.log (addFormData.symbol)
-    const re = new RegExp('^[a-zA-Z0-9]*$');  // Verify valid symbol in englis letters
+    const re = new RegExp('^[a-zA-Z0-9\.]*$');  // Verify valid symbol in englis letters
     if (! re.test (addFormData.symbol)) {
       alert (`Invalid symbol: ${addFormData.symbol}`);
       return;
