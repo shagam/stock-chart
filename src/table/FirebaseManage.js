@@ -138,11 +138,11 @@ const FirebaseManage = (props) => {
       }
       console.log (props.rows[QQQ_index].values.mon6)  
       var userQuery = query (props.gainRef, where(
-        'data[4]', '>', props.rows[QQQ_index].values.mon6 || //mon6
-        'data[5]', '>', props.rows[QQQ_index].values.year || //year
-        'data[6]', '>', props.rows[QQQ_index].values.year2 || //year2
-        'data[7]', '>', props.rows[QQQ_index].values.year5 || //year5
-        'data[8]', '>', props.rows[QQQ_index].values.year10 //year10
+        'mon6', '>', props.rows[QQQ_index].values.mon6 || //mon6
+        'year', '>', props.rows[QQQ_index].values.year || //year
+        'year2', '>', props.rows[QQQ_index].values.year2 || //year2
+        'year5', '>', props.rows[QQQ_index].values.year5 || //year5
+        'year10', '>', props.rows[QQQ_index].values.year10 //year10
         ));
       const gain = await getDocs(userQuery);
       console.log (gain.docs.length);

@@ -40,7 +40,7 @@ export const BasicTable = (props) => {
   const [stocksInfoOne, setStocksInfoOne] = useState({});
   const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
-  const gainRef = collection(db, "gain-history")
+  const gainRef = collection(db, "stock-gain")
   const infoRef = collection(db, "stock-info")
 
 
@@ -149,14 +149,14 @@ export const BasicTable = (props) => {
   })
  
   // send gain to firefox
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, newGain, splits) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
     console.log (stocksGainOne);
     if (stocksGainOne[symbol] === undefined) //not found
-      await addDoc (gainRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits })
+      await addDoc (gainRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
     else { // found update
       const id = stocksGainOne[symbol].id;
       var gainDoc = doc(db, "gain-history", id);
-      await updateDoc (gainDoc,  {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits });
+      await updateDoc (gainDoc,  {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 });
       //await deleteDoc (gainDoc);
     }
   }
@@ -203,8 +203,8 @@ export const BasicTable = (props) => {
    
       // fill gain
       ref = stocksGainOne[symbol];
-      if (ref !== undefined && rows[i].values.info_gain === undefined)
-        handleCallBackForHistory (ref.data().data, ref.data().__symbol, ref.data().splits, ref.data()._updateDate, ref.data()._updateMili);
+      if (ref !== undefined && rows[i].values.gain_date === undefined)
+        handleCallBackForHistory (ref.data().__symbol, ref.data().splits, ref.data()._updateDate, ref.data()._updateMili, ref.data().wk, ref.data().wk2, ref.data().mon, ref.data().mon3, ref.data().mon6, ref.data().year, ref.data().year2, ref.data().year5, ref.data().year10, ref.data().year20);
     }
 
     // get missing data, for next round
@@ -299,46 +299,45 @@ export const BasicTable = (props) => {
           )
          }
   
-         const handleCallBackForHistory = (childData, sym, splits, updateDate, updateMili) => {
-            console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
-            const index = rows.findIndex((row)=> row.values.symbol === sym);            
-            if (index === -1) {
-              alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
-              return;
-            }
+const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
+    //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
+    const index = rows.findIndex((row)=> row.values.symbol === sym);            
+    if (index === -1) {
+      alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
+      return;
+    }
 
-            if (Date.now() - rows[index].values.nowChart < 1000)
-              return "duplicate";
+    if (Date.now() - rows[index].values.nowChart < 1000)
+      return "duplicate";
 
-            rows[index].values.nowHist = updateMili;
-            rows[index].values.gain_date = updateDate;
+    rows[index].values.gain_mili = updateMili;
+    rows[index].values.gain_date = updateDate;
 
-            rows[index].values.wk = childData[0]; //stocks[index].wk;
-            rows[index].values.wk2 = childData[1]; //stocks[index].wk2;
-            rows[index].values.mon = childData[2]; //stocks[index].mon;
-            rows[index].values.mon3 = childData[3]; //stocks[index].mon3;
-            rows[index].values.mon6 = childData[4]; //stocks[index].mon6;
-            rows[index].values.year = childData[5]; //stocks[index].year;
-            rows[index].values.year2 = childData[6]; //stocks[index].year2;
-            rows[index].values.year5 = childData[7]; //stocks[index].year5;
-            rows[index].values.year10 = childData[8]; //stocks[index].year10;
-            rows[index].values.year20 = childData[9]; //stocks[index].year20; 
-            rows[index].values.nowChart = Date.now();
-            rows[index].values.splits_list = splits;
-            if (splits === '')
-              rows[index].values.splits_calc = '';
-            else if (splitsCalc)
-              rows[index].values.splits_calc = 'calc';
-            else
-              rows[index].values.splits_calc = 'raw';
-            //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
-            saveTable();
-            props.callBack(-1); // force refresh
-            if (splits === '' || splits.length === 0)
-              setSplitsFlag('');
-            else
-              setSplitsFlag(' splits ??');
-        }
+    rows[index].values.wk = wk; //stocks[index].wk;
+    rows[index].values.wk2 = wk2; //stocks[index].wk2;
+    rows[index].values.mon = mon; //stocks[index].mon;
+    rows[index].values.mon3 = mon3; //stocks[index].mon3;
+    rows[index].values.mon6 = mon6; //stocks[index].mon6;
+    rows[index].values.year = year; //stocks[index].year;
+    rows[index].values.year2 = year2; //stocks[index].year2;
+    rows[index].values.year5 = year5; //stocks[index].year5;
+    rows[index].values.year10 = year10; //stocks[index].year10;
+    rows[index].values.year20 = year20; //stocks[index].year20; 
+    rows[index].values.splits_list = splits;
+    if (splits === '')
+      rows[index].values.splits_calc = '';
+    else if (splitsCalc)
+      rows[index].values.splits_calc = 'calc';
+    else
+      rows[index].values.splits_calc = 'raw';
+    //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
+    saveTable();
+    props.callBack(-1); // force refresh
+    if (splits === '' || splits.length === 0)
+      setSplitsFlag('');
+    else
+      setSplitsFlag(' splits ??');
+  }
 
         const handleOverview = (childData, updateDate, updateMili)  => {
           if (childData === null || childData === {} || childData["Exchange"] == null) {
@@ -474,22 +473,24 @@ export const BasicTable = (props) => {
               if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 208)
                 splits = '';
 
-              var histArray = [];  // data for stocks table.
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
-              histArray.push ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
 
               const updateMili = Date.now();
               const updateDate = getDate();
-              handleCallBackForHistory (histArray, sym, splits, updateDate, updateMili);
-              firebaseGainAdd (sym, getDate(), Date.now(), histArray, splits);  // save in firestore
+              const wk =(stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2);
+              const wk2 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2);
+              const mon = (stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2);
+              const mon3 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2);
+              const mon6 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2);
+              const year = (stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2);
+              const year2 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2);
+              const year5 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2);
+              const year10 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2);
+              const year20 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2);
+     
+              handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20);
+
+              firebaseGainAdd (sym, updateDate, updateMili, splits,
+                 wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20);  // save in firestore
             }
         )
       }
