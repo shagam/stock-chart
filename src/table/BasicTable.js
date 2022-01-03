@@ -148,20 +148,7 @@ export const BasicTable = (props) => {
 
   })
  
- 
-  // const getGainDocIndex = (symbol) => {
-  //   for (let i = 0; i < stocksGain.length; i++) {
-  //     if (stocksGain[i].__symbol === symbol)
-  //       return i;
-  //   }
-  //   return -1;
-  // }
-  // const getGainDocId = (symbol) => {
-  //   const index = getGainDocIndex (symbol);   
-  //   if (index >= 0)
-  //     return stocksGain[index].id;
-  //   return '';
-  // }
+  // send gain to firefox
   const firebaseGainAdd = async (symbol, updateDate, updateMili, newGain, splits) => {
     console.log (stocksGainOne);
     if (stocksGainOne[symbol] === undefined) //not found
@@ -172,23 +159,9 @@ export const BasicTable = (props) => {
       await updateDoc (gainDoc,  {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newGain, splits: splits });
       //await deleteDoc (gainDoc);
     }
-    //const gain = await getDocs(gainRef)
-    //setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
-  // const getInfoDocIndx = (symbol) => {
-  //   for (let i = 0; i < stocksInfo.length; i++) {
-  //     if (stocksInfo[i].__symbol === symbol)
-  //       return i;
-  //   }
-  //   return -1;
-  // }
-  // const getInfoDocId = (symbol) => {
-  //   const i = getInfoDocIndx (symbol);
-  //   if (i >= 0)
-  //       return stocksInfo[i].id;
-  //   return '';
-  // }
+
   const firebaseInfoAdd = async (symbol, updateDate, updateMili, newInfo) => {
     console.log (stocksInfoOne);
     try{
@@ -639,6 +612,7 @@ export const BasicTable = (props) => {
     rows[index].values.recoverWeek = recoverWeek;
   }
 
+  // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"
   const { globalFilter } = state
 
   const handleChange = () => {setSplitsCalc(! splitsCalc)}
