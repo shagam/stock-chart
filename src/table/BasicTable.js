@@ -504,8 +504,8 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
     } 
     rows.splice(index, 1);
     //console.log (rows);
-    props.callBack(-1);
-    firebaseGetAndFill();
+    //props.callBack(-1);
+    //firebaseGetAndFill();
     saveTable();
   }
 
