@@ -203,7 +203,7 @@ const FirebaseManage = (props) => {
     } catch(e) { console.log (e); alert (e)}
   }
 
-  const usageHelpChange = () => {setIpDisplayFlag (! ipDisplayFlag)}
+  const ipDisplayChange = () => {setIpDisplayFlag (! ipDisplayFlag)}
 
   return (
     <>
@@ -216,7 +216,7 @@ const FirebaseManage = (props) => {
       </div>
 
       <label>
-          <input type="checkbox" checked={ipDisplayFlag}  onChange={usageHelpChange} /> ip-display
+          <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
       </label>
 
 
