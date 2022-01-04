@@ -84,6 +84,7 @@ const FirebaseManage = (props) => {
       const ipFromFirebase = await getDocs(userQuery);
       if (ipFromFirebase.docs.length > 0) {
         if (ipFromFirebase.docs.length > 1) {  // clean duplicates
+          if (LOG_FLAG)
           console.log ('duplicates', ipFromFirebase.docs.length, ipFromFirebase.docs[0].data());
           for (let i = 1; i < ipFromFirebase.docs.length; i++) {
             const id = ipFromFirebase.docs[i].id;
