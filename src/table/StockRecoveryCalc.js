@@ -1,7 +1,7 @@
 import React, {useState, } from 'react'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import {format} from "date-fns";
 
 const StockRecoveryCalc = (props) => {
 
@@ -17,6 +17,8 @@ const StockRecoveryCalc = (props) => {
 
   
   const searchDeepValue = () => {
+
+    const LOG_FLAG = false;
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -55,10 +57,13 @@ const StockRecoveryCalc = (props) => {
         dropWeek = i;
       }
     }
-    console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropWeek]);
 
-    console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
-    console.log ('dropPrice: ', dropPrice, ' dropWeek: ', dropWeek);
+    if (LOG_FLAG) {
+      console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropWeek]);
+
+      console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
+      console.log ('dropPrice: ', dropPrice, ' dropWeek: ', dropWeek);
+    }
 
     // search for higest befor deep
     for (let i = dropWeek; i <= startBeforeDropWeek; i++) { 
@@ -68,7 +73,6 @@ const StockRecoveryCalc = (props) => {
         highPriceBeforeDeepWeek = i;
       }
     }
-
 
     // check for highest price after drop
     for (let i = dropWeek; i > 0; i--) {      
@@ -82,23 +86,27 @@ const StockRecoveryCalc = (props) => {
     }
 
     const drop = Math.round (dropPrice / highPriceBeforeDeep * 1000, 3) / 1000;
- 
-    console.log ('drop: ' + drop);
-    console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepWeek: ',  highPriceBeforeDeepWeek)
-    console.log ('highPriceAfterDeep', highPriceAfterDeep, ' recoverWeek: ', recoverWeek);
+    if (LOG_FLAG) {
+      console.log ('drop: ' + drop);
+      console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepWeek: ',  highPriceBeforeDeepWeek)
+      console.log ('highPriceAfterDeep', highPriceAfterDeep, ' recoverWeek: ', recoverWeek);
+    }
 
-    props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek);
+    // fill columns in stock table
+    props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek, format(startDate, "yyyy-MMM-dd"));
   }
 
-  //  skip search if no symbol
-  if (props.StockSymbol !== '' && props.StockSymbol !== undefined  
+
+  //  skip analysis if no symbol
+  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.stockSymbol);
+  if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
   && props.stockChartYValues.length !== 0)
     searchDeepValue (); 
 
 
   return (
     <div>
-       Date before crash
+       Stock crash and recory. (Date before crash)
       <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
     </div>
   )
