@@ -4,6 +4,7 @@ import "./StockChart.css";
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 const Stock_chart = (props) => { 
+  const LOG_FLAG = false;
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
@@ -23,6 +24,7 @@ const Stock_chart = (props) => {
 
   //console.log (JSON.stringify(`${StockSymbol}`));
   if (isEmpty (`${StockSymbol}`)) {
+    if (LOG_FLAG)
     console.log ("(Stock-chart.js) symbol Udef");
     return "Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
