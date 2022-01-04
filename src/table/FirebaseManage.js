@@ -138,11 +138,11 @@ const FirebaseManage = (props) => {
       }
       console.log (props.rows[QQQ_index].values.mon6)  
       var userQuery = query (props.gainRef, where(
-        'mon6', '>', props.rows[QQQ_index].values.mon6 || //mon6
-        'year', '>', props.rows[QQQ_index].values.year || //year
-        'year2', '>', props.rows[QQQ_index].values.year2 || //year2
-        'year5', '>', props.rows[QQQ_index].values.year5 || //year5
-        'year10', '>', props.rows[QQQ_index].values.year10 //year10
+        'mon6', '>', props.rows[QQQ_index].values.mon6 
+        || 'year', '>', props.rows[QQQ_index].values.year
+        || 'year2', '>', props.rows[QQQ_index].values.year2
+        || 'year5', '>', props.rows[QQQ_index].values.year5
+        || 'year10', '>', props.rows[QQQ_index].values.year10
         ));
       const gain = await getDocs(userQuery);
       console.log (gain.docs.length);
@@ -190,7 +190,7 @@ const FirebaseManage = (props) => {
         // window.location.reload();
       }
       if (found_stocks_array.length > 0)
-        alert (`stock with gain compare to QQQ:    [${found_stocks_array}]`)
+        alert (`stock compared with QQQ (6m, y, 2y, 5y, 10y):    [${found_stocks_array}]`)
     } catch(e) { console.log (e); alert (e)}
   }
 
