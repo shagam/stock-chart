@@ -12,7 +12,8 @@ const FirebaseManage = (props) => {
   const [ipListFormatted, setIpListFormated] = useState ([]);
 
   const ipRef = collection(db, "ipList")
-
+  
+  const LOG_FLAG = false;
 
   if ( props.ip.IPv4 !== '84.228.164.65' && props.ip.IPv4 !== '10.120.250.135')
     return null;
@@ -28,7 +29,8 @@ const FirebaseManage = (props) => {
         index = ipList.findIndex((ip) => ip.IPv4 === gain.docs[i].data()._ip.IPv4);
       if (index === -1) {// not found
         ipList.push(gain.docs[i].data()._ip)
-        console.log (gain.docs[i].data()._ip);
+        if (LOG_FLAG)
+          console.log (gain.docs[i].data()._ip);
       }
     }
   }
@@ -37,6 +39,7 @@ const FirebaseManage = (props) => {
   const firebaseInfoGetAll = async () => {
     const info = await getDocs(props.infoRef)
     setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
+    if (LOG_FLAG)
     console.log ('firebase read info: ', info.docs.length, stocksInfo.length);
     for ( let i = 0; i < info.docs.length; i++) {
       var index = -1;
@@ -44,7 +47,8 @@ const FirebaseManage = (props) => {
         index = ipList.findIndex((ip) => ip.IPv4 === info.docs[i].data()._ip.IPv4);
       if (index === -1) {// not found
         ipList.push(info.docs[i].data()._ip)
-        console.log (info.docs[i].data()._ip);
+        if (LOG_FLAG)
+          console.log (info.docs[i].data()._ip);
       }
     }
   }
@@ -123,6 +127,7 @@ const FirebaseManage = (props) => {
 //    ipFireGet();
     localStorage.setItem ('ipList', JSON.stringify(ipList));
 
+    if (LOG_FLAG)
     console.log ('stocksGain (count): ', stocksGain.length, 'stocksInfo (count): ', stocksInfo.length);
    // console.log ("ipList: ", ipList.length);
   }
@@ -136,6 +141,8 @@ const FirebaseManage = (props) => {
         alert ('QQQ missing in table');
         return; // cannot compare with QQQ
       }
+      
+      if (LOG_FLAG)
       console.log (props.rows[QQQ_index].values.mon6)  
       var userQuery = query (props.gainRef, where(
         'mon6', '>', props.rows[QQQ_index].values.mon6 
@@ -145,6 +152,7 @@ const FirebaseManage = (props) => {
         || 'year10', '>', props.rows[QQQ_index].values.year10
         ));
       const gain = await getDocs(userQuery);
+      if (LOG_FLAG)
       console.log (gain.docs.length);
       var found_stocks_array = [];
       for (let i = 0; i < gain.docs.length; i++) {
