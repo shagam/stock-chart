@@ -19,6 +19,7 @@ import axios from 'axios'
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, orderByChild, firestore} from "firebase/firestore";
 import { validateArgCount } from '@firebase/util'
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 
 
@@ -42,7 +43,7 @@ export const BasicTable = (props) => {
 
   const gainRef = collection(db, "stock-gain")
   const infoRef = collection(db, "stock-info")
-
+  const LOG_FLAG = false;
 
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
@@ -68,6 +69,7 @@ export const BasicTable = (props) => {
     }
 
     const res = await axios.get('https://geolocation-db.com/json/')
+    if (LOG_FLAG)
     console.log('ip ', res.data);
     setIP(res.data)
   } 
@@ -672,7 +674,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
               {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
                   <span>
-                    {column.isSorted ? (column.isSortedDesc ? ' V ' : ' A ') : ''} 
+                    {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
                   </span>
                   </th>
               ))}
@@ -694,7 +696,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
                   <div>
                   <button type="button" onClick={()=>handleDeleteClick(row, row.values.symbol)}>del</button>
                   <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
-                  <button type="button" onClick={()=>handleChartClick(row.values.symbol)}>chart</button> 
+                  <button type="button" onClick={()=>handleChartClick(row.values.symbol)}>gain</button> 
                   </div>
               </tr>
             )
