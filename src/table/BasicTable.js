@@ -350,18 +350,18 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
           const symbol = childData["Symbol"];
           const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
-          rows[index].values.Exchange = childData["Exchange"].substring(0,4);
-          rows[index].values.PE = childData["PERatio"];
-          rows[index].values.PEG = childData["PEGRatio"]; 
-          rows[index].values.TrailPE = childData["TrailingPE"];
-          rows[index].values.ForwPE = childData["ForwardPE"];
-          rows[index].values.Div = childData["DividendYield"];
-          rows[index].values.BETA = childData["Beta"];
-          rows[index].values.EVToEBITDA = childData["EVToEBITDA"];
-          rows[index].values.EVToRevenue = childData["EVToRevenue"];
-          rows[index].values.target = childData["AnalystTargetPrice"];
+          rows[index].values.Exchange = Number(childData["Exchange"].substring(0,4));
+          rows[index].values.PE = Number (childData["PERatio"]);
+          rows[index].values.PEG = Number (childData["PEGRatio"]); 
+          rows[index].values.TrailPE = Number (childData["TrailingPE"]);
+          rows[index].values.ForwPE = Number (childData["ForwardPE"]);
+          rows[index].values.Div = Number (childData["DividendYield"]);
+          rows[index].values.BETA = Number (childData["Beta"]);
+          rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
+          rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
+          rows[index].values.target = Number (childData["AnalystTargetPrice"]);
           rows[index].values.Industry = childData["Industry"];
-          rows[index].values.PriceToBookRatio = childData["PriceToBookRatio"];
+          rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
           //Sector         
 
           rows[index].values.nowOverview = updateMili;
@@ -478,16 +478,16 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
 
               const updateMili = Date.now();
               const updateDate = getDate();
-              const wk =(stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2);
-              const wk2 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2);
-              const mon = (stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2);
-              const mon3 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2);
-              const mon6 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2);
-              const year = (stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2);
-              const year2 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2);
-              const year5 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2);
-              const year10 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2);
-              const year20 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2);
+              const wk =Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
+              const wk2 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
+              const mon = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
+              const mon3 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
+              const mon6 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2));
+              const year = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2));
+              const year2 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2));
+              const year5 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
+              const year10 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
+              const year20 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
      
               handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20);
 
