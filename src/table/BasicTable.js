@@ -709,7 +709,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
 
       {AlphaVantage (alphaCallBack)}
 
-      <StockRecoveryCalc StockSymbol = {chartSymbol} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
+      <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div id="firebase_id">
         <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne}/>
