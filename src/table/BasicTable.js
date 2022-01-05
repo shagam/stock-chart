@@ -350,7 +350,9 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
           const symbol = childData["Symbol"];
           const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
-          rows[index].values.Exchange = Number(childData["Exchange"].substring(0,4));
+          rows[index].values.Exchange = childData["Exchange"].substring(0,4);
+          rows[index].values.Industry = childData["Industry"];
+          
           rows[index].values.PE = Number (childData["PERatio"]);
           rows[index].values.PEG = Number (childData["PEGRatio"]); 
           rows[index].values.TrailPE = Number (childData["TrailingPE"]);
@@ -360,7 +362,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
           rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
           rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
           rows[index].values.target = Number (childData["AnalystTargetPrice"]);
-          rows[index].values.Industry = childData["Industry"];
+
           rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
           //Sector         
 
