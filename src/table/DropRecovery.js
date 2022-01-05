@@ -1,5 +1,5 @@
 import React, {useState, } from 'react'
-import DatePicker, {moment} from 'react-datepicker';
+import DatePicker, {moment} from 'react-datepicker/dist/react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {format} from "date-fns";
 
