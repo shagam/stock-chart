@@ -6,7 +6,7 @@ import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
-import StockRecoveryCalc from './StockRecoveryCalc'
+import StockRecoveryCalc from './DropRecovery'
 import AlphaVantage from '../AlphaVantage'
 import Manual from '../Manual'
 import FirebaseManage from './FirebaseManage'
@@ -352,7 +352,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
 
           rows[index].values.Exchange = childData["Exchange"].substring(0,4);
           rows[index].values.Industry = childData["Industry"];
-          
+
           rows[index].values.PE = Number (childData["PERatio"]);
           rows[index].values.PEG = Number (childData["PEGRatio"]); 
           rows[index].values.TrailPE = Number (childData["TrailingPE"]);
@@ -568,7 +568,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
     }
 
   },
@@ -604,7 +604,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
     localStorage.setItem ('state', JSON.stringify(state));
   }
 
-  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek) => {
+  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, dropDate) => {
     //console.log (stockSymbol, drop, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
     if (index === -1) {
@@ -614,6 +614,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
     // rows[index]values.
     rows[index].values.drop = drop;
     rows[index].values.recoverWeek = recoverWeek;
+    rows[index].values.dropDate = dropDate;
   }
 
   // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"

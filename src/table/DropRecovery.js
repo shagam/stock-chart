@@ -18,7 +18,7 @@ const StockRecoveryCalc = (props) => {
   
   const searchDeepValue = () => {
 
-    const LOG_FLAG = false;
+    const LOG_FLAG = true;
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -44,7 +44,7 @@ const StockRecoveryCalc = (props) => {
 
     var dropPrice = Number(props.stockChartYValues[startBeforeDropWeek]);
     var dropWeek = 0;
-    
+    var dropDate = 0;
     var highPriceAfterDeep = 0;
     var recoverWeek = 0;
 
@@ -55,11 +55,12 @@ const StockRecoveryCalc = (props) => {
       if (dropPrice > price) {
         dropPrice = price;
         dropWeek = i;
+        dropDate = props.stockChartXValues[i];
       }
     }
 
     if (LOG_FLAG) {
-      console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropWeek]);
+      console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropWeek], dropDate);
 
       console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
       console.log ('dropPrice: ', dropPrice, ' dropWeek: ', dropWeek);
@@ -93,12 +94,12 @@ const StockRecoveryCalc = (props) => {
     }
 
     // fill columns in stock table
-    props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek, format(startDate, "yyyy-MMM-dd"));
+    props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek, dropDate); //format(startDate, "yyyy-MMM-dd"));
   }
 
 
   //  skip analysis if no symbol
-  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.stockSymbol);
+  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
   if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
   && props.stockChartYValues.length !== 0)
     searchDeepValue (); 
