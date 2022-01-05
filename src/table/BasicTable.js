@@ -188,11 +188,12 @@ export const BasicTable = (props) => {
     // console.log (stocksInfoOne);
     // console.log (stocksGainOne);     
     // fill in table missing values
+    
     // turn on columns so used can decide if up to date
-    var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
-    allColumns[ind].toggleHidden();
-    ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
-    allColumns[ind].toggleHidden();
+    // var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
+    // allColumns[ind].toggleHidden();
+    // ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
+    // allColumns[ind].toggleHidden();
 
     //allColumns[ind].getToggleHiddenProps().checked = ! allColumns[ind].getToggleHiddenProps().checked;
 
@@ -548,7 +549,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
     newStock.allCells = [];
     
     rows.push (newStock);
-    firebaseGetAndFill();      
+    //firebaseGetAndFill();      
     saveTable();
     window.location.reload();
   }
