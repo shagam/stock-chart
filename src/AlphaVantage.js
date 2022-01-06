@@ -30,7 +30,7 @@ const  AlphaVantage = (alphaCallBack) => {
 
     return (
       <div className = 'alpha'>
-        <div> get key from www.alphavantage.co): ({alpha}) </div>
+        <label> get key from www.alphavantage.co): ({alpha}) </label>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"

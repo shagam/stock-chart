@@ -127,7 +127,7 @@ function Ip (props) {
   return (
     <>
       <div id="ip_diaplay">
-        <div>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </div>
+        <label>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </label>
         <button type="button" onClick={()=>collect_ip()}>get IP    </button>
 
         <div id = 'ip_diaspay_Checkbox'>
