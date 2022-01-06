@@ -16,7 +16,7 @@ const StockRecoveryCalc = (props) => {
 
   const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
   const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
-
+  const [displayFlag, setDisplayFlag] = useState (false); 
  //  2007, 11, 1  2008 deep
 
   
@@ -119,11 +119,23 @@ const StockRecoveryCalc = (props) => {
       //paddingTop: "100px",
   }
 
+  const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
+
   return (
     <div id='dropRecovery_id' >
-       <div color='yellow' >Stock drop and recovery. (Choose date range) </div>
-      <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
-      <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
+      <div>
+            <input
+              type="checkbox" checked={displayFlag}
+              onChange={displayFlagChange}
+            /> Drop-Recovery-analysis
+      </div>
+      {displayFlag && 
+        <div>     
+          <div color='yellow' >Stock drop and recovery. Choose date range and then click gain on few stocks </div>
+          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+          <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
+        </div>
+      }
     </div>
   )
 }
