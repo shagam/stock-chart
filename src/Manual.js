@@ -21,18 +21,9 @@ const Manual = () => {
     })
   }, [])
 
-  const styleObj = {
-    //fontSize: 14,
-    color: "#4a54f1",
-    float: "left",
-    'margin-left': '0px',
-    'padding-left': '0px',
-    //textAlign: "center",
-    //paddingTop: "100px",
-  }
 
 
-  return <div style={styleObj} className='upload-expense'>
+  return <div className='upload-expense'>
     <label>
           <input
             type="checkbox" checked={ManualFlag}
