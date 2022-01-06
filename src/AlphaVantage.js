@@ -30,13 +30,13 @@ const  AlphaVantage = (alphaCallBack) => {
 
     return (
       <div className = 'alpha'>
-        <label> Enter key (get from www.alphavantage.co): {alpha} </label>
+        <div> get key from www.alphavantage.co): ({alpha}) </div>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
             required="required"
-            placeholder="enter alphaVantage key to add ..."
+            placeholder="enter alphaVantage.co key "
             onChange={handleAddFormChange}
             // value={alpha}
           />
