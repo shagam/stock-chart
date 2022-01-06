@@ -59,11 +59,11 @@ export const BasicTable = (props) => {
       // const cafeList = document.querySelector("#gain-history")
 
 
-  const [ip, setIP] = useState('');
+  const [localIp, setLocalIP] = useState('');
 
   //creating function to load ip address from the API
   const getIp = async () => {
-    if (ip !== '' && ip !== undefined) {
+    if (localIp !== '' && localIp !== undefined) {
       //console.log('ip ', ip)
       return;
     }
@@ -71,7 +71,7 @@ export const BasicTable = (props) => {
     const res = await axios.get('https://geolocation-db.com/json/')
     if (LOG_FLAG)
     console.log('ip ', res.data);
-    setIP(res.data)
+    setLocalIP(res.data)
   } 
 
     // get one symbol GAIN from firebase  and clean duplicates
@@ -154,11 +154,11 @@ export const BasicTable = (props) => {
   const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
     console.log (stocksGainOne);
     if (stocksGainOne[symbol] === undefined) //not found
-      await addDoc (gainRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
+      await addDoc (gainRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
     else { // found update
       const id = stocksGainOne[symbol].id;
       var gainDoc = doc(db, "gain-history", id);
-      await updateDoc (gainDoc,  {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 });
+      await updateDoc (gainDoc,  {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 });
       //await deleteDoc (gainDoc);
     }
   }
@@ -168,10 +168,10 @@ export const BasicTable = (props) => {
     console.log (stocksInfoOne);
     try{
     if (stocksInfoOne[symbol] === undefined) 
-      await addDoc (infoRef, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
+      await addDoc (infoRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
     else { // found: update
       const infoDoc = doc(db, "stock-info", stocksInfoOne[symbol].id)
-      await updateDoc (infoDoc, {__symbol: symbol, _ip: ip, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
+      await updateDoc (infoDoc, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
       // await deleteDoc (infoDoc); // temp fix for format change)
     }
     //const info = await getDocs(infoRef)
@@ -718,7 +718,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div id="firebase_id">
-        <FirebaseManage ip={ip} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne}/>
+        <FirebaseManage localIp={localIp} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} />
       </div>
 
       <Manual/>
