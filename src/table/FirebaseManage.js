@@ -4,6 +4,7 @@ import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, or
 import {nanoid} from 'nanoid';
 
 import Ip from './Ip'
+import "./FirebaseManage.css"
 
 const FirebaseManage = (props) => {
   const [stocksGain, setStocksGain] = useState([]);
@@ -120,14 +121,15 @@ const FirebaseManage = (props) => {
 
   return (
     <>
-      <div>
+      <div id="firebase_id"> 
         <h4> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </h4>
 
           <button type="button" onClick={()=>firebaseGainGetBest()}> stocks-better-then-QQQ    </button>
           <button type="button" onClick={()=>removeDuplicates()}>removeDuplicates    </button>
       </div>
-
-      <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} />
+      <div id="ip_id"> 
+        <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} />
+      </div>
     </>
   )
 }
