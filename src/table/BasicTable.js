@@ -43,6 +43,8 @@ export const BasicTable = (props) => {
 
   const gainRef = collection(db, "stock-gain")
   const infoRef = collection(db, "stock-info")
+  const [admin, setAdmin] = useState(false);
+
   const LOG_FLAG = false;
 
   const columns = useMemo(() => COLUMNS, []);
@@ -71,7 +73,8 @@ export const BasicTable = (props) => {
     const res = await axios.get('https://geolocation-db.com/json/')
     if (LOG_FLAG)
     console.log('ip ', res.data);
-    setLocalIP(res.data)
+    setLocalIP(res.data);
+    setAdmin (res.data.IPv4 === '84.228.164.65');
   } 
 
     // get one symbol GAIN from firebase  and clean duplicates
@@ -718,10 +721,11 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div>
-        <FirebaseManage localIp={localIp} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} />
+        <FirebaseManage localIp={localIp} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} />
       </div>
-
-      <Manual/>
+      <div id='manual_id'>
+        <Manual/>
+      </div>
     </div> 
     </>
   )

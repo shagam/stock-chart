@@ -85,10 +85,6 @@ table tbody {
   /* padding-left: 18px; */
 }
 
-#firebase_id {
-  border: 2px solid green;
-}
-
 #stockTable {
   border: 2px solid green;
   display: block;
@@ -109,3 +105,10 @@ table tbody {
   /* width: 100%!important; */
   /* color: red; */
 }
+
+/* #manual_id {
+  all: initial !important;
+  color: purple;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
+} */

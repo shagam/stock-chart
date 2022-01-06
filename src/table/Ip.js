@@ -13,7 +13,7 @@ function Ip (props) {
 
   const ipRef = collection(props.db, "ipList")
 
-  if ( props.localIp.IPv4 !== '84.228.164.65' && props.localIp.IPv4 !== '10.120.250.135')
+  if ( props.admin && props.localIp.IPv4 !== '10.120.250.135')
     return null;
 
 
@@ -114,13 +114,10 @@ function Ip (props) {
     ipCleanDupAll ();
     ipTablePrepareDisplay();
     ipFireSave(); 
+    
+  //    ipFireGet();
   }
 
-  
-   
-
-
-  //    ipFireGet();
   
   localStorage.setItem ('ipList', JSON.stringify(ipList));
 
@@ -130,12 +127,12 @@ function Ip (props) {
   return (
     <>
       <div id="ip_diaplay">
-        <h4>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </h4>
+        <div>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </div>
         <button type="button" onClick={()=>collect_ip()}>get IP    </button>
 
-        <label id = 'ip_diaspay_Checkbox'>
+        <div id = 'ip_diaspay_Checkbox'>
             <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
-        </label>
+        </div>
       </div>
 
         {ipDisplayFlag &&

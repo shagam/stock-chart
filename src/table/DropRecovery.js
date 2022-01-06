@@ -1,7 +1,10 @@
 import React, {useState, } from 'react'
-import DatePicker, {moment} from 'react-datepicker/dist/react-datepicker';
+import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {format} from "date-fns";
+import { relativeTimeRounding } from 'moment';
+import './DropRecovery.css'
+
 
 const StockRecoveryCalc = (props) => {
 
@@ -12,6 +15,7 @@ const StockRecoveryCalc = (props) => {
 
 
   const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
+  const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
 
  //  2007, 11, 1  2008 deep
 
@@ -104,11 +108,22 @@ const StockRecoveryCalc = (props) => {
   && props.stockChartYValues.length !== 0)
     searchDeepValue (); 
 
+    const styleObj = {
+      border: '2px',
+      //fontSize: 14,
+      // color: "#4a54f1",
+      // display: "grid",
+      position: 'relative',
+      // gridTemplateColumns: "1fr 1fr" 
+      //textAlign: "center",
+      //paddingTop: "100px",
+  }
 
   return (
-    <div>
-       Stock crash and recory. (Date before crash)
+    <div id='dropRecovery_id' >
+       <div color='yellow' >Stock drop and recovery. (Choose date range) </div>
       <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+      <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
     </div>
   )
 }
