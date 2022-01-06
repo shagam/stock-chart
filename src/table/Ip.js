@@ -132,11 +132,11 @@ function Ip (props) {
       <div id="ip_diaplay">
         <h4>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </h4>
         <button type="button" onClick={()=>collect_ip()}>get IP    </button>
-      </div>
 
-      <label>
-          <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
-      </label>
+        <label id = 'ip_diaspay_Checkbox'>
+            <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
+        </label>
+      </div>
 
         {ipDisplayFlag &&
         <div className='text'> 
