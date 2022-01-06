@@ -13,7 +13,7 @@ function Ip (props) {
 
   const ipRef = collection(props.db, "ipList")
 
-  if ( props.admin && props.localIp.IPv4 !== '10.120.250.135')
+  if (! props.admin && props.localIp.IPv4 !== '10.120.250.135')
     return null;
 
 
