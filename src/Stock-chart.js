@@ -26,7 +26,7 @@ const Stock_chart = (props) => {
   if (isEmpty (`${StockSymbol}`)) {
     if (LOG_FLAG)
     console.log ("(Stock-chart.js) symbol Udef");
-    return "Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
+    return null; //"Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
 
  
@@ -37,7 +37,7 @@ const Stock_chart = (props) => {
     graphColor = 'purple';
 
   return (
-    <div>
+    <div id = 'chart_id'>
       {/* <h4>  historical_gain({StockSymbol}): {histString}  </h4> */}
       <Plot
         data={[

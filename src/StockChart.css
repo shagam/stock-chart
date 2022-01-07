@@ -1,13 +1,16 @@
-div.chart {
-  padding-top: -20px;
-}
 
-div.hist {
-  padding-top: -20px;
-}
 
-div.chart {
-  height: 35vh;
-  width: 100vw;
-  overflow: auto;
+#chart_id {
+  padding-left: -20px;
+  margin-left: -40px;
+  /* padding: -20px;
+  margin: 0px; */
+  /* padding-bottom: 0px; */
+  /* padding-right: 20px; */
+
+  /* border: 1px solid gray; */
+  /* margin-right: 4px; */
+  /* margin-bottom: -20px;  */
+  /* margin-top: -2px; */
+
 }
