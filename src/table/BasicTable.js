@@ -153,33 +153,42 @@ export const BasicTable = (props) => {
 
   })
  
-  // send gain to firefox
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
-    console.log (stocksGainOne);
-    if (stocksGainOne[symbol] === undefined) //not found
-      await addDoc (gainRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
-    else { // found update
-      const id = stocksGainOne[symbol].id;
-      var gainDoc = doc(db, "stock-gain", id);
-      await updateDoc (gainDoc,  {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 });
-      //await deleteDoc (gainDoc);
-    }
+  // send stock gain to firebase, delete old and add new one (No woory about format change)
+    const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
+    // read old entries
+    var userQuery = query (gainRef, where('__symbol', '==', symbol));
+    const gain = await getDocs(userQuery);
+
+    // add new entry
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
+
+    // delete old entries
+    if (gain.docs.length > 0)
+      console.log (symbol, gain.docs.length);
+    for (let i = 0; i < gain.docs.length; i++) {
+      const id = gain.docs[i].id;
+      var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
+      await deleteDoc (gainDoc);    
+    }               
   }
 
-
+  // send stock info to firebase, delete old and add new one (No woory about format change)
   const firebaseInfoAdd = async (symbol, updateDate, updateMili, newInfo) => {
-    console.log (stocksInfoOne);
-    try{
-    if (stocksInfoOne[symbol] === undefined) 
-      await addDoc (infoRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
-    else { // found: update
-      const infoDoc = doc(db, "stock-info", stocksInfoOne[symbol].id)
-      await updateDoc (infoDoc, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, data: newInfo });
-      // await deleteDoc (infoDoc); // temp fix for format change)
+    // get old entries
+    var userQuery = query (infoRef, where('__symbol', '==', symbol));
+    const info = await getDocs(userQuery);
+
+    // send new entry
+    await addDoc (infoRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
+
+    // delete old entries 
+    if (info.docs.length > 0)
+      console.log (symbol, info.docs.length); 
+    for (let i = 0; i < info.docs.length; i++) {
+      const id = info.docs[i].id;
+      var infoDoc = doc(db, "stock-info", info.docs[i].id);
+      await deleteDoc (infoDoc);    
     }
-    //const info = await getDocs(infoRef)
-  } catch(e) {console.log (e); alert(e)}
-    //setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
   }
 
   const firebaseGetAndFill = () => {
