@@ -101,7 +101,7 @@ export const BasicTable = (props) => {
             if (i === latestIndex)
               continue;
             const id = gain.docs[i].id;
-            var gainDoc = doc(db, "gain-history", gain.docs[i].id);
+            var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
             await deleteDoc (gainDoc);    
           }               
         }
@@ -160,7 +160,7 @@ export const BasicTable = (props) => {
       await addDoc (gainRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
     else { // found update
       const id = stocksGainOne[symbol].id;
-      var gainDoc = doc(db, "gain-history", id);
+      var gainDoc = doc(db, "stock-gain", id);
       await updateDoc (gainDoc,  {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 });
       //await deleteDoc (gainDoc);
     }
