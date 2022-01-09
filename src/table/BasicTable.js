@@ -154,7 +154,7 @@ export const BasicTable = (props) => {
   })
  
   // send stock gain to firebase, delete old and add new one (No woory about format change)
-    const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
     // read old entries
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
@@ -164,7 +164,7 @@ export const BasicTable = (props) => {
 
     // delete old entries
     if (gain.docs.length > 0)
-      console.log (symbol, gain.docs.length);
+      console.log (symbol, 'gain-send', gain.docs.length);
     for (let i = 0; i < gain.docs.length; i++) {
       const id = gain.docs[i].id;
       var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
@@ -183,7 +183,7 @@ export const BasicTable = (props) => {
 
     // delete old entries 
     if (info.docs.length > 0)
-      console.log (symbol, info.docs.length); 
+      console.log (symbol, 'info-send', info.docs.length); 
     for (let i = 0; i < info.docs.length; i++) {
       const id = info.docs[i].id;
       var infoDoc = doc(db, "stock-info", info.docs[i].id);
