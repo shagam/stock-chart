@@ -46,7 +46,9 @@ export const BasicTable = (props) => {
   const gainRef = collection(db, "stock-gain")
   const infoRef = collection(db, "stock-info")
   const ipRef = collection(db, "ipList")
-  
+  const ipStockRef = collection(db, "stockIp")
+
+
   const [admin, setAdmin] = useState(false);
 
 
@@ -350,6 +352,8 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
     if (Date.now() - rows[index].values.nowChart < 1000)
       return "duplicate";
 
+    firebase_stockSymbol_ip_pair(sym);
+
     rows[index].values.gain_mili = updateMili;
     rows[index].values.gain_date = updateDate;
 
@@ -418,6 +422,25 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
           // localStorage.setItem('stocksOverview', stocksOverviewStr);
         }
             
+  // save pair (stockSymbol ip)
+  const firebase_stockSymbol_ip_pair = async (chartSymbol) => {
+    const ip = localIp.IPv4;
+    var ipSymbolQuery = query (ipStockRef, where(('ip', '==', ip) &&
+    'stockSymbol', '==', chartSymbol ));
+    const ipSymbolPair = await getDocs(ipSymbolQuery);
+    if (ipSymbolPair.docs.length === 0)
+      return;
+    // add new entry
+    await addDoc (ipStockRef, {ip: ip, update: getDate(), stockSymbol: chartSymbol});
+
+    // delete duplicate entries
+    for (let i = 0; i < ipSymbolPair.docs.length; i++) {
+      const id = ipSymbolPair.docs[i].id;
+      var ipDoc = doc(db, "stockIp", ipSymbolPair.docs[i].id);
+      await deleteDoc (ipDoc);    
+    }               
+  }
+
 
   const handleChartClick = (sym) => {
     setChartSymbol (sym);
