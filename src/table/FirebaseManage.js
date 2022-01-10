@@ -10,7 +10,8 @@ const FirebaseManage = (props) => {
   const [stocksGain, setStocksGain] = useState([]);
   const [stocksInfo, setStocksInfo] = useState([]);
   const [stocksGainAll, setStocksGainAll] = useState([]);
-  const [stocksInfoAll, setStocksInfoAll] = useState([]);   
+  const [stocksInfoAll, setStocksInfoAll] = useState([]); 
+
   const LOG_FLAG = false;
 
 
@@ -62,9 +63,9 @@ const FirebaseManage = (props) => {
       var userQuery = query (props.gainRef, where(
        // 'mon6', '>', props.rows[QQQ_index].values.mon6 
        'year', '>', props.rows[QQQ_index].values.year
-        || 'year2', '>', 10//props.rows[QQQ_index].values.year2
-        || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
-        || 'year10', '>', 10000// props.rows[QQQ_index].values.year10
+        // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
+        // || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
+        // || 'year10', '>', 10000// props.rows[QQQ_index].values.year10
         ));
       const gain = await getDocs(userQuery);
       if (LOG_FLAG)
@@ -75,15 +76,19 @@ const FirebaseManage = (props) => {
         
         const symIndex = props.rows.findIndex((row)=> row.values.symbol === symbol); 
         if (symIndex !== -1) {
+          if (LOG_FLAG)
           console.log ('stock alreay in table ', i, symbol);
           continue; // already in table
         }
-       
+
+        if (LOG_FLAG)
         console.log ('stock equ QQQ added ', i, symbol);
         if (found_stocks_array[symbol] === undefined)
           found_stocks_array[symbol] = true;
-        else
+        else {
+          if (LOG_FLAG)
           console.log ('dup')
+        }
         // var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     
         // newStock.id = nanoid();
@@ -116,7 +121,7 @@ const FirebaseManage = (props) => {
         // window.location.reload();
       }
       const len = Object.keys (found_stocks_array).length;
-      alert (`stock compared with QQQ (one year) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+      alert (`missing symbols compared with QQQ (one year) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
     } catch(e) { console.log (e); alert (e)}
   }
 
