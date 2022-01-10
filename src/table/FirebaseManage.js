@@ -60,16 +60,16 @@ const FirebaseManage = (props) => {
       if (LOG_FLAG)
       console.log (props.rows[QQQ_index].values.mon6)  
       var userQuery = query (props.gainRef, where(
-        'mon6', '>', props.rows[QQQ_index].values.mon6 
-        || 'year', '>', props.rows[QQQ_index].values.year
-        || 'year2', '>', props.rows[QQQ_index].values.year2
-        || 'year5', '>', props.rows[QQQ_index].values.year5
-        || 'year10', '>', props.rows[QQQ_index].values.year10
+       // 'mon6', '>', props.rows[QQQ_index].values.mon6 
+       'year', '>', props.rows[QQQ_index].values.year
+        || 'year2', '>', 10//props.rows[QQQ_index].values.year2
+        || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
+        || 'year10', '>', 10000// props.rows[QQQ_index].values.year10
         ));
       const gain = await getDocs(userQuery);
       if (LOG_FLAG)
       console.log (gain.docs.length);
-      var found_stocks_array = [];
+      var found_stocks_array = {};
       for (let i = 0; i < gain.docs.length; i++) {
         const symbol = gain.docs[i].data().__symbol;
         
@@ -80,7 +80,10 @@ const FirebaseManage = (props) => {
         }
        
         console.log ('stock equ QQQ added ', i, symbol);
-        found_stocks_array.push(symbol);
+        if (found_stocks_array[symbol] === undefined)
+          found_stocks_array[symbol] = true;
+        else
+          console.log ('dup')
         // var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     
         // newStock.id = nanoid();
@@ -112,8 +115,8 @@ const FirebaseManage = (props) => {
         // }
         // window.location.reload();
       }
-      if (found_stocks_array.length > 0)
-        alert (`stock compared with QQQ (6m, y, 2y, 5y, 10y):    [${found_stocks_array}]`)
+      const len = Object.keys (found_stocks_array).length;
+      alert (`stock compared with QQQ (one year) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
     } catch(e) { console.log (e); alert (e)}
   }
 
