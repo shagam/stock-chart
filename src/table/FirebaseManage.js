@@ -129,6 +129,7 @@ const FirebaseManage = (props) => {
         collect[sym] ++;
     }
     console.log (collect);
+    alert (JSON.stringify (collect))
   }
 
   return (
