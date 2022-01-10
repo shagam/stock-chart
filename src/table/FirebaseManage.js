@@ -33,7 +33,7 @@ const FirebaseManage = (props) => {
 
  
   // main entry
-  const removeDuplicates = () => {
+  const count_gain_info = () => {
     firebaseGainGetAll();
     firebaseInfoGetAll();
 
@@ -117,7 +117,19 @@ const FirebaseManage = (props) => {
     } catch(e) { console.log (e); alert (e)}
   }
 
-
+  // collect statistics per stock symbol
+  const ip_symbol_statistics = async () => {
+    var collect = {};
+    const ipStock = await getDocs(props.ipStockRef)
+    for (let i = 0; i < ipStock.docs.length; i++) {
+      var sym = ipStock.docs[i].data().stockSymbol;
+      if (collect[sym] === undefined)
+        collect[sym] = 1;
+      else
+        collect[sym] ++;
+    }
+    console.log (collect);
+  }
 
   return (
     <>
@@ -126,7 +138,8 @@ const FirebaseManage = (props) => {
         {props.admin &&
           <div>
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
-            <button type="button" onClick={()=>removeDuplicates()}>removeDuplicates    </button>
+            <button type="button" onClick={()=>count_gain_info()}>count_gain_info    </button>
+            <button type="button" onClick={()=>ip_symbol_statistics()}>ip_stock_Statistics    </button>
           </div>
         }
       </div>
