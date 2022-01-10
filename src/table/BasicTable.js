@@ -292,56 +292,56 @@ export const BasicTable = (props) => {
   }
 
     // get stock overview
-    const handleInfoClick = (symbol) => {
+  const handleInfoClick = (symbol) => {
 
-      //callBack ("tableCallBack");
-      localStorage.setItem ('infoSymbol', symbol); 
-      console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
-      if (symbol === '' || symbol === undefined) {
-        alert (`bug, info sym vanished (${symbol})`);
-        return;
-      }
-      
-      var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
-      let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
+    //callBack ("tableCallBack");
+    localStorage.setItem ('infoSymbol', symbol); 
+    console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
+    if (symbol === '' || symbol === undefined) {
+      alert (`bug, info sym vanished (${symbol})`);
+      return;
+    }
+    
+    var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
+    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
-      //console.log(`Overview info (${symbol})`);
-      console.log (`${API_Call}`);            
-      fetch(API_Call)
-          .then(
-              function(response) {
-                  if (response != null) {
-                    const respStr = JSON.stringify (response);
-                    if (respStr.indexOf('redirected: false, status: 200, ok:') !== -1)
-                      console.log(response);
-                    return response.json();
+    //console.log(`Overview info (${symbol})`);
+    console.log (`${API_Call}`);            
+    fetch(API_Call)
+        .then(
+            function(response) {
+                if (response != null) {
+                  const respStr = JSON.stringify (response);
+                  if (respStr.indexOf('redirected: false, status: 200, ok:') !== -1)
+                    console.log(response);
+                  return response.json();
+                }
+            }
+        )
+        .then(
+            function (data) {
+              if (data != null) {
+                  const dataStr = JSON.stringify(data);
+                  if (dataStr === '{}') {
+                    alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
+                    return;
                   }
-              }
-          )
-          .then(
-              function (data) {
-                if (data != null) {
-                    const dataStr = JSON.stringify(data);
-                    if (dataStr === '{}') {
-                      alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
-                      return;
-                    }
-                    const index =  (dataStr.search('API call frequency is 5 calls per minute'))
-                    if (index !== -1) {
-                      alert (dataStr + `\n\n${API_Call}`);
-                      //alert (dataStr);
-                      return;
-                    }
-                        
-                    const updateMili = Date.now();
-                    const updateDate = getDate();
-                    handleOverview (data, updateDate, updateMili);
+                  const index =  (dataStr.search('API call frequency is 5 calls per minute'))
+                  if (index !== -1) {
+                    alert (dataStr + `\n\n${API_Call}`);
+                    //alert (dataStr);
+                    return;
                   }
-              }
-          )
-         }
-  
-const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
+                      
+                  const updateMili = Date.now();
+                  const updateDate = getDate();
+                  handleOverview (data, updateDate, updateMili);
+                }
+            }
+        )
+  }
+
+  const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (index === -1) {
@@ -383,44 +383,44 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
       setSplitsFlag(' splits ??');
   }
 
-        const handleOverview = (childData, updateDate, updateMili)  => {
-          if (childData === null || childData === {} || childData["Exchange"] == null) {
-            console.log ('ChildData missing');
-            return;
-          }
-          console.log (JSON.stringify(childData).substring(0,100));
-          const symbol = childData["Symbol"];
-          const index = rows.findIndex((row)=> row.values.symbol === symbol);
+  const handleOverview = (childData, updateDate, updateMili)  => {
+    if (childData === null || childData === {} || childData["Exchange"] == null) {
+      console.log ('ChildData missing');
+      return;
+    }
+    console.log (JSON.stringify(childData).substring(0,100));
+    const symbol = childData["Symbol"];
+    const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
-          rows[index].values.Exchange = childData["Exchange"].substring(0,4);
-          rows[index].values.Industry = childData["Industry"];
+    rows[index].values.Exchange = childData["Exchange"].substring(0,4);
+    rows[index].values.Industry = childData["Industry"];
 
-          rows[index].values.PE = Number (childData["PERatio"]);
-          rows[index].values.PEG = Number (childData["PEGRatio"]); 
-          rows[index].values.TrailPE = Number (childData["TrailingPE"]);
-          rows[index].values.ForwPE = Number (childData["ForwardPE"]);
-          rows[index].values.Div = Number (childData["DividendYield"]);
-          rows[index].values.BETA = Number (childData["Beta"]);
-          rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
-          rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
-          rows[index].values.target = Number (childData["AnalystTargetPrice"]);
+    rows[index].values.PE = Number (childData["PERatio"]);
+    rows[index].values.PEG = Number (childData["PEGRatio"]); 
+    rows[index].values.TrailPE = Number (childData["TrailingPE"]);
+    rows[index].values.ForwPE = Number (childData["ForwardPE"]);
+    rows[index].values.Div = Number (childData["DividendYield"]);
+    rows[index].values.BETA = Number (childData["Beta"]);
+    rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
+    rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
+    rows[index].values.target = Number (childData["AnalystTargetPrice"]);
 
-          rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
-          //Sector         
+    rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
+    //Sector         
 
-          rows[index].values.nowOverview = updateMili;
-          rows[index].values.info_date = updateDate;
-         
-          saveTable();
-          props.callBack(-1);
-          childData.Address = '';   // Clear some data to decrese traffic
-          childData.Description = '';
-          firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
-          // save overview per symbol
-          // stocksOverview[symbol] = childData;
-          // const stocksOverviewStr = JSON.stringify(stocksOverview);
-          // localStorage.setItem('stocksOverview', stocksOverviewStr);
-        }
+    rows[index].values.nowOverview = updateMili;
+    rows[index].values.info_date = updateDate;
+    
+    saveTable();
+    props.callBack(-1);
+    childData.Address = '';   // Clear some data to decrese traffic
+    childData.Description = '';
+    firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
+    // save overview per symbol
+    // stocksOverview[symbol] = childData;
+    // const stocksOverviewStr = JSON.stringify(stocksOverview);
+    // localStorage.setItem('stocksOverview', stocksOverviewStr);
+  }
             
   // save pair (stockSymbol ip)
   const firebase_stockSymbol_ip_pair = async (chartSymbol) => {
@@ -558,7 +558,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
                  wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20);  // save in firestore
             }
         )
-      }
+  }
   
 
   const handleDeleteClick = (row, symbol) => {
@@ -776,7 +776,7 @@ const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, 
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div>
-        <FirebaseManage localIp={localIp} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} />
+        <FirebaseManage localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} />
       </div>
       
       {AlphaVantage (alphaCallBack)}
