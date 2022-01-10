@@ -39,11 +39,16 @@ export const BasicTable = (props) => {
   const [stocksGainOne, setStocksGainOne] = useState({});
   //const [stocksInfo, setStocksInfo] = useState([]);
   const [stocksInfoOne, setStocksInfoOne] = useState({});
+  const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
+
   const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
   const gainRef = collection(db, "stock-gain")
   const infoRef = collection(db, "stock-info")
+  const ipRef = collection(db, "ipList")
+  
   const [admin, setAdmin] = useState(false);
+
 
   const LOG_FLAG = false;
 
@@ -75,6 +80,26 @@ export const BasicTable = (props) => {
     console.log('ip ', res.data);
     setLocalIP(res.data);
     setAdmin (res.data.IPv4 === '84.228.164.65');
+
+    // save ip
+    var ipQuery = query (ipRef, where('_ipv4', '==', (res.data.IPv4)));
+    const ipInfo = await getDocs(ipQuery);
+
+    // add new entry
+    await addDoc (ipRef, {_ipv4: res.data.IPv4, update: getDate(), country_name: res.data.country_name,
+      city: res.data.city, state: res.data.state, postal: res.data.postal,
+       longitude: res.data.longitude, latitude: res.data.latitude })
+
+    // delete old entries
+    if (ipInfo.docs.length > 0)
+      console.log (res, 'ipList', ipInfo.docs.length);
+    for (let i = 0; i < ipInfo.docs.length; i++) {
+      const id = ipInfo.docs[i].id;
+      var ipDoc = doc(db, "ipList", ipInfo.docs[i].id);
+      await deleteDoc (ipDoc);    
+    }               
+
+
   } 
 
     // get one symbol GAIN from firebase  and clean duplicates
