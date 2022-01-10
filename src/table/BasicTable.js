@@ -185,7 +185,7 @@ export const BasicTable = (props) => {
     const gain = await getDocs(userQuery);
 
     // add new entry
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
 
     // delete old entries
     if (gain.docs.length > 0)
@@ -204,7 +204,7 @@ export const BasicTable = (props) => {
     const info = await getDocs(userQuery);
 
     // send new entry
-    await addDoc (infoRef, {__symbol: symbol, _ip: localIp, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
+    await addDoc (infoRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
 
     // delete old entries 
     if (info.docs.length > 0)
