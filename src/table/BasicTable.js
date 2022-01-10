@@ -425,20 +425,20 @@ export const BasicTable = (props) => {
   // save pair (stockSymbol ip)
   const firebase_stockSymbol_ip_pair = async (chartSymbol) => {
     const ip = localIp.IPv4;
-    var ipSymbolQuery = query (ipStockRef, where(('ip', '==', ip) &&
-    'stockSymbol', '==', chartSymbol ));
+    var ipSymbolQuery = query (ipStockRef, where('ip', '==', ip), where
+    ('stockSymbol', '==', chartSymbol ));
     const ipSymbolPair = await getDocs(ipSymbolQuery);
     if (ipSymbolPair.docs.length > 0)
       return;
     // add new entry
     await addDoc (ipStockRef, {ip: ip, update: getDate(), stockSymbol: chartSymbol});
 
-    // delete duplicate entries
-    for (let i = 0; i < ipSymbolPair.docs.length; i++) {
-      const id = ipSymbolPair.docs[i].id;
-      var ipDoc = doc(db, "stockIp", ipSymbolPair.docs[i].id);
-      await deleteDoc (ipDoc);    
-    }               
+    // // delete duplicate entries
+    // for (let i = 0; i < ipSymbolPair.docs.length; i++) {
+    //   const id = ipSymbolPair.docs[i].id;
+    //   var ipDoc = doc(db, "stockIp", ipSymbolPair.docs[i].id);
+    //   await deleteDoc (ipDoc);    
+    // }               
   }
 
 
