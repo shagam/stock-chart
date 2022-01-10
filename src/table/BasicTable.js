@@ -428,7 +428,7 @@ export const BasicTable = (props) => {
     var ipSymbolQuery = query (ipStockRef, where(('ip', '==', ip) &&
     'stockSymbol', '==', chartSymbol ));
     const ipSymbolPair = await getDocs(ipSymbolQuery);
-    if (ipSymbolPair.docs.length === 0)
+    if (ipSymbolPair.docs.length > 0)
       return;
     // add new entry
     await addDoc (ipStockRef, {ip: ip, update: getDate(), stockSymbol: chartSymbol});
