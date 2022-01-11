@@ -83,6 +83,11 @@ export const BasicTable = (props) => {
     setLocalIP(res.data);
     setAdmin (res.data.IPv4 === '84.228.164.65');
 
+    // admin password
+    const admin_index = rows.findIndex((row)=> row.values.symbol === '_ADMIN_');
+    if (admin_index !== -1)
+    setAdmin (true);
+
     // save ip
     var ipQuery = query (ipRef, where('_ipv4', '==', (res.data.IPv4)));
     const ipInfo = await getDocs(ipQuery);
@@ -99,9 +104,7 @@ export const BasicTable = (props) => {
       const id = ipInfo.docs[i].id;
       var ipDoc = doc(db, "ipList", ipInfo.docs[i].id);
       await deleteDoc (ipDoc);    
-    }               
-
-
+    }
   } 
 
     // get one symbol GAIN from firebase  and clean duplicates
@@ -229,10 +232,10 @@ export const BasicTable = (props) => {
     // fill in table missing values
     
     // turn on columns so used can decide if up to date
-    // var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
-    // allColumns[ind].toggleHidden();
-    // ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
-    // allColumns[ind].toggleHidden();
+    var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
+    allColumns[ind].toggleHidden();
+    ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
+    allColumns[ind].toggleHidden();
 
     //allColumns[ind].getToggleHiddenProps().checked = ! allColumns[ind].getToggleHiddenProps().checked;
 
@@ -499,8 +502,8 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
-                  if (i > 1040)
-                    continue;  //ignore splis before 20 years
+                  if (i > 1140)
+                    continue;  //ignore splis before 22 years
                   if (i > 0) {
                     let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
                     if (ratio > 1.8 || ratio < 0.6) {
@@ -694,7 +697,7 @@ export const BasicTable = (props) => {
           calc_splits
         </label>
 
-        <button type="button" className="stock_button_class" onClick={()=>firebaseGetAndFill()}>firebaseGet    </button>
+        <button type="button" className="stock_button_class" onClick={()=>firebaseGetAndFill()}>Fill_gain_info    </button>
 
         <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
              
