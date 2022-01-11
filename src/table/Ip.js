@@ -22,15 +22,21 @@ function Ip (props) {
 
   const ipFireGet = async () => {
     var ipTable = "";
+    var ipListCollect = [];
+    setIpList ([]);
     const ipReadList = await getDocs(ipRef)
     for (let i = 0; i < ipReadList.docs.length; i++) {
+      if (LOG_FLAG)
       console.log (ipReadList.docs[i].data());
       const index = ipList.findIndex((ip) => ip._ipv4 === ipReadList.docs[i].data().ipv4);
-      if (index === -1) // not found
-        ipList.push (ipReadList.docs[i].data());
+      if (index === -1) {// not found
+        //ipList.push (ipReadList.docs[i].data());
+        ipListCollect.push (ipReadList.docs[i].data());
         ipTable += JSON.stringify(ipReadList.docs[i].data()) + "\n\n";
+      }
     }
     setIpListFormated(ipTable);
+    setIpList (ipListCollect);
   }
 
   
