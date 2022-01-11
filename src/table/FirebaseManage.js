@@ -52,7 +52,7 @@ const FirebaseManage = (props) => {
         alert ('QQQ missing in table');
         return; // cannot compare with QQQ
       }
-      if (props.rows[QQQ_index].values.mon == undefined) {
+      if (props.rows[QQQ_index].values.year === undefined) {
         alert ('need to get QQQ gain by pressing <gain> ');
         return; // cannot compare with QQQ
       }
@@ -62,7 +62,7 @@ const FirebaseManage = (props) => {
       console.log (props.rows[QQQ_index].values.mon6)  
       var userQuery = query (props.gainRef, where(
        // 'mon6', '>', props.rows[QQQ_index].values.mon6 
-       'year', '>', props.rows[QQQ_index].values.year
+       'year', '>', (props.rows[QQQ_index].values.year * 0.92)
         // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
         // || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
         // || 'year10', '>', 10000// props.rows[QQQ_index].values.year10
@@ -121,7 +121,7 @@ const FirebaseManage = (props) => {
         // window.location.reload();
       }
       const len = Object.keys (found_stocks_array).length;
-      alert (`missing symbols compared with QQQ (one year) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+      alert (`symbols (missing) compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
     } catch(e) { console.log (e); alert (e)}
   }
 
