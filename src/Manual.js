@@ -54,7 +54,7 @@ const Manual = () => {
           >
           </textarea>
           {/* <div>
-            <Document file='C:/Manual.pdf'  onLoadSuccess={({ numPages }) =>setNumPages(numPages)} style={{width:'100%'}}>
+            <Document file='file:///C:/Manual.pdf'  onLoadSuccess={({ numPages }) =>setNumPages(numPages)} style={{width:'100%'}}>
               {Array.apply(null, Array(numPages))
               .map(page =>
                 <Page pageNumber={page} size='A4' />
