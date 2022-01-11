@@ -22,7 +22,7 @@ const StockRecoveryCalc = (props) => {
   
   const searchDeepValue = () => {
 
-    const LOG_FLAG = true;
+    const LOG_FLAG = false;
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -101,12 +101,25 @@ const StockRecoveryCalc = (props) => {
     props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek, dropDate); //format(startDate, "yyyy-MMM-dd"));
   }
 
+  function swap_period() {
+    if (startDate.getFullYear() === 2020) {
+      setStartDate (new Date(2007, 9, 15));
+      setEndDate (new Date(2009, 1, 1));
+    }
+    else if (startDate.getFullYear() === 2007) {
+      setStartDate (new Date(2020, 1, 5));
+      setEndDate (new Date(2020, 4, 15));
+    }
+  }
 
   //  skip analysis if no symbol
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
   if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
   && props.stockChartYValues.length !== 0)
     searchDeepValue (); 
+
+
+
 
     const styleObj = {
       border: '2px',
@@ -134,6 +147,7 @@ const StockRecoveryCalc = (props) => {
           <div color='yellow' >Stock drop and recovery. Choose date range and then click gain on few stocks </div>
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
           <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
+          <button type="button" onClick={()=>swap_period()}>swap_period_2020_or_2007    </button>
         </div>
       }
     </div>
