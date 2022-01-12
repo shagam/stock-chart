@@ -143,12 +143,12 @@ const FirebaseManage = (props) => {
   return (
     <>
       <div id="firebase_id"> 
-        <button type="button" onClick={()=>firebaseGainGetBest()}> firebase-stocks-compared-to-QQQ    </button>
+        <button type="button" onClick={()=>firebaseGainGetBest()}>Stocks-compared-to-QQQ </button>
+        <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
         {props.admin &&
           <div>
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
-            <button type="button" onClick={()=>count_gain_info()}>count_gain_info    </button>
-            <button type="button" onClick={()=>ip_symbol_statistics()}>ip_stock_Statistics    </button>
+            <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
           </div>
         }
       </div>
