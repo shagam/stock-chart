@@ -54,9 +54,10 @@ try {
 
           
           <div>       
-          <object data={filePDF} type="application/pdf" width="100%" /*height="100%"*/>  </object>
+          <object data={filePDF} type="application/pdf"
+           width="100%" height="100%">  </object>
      
-          {/* <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object> */}
+          <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object>
 
             {/* <Document
              file="./Manual.pdf"
