@@ -48,13 +48,13 @@ try {
     <div className='txt'>
       {ManualFlag &&
         <div className='text'> 
-          {/* <textarea type='text' name='manual' cols='80' rows='30' readOnly
+          <textarea type='text' name='manual' cols='80' rows='30' readOnly
            defaultValue={manualText}  >
-          </textarea> */}
+          </textarea>
 
           
           <div>       
-          <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object>
+          {/* <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object> */}
 
           {/* <object data={filePDF} type="application/pdf"
            width="100%" height="100%">  </object> */}
