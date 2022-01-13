@@ -12,7 +12,7 @@ import filePDF from './Manual.pdf'
 const Manual = () => {
   const [ManualFlag, setManualFlag] = useState(false);
   const [manualText, setManualText] = useState("One\nTwo\nThree");
-  // const [manualPdf, setManualPdf] = useState("")
+  const [manualTextPdf, setManualTextPdf] = useState("")
   // const [numPages, setNumPages] = useState(null)
   // const [pageNumber, setPageNumber] = useState(1)
 
@@ -34,6 +34,14 @@ const Manual = () => {
       //console.log (text)
     })
 
+    fetch (filePDF)
+    .then (r => r.text())
+    .then (text => {
+      setManualTextPdf(text);
+      //console.log (text)
+    })
+
+
   }, [])
 
   // onLoadError {console.error}
@@ -48,16 +56,16 @@ try {
     <div className='txt'>
       {ManualFlag &&
         <div className='text'> 
-          <textarea type='text' name='manual' cols='80' rows='30' readOnly
+          {/* <textarea type='text' name='manual' cols='80' rows='30' readOnly
            defaultValue={manualText}  >
-          </textarea>
+          </textarea> */}
 
           
           <div>       
           {/* <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object> */}
 
-          {/* <object data={filePDF} type="application/pdf"
-           width="100%" height="100%">  </object> */}
+          <object data={filePDF} type="application/pdf"
+           width="1200" height="700">  </object>
      
        
             {/* <Document
