@@ -262,8 +262,10 @@ export const BasicTable = (props) => {
         firebaseGainGetOne((rows[i].values.symbol));
       }
     }
-    console.log (stocksInfoOne);
-    console.log (stocksGainOne);   
+    if (LOG_FLAG) {
+      console.log (stocksInfoOne);
+      console.log (stocksGainOne);
+    }   
    }
 
 
