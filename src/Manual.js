@@ -64,11 +64,11 @@ try {
           <div>       
           {/* <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object> */}
           
-          <object data="http://84.228.164.65/home/eli/react/stock-chart/src/Manual.pdf" 
-            type="application/pdf" width="200%" height="200%">   </object>
+          {/* <object data="http://84.228.164.65/home/eli/react/stock-chart/src/Manual.pdf" 
+            type="application/pdf" width="200%" height="200%">   </object> */}
 
           <object data={filePDF} type="application/pdf"
-           width="1200" height="700">  </object>
+           width="1000" height="700" border='5' standby="Loading" width='800'>  </object>
      
        
             {/* <Document
