@@ -77,8 +77,8 @@ export const BasicTable = (props) => {
       return;
     }
 
+    // userAgent
     const userAgent = navigator.userAgent;
-    alert (userAgent);
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
       setUserAgent("mobil");
     } else 
