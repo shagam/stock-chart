@@ -69,13 +69,20 @@ export const BasicTable = (props) => {
 
 
   const [localIp, setLocalIP] = useState('');
-
+  const [userAgent, setUserAgent] = useState("");
   //creating function to load ip address from the API
   const getIp = async () => {
     if (localIp !== '' && localIp !== undefined) {
       //console.log('ip ', ip)
       return;
     }
+
+    const userAgent = navigator.userAgent;
+    alert (userAgent);
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+      setUserAgent("mobil");
+    } else 
+      console.log("not mobile device");
 
     const res = await axios.get('https://geolocation-db.com/json/')
     if (LOG_FLAG)
@@ -95,7 +102,7 @@ export const BasicTable = (props) => {
     // add new entry
     await addDoc (ipRef, {_ipv4: res.data.IPv4, update: getDate(), country_name: res.data.country_name,
       city: res.data.city, state: res.data.state, postal: res.data.postal,
-       longitude: res.data.longitude, latitude: res.data.latitude })
+       longitude: res.data.longitude, latitude: res.data.latitude, userAgent: userAgent })
 
     // delete old entries
     if (ipInfo.docs.length > 0)
@@ -591,7 +598,7 @@ export const BasicTable = (props) => {
     event.preventDefault();
   
     //console.log (addFormData.symbol)
-    const re = new RegExp('^[a-zA-Z0-9\._]*$');  // Verify valid symbol in englis letters
+    const re = new RegExp('^[a-zA-Z0-9\._=-]*$');  // Verify valid symbol in englis letters
     if (! re.test (addFormData.symbol)) {
       alert (`Invalid letters: ${addFormData.symbol}`);
       return;
