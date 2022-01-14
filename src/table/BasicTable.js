@@ -124,6 +124,13 @@ export const BasicTable = (props) => {
       var userQuery = query (gainRef, where('__symbol', '==', symbol));
       const gain = await getDocs(userQuery);
 
+      const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
+      if (rowIndex !== -1 && gain != undefined) {
+        const gain_ = gain.docs[0].data()
+        if (rows[rowIndex].values.gain_date === undefined)
+        handleCallBackForHistory (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20);
+      }
+ 
       if (gain.docs.length > 0) {
         var latestIndex = 0;
         if (gain.docs.length > 1) {
@@ -249,19 +256,6 @@ export const BasicTable = (props) => {
 
     //allColumns[ind].getToggleHiddenProps().checked = ! allColumns[ind].getToggleHiddenProps().checked;
 
-    for (let i = 0; i < rows.length; i++) {
-      const symbol = rows[i].values.symbol;
-      // fill info
-      var ref = stocksInfoOne[symbol];
-      if (ref !== undefined && rows[i].values.info_date === undefined)
-        handleOverview (ref.data().data, ref.data()._updateDate, ref.data()._updateMili)
-   
-      // fill gain
-      ref = stocksGainOne[symbol];
-      if (ref !== undefined && rows[i].values.gain_date === undefined)
-        handleCallBackForHistory (ref.data().__symbol, ref.data().splits, ref.data()._updateDate, ref.data()._updateMili, ref.data().wk, ref.data().wk2, ref.data().mon, ref.data().mon3, ref.data().mon6, ref.data().year, ref.data().year2, ref.data().year5, ref.data().year10, ref.data().year20);
-    }
-
     // get missing data, for next round
     for (let i = 0; i < rows.length; i++) {
       // get from firebase 
@@ -272,7 +266,17 @@ export const BasicTable = (props) => {
         firebaseGainGetOne((rows[i].values.symbol));
       }
     }
-    if (LOG_FLAG) {
+
+    // fill missing data
+    for (let i = 0; i < rows.length; i++) {
+      const symbol = rows[i].values.symbol;
+      // fill info
+      var ref = stocksInfoOne[symbol];
+      if (ref !== undefined && rows[i].values.info_date === undefined)
+        handleOverview (ref.data().data, ref.data()._updateDate, ref.data()._updateMili)
+      }
+
+     if (LOG_FLAG) {
       console.log (stocksInfoOne);
       console.log (stocksGainOne);
     }   
