@@ -26,22 +26,24 @@ const Manual = (props) => {
   // onLoadError {console.error}
 try {
   return <div className='upload-expense'>
-    <label>
+    <div>
           <input
             type="checkbox" checked={ManualFlag}
             onChange={usageHelpChange}
           /> manual
-    </label>
+    </div>
     <div className='txt'>
       {ManualFlag &&
-        <div className='text'> 
+        <div className='text'>
+          <div id="textarea_id"> 
           {(/Android/i.test(props.userAgent)) &&
             <textarea type='text' name='manual' cols='80' rows='30' readOnly
             defaultValue={manualText}  >
             </textarea>
           }
+          </div>
           
-          <div>       
+          <div id = "pdf_id">       
             { ! (/Android/i.test(props.userAgent)) &&
               <object data={filePDF} type="application/pdf"
               width="1000" height="700" border='5' standby="Loading" width='800'>  </object>

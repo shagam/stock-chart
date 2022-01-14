@@ -3,11 +3,23 @@
   width: 800px;
   height: 100%;
 } */
-div.txt {
+#pdf_id {
   padding: 0px;
   margin: 0px;
   white-space: pre-wrap;
   width: 800px;
   height: 200%;
   /* font-size: 100%; */
+}
+
+#textarea_id {
+  background-color: #f2f2f2;
+  color: red;
+  /* position: sticky; */
+  padding-top: 20px;
+  padding-left: 20px;
+  /* margin: 0px;
+  white-space: pre-wrap;
+  width: 800px;
+  height: 200%; */
 }
