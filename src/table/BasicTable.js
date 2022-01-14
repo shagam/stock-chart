@@ -634,7 +634,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
     }
 
   },
