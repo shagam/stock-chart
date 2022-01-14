@@ -35,22 +35,15 @@ export const BasicTable = (props) => {
   const [splitsFlag, setSplitsFlag] = useState('');
   const [splitsCalc, setSplitsCalc] = useState(true);
 
-  //const [stocksGain, setStocksGain] = useState([]);
-  const [stocksGainOne, setStocksGainOne] = useState({});
-  //const [stocksInfo, setStocksInfo] = useState([]);
-  const [stocksInfoOne, setStocksInfoOne] = useState({});
-  const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
-
-  const [firebaseFillMili, setFirebaseFillMili] = useState(0);
+  // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
+  // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
   const gainRef = collection(db, "stock-gain")
   const infoRef = collection(db, "stock-info")
   const ipRef = collection(db, "ipList")
   const ipStockRef = collection(db, "stockIp")
 
-
   const [admin, setAdmin] = useState(false);
-
 
   const LOG_FLAG = false;
 
@@ -67,10 +60,10 @@ export const BasicTable = (props) => {
 
       // const cafeList = document.querySelector("#gain-history")
 
-
   const [localIp, setLocalIP] = useState('');
   const [userAgent, setUserAgent] = useState("");
   const [userAgentType, setUserAgentType] = useState("");
+  
   //creating function to load ip address from the API
   const getIp = async () => {
     if (localIp !== '' && localIp !== undefined) {
@@ -152,10 +145,6 @@ export const BasicTable = (props) => {
             await deleteDoc (gainDoc);    
           }               
         }
-        var newJason = stocksGainOne; // jason of all stocks
-        newJason[symbol] = gain.docs[latestIndex];
-        setStocksGainOne (newJason);
-        //console.log (gain.docs[latestIndex].data())
       }
     } catch(e) { console.log (e); alert (e)}
   }
@@ -192,10 +181,7 @@ export const BasicTable = (props) => {
             await deleteDoc (infoDoc);    
           }
         }
-        var newJason = stocksInfoOne;
-        newJason[symbol] =  info.docs[latestIndex];
-        setStocksInfoOne (newJason);       
-      }
+       }
     } catch(e) {console.log (e); alert (e)}
   }
 
