@@ -4,27 +4,15 @@ import txt from './Manual.text'
 import './Manual.css'
 
 import filePDF from './Manual.pdf'
-// import {Document,Page} from 'react-pdf'
 
-// import Viewer, { Worker } from '@phuocng/react-pdf-viewer';
-// import '@phuocng/react-pdf-viewer/cjs/react-pdf-viewer.css';
-
-const Manual = () => {
+const Manual = (props) => {
   const [ManualFlag, setManualFlag] = useState(false);
   const [manualText, setManualText] = useState("One\nTwo\nThree");
   const [manualTextPdf, setManualTextPdf] = useState("")
-  // const [numPages, setNumPages] = useState(null)
-  // const [pageNumber, setPageNumber] = useState(1)
-
-  //const pdfText_ = useMemo(() => pdf, []);
-
+ 
   const usageHelpChange = () => {setManualFlag (! ManualFlag)}
 
-  // const  onDocumentLoadSuccess = ({numPages}) => {
-  //   console.log ('loaded');
-  //   setNumPages(numPages);
-  // }
-
+ 
   // read helpFile into helpText
   useEffect (() => { 
     fetch (txt)
@@ -33,15 +21,6 @@ const Manual = () => {
       setManualText(text);
       //console.log (text)
     })
-
-    fetch (filePDF)
-    .then (r => r.text())
-    .then (text => {
-      setManualTextPdf(text);
-      //console.log (text)
-    })
-
-
   }, [])
 
   // onLoadError {console.error}
@@ -56,29 +35,18 @@ try {
     <div className='txt'>
       {ManualFlag &&
         <div className='text'> 
-          {/* <textarea type='text' name='manual' cols='80' rows='30' readOnly
-           defaultValue={manualText}  >
-          </textarea> */}
-
+          {(/Android/i.test(props.userAgent)) &&
+            <textarea type='text' name='manual' cols='80' rows='30' readOnly
+            defaultValue={manualText}  >
+            </textarea>
+          }
           
           <div>       
-          {/* <object data="http://africau.edu/images/default/sample.pdf" type="application/pdf" width="200%" height="200%">   </object> */}
-          
-          {/* <object data="http://84.228.164.65/home/eli/react/stock-chart/src/Manual.pdf" 
-            type="application/pdf" width="200%" height="200%">   </object> */}
-
-          <object data={filePDF} type="application/pdf"
-           width="1000" height="700" border='5' standby="Loading" width='800'>  </object>
-     
-       
-            {/* <Document
-             file="./Manual.pdf"
-              // file='https://publications.mfo.de/bitstream/handle/mfo/3593/OWR_2017_28.pdf?sequence=1&isAllowed=y'
-               onLoadSuccess={onDocumentLoadSuccess}>
-                <Page pageNumber={pageNumber} />
-            </Document>
-            <p> Page = {pageNumber} of {numPages} </p> */}
-          </div>
+            { ! (/Android/i.test(props.userAgent)) &&
+              <object data={filePDF} type="application/pdf"
+              width="1000" height="700" border='5' standby="Loading" width='800'>  </object>
+            }      
+           </div>
         </div>
       }
     </div>

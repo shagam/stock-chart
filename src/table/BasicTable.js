@@ -70,6 +70,7 @@ export const BasicTable = (props) => {
 
   const [localIp, setLocalIP] = useState('');
   const [userAgent, setUserAgent] = useState("");
+  const [userAgentType, setUserAgentType] = useState("");
   //creating function to load ip address from the API
   const getIp = async () => {
     if (localIp !== '' && localIp !== undefined) {
@@ -79,8 +80,10 @@ export const BasicTable = (props) => {
 
     // userAgent
     const userAgent = navigator.userAgent;
+    setUserAgent(navigator.userAgent)
+    //if (/Android/i.test(navigator.userAgent))
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-      setUserAgent("mobil");
+      setUserAgentType("mobil");
     } else 
       console.log("not mobile device");
 
@@ -793,7 +796,7 @@ export const BasicTable = (props) => {
       
       {AlphaVantage (alphaCallBack)}
       <div id='manual_id'>
-        <Manual/>
+        <Manual userAgent={userAgent}/>
       </div>
     </div> 
     </>
