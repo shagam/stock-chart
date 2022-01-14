@@ -121,7 +121,7 @@ export const BasicTable = (props) => {
       if (rowIndex !== -1 && gain !== undefined) {
         const gain_ = gain.docs[0].data()
         if (rows[rowIndex].values.gain_date === undefined)
-        handleCallBackForHistory (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20);
+        handleCallBackForHistory (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
       }
  
       if (gain.docs.length > 0) {
@@ -193,13 +193,13 @@ export const BasicTable = (props) => {
   })
  
   // send stock gain to firebase, delete old and add new one (No woory about format change)
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     // read old entries
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
     // add new entry
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20 })
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price })
 
     // delete old entries
     if (gain.docs.length > 0)
@@ -335,7 +335,7 @@ export const BasicTable = (props) => {
         )
   }
 
-  const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20) => {
+  const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (index === -1) {
@@ -360,7 +360,9 @@ export const BasicTable = (props) => {
     rows[index].values.year2 = year2; //stocks[index].year2;
     rows[index].values.year5 = year5; //stocks[index].year5;
     rows[index].values.year10 = year10; //stocks[index].year10;
-    rows[index].values.year20 = year20; //stocks[index].year20; 
+    rows[index].values.year20 = year20; //stocks[index].year20;
+    rows[index].values.price = price;
+
     rows[index].values.splits_list = splits;
     if (splits === '')
       rows[index].values.splits_calc = '';
@@ -375,6 +377,10 @@ export const BasicTable = (props) => {
       setSplitsFlag('');
     else
       setSplitsFlag(' splits ??');
+
+      if (rows[index].values.target_raw !== undefined)
+        rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
+
   }
 
   const handleOverview = (childData, updateDate, updateMili)  => {
@@ -397,13 +403,16 @@ export const BasicTable = (props) => {
     rows[index].values.BETA = Number (childData["Beta"]);
     rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
     rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
-    rows[index].values.target = Number (childData["AnalystTargetPrice"]);
+    rows[index].values.target_raw = Number (childData["AnalystTargetPrice"]);
 
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
     //Sector         
 
     rows[index].values.nowOverview = updateMili;
     rows[index].values.info_date = updateDate;
+
+    if (rows[index].values.price !== undefined)
+      rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
     
     saveTable();
     props.callBack(-1);
@@ -545,11 +554,11 @@ export const BasicTable = (props) => {
               const year5 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
               const year10 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               const year20 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
-     
-              handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20);
+              const price = stockChartYValuesFunction[0];
+              handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
 
               firebaseGainAdd (sym, updateDate, updateMili, splits,
-                 wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20);  // save in firestore
+                 wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);  // save in firestore
             }
         )
   }
@@ -625,7 +634,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","target","wk","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
     }
 
   },
