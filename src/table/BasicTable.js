@@ -563,6 +563,7 @@ export const BasicTable = (props) => {
     } 
     rows.splice(index, 1);
     saveTable();
+    props.callBack(-1); // force refresh
   }
 
   // two handlers for adding new symbol
@@ -605,7 +606,8 @@ export const BasicTable = (props) => {
     rows.push (newStock);
     //firebaseGetAndFill();      
     saveTable();
-    window.location.reload();
+    props.callBack(-1);
+    //window.location.reload();
   }
 
   const {
