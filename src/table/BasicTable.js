@@ -71,6 +71,18 @@ export const BasicTable = (props) => {
       return;
     }
 
+    const os = require('os');
+    const cpu=os.cpus();
+    const hostName = os.hostname()
+    const platform = os.platform();
+    const type = os.type();
+    const arch = os.arch();
+    const uptime = os.uptime();
+    var path = require('path');
+    //var userInfo_ = process.env['USERPROFILE']//.split(path.sep)[2];
+    // const username = require('username')
+   // const userInfo = os.userInfo('buffer');
+  
     // userAgent
     const userAgent = navigator.userAgent;
     setUserAgent(navigator.userAgent)
