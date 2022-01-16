@@ -555,6 +555,8 @@ export const BasicTable = (props) => {
               const year10 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               const year20 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
               const price = stockChartYValuesFunction[0];
+              if (price === undefined)
+                price = -1;
               handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
 
               firebaseGainAdd (sym, updateDate, updateMili, splits,
