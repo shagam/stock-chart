@@ -767,9 +767,11 @@ export const BasicTable = (props) => {
           {headerGroups.map((headerGroup) => (
             <div {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map((column) => (
-                <div {...column.getHeaderProps()} className="th">
-                  {column.render('Header')}
-                </div>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
+                </span>
+              </th>
               ))}
             </div>
           ))}
