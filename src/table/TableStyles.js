@@ -15,7 +15,12 @@ export const Styles = styled.div`
  
     .th,
     .td {
-      padding: 5px;
+      // padding: 5x;
+      // margin: 0px;
+      // padding-top: 2px;
+      // padding-bottom: 2px;
+      // padding-right: -20px;
+      // padding-left: -20px;
       border-bottom: 1px solid #ddd;
       border-right: 1px solid #ddd;
       background-color: #fff;
@@ -36,8 +41,12 @@ export const Styles = styled.div`
       }
  
       .header {
+        // margin: 0;
+        // padding: 0;
         top: 0;
         box-shadow: 0px 3px 3px #ccc;
+        background-color: #04AA6D;
+        text-align: center;
       }
  
       .footer {
@@ -48,6 +57,7 @@ export const Styles = styled.div`
       .body {
         position: relative;
         z-index: 0;
+        text-align: center;
       }
  
       [data-sticky-td] {

@@ -573,7 +573,7 @@ export const BasicTable = (props) => {
               const year5 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
               const year10 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
               const year20 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
-              const price = stockChartYValuesFunction[0];
+              var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
               handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
@@ -655,7 +655,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","gap","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
     }
 
   },
@@ -761,38 +761,7 @@ export const BasicTable = (props) => {
       
       </div>
 
-      <Styles>
-      <div {...getTableProps()} className="table sticky" style={{ width: 1000, height: 500 }}>
-        <div className="header">
-          {headerGroups.map((headerGroup) => (
-            <div {...headerGroup.getHeaderGroupProps()} className="tr">
-              {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
-                <span>
-                  {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
-                </span>
-              </th>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div {...getTableBodyProps()} className="body">
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <div {...row.getRowProps()} className="tr">
-                {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} className="td">
-                    {cell.render('Cell')}
-                  </div>
-                ))}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </Styles>     
-    <table id="stockTable" {...getTableProps()}>
+      <table id="stockTable" {...getTableProps()}>
       <thead>
         {headerGroups.map ((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -828,8 +797,49 @@ export const BasicTable = (props) => {
           })}
       </tbody>
     </table>
-  
-   <div>
+
+
+      <Styles>
+      <div {...getTableProps()} className="table sticky" style={{ height: 500 }}>
+        <div className="header">
+          {headerGroups.map((headerGroup) => (
+            <div {...headerGroup.getHeaderGroupProps()} className="tr">
+              {headerGroup.headers.map((column) => (
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
+                </span>
+              </th>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div {...getTableBodyProps()} className="body">
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <div {...row.getRowProps()} className="tr">
+
+                
+                {row.cells.map((cell) => (
+                  <div {...cell.getCellProps()} className="td">
+
+                    {cell.render('Cell')}
+                  </div>           
+                ))}
+                
+                <button type="button" onClick={()=>handleDeleteClick(row, row.values.symbol)}>del</button>
+                <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
+                <button type="button" onClick={()=>handleChartClick(row.values.symbol)}>gain</button>
+
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </Styles> 
+   
+    <div>
      {/* {console.log (chartSymbol)} */}
 
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
