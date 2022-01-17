@@ -2,7 +2,8 @@ export const COLUMNS = [
   {
     Header: 'symbol',
     Footer: 'symbol',    
-    accessor: 'symbol'
+    accessor: 'symbol',
+    sticky: 'left'
   },
   {
     Header: 'Exch',
