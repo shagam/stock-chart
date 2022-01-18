@@ -43,8 +43,29 @@ const FirebaseManage = (props) => {
    // console.log ("ipList: ", ipList.length);
   }
 
+  function addSym (sym) {
+    const sym_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
+    if (sym_index === -1) 
+      return;
+    var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
+    props.prepareRow(newStock);
+
+    newStock.id = nanoid();
+    newStock.values.symbol = sym;
+    newStock.original.symbol = sym;
+    newStock.cells = null;
+    newStock.allCells = [];
+    
+    props.rows.push (newStock);
+    //firebaseGetAndFill();      
+    //saveTable();
+    //props.callBack(-1);
+  }
+
   // get all stocks better than QQQ
   const firebaseGainGetBest = async (symbol) => {
+    const add_flag = false;
+
     try {
       // get one symbol gain from firebase
       const QQQ_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
@@ -79,6 +100,12 @@ const FirebaseManage = (props) => {
           if (LOG_FLAG)
           console.log ('stock alreay in table ', i, symbol);
           continue; // already in table
+        }
+
+        if (add_flag) {
+          addSym (symbol);
+          props.saveTable();
+          props.refreshCallBack();
         }
 
         if (LOG_FLAG)
@@ -120,8 +147,11 @@ const FirebaseManage = (props) => {
         // }
         // window.location.reload();
       }
-      const len = Object.keys (found_stocks_array).length;
-      alert (`symbols (missing) compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+
+      if (! add_flag) {
+        const len = Object.keys (found_stocks_array).length;
+        alert (`symbols (missing) compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+      }      
     } catch(e) { console.log (e); alert (e)}
   }
 

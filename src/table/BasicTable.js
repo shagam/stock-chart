@@ -391,7 +391,7 @@ export const BasicTable = (props) => {
       rows[index].values.splits_calc = 'raw';
     //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
-    props.callBack(-1); // force refresh
+    props.refreshCallBack(-1); // force refresh
     if (splits === '' || splits.length === 0)
       setSplitsFlag('');
     else
@@ -434,7 +434,7 @@ export const BasicTable = (props) => {
       rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
     
     saveTable();
-    props.callBack(-1);
+    props.refreshCallBack(-1);
     childData.Address = '';   // Clear some data to decrese traffic
     childData.Description = '';
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
@@ -593,7 +593,7 @@ export const BasicTable = (props) => {
     } 
     rows.splice(index, 1);
     saveTable();
-    props.callBack(-1); // force refresh
+    props.refreshCallBack(-1); // force refresh
   }
 
   // two handlers for adding new symbol
@@ -636,7 +636,7 @@ export const BasicTable = (props) => {
     rows.push (newStock);
     //firebaseGetAndFill();      
     saveTable();
-    props.callBack(-1);
+    props.refreshCallBack(-1);
     //window.location.reload();
   }
 
@@ -847,7 +847,7 @@ export const BasicTable = (props) => {
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div>
-        <FirebaseManage localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} />
+        <FirebaseManage localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} />
       </div>
       
       {AlphaVantage (alphaCallBack)}

@@ -6,7 +6,7 @@ import {BasicTable} from './table/BasicTable'
 function App() {
   const [count, setCount] = useState (0);
   
-  const handleCallBack = (childData) => {
+  const refreshCallBack = (childData) => {
     setCount (count + childData);
   }
 
@@ -16,7 +16,7 @@ function App() {
         {/* <StockTable /> */}
       </div>
       <div>
-        <BasicTable callBack = {handleCallBack} />
+        <BasicTable refreshCallBack = {refreshCallBack} />
         <label count = {count} />
       </div>
     </div>
