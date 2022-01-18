@@ -1,8 +1,8 @@
 import React, {useState, useMemo, useEffect} from 'react'
-import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout } from 'react-table'
-import { useSticky } from 'react-table-sticky'
-import styled from 'styled-components';
-import{ Styles } from './TableStyles'
+import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
+//import { useSticky } from 'react-table-sticky'
+//import styled from 'styled-components';
+//import{ Styles } from './TableStyles'
 import MOCK_DATA from './mock-data.json'
 import { COLUMNS, GROUPED_COLUMNS } from './columns'
 import './table.css'
@@ -659,7 +659,7 @@ export const BasicTable = (props) => {
     }
 
   },
-  useGlobalFilter, useSortBy, useRowSelect, useBlockLayout, useSticky
+  useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
   //  (hooks) => {
   //   hooks.visibleColumns.push((columns) => {
   //     return [
@@ -799,7 +799,7 @@ export const BasicTable = (props) => {
     </table>
 
 
-      <Styles>
+      {/* <Styles>
       <div {...getTableProps()} className="table sticky" style={{ height: 500 }}>
         <div className="header">
           {headerGroups.map((headerGroup) => (
@@ -837,7 +837,7 @@ export const BasicTable = (props) => {
           })}
         </div>
       </div>
-    </Styles> 
+    </Styles>  */}
    
     <div>
      {/* {console.log (chartSymbol)} */}
