@@ -46,7 +46,7 @@ try {
           <div id = "pdf_id">       
             { ! (/Android/i.test(props.userAgent)) &&
               <object data={filePDF} type="application/pdf"
-              width="1000" height="700" border='5' standby="Loading" width='800'>  </object>
+              width="1000" height="700" border='3' standby="Loading" >  </object>
             }      
            </div>
         </div>
