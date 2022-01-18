@@ -1,4 +1,5 @@
 import React, {useState, } from 'react'
+import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {} from "date-fns";
@@ -98,7 +99,7 @@ const StockRecoveryCalc = (props) => {
     }
 
     // fill columns in stock table
-    props.callBack (props.StockSymbol, drop, dropWeek, highPriceBeforeDeepWeek - recoverWeek, dropDate); //format(startDate, "yyyy-MMM-dd"));
+    props.dropCallBack (props.StockSymbol, drop, dropWeek, dropWeek - recoverWeek, dropDate); //format(startDate, "yyyy-MMM-dd"));
   }
 
   function swap_period() {
@@ -144,7 +145,7 @@ const StockRecoveryCalc = (props) => {
       </div>
       {displayFlag && 
         <div>     
-          <div color='yellow' >Stock drop and recovery. Choose date range and then click gain on few stocks </div>
+          <div color='yellow' > Choose date range and then click gain on few stocks </div>
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
           <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
           <button type="button" onClick={()=>swap_period()}>swap_period_2020_or_2007    </button>

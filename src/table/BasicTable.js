@@ -848,7 +848,7 @@ export const BasicTable = (props) => {
 
     <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
 
-      <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} callBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
+      <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div>
         <FirebaseManage localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} />
