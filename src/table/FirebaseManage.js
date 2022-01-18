@@ -63,8 +63,7 @@ const FirebaseManage = (props) => {
   }
 
   // get all stocks better than QQQ
-  const firebaseGainGetBest = async (symbol) => {
-    const add_flag = false;
+  const firebaseGainGetBest = async (add_flag) => {
 
     try {
       // get one symbol gain from firebase
@@ -151,7 +150,9 @@ const FirebaseManage = (props) => {
       if (! add_flag) {
         const len = Object.keys (found_stocks_array).length;
         alert (`symbols (missing) compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
-      }      
+      }
+      else
+        window.location.reload();    
     } catch(e) { console.log (e); alert (e)}
   }
 
@@ -173,7 +174,8 @@ const FirebaseManage = (props) => {
   return (
     <>
       <div id="firebase_id"> 
-        <button type="button" onClick={()=>firebaseGainGetBest()}>Stocks-compared-to-QQQ </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(false)}>Show-stocks-compared-to-QQQ </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(true)}>Fill-stocks-compared-to-QQQ </button>
         <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
         {props.admin &&
           <div>
