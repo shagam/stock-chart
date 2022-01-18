@@ -48,8 +48,8 @@ export const COLUMNS = [
     accessor: 'EVToEBITDA'
   },
   {
-    Header: 'EV/Revenue',
-    Footer: 'EV/Revenue',    
+    Header: 'EV/R',
+    Footer: 'EV/R',    
     accessor: 'EVToRevenue'
   },
   {
