@@ -492,6 +492,10 @@ export const BasicTable = (props) => {
         .then(
             (chartData) => {
               const dataStr = JSON.stringify(chartData);
+              if (dataStr === "{}") {
+                alert (`Invalid symbol: (${sym})`)
+                return;
+              }
               console.log(API_Call);
               console.log (dataStr.substring(0,150));
               // stocksChartHistory[StockSymbol] = data;
