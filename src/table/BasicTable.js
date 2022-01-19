@@ -771,46 +771,7 @@ export const BasicTable = (props) => {
     </table>
 
 
-      {/* <Styles>
-      <div {...getTableProps()} className="table sticky" style={{ height: 500 }}>
-        <div className="header">
-          {headerGroups.map((headerGroup) => (
-            <div {...headerGroup.getHeaderGroupProps()} className="tr">
-              {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
-                <span>
-                  {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
-                </span>
-              </th>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div {...getTableBodyProps()} className="body">
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <div {...row.getRowProps()} className="tr">
-
-                
-                {row.cells.map((cell) => (
-                  <div {...cell.getCellProps()} className="td">
-
-                    {cell.render('Cell')}
-                  </div>           
-                ))}
-                
-                <button type="button" onClick={()=>handleDeleteClick(row, row.values.symbol)}>del</button>
-                <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
-                <button type="button" onClick={()=>handleChartClick(row.values.symbol)}>gain</button>
-
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </Styles>  */}
-   
+       
     <div>
      {/* {console.log (chartSymbol)} */}
 
