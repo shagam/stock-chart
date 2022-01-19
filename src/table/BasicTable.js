@@ -12,7 +12,7 @@ import Stock_chart from '../Stock-chart'
 import StockRecoveryCalc from './DropRecovery'
 import AlphaVantage from '../AlphaVantage'
 import Manual from '../Manual'
-import FirebaseManage from './FirebaseManage'
+import Firebase from './Firebase'
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
@@ -849,7 +849,7 @@ export const BasicTable = (props) => {
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div>
-        <FirebaseManage localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} />
+        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} />
       </div>
       
       {AlphaVantage (alphaCallBack)}

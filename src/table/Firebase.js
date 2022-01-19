@@ -4,9 +4,9 @@ import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, or
 import {nanoid} from 'nanoid';
 
 import Ip from './Ip'
-import "./FirebaseManage.css"
+import "./Firebase.css"
 
-const FirebaseManage = (props) => {
+const Firebase = (props) => {
   const [stocksGain, setStocksGain] = useState([]);
   const [stocksInfo, setStocksInfo] = useState([]);
   const [stocksGainAll, setStocksGainAll] = useState([]);
@@ -176,4 +176,4 @@ const FirebaseManage = (props) => {
   )
 }
 
-export default FirebaseManage
+export default Firebase
