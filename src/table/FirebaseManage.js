@@ -43,7 +43,7 @@ const FirebaseManage = (props) => {
    // console.log ("ipList: ", ipList.length);
   }
 
-  function addSym (sym) {
+  function addSym (sym, fireGain) {
     const sym_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
     if (sym_index === -1) 
       return;
@@ -56,10 +56,25 @@ const FirebaseManage = (props) => {
     newStock.cells = null;
     newStock.allCells = [];
     
+    newStock.values.gain_date = fireGain._updateDate;
+    newStock.values.gain_mili = fireGain._updateMili;
+
+    newStock.values.wk = fireGain.wk;
+    newStock.values.wk2 = fireGain.wk2;
+    newStock.values.mon = fireGain.mon;
+    newStock.values.mon3 = fireGain.mon3;
+    newStock.values.mon6 = fireGain.mon6;
+    newStock.values.year = fireGain.year;
+    newStock.values.year2 = fireGain.year2;
+    newStock.values.year5 = fireGain.year5;
+    newStock.values.year10 = fireGain.year10;
+    newStock.values.year20 = fireGain.year20;
+    newStock.values.splits = fireGain.splits;
+    newStock.values.price = fireGain.price;
+    newStock.values.splits_list = fireGain.splits;
+    props.prepareRow(newStock);
+
     props.rows.push (newStock);
-    //firebaseGetAndFill();      
-    //saveTable();
-    //props.callBack(-1);
   }
 
   // get all stocks better than QQQ
@@ -102,7 +117,7 @@ const FirebaseManage = (props) => {
         }
 
         if (add_flag) {
-          addSym (symbol);
+          addSym (symbol, gain.docs[i].data());
           props.saveTable();
           props.refreshCallBack();
         }
@@ -115,36 +130,6 @@ const FirebaseManage = (props) => {
           if (LOG_FLAG)
           console.log ('dup')
         }
-        // var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-    
-        // newStock.id = nanoid();
-        // newStock.values.symbol = symbol;
-        // newStock.original.symbol = symbol;
-        // newStock.cells = null;
-        // newStock.allCells = [];
-        // newStock.values.updateDate = gain.docs[i].data()._updateDate;
-        // newStock.values.updateMili = gain.docs[i].data()._updateMili;
-
-        // newStock.values.wk = gain.docs[i].data().wk;
-        // newStock.values.wk2 = gain.docs[i].data().wk2;
-        // newStock.values.mon = gain.docs[i].data().mon;
-        // newStock.values.mon3 = gain.docs[i].data().mon3;
-        // newStock.values.mon6 = gain.docs[i].data().mon6;
-        // newStock.values.year = gain.docs[i].data().year;
-        // newStock.values.year2 = gain.docs[i].data().year2;
-        // newStock.values.year5 = gain.docs[i].data().year5;
-        // newStock.values.year10 = gain.docs[i].data().year10;
-        // newStock.values.year20 = gain.docs[i].data().year20;
-        // newStock.values.splits = gain.docs[i].data().splits;
-
-        // try {
-        // props.prepareRow(newStock);
-        // props.rows.push (newStock);
-        // } catch (e) {
-        //   console.log (e)
-        //   alert ('adding best stocks' + e);
-        // }
-        // window.location.reload();
       }
 
       if (! add_flag) {
