@@ -140,6 +140,7 @@ export const BasicTable = (props) => {
  
       if (gain.docs.length > 0) {
         var latestIndex = 0;
+        
         if (gain.docs.length > 1) {
           console.log ('duplicates ', gain.docs.length, gain.docs[0].data()); 
           var updateMili = 0;
@@ -394,7 +395,7 @@ export const BasicTable = (props) => {
     else
       setSplitsFlag(' splits ??');
 
-      if (rows[index].values.target_raw !== undefined)
+      if (rows[index].values.target_raw !== undefined && rows[index].values.price !== 0)
         rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
 
   }

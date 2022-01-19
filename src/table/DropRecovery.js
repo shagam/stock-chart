@@ -141,14 +141,14 @@ const StockRecoveryCalc = (props) => {
             <input
               type="checkbox" checked={displayFlag}
               onChange={displayFlagChange}
-            /> Drop-Recovery-analysis
+            /> Drop-Recovery
       </div>
       {displayFlag && 
         <div>     
           <div color='yellow' > Choose date range and then click gain on few stocks </div>
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
           <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
-          <button type="button" onClick={()=>swap_period()}>swap_period_2020_or_2007    </button>
+          <button type="button" onClick={()=>swap_period()}>swap_2008_or_2020    </button>
         </div>
       }
     </div>
