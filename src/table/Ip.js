@@ -1,7 +1,6 @@
-import React, {useState, useMemo, useEffect} from 'react'
+import React, {useState} from 'react'
 
-import {db} from './firebase-config'
-import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, orderByChild, firestore} from "firebase/firestore";
+import {collection, getDocs} from "firebase/firestore";
 
 
 
