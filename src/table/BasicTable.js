@@ -124,7 +124,14 @@ export const BasicTable = (props) => {
       await deleteDoc (ipDoc);    
     }
   } 
+  
+  useEffect (() => { 
+    //getGain();
+    getIp();
+     //getInfo();
 
+  })
+ 
     // get one symbol GAIN from firebase  and clean duplicates
   const firebaseGainGetOne = async (symbol) => {
     try {
@@ -135,7 +142,7 @@ export const BasicTable = (props) => {
       const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
       if (rowIndex !== -1 && gain !== undefined) {
         const gain_ = gain.docs[0].data()
-        handleCallBackForHistory (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
+        updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
       }
  
       if (gain.docs.length > 0) {
@@ -173,7 +180,7 @@ export const BasicTable = (props) => {
         const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
         if (rowIndex !== -1 && info !== undefined) {
           const info_ = info.docs[0].data();
-          handleOverview (info_.data, info_._updateDate, info_._updateMili)
+          updateTableInfo (info_.data, info_._updateDate, info_._updateMili)
         }
 
         var latestIndex = 0;
@@ -200,13 +207,6 @@ export const BasicTable = (props) => {
     } catch(e) {console.log (e); alert (e)}
   }
 
-  useEffect (() => { 
-    //getGain();
-    getIp();
-     //getInfo();
-
-  })
- 
   // send stock gain to firebase, delete old and add new one (No woory about format change)
   const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     // read old entries
@@ -346,13 +346,13 @@ export const BasicTable = (props) => {
                       
                   const updateMili = Date.now();
                   const updateDate = getDate();
-                  handleOverview (data, updateDate, updateMili);
+                  updateTableInfo (data, updateDate, updateMili);
                 }
             }
         )
   }
 
-  const handleCallBackForHistory = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
+  const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (index === -1) {
@@ -400,7 +400,7 @@ export const BasicTable = (props) => {
 
   }
 
-  const handleOverview = (childData, updateDate, updateMili)  => {
+  const updateTableInfo = (childData, updateDate, updateMili)  => {
     if (childData === null || childData === {} || childData["Exchange"] == null) {
       console.log ('ChildData missing');
       return;
@@ -462,7 +462,7 @@ export const BasicTable = (props) => {
   }
 
 
-  const handleChartClick = (sym) => {
+  const handleGainClick = (sym) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
     console.log(`symbol: ${sym} chartSymbol: ${chartSymbol}`); 
@@ -578,7 +578,7 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              handleCallBackForHistory (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
+              updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
 
               firebaseGainAdd (sym, updateDate, updateMili, splits,
                  wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);  // save in firestore
@@ -792,7 +792,7 @@ export const BasicTable = (props) => {
                   <div>
                   <button type="button" onClick={()=>handleDeleteClick(row, row.values.symbol)}>del</button>
                   <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
-                  <button type="button" onClick={()=>handleChartClick(row.values.symbol)}>gain</button> 
+                  <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
                   </div>
               </tr>
             )
