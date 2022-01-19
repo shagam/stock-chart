@@ -1,10 +1,10 @@
 import React, {useState, useMemo, useEffect} from 'react'
-import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
+import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 //import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
 //import{ Styles } from './TableStyles'
 import MOCK_DATA from './mock-data.json'
-import { COLUMNS, GROUPED_COLUMNS } from './columns'
+import { COLUMNS } from './columns'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
@@ -20,8 +20,8 @@ import {format} from "date-fns"
 import axios from 'axios'
 
 import {db} from './firebase-config'
-import {collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where, orderByChild, firestore} from "firebase/firestore";
-import { validateArgCount } from '@firebase/util'
+import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 
@@ -74,14 +74,14 @@ export const BasicTable = (props) => {
       return;
     }
 
-    const os = require('os');
-    const cpu=os.cpus();
-    const hostName = os.hostname()
-    const platform = os.platform();
-    const type = os.type();
-    const arch = os.arch();
-    const uptime = os.uptime();
-    var path = require('path');
+    // const os = require('os');
+    // const cpu=os.cpus();
+    // const hostName = os.hostname()
+    // const platform = os.platform();
+    // const type = os.type();
+    // const arch = os.arch();
+    // const uptime = os.uptime();
+    // var path = require('path');
     //var userInfo_ = process.env['USERPROFILE']//.split(path.sep)[2];
     // const username = require('username')
    // const userInfo = os.userInfo('buffer');

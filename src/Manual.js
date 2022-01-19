@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect, useMemo, Component} from 'react'
+import React, {useState, useEffect} from 'react'
 import txt from './Manual.text'
 import './Manual.css'
 
@@ -8,7 +8,7 @@ import filePDF from './Manual.pdf'
 const Manual = (props) => {
   const [ManualFlag, setManualFlag] = useState(false);
   const [manualText, setManualText] = useState("One\nTwo\nThree");
-  const [manualTextPdf, setManualTextPdf] = useState("")
+  //const [manualTextPdf, setManualTextPdf] = useState("")
  
   const usageHelpChange = () => {setManualFlag (! ManualFlag)}
 
