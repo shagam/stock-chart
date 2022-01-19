@@ -135,9 +135,6 @@ export const BasicTable = (props) => {
       const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
       if (rowIndex !== -1 && gain !== undefined) {
         const gain_ = gain.docs[0].data()
-        console.log (rows[rowIndex].values.gain_mili, gain_._updateMili)
-        if (rows[rowIndex].values.gain_date === undefined ||
-           rows[rowIndex].values.gain_mili < gain_._updateMili)
         handleCallBackForHistory (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
       }
  
@@ -175,9 +172,7 @@ export const BasicTable = (props) => {
         const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
         if (rowIndex !== -1 && info !== undefined) {
           const info_ = info.docs[0].data();
-          if (rows[rowIndex].values.info_date === undefined ||
-            rows[rowIndex].values.info_mili < info_._updateMili)
-            handleOverview (info_.data, info_._updateDate, info_._updateMili)
+          handleOverview (info_.data, info_._updateDate, info_._updateMili)
         }
 
         var latestIndex = 0;
@@ -275,6 +270,8 @@ export const BasicTable = (props) => {
         firebaseGainGetOne((rows[i].values.symbol));
       }
     }
+    saveTable();
+    props.refreshCallBack(-1);
   }
 
   const alphaCallBack = (key) => {
