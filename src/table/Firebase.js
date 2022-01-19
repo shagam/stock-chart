@@ -156,9 +156,42 @@ const Firebase = (props) => {
     alert (JSON.stringify (collect))
   }
 
+  const firebaseGetAndFill = () => {
+    // allow reads once a minute
+    // if (Date.now() - firebaseFillMili < 1000*60)
+    //   return;
+    // setFirebaseFillMili(Date.now());
+
+    // console.log (stocksInfoOne);
+    // console.log (stocksGainOne);     
+    // fill in table missing values
+    
+    // turn on columns so used can decide if up to date
+    // var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
+    // allColumns[ind].toggleHidden();
+    // ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
+    // allColumns[ind].toggleHidden();
+
+    // fill missing data
+    for (let i = 0; i < props.rows.length; i++) {
+      // get from firebase 
+      if (props.rows[i].values.info_date === undefined) {
+        props.firebaseInfoGetOne((props.rows[i].values.symbol));
+      }
+      if (props.rows[i].values.gain_date === undefined) {
+        props.firebaseGainGetOne((props.rows[i].values.symbol));
+      }
+    }
+    props.saveTable();
+    props.refreshCallBack(-1);
+  }
+
+
+
   return (
     <>
       <div id="firebase_id"> 
+        <button type="button" onClick={()=>firebaseGetAndFill()}>Fill_gain_info </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false)}>Show-stocks-compared-to-QQQ </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true)}>Fill-stocks-compared-to-QQQ </button>
         {props.admin &&

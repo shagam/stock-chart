@@ -245,36 +245,6 @@ export const BasicTable = (props) => {
     }
   }
 
-  const firebaseGetAndFill = () => {
-    // allow reads once a minute
-    // if (Date.now() - firebaseFillMili < 1000*60)
-    //   return;
-    // setFirebaseFillMili(Date.now());
-
-    // console.log (stocksInfoOne);
-    // console.log (stocksGainOne);     
-    // fill in table missing values
-    
-    // turn on columns so used can decide if up to date
-    var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
-    allColumns[ind].toggleHidden();
-    ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
-    allColumns[ind].toggleHidden();
-
-    // fill missing data
-    for (let i = 0; i < rows.length; i++) {
-      // get from firebase 
-      if (rows[i].values.info_date === undefined) {
-        firebaseInfoGetOne((rows[i].values.symbol));
-      }
-      if (rows[i].values.gain_date === undefined) {
-        firebaseGainGetOne((rows[i].values.symbol));
-      }
-    }
-    saveTable();
-    props.refreshCallBack(-1);
-  }
-
   const alphaCallBack = (key) => {
     setAPI_KEY (key);
   }      
@@ -726,7 +696,7 @@ export const BasicTable = (props) => {
           calc_splits
         </label>
 
-        <button type="button" className="stock_button_class" onClick={()=>firebaseGetAndFill()}>Fill_gain_info    </button>
+       
 
         <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
              
