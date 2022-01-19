@@ -156,6 +156,83 @@ const Firebase = (props) => {
     alert (JSON.stringify (collect))
   }
 
+   // get one symbol GAIN from firebase  and clean duplicates
+   const firebaseGainGetOne = async (symbol) => {
+    try {
+      // get one symbol gain from firebase
+      var userQuery = query (props.gainRef, where('__symbol', '==', symbol));
+      const gain = await getDocs(userQuery);
+
+      const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
+      if (rowIndex !== -1 && gain !== undefined) {
+        const gain_ = gain.docs[0].data()
+        props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
+      }
+ 
+      if (gain.docs.length > 0) {
+        var latestIndex = 0;
+        
+        if (gain.docs.length > 1) {
+          console.log ('duplicates ', gain.docs.length, gain.docs[0].data()); 
+          var updateMili = 0;
+          // search for latest
+          for (let i = 0; i < gain.docs.length; i++) {
+            if (gain.docs[i].data()._updateMili > updateMili) {
+              updateMili = gain.docs[i].data()._updateMili;
+              latestIndex = i;
+            }
+          }
+          // delete all dups except latest
+          for (let i = 0; i < gain.docs.length; i++) {
+            if (i === latestIndex)
+              continue;
+            const id = gain.docs[i].id;
+            var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
+            await deleteDoc (gainDoc);    
+          }               
+        }
+      }
+    } catch(e) { console.log (e); alert (e)}
+  }
+
+  // get one symbol INFO from firebase  and clean duplicates
+  const firebaseInfoGetOne = async (symbol) => {
+    try {
+      var userQuery = query (props.infoRef, where('__symbol', '==', symbol));
+      const info = await getDocs(userQuery);
+      if (info.docs.length > 0) {
+        const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
+        if (rowIndex !== -1 && info !== undefined) {
+          const info_ = info.docs[0].data();
+          props.updateTableInfo (info_.data, info_._updateDate, info_._updateMili)
+        }
+
+        var latestIndex = 0;
+        if (info.docs.length > 1) {
+          console.log ('duplicates', info.docs.length, info.docs[0].data());
+          var updateMili = 0;
+          // search for latest
+          for (let i = 0; i < info.docs.length; i++) {
+            if (info.docs[i].data()._updateMili > updateMili) {
+              updateMili = info.docs[i].data()._updateMili;
+              latestIndex = i;
+            }
+          }
+          // delete all dups except latest
+          for (let i = 0; i < info.docs.length; i++) {
+            if (i === latestIndex)
+              continue;
+            const id = info.docs[i].id;
+            var infoDoc = doc(db, "stock-info", info.docs[i].id);
+            await deleteDoc (infoDoc);    
+          }
+        }
+       }
+    } catch(e) {console.log (e); alert (e)}
+  }
+
+
+
   const firebaseGetAndFill = () => {
     // allow reads once a minute
     // if (Date.now() - firebaseFillMili < 1000*60)
@@ -176,10 +253,10 @@ const Firebase = (props) => {
     for (let i = 0; i < props.rows.length; i++) {
       // get from firebase 
       if (props.rows[i].values.info_date === undefined) {
-        props.firebaseInfoGetOne((props.rows[i].values.symbol));
+        firebaseInfoGetOne((props.rows[i].values.symbol));
       }
       if (props.rows[i].values.gain_date === undefined) {
-        props.firebaseGainGetOne((props.rows[i].values.symbol));
+        firebaseGainGetOne((props.rows[i].values.symbol));
       }
     }
     props.saveTable();

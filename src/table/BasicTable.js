@@ -132,81 +132,7 @@ export const BasicTable = (props) => {
 
   })
  
-    // get one symbol GAIN from firebase  and clean duplicates
-  const firebaseGainGetOne = async (symbol) => {
-    try {
-      // get one symbol gain from firebase
-      var userQuery = query (gainRef, where('__symbol', '==', symbol));
-      const gain = await getDocs(userQuery);
-
-      const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
-      if (rowIndex !== -1 && gain !== undefined) {
-        const gain_ = gain.docs[0].data()
-        updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
-      }
- 
-      if (gain.docs.length > 0) {
-        var latestIndex = 0;
-        
-        if (gain.docs.length > 1) {
-          console.log ('duplicates ', gain.docs.length, gain.docs[0].data()); 
-          var updateMili = 0;
-          // search for latest
-          for (let i = 0; i < gain.docs.length; i++) {
-            if (gain.docs[i].data()._updateMili > updateMili) {
-              updateMili = gain.docs[i].data()._updateMili;
-              latestIndex = i;
-            }
-          }
-          // delete all dups except latest
-          for (let i = 0; i < gain.docs.length; i++) {
-            if (i === latestIndex)
-              continue;
-            const id = gain.docs[i].id;
-            var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
-            await deleteDoc (gainDoc);    
-          }               
-        }
-      }
-    } catch(e) { console.log (e); alert (e)}
-  }
-
-  // get one symbol INFO from firebase  and clean duplicates
-  const firebaseInfoGetOne = async (symbol) => {
-    try {
-      var userQuery = query (infoRef, where('__symbol', '==', symbol));
-      const info = await getDocs(userQuery);
-      if (info.docs.length > 0) {
-        const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);            
-        if (rowIndex !== -1 && info !== undefined) {
-          const info_ = info.docs[0].data();
-          updateTableInfo (info_.data, info_._updateDate, info_._updateMili)
-        }
-
-        var latestIndex = 0;
-        if (info.docs.length > 1) {
-          console.log ('duplicates', info.docs.length, info.docs[0].data());
-          var updateMili = 0;
-          // search for latest
-          for (let i = 0; i < info.docs.length; i++) {
-            if (info.docs[i].data()._updateMili > updateMili) {
-              updateMili = info.docs[i].data()._updateMili;
-              latestIndex = i;
-            }
-          }
-          // delete all dups except latest
-          for (let i = 0; i < info.docs.length; i++) {
-            if (i === latestIndex)
-              continue;
-            const id = info.docs[i].id;
-            var infoDoc = doc(db, "stock-info", info.docs[i].id);
-            await deleteDoc (infoDoc);    
-          }
-        }
-       }
-    } catch(e) {console.log (e); alert (e)}
-  }
-
+  
   // send stock gain to firebase, delete old and add new one (No woory about format change)
   const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     // read old entries
@@ -695,15 +621,13 @@ export const BasicTable = (props) => {
           /> 
           calc_splits
         </label>
-
-       
+   
 
         <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
              
         <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
           
         <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All  
-
 
 
       <div id="columnToggle">
@@ -769,8 +693,6 @@ export const BasicTable = (props) => {
           })}
       </tbody>
     </table>
-
-
        
     <div>
      {/* {console.log (chartSymbol)} */}
@@ -780,7 +702,7 @@ export const BasicTable = (props) => {
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
       <div>
-        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} firebaseGainGetOne={firebaseGainGetOne} firebaseInfoGetOne={firebaseInfoGetOne} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} />
+        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} />
       </div>
       
       {AlphaVantage (alphaCallBack)}
