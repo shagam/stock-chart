@@ -186,7 +186,7 @@ const Firebase = (props) => {
           for (let i = 0; i < gain.docs.length; i++) {
             if (i === latestIndex)
               continue;
-            const id = gain.docs[i].id;
+            //const id = gain.docs[i].id;
             var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
             await deleteDoc (gainDoc);    
           }               
@@ -222,7 +222,7 @@ const Firebase = (props) => {
           for (let i = 0; i < info.docs.length; i++) {
             if (i === latestIndex)
               continue;
-            const id = info.docs[i].id;
+            //const id = info.docs[i].id;
             var infoDoc = doc(db, "stock-info", info.docs[i].id);
             await deleteDoc (infoDoc);    
           }

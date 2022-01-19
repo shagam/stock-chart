@@ -119,7 +119,7 @@ export const BasicTable = (props) => {
     if (ipInfo.docs.length > 0)
       console.log (res, 'ipList', ipInfo.docs.length);
     for (let i = 0; i < ipInfo.docs.length; i++) {
-      const id = ipInfo.docs[i].id;
+      //const id = ipInfo.docs[i].id;
       var ipDoc = doc(db, "ipList", ipInfo.docs[i].id);
       await deleteDoc (ipDoc);    
     }
@@ -146,7 +146,7 @@ export const BasicTable = (props) => {
     if (gain.docs.length > 0)
       console.log (symbol, 'gain-send', gain.docs.length);
     for (let i = 0; i < gain.docs.length; i++) {
-      const id = gain.docs[i].id;
+      //const id = gain.docs[i].id;
       var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
       await deleteDoc (gainDoc);    
     }               
@@ -165,7 +165,7 @@ export const BasicTable = (props) => {
     if (info.docs.length > 0)
       console.log (symbol, 'info-send', info.docs.length); 
     for (let i = 0; i < info.docs.length; i++) {
-      const id = info.docs[i].id;
+      //const id = info.docs[i].id;
       var infoDoc = doc(db, "stock-info", info.docs[i].id);
       await deleteDoc (infoDoc);    
     }
@@ -509,7 +509,7 @@ export const BasicTable = (props) => {
     event.preventDefault();
   
     //console.log (addFormData.symbol)
-    const re = new RegExp('^[a-zA-Z0-9\._=-]*$');  // Verify valid symbol in englis letters
+    const re = new RegExp('^[a-zA-Z0-9._=-]*$');  // Verify valid symbol in englis letters
     if (! re.test (addFormData.symbol)) {
       alert (`Invalid letters: ${addFormData.symbol}`);
       return;

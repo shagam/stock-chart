@@ -122,16 +122,16 @@ const StockRecoveryCalc = (props) => {
 
 
 
-    const styleObj = {
-      border: '2px',
-      //fontSize: 14,
-      // color: "#4a54f1",
-      // display: "grid",
-      position: 'relative',
-      // gridTemplateColumns: "1fr 1fr" 
-      //textAlign: "center",
-      //paddingTop: "100px",
-  }
+  //   const styleObj = {
+  //     border: '2px',
+  //     //fontSize: 14,
+  //     // color: "#4a54f1",
+  //     // display: "grid",
+  //     position: 'relative',
+  //     // gridTemplateColumns: "1fr 1fr" 
+  //     //textAlign: "center",
+  //     //paddingTop: "100px",
+  // }
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
