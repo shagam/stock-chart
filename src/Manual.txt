@@ -26,11 +26,9 @@ CHART
 Each pressing of <gain> will draw a chart of the symbol, of the last 22 years based on weekly opening price. Chart resulted from guessed splits will be purple, otherwise green. (No guessing)
 <chart> checkbox allows to hide/show chart  of a stock or ETF
 
-RAW DATA (GAIN AND INFO) SOURCE
-
-The tool gets the raw data from AlphVantage.co API. The user needs to get his/her own <key> from AlphVatage.co site.  The key should be entered at the bottom. Otherwise you are sharing my key.
-Free key allows 5 API calls per minute, and 500 per day. Please get your own <key> from AlphVatage.co site, and insert it at the bottom of the page. Otherwise you will be using (and sharing) my key.
-
+ALPHAVANTAGE.CO RAW DATA (GAIN AND INFO) SOURCE
+The tool gets the raw data from AlphVantage.co API. The user needs to get his own <key> from AlphVatage.co site.  The key should be entered in the <config> pan. Otherwise you are sharing my key.
+Free key allows 5 API calls per minute, and 500 per day. Please get your own <key> from AlphVatage.co site.
 ALPHAVANTAGE.CO API GAIN PITFALL
 
 Before relying on the tool, the user MUST compare the values with other providers like, google finance, or finance.yahoo.com

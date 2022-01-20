@@ -100,7 +100,7 @@ export const BasicTable = (props) => {
     if (LOG_FLAG)
     console.log('ip ', res.data);
     setLocalIP(res.data);
-    setAdmin (res.data.IPv4 === '84.228.164.65');
+    setAdmin (res.data.IPv4 === '84.228.164.64');
 
     // admin password
     const admin_index = rows.findIndex((row)=> row.values.symbol === '_ADMIN_');
