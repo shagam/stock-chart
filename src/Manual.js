@@ -1,6 +1,6 @@
 
 import React, {useState, useEffect} from 'react'
-import txt from './Manual.text'
+import txt from './Manual.txt'
 import './Manual.css'
 
 import filePDF from './Manual.pdf'

@@ -1,0 +1,104 @@
+STOCK-CHART    STOCKS AND ETF ANALYSIS   URL    http://84.228.164.65:3000
+
+Stock-chart is used to compare stocks and ETF in American stock market NYSE and NASDAQ. The tool is designed for long term investors.
+
+USAGE AND TESTING INSTRUCTIONS
+* Load  URL to browser http://84.228.164.65:3000
+First time users, a sample list of stocks will be loaded. 
+* Press <fill_gain_info>   to fill gain and info, which other users shared through Firebase.
+The information may be old. Check the columns info_date & gain_date 
+* Press <info>  button, to bring overview data from AlphVantage.co (Not for ETF(
+* Press <gain> button, to bring gain data from AlphVantage.co.  Pressing <gain>  draws a chart. Gain == 2 means 100% price increase.
+* Hide/Display columns by selecting or deselecting check boxes at the top 
+* Sort a column by pressing the column title. Second press will reverse order.
+* Press <del> to delete a stock symbol
+* Add a stock or ETF symbol, and press <Add>  
+* <Show-stocks-compared-to-QQQ>   
+* Global Search/filter string. Show only rows that contain the text.
+* Persistence: Press <save-data> button.  Then close the browser tab, and reload again. Verify same data.
+* The chart uses Plotly library. It allows zooming, and revert zoom.
+* Manual:  check the <Manual> checkbox at the bottom. 
+* <Drop-Recovery>   see below
+CHART
+Each pressing of <gain> will draw a chart of the symbol, of the last 22 years based on weekly opening price. Chart resulted from guessed splits will be purple, otherwise green. (No guessing)
+<chart> checkbox allows to hide/show chart  of a stock or ETF
+
+RAW DATA (GAIN AND INFO) SOURCE
+The tool gets the raw data from AlphVantage.co API. The user needs to get his/her own <key> from AlphVatage.co site.  The key should be entered at the bottom. Otherwise you are sharing my key.
+Free key allows 5 API calls per minute, and 500 per day. Please get your own <key> from AlphVatage.co site, and insert it at the bottom of the page. Otherwise you will be using (and sharing) my key.
+
+ALPHAVANTAGE.CO API GAIN PITFALL
+Before relying on the tool, the user MUST compare the values with other providers like, google finance, or finance.yahoo.com
+Market info retrieved through AlphaVantage.co API. The API provides nominal stock historical prices and ignores splits and reverse-splits, and provide nominal stock or ETF price. The tool tries to guess splits by looking into sharp falls, or sharp rise. The button <calc-splits>  allows to bypass these calculations. And get raw prices
+The guessed splits column, can be shown by checkbox <splits_list<   Purple chart means splits discovered, and chart and gain value manipulated. Green chart means no split calculations.
+
+DROP-RECOVERY
+The tool analyses stock drop during market drop.  Shows drop-level, and stock recovery duration in weeks t. The tool is valid only during an overall bull market, with some bear periods. The tool is limited to 22 years because of AlphaVantage data.
+Steps:
+* Open Drop-Recovery pan, by pressing <Drop-Recovery> check box.
+* Choose a date range of the drop (Or big correction)
+* The tool turns on 3 related columns: 
+o Drop: how low did the stock drop from highest price before drop.  (0.7 means a drop of 30%)
+o Recover week: how many weeks it took to reach the pre correction stock price.
+o Drop bottom week date approximation.
+* Press the <gain> button of some stocks.
+* Algorithm
+o Search for the lowest price within selected dates
+o Search for highest price before correction
+o Search for recovery duration in weeks
+o Calculate drop, and recovery duration.
+Default dates are:  2008 market drop, and Mar 2020 market drop. 
+Press <swap_2008_or_2020>  to swap between 2  correction periods.
+
+SHOW-STOCKS-COMPARED-WITH-QQQ
+Press <Show-stocks-compared-to-QQQ>   button to show a list of stocks and ETF that had a yearly gain equivalent or better than QQQ, the list is retrieved from shared database (firebase), that other users examined <gain> and <info>
+The bench mark for comparison is QQQ ETF, NASDAQ   hi-tech average. User should hold only stocks that perform better than QQQ, or invest in QQQ. The columns: wk, mon, 3mon, yr, 2yr, 5yr, 10r, shows the gain proportion. A gain of 2, means the stock price doubled during that period. Other fields can be found on google.
+
+<FILL-STOCKS-COMPARED-WITH-QQQ>
+Press <Fill-stocks-compared-to-QQQ>  button to insert in table stocks and ETF that are equivalent or better than QQQ
+
+BACKEND DATABASE (FIREBASE). SHARE INFO BETWEEN USERS
+The tool stores gain and info data in a global database, to be shared with other users. This data is used to fill gain and info in the table.
+
+PERSISTENCE
+ The tool saves the table data in local-storage, for next session.
+
+TABLE FIELDS
+Symbol: ticker of stock of a company or ETF
+Exchange:  NASDAQ or NYSE
+Industry: Services / Electronic/ Medical /  Biological / Computers/ Pharma
+
+PE:  Stock price / Yearly earning per stock
+PE(F):
+PE(TTM): PE of Trailing 12 Months
+PEG:  PE / Yearly earnings growth
+Div:  Yearly dividend per stock / Atock _price   (0.05  means the that for $100 worth of stocks, you get $1)
+BETA:  fluctuation compared with other stocks of same industry  (0.8 means less volatile than average)
+EV/EBITDA:  Enterprise value (Current Market Cap + Debt + Minority Interest + preferred shares – cash) / (earnings before interest, taxes, depreciation, and amortization) 
+EV/Revenue: Enterprise value / yearly revenue
+PriceToBook:  Company valuation / Book value.
+Target: Analysts expected price / actual price
+
+Wk (Week), 2wk, Mon (Month),  2Mon, 6Mon, yr(year), ….  Latest_price / old price (week /mon/year)  Ago) 
+
+Splits:  a flag that shows if splits were calculated. To see raw gain data (turn off <calc_splits> to prevent splits guessing), (Calculated when <gain> pressed) 
+Split_list:  guessed split list of splits or reversed splits.  (Assumed because of sudden value change)
+
+Info_date:  Date when info retrieved (<info> button pressed)
+Gain_date: Date when gain retrieved (<gain> button pressed)
+
+Drop:  Lowest price during drop / highest price before drop (Calculated when <gain> pressed)
+RecoveyWeek: number of weeks to reach price before drop
+Drop_date: estimated week of lowest price.
+
+PLATFORMS
+The tool was tested on some browsers (Chromium, Firefox, Opera, and Microsoft Edge)
+Preferred platform is desktop, laptop, or tablet. Not recommended for smartphone
+
+USED PACKAGES 
+ The tool is built on top of JavaScript, React.JS library, react-table, Plotly, react-datepicker, Firebase, Redux
+
+BUG REPORT AND ENHANCEMENTS 
+The tool was developed by Eli Shagam, Please send any bug report, or enhancement request to eli.shagam@gmail.com 
+
+
