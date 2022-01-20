@@ -22,7 +22,7 @@ const  Config = (props) => {
   }
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
-
+  //   border: 2px solid magenta;
   return (
     <div>
 
@@ -32,8 +32,8 @@ const  Config = (props) => {
       /> config 
 
       { configFlag &&
-
-        <div>
+        <div id = "config_id">
+          <AlphaVantage alphaCallBack={props.alphaCallBack} />
           <form onSubmit = {flexSubmit}>
             <input
               type="number"
@@ -45,10 +45,7 @@ const  Config = (props) => {
             <button type="submit"> Enter</button>
           </form>
 
-         <AlphaVantage alphaCallBack={props.alphaCallBack} />
         </div>
-
-
       }
 
     </div>
