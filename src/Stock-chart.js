@@ -1,17 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Plot from 'react-plotly.js';
 import "./StockChart.css";
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 const Stock_chart = (props) => { 
+  const [chartFlag, setChartFlag] = useState(true);
   const LOG_FLAG = false;
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
   if (splitsFlag !== '')
     splitsFlag =  ' ' + splitsFlag + ' distort graph and table';
-
-  //console.log (`Stock-chart props ${StockSymbol}`);
   
 
   const isEmpty = (str) => {
@@ -37,10 +36,20 @@ const Stock_chart = (props) => {
   else
     graphColor = 'purple';
 
+  const chartFlagChange = () => {setChartFlag (! chartFlag)}
+
   return (
-    <div id = 'chart_id'>
+    <div>
+        <div>
+          <input
+            type="checkbox" checked={chartFlag}
+            onChange={ chartFlagChange}
+          /> chart
+    </div>
+
       {/* <h4>  historical_gain({StockSymbol}): {histString}  </h4> */}
-      <Plot
+      <div id = 'chart_id'>
+      {chartFlag && <Plot
         data={[
           {
             x: props.stockChartXValues,
@@ -53,6 +62,9 @@ const Stock_chart = (props) => {
         layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + splitsFlag,
       }}
       />
+
+    }
+      </div>
     </div>
   );
 }
