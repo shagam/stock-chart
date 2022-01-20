@@ -137,7 +137,10 @@ const Firebase = (props) => {
         alert (`symbols (missing) compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
       }
       else
-        window.location.reload();    
+        window.location.reload();
+      const ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
+      props.allColumns[ind].toggleHidden();
+        
     } catch(e) { console.log (e); alert (e)}
   }
 
@@ -244,10 +247,10 @@ const Firebase = (props) => {
     // fill in table missing values
     
     // turn on columns so used can decide if up to date
-    // var ind = allColumns.findIndex((column)=> column.Header === 'info_date');
-    // allColumns[ind].toggleHidden();
-    // ind = allColumns.findIndex((column)=> column.Header === 'gain_date');
-    // allColumns[ind].toggleHidden();
+    var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
+    props.allColumns[ind].toggleHidden();
+    ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
+    props.allColumns[ind].toggleHidden();
 
     // fill missing data
     for (let i = 0; i < props.rows.length; i++) {

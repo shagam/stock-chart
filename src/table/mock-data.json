@@ -20,6 +20,9 @@
     }, 
     {
         "symbol": "QQQ"
+    },
+    {
+        "symbol": "BRK.A"
     }
 
 ]
