@@ -509,7 +509,7 @@ export const BasicTable = (props) => {
     event.preventDefault();
   
     //console.log (addFormData.symbol)
-    const re = new RegExp('^[a-zA-Z0-9._=-]*$');  // Verify valid symbol in englis letters
+    const re = new RegExp('^[a-zA-Z0-9^._=-]*$');  // Verify valid symbol in englis letters
     if (! re.test (addFormData.symbol)) {
       alert (`Invalid letters: ${addFormData.symbol}`);
       return;
