@@ -22,10 +22,16 @@ const  Config = (props) => {
   }
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
-  //   border: 2px solid magenta;
-  return (
-    <div>
 
+  const style = {
+    // background: 'blue',
+    // color: 'red',
+    // fontSize: 200,
+    border: '2px solid blue'
+  };
+  //   
+  return (
+    <div style = {style}>
       <input
         type="checkbox" checked={configFlag}
         onChange={ configFlagChange }
