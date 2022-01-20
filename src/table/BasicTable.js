@@ -13,6 +13,7 @@ import StockRecoveryCalc from './DropRecovery'
 import AlphaVantage from '../AlphaVantage'
 import Manual from '../Manual'
 import Firebase from './Firebase'
+import Config from './Config'
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
@@ -45,7 +46,7 @@ export const BasicTable = (props) => {
   const infoRef = collection(db, "stock-info")
   const ipRef = collection(db, "ipList")
   const ipStockRef = collection(db, "stockIp")
-
+  const [flex, setFlex] = useState ();
   const [admin, setAdmin] = useState(false);
 
   const LOG_FLAG = false;
@@ -588,6 +589,10 @@ export const BasicTable = (props) => {
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
   }
+  const flexCallBack = (flex) => {
+    console.log (flex);
+    setFlex (flex);
+  }
 
   const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, dropDate) => {
     //console.log (stockSymbol, drop, deepWeek, recoverWeek);
@@ -707,6 +712,7 @@ export const BasicTable = (props) => {
       
       {AlphaVantage (alphaCallBack)}
       <div id='manual_id'>
+        <Config flexCallBack = {flexCallBack} />
         <Manual userAgent={userAgent}/>
       </div>
     </div> 
