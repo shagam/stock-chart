@@ -11,6 +11,7 @@ import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
 import StockRecoveryCalc from './DropRecovery'
 
+import StockInfo from './StockInfo'
 import Manual from '../Manual'
 import Firebase from './Firebase'
 import Config from './Config'
@@ -38,7 +39,7 @@ export const BasicTable = (props) => {
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
   const [splitsCalc, setSplitsCalc] = useState(true);
-
+  const [stockInfo, setStockInfo] = useState ('');
   // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
   // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
@@ -244,6 +245,7 @@ export const BasicTable = (props) => {
                   const updateMili = Date.now();
                   const updateDate = getDate();
                   updateTableInfo (data, updateDate, updateMili);
+                  setStockInfo (JSON.stringify(data));
                 }
             }
         )
@@ -713,6 +715,7 @@ export const BasicTable = (props) => {
       <div id='manual_id'>
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
         <Manual userAgent={userAgent}/>
+        <StockInfo stockInfo = {stockInfo} />
       </div>
     </div> 
     </>
