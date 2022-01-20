@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import AlphaVantage from '../AlphaVantage'
 
 const  Config = (props) => { 
   var config_ = localStorage.getItem('flex');
@@ -32,17 +32,25 @@ const  Config = (props) => {
       /> config 
 
       { configFlag &&
-        <form onSubmit = {flexSubmit}>
-          <input
-            type="number"
-            name="flex"
-            required="required"
-            placeholder="flex week  1 - 1140"
-            onChange={flexChange}
-          />
-          <button type="submit"> Enter</button>
-        </form>
+
+        <div>
+          <form onSubmit = {flexSubmit}>
+            <input
+              type="number"
+              name="flex"
+              required="required"
+              placeholder="flex week  1 - 1140"
+              onChange={flexChange}
+            />
+            <button type="submit"> Enter</button>
+          </form>
+
+         <AlphaVantage alphaCallBack={props.alphaCallBack} />
+        </div>
+
+
       }
+
     </div>
   )
 }

@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import './alphaVantage.css'
 
 
-const  AlphaVantage = (alphaCallBack) => { 
+const  AlphaVantage = (props) => { 
     var aleph = localStorage.getItem('alphaVantage');
     const [alpha, setAlpha] = useState(aleph);
     //console.log(`AlphaVantage localStorage ${alpha}`); 
@@ -23,24 +23,24 @@ const  AlphaVantage = (alphaCallBack) => {
 
         console.log("final data is: ", alpha);
         localStorage.setItem('alphaVantage', `${alpha}`);
-        alphaCallBack (alpha);
+        props.alphaCallBack (alpha);
     }
 
     //console.log('AlphaVantage render');
 
     return (
       <div className = 'alpha'>
-        <label> get key from www.alphavantage.co): ({alpha}) </label>
+        <label> AlphaVatage.co key: ({alpha}) </label>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
             required="required"
-            placeholder="enter alphaVantage.co key "
+            placeholder="enter key from alphaVantage.co "
             onChange={handleAddFormChange}
             // value={alpha}
           />
-          <button type="submit"> Enter</button>
+          <button type="submit"> Enter new key</button>
         </form>
 
       </div>

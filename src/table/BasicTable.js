@@ -10,7 +10,7 @@ import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
 import StockRecoveryCalc from './DropRecovery'
-import AlphaVantage from '../AlphaVantage'
+
 import Manual from '../Manual'
 import Firebase from './Firebase'
 import Config from './Config'
@@ -710,9 +710,8 @@ export const BasicTable = (props) => {
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
       
-      {AlphaVantage (alphaCallBack)}
       <div id='manual_id'>
-        <Config flexCallBack = {flexCallBack} />
+        <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
         <Manual userAgent={userAgent}/>
       </div>
     </div> 
