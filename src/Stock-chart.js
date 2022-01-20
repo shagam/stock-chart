@@ -28,7 +28,8 @@ const Stock_chart = (props) => {
     console.log ("(Stock-chart.js) symbol Udef");
     return null; //"Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
-
+  if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
+    return null;
  
   var graphColor;
   if (splitsFlag === '')
