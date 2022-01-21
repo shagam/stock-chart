@@ -31,11 +31,11 @@ export const GainValidate = (props) => {
 
 
     //const symbol_ = props.rows[row_index].values.symbol;
-    
-    var priceWeeks  = (data[symbol_index].year - 2000) * 52.16 + data[symbol_index].month * 4.34 + data[symbol_index].day / 7;
-    const todayWeeks = todayYear * 52.16 + todayMon * 4.34 + todayDay / 7;
+    // weeks in year 365.25 / 7 = 52.17857  
+    // weeks in month 365.25 / 12 / 7
+    var priceWeeks  = (data[symbol_index].year - 2000) * 52.17857 + data[symbol_index].month * 4.3452 + data[symbol_index].day / 7;
+    const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
     var weeks = Math.round (todayWeeks - priceWeeks);
-    //weeks += 7;
 
     if (weeks >= props.stockChartYValues.length) {
       alert ('GainValidate wrong weeks', props.symbol, props.stockChartYValues.length, weeks)
