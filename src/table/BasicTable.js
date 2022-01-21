@@ -12,6 +12,7 @@ import Stock_chart from '../Stock-chart'
 import StockRecoveryCalc from './DropRecovery'
 
 import StockInfo from './StockInfo'
+import GainValidate from './GainValidate'
 import Manual from '../Manual'
 import Firebase from './Firebase'
 import Config from './Config'
@@ -145,7 +146,7 @@ export const BasicTable = (props) => {
     await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price })
 
     // delete old entries
-    if (gain.docs.length > 0)
+    if (gain.docs.length > 0 && LOG_FLAG)
       console.log (symbol, 'gain-send', gain.docs.length);
     for (let i = 0; i < gain.docs.length; i++) {
       //const id = gain.docs[i].id;
@@ -164,7 +165,7 @@ export const BasicTable = (props) => {
     await addDoc (infoRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
 
     // delete old entries 
-    if (info.docs.length > 0)
+    if (info.docs.length > 0 && LOG_FLAG)
       console.log (symbol, 'info-send', info.docs.length); 
     for (let i = 0; i < info.docs.length; i++) {
       //const id = info.docs[i].id;
@@ -704,7 +705,8 @@ export const BasicTable = (props) => {
     <div>
      {/* {console.log (chartSymbol)} */}
 
-    <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
+      <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
+      {/* <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} /> */}
 
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}  />
 
@@ -716,6 +718,7 @@ export const BasicTable = (props) => {
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
         <Manual userAgent={userAgent}/>
         <StockInfo stockInfo = {stockInfo} />
+
       </div>
     </div> 
     </>

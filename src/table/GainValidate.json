@@ -1,0 +1,117 @@
+[
+  {
+    "symbol": "AMZN",
+    "price": 76.19,
+    "year": 2000,
+    "month": 1,
+    "day": 11   
+  },
+  {
+    "symbol": "FB",
+    "price": 38.23,
+    "year": 2012,
+    "month": 4,
+    "day": 18   
+  }
+  ,
+  {
+    "symbol": "TSLA",
+    "price": 4.56,
+    "year": 2012,
+    "month": 5,
+    "day": 13  
+  },
+  {
+    "symbol": "QQQ",
+    "price": 87.99,
+    "year": 2010,
+    "month": 5,
+    "day": 7  
+  },
+  {
+    "symbol": "ISRG",
+    "price": 4.51,
+    "year": 2005,
+    "month": 5,
+    "day": 21
+  }
+  ,
+  {
+    "symbol": "ABT",
+    "price": 24.22,
+    "year": 2002,
+    "month": 3,
+    "day": 26 
+  }
+  ,
+  {
+    "symbol": "VOO",
+    "price": 101.78,
+    "year": 2010,
+    "month": 5,
+    "day": 10
+  }
+  ,
+  {
+    "symbol": "AAPL",
+    "price": 0.34,
+    "year": 2001,
+    "month": 5,
+    "day": 27  
+  }
+  ,
+  {
+    "symbol": "LRCX",
+    "price": 30.76,
+    "year": 2003,
+    "month": 10,
+    "day": 7
+  }
+  ,
+  {
+    "symbol": "MSFT",
+    "price": 31.25,
+    "year": 2002,
+    "month": 2,
+    "day": 15
+  }
+  ,
+  {
+    "symbol": "DXCM",
+    "price": 23.30,
+    "year": 2006,
+    "month": 3,
+    "day": 21
+  }
+  ,
+  {
+    "symbol": "DELL",
+    "bad": true
+  },
+  {
+    "symbol": "NVDA",
+    "price": 2.93,
+    "year": 2002,
+    "month": 2,
+    "day": 15
+  }
+  ,
+  {
+    "symbol": "FTNT",
+    "price": 21.03,
+    "year": 2011,
+    "month": 2,
+    "day": 4
+  } ,
+  {
+    "symbol": "ASML",
+    "price": 35.01,
+    "year": 2002,
+    "month": 2,
+    "day": 15
+  },
+  {
+    "symbol": "ATTU",
+    "bad": true
+  }
+]
