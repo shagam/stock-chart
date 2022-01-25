@@ -152,7 +152,31 @@ export const COLUMNS = [
     Footer: 'dropDate',    
     accessor: 'dropDate'
   },
-  
+  {
+    Header: 'alphaDate',
+    Footer: 'alphaDate',    
+    accessor: 'alphaDate'
+  },
+  {
+    Header: 'alphaPrice',
+    Footer: 'alphaPrice',    
+    accessor: 'alphaPrice'
+  },
+   {
+    Header: 'compareDate',
+    Footer: 'compareDate',    
+    accessor: 'compareDate'
+  },
+  {
+    Header: 'comparePrice',
+    Footer: 'comparePrice',
+    accessor: 'comparePrice',
+  },
+  {
+    Header: 'compare',
+    Footer: 'compare',    
+    accessor: 'compare'
+  },
 
 ] 
 

@@ -26,33 +26,45 @@ export const GainValidate = (props) => {
     return null;
 
 
-  if (props.rows[row_index].values.splits_list === '')
-    return null;
+  // if (props.rows[row_index].values.splits_list === '')
+  //   return null;
 
 
     //const symbol_ = props.rows[row_index].values.symbol;
     // weeks in year 365.25 / 7 = 52.17857  
     // weeks in month 365.25 / 12 / 7
+
     var priceWeeks  = (data[symbol_index].year - 2000) * 52.17857 + data[symbol_index].month * 4.3452 + data[symbol_index].day / 7;
     const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
     var weeks = Math.round (todayWeeks - priceWeeks);
 
     if (weeks >= props.stockChartYValues.length) {
-      alert ('GainValidate wrong weeks', props.symbol, props.stockChartYValues.length, weeks)
+      console.log ('GainValidate calc weeks beyond alpha data', props.symbol, props.stockChartYValues.length, weeks)
       return null;
     }
 
-    const historicPrice = props.stockChartYValues[weeks];
+    const AlphaHistoricPrice = props.stockChartYValues[weeks];
     // props.stockChartXValues,
 
 
-    var p = historicPrice / data[symbol_index].price;
+    var p = AlphaHistoricPrice / data[symbol_index].price;
     p = p.toFixed(3)
-    if (p > 1.1 || p < 0.9)
-      props.rows[row_index].values.splits_calc = p;
-    console.log (props.symbol, weeks, p, props.stockChartXValues[weeks], data[symbol_index]);
+    // if (p > 1.1 || p < 0.9)
+    //   props.rows[row_index].values.splits_calc = p;
+    console.log (props.symbol, weeks, p, props.stockChartXValues[weeks], data[symbol_index], props.stockChartYValues[weeks]);
 
-  } catch (e) { console.log (e)}
+    var alphaPrice = props.stockChartYValues[weeks];
+    if (alphaPrice !== undefined)
+      alphaPrice = alphaPrice.toFixed(3)
+
+    props.rows[row_index].values.alphaPrice = alphaPrice;
+    props.rows[row_index].values.alphaDate = props.stockChartXValues[weeks];
+
+    props.rows[row_index].values.compareDate =  data[symbol_index].year + "-" + (Number(data[symbol_index].month) + 1) + "-" + data[symbol_index].day
+    props.rows[row_index].values.comparePrice = data[symbol_index].price
+
+    props.rows[row_index].values.compare = p;
+  } catch (e) { alert (e)}
   return null;
   
 }
