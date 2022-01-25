@@ -61,8 +61,8 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     rows[row_index].values.alphaPrice = Number(alphaPrice);
     rows[row_index].values.alphaDate = stockChartXValues[weeks];
 
-    rows[row_index].values.compareDate =  gain_validation_json[valiate_index].year + "-" + (Number(gain_validation_json[valiate_index].month) + 1) + "-" + gain_validation_json[valiate_index].day
-    rows[row_index].values.comparePrice = gain_validation_json[valiate_index].price
+    rows[row_index].values.googDate =  gain_validation_json[valiate_index].year + "-" + (Number(gain_validation_json[valiate_index].month) + 1) + "-" + gain_validation_json[valiate_index].day
+    rows[row_index].values.googPrice = gain_validation_json[valiate_index].price
 
     rows[row_index].values.GOOGCompare = p;
     //refreshCallBack (-1);

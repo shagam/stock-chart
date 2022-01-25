@@ -128,6 +128,31 @@ export const COLUMNS = [
     accessor: 'splits_calc'
   },
   {
+    Header: 'alphaDate',
+    Footer: 'alphaDate',    
+    accessor: 'alphaDate'
+  },
+  {
+    Header: 'alphaPrice',
+    Footer: 'alphaPrice',    
+    accessor: 'alphaPrice'
+  },
+   {
+    Header: 'googDate',
+    Footer: 'googDate',    
+    accessor: 'googDate'
+  },
+  {
+    Header: 'googPrice',
+    Footer: 'googPrice',
+    accessor: 'googPrice',
+  },
+  {
+    Header: 'GOOGCompare',
+    Footer: 'GOOGCompare',    
+    accessor: 'GOOGCompare'
+  },
+  {
     Header: 'info_date',
     Footer: 'info_date',    
     accessor: 'info_date'
@@ -152,31 +177,7 @@ export const COLUMNS = [
     Footer: 'dropDate',    
     accessor: 'dropDate'
   },
-  {
-    Header: 'alphaDate',
-    Footer: 'alphaDate',    
-    accessor: 'alphaDate'
-  },
-  {
-    Header: 'alphaPrice',
-    Footer: 'alphaPrice',    
-    accessor: 'alphaPrice'
-  },
-   {
-    Header: 'googDate',
-    Footer: 'googDate',    
-    accessor: 'compareDate'
-  },
-  {
-    Header: 'googPrice',
-    Footer: 'comparePrice',
-    accessor: 'comparePrice',
-  },
-  {
-    Header: 'GOOGCompare',
-    Footer: 'GOOGCompare',    
-    accessor: 'GOOGCompare'
-  },
+ 
 
 ] 
 
