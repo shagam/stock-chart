@@ -113,6 +113,15 @@ const StockRecoveryCalc = (props) => {
     }
   }
 
+  function toggleDropRecoveryColumns ()  {
+    var ind = props.allColumns.findIndex((column)=> column.Header === 'drop');
+    props.allColumns[ind].toggleHidden();
+    ind = props.allColumns.findIndex((column)=> column.Header === 'dropDate');
+    props.allColumns[ind].toggleHidden();
+    ind = props.allColumns.findIndex((column)=> column.Header === 'recoverWeek');
+    props.allColumns[ind].toggleHidden();
+  }
+
   //  skip analysis if no symbol
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
   if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
@@ -149,6 +158,7 @@ const StockRecoveryCalc = (props) => {
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
           <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
           <button type="button" onClick={()=>swap_period()}>swap_2008_or_2020    </button>
+          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
         </div>
       }
     </div>
