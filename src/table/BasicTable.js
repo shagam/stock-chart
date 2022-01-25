@@ -560,7 +560,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","compareDate","comparePrice", "info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","googDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
     } // "gap",
 
   },
@@ -582,6 +582,17 @@ export const BasicTable = (props) => {
   //   })
   // }  
   )
+
+  function toggleGoogCompareColumns ()  {
+    var ind = allColumns.findIndex((column)=> column.Header === 'alphaPrice');
+    allColumns[ind].toggleHidden();
+    ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
+    allColumns[ind].toggleHidden();
+    ind = allColumns.findIndex((column)=> column.Header === 'googDate');
+    allColumns[ind].toggleHidden();
+    ind = allColumns.findIndex((column)=> column.Header === 'googPrice');
+    allColumns[ind].toggleHidden();
+  }
 
   const saveTable = () => {
     const stocks = [];
@@ -632,8 +643,8 @@ export const BasicTable = (props) => {
           /> 
           calc_splits
         </label>
-   
 
+        <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button>        
         <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
              
         <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
