@@ -4,14 +4,16 @@
     "price": 76.19,
     "year": 2000,
     "month": 1,
-    "day": 11   
+    "day": 11,
+    "src": "google"     
   },
   {
     "symbol": "FB",
     "price": 38.23,
     "year": 2012,
     "month": 4,
-    "day": 18   
+    "day": 18,
+    "src": "google"     
   }
   ,
   {
@@ -19,21 +21,24 @@
     "price": 4.56,
     "year": 2012,
     "month": 5,
-    "day": 13  
+    "day": 13,
+    "src": "google"    
   },
   {
     "symbol": "QQQ",
     "price": 87.99,
     "year": 2010,
     "month": 5,
-    "day": 7  
+    "day": 7,
+    "src": "google"   
   },
   {
     "symbol": "ISRG",
     "price": 4.51,
     "year": 2005,
     "month": 5,
-    "day": 21
+    "day": 21,
+    "src": "google"  
   }
   ,
   {
@@ -41,15 +46,17 @@
     "price": 24.22,
     "year": 2002,
     "month": 3,
-    "day": 26 
+    "day": 26,
+    "src": "google"   
   }
   ,
   {
     "symbol": "VOO",
-    "price": 101.78,
-    "year": 2010,
-    "month": 5,
-    "day": 10
+    "price": 119.4,
+    "year": 2012,
+    "month": 1,
+    "day": 24,
+    "src": "yahoo"
   }
   ,
   {
@@ -57,7 +64,8 @@
     "price": 0.34,
     "year": 2001,
     "month": 5,
-    "day": 27  
+    "day": 27,
+    "src": "google"  
   }
   ,
   {
@@ -65,7 +73,8 @@
     "price": 30.76,
     "year": 2003,
     "month": 10,
-    "day": 7
+    "day": 7,
+    "src": "google"
   }
   ,
   {
@@ -73,7 +82,8 @@
     "price": 31.25,
     "year": 2002,
     "month": 2,
-    "day": 15
+    "day": 15,
+    "src": "google"
   }
   ,
   {
@@ -81,7 +91,8 @@
     "price": 23.30,
     "year": 2006,
     "month": 3,
-    "day": 21
+    "day": 21,
+    "src": "google"  
   }
   ,
   {
@@ -93,7 +104,8 @@
     "price": 2.93,
     "year": 2002,
     "month": 2,
-    "day": 15
+    "day": 15,
+    "src": "google"  
   }
   ,
   {
@@ -101,15 +113,90 @@
     "price": 21.03,
     "year": 2011,
     "month": 2,
-    "day": 4
+    "day": 4,
+    "src": "google"  
   } ,
   {
     "symbol": "ASML",
     "price": 35.01,
     "year": 2002,
     "month": 2,
-    "day": 15
+    "day": 15,
+    "src": "google"  
   },
+  {
+    "symbol": "SWKS",
+    "price": 5.15,
+    "year": 2003,
+    "month": 3,
+    "day": 25,
+    "src": "google"  
+  },
+  {
+    "symbol": "IWR",
+    "price": 11.54,
+    "year": 2003,
+    "month": 2,
+    "day": 7,
+    "src": "google"  
+  },
+  {
+    "symbol": "MRNA",
+    "price": 16.96,
+    "year": 2019,
+    "month": 5,
+    "day": 4,
+    "src": "google"  
+  },
+  {
+    "symbol": "QS",
+    "price": 17.85,
+    "year": 2020,
+    "month": 8,
+    "day": 18,
+    "src": "google"  
+  },
+  {
+    "symbol": "GOOG",
+    "price": 576.21,
+    "year": 2014,
+    "month": 7,
+    "day": 8,
+    "src": "google"  
+  },
+  {
+    "symbol": "INTC",
+    "price": 20.81,
+    "year": 2004,
+    "month": 9,
+    "day": 1,
+    "src": "google"  
+  },
+  {
+    "symbol": "QRVO",
+    "price": 83.7,
+    "year": 2015,
+    "month": 5,
+    "day": 5,
+    "src": "google"  
+  },
+  {
+    "symbol": "MU",
+    "price": 8.72,
+    "year": 2003,
+    "month": 2,
+    "day": 28,
+    "src": "google"  
+  },
+  {
+    "symbol": "IIPR",
+    "price": 17.86,
+    "year": 2017,
+    "month": 4,
+    "day": 19,
+    "src": "google"  
+  },
+   
   {
     "symbol": "ATTU",
     "bad": true

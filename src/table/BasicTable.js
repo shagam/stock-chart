@@ -5,6 +5,7 @@ import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 //import{ Styles } from './TableStyles'
 import MOCK_DATA from './mock-data.json'
 import { COLUMNS } from './columns'
+import GAIN_VALIDATION from './GainValidate.json'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
@@ -53,6 +54,7 @@ export const BasicTable = (props) => {
 
   const LOG_FLAG = false;
 
+  var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = localStorage.getItem("stocks");
@@ -454,6 +456,7 @@ export const BasicTable = (props) => {
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
 
+              GainValidate (chartSymbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, props.refreshCallBack);
 
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
@@ -557,7 +560,7 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","compareDate","comparePrice", "info_date","gain_date","drop","recoverWeek","dropDate"]
     } // "gap",
 
   },

@@ -163,19 +163,19 @@ export const COLUMNS = [
     accessor: 'alphaPrice'
   },
    {
-    Header: 'compareDate',
-    Footer: 'compareDate',    
+    Header: 'googDate',
+    Footer: 'googDate',    
     accessor: 'compareDate'
   },
   {
-    Header: 'comparePrice',
+    Header: 'googPrice',
     Footer: 'comparePrice',
     accessor: 'comparePrice',
   },
   {
-    Header: 'compare',
-    Footer: 'compare',    
-    accessor: 'compare'
+    Header: 'GOOGCompare',
+    Footer: 'GOOGCompare',    
+    accessor: 'GOOGCompare'
   },
 
 ] 
