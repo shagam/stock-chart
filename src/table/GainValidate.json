@@ -264,6 +264,37 @@
     "src": "google"  
   },
   {
+    "symbol": "CSCO",
+    "price": 20.42,
+    "year": 2003,
+    "month": 8,
+    "day": 5,
+    "src": "google"  
+  },{
+    "symbol": "IVV",
+    "price": 100.26,
+    "year": 2003,
+    "month": 6,
+    "day": 11,
+    "src": "google"  
+  },
+  {
+    "symbol": "QQQE",
+    "price": 26.9,
+    "year": 2014,
+    "month": 5,
+    "day": 10,
+    "src": "google"  
+  },
+  {
+    "symbol": "SPY",
+    "price": 100.23,
+    "year": 2003,
+    "month": 6,
+    "day": 25,
+    "src": "google"  
+  },
+  {
     "symbol": "IIPR",
     "price": 17.86,
     "year": 2017,
