@@ -253,12 +253,9 @@ const Firebase = (props) => {
     // fill missing data
     for (let i = 0; i < props.rows.length; i++) {
       // get from firebase 
-      if (props.rows[i].values.info_date === undefined) {
-        firebaseInfoGetOne((props.rows[i].values.symbol));
-      }
-      if (props.rows[i].values.gain_date === undefined) {
-        firebaseGainGetOne((props.rows[i].values.symbol));
-      }
+
+      firebaseInfoGetOne((props.rows[i].values.symbol));
+      firebaseGainGetOne((props.rows[i].values.symbol));
     }
     props.saveTable();
     props.refreshCallBack(-1);

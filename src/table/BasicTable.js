@@ -262,7 +262,7 @@ export const BasicTable = (props) => {
         )
   }
 
-  const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
+  const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (index === -1) {
@@ -289,7 +289,7 @@ export const BasicTable = (props) => {
     rows[index].values.year10 = year10; //stocks[index].year10;
     rows[index].values.year20 = year20; //stocks[index].year20;
     rows[index].values.price = price;
-
+    rows[index].values.GOOGCompare = GOOGCompare;
     rows[index].values.splits_list = splits;
     if (splits === '')
       rows[index].values.splits_calc = '';
@@ -489,7 +489,7 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
+              updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);        
 
               if (GOOGCompare === undefined)
                 GOOGCompare = -2
