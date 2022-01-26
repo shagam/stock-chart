@@ -464,7 +464,7 @@ export const BasicTable = (props) => {
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
 
-              GainValidate (chartSymbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, props.refreshCallBack);
+              const GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, props.refreshCallBack);
 
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
@@ -489,8 +489,10 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              const GOOGCompare = updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
+              updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
 
+              if (isNaN(GOOGCompare))
+                GOOGCompare = -2
               firebaseGainAdd (sym, updateDate, updateMili, splits,
                  wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);  // save in firestore
             }

@@ -9,10 +9,10 @@
   },
   {
     "symbol": "FB",
-    "price": 38.23,
-    "year": 2012,
-    "month": 4,
-    "day": 18,
+    "price": 96.95,
+    "year": 2015,
+    "month": 6,
+    "day": 24,
     "src": "google"     
   }
   ,
@@ -130,10 +130,10 @@
   },
   {
     "symbol": "SWKS",
-    "price": 5.15,
-    "year": 2003,
-    "month": 3,
-    "day": 25,
+    "price": 9,
+    "year": 2004,
+    "month": 5,
+    "day": 2,
     "src": "google"  
   },
   {

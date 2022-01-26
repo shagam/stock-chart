@@ -3,11 +3,9 @@ import React from 'react'
 
 export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, refreshCallBack) => {
 
-
-
   try {
   if (stockChartYValues === undefined || stockChartYValues.length === 0 || symbol === '')
-    return null;
+    return "none";
   const today = new Date();
   const todayYear = today.getFullYear() - 2000;
   const todayMon = today.getMonth();
@@ -15,7 +13,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
 
   const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
   if (row_index === -1)
-    return null;
+    return "symMiss";
 
   // if (rows[row_index].values.alphaPrice !== undefined)
   //   return;  // no need for duplicate verification
@@ -23,7 +21,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
   const valiate_index = gain_validation_json.findIndex((dat)=> dat.symbol === symbol)
   if (valiate_index === -1) {
     rows[row_index].values.GOOGCompare = 'none';
-    return null;
+    return "none";
   }
 
   // if (props.rows[row_index].values.splits_list === '')
@@ -41,7 +39,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     if (weeks >= stockChartYValues.length) {
       rows[row_index].values.GOOGCompare = 'dateErr';
       console.log ('GainValidate calc weeks beyond alpha data', symbol, stockChartYValues.length, weeks)
-      return null;
+      return "dateErr";
     }
 
     const AlphaHistoricPrice = stockChartYValues[weeks];
