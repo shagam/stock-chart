@@ -4,7 +4,7 @@ import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 //import styled from 'styled-components';
 //import{ Styles } from './TableStyles'
 import MOCK_DATA from './mock-data.json'
-import { COLUMNS } from './columns'
+import { COLUMNS, GROUPED_COLUMNS } from './columns'
 import GAIN_VALIDATION from './GainValidate.json'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
@@ -57,7 +57,7 @@ export const BasicTable = (props) => {
   const LOG_FLAG = false;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
-  const columns = useMemo(() => COLUMNS, []);
+  const columns = useMemo(() => GROUPED_COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = localStorage.getItem("stocks");
   var mmmmm = useMemo; 
