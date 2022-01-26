@@ -432,7 +432,7 @@ export const BasicTable = (props) => {
               var splitArray = [];
               for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
-                  stockChartYValuesFunction.push(chartData[`${periodTag}`][key]['1. open']);
+                  stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
                   if (i > 1140)
                     continue;  //ignore splis before 22 years
                   if (i > 0) {
@@ -464,7 +464,7 @@ export const BasicTable = (props) => {
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
 
-              var GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, props.refreshCallBack);
+              var GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
