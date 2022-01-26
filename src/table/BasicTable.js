@@ -40,6 +40,7 @@ export const BasicTable = (props) => {
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
+  
   const [splitsCalc, setSplitsCalc] = useState(true);
   const [stockInfo, setStockInfo] = useState ('');
   // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
@@ -51,6 +52,7 @@ export const BasicTable = (props) => {
   const ipStockRef = collection(db, "stockIp")
   const [flex, setFlex] = useState ();
   const [admin, setAdmin] = useState(false);
+  const [columnHideFlag, setColumnHideFlag] = useState(true);
 
   const LOG_FLAG = false;
 
@@ -583,6 +585,10 @@ export const BasicTable = (props) => {
   //   })
   // }  
   )
+  function columnHide() {
+
+  }
+
 
   function toggleGoogCompareColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'alphaPrice');
@@ -629,7 +635,7 @@ export const BasicTable = (props) => {
   const { globalFilter } = state
 
   const handleChange = () => {setSplitsCalc(! splitsCalc)}
-
+  const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   return (
     <>
 
@@ -647,24 +653,32 @@ export const BasicTable = (props) => {
 
         <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button>        
         <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
-             
-        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
-          
-        <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All  
 
+          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
+        
+          <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All
 
-      <div id="columnToggle">
-        {
-        allColumns.map(column => (
-          <div id="columnToggle_id" key={column.id}>
-            <label id="column_Label_id">
-              <input type='checkbox' {...column.getToggleHiddenProps()} />
-              {column.Header}
-            </label>
-          </div>
-        ))
-        }
-      </div>
+        <div>
+          <input
+            type="checkbox" checked={columnHideFlag}
+            onChange={ columnHideFlagChange}
+        /> columnHide
+        </div>
+
+      {columnHideFlag && 
+        <div id="columnToggle">
+          {
+          allColumns.map(column => (
+            <div id="columnToggle_id" key={column.id}>
+              <label id="column_Label_id">
+                <input type='checkbox' {...column.getToggleHiddenProps()} />
+                {column.Header}
+              </label>
+            </div>
+          ))
+          }
+        </div>
+      }
 
       <div id="add_stock_id">
       <form  onSubmit = {handleAddFormSubmit}>
