@@ -1,11 +1,11 @@
-import React from 'react'
+// import React from 'react'
 
 
 export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, refreshCallBack) => {
 
   try {
   if (stockChartYValues === undefined || stockChartYValues.length === 0 || symbol === '')
-    return "none";
+    return "err";
   const today = new Date();
   const todayYear = today.getFullYear() - 2000;
   const todayMon = today.getMonth();

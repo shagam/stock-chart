@@ -39,8 +39,7 @@
     "month": 5,
     "day": 21,
     "src": "google"  
-  }
-  ,
+  },
   {
     "symbol": "ABT",
     "price": 24.22,
@@ -48,8 +47,7 @@
     "month": 3,
     "day": 26,
     "src": "google"   
-  }
-  ,
+  },
   {
     "symbol": "VOO",
     "price": 119.4,
@@ -57,17 +55,15 @@
     "month": 1,
     "day": 24,
     "src": "yahoo"
-  }
-  ,
+  },
   {
     "symbol": "AAPL",
-    "price": 0.34,
-    "year": 2001,
-    "month": 5,
-    "day": 27,
+    "price": 0.4,
+    "year": 2003,
+    "month": 9,
+    "day": 24,
     "src": "google"  
-  }
-  ,
+  },
   {
     "symbol": "LRCX",
     "price": 30.76,
@@ -75,8 +71,7 @@
     "month": 10,
     "day": 7,
     "src": "google"
-  }
-  ,
+  },
   {
     "symbol": "MSFT",
     "price": 31.25,
@@ -84,8 +79,7 @@
     "month": 2,
     "day": 15,
     "src": "google"
-  }
-  ,
+  },
   {
     "symbol": "DXCM",
     "price": 23.30,
@@ -93,8 +87,7 @@
     "month": 3,
     "day": 21,
     "src": "google"  
-  }
-  ,
+  },
   {
     "symbol": "DELL",
     "price": 25.96,
@@ -110,8 +103,7 @@
     "month": 2,
     "day": 15,
     "src": "google"  
-  }
-  ,
+  },
   {
     "symbol": "FTNT",
     "price": 21.03,
@@ -119,7 +111,7 @@
     "month": 2,
     "day": 4,
     "src": "google"  
-  } ,
+  },
   {
     "symbol": "ASML",
     "price": 35.01,
@@ -245,6 +237,30 @@
     "year": 2002,
     "month": 4,
     "day": 24,
+    "src": "google"  
+  },
+  {
+    "symbol": "WMT",
+    "price": 52.3,
+    "year": 2004,
+    "month": 5,
+    "day": 2,
+    "src": "google"  
+  },
+  {
+    "symbol": "QS",
+    "price": 119.4,
+    "year": 2020,
+    "month": 9,
+    "day": 2,
+    "src": "google"  
+  },
+  {
+    "symbol": "ZM",
+    "price": 91.88,
+    "year": 2019,
+    "month": 6,
+    "day": 5,
     "src": "google"  
   },
   {
