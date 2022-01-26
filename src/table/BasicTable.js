@@ -72,7 +72,7 @@ export const BasicTable = (props) => {
 
   const [localIp, setLocalIP] = useState('');
   const [userAgent, setUserAgent] = useState("");
-  const [userAgentType, setUserAgentType] = useState("");
+  const [userAgentMobile, setUserAgentMobile] = useState(false);
   
   //creating function to load ip address from the API
   const getIp = async () => {
@@ -98,9 +98,11 @@ export const BasicTable = (props) => {
     setUserAgent(navigator.userAgent)
     //if (/Android/i.test(navigator.userAgent))
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-      setUserAgentType("mobil");
-    } else 
+      setUserAgentMobile(true);
+    } else {
+      setUserAgentMobile(false);
       console.log("not mobile device");
+    }
 
     const res = await axios.get('https://geolocation-db.com/json/')
     if (LOG_FLAG)
@@ -585,10 +587,6 @@ export const BasicTable = (props) => {
   //   })
   // }  
   )
-  function columnHide() {
-
-  }
-
 
   function toggleGoogCompareColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'alphaPrice');
