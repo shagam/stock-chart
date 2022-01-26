@@ -491,7 +491,7 @@ export const BasicTable = (props) => {
                 price = -1;
               updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
 
-              if (isNaN(GOOGCompare))
+              if (GOOGCompare === undefined)
                 GOOGCompare = -2
               firebaseGainAdd (sym, updateDate, updateMili, splits,
                  wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);  // save in firestore

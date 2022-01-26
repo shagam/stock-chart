@@ -36,6 +36,9 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
     var weeks = Math.round (todayWeeks - priceWeeks);
 
+    rows[row_index].values.googDate =  gain_validation_json[valiate_index].year + "-" + (Number(gain_validation_json[valiate_index].month) + 1) + "-" + gain_validation_json[valiate_index].day;
+    rows[row_index].values.googPrice = gain_validation_json[valiate_index].price
+
     if (weeks >= stockChartYValues.length) {
       rows[row_index].values.GOOGCompare = 'dateErr';
       console.log ('GainValidate calc weeks beyond alpha data', symbol, stockChartYValues.length, weeks)
@@ -58,9 +61,6 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     } catch (e) {alert (symbol, 'alphaprice ' + alphaPrice)}
     rows[row_index].values.alphaPrice = Number(alphaPrice);
     rows[row_index].values.alphaDate = stockChartXValues[weeks];
-
-    rows[row_index].values.googDate =  gain_validation_json[valiate_index].year + "-" + (Number(gain_validation_json[valiate_index].month) + 1) + "-" + gain_validation_json[valiate_index].day
-    rows[row_index].values.googPrice = gain_validation_json[valiate_index].price
 
     rows[row_index].values.GOOGCompare = p;
     return p; 
