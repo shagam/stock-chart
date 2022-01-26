@@ -191,6 +191,61 @@
     "month": 2,
     "day": 28,
     "src": "google"  
+  },  
+  {
+    "symbol": "BRK.A",
+    "price": 74300,
+    "year": 2002,
+    "month": 4,
+    "day": 3,
+    "src": "google"  
+  },
+  {
+    "symbol": "BRK.B",
+    "price": 48.8,
+    "year": 2002,
+    "month": 7,
+    "day": 30,
+    "src": "google"  
+  },
+  {
+    "symbol": "BILL",
+    "price": 38.01,
+    "year": 2020,
+    "month": 0,
+    "day": 3,
+    "src": "google"  
+  },  {
+    "symbol": "LLY",
+    "price": 55.5,
+    "year": 2005,
+    "month": 1,
+    "day": 11,
+    "src": "google"  
+  },
+  {
+    "symbol": "IBM",
+    "price": 85.06,
+    "year": 2003,
+    "month": 8,
+    "day": 26,
+    "src": "google"  
+  },
+  {
+    "symbol": "COST",
+    "price": 34.55,
+    "year": 2002,
+    "month": 8,
+    "day": 26,
+    "src": "google"  
+  },
+  {
+    "symbol": "PFE",
+    "price": 33.60,
+    "year": 2002,
+    "month": 4,
+    "day": 24,
+    "src": "google"  
   },
   {
     "symbol": "IIPR",
@@ -199,7 +254,6 @@
     "month": 4,
     "day": 19,
     "src": "google"  
-  }
-   
+  } 
 
 ]
