@@ -294,13 +294,56 @@
     "day": 25,
     "src": "google"  
   },
+
+
+
   {
-    "symbol": "IIPR",
-    "price": 17.86,
-    "year": 2017,
+    "symbol": "IYE",
+    "price": 13.35,
+    "year": 2003,
     "month": 4,
-    "day": 19,
+    "day": 2,
     "src": "google"  
-  } 
+  },
+  {
+    "symbol": "MDB",
+    "price": 38.72,
+    "year": 2018,
+    "month": 2,
+    "day": 23,
+    "src": "google"  
+  },
+  {
+    "symbol": "XLV",
+    "price": 26.32,
+    "year": 2003,
+    "month": 0,
+    "day": 24,
+    "src": "google"  
+  },
+  {
+    "symbol": "ZS",
+    "price": 39.79,
+    "year": 2018,
+    "month": 6,
+    "day": 20,
+    "src": "google"  
+  },
+  {
+    "symbol": "KO",
+    "price": 24.80,
+    "year": 2004,
+    "month": 5,
+    "day": 9,
+    "src": "google"  
+  },
+  {
+    "symbol": "DJI",
+    "price": 10586.29,
+    "year": 2004,
+    "month": 0,
+    "day": 23,
+    "src": "google"  
+  }
 
 ]
