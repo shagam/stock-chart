@@ -238,15 +238,13 @@ const Firebase = (props) => {
 
   const firebaseGetAndFill = () => {
     // allow reads once a minute
+
     // if (Date.now() - firebaseFillMili < 1000*60)
     //   return;
     // setFirebaseFillMili(Date.now());
 
-    // console.log (stocksInfoOne);
-    // console.log (stocksGainOne);     
-    // fill in table missing values
-    
     // turn on columns so used can decide if up to date
+    try {
     var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
     props.allColumns[ind].toggleHidden();
     ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
@@ -264,6 +262,7 @@ const Firebase = (props) => {
     }
     props.saveTable();
     props.refreshCallBack(-1);
+    } catch (e) { console.log (e)}
   }
 
   const showGainAll  = async () => {
