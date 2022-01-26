@@ -65,7 +65,8 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     rows[row_index].values.googPrice = gain_validation_json[valiate_index].price
 
     rows[row_index].values.GOOGCompare = p;
-    //refreshCallBack (-1);
+    return p; 
+     //refreshCallBack (-1);
   } catch (e) { alert (e)}
   return null;
   

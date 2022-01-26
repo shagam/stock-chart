@@ -169,7 +169,7 @@ const Firebase = (props) => {
       const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
       if (rowIndex !== -1 && gain !== undefined) {
         const gain_ = gain.docs[0].data()
-        props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
+        props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price, gain_.GOOGCompare);
       }
  
       if (gain.docs.length > 0) {
@@ -266,6 +266,20 @@ const Firebase = (props) => {
     props.refreshCallBack(-1);
   }
 
+  const showGainAll  = async () => {
+    //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain").doc(doc.id). update ({your data}) }); });
+    const gain = await getDocs(props.gainRef);
+    const all = [];
+    
+    for (let i = 0; i < gain.docs.length; i++)
+      all.push (gain.docs[i].data().__symbol);
+    alert (all.toString() + "  (" + all.length + ")"); 
+    console.log (all.toString() + "  (" + all.length + ")"); 
+    //gain.docs.map(doc) =>  
+    //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
+    //console.log ('firebase read gain: ', gain.docs.length, stocksGain.length);
+
+  }
 
 
   return (
@@ -279,6 +293,7 @@ const Firebase = (props) => {
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
             <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
+            <button type="button" onClick={()=>showGainAll ()}>getAllGain</button>
           </div>
         }
       </div>

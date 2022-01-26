@@ -139,14 +139,15 @@ export const BasicTable = (props) => {
  
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare) => {
     // read old entries
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
     // add new entry
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price })
-
+    try {
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare})
+    } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
       console.log (symbol, 'gain-send', gain.docs.length);
@@ -481,10 +482,10 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
+              const GOOGCompare = updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);        
 
               firebaseGainAdd (sym, updateDate, updateMili, splits,
-                 wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price);  // save in firestore
+                 wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);  // save in firestore
             }
         )
   }

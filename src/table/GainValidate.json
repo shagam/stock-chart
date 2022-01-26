@@ -97,7 +97,11 @@
   ,
   {
     "symbol": "DELL",
-    "bad": true
+    "price": 25.96,
+    "year": 2019,
+    "month": 5,
+    "day": 14,
+    "src": "google"  
   },
   {
     "symbol": "NVDA",
@@ -195,10 +199,7 @@
     "month": 4,
     "day": 19,
     "src": "google"  
-  },
-   
-  {
-    "symbol": "ATTU",
-    "bad": true
   }
+   
+
 ]
