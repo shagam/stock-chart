@@ -330,6 +330,16 @@ export const GROUPED_COLUMNS = [
         accessor: 'year20'
       },
       {
+        Header: 'splits_list ??',
+        Footer: 'splis_list',    
+        accessor: 'splits_list'
+      },
+      {
+        Header: 'splits',
+        Footer: 'splits',    
+        accessor: 'splits_calc'
+      },
+      {
         Header: 'gain_date',
         Footer: 'gain_date',    
         accessor: 'gain_date'
