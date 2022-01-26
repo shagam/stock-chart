@@ -143,11 +143,14 @@ export const BasicTable = (props) => {
  
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
+
   const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare) => {
     // read old entries
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
+    if (GOOGCompare === undefined)
+      GOOGCompare = -1;
     // add new entry
     try {
     await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare})
