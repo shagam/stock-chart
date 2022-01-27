@@ -14,8 +14,7 @@
     "month": 6,
     "day": 24,
     "src": "google"     
-  }
-  ,
+  },
   {
     "symbol": "TSLA",
     "price": 4.56,
@@ -47,14 +46,6 @@
     "month": 3,
     "day": 26,
     "src": "google"   
-  },
-  {
-    "symbol": "VOO",
-    "price": 119.4,
-    "year": 2012,
-    "month": 1,
-    "day": 24,
-    "src": "yahoo"
   },
   {
     "symbol": "AAPL",
@@ -129,14 +120,6 @@
     "src": "google"  
   },
   {
-    "symbol": "IWR",
-    "price": 11.54,
-    "year": 2003,
-    "month": 2,
-    "day": 7,
-    "src": "google"  
-  },
-  {
     "symbol": "MRNA",
     "price": 16.96,
     "year": 2019,
@@ -184,22 +167,6 @@
     "day": 28,
     "src": "google"  
   },  
-  {
-    "symbol": "BRK.A",
-    "price": 74300,
-    "year": 2002,
-    "month": 4,
-    "day": 3,
-    "src": "google"  
-  },
-  {
-    "symbol": "BRK.B",
-    "price": 48.8,
-    "year": 2002,
-    "month": 7,
-    "day": 30,
-    "src": "google"  
-  },
   {
     "symbol": "BILL",
     "price": 38.01,
@@ -270,41 +237,8 @@
     "month": 8,
     "day": 5,
     "src": "google"  
-  },{
-    "symbol": "IVV",
-    "price": 100.26,
-    "year": 2003,
-    "month": 6,
-    "day": 11,
-    "src": "google"  
   },
-  {
-    "symbol": "QQQE",
-    "price": 26.9,
-    "year": 2014,
-    "month": 5,
-    "day": 10,
-    "src": "google"  
-  },
-  {
-    "symbol": "SPY",
-    "price": 100.23,
-    "year": 2003,
-    "month": 6,
-    "day": 25,
-    "src": "google"  
-  },
-
-
-
-  {
-    "symbol": "IYE",
-    "price": 13.35,
-    "year": 2003,
-    "month": 4,
-    "day": 2,
-    "src": "google"  
-  },
+  
   {
     "symbol": "MDB",
     "price": 38.72,
@@ -313,15 +247,7 @@
     "day": 23,
     "src": "google"  
   },
-  {
-    "symbol": "XLV",
-    "price": 26.32,
-    "year": 2003,
-    "month": 0,
-    "day": 24,
-    "src": "google"  
-  },
-  {
+   {
     "symbol": "ZS",
     "price": 39.79,
     "year": 2018,
@@ -338,12 +264,111 @@
     "src": "google"  
   },
   {
+    "symbol": "ZS",
+    "price": 42.79,
+    "year": 2018,
+    "month": 7,
+    "day": 31,
+    "src": "google"  
+  },
+
+
+
+  {
+    "symbol": "BRK.A",
+    "price": 74300,
+    "year": 2002,
+    "month": 4,
+    "day": 3,
+    "src": "google"  
+  },
+  {
+    "symbol": "BRK.B",
+    "price": 48.8,
+    "year": 2002,
+    "month": 7,
+    "day": 30,
+    "src": "google"  
+  },
+  {
+    "symbol": "IVV",
+    "price": 100.26,
+    "year": 2003,
+    "month": 6,
+    "day": 11,
+    "src": "google"  
+  },
+  {
+    "symbol": "IWR",
+    "price": 11.54,
+    "year": 2003,
+    "month": 2,
+    "day": 7,
+    "src": "google"  
+  },
+  {
+    "symbol": "IYE",
+    "price": 13.35,
+    "year": 2003,
+    "month": 4,
+    "day": 2,
+    "src": "google"  
+  },
+ {
+    "symbol": "QQQE",
+    "price": 26.9,
+    "year": 2014,
+    "month": 5,
+    "day": 10,
+    "src": "google"  
+  },
+  {
+    "symbol": "SPY",
+    "price": 100.23,
+    "year": 2003,
+    "month": 6,
+    "day": 25,
+    "src": "google"  
+  },
+   {
+    "symbol": "XLE",
+    "price": 34.62,
+    "year": 2004,
+    "month": 8,
+    "day": 24,
+    "src": "google"  
+  },
+  {
+    "symbol": "XLK",
+    "price": 21.11,
+    "year": 2004,
+    "month": 11,
+    "day": 31,
+    "src": "google"  
+  },
+  {
+    "symbol": "XLV",
+    "price": 26.32,
+    "year": 2003,
+    "month": 0,
+    "day": 24,
+    "src": "google"  
+  },
+  {
     "symbol": "DJI",
     "price": 10586.29,
     "year": 2004,
     "month": 0,
     "day": 23,
     "src": "google"  
-  }
+  },
+  {
+    "symbol": "VOO",
+    "price": 119.4,
+    "year": 2012,
+    "month": 1,
+    "day": 24,
+    "src": "yahoo"
+  },
 
 ]
