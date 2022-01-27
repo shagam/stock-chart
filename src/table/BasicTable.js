@@ -308,7 +308,9 @@ export const BasicTable = (props) => {
     if (rows[index].values.target_raw !== undefined && rows[index].values.price !== 0)
       rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
 
-    if (GOOGCompare === undefined) // defined only when called from Firebase
+    if (GOOGCompare !== undefined) // defined only when called from Firebase
+      rows[index].values.GOOGCompare = GOOGCompare;
+    else
       GOOGCompare = rows[index].values.GOOGCompare;
 
     firebaseGainAdd (sym, updateDate, updateMili, splits,
@@ -320,7 +322,7 @@ export const BasicTable = (props) => {
       console.log ('ChildData missing');
       return;
     }
-    console.log (JSON.stringify(childData).substring(0,100));
+    //console.log (JSON.stringify(childData).substring(0,100));
     const symbol = childData["Symbol"];
     const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
