@@ -105,10 +105,10 @@
   },
   {
     "symbol": "ASML",
-    "price": 35.01,
-    "year": 2002,
+    "price": 26.26,
+    "year": 2004,
     "month": 2,
-    "day": 15,
+    "day": 12,
     "src": "google"  
   },
   {
@@ -269,6 +269,14 @@
     "year": 2018,
     "month": 7,
     "day": 31,
+    "src": "google"  
+  },
+  {
+    "symbol": "BMO",
+    "price": 42.90,
+    "year": 2003,
+    "month": 5,
+    "day": 27,
     "src": "google"  
   },
 
