@@ -174,7 +174,8 @@
     "month": 0,
     "day": 3,
     "src": "google"  
-  },  {
+  },
+  {
     "symbol": "LLY",
     "price": 55.5,
     "year": 2005,
@@ -238,7 +239,6 @@
     "day": 5,
     "src": "google"  
   },
-  
   {
     "symbol": "MDB",
     "price": 38.72,
@@ -314,7 +314,7 @@
     "day": 2,
     "src": "google"  
   },
- {
+  {
     "symbol": "QQQE",
     "price": 26.9,
     "year": 2014,
@@ -330,7 +330,7 @@
     "day": 25,
     "src": "google"  
   },
-   {
+  {
     "symbol": "XLE",
     "price": 34.62,
     "year": 2004,
@@ -369,6 +369,6 @@
     "month": 1,
     "day": 24,
     "src": "yahoo"
-  },
+  }
 
 ]
