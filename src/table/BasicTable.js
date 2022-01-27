@@ -463,8 +463,11 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
-
-              var GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
+              var GOOGCompare;
+              if (stockChartYValuesFunction === undefined || stockChartYValuesFunction.length === 0)
+                GOOGCompare = -3;
+              else
+                GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
