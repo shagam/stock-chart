@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 
 import Ip from './Ip'
-import "./Firebase.css"
+// import "./Firebase.css"
 
 const Firebase = (props) => {
   const [stocksGain, setStocksGain] = useState([]);
@@ -276,10 +276,16 @@ const Firebase = (props) => {
 
   }
 
+  const style = {
+    //background: 'blue',
+    // color: 'red',
+    // fontSize: 200,
+    border: '2px solid green'
+  };
 
   return (
     <>
-      <div id="firebase_id"> 
+      <div style = {style} id="firebase_id"> 
         <button type="button" onClick={()=>firebaseGetAndFill()}>Fill_gain_info </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false)}>Show-stocks-compared-to-QQQ </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true)}>Fill-stocks-compared-to-QQQ </button>
