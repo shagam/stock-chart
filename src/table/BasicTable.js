@@ -289,7 +289,7 @@ export const BasicTable = (props) => {
     rows[index].values.year10 = year10; //stocks[index].year10;
     rows[index].values.year20 = year20; //stocks[index].year20;
     rows[index].values.price = price;
-    rows[index].values.GOOGCompare = GOOGCompare;
+
     rows[index].values.splits_list = splits;
     if (splits === '')
       rows[index].values.splits_calc = '';
@@ -305,9 +305,14 @@ export const BasicTable = (props) => {
     else
       setSplitsFlag(' splits ??');
 
-      if (rows[index].values.target_raw !== undefined && rows[index].values.price !== 0)
-        rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
+    if (rows[index].values.target_raw !== undefined && rows[index].values.price !== 0)
+      rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
 
+    if (GOOGCompare === undefined) // defined only when called from Firebase
+      GOOGCompare = rows[index].values.GOOGCompare;
+
+    firebaseGainAdd (sym, updateDate, updateMili, splits,
+      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);  // save in firestore
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {
@@ -463,11 +468,8 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
-              var GOOGCompare;
-              if (stockChartYValuesFunction === undefined || stockChartYValuesFunction.length === 0)
-                GOOGCompare = -3;
-              else
-                GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
+        
+              var  GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
               if (splitArray.length > 0)
                 splits = JSON.stringify(splitArray);
@@ -494,11 +496,7 @@ export const BasicTable = (props) => {
                 price = -1;
               updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);        
 
-              if (GOOGCompare === undefined)
-                GOOGCompare = -2
-              firebaseGainAdd (sym, updateDate, updateMili, splits,
-                 wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);  // save in firestore
-            }
+           }
         )
   }
   
