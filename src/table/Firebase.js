@@ -244,10 +244,10 @@ const Firebase = (props) => {
 
     // turn on columns so used can decide if up to date
     try {
-    var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
-    props.allColumns[ind].toggleHidden();
-    ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
-    props.allColumns[ind].toggleHidden();
+    // var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
+    // props.allColumns[ind].toggleHidden();
+    // ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
+    // props.allColumns[ind].toggleHidden();
 
     // fill missing data
     for (let i = 0; i < props.rows.length; i++) {
