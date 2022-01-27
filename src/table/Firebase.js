@@ -167,16 +167,15 @@ const Firebase = (props) => {
       const gain = await getDocs(userQuery);
 
       const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
-      if (rowIndex !== -1 && gain !== undefined) {
+      if (rowIndex !== -1 && gain !== undefined && gain.docs.length > 0) {
         const gain_ = gain.docs[0].data()
         props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price, gain_.GOOGCompare);
       }
  
       if (gain.docs.length > 0) {
         var latestIndex = 0;
-        
         if (gain.docs.length > 1) {
-          console.log ('duplicates ', gain.docs.length, gain.docs[0].data()); 
+          //console.log ('duplicates ', gain.docs.length, gain.docs[0].data()); 
           var updateMili = 0;
           // search for latest
           for (let i = 0; i < gain.docs.length; i++) {
@@ -195,7 +194,7 @@ const Firebase = (props) => {
           }               
         }
       }
-    } catch(e) { console.log (e); alert (e)}
+    } catch(e) {console.log (e)}
   }
 
   // get one symbol INFO from firebase  and clean duplicates
