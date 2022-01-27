@@ -2,10 +2,12 @@
 
 
 export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, refreshCallBack) => {
-
+  const LOG_FLAG = true;
   try {
-  if (stockChartYValues === undefined || stockChartYValues.length === 0 || symbol === '')
-    return "err";
+  if (stockChartYValues === undefined || stockChartYValues.length === 0 || symbol === '') {
+    console.log ('GainValidate noArray', symbol, stockChartYValues);
+    return "noArray";
+  }
   const today = new Date();
   const todayYear = today.getFullYear() - 2000;
   const todayMon = today.getMonth();
@@ -21,6 +23,8 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
   const valiate_index = gain_validation_json.findIndex((dat)=> dat.symbol === symbol)
   if (valiate_index === -1) {
     rows[row_index].values.GOOGCompare = 'none';
+    if (LOG_FLAG)
+      console.log ('GainValidate none', symbol, valiate_index);
     return "none";
   }
 
@@ -41,7 +45,8 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
 
     if (weeks >= stockChartYValues.length) {
       rows[row_index].values.GOOGCompare = 'dateErr';
-      console.log ('GainValidate calc weeks beyond alpha data', symbol, stockChartYValues.length, weeks)
+        if (LOG_FLAG)
+          console.log ('GainValidate dateErr', symbol, weeks, stockChartXValues.length, stockChartYValues.length);
       return "dateErr";
     }
 
