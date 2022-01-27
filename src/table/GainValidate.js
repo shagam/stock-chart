@@ -5,13 +5,14 @@ export const GainValidate = (props) => {
   //symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, refreshCallBack
 
 
-  const LOG_FLAG = true;
+  const LOG_FLAG = false;
 
   if (LOG_FLAG)
     console.log (props.symbol, props.rows.length, props.stockChartXValues.length, props.stockChartYValues.length );
 
   try {
   if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0 || props.symbol === '') {
+    if (LOG_FLAG)
     console.log ('GainValidate noArray', props.symbol, props.stockChartYValues.length);
     return "noArray";
   }

@@ -125,7 +125,7 @@ export const BasicTable = (props) => {
        longitude: res.data.longitude, latitude: res.data.latitude, userAgent: userAgent })
 
     // delete old entries
-    if (ipInfo.docs.length > 0)
+    if (ipInfo.docs.length > 0 && LOG_FLAG)
       console.log (res, 'ipList', ipInfo.docs.length);
     for (let i = 0; i < ipInfo.docs.length; i++) {
       //const id = ipInfo.docs[i].id;
@@ -475,8 +475,8 @@ export const BasicTable = (props) => {
                 splits = JSON.stringify(splitArray);
               else
                 splits = '';  
-              if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 208)
-                splits = '';
+              // if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 100)
+              //   splits = '';
 
 
               const updateMili = Date.now();
@@ -640,6 +640,8 @@ export const BasicTable = (props) => {
 
   const handleChange = () => {setSplitsCalc(! splitsCalc)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
+
+  const COMPARE_STYLE = {style: "background-color: red;"};
   return (
     <>
 
@@ -716,7 +718,7 @@ export const BasicTable = (props) => {
       <tbody id="tableBodyId" {...getTableBodyProps()}>
         {
           rows.map(row => {
-
+            // {style: (row.GOOGCompare > 1.1 || row.GOOGCompare < 0.9) ? {background: red}}
             prepareRow(row)
             return (
               <tr id='stock_row_id'
