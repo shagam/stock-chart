@@ -443,15 +443,15 @@ export const BasicTable = (props) => {
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
                   if (i > 1140)
                     continue;  //ignore splis before 22 years
-                  // if (i > 0) {
-                  //   let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                  //   if (ratio > 1.8 || ratio < 0.6) {
-                  //     ratio = ratio.toFixed(2);
-                  //     //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                  //     const  split = {ratio: ratio, date: key, week: i};
-                  //     splitArray.push(split); 
-                  //   }                        
-                  // }
+                  if (i > 0) {
+                    let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                    if (ratio > 1.8 || ratio < 0.6) {
+                      ratio = ratio.toFixed(2);
+                      //splits += `date=${key}  ratio=${ratio} week=${i}, `;
+                      const  split = {ratio: ratio, date: key, week: i};
+                      splitArray.push(split); 
+                    }                        
+                  }
                   i++;
               }
 
