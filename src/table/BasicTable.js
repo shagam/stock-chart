@@ -10,6 +10,7 @@ import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
+import Splits from './Splits'
 import StockRecoveryCalc from './DropRecovery'
 
 import StockInfo from './StockInfo'
@@ -382,7 +383,7 @@ export const BasicTable = (props) => {
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
-    console.log(`symbol: ${sym} chartSymbol: ${chartSymbol}`); 
+    console.log(`symbol: ${sym}`); 
     if (sym === '' || sym === undefined) {
       alert (`bug, chart sym vanished (${sym})`);
       return;
@@ -442,19 +443,19 @@ export const BasicTable = (props) => {
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
                   if (i > 1140)
                     continue;  //ignore splis before 22 years
-                  if (i > 0) {
-                    let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                    if (ratio > 1.8 || ratio < 0.6) {
-                      ratio = ratio.toFixed(2);
-                      //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                      const  split = {ratio: ratio, date: key, week: i};
-                      splitArray.push(split); 
-                    }                        
-                  }
+                  // if (i > 0) {
+                  //   let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                  //   if (ratio > 1.8 || ratio < 0.6) {
+                  //     ratio = ratio.toFixed(2);
+                  //     //splits += `date=${key}  ratio=${ratio} week=${i}, `;
+                  //     const  split = {ratio: ratio, date: key, week: i};
+                  //     splitArray.push(split); 
+                  //   }                        
+                  // }
                   i++;
               }
 
-              // compensate for splis
+              // compensate for splits
               if (splitArray.length > 0 && splitsCalc) {
                 for (let i = 0; i < splitArray.length; i++) {
                   var ratio = splitArray[i].ratio;
@@ -752,9 +753,9 @@ export const BasicTable = (props) => {
 
       <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
 
+      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} />
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
-      {/* GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack); */}
-
+      
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
 
       <div>
