@@ -113,7 +113,9 @@ export const Splits = (props) => {
 
   return (
     <>
-      <button type="button" onClick={()=>searchSplits('NVDA', 'BC9UV9YUBWM3KQGF')}>searchSplits </button>
+      {
+        props.admin && <button type="button" onClick={()=>searchSplits('NVDA', 'BC9UV9YUBWM3KQGF')}>searchSplits </button>
+      }     
     </>
   )
 }
