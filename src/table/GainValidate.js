@@ -14,7 +14,7 @@ export const GainValidate = (props) => {
   if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0 || props.symbol === '') {
     if (LOG_FLAG)
     console.log ('GainValidate noArray', props.symbol, props.stockChartYValues.length);
-    return "noArray";
+    return null; //"noArray";
   }
   const today = new Date();
   const todayYear = today.getFullYear() - 2000;
@@ -22,8 +22,10 @@ export const GainValidate = (props) => {
   const todayDay = today.getDate();
 
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
-  if (row_index === -1)
-    return "symMiss";
+  if (row_index === -1) {
+    props.rows[row_index].values.GOOGCompare = "symMiss";
+    return null;
+  }
 
   // if (rows[row_index].values.alphaPrice !== undefined)
   //   return;  // no need for duplicate verification
@@ -33,7 +35,7 @@ export const GainValidate = (props) => {
     props.rows[row_index].values.GOOGCompare = 'none';
     if (LOG_FLAG)
       console.log ('GainValidate none', props.symbol, valiate_index);
-    return "none";
+    return null;
   }
 
   // if (props.rows[row_index].values.splits_list === '')
@@ -55,7 +57,7 @@ export const GainValidate = (props) => {
       props.rows[row_index].values.GOOGCompare = 'dateErr';
         if (LOG_FLAG)
           console.log ('GainValidate dateErr', props.symbol, weeks, props.stockChartXValues.length, props.stockChartYValues.length);
-      return "dateErr";
+      return null;
     }
 
     const AlphaHistoricPrice = props.stockChartYValues[weeks];
@@ -76,7 +78,7 @@ export const GainValidate = (props) => {
     props.rows[row_index].values.alphaDate = props.stockChartXValues[weeks];
 
     props.rows[row_index].values.GOOGCompare = p;
-    return p; 
+    return null; 
      //refreshCallBack (-1);
   } catch (e) { alert (e)}
   return null;
