@@ -133,8 +133,11 @@ const Firebase = (props) => {
       }
 
       if (! add_flag) {
-        const len = Object.keys (found_stocks_array).length;
-        alert (`symbols (missing) compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+          const len = Object.keys (found_stocks_array).length;
+          if (len === 0)
+            alert (`no symbols found in firebase that compare with QQQ (year gain), except symbols in table`)
+          else
+            alert (`symbols in firebase compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
       }
       else
         window.location.reload();
@@ -246,8 +249,8 @@ const Firebase = (props) => {
     try {
     // var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
     // props.allColumns[ind].toggleHidden();
-    // ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
-    // props.allColumns[ind].toggleHidden();
+    var ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
+    props.allColumns[ind].toggleHidden();
 
     // fill missing data
     for (let i = 0; i < props.rows.length; i++) {
