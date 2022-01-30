@@ -642,8 +642,16 @@ export const BasicTable = (props) => {
 
   const handleChange = () => {setSplitsCalc(! splitsCalc)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
+  
+  const style = {
+    padding: '0px',
+    margin: '0px'
+    //background: 'blue',
+    // color: 'red',
+    // fontSize: 200,
+    //border: '2px solid green'
+  };
 
-  const COMPARE_STYLE = {style: "background-color: red;"};
   return (
     <>
 
