@@ -108,8 +108,12 @@ export const BasicTable = (props) => {
     const res = await axios.get('https://geolocation-db.com/json/')
     if (LOG_FLAG)
     console.log('ip ', res.data);
-    setLocalIP(res.data);
-    setAdmin (res.data.IPv4 === '84.228.164.64');
+    if (res.data !== '') {
+      setLocalIP(res.data);
+      setAdmin (res.data.IPv4 === '84.228.164.64');
+    }
+    else
+      console.log ('no ip');
 
     // admin password
     const admin_index = rows.findIndex((row)=> row.values.symbol === '_ADMIN_');
@@ -499,7 +503,7 @@ export const BasicTable = (props) => {
   }
   
 
-  const handleDeleteClick = (row, symbol) => {
+  const handleDeleteClick = (symbol) => {
     const index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (index === -1) {
       alert ('symbol not found ', symbol);
@@ -508,6 +512,7 @@ export const BasicTable = (props) => {
     rows.splice(index, 1);
     saveTable();
     props.refreshCallBack(-1); // force refresh
+    //window.location.reload();
   }
 
   // two handlers for adding new symbol
@@ -578,12 +583,18 @@ export const BasicTable = (props) => {
   //   hooks.visibleColumns.push((columns) => {
   //     return [
   //       {
-  //         id: 'selection',
+  //         // id: 'selection',
   //         Header: ({getToggleAllRowsSelectedProps}) => (
-  //           <CheckBox {...getToggleAllRowsSelectedProps()} />
+  //           <butt/>
+  //           //<CheckBox {...getToggleAllRowsSelectedProps()} />
   //         ),
   //         Cell: ({row}) => (
-  //           <CheckBox {...row.getToggleRowSelectedProps()} />
+  //           <l>   
+  //           <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+  //           <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
+  //           <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+  //           {/* <CheckBox {...row.getToggleRowSelectedProps()} /> */}
+  //           </l> 
   //         )
   //       }, 
   //       ...columns
@@ -733,7 +744,7 @@ export const BasicTable = (props) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
                   <div>
-                  <button type="button" onClick={()=>handleDeleteClick(row, row.values.symbol)}>del</button>
+                  <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                   <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
                   <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
                   </div>
