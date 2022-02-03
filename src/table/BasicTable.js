@@ -145,7 +145,7 @@ export const BasicTable = (props) => {
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
 
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, drop, recoverWeek, dropDate) => {
     // read old entries
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
@@ -154,7 +154,7 @@ export const BasicTable = (props) => {
       GOOGCompare = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare})
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate})
     } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
@@ -315,7 +315,7 @@ export const BasicTable = (props) => {
       GOOGCompare = rows[index].values.GOOGCompare;
 
     firebaseGainAdd (sym, updateDate, updateMili, splits,
-      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare);  // save in firestore
+      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, rows[index].values.drop, rows[index].values.recoverWeek, rows[index].values.dropDate);  // save in firestore
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {
