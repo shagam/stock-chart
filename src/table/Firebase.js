@@ -172,7 +172,9 @@ const Firebase = (props) => {
       const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
       if (rowIndex !== -1 && gain !== undefined && gain.docs.length > 0) {
         const gain_ = gain.docs[0].data()
-        props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price, gain_.GOOGCompare);
+        props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
+
+        props.rows[rowIndex].values.GOOGCompare = gain_.GOOGCompare;
 
         // dropRecover info
         props.rows[rowIndex].values.drop = gain_.drop;

@@ -263,7 +263,7 @@ export const BasicTable = (props) => {
         )
   }
 
-  const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare) => {
+  const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (index === -1) {
@@ -309,13 +309,8 @@ export const BasicTable = (props) => {
     if (rows[index].values.target_raw !== undefined && rows[index].values.price !== 0)
       rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
 
-    if (GOOGCompare !== undefined) // defined only when called from Firebase
-      rows[index].values.GOOGCompare = GOOGCompare;
-    else
-      GOOGCompare = rows[index].values.GOOGCompare;
-
     firebaseGainAdd (sym, updateDate, updateMili, splits,
-      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, rows[index].values.drop, rows[index].values.recoverWeek, rows[index].values.dropDate);  // save in firestore
+      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[index].values.GOOGCompare, rows[index].values.drop, rows[index].values.recoverWeek, rows[index].values.dropDate);  // save in firestore
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {
