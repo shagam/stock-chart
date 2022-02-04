@@ -72,6 +72,7 @@ export const BasicTable = (props) => {
       // const cafeList = document.querySelector("#gain-history")
 
   const [localIp, setLocalIP] = useState('');
+  const [localIpv4, setLocalIPv4] = useState('');
   const [userAgent, setUserAgent] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   
@@ -106,11 +107,12 @@ export const BasicTable = (props) => {
     }
 
     const res = await axios.get('https://geolocation-db.com/json/')
-    if (LOG_FLAG)
+    // if (LOG_FLAG)
     console.log('ip ', res.data);
     if (res.data !== '') {
       setLocalIP(res.data);
       setAdmin (res.data.IPv4 === '84.228.164.64');
+      setLocalIPv4 (res.data.IPv4);
     }
     else
       console.log ('no ip');
@@ -158,7 +160,7 @@ export const BasicTable = (props) => {
       GOOGCompare = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate})
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate})
     } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
@@ -177,7 +179,7 @@ export const BasicTable = (props) => {
     const info = await getDocs(userQuery);
 
     // send new entry
-    await addDoc (infoRef, {__symbol: symbol, _ip: localIp.IPv4, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
+    await addDoc (infoRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
 
     // delete old entries 
     if (info.docs.length > 0 && LOG_FLAG)
@@ -361,14 +363,15 @@ export const BasicTable = (props) => {
             
   // save pair (stockSymbol ip)
   const firebase_stockSymbol_ip_pair = async (chartSymbol) => {
-    const ip = localIp.IPv4;
-    var ipSymbolQuery = query (ipStockRef, where('ip', '==', ip), where
+    if (localIp === '' || localIp === undefined)
+      return;
+    var ipSymbolQuery = query (ipStockRef, where('ip', '==', localIpv4), where
     ('stockSymbol', '==', chartSymbol ));
     const ipSymbolPair = await getDocs(ipSymbolQuery);
     if (ipSymbolPair.docs.length > 0)
       return;
     // add new entry
-    await addDoc (ipStockRef, {ip: ip, update: getDate(), stockSymbol: chartSymbol});
+    await addDoc (ipStockRef, {ip: localIpv4, update: getDate(), stockSymbol: chartSymbol});
 
     // // delete duplicate entries
     // for (let i = 0; i < ipSymbolPair.docs.length; i++) {
@@ -583,18 +586,19 @@ export const BasicTable = (props) => {
   //   hooks.visibleColumns.push((columns) => {
   //     return [
   //       {
-  //         // id: 'selection',
+  //         id: 'selection',
   //         Header: ({getToggleAllRowsSelectedProps}) => (
-  //           <butt/>
-  //           //<CheckBox {...getToggleAllRowsSelectedProps()} />
+  //           null
+  //           // <CheckBox {...getToggleAllRowsSelectedProps()} />
   //         ),
   //         Cell: ({row}) => (
-  //           <l>   
+  //           //<CheckBox {...row.getToggleRowSelectedProps()} />
+  //           // <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+  //           <div>   
   //           <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
   //           <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
-  //           <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-  //           {/* <CheckBox {...row.getToggleRowSelectedProps()} /> */}
-  //           </l> 
+  //           {/* <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button> */}
+  //           </div> 
   //         )
   //       }, 
   //       ...columns
