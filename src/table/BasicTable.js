@@ -507,15 +507,17 @@ export const BasicTable = (props) => {
   
 
   const handleDeleteClick = (symbol) => {
-    const index = rows.findIndex((row)=> row.values.symbol === symbol);
-    if (index === -1) {
-      alert ('symbol not found ', symbol);
-      return;
-    } 
-    rows.splice(index, 1);
-    saveTable();
-    props.refreshCallBack(-1); // force refresh
-    //window.location.reload();
+    try {
+      const index = rows.findIndex((row)=> row.values.symbol === symbol);
+      if (index === -1) {
+        alert ('symbol not found ', symbol);
+        return;
+      } 
+      rows.splice(index, 1);
+      saveTable();
+      props.refreshCallBack(-1); // force refresh
+      //window.location.reload();
+    } catch (e) {console.log(e)}
   }
 
   // two handlers for adding new symbol
