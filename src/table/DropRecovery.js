@@ -48,10 +48,10 @@ const StockRecoveryCalc = (props) => {
     var highPriceBeforeDeepWeek = 0;
 
     var dropPrice = Number(props.stockChartYValues[startBeforeDropWeek]);
-    var dropWeek = 0;
-    var dropDate = 0;
-    var highPriceAfterDeep = 0;
-    var recoverWeek = 0;
+    var dropWeek = -1;
+    var dropDate = '';
+    var highPriceAfterDeep = -1;
+    var recoverWeek = -1;
 
     // search for deepPrice
     for (var i = startBeforeDropWeek; i > 0; i--) {
