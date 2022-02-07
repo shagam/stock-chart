@@ -377,6 +377,14 @@
     "month": 1,
     "day": 24,
     "src": "yahoo"
+  },
+  {
+    "symbol": "DXCM",
+    "price": 10.07,
+    "year": 2007,
+    "month": 9,
+    "day": 12,
+    "src": "google"
   }
 
 ]
