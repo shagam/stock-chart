@@ -47,7 +47,7 @@ export const BasicTable = (props) => {
   // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
   // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
-  const gainRef = collection(db, "stock-gain")
+  const gainRef = collection(db, "stock-gain_")
   const infoRef = collection(db, "stock-info")
   const ipRef = collection(db, "ipList")
   const ipStockRef = collection(db, "stockIp")
@@ -167,7 +167,7 @@ export const BasicTable = (props) => {
       console.log (symbol, 'gain-send', gain.docs.length);
     for (let i = 0; i < gain.docs.length; i++) {
       //const id = gain.docs[i].id;
-      var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
+      var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
       await deleteDoc (gainDoc);    
     }               
   }

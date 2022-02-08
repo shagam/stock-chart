@@ -199,7 +199,7 @@ const Firebase = (props) => {
             if (i === latestIndex)
               continue;
             //const id = gain.docs[i].id;
-            var gainDoc = doc(db, "stock-gain", gain.docs[i].id);
+            var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
             await deleteDoc (gainDoc);    
           }               
         }
