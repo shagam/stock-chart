@@ -23,7 +23,7 @@ const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
   if (dateArray_ [2] - days > 0)
     dateArray_ [2] -= days;
   else {
-    dateArray_[2] = dateArray_[2] - days + 30;
+    dateArray_[2] = dateArray_[2] - days + 31; // assume 30 days + one day
     if ( dateArray_[1] > 1) {
       dateArray_[1] --;
       if (dateArray_[1] == 2 && dateArray_[0] > 2)
@@ -37,4 +37,37 @@ const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
   return dateArray_;
 }
 
-export {dateStrToArray, monthsBack, daysBack}
+// recieves 2 arrays [y,m,d]
+const compareDate = (date1, date2) => {
+  // compare year
+  if (date1[0] > date2[0])
+    return 1;
+  if (date1[0] < date2[0])
+    return -1;
+    
+  // ecompare month
+  if (date1[1] > date2[1])
+    return 1;
+  if (date1[1] < date2[1])
+    return -1;    
+
+    // compare day
+  if (date1[2] > date2[2])
+    return 1;
+  if (date1[2] < date2[2])
+    return -1;
+
+  return 0;
+}
+
+const daysFrom1970 = (date) => {
+  const dateDays = (date[0] - 1970) * 365.25 + date[1] * 30.416 + date[2];
+  return dateDays;
+}
+const dateDiff = (date1, date2) => {
+  const diff = daysFrom1970 (date1) - daysFrom1970 (date2)
+
+  return Math.abs(diff);
+}
+
+export {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970}

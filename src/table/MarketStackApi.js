@@ -6,10 +6,12 @@ import {dateStrToArray, monthsBack, daysBack} from './Date';
 export const MarketstackApi = (props) => {
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
-  console.log ('MarketstackApi', props);
 
   const searchSplits = (sym) => {
 
+    if (props.symbol !== undefined)
+      sym = props.symbol;
+    console.log ('MarketstackApi', props);
     if (sym === '' || sym === undefined) {
       console.log (`Splits chart sym vanished (${sym})`);
       return;
@@ -35,12 +37,13 @@ export const MarketstackApi = (props) => {
 
     //const API_KEY = '46bea3e9fabc17363dbbe15839cb0fe3';  // eli.shagam.gmail.com
     const API_KEY = '2b5394f2ced526a03a5a7886403a22ce'; // Goldstein.dina@gmail.com
+    var DATE = '2022-04-01'
+    
     const date = new Date();
-
-    var DATE = Number(date.getFullYear()) - 1;
-    if (date.getMonth() > 11)
-      DATE += '-' + Number(date.getMonth()) + 1
-    + '-' + date.getMonth() + '-' + date.getDate(); //'2020-03-01'
+    // var DATE = Number(date.getFullYear()) - 1;
+    // if (date.getMonth() > 11)
+    //   DATE += '-' + Number(date.getMonth()) + 1
+    // + '-' + date.getMonth() + '-' + date.getDate(); //'2020-03-01'
     //1000 per month
     // End-of-Day Data API Endpoint
     //http://api.marketstack.com/v1/
