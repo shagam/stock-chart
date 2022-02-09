@@ -11,7 +11,7 @@ import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import Stock_chart from '../Stock-chart'
 import Splits from './Splits'
-import GainGoogle from './GainGoogle'
+import MarketStackApi from './MarketStackApi'
 import StockRecoveryCalc from './DropRecovery'
 
 import StockInfo from './StockInfo'
@@ -768,7 +768,7 @@ export const BasicTable = (props) => {
 
       <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
-      <GainGoogle symbol={chartSymbol} admin = {admin} />
+      <MarketStackApi symbol={chartSymbol} admin = {admin} />
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
