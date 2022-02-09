@@ -1,5 +1,7 @@
+import { getMonth } from 'date-fns';
 import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
+import {dateStrToArray, monthsBack, daysBack} from './Date';
 
 export const MarketstackApi = (props) => {
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -12,6 +14,9 @@ export const MarketstackApi = (props) => {
       console.log (`Splits chart sym vanished (${sym})`);
       return;
     }
+
+  const date0 = monthsBack ([2020, 1, 1], 1);
+  const date1 = daysBack ([2020, 1, 1], 7);
 // End-of-Day Data API Endpoint
 
 //{"pagination":{"limit":100,"offset":0,"count":100,"total":253},"data":[{"open":171.73,"high":175.35,"low":171.43,"close":174.83,"volume":73516656.0,"adj_high":null,"adj_low":null,"adj_close":174.83,"adj_open":null,"adj_volume":null,"split_factor":1.0,"dividend":0.0,"symbol":"AAPL","exchange":"XNAS","date":"2022-02-08T00:00:00+0000"},{"open":172.86,"high":173.95,"low":170.95,"close":171.66,"volume":77045100.0,"adj_high":null,"adj_low":null,"adj_close":171.66,"adj_open":null,"adj_volume":null,"split_factor":1.0,"dividend":0.0,"symbol":"AAPL","exchange":"XNAS","date":"2022-02-07T00:00:00+0000"},
@@ -30,12 +35,20 @@ export const MarketstackApi = (props) => {
 
     //const API_KEY = '46bea3e9fabc17363dbbe15839cb0fe3';  // eli.shagam.gmail.com
     const API_KEY = '2b5394f2ced526a03a5a7886403a22ce'; // Goldstein.dina@gmail.com
+    const date = new Date();
 
+    var DATE = Number(date.getFullYear()) - 1;
+    if (date.getMonth() > 11)
+      DATE += '-' + Number(date.getMonth()) + 1
+    + '-' + date.getMonth() + '-' + date.getDate(); //'2020-03-01'
     //1000 per month
     // End-of-Day Data API Endpoint
     //http://api.marketstack.com/v1/
 
-    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_from= 2020-02-01&limit=8&offset=0`
+    //let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_from=${DATE}&limit=1&offset=100`
+
+    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_to=${DATE}&limit=1`
+
     // & date_to = YYYY-MM-DD
 
     fetch(API_Call)
@@ -63,23 +76,18 @@ export const MarketstackApi = (props) => {
             }
             console.log(API_Call);
             console.log (dataStr.substring(0,150));
-            
-            //too frequent AlphaVantage api calls
-            if (dataStr.indexOf ('Your monthly usage limit has been reached') !== -1) {
-                alert (`${dataStr} (${sym}) \n\n${API_Call} `);
-                //setChartData ('');
-                return;
-            }
-            // if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-            //   alert (dataStr.substring(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
-            //   //setChartData ('');
-            //   return;
-            // }
-
+                
             var stockChartXValuesFunction = [];              
             var stockChartYValuesFunction = [];
-            //let periodTag = 'Weekly Adjusted Time Series';
-            let periodTag = "Time Series (Daily)"
+            try {
+              for (let i = 0; i < chartData.data.length; i++) {
+                var date = chartData.data[i].date;
+                date = date.split('T')[0];
+                const open = chartData.data[i].open;
+                stockChartXValuesFunction.push(date);
+                stockChartYValuesFunction.push(open);
+              }
+            } catch (e) {console.log(e)}
 
             // prepare historical data for plotly chart
             // let i = 0;
