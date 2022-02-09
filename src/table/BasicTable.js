@@ -767,7 +767,9 @@ export const BasicTable = (props) => {
       <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
 
       <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
+
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
+      
       <MarketStackApi symbol={chartSymbol} admin = {admin} />
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
@@ -777,7 +779,9 @@ export const BasicTable = (props) => {
       
       <div id='manual_id'>
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
+        
         <Manual userAgent={userAgent}/>
+        
         <StockInfo stockInfo = {stockInfo} />
       </div>
     </div> 
