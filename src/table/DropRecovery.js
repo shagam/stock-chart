@@ -80,15 +80,16 @@ const StockRecoveryCalc = (props) => {
       }
     }
 
-    // check for highest price after drop
+    // check for recovery price after drop
     for (let i = dropWeek; i > 0; i--) {      
       const price = Number(props.stockChartYValues[i]);
-      if (highPriceAfterDeep < price) {
-        highPriceAfterDeep = price;
-        recoverWeek = i;
-        if (price > Number (props.stockChartYValues[highPriceBeforeDeepWeek]))
+      //if (highPriceAfterDeep < price) {
+        if (price > Number (props.stockChartYValues[highPriceBeforeDeepWeek])) {
+          highPriceAfterDeep = price;
+          recoverWeek = i;
           break; // recovery found
-      }
+        }
+      //}
     }
 
     const drop = Math.round (dropPrice / highPriceBeforeDeep * 1000, 3) / 1000;
@@ -99,7 +100,11 @@ const StockRecoveryCalc = (props) => {
     }
 
     // fill columns in stock table
-    props.dropCallBack (props.StockSymbol, drop, dropWeek, dropWeek - recoverWeek, dropDate); //format(startDate, "yyyy-MMM-dd"));
+    var recoverPeriod = dropWeek - recoverWeek;
+    if (recoverWeek === -1)
+    recoverPeriod = -1;
+
+    props.dropCallBack (props.StockSymbol, drop, dropWeek, recoverPeriod, dropDate); //format(startDate, "yyyy-MMM-dd"));
   }
 
   function swap_period() {
