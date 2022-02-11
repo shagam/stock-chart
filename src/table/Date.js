@@ -60,14 +60,53 @@ const compareDate = (date1, date2) => {
   return 0;
 }
 
-const daysFrom1970 = (date) => {
-  const dateDays = (date[0] - 1970) * 365.25 + date[1] * 30.416 + date[2];
+const daysFrom1970 = (dateArray) => {
+  const dateDays = (dateArray[0] - 1970) * 365.25 + dateArray[1] * 30.416 + dateArray[2];
   return dateDays;
 }
-const dateDiff = (date1, date2) => {
-  const diff = daysFrom1970 (date1) - daysFrom1970 (date2)
-
+const dateDiff = (dateArray1, dateArray2) => {
+  const diff = daysFrom1970 (dateArray1) - daysFrom1970 (dateArray2)
   return Math.abs(diff);
 }
 
-export {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970}
+// return index of dataArray closest
+const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
+
+  //var testDateArray = [2020, 11, 1];
+
+  var newestIndx = 0;
+  var oldestIndx = stockChartXValuesFunction.length -1;
+
+  while (true) {
+    var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
+    var searchArray = stockChartXValuesFunction [searchIndex].split('-');
+
+    if (Math.abs (daysFrom1970 ( searchArray ) - daysFrom1970(testDateArray)) <= 4){
+      return searchIndex;
+    }
+
+    const comp = compareDate (testDateArray, searchArray);
+    switch (comp) {
+      case 0:
+        return searchIndex;
+      //  alert (`date found__, ${searchIndex}`);
+      //  break;
+      case 1:
+        oldestIndx = Math.round ((oldestIndx + searchIndex) / 2);
+        continue;
+      case -1:
+        newestIndx = Math.round ((newestIndx + searchIndex) / 2); 
+        break;
+      default:
+        alert ('invalid campareDate result: ', comp);
+    }
+    console.log (oldestIndx, newestIndx, searchIndex);
+  }
+
+
+
+}
+
+
+
+export {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray}

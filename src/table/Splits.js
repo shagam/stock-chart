@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 
+import {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 
 
 export const Splits = (props) => {
@@ -10,6 +11,9 @@ export const Splits = (props) => {
 
 
   const searchSplits = (sym, API_KEY) => {
+
+    if (props.symbol !== undefined)
+      sym = props.symbol;
 
     if (sym === '' || sym === undefined) {
       console.log (`Splits chart sym vanished (${sym})`);
@@ -91,6 +95,10 @@ export const Splits = (props) => {
             //     }
             //   }
             // }
+
+            props.rows.walues.splits_daily = JSON.stringify (splitArray);
+            props.rows.walues.splits_raw = splitArray;
+
             setStockChartXValues (stockChartXValuesFunction);
             setStockChartYValues (stockChartYValuesFunction);
 
@@ -105,8 +113,12 @@ export const Splits = (props) => {
             //const updateMili = Date.now();
             //const updateDate = getDate();
        
+            // search date
+            var testDateArray = [2020, 11, 1];
+            const foundIndex = searchDateInArray (stockChartXValuesFunction, testDateArray);
+            alert (foundIndex);
 
-         }
+          }
       )
   }
   //searchSplits (props.symbol)
