@@ -4,7 +4,7 @@ import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {} from "date-fns";
 
-import './DropRecovery.css'
+//import './DropRecovery.css'
 
 
 const StockRecoveryCalc = (props) => {
@@ -142,10 +142,17 @@ const StockRecoveryCalc = (props) => {
   //     //paddingTop: "100px",
   // }
 
+  const style = {
+    // background: 'blue',
+    // color: 'red',
+    // fontSize: 200,
+    border: '2px solid magenta'
+  };
+
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
   return (
-    <div id='dropRecovery_id' >
+    <div style = {style} id='dropRecovery_id' >
       <div>
             <input
               type="checkbox" checked={displayFlag}
