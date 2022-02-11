@@ -8,6 +8,9 @@ const dateStrToArray = (date) => {
 
 // array [year, month, day] month 1..12
 const monthsBack = (dateArray, months) => { // [y,m,d]
+  dateArray[0] = Number(dateArray[0]);
+  dateArray[1] = Number(dateArray[1]);
+  dateArray[2] = Number(dateArray[2]);
   var dateArray_ =  [...dateArray];
   if (dateArray [1] - months > 0)
     dateArray_ [1] --;
@@ -26,7 +29,7 @@ const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
     dateArray_[2] = dateArray_[2] - days + 31; // assume 30 days + one day
     if ( dateArray_[1] > 1) {
       dateArray_[1] --;
-      if (dateArray_[1] == 2 && dateArray_[0] > 2)
+      if (dateArray_[1] === 2 && dateArray_[0] > 2)
         dateArray_[0] -= 2
     }
     else {

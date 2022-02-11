@@ -3,6 +3,8 @@ import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {} from "date-fns";
+import {format} from "date-fns"
+import {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 
 //import './DropRecovery.css'
 
@@ -107,15 +109,44 @@ const StockRecoveryCalc = (props) => {
     props.dropCallBack (props.StockSymbol, drop, dropWeek, recoverPeriod, dropDate); //format(startDate, "yyyy-MMM-dd"));
   }
 
-  function swap_period() {
-    if (startDate.getFullYear() === 2020) {
+  function swap_period_2008() {
       setStartDate (new Date(2007, 9, 15));
       setEndDate (new Date(2009, 1, 1));
+  }
+
+  function swap_period_2020() {
+    setStartDate (new Date(2020, 1, 5));
+    setEndDate (new Date(2020, 4, 15));
+  }
+
+  const monNameToNumber = (monStr) => {
+    switch (monStr) {
+      case 'Jan': return 1;
+      case 'Feb': return 2;
+      case 'Mar': return 3;
+      case 'Apr': return 4;
+      case 'May': return 5;
+      case 'Jun': return 6;
+      case 'Jul': return 7;
+      case 'Aug': return 8;
+      case 'Sep': return 9;
+      case 'Oct': return 10;
+      case 'Nov': return 11;
+      case 'Fec': return 12;
+      default: alert ('wrong month str, cannot convert')
     }
-    else if (startDate.getFullYear() === 2007) {
-      setStartDate (new Date(2020, 1, 5));
-      setEndDate (new Date(2020, 4, 15));
-    }
+  }
+
+  function swap_period_now() {
+    var date = new Date();
+    var formattedDate = format(date, "yyyy-MM-dd");
+    var dateArray = formattedDate.split('-');
+
+    // date = date.split('T')[0];
+    const dateArray1 = monthsBack (dateArray, 6);
+    const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
+    setStartDate (new Date(dateStr));
+    setEndDate (new Date());
   }
 
   function toggleDropRecoveryColumns ()  {
@@ -166,11 +197,13 @@ const StockRecoveryCalc = (props) => {
       </div>
       {displayFlag && 
         <div>     
+          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           <div color='yellow' > Choose date range and then click gain on few stocks </div>
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
           <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> 
-          <button type="button" onClick={()=>swap_period()}>swap_2008_or_2020    </button>
-          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
+          <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
+          <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
+          <button type="button" onClick={()=>swap_period_now()}>  now    </button>
         </div>
       }
     </div>
