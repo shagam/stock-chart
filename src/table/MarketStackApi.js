@@ -1,7 +1,7 @@
 import { getMonth } from 'date-fns';
 import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
-import {dateStrToArray, monthsBack, daysBack} from './Date';
+import {dateSplit, monthsBack, daysBack} from './Date';
 
 export const MarketstackApi = (props) => {
   const [stockChartXValues, setStockChartXValues] = useState ([]);

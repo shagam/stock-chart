@@ -30,7 +30,7 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
-import {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
+import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 
 export const BasicTable = (props) => {
 

@@ -1,10 +1,39 @@
-const dateStrToArray = (date) => {
+
+import {format} from "date-fns"
+
+
+const todayDate = () => {
+  const date = new Date();
+  const formattedDate = format(date, "yyyy-MM-dd");
+  return formattedDate;
+}
+
+
+const dateSplit = (date) => {
   const dateSplit = date.split('-');
+  dateSplit[0] = Number(dateSplit[0]);
+  dateSplit[1] = Number(dateSplit[1]);
+  dateSplit[2] = Number(dateSplit[2]);
   return dateSplit;
-  // const year = Number(dateSplit[0]);
-  // const mon = Number(dateSplit[1]);
-  // const day = Number(dateSplit[2]);
 } 
+
+const monNameToNumber = (monStr) => {
+  switch (monStr) {
+    case 'Jan': return 1;
+    case 'Feb': return 2;
+    case 'Mar': return 3;
+    case 'Apr': return 4;
+    case 'May': return 5;
+    case 'Jun': return 6;
+    case 'Jul': return 7;
+    case 'Aug': return 8;
+    case 'Sep': return 9;
+    case 'Oct': return 10;
+    case 'Nov': return 11;
+    case 'Fec': return 12;
+    default: alert ('wrong month str, cannot convert')
+  }
+}
 
 // array [year, month, day] month 1..12
 const monthsBack = (dateArray, months) => { // [y,m,d]
@@ -112,4 +141,4 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
 
 
 
-export {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray}
+export {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray}

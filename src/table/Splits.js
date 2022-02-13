@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 
-import {dateStrToArray, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
+import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 
 
 export const Splits = (props) => {
