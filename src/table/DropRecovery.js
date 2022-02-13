@@ -113,7 +113,9 @@ const StockRecoveryCalc = (props) => {
 
     const startDateSplit = [startYear, startMon, startDay];
     const todayDateSplit = dateSplit( todayDate());
-    if (Math.abs (daysFrom1970 (todayDateSplit) - daysFrom1970(startDateSplit)) > 190) {  // more than 6 months
+    const todayDaysSince1970 = daysFrom1970 (todayDateSplit);
+    const startDaysSince1970 = daysFrom1970 (startDateSplit);
+    if (Math.abs (daysFrom1970 (todayDateSplit) - daysFrom1970(startDateSplit)) > 250) {  // more than 6 months
     // drop-recovery
       deep();
       highistBeforeDeep();
