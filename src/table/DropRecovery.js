@@ -57,11 +57,13 @@ const StockRecoveryCalc = (props) => {
     var recoverPeriod = -1
     var drop = -1;
 
-    // search for deepPrice
+    // search for deepPrice after start date
     const deep = () => {
+      dropPrice = Number(props.stockChartYValues[startBeforeDropWeek]);
+      dropDate = props.stockChartXValues[startBeforeDropWeek];
       for (var i = startBeforeDropWeek; i > 0; i--) {
         // search for lowestPrrice 
-        const price = Number(props.stockChartYValues[i]);
+        const price = Number(props.stockChartYValues[i] );
         if (dropPrice > price) {
           dropPrice = price;
           dropWeek = i;
@@ -77,7 +79,7 @@ const StockRecoveryCalc = (props) => {
 
     // search for higest befor deep
     const highistBeforeDeep = () => {
-      for (let i = dropWeek; i <= startBeforeDropWeek; i++) { 
+      for (let i = dropWeek; i <= startBeforeDropWeek * 4; i++) { 
         const price = Number(props.stockChartYValues[i]);
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
@@ -142,13 +144,13 @@ const StockRecoveryCalc = (props) => {
   }
 
   
-  function swap_period_now() {
+  function swap_period_4_mon() {
     var date = new Date();
     var formattedDate = format(date, "yyyy-MM-dd");
     var dateArray = formattedDate.split('-');
 
     // date = date.split('T')[0];
-    const dateArray1 = monthsBack (dateArray, 6);
+    const dateArray1 = monthsBack (dateArray, 4);
     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
     setStartDate (new Date(dateStr));
     // setEndDate (new Date());
@@ -209,7 +211,7 @@ const StockRecoveryCalc = (props) => {
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
           <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
-          <button type="button" onClick={()=>swap_period_now()}>  last6Months    </button>
+          <button type="button" onClick={()=>swap_period_4_mon()}>  last4Months    </button>
         </div>
       }
     </div>
