@@ -96,9 +96,13 @@ export const Splits = (props) => {
             //   }
             // }
 
-            props.rows.walues.splits_daily = JSON.stringify (splitArray);
-            props.rows.walues.splits_raw = splitArray;
-
+            const row_index = props.rows.findIndex((row)=> row.values.symbol === '_ADMIN_');
+            if (row_index !== -1) {
+              //console.log (props.rows[row_index].values)
+              //props.rows[row_index].values.splits_list = splits;
+              props.rows[row_index].values.splits_list = JSON.stringify (splitArray);
+              //props.rows[row_index].values.splits_raw = splitArray;
+            }
             setStockChartXValues (stockChartXValuesFunction);
             setStockChartYValues (stockChartYValuesFunction);
 
@@ -116,7 +120,7 @@ export const Splits = (props) => {
             // search date
             var testDateArray = [2020, 11, 1];
             const foundIndex = searchDateInArray (stockChartXValuesFunction, testDateArray);
-            alert (foundIndex);
+            console.log (foundIndex);
 
           }
       )

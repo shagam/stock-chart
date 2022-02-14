@@ -764,7 +764,9 @@ export const BasicTable = (props) => {
     <div>
      {/* {console.log (chartSymbol)} */}
 
-      <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
+      <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
+       
+      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
 
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
       
