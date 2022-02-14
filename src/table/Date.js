@@ -8,6 +8,12 @@ const todayDate = () => {
   return formattedDate;
 }
 
+function getDate() {
+  const date = new Date();
+  var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
+  return formattedDate;    
+}
+
 
 const dateSplit = (date) => {
   const dateSplit = date.split('-');
@@ -141,4 +147,4 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
 
 
 
-export {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray}
+export {getDate, todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray}

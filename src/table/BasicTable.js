@@ -30,7 +30,7 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
-import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
+import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
 
 export const BasicTable = (props) => {
 
@@ -212,12 +212,6 @@ export const BasicTable = (props) => {
   //const [rows, setRows] = useState (data);
 
   const [addFormData, setAddFormData] = useState({    })
-
-  function getDate() {
-    const date = new Date();
-    var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
-    return formattedDate;    
-  }
 
     // get stock overview
   const handleInfoClick = (symbol) => {
@@ -766,7 +760,7 @@ export const BasicTable = (props) => {
 
       <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
        
-      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
+      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' admin = {admin} />
 
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
       
