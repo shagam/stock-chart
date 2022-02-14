@@ -272,39 +272,39 @@ export const BasicTable = (props) => {
 
   const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
-    const index = rows.findIndex((row)=> row.values.symbol === sym);            
-    if (index === -1) {
+    const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
+    if (row_index === -1) {
       alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
       return;
     }
 
-    if (Date.now() - rows[index].values.gain_mili < 1000)
+    if (Date.now() - rows[row_index].values.gain_mili < 1000)
       return "duplicate";
 
     firebase_stockSymbol_ip_pair(sym);
 
-    rows[index].values.gain_mili = updateMili;
-    rows[index].values.gain_date = updateDate;
+    rows[row_index].values.gain_mili = updateMili;
+    rows[row_index].values.gain_date = updateDate;
 
-    rows[index].values.wk = wk; //stocks[index].wk;
-    rows[index].values.wk2 = wk2; //stocks[index].wk2;
-    rows[index].values.mon = mon; //stocks[index].mon;
-    rows[index].values.mon3 = mon3; //stocks[index].mon3;
-    rows[index].values.mon6 = mon6; //stocks[index].mon6;
-    rows[index].values.year = year; //stocks[index].year;
-    rows[index].values.year2 = year2; //stocks[index].year2;
-    rows[index].values.year5 = year5; //stocks[index].year5;
-    rows[index].values.year10 = year10; //stocks[index].year10;
-    rows[index].values.year20 = year20; //stocks[index].year20;
-    rows[index].values.price = price;
+    rows[row_index].values.wk = wk; //stocks[index].wk;
+    rows[row_index].values.wk2 = wk2; //stocks[index].wk2;
+    rows[row_index].values.mon = mon; //stocks[index].mon;
+    rows[row_index].values.mon3 = mon3; //stocks[index].mon3;
+    rows[row_index].values.mon6 = mon6; //stocks[index].mon6;
+    rows[row_index].values.year = year; //stocks[index].year;
+    rows[row_index].values.year2 = year2; //stocks[index].year2;
+    rows[row_index].values.year5 = year5; //stocks[index].year5;
+    rows[row_index].values.year10 = year10; //stocks[index].year10;
+    rows[row_index].values.year20 = year20; //stocks[index].year20;
+    rows[row_index].values.price = price;
 
-    rows[index].values.splits_list = splits;
+    rows[row_index].values.splits_list = splits;
     if (splits === '')
-      rows[index].values.splits_calc = '';
+      rows[row_index].values.splits_calc = '';
     else if (splitsCalc)
-      rows[index].values.splits_calc = 'calc';
+      rows[row_index].values.splits_calc = 'calc';
     else
-      rows[index].values.splits_calc = 'raw';
+      rows[row_index].values.splits_calc = 'raw';
     //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
     props.refreshCallBack(-1); // force refresh
@@ -313,11 +313,11 @@ export const BasicTable = (props) => {
     else
       setSplitsFlag(' splits ??');
 
-    if (rows[index].values.target_raw !== undefined && rows[index].values.price !== 0)
-      rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
+    if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
+      rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
 
     firebaseGainAdd (sym, updateDate, updateMili, splits,
-      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[index].values.GOOGCompare, rows[index].values.drop, rows[index].values.recoverWeek, rows[index].values.dropDate);  // save in firestore
+      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.GOOGCompare, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate);  // save in firestore
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {
@@ -764,9 +764,7 @@ export const BasicTable = (props) => {
     <div>
      {/* {console.log (chartSymbol)} */}
 
-      <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
-
-      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
+      <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' getDate={getDate} admin = {admin} />
 
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
       
