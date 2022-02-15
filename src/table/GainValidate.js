@@ -1,5 +1,5 @@
 // import React from 'react'
-
+import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
 
 export const GainValidate = (props) => {
   //symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, refreshCallBack
@@ -7,19 +7,21 @@ export const GainValidate = (props) => {
 
   const LOG_FLAG = false;
 
-  if (LOG_FLAG)
-    console.log (props.symbol, props.rows.length, props.stockChartXValues.length, props.stockChartYValues.length );
-
   try {
   if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0 || props.symbol === '') {
     if (LOG_FLAG)
-    console.log ('GainValidate noArray', props.symbol, props.stockChartYValues.length);
+    console.log ('GainValidate noArray', props.symbol);
     return null; //"noArray";
   }
-  const today = new Date();
-  const todayYear = today.getFullYear() - 2000;
-  const todayMon = today.getMonth();
-  const todayDay = today.getDate();
+
+  if (LOG_FLAG)
+    console.log (props.symbol, props.rows.length, props.stockChartXValues.length, props.stockChartYValues.length );
+
+  
+  // const today = new Date();
+  // const todayYear = today.getFullYear() - 2000;
+  // const todayMon = today.getMonth();
+  // const todayDay = today.getDate();
 
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
   if (row_index === -1) {
@@ -38,44 +40,43 @@ export const GainValidate = (props) => {
     return null;
   }
 
+
   // if (props.rows[row_index].values.splits_list === '')
   //   return null;
-
-
     //const symbol_ = props.rows[row_index].values.symbol;
     // weeks in year 365.25 / 7 = 52.17857  
     // weeks in month 365.25 / 12 / 7
+    const googDateSplit = [props.gain_validation_json[valiate_index].year, props.gain_validation_json[valiate_index].month, props.gain_validation_json[valiate_index].day];
+    const chartIndex = searchDateInArray (props.stockChartXValues, googDateSplit);
 
-    var priceWeeks  = (props.gain_validation_json[valiate_index].year - 2000) * 52.17857 + props.gain_validation_json[valiate_index].month * 4.3452 + props.gain_validation_json[valiate_index].day / 7;
-    const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
-    var weeks = Math.round (todayWeeks - priceWeeks);
+    //var priceWeeks  = (props.gain_validation_json[valiate_index].year - 2000) * 52.17857 + props.gain_validation_json[valiate_index].month * 4.3452 + props.gain_validation_json[valiate_index].day / 7;
+    // const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
+    // var weeks = Math.round (todayWeeks - priceWeeks);
 
     props.rows[row_index].values.googDate =  props.gain_validation_json[valiate_index].year + "-" + (Number(props.gain_validation_json[valiate_index].month) + 1) + "-" + props.gain_validation_json[valiate_index].day;
     props.rows[row_index].values.googPrice = props.gain_validation_json[valiate_index].price
 
-    if (weeks >= props.stockChartYValues.length) {
-      props.rows[row_index].values.GOOGCompare = 'dateErr';
-        if (LOG_FLAG)
-          console.log ('GainValidate dateErr', props.symbol, weeks, props.stockChartXValues.length, props.stockChartYValues.length);
-      return null;
+    var p = -1;
+    var AlphaHistoricPrice = -1
+    if (chartIndex !== undefined) {
+      AlphaHistoricPrice = props.stockChartYValues[chartIndex];
+      try {
+        p = AlphaHistoricPrice / props.gain_validation_json[valiate_index].price;
+      p = Number(p).toFixed(3)
+      } catch (e) {alert ('p  ' + p)}
+    
+      // if (p > 1.1 || p < 0.9)
+      //   props.rows[row_index].values.splits_calc = p;
+      console.log (props.symbol, chartIndex, p, props.stockChartXValues[chartIndex], props.gain_validation_json[valiate_index], props.stockChartYValues[chartIndex]);
+
+      var alphaPrice = Number (props.stockChartYValues[chartIndex]);
+      try {
+      if (alphaPrice !== undefined)
+        alphaPrice = alphaPrice.toFixed(3)
+      } catch (e) {alert (props.symbol, 'alphaprice ' + alphaPrice)}
+      props.rows[row_index].values.alphaPrice = Number(alphaPrice);
+      props.rows[row_index].values.alphaDate = props.stockChartXValues[chartIndex];
     }
-
-    const AlphaHistoricPrice = props.stockChartYValues[weeks];
-    try {
-    var p = AlphaHistoricPrice / props.gain_validation_json[valiate_index].price;
-    p = Number(p).toFixed(3)
-    } catch (e) {alert ('p  ' + p)}
-    // if (p > 1.1 || p < 0.9)
-    //   props.rows[row_index].values.splits_calc = p;
-    console.log (props.symbol, weeks, p, props.stockChartXValues[weeks], props.gain_validation_json[valiate_index], props.stockChartYValues[weeks]);
-
-    var alphaPrice = Number (props.stockChartYValues[weeks]);
-    try {
-    if (alphaPrice !== undefined)
-      alphaPrice = alphaPrice.toFixed(3)
-    } catch (e) {alert (props.symbol, 'alphaprice ' + alphaPrice)}
-    props.rows[row_index].values.alphaPrice = Number(alphaPrice);
-    props.rows[row_index].values.alphaDate = props.stockChartXValues[weeks];
 
     props.rows[row_index].values.GOOGCompare = p;
     return null; 

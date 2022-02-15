@@ -390,8 +390,8 @@ export const BasicTable = (props) => {
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
-
+    //let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
+    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY_}`;
     
     fetch(API_Call)
         .then(
@@ -429,7 +429,8 @@ export const BasicTable = (props) => {
 
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
-              let periodTag = 'Weekly Adjusted Time Series';
+              //let periodTag = 'Weekly Adjusted Time Series';
+              let periodTag = "Time Series (Daily)"
 
               // prepare historical data for plotly chart
               let i = 0;
