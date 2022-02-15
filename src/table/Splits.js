@@ -115,7 +115,6 @@ export const Splits = (props) => {
 
             dateBackSplit = daysBack (todaySplit, 14);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.wk2 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];
@@ -123,7 +122,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 1);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.mon = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];           
@@ -131,7 +129,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 3);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.mon3 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
@@ -139,7 +136,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 6);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.mon6 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
@@ -147,7 +143,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 12);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.year = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
@@ -155,7 +150,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 36); 
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.year2 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
@@ -163,7 +157,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 60); // 5 years
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.year5 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
@@ -171,7 +164,6 @@ export const Splits = (props) => {
 
             dateBackSplit = monthsBack (todaySplit, 120); // 10 years
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            date = stockChartXValuesFunction[chartIndex];
             if (chartIndex !== undefined) {
               date = stockChartXValuesFunction[chartIndex];
               props.rows[row_index].values.year10 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            

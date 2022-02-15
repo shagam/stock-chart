@@ -30,7 +30,7 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
-import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
+import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
 
 export const BasicTable = (props) => {
 
@@ -439,7 +439,7 @@ export const BasicTable = (props) => {
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
                   if (i > 1140)
-                    continue;  //ignore splis before 22 years
+                    continue;  //ignore splits before 22 years
                   if (i > 0) {
                     let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
                     if (ratio > 1.8 || ratio < 0.6) {
@@ -481,21 +481,93 @@ export const BasicTable = (props) => {
 
               const updateMili = Date.now();
               const updateDate = getDate();
-              const wk =Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
-              const wk2 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
-              const mon = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
-              const mon3 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
-              const mon6 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2));
-              const year = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2));
-              const year2 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2));
-              const year5 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
-              const year10 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
-              const year20 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
+              var date;
+              const todaySplit = todayDateSplit();
+              var dateBackSplit = daysBack (todaySplit, 7);
+              var chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              var wk = -1;
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];            
+                wk = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);
+              }
+
+              var wk2 = -1;// = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
+              dateBackSplit = daysBack (todaySplit, 14);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                wk2 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);
+              }
+  
+              var mon = -1;// = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 1);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                mon = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);
+              }
+  
+              var mon3 = -1;// = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 3);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                mon3 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+  
+              var mon6 = -1;// = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[26]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 6);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                mon6 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+
+              var year = -1; // = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[52]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 12);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                year = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+
+              var year2 = -1; // = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[104]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 24); 
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                year2 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+
+              var year5 = -1;//Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[260]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 60); // 5 years
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                year5 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+
+              var year10 = -1;//Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 120); // 10 years
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                year10 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+  
+              var year20 = -1;//Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
+              dateBackSplit = monthsBack (todaySplit, 240); // 20 years
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              if (chartIndex !== undefined) {
+                date = stockChartXValuesFunction[chartIndex];
+                year20 = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);            
+              }
+  
+
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
               updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
-
            }
         )
   }
