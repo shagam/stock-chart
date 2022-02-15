@@ -97,60 +97,101 @@ export const Splits = (props) => {
             // }
 
 
-
+            try {
             const row_index = props.rows.findIndex((row)=> row.values.symbol === sym);
+            if (row_index === -1) {
+              console.log ('splits.js sym not found')
+              return null;
+            }
             const todaySplit = todayDateSplit();
             
             var dateBackSplit = daysBack (todaySplit, 7);
             var chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            var date_7 = stockChartXValuesFunction[chartIndex];
+            var date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];            
+              props.rows[row_index].values.wk = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];
+            }
 
             dateBackSplit = daysBack (todaySplit, 14);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_14 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.wk2 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];
+            }
 
             dateBackSplit = monthsBack (todaySplit, 1);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_1 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.mon = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];           
+            }
 
             dateBackSplit = monthsBack (todaySplit, 3);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_3 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.mon3 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
+            }
 
             dateBackSplit = monthsBack (todaySplit, 6);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_6 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.mon6 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
+            }
 
             dateBackSplit = monthsBack (todaySplit, 12);
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_12 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.year = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
+            }
 
-            dateBackSplit = monthsBack (todaySplit, 36);
+            dateBackSplit = monthsBack (todaySplit, 36); 
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_36 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.year2 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
+            }
 
             dateBackSplit = monthsBack (todaySplit, 60); // 5 years
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_60 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.year5 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
+            }
 
             dateBackSplit = monthsBack (todaySplit, 120); // 10 years
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            const date_120 = stockChartXValuesFunction[chartIndex];
+            date = stockChartXValuesFunction[chartIndex];
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.year10 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
+            }
 
             dateBackSplit = monthsBack (todaySplit, 240); // 20 years
             chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            var date_240 = 0;
-            if (chartIndex !== undefined)
-              date_240 = stockChartXValuesFunction[chartIndex];            
-
-            if (row_index !== -1) {
-              //console.log (props.rows[row_index].values)
-            if (splitArray.length > 0)
-                props.rows[row_index].values.splits_list = JSON.stringify (splitArray);
-              else
-                props.rows[row_index].values.splits_list = undefined;
-              //props.rows[row_index].values.splits_object = splitArray;
+            if (chartIndex !== undefined) {
+              date = stockChartXValuesFunction[chartIndex];
+              props.rows[row_index].values.year20 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
             }
+
+
+            if (splitArray.length > 0)
+              props.rows[row_index].values.splits_list = JSON.stringify (splitArray);
+            else
+              props.rows[row_index].values.splits_list = undefined;
+              //props.rows[row_index].values.splits_object = splitArray;
+
+            } catch (e) {console.log (e)}
 
             props.saveTable();
 
