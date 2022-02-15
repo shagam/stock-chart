@@ -446,7 +446,7 @@ export const BasicTable = (props) => {
                     if (ratio > 1.8 || ratio < 0.6) {
                       ratio = ratio.toFixed(2);
                       //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                      const  split = {ratio: ratio, date: key, week: i};
+                      const  split = {ratio: ratio, date: key};
                       splitArray.push(split); 
                     }                        
                   }
@@ -460,8 +460,11 @@ export const BasicTable = (props) => {
                   if (ratio > 1)
                     ratio = Math.round (ratio);
                   else
-                    ratio = 1 / Math.round (1/ratio);                  
-                  for ( let j = splitArray[i].week; j < stockChartYValuesFunction.length; j++) {
+                    ratio = 1 / Math.round (1/ratio);
+                  
+                  const splitDate = splitArray[i].date.split('-');
+                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
+                  for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
                       stockChartYValuesFunction[j] /= ratio;
                       chartData[`${periodTag}`][key]['1. open'] /= ratio;
                   }
