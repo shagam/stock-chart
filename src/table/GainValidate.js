@@ -46,7 +46,7 @@ export const GainValidate = (props) => {
     //const symbol_ = props.rows[row_index].values.symbol;
     // weeks in year 365.25 / 7 = 52.17857  
     // weeks in month 365.25 / 12 / 7
-    const googDateSplit = [props.gain_validation_json[valiate_index].year, props.gain_validation_json[valiate_index].month, props.gain_validation_json[valiate_index].day];
+    const googDateSplit = [props.gain_validation_json[valiate_index].year, props.gain_validation_json[valiate_index].month + 1, props.gain_validation_json[valiate_index].day + 1];
     const chartIndex = searchDateInArray (props.stockChartXValues, googDateSplit);
 
     //var priceWeeks  = (props.gain_validation_json[valiate_index].year - 2000) * 52.17857 + props.gain_validation_json[valiate_index].month * 4.3452 + props.gain_validation_json[valiate_index].day / 7;
