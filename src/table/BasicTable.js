@@ -466,7 +466,7 @@ export const BasicTable = (props) => {
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
                   for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
                       stockChartYValuesFunction[j] /= ratio;
-                      chartData[`${periodTag}`][key]['1. open'] /= ratio;
+                      //chartData[`${periodTag}`][key]['1. open'] /= ratio;
                   }
                 }
               }
