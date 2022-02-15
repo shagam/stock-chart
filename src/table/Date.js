@@ -8,6 +8,16 @@ const todayDate = () => {
   return formattedDate;
 }
 
+const todayDateSplit = () => {
+  const date = new Date();
+  const formattedDate = format(date, "yyyy-MM-dd");
+  const dateArraySplit = formattedDate.split('-');
+  dateArraySplit[0] = Number(dateArraySplit[0]);
+  dateArraySplit[1] = Number(dateArraySplit[1]);
+  dateArraySplit[2] = Number(dateArraySplit[2]);
+  return dateArraySplit;
+}
+
 function getDate() {
   const date = new Date();
   var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
@@ -47,18 +57,40 @@ const monthsBack = (dateArray, months) => { // [y,m,d]
   dateArray[1] = Number(dateArray[1]);
   dateArray[2] = Number(dateArray[2]);
   var dateArray_ =  [...dateArray];
-  if (dateArray [1] - months > 0)
-    dateArray_ [1] --;
+  if (dateArray [1] - months >= 1)
+    dateArray_ [1] -= months;
   else {
-    dateArray_[0] --;
-    dateArray_[1] = dateArray[1] + 12 - months;
+    dateArray_[0] -= (Math.floor((months + 12 - dateArray_[1]) /12));
+    dateArray_[1] = (dateArray_[1] + 12 - months) % 12;
+    if (dateArray_[1] < 0)
+      dateArray_[1] += 12;
+    if (dateArray_[1] === 0)
+      dateArray_[1] = 12;
   }
   return dateArray_;
 }
 
+const monthsBackTest = () => {
+   var date = monthsBack ([2022, 2, 15], 2);
+    date = monthsBack ([2022, 2, 15], 3);
+    date = monthsBack ([2022, 2, 15], 5);
+    date = monthsBack ([2022, 2, 15], 8);
+    date = monthsBack ([2022, 2, 15], 12);
+    date = monthsBack ([2022, 2, 15], 13);
+    date = monthsBack ([2022, 2, 15], 14);
+    date = monthsBack ([2022, 2, 15], 36);
+    date = monthsBack ([2022, 2, 15], 72);
+    date = monthsBack ([2022, 2, 15], 144);
+}
+
+
 const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
+  dateArray[0] = Number(dateArray[0]);
+  dateArray[1] = Number(dateArray[1]);
+  dateArray[2] = Number(dateArray[2]);
   var dateArray_ =  [...dateArray];
-  if (dateArray_ [2] - days > 0)
+
+  if (dateArray_ [2] - days >= 1)
     dateArray_ [2] -= days;
   else {
     dateArray_[2] = dateArray_[2] - days + 31; // assume 30 days + one day
@@ -107,21 +139,37 @@ const dateDiff = (dateArray1, dateArray2) => {
   return Math.abs(diff);
 }
 
+const same = (date1Split, date2Split) => {
+  if (date1Split[0] === date2Split[0] && date1Split[1] === date2Split[1] && date1Split[2] === date2Split[2])
+    return true;
+  else
+    return false;
+}
+
+
 // return index of dataArray closest
 const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
 
   //var testDateArray = [2020, 11, 1];
-
+  let i = 0;
   var newestIndx = 0;
   var oldestIndx = stockChartXValuesFunction.length -1;
 
-  while (true) {
-    var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
-    var searchArray = stockChartXValuesFunction [searchIndex].split('-');
+  if (compareDate (testDateArray, stockChartXValuesFunction [stockChartXValuesFunction.length-1].split('-')) === -1)
+    return undefined;
 
-    if (Math.abs (daysFrom1970 ( searchArray ) - daysFrom1970(testDateArray)) <= 4){
+  for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
+    var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
+    var searchArray = dateSplit (stockChartXValuesFunction [searchIndex]);
+
+    if (oldestIndx - newestIndx <= 1)
       return searchIndex;
-    }
+
+    // if (same( searchArray, testDateArray))
+    //   return searchIndex;
+    // if (Math.abs (daysFrom1970 ( searchArray ) - daysFrom1970(testDateArray)) <= 3){
+    //   return searchIndex;
+    // }
 
     const comp = compareDate (testDateArray, searchArray);
     switch (comp) {
@@ -130,21 +178,19 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
       //  alert (`date found__, ${searchIndex}`);
       //  break;
       case 1:
-        oldestIndx = Math.round ((oldestIndx + searchIndex) / 2);
+        oldestIndx = searchIndex;
         continue;
       case -1:
-        newestIndx = Math.round ((newestIndx + searchIndex) / 2); 
-        break;
+        newestIndx = searchIndex; 
+        continue;
       default:
         alert ('invalid campareDate result: ', comp);
     }
     console.log (oldestIndx, newestIndx, searchIndex);
   }
-
-
-
+  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i =${i} searchArray=${searchArray}`);
 }
 
 
 
-export {getDate, todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray}
+export {getDate, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest}
