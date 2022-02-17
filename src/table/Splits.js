@@ -40,9 +40,27 @@ export const Splits = (props) => {
     var newSplit = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     prepareRow(newSplit);
 
+
     newSplit.id = nanoid();
     newSplit.values.symbol = split.symbol.toUpperCase();
     newSplit.original.symbol = split.symbol.toUpperCase();
+    newSplit.values.key = newSplit.values.symbol + '_' + split.year
+    
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].values.key === newSplit.values.key) {
+        alert ('duplicate key:  ' + rows[i].values.key);
+        return;
+      }          
+    }
+
+    // rows.map ((row) => {
+    //      if (row.values.key === newSplit.values.key) {
+    //     alert ('duplicate key:  ' + row.values.key);
+    //     return;
+    //   }    
+    // } ) 
+
+
     newSplit.cells = null;
     newSplit.allCells = [];
 
@@ -54,9 +72,9 @@ export const Splits = (props) => {
 
     rows.push (newSplit);
 
-    try {
-      await addDoc (splitRef, {_symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
-    } catch (e) {console.log (e)}
+    // try {
+      await addDoc (splitRef, {_key: newSplit.values.key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
+    // } catch (e) {console.log (e)}
 
     props.refreshCallBack(-1);
   }

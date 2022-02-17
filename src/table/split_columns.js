@@ -1,4 +1,12 @@
 export const SPLIT_COLUMNS = [
+
+  
+  {
+    Header: 'key',
+    Footer: 'key',    
+    accessor: 'key',
+    sticky: 'left'
+  },  
   {
     Header: 'symbol',
     Footer: 'symbol',    
