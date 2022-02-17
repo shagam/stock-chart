@@ -1,222 +1,202 @@
 import React, {useState, useMemo, useEffect} from 'react'
+
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
-
-import {dateSplit, todayDate, todayDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest} from './Date'
-
+import GlobalFilter from './GlobalFilter'
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
+import Firebase from './Firebase'
+import {db} from './firebase-config'
+import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+import { SPLIT_COLUMNS } from './split_columns'
+import SPLIT_MOCK_DATA from './split_mock_data.json'
+import {nanoid} from 'nanoid';
 
 export const Splits = (props) => {
-  const [stockChartXValues, setStockChartXValues] = useState ([]);
-  const [stockChartYValues, setStockChartYValues] = useState ([]);
+ 
+    const [splitsFlag, setSplitsFlag] = useState(false);
+    const [split, setSplit] = useState({});
 
+    const columns = useMemo(() => SPLIT_COLUMNS, []);
+    var  data = useMemo(() => SPLIT_MOCK_DATA, []);
+    const splitRef = collection(db, "splits")
 
+    const splitsFlagChange = () => {setSplitsFlag (! splitsFlag)}
 
-  const searchSplits = (sym, API_KEY) => {
+  function formChange (event) {
+    event.preventDefault();
 
-    if (props.symbol !== undefined)
-      sym = props.symbol;
+    const name = event.target.name;
+    const value = event.target.value;
 
-    if (sym === '' || sym === undefined) {
-      console.log (`Splits chart sym vanished (${sym})`);
-      return;
-    }
+    setSplit (values => ({...values, [name]: value.toUpperCase()}))
 
-    // const API_KEY_ = props.API_KEY; //'BC9UV9YUBWM3KQGF';
-
-    let API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY}`;
-    //https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=demo
-    //https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&outputsize=full&apikey=demo
-
-    fetch(API_Call)
-      .then(
-          function(response) {
-              const respStr = JSON.stringify (response);
-              if (respStr.indexOf (' status: 200, ok: true') !== -1)
-                  console.log(response);
-              return response.json();
-          }
-      )
-      .then(
-          (chartData) => {
-            const dataStr = JSON.stringify(chartData);
-            if (dataStr === "{}") {
-              alert (`Invalid symbol: (${sym})`)
-              return;
-            }
-            console.log(API_Call);
-            console.log (dataStr.substring(0,150));
-            
-            // too frequent AlphaVantage api calls
-            if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                alert (`${dataStr} (${sym}) \n\n${API_Call} `);
-                //setChartData ('');
-                return;
-            }
-            if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-              alert (dataStr.substring(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
-              //setChartData ('');
-              return;
-            }
-
-            var stockChartXValuesFunction = [];              
-            var stockChartYValuesFunction = [];
-            //let periodTag = 'Weekly Adjusted Time Series';
-            let periodTag = "Time Series (Daily)"
-
-            // prepare historical data for plotly chart
-            let i = 0;
-            var splits = "";
-            var splitArray = [];
-            for (var key in chartData[`${periodTag}`]) {
-                stockChartXValuesFunction.push(key);
-                stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
-                if (i > 0) {
-                  let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                  if (ratio > 1.8 || ratio < 0.6) {
-                    ratio = ratio.toFixed(2);
-                    //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                    const  split = {ratio: ratio, date: key, week: -1};
-                    splitArray.push(split); 
-                  }                        
-                }
-                i++;
-            }
-
-            // compensate for splits
-            // if (splitArray.length > 0) {
-            //   for (let i = 0; i < splitArray.length; i++) {
-            //     var ratio = splitArray[i].ratio;
-            //     if (ratio > 1)
-            //       ratio = Math.round (ratio);
-            //     else
-            //       ratio = 1 / Math.round (1/ratio);                  
-            //     for ( let j = splitArray[i].week; j < stockChartYValuesFunction.length; j++) {
-            //         stockChartYValuesFunction[j] /= ratio;
-            //         chartData[`${periodTag}`][key]['1. open'] /= ratio;
-            //     }
-            //   }
-            // }
-
-
-            try {
-            const row_index = props.rows.findIndex((row)=> row.values.symbol === sym);
-            if (row_index === -1) {
-              console.log ('splits.js sym not found')
-              return null;
-            }
-            const todaySplit = todayDateSplit();
-            
-            var dateBackSplit = daysBack (todaySplit, 7);
-            var chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            var date = stockChartXValuesFunction[chartIndex];
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];            
-              props.rows[row_index].values.wk = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];
-            }
-
-            dateBackSplit = daysBack (todaySplit, 14);
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.wk2 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 1);
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.mon = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];           
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 3);
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.mon3 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 6);
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.mon6 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 12);
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.year = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 36); 
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.year2 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 60); // 5 years
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.year5 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 120); // 10 years
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.year10 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-            dateBackSplit = monthsBack (todaySplit, 240); // 20 years
-            chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
-            if (chartIndex !== undefined) {
-              date = stockChartXValuesFunction[chartIndex];
-              props.rows[row_index].values.year20 = stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex];            
-            }
-
-
-            if (splitArray.length > 0)
-              props.rows[row_index].values.splits_list = JSON.stringify (splitArray);
-            else
-              props.rows[row_index].values.splits_list = undefined;
-              //props.rows[row_index].values.splits_object = splitArray;
-
-            } catch (e) {console.log (e)}
-
-            props.saveTable();
-
-            setStockChartXValues (stockChartXValuesFunction);
-            setStockChartYValues (stockChartYValuesFunction);
-
-            if (splitArray.length > 0)
-              splits = JSON.stringify(splitArray);
-            else
-              splits = '';  
-            // if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 100)
-            //   splits = '';
-
-
-            //const updateMili = Date.now();
-            //const updateDate = getDate();
-       
-            // search date
-            // var testDateArray = [2020, 11, 1];
-            // const foundIndex = searchDateInArray (stockChartXValuesFunction, testDateArray);
-            // console.log (foundIndex);
-
-          }
-      )
+    console.log(event.target.name + " " + event.target.value.toUpperCase());
+    //split (event.target.name: event.target.value.toUpperCase());
   }
-  //searchSplits (props.symbol)
 
-  return (
-    <>
-      {
-        props.admin && <button type="button" onClick={()=>searchSplits('NVDA', 'BC9UV9YUBWM3KQGF')}>searchSplitsDaily </button>
+  const formSubmit = async (event) => {
+    event.preventDefault();
+    console.log (split);
+
+    var newSplit = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
+    prepareRow(newSplit);
+
+    newSplit.id = nanoid();
+    newSplit.values.symbol = split.symbol.toUpperCase();
+    newSplit.original.symbol = split.symbol.toUpperCase();
+    newSplit.cells = null;
+    newSplit.allCells = [];
+
+    newSplit.values.jump = split.jump;
+    newSplit.values.year = split.year;
+    newSplit.values.month = split.month;
+    newSplit.values.day = split.day;
+    prepareRow(newSplit);
+
+    rows.push (newSplit);
+
+    try {
+      await addDoc (splitRef, {_symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
+    } catch (e) {console.log (e)}
+
+    props.refreshCallBack(-1);
+  }
+
+  function deleteClick(symbol) {
+    const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);
+      if (rowIndex === -1) {
+        alert ('split symbol not found ', symbol);
+        return;
+      } 
+      rows.splice(rowIndex, 1);
+      props.refreshCallBack(-1);
+  }
+
+
+
+  const {
+
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = useTable ({
+    columns,
+    data,
+
+  },
+  useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
+
+  )
+
+  const style_component = {
+    border: '2px solid red',
+  };
+
+  const style_header = {
+    // 'text-align': 'center',
+    // 'background-color': '#04AA6D',
+    color: 'white',
+    position: 'sticky',
+    top: 0
+  }
+    
+  
+  const style_table = {
+    // background: 'blue',
+    // color: 'red',
+    // fontSize: 200,
+    'overflow-y': 'scroll',
+    /* background: yellow; */
+    'text-align': 'center',
+    height: '50vh',
+    display: 'block'
+    // padding: '-20px',
+    // margin: '-20px'
+  };
+
+
+
+  const { globalFilter } = state
+
+  return  props.admin && (
+  
+    <div style= {style_component}>
+      <div>
+            <input
+              type="checkbox" checked={splitsFlag}
+              onChange={splitsFlagChange}
+            /> splits
+      </div>
+
+      { splitsFlag &&
+
+        <div  className = 'split'>
+          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
+          {'  rows=' + rows.length}
+
+          <table style = {style_table} id="stockTable_id" {...getTableProps()}>
+            <thead style={ style_header }>
+              {headerGroups.map ((headerGroup) => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map((columns) => (
+                        <th {...columns.getHeaderProps(columns.getSortByToggleProps())}>{columns.render('Header')} 
+                        <span>
+                          {columns.isSorted ? (columns.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
+                        </span>
+                        </th>
+                    ))}
+                  </tr>
+              ))}
+            </thead>
+          
+            <tbody id="tableBodyId" {...getTableBodyProps()}>
+              {
+                rows.map(row => {
+                  // {style: (row.GOOGCompare > 1.1 || row.GOOGCompare < 0.9) ? {background: red}}
+                  prepareRow(row)
+                  return (
+                    <tr id='stock_row_id_'
+                      {...row.getRowProps()}>
+                      {row.cells.map((cell) => {
+                        return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                      })}
+                        <div>
+                        <button type="button" onClick={()=>deleteClick(row.values.symbol)}>del</button>
+                        </div>
+                    </tr>
+                  )
+                })}
+            </tbody>
+          </table>
+
+
+          <form onSubmit = {formSubmit}>
+          < input type="text" name="symbol"  required="required"
+              placeholder="Symbol (stock or etf"  onChange={formChange}  /> 
+
+            <input type="text" name="jump"  required="required"
+              placeholder="jump (2, 0.5)"  onChange={formChange}  />
+     
+            <input type="number" name="year"  required="required"
+              placeholder="year "  onChange={formChange}  />
+
+            <input type="number" name="month"  required="required"
+              placeholder="month 1..12 "  onChange={formChange}  />
+
+            <input type="number" name="day"  required="required"
+              placeholder="day 1..31"  onChange={formChange}  />
+
+            <button type="submit"> add split </button>
+          </form>
+
+        </div>
+
+         // props.admin && <button type="button" onClick={()=>searchSplits('NVDA', 'BC9UV9YUBWM3KQGF')}>searchSplitsDaily </button>
       }     
-    </>
+    </div>
   )
 }
 

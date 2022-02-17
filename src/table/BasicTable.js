@@ -812,8 +812,6 @@ export const BasicTable = (props) => {
      {/* {console.log (chartSymbol)} */}
 
       <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
-       
-      <Splits symbol ={chartSymbol} rows = {rows} API_KEY = 'BC9UV9YUBWM3KQGF' admin = {admin} saveTable = {saveTable} />
 
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
       
@@ -826,6 +824,8 @@ export const BasicTable = (props) => {
       
       <div id='manual_id'>
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
+        
+        <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4} refreshCallBack = {props.refreshCallBack}/>
         
         <Manual userAgent={userAgent}/>
         
