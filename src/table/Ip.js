@@ -39,7 +39,6 @@ function Ip (props) {
   }
 
   
-  
   const collect_ip = () => {
     ipFireGet();
   }
@@ -52,16 +51,17 @@ function Ip (props) {
 
   return (
     <>
-      <div id="ip_diaplay">
-        <label>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </label>
-        <button type="button" onClick={()=>collect_ip()}>get IP    </button>
-
-        <div id = 'ip_diaspay_Checkbox'>
-            <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
-        </div>
+      <div id = 'ip_diaspay_Checkbox'>
+          <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
       </div>
 
-        {ipDisplayFlag &&
+      {ipDisplayFlag && <div>
+
+        <div id="ip_diaplay">
+          <label>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </label>
+          <button type="button" onClick={()=>collect_ip()}>get IP    </button>
+        </div>
+
         <div className='text'> 
           <textarea
             type='text'
@@ -73,7 +73,9 @@ function Ip (props) {
           >
           </textarea>
         </div>
-      }
+        
+      </div>
+    }
     </>
   )
 }
