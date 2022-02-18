@@ -33,33 +33,15 @@ export const Splits = (props) => {
     //split (event.target.name: event.target.value.toUpperCase());
   }
 
-  const formSubmit = async (event) => {
-    event.preventDefault();
-    console.log (split);
-
+  
+  const insetInTable = (split) => {
     var newSplit = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     prepareRow(newSplit);
-
-
+    try {
     newSplit.id = nanoid();
     newSplit.values.symbol = split.symbol.toUpperCase();
     newSplit.original.symbol = split.symbol.toUpperCase();
-    newSplit.values.key = newSplit.values.symbol + '_' + split.year
-    
-    for (let i = 0; i < rows.length; i++) {
-      if (rows[i].values.key === newSplit.values.key) {
-        alert ('duplicate key:  ' + rows[i].values.key);
-        return;
-      }          
-    }
-
-    // rows.map ((row) => {
-    //      if (row.values.key === newSplit.values.key) {
-    //     alert ('duplicate key:  ' + row.values.key);
-    //     return;
-    //   }    
-    // } ) 
-
+    newSplit.values.key = split.symbol.toUpperCase() + '_' + split.year;
 
     newSplit.cells = null;
     newSplit.allCells = [];
@@ -71,12 +53,62 @@ export const Splits = (props) => {
     prepareRow(newSplit);
 
     rows.push (newSplit);
+    
+    props.refreshCallBack(-1);
+
+    } catch (e) {console.log (e);}
+  }
+  
+  
+  const searchKeyInTable = (key) => {
+    for (let i = 0; i < rows.length; i++) {
+      if (rows[i].values.key === key) {
+        return true;
+      }          
+    }
+    return false;
+  }
+
+
+  const formSubmit = async (event) => {
+    event.preventDefault();
+    // console.log (split); // array of splits
+
+    // var newSplit = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
+    // prepareRow(newSplit);
+
+
+    // newSplit.id = nanoid();
+    // newSplit.values.symbol = split.symbol.toUpperCase();
+    // newSplit.original.symbol = split.symbol.toUpperCase();
+    // newSplit.values.key = newSplit.values.symbol + '_' + split.year
+    
+    const key = split.symbol.toUpperCase() + '_' + split.year;
+
+    if (searchKeyInTable (key)) {
+      alert ('duplicate key:  ' + key);
+      return;
+    }
+   
+    // newSplit.cells = null;
+    // newSplit.allCells = [];
+
+    // newSplit.values.jump = split.jump;
+    // newSplit.values.year = split.year;
+    // newSplit.values.month = split.month;
+    // newSplit.values.day = split.day;
+    // prepareRow(newSplit);
+
+    // rows.push (newSplit);
+    insetInTable(split);
+
+    // await addDoc (splitRef, {_key: key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
 
     // try {
-      await addDoc (splitRef, {_key: newSplit.values.key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
+      // await addDoc (splitRef, {_key: newSplit.values.key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
     // } catch (e) {console.log (e)}
 
-    props.refreshCallBack(-1);
+    // props.refreshCallBack(-1);
   }
 
   function deleteClick(symbol) {
@@ -89,6 +121,24 @@ export const Splits = (props) => {
       props.refreshCallBack(-1);
   }
 
+  const firebaseGet = async () => {
+    const splitRecords = await getDocs(splitRef);
+
+    for (let i = 0; i < splitRecords.docs.length; i++) {
+      console.log (splitRecords.docs[i].data());
+      const key = splitRecords.docs[i].data()._key;
+
+      if (searchKeyInTable (key))
+        continue;
+  
+      const split = {key: splitRecords.docs[i].data()._key, symbol: splitRecords.docs[i].data()._symbol,
+          jump: splitRecords.docs[i].data().jump, year: splitRecords.docs[i].data().year,
+        month: splitRecords.docs[i].data().month, day: splitRecords.docs[i].data().day}
+
+      insetInTable(split);
+    }
+  }
+  
 
 
   const {
@@ -152,9 +202,10 @@ export const Splits = (props) => {
       { splitsFlag &&
 
         <div  className = 'split'>
+          
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
-          {'  rows=' + rows.length}
-
+          {'  rows=' + rows.length + "  "}
+          <button type="button" onClick={()=>firebaseGet()}>firebaseGet </button>
           <table style = {style_table} id="stockTable_id" {...getTableProps()}>
             <thead style={ style_header }>
               {headerGroups.map ((headerGroup) => (
@@ -209,10 +260,8 @@ export const Splits = (props) => {
 
             <button type="submit"> add split </button>
           </form>
-
         </div>
 
-         // props.admin && <button type="button" onClick={()=>searchSplits('NVDA', 'BC9UV9YUBWM3KQGF')}>searchSplitsDaily </button>
       }     
     </div>
   )
