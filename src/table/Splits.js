@@ -39,9 +39,9 @@ export const Splits = (props) => {
     prepareRow(newSplit);
     try {
     newSplit.id = nanoid();
+    newSplit.values.key = split.symbol.toUpperCase() + '_' + split.year;
     newSplit.values.symbol = split.symbol.toUpperCase();
     newSplit.original.symbol = split.symbol.toUpperCase();
-    newSplit.values.key = split.symbol.toUpperCase() + '_' + split.year;
 
     newSplit.cells = null;
     newSplit.allCells = [];
@@ -96,7 +96,9 @@ export const Splits = (props) => {
     // try {
       await addDoc (splitRef, {_key: key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
     // } catch (e) {console.log (e)}
+    saveTable();
   }
+
 
   function deleteClick(symbol) {
     const rowIndex = rows.findIndex((row)=> row.values.symbol === symbol);
@@ -126,7 +128,17 @@ export const Splits = (props) => {
     }
   }
   
-
+  const saveTable = () => {
+    const splitsTable = [];
+    for (let i = 0; i < rows.length; i++) {
+      splitsTable.push(rows[i].values);
+    }
+    const stocksStr = JSON.stringify(splitsTable);
+    if (splitsTable.length > 0)
+      localStorage.setItem ('splits', stocksStr);
+    else
+      localStorage.removeItem ('splits'); // reading empty array cause a bug
+  }
 
   const {
 
@@ -192,7 +204,11 @@ export const Splits = (props) => {
           
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
           {'  rows=' + rows.length + "  "}
+          
           <button type="button" onClick={()=>firebaseGet()}>firebaseGet </button>
+
+
+
           <table style = {style_table} id="stockTable_id" {...getTableProps()}>
             <thead style={ style_header }>
               {headerGroups.map ((headerGroup) => (
