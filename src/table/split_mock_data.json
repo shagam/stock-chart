@@ -1,68 +1,35 @@
 [
   {
-    "key": "AMZN_2010", 
-    "symbol": "AMZN",
-    "jump": 2,
+    "key": "NVDA_2021", 
+    "symbol": "NVDA",
+    "jump": 4,
     "year": 2010,
-    "month": 3,
-    "day": 15      
+    "month": 7,
+    "day": 20      
   },
   {
-    "key": "AMZN_2011", 
-    "symbol": "AMZN",
+    "key": "NVDA_2007", 
+    "symbol": "NVDA",
+    "jump": 1.5,
+    "year": 2007,
+    "month": 9,
+    "day": 11      
+  },
+  {
+    "key": "NVDA_2006", 
+    "symbol": "NVDA",
     "jump": 2,
-    "year": 2011,
-    "month": 3,
-    "day": 15      
+    "year": 2006,
+    "month": 4,
+    "day": 7      
   },
   {
-    "key": "AMZN_2012", 
-    "symbol": "AMZN",
+    "key": "NVDA_2001", 
+    "symbol": "NVDA",
     "jump": 2,
-    "year": 2012,
-    "month": 3,
-    "day": 15      
-  },
-  {
-    "key": "AMZN_2013", 
-    "symbol": "AMZN",
-    "jump": 2,
-    "year": 2013,
-    "month": 3,
-    "day": 15      
-  },
-  {
-    "key": "GOOG_2012", 
-    "symbol": "GOOG",
-    "jump": 3,
-    "year": 2012,
-    "month": 3,
-    "day": 10     
-  },
-  {
-    "key": "GOOG_2013", 
-    "symbol": "GOOG",
-    "jump": 3,
-    "year": 2013,
-    "month": 3,
-    "day": 10     
-  },
-  {
-    "key": "GOOG_2014", 
-    "symbol": "GOOG",
-    "jump": 3,
-    "year": 2014,
-    "month": 3,
-    "day": 10     
-  }
-  ,
-  {
-    "key": "GOOG_2015", 
-    "symbol": "GOOG",
-    "jump": 3,
-    "year": 2015,
-    "month": 3,
-    "day": 10     
+    "year": 2001,
+    "month": 9,
+    "day": 17      
   }
 
 

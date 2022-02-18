@@ -16,7 +16,18 @@ export const Splits = (props) => {
     const [split, setSplit] = useState({});
 
     const columns = useMemo(() => SPLIT_COLUMNS, []);
-    var  data = useMemo(() => SPLIT_MOCK_DATA, []);
+    var  data;// = useMemo(() => SPLIT_MOCK_DATA, []);
+
+    var stocksFromLocalStorage = localStorage.getItem("splits");
+    var mmmmm = useMemo; 
+    if (! stocksFromLocalStorage) 
+    {
+        data = mmmmm(() => SPLIT_MOCK_DATA, []);
+    }
+    else 
+        data = mmmmm(() => JSON.parse (localStorage.getItem("splits")), []);
+
+
     const splitRef = collection(db, "splits")
 
     const splitsFlagChange = () => {setSplitsFlag (! splitsFlag)}
@@ -107,6 +118,7 @@ export const Splits = (props) => {
         return;
       } 
       rows.splice(rowIndex, 1);
+      saveTable();
       props.refreshCallBack(-1);
   }
 
@@ -206,7 +218,7 @@ export const Splits = (props) => {
           {'  rows=' + rows.length + "  "}
           
           <button type="button" onClick={()=>firebaseGet()}>firebaseGet </button>
-
+          <button type="button" onClick={()=>saveTable()}>saveTable </button>
 
 
           <table style = {style_table} id="stockTable_id" {...getTableProps()}>
