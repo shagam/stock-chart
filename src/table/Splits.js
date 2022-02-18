@@ -29,7 +29,7 @@ export const Splits = (props) => {
 
     setSplit (values => ({...values, [name]: value.toUpperCase()}))
 
-    console.log(event.target.name + " " + event.target.value.toUpperCase());
+    //console.log(event.target.name + " " + event.target.value.toUpperCase());
     //split (event.target.name: event.target.value.toUpperCase());
   }
 
@@ -126,10 +126,10 @@ export const Splits = (props) => {
     // background: 'blue',
     // color: 'red',
     // fontSize: 200,
-    'overflow-y': 'scroll',
+    overflowY: 'scroll',
     /* background: yellow; */
-    'text-align': 'center',
-    height: '50vh',
+    textAlign: 'center',
+    height: '40vh',
     display: 'block'
     // padding: '-20px',
     // margin: '-20px'
