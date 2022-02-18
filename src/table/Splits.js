@@ -74,15 +74,6 @@ export const Splits = (props) => {
     event.preventDefault();
     // console.log (split); // array of splits
 
-    // var newSplit = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-    // prepareRow(newSplit);
-
-
-    // newSplit.id = nanoid();
-    // newSplit.values.symbol = split.symbol.toUpperCase();
-    // newSplit.original.symbol = split.symbol.toUpperCase();
-    // newSplit.values.key = newSplit.values.symbol + '_' + split.year
-    
     const key = split.symbol.toUpperCase() + '_' + split.year;
 
     if (searchKeyInTable (key)) {
@@ -90,25 +81,21 @@ export const Splits = (props) => {
       return;
     }
    
-    // newSplit.cells = null;
-    // newSplit.allCells = [];
 
-    // newSplit.values.jump = split.jump;
-    // newSplit.values.year = split.year;
-    // newSplit.values.month = split.month;
-    // newSplit.values.day = split.day;
-    // prepareRow(newSplit);
-
-    // rows.push (newSplit);
     insetInTable(split);
 
-    // await addDoc (splitRef, {_key: key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
-
+    // delete old docs with this key
+    var userQuery = query (splitRef, where('_key', '==', key));
+    const split_array = await getDocs(userQuery);
+    for (let i = 0; i < split_array.docs.length; i++) {
+      //const id = gain.docs[i].id;
+      var gainDoc = doc(db, "stock-gain_", split_array.docs[i].id);
+      await deleteDoc (gainDoc);    
+    }
+    
     // try {
-      // await addDoc (splitRef, {_key: newSplit.values.key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
+      await addDoc (splitRef, {_key: key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
     // } catch (e) {console.log (e)}
-
-    // props.refreshCallBack(-1);
   }
 
   function deleteClick(symbol) {
