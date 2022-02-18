@@ -89,10 +89,10 @@ export const Splits = (props) => {
     const split_array = await getDocs(userQuery);
     for (let i = 0; i < split_array.docs.length; i++) {
       //const id = gain.docs[i].id;
-      var gainDoc = doc(db, "stock-gain_", split_array.docs[i].id);
-      await deleteDoc (gainDoc);    
+      var splitDoc = doc(db, "splits", split_array.docs[i].id);
+      await deleteDoc (splitDoc);    
     }
-    
+
     // try {
       await addDoc (splitRef, {_key: key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
     // } catch (e) {console.log (e)}
