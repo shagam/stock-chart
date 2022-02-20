@@ -3,7 +3,17 @@ import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 import {dateSplit, monthsBack, daysBack} from './Date';
 
+import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import {} from "date-fns";
+import {format} from "date-fns"
+
 export const MarketstackApi = (props) => {
+
+  const [startDate, setStartDate] = useState(new Date(2021, 9, 5));
+  const [displayFlag, setDisplayFlag] = useState (false); 
+
+
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
 
@@ -37,8 +47,13 @@ export const MarketstackApi = (props) => {
 
     //const API_KEY = '46bea3e9fabc17363dbbe15839cb0fe3';  // eli.shagam.gmail.com
     const API_KEY = '2b5394f2ced526a03a5a7886403a22ce'; // Goldstein.dina@gmail.com
-    var DATE = '2022-04-01'
-    
+    var DATE = '2021-04-01'
+    //var DATE = startDate;
+    const startYear = startDate.getFullYear();
+    const startMon = startDate.getMonth();
+    const startDay = startDate.getDay();
+   // DATE = startYear + '-' +  startMon + '-' + startDay;
+
     const date = new Date();
     // var DATE = Number(date.getFullYear()) - 1;
     // if (date.getMonth() > 11)
@@ -50,7 +65,7 @@ export const MarketstackApi = (props) => {
 
     //let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_from=${DATE}&limit=1&offset=100`
 
-    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_to=${DATE}&limit=1`
+    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_to=${DATE}&limit=30`
 
     // & date_to = YYYY-MM-DD
 
@@ -140,11 +155,23 @@ export const MarketstackApi = (props) => {
       )
   }
   //searchSplits (props.symbol)
+  const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
+
 
   return (
     <>
-      {
-        props.admin && <button type="button" onClick={()=>searchSplits('NVDA')}>marketStack </button>
+      <div>
+            <input
+              type="checkbox" checked={displayFlag}
+              onChange={displayFlagChange}
+            /> marketStack
+      </div>
+      {displayFlag &&
+       <div>
+          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+
+          <button type="button" onClick={()=>searchSplits('NVDA')}>marketStackSearch </button>
+        </div> 
       }     
     </>
   )
