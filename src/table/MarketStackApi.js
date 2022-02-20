@@ -10,7 +10,7 @@ import {format} from "date-fns"
 
 export const MarketstackApi = (props) => {
 
-  const [startDate, setStartDate] = useState(new Date(2021, 9, 5));
+  const [startDate, setStartDate] = useState(new Date(2021, 9, 15));
   const [displayFlag, setDisplayFlag] = useState (false); 
 
 
@@ -27,8 +27,8 @@ export const MarketstackApi = (props) => {
       return;
     }
 
-  const date0 = monthsBack ([2020, 1, 1], 1);
-  const date1 = daysBack ([2020, 1, 1], 7);
+  // const date0 = monthsBack ([2020, 1, 1], 1);
+  // const date1 = daysBack ([2020, 1, 1], 7);
 // End-of-Day Data API Endpoint
 
 //{"pagination":{"limit":100,"offset":0,"count":100,"total":253},"data":[{"open":171.73,"high":175.35,"low":171.43,"close":174.83,"volume":73516656.0,"adj_high":null,"adj_low":null,"adj_close":174.83,"adj_open":null,"adj_volume":null,"split_factor":1.0,"dividend":0.0,"symbol":"AAPL","exchange":"XNAS","date":"2022-02-08T00:00:00+0000"},{"open":172.86,"high":173.95,"low":170.95,"close":171.66,"volume":77045100.0,"adj_high":null,"adj_low":null,"adj_close":171.66,"adj_open":null,"adj_volume":null,"split_factor":1.0,"dividend":0.0,"symbol":"AAPL","exchange":"XNAS","date":"2022-02-07T00:00:00+0000"},
@@ -50,9 +50,9 @@ export const MarketstackApi = (props) => {
     var DATE = '2021-04-01'
     //var DATE = startDate;
     const startYear = startDate.getFullYear();
-    const startMon = startDate.getMonth();
-    const startDay = startDate.getDay();
-   // DATE = startYear + '-' +  startMon + '-' + startDay;
+    const startMon = startDate.getMonth() + 1;
+    const startDay = startDate.getDate() + 1;
+    DATE = startYear + '-' +  startMon + '-' + startDay;
 
     const date = new Date();
     // var DATE = Number(date.getFullYear()) - 1;
@@ -65,16 +65,17 @@ export const MarketstackApi = (props) => {
 
     //let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_from=${DATE}&limit=1&offset=100`
 
-    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_to=${DATE}&limit=30`
+    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_to=${DATE}&limit=20`
 
     // & date_to = YYYY-MM-DD
 
     fetch(API_Call)
       .then(
           function(response) {
-            if (response.status === 429) {
+            if (response.status === 429 || response.status === 422) {
               console.log (response);
-              alert ('marketstack too Many Requests (allowed 1000 per month) ');
+              alert ('marketstack too Many Requests (allowed 1000 per month) ' + response.status + ' ' +
+              response.statusText);
               return null;
             }
             const respStr = JSON.stringify (response);
