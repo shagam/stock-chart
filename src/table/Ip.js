@@ -31,7 +31,17 @@ function Ip (props) {
       if (index === -1) {// not found
         //ipList.push (ipReadList.docs[i].data());
         ipListCollect.push (ipReadList.docs[i].data());
-        ipTable += JSON.stringify(ipReadList.docs[i].data()) + "\n\n";
+        var ipTable_one = "ipv4: " + "'" + ipReadList.docs[i].data()._ipv4  + "'"  + ", ";
+        ipTable_one += "country_name: " + "'" + ipReadList.docs[i].data().country_name  + "'" + ", ";
+        ipTable_one += "city: "  + "'" + ipReadList.docs[i].data().city  + "'" + ", ";
+        ipTable_one += "state: "  + "'" + ipReadList.docs[i].data().state  + "'" + ", ";
+        ipTable_one += "latitude: "  + "'" + ipReadList.docs[i].data().latitude  + "'" + ", ";
+        ipTable_one += "longitude: "  + "'" + ipReadList.docs[i].data().longitude  + "'" + ", ";
+        // ipTable_one += "postal: " +   ipReadList.docs[i].data().postal + ", ";
+        ipTable_one += "userAgent: " + "'" + ipReadList.docs[i].data().userAgent  + "'" + ", ";
+        ipTable_one += "update: " + "'" + ipReadList.docs[i].data().update  + "'" + "\n\n";
+   
+        ipTable += ipTable_one; //JSON.stringify(ipReadList.docs[i].data()) + "\n\n";
       }
     }
     setIpListFormated(ipTable);
