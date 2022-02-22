@@ -140,7 +140,7 @@ export const Splits = (props) => {
       insetInTable(split);
     }
     saveTable();
-
+    props.refreshCallBack(-1);
 
     // search stock table
     for (let s = 0; s < props.rows.length; s++) {
