@@ -14,6 +14,7 @@ export const Splits = (props) => {
  
     const [splitsFlag, setSplitsFlag] = useState(false);
     const [split, setSplit] = useState({});
+    // const [splitArray, setSplitArray] = useTable ([]);
 
     const columns = useMemo(() => SPLIT_COLUMNS, []);
     var  data;// = useMemo(() => SPLIT_MOCK_DATA, []);
@@ -126,7 +127,7 @@ export const Splits = (props) => {
     const splitRecords = await getDocs(splitRef);
 
     for (let i = 0; i < splitRecords.docs.length; i++) {
-      console.log (splitRecords.docs[i].data());
+      // console.log (splitRecords.docs[i].data());
       const key = splitRecords.docs[i].data()._key;
 
       if (searchKeyInTable (key))
@@ -137,6 +138,27 @@ export const Splits = (props) => {
         month: splitRecords.docs[i].data().month, day: splitRecords.docs[i].data().day}
 
       insetInTable(split);
+    }
+    saveTable();
+
+
+    // search stock table
+    for (let s = 0; s < props.rows.length; s++) {
+      const sym = props.rows[s].values.symbol;
+
+
+      // build array for specific stock
+      const splitArray_build = [];
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].values.symbol !== sym)
+          continue;
+          const date = rows[i].values.year + '-' + rows[i].values.month + '-' + rows[i].values.day;
+          const split = {ratio: Number (rows[i].values.jump), date: date};
+          splitArray_build.push (split);
+      }
+      if (splitArray_build.length > 0)
+        console.log (sym, splitArray_build);
+      // props.rows[s].splits_list_ = splitArray_build;
     }
   }
   
