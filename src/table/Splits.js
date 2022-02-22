@@ -123,6 +123,33 @@ export const Splits = (props) => {
       props.refreshCallBack(-1);
   }
 
+  const insertTableSplit = (sym) => {
+    // search stock table
+      // build array for specific stock
+      if (sym === undefined)
+        return;
+
+      const row_index = props.rows.findIndex((row)=> row.values.symbol === sym);
+      if (row_index === -1) // not found
+        return;
+
+      const splitArray_build = [];
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i].values.symbol !== sym)
+          continue;
+          const date = rows[i].values.year + '-' + rows[i].values.month + '-' + rows[i].values.day;
+          const split = {ratio: Number (rows[i].values.jump), date: date};
+          splitArray_build.push (split);
+      }
+      if (splitArray_build.length > 0)
+        console.log (sym, splitArray_build);
+      props.rows[row_index].values.splits_list_ = splitArray_build;
+      props.rows[row_index].values.splits_list = JSON.stringify(splitArray_build);
+      props.rows[row_index].values.splits_calc = 'table'
+      props.refreshCallBack(-1);
+  }
+
+
   const firebaseGet = async () => {
     const splitRecords = await getDocs(splitRef);
 
@@ -141,24 +168,14 @@ export const Splits = (props) => {
     }
     saveTable();
     props.refreshCallBack(-1);
+    insertTableSplit(props.symbol)
 
     // search stock table
     for (let s = 0; s < props.rows.length; s++) {
       const sym = props.rows[s].values.symbol;
 
-
       // build array for specific stock
-      const splitArray_build = [];
-      for (let i = 0; i < rows.length; i++) {
-        if (rows[i].values.symbol !== sym)
-          continue;
-          const date = rows[i].values.year + '-' + rows[i].values.month + '-' + rows[i].values.day;
-          const split = {ratio: Number (rows[i].values.jump), date: date};
-          splitArray_build.push (split);
-      }
-      if (splitArray_build.length > 0)
-        console.log (sym, splitArray_build);
-      // props.rows[s].splits_list_ = splitArray_build;
+
     }
   }
   
