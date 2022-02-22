@@ -390,7 +390,7 @@ export const BasicTable = (props) => {
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    const weekly = true;
+    const weekly = false;
     let API_Call;
     if (weekly)
       API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
@@ -446,10 +446,16 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
-                  if (i > 1140)
-                    continue;  //ignore splits before 22 years
+                  // if (i > 1140)
+                  //   continue;  //ignore splits before 22 years
                   if (i > 0) {
                     let jump = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                    if (jump > 1.4 && jump < 1.6) {
+                      jump = (jump * 2).toFixed(2);
+                      jump /= 2;
+                      const  split = {ratio: jump, date: key};
+                      splitArray.push(split);                       
+                    }
                     if (jump > 1.8 || jump < 0.6) {
                       jump = jump.toFixed(2);
                       //splits += `date=${key}  ratio=${ratio} week=${i}, `;
