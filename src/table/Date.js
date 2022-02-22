@@ -155,6 +155,8 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
   var newestIndx = 0;
   var oldestIndx = stockChartXValuesFunction.length -1;
 
+  if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
+    return undefined;
   if (compareDate (testDateArray, stockChartXValuesFunction [stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
 
