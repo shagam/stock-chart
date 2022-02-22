@@ -20,7 +20,7 @@ function Ip (props) {
   const LOG_FLAG = false;
 
   const ipFireGet = async () => {
-    const longtitude = false;
+    const longtitude = true;
     const userAgent =- false;
     var ipTable = "";
     var ipListCollect = [];
@@ -81,7 +81,7 @@ function Ip (props) {
           <textarea
             type='text'
             name='ipList'
-            cols='150'
+            cols='170'
             rows='20'
             readOnly
             defaultValue={ipListFormatted}
