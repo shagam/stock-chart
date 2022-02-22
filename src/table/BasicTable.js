@@ -386,6 +386,8 @@ export const BasicTable = (props) => {
       return;
     }
 
+    const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
@@ -441,9 +443,13 @@ export const BasicTable = (props) => {
 
               // prepare historical data for plotly chart
               let i = 0;
+
               var splits = "";
               var splitArray = [];
-              for (var key in chartData[`${periodTag}`]) {
+              if (rows[row_index].values.splits_calc === 'table')
+                splitArray = rows[row_index].values.splits_list_table;
+              else {
+                for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
                   // if (i > 1140)
@@ -464,8 +470,10 @@ export const BasicTable = (props) => {
                     }                        
                   }
                   i++;
+                }
               }
-
+              console.log (sym, rows[row_index].values.splits_calc, splitArray);
+              
               // compensate for splits
               if (splitArray.length > 0 && splitsCalc) {
                 for (let i = 0; i < splitArray.length; i++) {

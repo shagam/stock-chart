@@ -124,6 +124,9 @@ export const Splits = (props) => {
   }
 
   const insertTableSplit = (sym) => {
+    if (props.symbol === undefined || rows === undefined) // not initialized yet
+      return;
+
     // search stock table
       // build array for specific stock
       if (sym === undefined)
@@ -143,7 +146,7 @@ export const Splits = (props) => {
       }
       if (splitArray_build.length > 0)
         console.log (sym, splitArray_build);
-      props.rows[row_index].values.splits_list_ = splitArray_build;
+      props.rows[row_index].values.splits_list_table = splitArray_build;
       props.rows[row_index].values.splits_list = JSON.stringify(splitArray_build);
       props.rows[row_index].values.splits_calc = 'table'
       props.refreshCallBack(-1);
@@ -179,6 +182,7 @@ export const Splits = (props) => {
     }
   }
   
+
   const saveTable = () => {
     const splitsTable = [];
     for (let i = 0; i < rows.length; i++) {
@@ -190,6 +194,8 @@ export const Splits = (props) => {
     else
       localStorage.removeItem ('splits'); // reading empty array cause a bug
   }
+
+ 
 
   const {
 
@@ -208,6 +214,8 @@ export const Splits = (props) => {
   useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
 
   )
+  
+  //insertTableSplit(props.symbol);
 
   const style_component = {
     border: '2px solid red',

@@ -146,17 +146,17 @@ const same = (date1Split, date2Split) => {
     return false;
 }
 
-
 // return index of dataArray closest
 const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
+
+  if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
+  return undefined;
 
   //var testDateArray = [2020, 11, 1];
   let i = 0;
   var newestIndx = 0;
   var oldestIndx = stockChartXValuesFunction.length -1;
 
-  if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
-    return undefined;
   if (compareDate (testDateArray, stockChartXValuesFunction [stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
 
