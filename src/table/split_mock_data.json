@@ -1,15 +1,15 @@
 [
-  {"key": "NVDA_2021", "symbol": "NVDA","jump": 4,"year": 2010,"month": 7,"day": 20 },
-  {"key": "NVDA_2007", "symbol": "NVDA","jump": 1.5,"year": 2007,"month": 9,"day": 11},
-  {"key": "NVDA_2006", "symbol": "NVDA","jump": 2,"year": 2006,"month": 4,"day": 7},
-  {"key": "NVDA_2001", "symbol": "NVDA", "jump": 2, "year": 2001, "month": 9,"day": 17},
+  {"key": "NVDA_2021", "symbol": "NVDA", "jump": 4, "year": 2010, "month": 7, "day": 20 },
+  {"key": "NVDA_2007", "symbol": "NVDA", "jump": 1.5, "year": 2007, "month": 9, "day": 11},
+  {"key": "NVDA_2006", "symbol": "NVDA", "jump": 2, "year": 2006, "month": 4, "day": 7},
+  {"key": "NVDA_2001", "symbol": "NVDA", "jump": 2, "year": 2001, "month": 9, "day": 17},
 
   
   {"key": "AAPL_2000", "symbol": "AAPL", "jump": 2, "year": 2000, "month": 6, "day": 21},
   {"key": "AAPL_2005", "symbol": "AAPL", "jump": 2, "year": 2005, "month": 2, "day": 28},
   {"key": "AAPL_2014", "symbol": "AAPL", "jump": 7, "year": 2014, "month": 9, "day": 6},
   {"key": "AAPL_2020", "symbol": "AAPL", "jump": 4, "year": 2020, "month": 8, "day": 21},
-  
+
 
   {"key": "TSLA_2005", "symbol": "TSLA", "jump": 2, "year": 2005, "month": 2, "day": 28},
   {"key": "TSLA_2014", "symbol": "TSLA", "jump": 7, "year": 2014, "month": 6, "day": 9},
