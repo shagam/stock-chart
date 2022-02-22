@@ -73,7 +73,7 @@ function Ip (props) {
       {ipDisplayFlag && <div>
 
         <div id="ip_diaplay">
-          <label>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </label>
+          <div>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </div>
           <button type="button" onClick={()=>collect_ip()}>get IP    </button>
         </div>
 
@@ -81,7 +81,7 @@ function Ip (props) {
           <textarea
             type='text'
             name='ipList'
-            cols='200'
+            cols='150'
             rows='20'
             readOnly
             defaultValue={ipListFormatted}
