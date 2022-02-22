@@ -442,11 +442,11 @@ export const BasicTable = (props) => {
                   if (i > 1140)
                     continue;  //ignore splits before 22 years
                   if (i > 0) {
-                    let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                    if (ratio > 1.8 || ratio < 0.6) {
-                      ratio = ratio.toFixed(2);
+                    let jump = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                    if (jump > 1.8 || jump < 0.6) {
+                      jump = jump.toFixed(2);
                       //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                      const  split = {ratio: ratio, date: key};
+                      const  split = {ratio: jump, date: key};
                       splitArray.push(split); 
                     }                        
                   }
@@ -456,17 +456,16 @@ export const BasicTable = (props) => {
               // compensate for splits
               if (splitArray.length > 0 && splitsCalc) {
                 for (let i = 0; i < splitArray.length; i++) {
-                  var ratio = splitArray[i].ratio;
-                  if (ratio > 1)
-                    ratio = Math.round (ratio);
+                  var jump = splitArray[i].ratio;
+                  if (jump > 1)
+                    jump = Math.round (jump);
                   else
-                    ratio = 1 / Math.round (1/ratio);
+                    jump = 1 / Math.round (1/jump);
                   
                   const splitDate = splitArray[i].date.split('-');
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
                   for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
-                      stockChartYValuesFunction[j] /= ratio;
-                      //chartData[`${periodTag}`][key]['1. open'] /= ratio;
+                      stockChartYValuesFunction[j] /= jump;
                   }
                 }
               }
