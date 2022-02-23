@@ -46,7 +46,7 @@ export const Splits = (props) => {
   }
 
   
-  const insetInTable = (split) => {
+  const insetInSplitsTable = (split) => {
     var newSplit = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     prepareRow(newSplit);
     try {
@@ -94,7 +94,7 @@ export const Splits = (props) => {
     }
    
 
-    insetInTable(split);
+    insetInSplitsTable(split);
 
     // delete old docs with this key
     var userQuery = query (splitRef, where('_key', '==', key));
@@ -123,7 +123,7 @@ export const Splits = (props) => {
       props.refreshCallBack(-1);
   }
 
-  const insertTableSplit = (sym) => {
+  const insertSplitInStockTable = (sym) => {
     if (props.symbol === undefined || rows === undefined) // not initialized yet
       return;
 
@@ -135,6 +135,8 @@ export const Splits = (props) => {
       const row_index = props.rows.findIndex((row)=> row.values.symbol === sym);
       if (row_index === -1) // not found
         return;
+      if (props.rows[row_index].values.splits_calc === 'table')
+        return;  // already in
 
       const splitArray_build = [];
       for (let i = 0; i < rows.length; i++) {
@@ -144,15 +146,17 @@ export const Splits = (props) => {
           const split = {ratio: Number (rows[i].values.jump), date: date};
           splitArray_build.push (split);
       }
-      if (splitArray_build.length > 0)
-        console.log (sym, splitArray_build);
+      if (splitArray_build.length === 0) // no split found ?
+        return;
+      
+      // insert splits in stock table.
+      console.log (sym, splitArray_build);
       props.rows[row_index].values.splits_list_table = splitArray_build;
       props.rows[row_index].values.splits_list = JSON.stringify(splitArray_build);
       props.rows[row_index].values.splits_calc = 'table'
-      props.refreshCallBack(-1);
   }
 
-
+  // get splits from firebase into splits table. 
   const firebaseGet = async () => {
     const splitRecords = await getDocs(splitRef);
 
@@ -167,21 +171,28 @@ export const Splits = (props) => {
           jump: splitRecords.docs[i].data().jump, year: splitRecords.docs[i].data().year,
         month: splitRecords.docs[i].data().month, day: splitRecords.docs[i].data().day}
 
-      insetInTable(split);
+      insetInSplitsTable(split);
     }
     saveTable();
     props.refreshCallBack(-1);
-    insertTableSplit(props.symbol)
-
-    // search stock table
-    for (let s = 0; s < props.rows.length; s++) {
-      const sym = props.rows[s].values.symbol;
-
-      // build array for specific stock
-
-    }
   }
   
+
+  // useEffect (() => { 
+  //   insertSplitsInStockTableAll();
+  // }, [])
+
+  // scan stocktable to insert splits
+  const insertSplitsInStockTableAll = () => {
+    for (let s = 0; s < props.rows.length; s++) {
+      const sym = props.rows[s].values.symbol;
+      insertSplitInStockTable (sym);  // if found
+      // build array for specific stock
+    }
+    props.saveTable();
+    props.refreshCallBack(-1);
+  }
+
 
   const saveTable = () => {
     const splitsTable = [];
@@ -263,9 +274,10 @@ export const Splits = (props) => {
           
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
           {'  rows=' + rows.length + "  "}
-          
+
+          <button type="button" onClick={()=>saveTable()}>saveTable </button>          
           <button type="button" onClick={()=>firebaseGet()}>firebaseGet </button>
-          <button type="button" onClick={()=>saveTable()}>saveTable </button>
+          <button type="button" onClick={()=>insertSplitsInStockTableAll()}>insertSplitsInStockTable </button>
 
 
           <table style = {style_table} id="stockTable_id" {...getTableProps()}>

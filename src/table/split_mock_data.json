@@ -13,7 +13,7 @@
 
   {"key": "TSLA_2005", "symbol": "TSLA", "jump": 2, "year": 2005, "month": 2, "day": 28},
   {"key": "TSLA_2014", "symbol": "TSLA", "jump": 7, "year": 2014, "month": 6, "day": 9},
-  {"key": "TSLA_2020", "symbol": "TSLA", "jump": 4, "year": 2020, "month": 8, "day": 31}
+  {"key": "TSLA_2020", "symbol": "TSLA", "jump": 4, "year": 2020, "month": 8, "day": 31},
 
-
+  {"key": "MSFT_2003", "symbol": "MSFT", "jump": 2, "year": 2003, "month": 2, "day": 18}
 ]

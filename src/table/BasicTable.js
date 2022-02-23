@@ -850,7 +850,7 @@ export const BasicTable = (props) => {
       <div id='manual_id'>
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
         
-        <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4} refreshCallBack = {props.refreshCallBack}/>
+        <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/>
         
         <Manual userAgent={userAgent}/>
         
