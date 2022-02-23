@@ -206,7 +206,30 @@ export const Splits = (props) => {
       localStorage.removeItem ('splits'); // reading empty array cause a bug
   }
 
- 
+
+  const stocksplithistory = (sym) => {
+    const API_Call = `http://www.stocksplithistory.com/?symbol=${sym}`
+    fetch(API_Call)
+    .then(
+        function(response) {
+          const respStr = JSON.stringify (response);
+          console.log(response);
+          return response.json();
+        }
+    )
+    .then(
+        (data) => {
+          const dataStr = JSON.stringify(data);
+          if (dataStr === "{}") {
+            alert (`Invalid symbol: (${sym})`)
+            return;
+          }
+          console.log(API_Call);
+          console.log (dataStr.substring(0,150));
+        
+          
+        })
+  }
 
   const {
 
@@ -308,6 +331,7 @@ export const Splits = (props) => {
                       })}
                         <div>
                         <button type="button" onClick={()=>deleteClick(row.values.symbol)}>del</button>
+                        <button type="button" onClick={()=>stocksplithistory(row.values.symbol)}>get</button>
                         </div>
                     </tr>
                   )
