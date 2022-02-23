@@ -157,12 +157,12 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
   var newestIndx = 0;
   var oldestIndx = stockChartXValuesFunction.length -1;
 
-  if (compareDate (testDateArray, stockChartXValuesFunction [stockChartXValuesFunction.length-1].split('-')) === -1)
+  if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
 
   for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
-    var searchArray = dateSplit (stockChartXValuesFunction [searchIndex]);
+    var searchArray = dateSplit (stockChartXValuesFunction[searchIndex]);
 
     if (oldestIndx - newestIndx <= 1)
       return searchIndex;
