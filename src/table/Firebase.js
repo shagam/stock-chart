@@ -296,7 +296,7 @@ const Firebase = (props) => {
       list += all[i] + "\n";
        
     // alert (all.toString() + "  (" + all.length + ")"); 
-    alert ("(" + all.length + ")\n" + list); 
+    alert ("(" + all.length + ")\n" + all.toString()); 
     console.log ("(" + all.length + ")\n" + list); 
     //gain.docs.map(doc) =>  
     //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
@@ -322,7 +322,7 @@ const Firebase = (props) => {
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
             <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
-            <button type="button" onClick={()=>showAll ()}>getAll</button>
+            <button type="button" onClick={()=>showAll ()}>showAll</button>
           </div>
         }
       </div>
