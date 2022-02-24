@@ -272,15 +272,32 @@ const Firebase = (props) => {
     } catch (e) { console.log (e)}
   }
 
-  const showGainAll  = async () => {
+  const showAll  = async () => {
     //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain").doc(doc.id). update ({your data}) }); });
+    const all = [];  
     const gain = await getDocs(props.gainRef);
-    const all = [];
-    
-    for (let i = 0; i < gain.docs.length; i++)
-      all.push (gain.docs[i].data().__symbol);
-    alert (all.toString() + "  (" + all.length + ")"); 
-    console.log (all.toString() + "  (" + all.length + ")"); 
+    for (let i = 0; i < gain.docs.length; i++) {
+      const sym = gain.docs[i].data().__symbol;
+      all.push (sym);
+    }
+      // all.push (gain.docs[i].data().__symbol);
+
+    const info = await getDocs(props.infoRef);
+    for (let i = 0; i < info.docs.length; i++) {
+      const sym = info.docs[i].data().__symbol;
+      if (all.indexOf(sym) === -1)
+        all.push (sym);
+      // if (! all.find (sym))
+        // all.push (sym);
+    }
+
+    var list = "";
+    for (let i = 0; i < all.length; i++)
+      list += all[i] + "\n";
+       
+    // alert (all.toString() + "  (" + all.length + ")"); 
+    alert ("(" + all.length + ")\n" + list); 
+    console.log ("(" + all.length + ")\n" + list); 
     //gain.docs.map(doc) =>  
     //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
     //console.log ('firebase read gain: ', gain.docs.length, stocksGain.length);
@@ -305,7 +322,7 @@ const Firebase = (props) => {
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
             <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
-            <button type="button" onClick={()=>showGainAll ()}>getAllGain</button>
+            <button type="button" onClick={()=>showAll ()}>getAll</button>
           </div>
         }
       </div>
