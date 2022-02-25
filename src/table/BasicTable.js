@@ -43,7 +43,7 @@ export const BasicTable = (props) => {
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
   
-  const [splitsCalc, setSplitsCalc] = useState(true);
+  const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [stockInfo, setStockInfo] = useState ('');
   // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
   // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
@@ -280,25 +280,27 @@ export const BasicTable = (props) => {
     rows[row_index].values.gain_mili = updateMili;
     rows[row_index].values.gain_date = updateDate;
 
-    rows[row_index].values.wk = wk; //stocks[index].wk;
-    rows[row_index].values.wk2 = wk2; //stocks[index].wk2;
-    rows[row_index].values.mon = mon; //stocks[index].mon;
-    rows[row_index].values.mon3 = mon3; //stocks[index].mon3;
-    rows[row_index].values.mon6 = mon6; //stocks[index].mon6;
-    rows[row_index].values.year = year; //stocks[index].year;
-    rows[row_index].values.year2 = year2; //stocks[index].year2;
-    rows[row_index].values.year5 = year5; //stocks[index].year5;
-    rows[row_index].values.year10 = year10; //stocks[index].year10;
-    rows[row_index].values.year20 = year20; //stocks[index].year20;
+    rows[row_index].values.wk = wk; 
+    rows[row_index].values.wk2 = wk2; 
+    rows[row_index].values.mon = mon; 
+    rows[row_index].values.mon3 = mon3;
+    rows[row_index].values.mon6 = mon6; 
+    rows[row_index].values.year = year; 
+    rows[row_index].values.year2 = year2; 
+    rows[row_index].values.year5 = year5; 
+    rows[row_index].values.year10 = year10;
+    rows[row_index].values.year20 = year20;
     rows[row_index].values.price = price;
 
-    rows[row_index].values.splits_list = splits;
-    if (splits === '')
-      rows[row_index].values.splits_calc = '';
-    else if (splitsCalc)
-      rows[row_index].values.splits_calc = 'calc';
-    else
-      rows[row_index].values.splits_calc = 'raw';
+    if (rows[row_index].values.splits_calc !== 'table') {
+      rows[row_index].values.splits_list = splits;
+      if (splits === '')
+        rows[row_index].values.splits_calc = '';
+      else if (splitsCalcFlag)
+        rows[row_index].values.splits_calc = 'calc';
+      else
+        rows[row_index].values.splits_calc = 'raw';
+    }
     //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
     props.refreshCallBack(-1); // force refresh
@@ -446,7 +448,7 @@ export const BasicTable = (props) => {
 
               var splits = "";
               var splitArray = [];
-              if (rows[row_index].values.splits_calc === 'table')
+              if (rows[row_index].values.splits_calc === 'table' && rows[row_index].values.splits_list_table !== undefined)
                 splitArray = rows[row_index].values.splits_list_table;
               else {
                 for (var key in chartData[`${periodTag}`]) {
@@ -475,7 +477,7 @@ export const BasicTable = (props) => {
               console.log (sym, rows[row_index].values.splits_calc, splitArray);
               
               // compensate for splits
-              if (splitArray.length > 0 && splitsCalc) {
+              if (splitArray.length > 0 && splitsCalcFlag) {
                 for (let i = 0; i < splitArray.length; i++) {
                   var jump = splitArray[i].ratio;
                   if (jump > 1)
@@ -726,7 +728,7 @@ export const BasicTable = (props) => {
   // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"
   const { globalFilter } = state
 
-  const handleChange = () => {setSplitsCalc(! splitsCalc)}
+  const handleChange = () => {setSplitsCalcFlag(! splitsCalcFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   
   const style = {
@@ -747,7 +749,7 @@ export const BasicTable = (props) => {
         </script> 
         <label id="calc_splits_label_id">
           <input
-            type="checkbox" checked={splitsCalc}
+            type="checkbox" checked={splitsCalcFlag}
             onChange={handleChange}
           /> 
           calc_splits
