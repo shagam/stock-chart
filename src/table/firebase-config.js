@@ -1,14 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from '@firebase/firestore'
-
+// require ('dotenv').config();
 const firebaseConfig = {
-  apiKey: "AIzaSyBOkIZfHvdrJmuaPFPFdwQgoEYDsJD7ptI",
-  authDomain: "stocks-663a6.firebaseapp.com",
-  projectId: "stocks-663a6",
-  storageBucket: "stocks-663a6.appspot.com",
-  messagingSenderId: "750108366853",
-  appId: "1:750108366853:web:4c55452920b28d5ecee46c",
-  measurementId: "G-TLKF8JLME0"
+  apiKey:  process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain:  process.env.REACT_APP_FIREBASE_authDomain,
+  projectId:  process.env.REACT_APP_FIREBASE_projectId,
+  storageBucket:  process.env.REACT_APP_FIREBASE_storageBucket,
+  messagingSenderId:  process.env.REACT_APP_FIREBASE_messagingSenderId,
+  appId:  process.env.REACT_APP_FIREBASE_appId,
+  measurementId:  process.env.REACT_APP_FIREBASE_measurementId
 };
 
 const app = initializeApp(firebaseConfig);
