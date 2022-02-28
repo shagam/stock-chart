@@ -276,7 +276,7 @@ export const Splits = (props) => {
 
   const { globalFilter } = state
 
-  return  props.admin && (
+  return (
   
     <div style= {style_component}>
       <div>
