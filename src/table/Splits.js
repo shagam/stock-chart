@@ -20,13 +20,8 @@ export const Splits = (props) => {
     var  data;// = useMemo(() => SPLIT_MOCK_DATA, []);
 
     var stocksFromLocalStorage = localStorage.getItem("splits");
-    var mmmmm = useMemo; 
-    if (! stocksFromLocalStorage) 
-    {
-        data = mmmmm(() => SPLIT_MOCK_DATA, []);
-    }
-    else 
-        data = mmmmm(() => JSON.parse (localStorage.getItem("splits")), []);
+
+    data = useMemo(() => SPLIT_MOCK_DATA, []);
 
 
     const splitRef = collection(db, "splits")
