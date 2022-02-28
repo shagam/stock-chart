@@ -326,7 +326,7 @@ const Firebase = (props) => {
           </div>
         }
       </div>
-      <div id="ip_id"> 
+      <div  style = {style} id="ip_id"> 
         <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />
       </div>
     </>
