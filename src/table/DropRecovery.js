@@ -128,9 +128,9 @@ const StockRecoveryCalc = (props) => {
       highistBeforeDeep();
       recoveryWeeks();
     }
-
+    const priceDivHigh = (props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3);
     // fill columns in stock table
-    props.dropCallBack (props.StockSymbol, drop, dropWeek, recoverPeriod, dropDate); //format(startDate, "yyyy-MMM-dd"));
+    props.dropCallBack (props.StockSymbol, drop, dropWeek, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
 
   function swap_period_2008() {
@@ -163,6 +163,8 @@ const StockRecoveryCalc = (props) => {
     props.allColumns[ind].toggleHidden();
     ind = props.allColumns.findIndex((column)=> column.Header === 'recoverWeek');
     props.allColumns[ind].toggleHidden();
+    // ind = props.allColumns.findIndex((column)=> column.Header === 'priceDivHigh');
+    // props.allColumns[ind].toggleHidden();
   }
 
   //  skip analysis if no symbol

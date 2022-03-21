@@ -712,7 +712,7 @@ export const BasicTable = (props) => {
     setFlex (flex);
   }
 
-  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, dropDate) => {
+  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, dropDate, priceDivHigh) => {
     //console.log (stockSymbol, drop, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
     if (index === -1) {
@@ -723,6 +723,7 @@ export const BasicTable = (props) => {
     rows[index].values.drop = drop;
     rows[index].values.recoverWeek = recoverWeek;
     rows[index].values.dropDate = dropDate;
+    rows[index].values.priceDivHigh = priceDivHigh;
   }
 
   // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"

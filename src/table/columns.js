@@ -179,6 +179,11 @@ export const COLUMNS = [
     Footer: 'dropDate',    
     accessor: 'dropDate'
   },
+  {
+    Header: 'priceDivHigh',
+    Footer: 'priceDivHigh',    
+    accessor: 'priceDivHigh'
+  },
  
 
 ] 
@@ -365,6 +370,11 @@ export const GROUPED_COLUMNS = [
         Header: 'dropDate',
         Footer: 'dropDate',    
         accessor: 'dropDate'
+      },
+      {
+        Header: 'priceDivHigh',
+        Footer: 'priceDivHigh',    
+        accessor: 'priceDivHigh'
       },
     
     ]
