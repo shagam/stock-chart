@@ -7,7 +7,7 @@ import Firebase from './Firebase'
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 import { SPLIT_COLUMNS } from './split_columns'
-import SPLIT_MOCK_DATA from './split_mock_data.json'
+import SPLIT_MOCK_DATA from './stocksplithistory.json'
 import {nanoid} from 'nanoid';
 
 export const Splits = (props) => {
