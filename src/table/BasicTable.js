@@ -152,7 +152,7 @@ export const BasicTable = (props) => {
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
 
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, drop, recoverWeek, dropDate) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, drop, recoverWeek, dropDate, priceDivHigh) => {
     // read old entries
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
@@ -161,7 +161,7 @@ export const BasicTable = (props) => {
       GOOGCompare = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate})
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh})
     } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
@@ -313,7 +313,7 @@ export const BasicTable = (props) => {
       rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
 
     firebaseGainAdd (sym, updateDate, updateMili, splits,
-      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.GOOGCompare, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate);  // save in firestore
+      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.GOOGCompare, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh);  // save in firestore
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {

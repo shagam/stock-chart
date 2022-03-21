@@ -180,7 +180,9 @@ const Firebase = (props) => {
         // dropRecover info
         props.rows[rowIndex].values.drop = gain_.drop;
         props.rows[rowIndex].values.recoverWeek = gain_.recoverWeek;
-        props.rows[rowIndex].values.dropDate = gain_.dropDate;  
+        props.rows[rowIndex].values.dropDate = gain_.dropDate; 
+        if (gain_.priceDivHigh !== undefined)
+          props.rows[rowIndex].values.priceDivHigh = gain_.priceDivHigh;
       }
  
       if (gain.docs.length > 0) {
