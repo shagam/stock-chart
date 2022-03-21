@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import "./StockChart.css";
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
-const Stock_chart = (props) => { 
+const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(true);
   const LOG_FLAG = false;
   const StockSymbol = props.StockSymbol;
@@ -70,4 +70,4 @@ const Stock_chart = (props) => {
 }
 
 
-export default Stock_chart;
+export default StockChart;

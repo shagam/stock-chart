@@ -9,7 +9,7 @@ import GAIN_VALIDATION from './GainValidate.json'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
-import Stock_chart from '../Stock-chart'
+import StockChart from '../Stock-chart'
 import Splits from './Splits'
 import MarketStackApi from './MarketStackApi'
 import StockRecoveryCalc from './DropRecovery'
@@ -839,7 +839,7 @@ export const BasicTable = (props) => {
     <div>
      {/* {console.log (chartSymbol)} */}
 
-      <Stock_chart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
+      <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
 
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
       
