@@ -843,18 +843,19 @@ export const BasicTable = (props) => {
 
       <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />
       
-      <MarketStackApi symbol={chartSymbol} admin = {admin} />
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
 
       <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
-      
-      <div id='manual_id'>
-        <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
-        
+
+      <div id='manual_id'>    
         <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/>
+
+        {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
         
+        <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
+
         <Manual userAgent={userAgent}/>
         
         <StockInfo stockInfo = {stockInfo} />
