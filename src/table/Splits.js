@@ -289,7 +289,7 @@ export const Splits = (props) => {
       { splitsFlag &&
 
         <div  className = 'split'>
-          
+          {/* <div> splits from url:    https://www.stocksplithistory.com  </div> */}
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
           {'  rows=' + rows.length + "  "}
 
