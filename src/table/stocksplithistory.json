@@ -101,6 +101,6 @@
 {"key": "IVV_0000", "symbol": "IVV", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "ATTU_0000", "symbol": "ATTU", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "BRK.A_0000", "symbol": "BRK.A", "jump": 0.0, "year": 0, "month": 0, "day": 0},
-{"key": "BRK.B _2010", "symbol": "BRK.B ", "jump": 50.0, "year": 2010, "month": 1, "day": 21},
+{"key": "BRK.B_2010", "symbol": "BRK.B", "jump": 50.0, "year": 2010, "month": 1, "day": 21},
 {"key": "COPX_2015", "symbol": "COPX", "jump": 0.3333, "year": 2015, "month": 11, "day": 18}
 ]

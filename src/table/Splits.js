@@ -132,7 +132,8 @@ export const Splits = (props) => {
         return;
       if (props.rows[row_index].values.splits_calc === 'table')
         return;  // already in
-
+      
+      console.log ('searchSplit ', sym)
       const splitArray_build = [];
       for (let i = 0; i < rows.length; i++) {
         if (rows[i].values.symbol !== sym)
@@ -143,7 +144,8 @@ export const Splits = (props) => {
       }
       if (splitArray_build.length === 0) // no split found ?
         return;
-      
+      console.log ('addSplit ', sym)
+
       // insert splits in stock table.
       console.log (sym, splitArray_build);
       props.rows[row_index].values.splits_list_table = splitArray_build;
