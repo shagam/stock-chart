@@ -103,5 +103,11 @@
 {"key": "BRK.A_0000", "symbol": "BRK.A", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "BRK.B_2010", "symbol": "BRK.B", "jump": 50.0, "year": 2010, "month": 1, "day": 21},
 {"key": "COPX_2015", "symbol": "COPX", "jump": 0.3333, "year": 2015, "month": 11, "day": 18},
-{"key": "XLS_2014", "symbol": "XLS", "jump": 1.071, "year": 2014, "month": 9, "day": 29}
+{"key": "XLS_2014", "symbol": "XLS", "jump": 1.071, "year": 2014, "month": 9, "day": 29},
+{"key": "PFE_2020", "symbol": "PFE", "jump": 1.054, "year": 2020, "month": 11, "day": 17},
+{"key": "SPY_0000", "symbol": "SPY", "jump": 0.0, "year": 0, "month": 0, "day": 0},
+{"key": "XLK_0000", "symbol": "XLK", "jump": 0.0, "year": 0, "month": 0, "day": 0},
+{"key": "YNDX_0000", "symbol": "YNDX", "jump": 0.0, "year": 0, "month": 0, "day": 0},
+{"key": "PANW_0000", "symbol": "PANW", "jump": 0.0, "year": 0, "month": 0, "day": 0},
+{"key": "QQQX_0000", "symbol": "QQQX", "jump": 0.0, "year": 0, "month": 0, "day": 0}
 ]

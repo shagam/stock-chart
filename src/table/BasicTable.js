@@ -480,11 +480,13 @@ export const BasicTable = (props) => {
               if (splitArray.length > 0 && splitsCalcFlag) {
                 for (let i = 0; i < splitArray.length; i++) {
                   var jump = splitArray[i].ratio;
-                  if (jump > 1)
-                    jump = Math.round (jump);
-                  else
-                    jump = 1 / Math.round (1/jump);
-                  
+
+                  if (rows[row_index].values.splits_calc !== 'table') {
+                    if (jump > 1)
+                      jump = Math.round (jump);
+                    else
+                      jump = 1 / Math.round (1/jump);
+                  }
                   const splitDate = splitArray[i].date.split('-');
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
                   for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
