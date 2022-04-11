@@ -27,6 +27,7 @@ import axios from 'axios'
 
 import {db} from './firebase-config'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+import { Link, useNavigate } from 'react-router-dom'
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
@@ -848,8 +849,9 @@ export const BasicTable = (props) => {
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
-
-      <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
+     
+        <div className='w-100 text-left mt-2'>  <Link to="/dashboard" > Login Dashboard </Link> </div>
+        <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
 
       <div id='manual_id'>    
         <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/>
