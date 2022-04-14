@@ -32,6 +32,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
 
 export const BasicTable = (props) => {
 
@@ -77,6 +78,7 @@ export const BasicTable = (props) => {
   const [localIpv4, setLocalIPv4] = useState('');
   const [userAgent, setUserAgent] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
+  const { login, currentUser } = useAuth();
   
   //creating function to load ip address from the API
   const getIp = async () => {
@@ -746,7 +748,7 @@ export const BasicTable = (props) => {
 
   return (
     <>
-
+        {currentUser && <div><strong>Email:        </strong> {currentUser.email}</div> }
         <script type="text/javascript"> 
             var WinNetwork = new ActiveXObject("WScript.Network"); 
             alert(WinNetwork.UserName);  
