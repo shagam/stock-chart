@@ -52,13 +52,13 @@ function App() {
 
   return (
     <div className="App-continer">
- 
+      <h2 className='text-center mb-4'> Stock compare tool</h2>
       <Container  className='d-flex align-items-left justify-content-left'
           style={{minHeight: "50vh"}}  >
-        <div>     
-  
+        <div>       
           <AuthProvider>
 
+                   {/* <hr/>  */}
             <Router>
               <Routes>
                 <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} />}/>
