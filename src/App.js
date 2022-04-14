@@ -31,32 +31,6 @@ function App() {
     setCount (count + childData);
   }
 
-
-  const signInWithGoogle = () => {
-    const googleProvider = new GoogleAuthProvider()
-    signInWithPopup(auth, googleProvider)
-     .then ((result) => {
-       const profilePic = result.user.photoURL;
-       const phone = result.user.phoneNumber;
-       console.log(result, result.user.email, result.user.name, profilePic, phone)
-     }).catch((error) => {
-       alert (error.message)
-     })
-  };
-
-
-  const signInWithFacebook = () => {
-    const facebookProvider = new FacebookAuthProvider()
-    signInWithPopup(auth, facebookProvider)
-     .then ((result) => {
-       const profilePic = result.user.photoURL;
-       const phone = result.user.phoneNumber;
-      //  console.log(result, result.user.email, result.user.name, profilePic, phone)
-       console.log(result)
-     }).catch((error) => {
-       alert (error.message)
-     })
-  };
   //  Firebase: Error (auth/account-exists-with-different-credential).
   // ngrok http 3000
 
@@ -78,13 +52,7 @@ function App() {
 
   return (
     <div className="App-continer">
-      {/* <div> 
-        <button onClick={signInWithGoogle}> Google Sign In</button>      
-        <button onClick={signInWithFacebook}> Facebook Sign In </button>  
-        <button onClick={handleLogout}> logout</button>    
-      </div> */}
-
-
+ 
       <Container  className='d-flex align-items-left justify-content-left'
           style={{minHeight: "50vh"}}  >
         <div>     
