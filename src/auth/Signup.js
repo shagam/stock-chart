@@ -26,16 +26,11 @@ export default function Signup ()  {
       return setError ('Passwords do not match')
     } 
 
-    // if (passwordRef.current.value.length < 6) {
-    //   return setError ('Passwords length need at least 6 ')
-    // }
-
     try {
       setError('');
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value)
       navigate ('/')
-      // const a = 1;
     } catch (e) {setError (e.message)}
     setLoading (false);
   }
