@@ -87,25 +87,26 @@ function App() {
 
       <Container  className='d-flex align-items-left justify-content-left'
           style={{minHeight: "50vh"}}  >
-       <div>     
-        <Router>
+        <div>     
+  
           <AuthProvider>
-            <Routes>
-              <Route path="/" element={<BasicTable refreshCallBack = {refreshCallBack} />}/>
 
-              <Route exact path ="/dashBoard"  element={<Dashboard />}/>
-                    {/* <Route path="/" element={<Dashboard/>}   /> */}
-              <Route path="/signup" element={<Signup/> } />
-              <Route path="/login" element={<Login/> }/>
-              <Route path="/forgotPassword" element={<ForgotPassword />}/>
-              <Route path="/update-profile" element={<UpdateProfile  />}/>
+            <Router>
+              <Routes>
+                <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} />}/>
+                <Route path ="/dashBoard"  element={<Dashboard />}/>
+                      {/* <Route path="/" element={<Dashboard/>}   /> */}
+                <Route path="/signup" element={<Signup/> } />
+                <Route path="/login" element={<Login/> }/>
+                <Route path="/forgotPassword" element={<ForgotPassword />}/>
+                <Route path="/update-profile" element={<UpdateProfile  />}/>
+              </Routes>
+            </Router>
 
-            </Routes>
           </AuthProvider>
-        </Router>
         </div>
-        </Container>
-        <label count = {count} />
+      </Container>
+      <label count = {count} />
 
     </div>
 
