@@ -14,9 +14,9 @@ export function AuthProvider ({ children }) {
   const [loading, setLoading] = useState(true)
 
 
-  function signup (email, password) {
-    try {
-      const user = createUserWithEmailAndPassword (auth, email, password);
+  async function signup (email, password) {
+    // try {
+       const user = await createUserWithEmailAndPassword (auth, email, password);
       console.log (user.email);
       return user;
     // .then((userCredential) => {
@@ -33,14 +33,14 @@ export function AuthProvider ({ children }) {
     //   // ..
     // });
   
-    } catch (e) {console.log (e.message)}
+    // } catch (e) {console.log (e.message)}
   }
 
   function login (email, password) {
-    try {
+    // try {
       // return signInWithEmailAndPassword (auth, email, password)
-      return auth.signInWithEmailAndPassword (email, password)
-    } catch (e) {console.log (e)}
+      return signInWithEmailAndPassword (auth, email, password)
+    // } catch (e) {console.log (e)}
   }
 
   function logout () {

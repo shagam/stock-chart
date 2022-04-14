@@ -35,7 +35,7 @@ export default function Signup ()  {
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value)
       navigate ('/')
-      const a = 1;
+      // const a = 1;
     } catch (e) {setError (e.message)}
     setLoading (false);
   }

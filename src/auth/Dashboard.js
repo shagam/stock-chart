@@ -2,19 +2,20 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Card, Button, Alert } from 'react-bootstrap'
 import { updateCurrentUser } from 'firebase/auth';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
 
 // import {  useAuth, logout } from '../contexts/AuthContext';
 
 export default function Dashboard (props) {
   const [error, setError] = useState ('');
-  // const { currentUser, logout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
 
   async function handleLogout () {
     setError('');
     try {
-      // await logout();
+      await logout();
       navigate('/login')
     } catch (e) {setError(e.message) && console.log (e)}
   }
@@ -26,6 +27,7 @@ export default function Dashboard (props) {
         <Card.Body>
           <h2 className='text-center mb-4'> Dashboard </h2>
           {error && <Alert variant="danger"> {error} </Alert>}
+          {currentUser && <div><strong>Email:        </strong> {currentUser.email}</div> }
 
         {/* {props.admins[0].name}  */}
         {/* <div className='w-100 text-center mt-2'>  <Link to="/dina" > {props.admins[0].name} Gallery </Link> </div>
