@@ -748,11 +748,14 @@ export const BasicTable = (props) => {
 
   return (
     <>
-        {currentUser && <div><strong>Email:        </strong> {currentUser.email}</div> }
-        <script type="text/javascript"> 
+        <div className='w-100 text-left mt-2 d-flex '>   
+        {currentUser && <div><strong>  Email:  </strong> {currentUser.email}     <Link to="/dashboard" >   Login Dashboard </Link>  </div> } 
+        </div>
+
+        {/* <script type="text/javascript"> 
             var WinNetwork = new ActiveXObject("WScript.Network"); 
             alert(WinNetwork.UserName);  
-        </script> 
+        </script>  */}
         <label id="calc_splits_label_id">
           <input
             type="checkbox" checked={splitsCalcFlag}
@@ -852,7 +855,6 @@ export const BasicTable = (props) => {
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
      
-        <div className='w-100 text-left mt-2'>  <Link to="/dashboard" > Login Dashboard </Link> </div>
         <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
 
       <div id='manual_id'>    
