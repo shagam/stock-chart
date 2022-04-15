@@ -79,7 +79,7 @@ const Firebase = (props) => {
   }
 
   // get all stocks better than QQQ
-  const firebaseGainGetBest = async (add_flag) => {
+  const firebaseGainGetBest = async (add_flag, periodYears) => {
 
     try {
       // get one symbol gain from firebase
@@ -95,14 +95,25 @@ const Firebase = (props) => {
 
       
       if (LOG_FLAG)
-      console.log (props.rows[QQQ_index].values.mon6)  
+      console.log (props.rows[QQQ_index].values.mon6) 
+      
       var userQuery = query (props.gainRef, where(
-       // 'mon6', '>', props.rows[QQQ_index].values.mon6 
-       'year', '>', (props.rows[QQQ_index].values.year * 0.92)
+       'year', '>', (props.rows[QQQ_index].values.year * 0.92) ));
+
+
+      if (periodYears === 2)
+        userQuery = query (props.gainRef, where(
+        'year2', '>', (props.rows[QQQ_index].values.year2 * 0.92) ));
+
+        if (periodYears === 5)
+        userQuery = query (props.gainRef, where(
+        'year5', '>', (props.rows[QQQ_index].values.year5 * 0.92) ));
+
+        // || 'mon6', '>', props.rows[QQQ_index].values.mon6 
         // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
         // || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
         // || 'year10', '>', 10000// props.rows[QQQ_index].values.year10
-        ));
+
       const gain = await getDocs(userQuery);
       if (LOG_FLAG)
       console.log (gain.docs.length);
@@ -136,9 +147,9 @@ const Firebase = (props) => {
       if (! add_flag) {
           const len = Object.keys (found_stocks_array).length;
           if (len === 0)
-            alert (`no symbols found in firebase that compare with QQQ (year gain), except symbols in table`)
+            alert (`no symbols found in firebase that compare with QQQ , except symbols in table`)
           else
-            alert (`symbols in firebase compared with QQQ (year gain) (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+            alert (`symbols in firebase compared with QQQ (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
       }
       else
         window.location.reload();
@@ -312,13 +323,17 @@ const Firebase = (props) => {
     // fontSize: 200,
     border: '2px solid green'
   };
-
   return (
     <>
       <div style = {style} id="firebase_id"> 
         <button type="button" onClick={()=>firebaseGetAndFill()}>Fill_gain_info </button>
-        <button type="button" onClick={()=>firebaseGainGetBest(false)}>Show-stocks-compared-to-QQQ </button>
-        <button type="button" onClick={()=>firebaseGainGetBest(true)}>Fill-stocks-compared-to-QQQ </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(false, 1)}>stocks-compared-to-QQQ-1y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>stocks-compared-to-QQQ-2y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>stocks-compared-to-QQQ-5y </button>
+
+        <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
         {props.admin &&
           <div>
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
