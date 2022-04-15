@@ -55,12 +55,13 @@ export default function Dashboard (props) {
 
       <Card>
         <Card.Body>
-          <h2 className='text-left mb-4'> Sign In Dashboard </h2>
+          <h2 className='text-left  d-flex mb-4'> Log In Dashboard </h2>
           {error && <Alert variant="danger"> {error} </Alert>}
-          {currentUser && <div><strong>Email:        </strong> {currentUser.email}</div> }
+          <div> 
+            {currentUser && <div><strong>Email:        </strong> {currentUser.email}</div> }
 
-          <hr/>
-        <div> 
+          {/* <hr/> */}
+
           <button onClick={signInWithGoogle}> Google Sign In</button>      
           <button onClick={signInWithFacebook}> Facebook Sign In </button>  
           {/* <button onClick={handleLogout}> logout</button>     */}
@@ -74,6 +75,8 @@ export default function Dashboard (props) {
         <hr/>     <hr/>
         
         {/* {currentUser && <div><strong>Email:  </strong> {currentUser.email}</div> } */}
+        
+        <div className='w-100 text-center mt-1'> <strong> User/password </strong> </div>
 
         <div className='w-100 text-center mt-2'> Already have an account?  <Link to="/login" > Log In </Link> </div>
 
