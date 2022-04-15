@@ -55,7 +55,7 @@ export default function Dashboard (props) {
 
       <Card>
         <Card.Body>
-          <h2 className='text-center mb-4'> Sign Up Sign In Dashboard </h2>
+          <h2 className='text-left mb-4'> Sign In Dashboard </h2>
           {error && <Alert variant="danger"> {error} </Alert>}
           {currentUser && <div><strong>Email:        </strong> {currentUser.email}</div> }
 
