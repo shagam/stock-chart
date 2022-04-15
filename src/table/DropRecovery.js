@@ -128,7 +128,7 @@ const StockRecoveryCalc = (props) => {
       highistBeforeDeep();
       recoveryWeeks();
     }
-    const priceDivHigh = (props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3);
+    const priceDivHigh = Number((props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
     // fill columns in stock table
     props.dropCallBack (props.StockSymbol, drop, dropWeek, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
