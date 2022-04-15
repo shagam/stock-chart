@@ -51,10 +51,9 @@ function App() {
 
 
   return (
-    <div className="App-continer">
-      <h2 className='text-center mb-4'> Stock compare tool</h2>
-      <Container  className='d-flex align-items-left justify-content-left'
-          style={{minHeight: "50vh"}}  >
+    <div className="App-continer_">
+      <h2 className='text-left mb-4'> Stock compare tool</h2>
+      {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh"}}  > */}
         <div>       
           <AuthProvider>
 
@@ -73,7 +72,7 @@ function App() {
 
           </AuthProvider>
         </div>
-      </Container>
+      {/* </Container> */}
       <label count = {count} />
 
     </div>
