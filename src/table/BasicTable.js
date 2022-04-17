@@ -749,7 +749,8 @@ export const BasicTable = (props) => {
   return (
     <>
         <div className='w-100 text-left mt-2 d-flex '>   
-        {currentUser && <div><strong>  Email:  </strong> {currentUser.email}     <Link to="/dashboard" >   Login Dashboard </Link>  </div> } 
+          {currentUser && <div><strong>  Email:  </strong> {currentUser.email}  &nbsp; &nbsp;  </div> }    
+          <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
         </div>
 
         {/* <script type="text/javascript"> 
