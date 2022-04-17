@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div className="App-continer_">
-      <h2 className='text-left mb-4'> Stock compare tool</h2>
+      <h2  style={{color:'green'}}> Stock compare tool</h2>
       {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh"}}  > */}
         <div>       
           <AuthProvider>
