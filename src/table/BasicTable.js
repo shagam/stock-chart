@@ -757,26 +757,19 @@ export const BasicTable = (props) => {
             var WinNetwork = new ActiveXObject("WScript.Network"); 
             alert(WinNetwork.UserName);  
         </script>  */}
-        <label id="calc_splits_label_id">
-          <input
-            type="checkbox" checked={splitsCalcFlag}
-            onChange={handleChange}
-          /> 
-          calc_splits
-        </label>
 
-        <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button>        
-        <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
-
+        <div id="buttons_id" style={{display:'flex'}}> 
+          <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={handleChange} /> calc_splits </div>
+          &nbsp; &nbsp;
+          <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button> 
+          &nbsp; &nbsp;       
+          <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
+          &nbsp; &nbsp;   
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
-        
+          &nbsp;&nbsp;
           <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All
-
-        <div>
-          <input
-            type="checkbox" checked={columnHideFlag}
-            onChange={ columnHideFlagChange}
-        /> columnHide
+          &nbsp;&nbsp;       
+          <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide  </div>
         </div>
 
       {columnHideFlag && 
@@ -793,9 +786,9 @@ export const BasicTable = (props) => {
           }
         </div>
       }
-
+       
       <div id="add_stock_id">
-      <form  onSubmit = {handleAddFormSubmit}>
+        <form  onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
@@ -804,8 +797,7 @@ export const BasicTable = (props) => {
             onChange={handleAddFormChange}
           />
           <button type="submit"> Add  ({rows.length})  </button>
-      </form>
-      
+        </form>  
       </div>
 
       <table id="stockTable" {...getTableProps()}>
