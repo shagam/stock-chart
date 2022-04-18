@@ -66,15 +66,15 @@ function Ip (props) {
 
   return (
     <>
+      {/* {/* <div style={{display:'flex'}}></div> */}
       <div id = 'ip_diaspay_Checkbox'>
           <input type="checkbox" checked={ipDisplayFlag}  onChange={ipDisplayChange} /> ip-display
       </div>
 
       {ipDisplayFlag && <div>
-
-        <div id="ip_diaplay">
-          <div>  ip info: {props.localIp.IPv4}, ipList: {ipList.length} </div>
-          <button type="button" onClick={()=>collect_ip()}>get IP    </button>
+        <div style={{display:'flex'}}> 
+          <div>  ip info: &nbsp; {props.localIp.IPv4},  &nbsp; ipList: {ipList.length} &nbsp; &nbsp; </div>
+          <button type="button" onClick={()=>collect_ip()}>   get IP    </button>
         </div>
 
         <div className='text'> 
