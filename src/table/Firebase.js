@@ -317,17 +317,18 @@ const Firebase = (props) => {
 
   }
 
-  const style = {
-    //background: 'blue',
-    // color: 'red',
-    // fontSize: 200,
-    border: '2px solid green'
-  };
+  // const style = {
+  //   //background: 'blue',
+  //   // color: 'red',
+  //   // fontSize: 200,
+  //   border: '2px solid green'
+  // };
   return (
     <>
-      <div style = {style} id="firebase_id"> 
-        <button type="button" onClick={()=>firebaseGetAndFill()}>Fill_gain_info </button>
+      <div style = {{ border: '2px solid green'}}> 
+        <button type="button" onClick={()=>firebaseGetAndFill()} >Fill_gain_info </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 1)}>stocks-compared-to-QQQ-1y </button>
+        {/* <div style={{padding: '1px'}} ></div> */}
         <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>stocks-compared-to-QQQ-5y </button>
 
@@ -336,14 +337,14 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
         {props.admin &&
           <div>
-            <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} </div>
+            <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} &bpsp; </div>
             <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
             <button type="button" onClick={()=>showAll ()}>showAll</button>
           </div>
         }
       </div>
-      <div  style = {style} id="ip_id"> 
+      <div  style =  {{ border: '2px solid green', display:'flex'}} > 
         <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />
       </div>
     </>
