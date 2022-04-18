@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {auth} from '../firebaseConfig'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getDefaultNormalizer } from '@testing-library/react';
 
 
 const AuthContext = React.createContext();
@@ -12,11 +13,11 @@ export function useAuth() {
 export function AuthProvider ({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true)
+  const [admin, setAdmin] = useState(false);
 
-
-  async function signup (email, password) {
-    // try {
-       const user = await createUserWithEmailAndPassword (auth, email, password);
+  function signup (email, password) {
+    try {
+      const user = createUserWithEmailAndPassword (auth, email, password);
       console.log (user.email);
       return user;
     // .then((userCredential) => {
@@ -33,20 +34,23 @@ export function AuthProvider ({ children }) {
     //   // ..
     // });
   
-    // } catch (e) {console.log (e.message)}
+    } catch (e) {console.log (e.message)}
   }
 
   function login (email, password) {
-    // try {
+    try {
       // return signInWithEmailAndPassword (auth, email, password)
-      return signInWithEmailAndPassword (auth, email, password)
-    // } catch (e) {console.log (e)}
+      return auth.signInWithEmailAndPassword (email, password)
+    } catch (e) {console.log (e)}
   }
 
   function logout () {
     try {
       // return signInWithEmailAndPassword (auth, email, password)
-      return auth.signOut ()
+      const stat = auth.signOut ();
+      setAdmin (false);
+      return stat;
+
     } catch (e) {console.log (e)}
   }
   
@@ -79,14 +83,25 @@ export function AuthProvider ({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
+    if (user) console.log(user.email);
+      if (user && (user.email === 'eli.shagam@gmail.com' 
+      || user.email === 'j321111@gmail.com' 
+      || user.email === 'dina146@bezeqint.net')) {
+        setAdmin(true)
+        console.log ('setAdmin', ) 
+      }
+      // else
+      //   setAdmin(false)
+
       setLoading(false)
     })
     return unsubscribe;
-  }, []);
+  }, [currentUser]);
 
 
   const value = {
     currentUser,
+    admin,
     signup,
     login,
     logout,
