@@ -16,7 +16,7 @@ import StockRecoveryCalc from './DropRecovery'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
-import Manual from '../Manual'
+import Manual from '../manual/Manual'
 import Firebase from './Firebase'
 import Config from './Config'
 
