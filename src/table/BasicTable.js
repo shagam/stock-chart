@@ -780,7 +780,7 @@ export const BasicTable = (props) => {
             <div id="columnToggle_id" key={column.id}>
               <label id="column_Label_id">
                 <input type='checkbox' {...column.getToggleHiddenProps()}  />
-                &nbsp; {column.Header}   &nbsp; &nbsp;
+                &nbsp;{column.Header}   &nbsp; &nbsp;
               </label>
             </div>
           ))
