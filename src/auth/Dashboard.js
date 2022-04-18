@@ -45,15 +45,16 @@ export default function Dashboard (props) {
     .then((result) => {
       console.log(result)
          // This gives you a Google Access Token. You can use it to access the Google API.
-         const credential = provider.credentialFromResult(result);
-         const token = credential.accessToken;
+        //  const credential = provider.credentialFromResult(result);
+        //  const token = credential.accessToken;
          // The signed-in user info.
          const user = result.user;
          console.log(result)
     })
-    .catch((error) => { 
-      console.log(error.message)
-      setError (error.message);
+    .catch((error) => {
+      if (error) {
+        setError (error.message);
+        // console.log(error.message)
           // Handle Errors here.
           const errorCode = error.code;
           const errorMessage = error.message;
@@ -61,6 +62,7 @@ export default function Dashboard (props) {
           const email = error.email;
           // The AuthCredential type that was used.
           // const credential = provider.credentialFromError(error); 
+        }
     })
   }
 
@@ -93,7 +95,7 @@ export default function Dashboard (props) {
           {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
         </div>
 
-
+        <hr/> 
 
 
         <button onClick={signInWithGoogle}> Google Sign In</button> 
