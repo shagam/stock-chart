@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {db} from '../firebase-config'
+import {db} from '../firebaseConfig'
 import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'

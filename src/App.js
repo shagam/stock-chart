@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 // import StockTable from './Stock-table';
 import {BasicTable} from './table/BasicTable' 
-import { auth } from './firebase-config'
+import { auth } from './firebaseConfig'
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth'
 // import { logout} from './contexts/AuthContext'
 import { useAuth, AuthProvider } from './contexts/AuthContext';

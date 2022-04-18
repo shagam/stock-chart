@@ -5,7 +5,7 @@ import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } fr
 
 import { updateCurrentUser } from 'firebase/auth';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
-import { auth } from '../firebase-config'
+import { auth } from '../firebaseConfig'
 
 // import {  useAuth, logout } from '../contexts/AuthContext';
 

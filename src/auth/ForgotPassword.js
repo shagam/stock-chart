@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react'
   import { Form, Button, Card, Alert } from 'react-bootstrap'
   import { Link, useNavigate } from 'react-router-dom'
   import { AuthProvider, useAuth } from '../contexts/AuthContext';
-  import { db, app, projectStorage, auth } from '../firebase-config'    
+  import { db, app, projectStorage, auth } from '../firebaseConfig'    
   
   export default function ForgotPassword  ()  {
     const emailRef = useRef();

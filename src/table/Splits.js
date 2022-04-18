@@ -4,7 +4,7 @@ import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
 import GlobalFilter from './GlobalFilter'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import Firebase from './Firebase'
-import {db} from '../firebase-config'
+import {db} from '../firebaseConfig'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 import { SPLIT_COLUMNS } from './split_columns'
 import SPLIT_MOCK_DATA from './stocksplithistory.json'
