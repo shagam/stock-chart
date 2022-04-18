@@ -55,7 +55,7 @@ export const BasicTable = (props) => {
   const ipRef = collection(db, "ipList")
   const ipStockRef = collection(db, "stockIp")
   const [flex, setFlex] = useState ();
-  const [admin, setAdmin] = useState(false);
+
   const [columnHideFlag, setColumnHideFlag] = useState(true);
 
   const LOG_FLAG = false;
@@ -78,7 +78,7 @@ export const BasicTable = (props) => {
   const [localIpv4, setLocalIPv4] = useState('');
   const [userAgent, setUserAgent] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
-  const { login, currentUser } = useAuth();
+  const { login, currentUser, admin } = useAuth();
   
   //creating function to load ip address from the API
   const getIp = async () => {
@@ -115,18 +115,14 @@ export const BasicTable = (props) => {
     console.log('ip ', res.data);
     if (res.data !== '') {
       setLocalIP(res.data);
-      setAdmin (res.data.IPv4 === '84.228.164.64');
+      // setAdmin (res.data.IPv4 === '84.228.164.64');
       setLocalIPv4 (res.data.IPv4);
     }
     else
       console.log ('no ip');
 
     // admin password
-    const admin_index = rows.findIndex((row)=> row.values.symbol === '_ADMIN_');
-    if (admin_index !== -1)
-    setAdmin (true);
-
-    // save ip
+     // save ip
     var ipQuery = query (ipRef, where('_ipv4', '==', (res.data.IPv4)));
     const ipInfo = await getDocs(ipQuery);
 
@@ -749,7 +745,12 @@ export const BasicTable = (props) => {
   return (
     <>
         <div className='w-100 text-left mt-2 d-flex '>   
-          {currentUser && <div><strong>  Email:  </strong> {currentUser.email}  &nbsp; &nbsp;  </div> }    
+          {currentUser && <div><strong>  Email:  </strong> {currentUser.email}   </div> }  
+          {admin && <div> &nbsp; <strong>(admin)</strong>  &nbsp; </div>}
+          {/* <div style={{display:'flex'}}>
+          {currentUser && <div><strong>Email:  </strong> {currentUser.email}</div> } */}
+        {/* </div> */}
+  
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
         </div>
 
@@ -778,8 +779,8 @@ export const BasicTable = (props) => {
           allColumns.map(column => (
             <div id="columnToggle_id" key={column.id}>
               <label id="column_Label_id">
-                <input type='checkbox' {...column.getToggleHiddenProps()} />
-               {column.Header}   &nbsp; &nbsp;
+                <input type='checkbox' {...column.getToggleHiddenProps()}  />
+                &nbsp; {column.Header}   &nbsp; &nbsp;
               </label>
             </div>
           ))
