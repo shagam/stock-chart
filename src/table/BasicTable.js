@@ -25,7 +25,7 @@ import {format} from "date-fns"
 //import cloneDeep from 'lodash/cloneDeep';
 import axios from 'axios'
 
-import {db} from './firebase-config'
+import {db} from '../firebase-config'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 import { Link, useNavigate } from 'react-router-dom'
 
