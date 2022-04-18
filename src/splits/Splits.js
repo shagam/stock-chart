@@ -1,9 +1,9 @@
 import React, {useState, useMemo, useEffect} from 'react'
 
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
-import GlobalFilter from './GlobalFilter'
+import GlobalFilter from '../table/GlobalFilter'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
-import Firebase from './Firebase'
+import Firebase from '../table/Firebase'
 import {db} from '../firebaseConfig'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 import { SPLIT_COLUMNS } from './split_columns'

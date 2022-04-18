@@ -10,7 +10,7 @@ import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 import StockChart from '../Stock-chart'
-import Splits from './Splits'
+import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import StockRecoveryCalc from './DropRecovery'
 
