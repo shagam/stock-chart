@@ -34,27 +34,12 @@ function App() {
   //  Firebase: Error (auth/account-exists-with-different-credential).
   // ngrok http 3000
 
-  async function handleLogout () {
-    // setError('');
-    try {
-      return await auth.signOut ()
-      // navigate('/login')
-    } catch (error) { console.log (error.message)} //setError(e.message) &&
-  }
-
-  function logout () {
-    try {
-      // return signInWithEmailAndPassword (auth, email, password)
-      return auth.signOut ()
-    } catch (e) {console.log (e)}
-  }
-
-
   return (
-    <div className="App-continer_">
-      <h2  style={{color:'green'}}> Stock compare tool</h2>
-      {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh"}}  > */}
-        <div>       
+    <div className="App-continer">
+
+      <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
+        <div> 
+        <h2  style={{color:'green'}}> Stock compare tool</h2>      
           <AuthProvider>
 
                    {/* <hr/>  */}
@@ -72,7 +57,7 @@ function App() {
 
           </AuthProvider>
         </div>
-      {/* </Container> */}
+      </Container>
       <label count = {count} />
 
     </div>
