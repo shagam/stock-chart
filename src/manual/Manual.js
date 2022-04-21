@@ -37,9 +37,16 @@ try {
         <div className='text'>
           <div id="textarea_id"> 
           {(/Android/i.test(props.userAgent)) &&
+          <div>
+            <object data={filePDF} type="application/pdf"
+            width="1000" height="700" border='3' standby="Loading" >  </object>
+
             <textarea type='text' name='manual' cols='80' rows='30' readOnly
             defaultValue={manualText}  >
             </textarea>
+
+
+          </div>
           }
           </div>
           
