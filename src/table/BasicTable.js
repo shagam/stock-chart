@@ -23,7 +23,7 @@ import Config from './Config'
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
 //import cloneDeep from 'lodash/cloneDeep';
-import axios from 'axios'
+
 
 import {db} from '../firebaseConfig'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
@@ -33,6 +33,7 @@ import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import IpContext from './IpContext';
 
 export const BasicTable = (props) => {
 
@@ -74,79 +75,9 @@ export const BasicTable = (props) => {
 
       // const cafeList = document.querySelector("#gain-history")
 
-  const [localIp, setLocalIP] = useState('');
-  const [localIpv4, setLocalIPv4] = useState('');
-  const [userAgent, setUserAgent] = useState("");
-  const [userAgentMobile, setUserAgentMobile] = useState(false);
+
   const { login, currentUser, admin } = useAuth();
-  
-  //creating function to load ip address from the API
-  const getIp = async () => {
-    if (localIp !== '' && localIp !== undefined) {
-      //console.log('ip ', ip)
-      return;
-    }
-
-    // const os = require('os');
-    // const cpu=os.cpus();
-    // const hostName = os.hostname()
-    // const platform = os.platform();
-    // const type = os.type();
-    // const arch = os.arch();
-    // const uptime = os.uptime();
-    // var path = require('path');
-    //var userInfo_ = process.env['USERPROFILE']//.split(path.sep)[2];
-    // const username = require('username')
-   // const userInfo = os.userInfo('buffer');
-  
-    // userAgent
-    const userAgent = navigator.userAgent;
-    setUserAgent(navigator.userAgent)
-    //if (/Android/i.test(navigator.userAgent))
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-      setUserAgentMobile(true);
-    } else {
-      setUserAgentMobile(false);
-      console.log("not mobile device");
-    }
-
-    const res = await axios.get('https://geolocation-db.com/json/')
-    // if (LOG_FLAG)
-    console.log('ip ', res.data);
-    if (res.data !== '') {
-      setLocalIP(res.data);
-      // setAdmin (res.data.IPv4 === '84.228.164.64');
-      setLocalIPv4 (res.data.IPv4);
-    }
-    else
-      console.log ('no ip');
-
-    // admin password
-     // save ip
-    var ipQuery = query (ipRef, where('_ipv4', '==', (res.data.IPv4)));
-    const ipInfo = await getDocs(ipQuery);
-
-    // add new entry
-    await addDoc (ipRef, {_ipv4: res.data.IPv4, update: getDate(), country_name: res.data.country_name,
-      city: res.data.city, state: res.data.state, postal: res.data.postal,
-       longitude: res.data.longitude, latitude: res.data.latitude, userAgent: userAgent })
-
-    // delete old entries
-    if (ipInfo.docs.length > 0 && LOG_FLAG)
-      console.log (res, 'ipList', ipInfo.docs.length);
-    for (let i = 0; i < ipInfo.docs.length; i++) {
-      //const id = ipInfo.docs[i].id;
-      var ipDoc = doc(db, "ipList", ipInfo.docs[i].id);
-      await deleteDoc (ipDoc);    
-    }
-  } 
-  
-  useEffect (() => { 
-    //getGain();
-    getIp();
-     //getInfo();
-
-  })
+  const {localIp, localIpv4} = IpContext();
  
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
@@ -858,7 +789,7 @@ export const BasicTable = (props) => {
         
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
 
-        <Manual userAgent={userAgent}/>
+        <Manual />
         
         <StockInfo stockInfo = {stockInfo} />
       </div>

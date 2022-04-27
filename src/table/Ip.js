@@ -1,14 +1,26 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
-import {collection, getDocs} from "firebase/firestore";
+import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 
+import axios from 'axios'
+import {format} from "date-fns"
 
+import {db} from '../firebaseConfig'
 
 function Ip (props) {
 
   const [ipList, setIpList] = useState ([]);
   const [ipDisplayFlag, setIpDisplayFlag] = useState(false);
   const [ipListFormatted, setIpListFormated] = useState ([]);
+
+
+  const [localIp, setLocalIP] = useState('');
+  const [localIpv4, setLocalIPv4] = useState('');
+  const [userAgent, setUserAgent] = useState("");
+  const [userAgentMobile, setUserAgentMobile] = useState(false);
+
+
+
 
   const ipRef = collection(props.db, "ipList")
 
@@ -58,7 +70,9 @@ function Ip (props) {
     ipFireGet();
   }
 
-  
+
+ 
+
   localStorage.setItem ('ipList', JSON.stringify(ipList));
 
   const ipDisplayChange = () => {setIpDisplayFlag (! ipDisplayFlag)}
