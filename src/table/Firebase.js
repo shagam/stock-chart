@@ -175,7 +175,8 @@ const Firebase = (props) => {
       else
         window.location.reload();
       const ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
-      props.allColumns[ind].toggleHidden();
+      // if (add_flag)
+      //   props.allColumns[ind].toggleHidden();
         
     } catch(e) { console.log (e); alert (e)}
   }
