@@ -405,7 +405,7 @@ export const GROUPED_COLUMNS = [
         accessor: 'googPrice',
       },
       {
-        Header: 'GOOGCompare',
+        Header: 'compare',
         Footer: 'GOOGCompare',    
         accessor: 'GOOGCompare'
       },
