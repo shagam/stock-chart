@@ -119,6 +119,8 @@ const Firebase = (props) => {
       console.log (gain.docs.length);
       var found_stocks_array = {};
       for (let i = 0; i < gain.docs.length; i++) {
+;
+  
         const symbol = gain.docs[i].data().__symbol;
         
         const symIndex = props.rows.findIndex((row)=> row.values.symbol === symbol); 
@@ -133,11 +135,30 @@ const Firebase = (props) => {
           props.saveTable();
           props.refreshCallBack();
         }
+        else {
+          const dat = gain.docs[i].data();
+          var ratio = -1;
+          switch (periodYears) {
+            case 1:
+              ratio = dat.year / props.rows[QQQ_index].values.year;
+              break;
+            case 2:
+              ratio = dat.year2 / props.rows[QQQ_index].values.year2;
+              break;            
+            case 5:
+              ratio = dat.year5 / props.rows[QQQ_index].values.year5;
+              break;
+            default:
+              ratio = -1;
+          }
+          ratio = ratio.toFixed(2)
+          console.log (ratio);
+        }
 
         if (LOG_FLAG)
         console.log ('stock equ QQQ added ', i, symbol);
         if (found_stocks_array[symbol] === undefined)
-          found_stocks_array[symbol] = true;
+          found_stocks_array[symbol] = ratio;
         else {
           if (LOG_FLAG)
           console.log ('dup')
@@ -149,7 +170,7 @@ const Firebase = (props) => {
           if (len === 0)
             alert (`no symbols found in firebase that compare with QQQ , except symbols in table`)
           else
-            alert (`symbols in firebase compared with QQQ (${len} symbols):  ${JSON.stringify(Object.keys(found_stocks_array))}`)
+            alert (`symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}):  ${JSON.stringify(found_stocks_array)}`)
       }
       else
         window.location.reload();
