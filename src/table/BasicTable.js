@@ -720,7 +720,7 @@ export const BasicTable = (props) => {
       }
        
       <div id="add_stock_id">
-        <form  onSubmit = {handleAddFormSubmit}>
+        <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
             name="symbol"
