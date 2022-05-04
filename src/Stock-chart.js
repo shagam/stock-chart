@@ -57,7 +57,7 @@ const StockChart = (props) => {
             marker: { color: graphColor },
             },
         ]}
-        layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + '  ('+ splitsFlag + ')',
+        layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + ' ' + splitsFlag,
       }}
       />
 

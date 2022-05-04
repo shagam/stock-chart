@@ -335,7 +335,7 @@ export const GROUPED_COLUMNS = [
         accessor: 'year20'
       },
       {
-        Header: 'splits_list ??',
+        Header: 'splits_list',
         Footer: 'splis_list',    
         accessor: 'splits_list'
       },

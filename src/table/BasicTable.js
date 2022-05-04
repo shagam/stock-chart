@@ -234,10 +234,10 @@ export const BasicTable = (props) => {
     //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
     props.refreshCallBack(-1); // force refresh
-    if (splits === '' || splits.length === 0)
+    if (splits === '' || splits.length === 0 || splits[0].jump === 0)
       setSplitsFlag('');
     else
-      setSplitsFlag('splits');
+      setSplitsFlag('(splits)');
 
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
       rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
