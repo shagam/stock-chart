@@ -9,8 +9,6 @@ const StockChart = (props) => {
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
-  if (splitsFlag !== '')
-    splitsFlag =  ' ' + splitsFlag + ' distort graph and table';
   
 
   const isEmpty = (str) => {
@@ -59,7 +57,7 @@ const StockChart = (props) => {
             marker: { color: graphColor },
             },
         ]}
-        layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + splitsFlag,
+        layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + '  ('+ splitsFlag + ')',
       }}
       />
 

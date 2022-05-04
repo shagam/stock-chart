@@ -237,7 +237,7 @@ export const BasicTable = (props) => {
     if (splits === '' || splits.length === 0)
       setSplitsFlag('');
     else
-      setSplitsFlag(' splits ??');
+      setSplitsFlag('splits');
 
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
       rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
