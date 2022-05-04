@@ -21,7 +21,7 @@ import Firebase from './Firebase'
 import Config from './Config'
 
 import {nanoid} from 'nanoid';
-import {format} from "date-fns"
+
 //import cloneDeep from 'lodash/cloneDeep';
 
 
@@ -53,7 +53,7 @@ export const BasicTable = (props) => {
 
   const gainRef = collection(db, "stock-gain_")
   const infoRef = collection(db, "stock-info")
-  const ipRef = collection(db, "ipList")
+
   const ipStockRef = collection(db, "stockIp")
   const [flex, setFlex] = useState ();
 
@@ -664,14 +664,14 @@ export const BasicTable = (props) => {
   const handleChange = () => {setSplitsCalcFlag(! splitsCalcFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   
-  const style = {
-    padding: '0px',
-    margin: '0px'
-    //background: 'blue',
-    // color: 'red',
-    // fontSize: 200,
-    //border: '2px solid green'
-  };
+  // const style = {
+  //   padding: '0px',
+  //   margin: '0px'
+  //   //background: 'blue',
+  //   // color: 'red',
+  //   // fontSize: 200,
+  //   //border: '2px solid green'
+  // };
 
   return (
     <>
