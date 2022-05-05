@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import txt from './Manual.txt'
 import './Manual.css'
 
@@ -9,7 +9,9 @@ const Manual = (props) => {
   const [ManualFlag, setManualFlag] = useState(false);
   // const [manualText, setManualText] = useState("One\nTwo\nThree");
   //const [manualTextPdf, setManualTextPdf] = useState("")
- 
+
+  const pdfCache = useMemo(() => filePDF, []);
+
   const usageHelpChange = () => {setManualFlag (! ManualFlag)}
 
  
@@ -36,7 +38,7 @@ try {
       {ManualFlag &&
         <div className='text'> 
           <div id = "pdf_id">       
-              <object data={filePDF} type="application/pdf"
+              <object data={pdfCache} type="application/pdf"
               width="1000" height="700" border='3' standby="Loading" >  </object>    
            </div>
         </div>
