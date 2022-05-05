@@ -61,6 +61,7 @@
 {"key": "ZS_0000", "symbol": "ZS", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "WMT_0000", "symbol": "WMT", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "T_2002", "symbol": "T", "jump": 0.4975, "year": 2002, "month": 11, "day": 18},
+{"key": "T_2022", "symbol": "T", "jump": 1.324, "year": 2022, "month": 4, "day": 11},
 {"key": "HP_2006", "symbol": "HP", "jump": 2.0, "year": 2006, "month": 7, "day": 10},
 {"key": "STX_0000", "symbol": "STX", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "MU_2000", "symbol": "MU", "jump": 2.0, "year": 2000, "month": 5, "day": 2},
@@ -109,5 +110,8 @@
 {"key": "XLK_0000", "symbol": "XLK", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "YNDX_0000", "symbol": "YNDX", "jump": 0.0, "year": 0, "month": 0, "day": 0},
 {"key": "PANW_0000", "symbol": "PANW", "jump": 0.0, "year": 0, "month": 0, "day": 0},
-{"key": "QQQX_0000", "symbol": "QQQX", "jump": 0.0, "year": 0, "month": 0, "day": 0}
+{"key": "QQQX_0000", "symbol": "QQQX", "jump": 0.0, "year": 0, "month": 0, "day": 0},
+{"key": "KLAC_2000", "symbol": "KLAC", "jump": 2.0, "year": 2000, "month": 1, "day": 19},
+{"key": "SOXX_0000", "symbol": "SOXX", "jump": 0.0, "year": 0, "month": 0, "day": 0},
+{"key": "PANW_0000", "symbol": "PANW", "jump": 0.0, "year": 0, "month": 0, "day": 0}
 ]

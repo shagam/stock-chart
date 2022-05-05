@@ -222,7 +222,7 @@ export const BasicTable = (props) => {
     rows[row_index].values.year20 = year20;
     rows[row_index].values.price = price;
 
-    if (rows[row_index].values.splits_calc !== 'table') {
+    if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== '---') {
       rows[row_index].values.splits_list = splits;
       if (splits === '')
         rows[row_index].values.splits_calc = '';
@@ -378,7 +378,7 @@ export const BasicTable = (props) => {
 
               var splits = "";
               var splitArray = [];
-              if (rows[row_index].values.splits_calc === 'table' && rows[row_index].values.splits_list_table !== undefined)
+              if (rows[row_index].values.splits_calc === 'table' && rows[row_index].values.splits_list_table !== undefined && rows[row_index].values.splits_calc === '---' )
                 splitArray = rows[row_index].values.splits_list_table;
               else {
                 for (var key in chartData[`${periodTag}`]) {

@@ -130,7 +130,7 @@ export const Splits = (props) => {
       const row_index = props.rows.findIndex((row)=> row.values.symbol === sym);
       if (row_index === -1) // not found
         return;
-      if (props.rows[row_index].values.splits_calc === 'table')
+      if (props.rows[row_index].values.splits_calc === 'table_' || props.rows[row_index].values.splits_calc === '---' )
         return;  // already in
       
       console.log ('searchSplit ', sym)
@@ -150,7 +150,10 @@ export const Splits = (props) => {
       console.log (sym, splitArray_build);
       props.rows[row_index].values.splits_list_table = splitArray_build;
       props.rows[row_index].values.splits_list = JSON.stringify(splitArray_build);
-      props.rows[row_index].values.splits_calc = 'table'
+      if (splitArray_build[0].ratio !== 0)
+        props.rows[row_index].values.splits_calc = 'table'
+      else
+        props.rows[row_index].values.splits_calc = '---'
   }
 
   // get splits from firebase into splits table. 
