@@ -40,7 +40,7 @@ export function AuthProvider ({ children }) {
   function login (email, password) {
     try {
       // return signInWithEmailAndPassword (auth, email, password)
-      return auth.signInWithEmailAndPassword (email, password)
+      return signInWithEmailAndPassword (auth, email, password)
     } catch (e) {console.log (e)}
   }
 
