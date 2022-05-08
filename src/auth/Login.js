@@ -9,7 +9,7 @@ export default function Login (props)  {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const { login, currentUser } = useAuth(); //, currentUser
+  const { login, currentUser, admin } = useAuth(); //, currentUser
   const [error, setError] = useState ('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword]= useState(false);
@@ -43,7 +43,11 @@ export default function Login (props)  {
       <Card>
         <Card.Body>
           <h2 className='text-center mb-4'> Log In</h2>
-          {currentUser && <div><strong>Email:  </strong> {currentUser.email}</div> }
+          <div style={{display:'flex'}}>
+          {currentUser && <div>{currentUser.email}</div> }
+          {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
+          </div>
+
 
           {error && <Alert variant="danger"> {error} </Alert>}
           <hr/> 

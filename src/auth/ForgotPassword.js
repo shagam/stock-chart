@@ -9,7 +9,7 @@ import React, { useState, useRef } from 'react'
   export default function ForgotPassword  ()  {
     const emailRef = useRef();
   
-    const { resetPassword, currentUser } = useAuth(); //, currentUser
+    const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
     const [error, setError] = useState ('');
     const [ message, setMessage] = useState ()
     const [loading, setLoading] = useState(false);
@@ -37,7 +37,10 @@ import React, { useState, useRef } from 'react'
         <Card>
           <Card.Body>
             <h2 className='text-center mb-4'> Password Reset</h2>
-            {currentUser && <div><strong>Email:  </strong> {currentUser.email}</div> }
+            <div style={{display:'flex'}}>
+              {currentUser && <div>{currentUser.email}</div> }
+              {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
+            </div>
             <hr/>   
             {error && <Alert variant="danger"> {error} </Alert>}
             {error && <Alert variant="success"> {message} </Alert>}

@@ -10,7 +10,7 @@ export default function Signup ()  {
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
 
-  const { signup, currentUser } = useAuth(); //, currentUser
+  const { signup, currentUser, admin } = useAuth(); //, currentUser
   const [error, setError] = useState ('');
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword]= useState(false);
@@ -42,8 +42,11 @@ export default function Signup ()  {
       <Card>
         <Card.Body>
           <h2 className='text-center mb-4'> Sign up</h2>
-          {currentUser && <div><strong>Email:  </strong> {currentUser.email}</div> }
 
+          <div style={{display:'flex'}}>
+              {currentUser && <div>{currentUser.email}</div> }
+              {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
+            </div>
           {error && <Alert variant="danger"> {error} </Alert>}
           <hr/>   
           <Form onSubmit={handleSubmit}>
