@@ -353,10 +353,11 @@ const Firebase = (props) => {
         {/* <div style={{padding: '1px'}} ></div> */}
         <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>stocks-compared-to-QQQ-5y </button>
-
+        <div>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
+        </div>
         {props.admin &&
           <div>
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} &bpsp; </div>
