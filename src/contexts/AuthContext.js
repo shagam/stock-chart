@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {auth} from '../firebaseConfig'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, updatePassword } from "firebase/auth";
 import { getDefaultNormalizer } from '@testing-library/react';
 
 
@@ -47,7 +47,7 @@ export function AuthProvider ({ children }) {
   function logout () {
     try {
       // return signInWithEmailAndPassword (auth, email, password)
-      const stat = auth.signOut ();
+      const stat = signOut (auth);
       setAdmin (false);
       return stat;
 
@@ -58,12 +58,12 @@ export function AuthProvider ({ children }) {
     return sendPasswordResetEmail (auth,email);
   }
 
-  function updateEmail (email) {
+  function updateEmail_ (email) {
     return currentUser.updateEmail(email);
   }
 
-  function updatePassword (password) {
-    return currentUser.updatePassword(password);
+  function updatePass (password) {
+    return updatePassword(currentUser, password);
   }
 
   // onAuthStateChanged(auth, (user) => {
@@ -106,8 +106,8 @@ export function AuthProvider ({ children }) {
     login,
     logout,
     resetPassword,
-    updateEmail,
-    updatePassword
+    updateEmail_,
+    updatePass
   }
   return (
     <AuthContext.Provider value={value}>
