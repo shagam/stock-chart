@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {auth} from '../firebaseConfig'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, signOut, updatePassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail,
+   signOut, updatePassword, updateEmail } from "firebase/auth";
 import { getDefaultNormalizer } from '@testing-library/react';
 
 
@@ -59,7 +60,7 @@ export function AuthProvider ({ children }) {
   }
 
   function updateEmail_ (email) {
-    return currentUser.updateEmail(email);
+    return updateEmail(currentUser, email);
   }
 
   function updatePass (password) {

@@ -26,9 +26,9 @@ export default function UpdateProfile ()  {
       return setError ('Passwords do not match')
     } 
 
-    if (passwordRef.current.value.length < 6) {
-      return setError ('Passwords length need at least 6 ')
-    }
+    // if (passwordRef.current.value.length < 6 ) {
+    //   return setError ('Passwords length need at least 6 ')
+    // }
 
     setError('');
     setLoading(true);
