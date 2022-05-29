@@ -109,6 +109,10 @@ const Firebase = (props) => {
         userQuery = query (props.gainRef, where(
         'year5', '>', (props.rows[QQQ_index].values.year5 * 0.92) ));
 
+        if (periodYears === 10)
+        userQuery = query (props.gainRef, where(
+        'year10', '>', (props.rows[QQQ_index].values.year10 * 0.92) ));        
+
         // || 'mon6', '>', props.rows[QQQ_index].values.mon6 
         // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
         // || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
@@ -131,6 +135,7 @@ const Firebase = (props) => {
         }
 
         if (add_flag) {
+          // if need to add
           addSym (symbol, gain.docs[i].data());
           props.saveTable();
           props.refreshCallBack();
@@ -148,10 +153,13 @@ const Firebase = (props) => {
             case 5:
               ratio = dat.year5 / props.rows[QQQ_index].values.year5;
               break;
+            case 10:
+              ratio = dat.year10 / props.rows[QQQ_index].values.year10;
+              break;              
             default:
               ratio = -1;
           }
-          ratio = ratio.toFixed(2)
+          ratio = Number(ratio.toFixed(2))
           console.log (ratio);
         }
 
@@ -165,12 +173,20 @@ const Firebase = (props) => {
         }
       }
 
+      // disply list
       if (! add_flag) {
           const len = Object.keys (found_stocks_array).length;
           if (len === 0)
             alert (`no symbols found in firebase that compare with QQQ , except symbols in table`)
-          else
+          else {
+            // var str = "";
+            // for (var i = 0; i < len; i++) {
+            //   if (i % 4 === 0)
+            //     str += "\n"
+            //   str += found_stocks_array[i]
+            // }
             alert (`symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}):  ${JSON.stringify(found_stocks_array)}`)
+          }
       }
       else
         window.location.reload();
@@ -293,7 +309,7 @@ const Firebase = (props) => {
     // var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
     // props.allColumns[ind].toggleHidden();
     var ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
-    props.allColumns[ind].toggleHidden();
+    // props.allColumns[ind].toggleHidden();
 
     // fill missing data
     for (let i = 0; i < props.rows.length; i++) {
@@ -353,10 +369,12 @@ const Firebase = (props) => {
         {/* <div style={{padding: '1px'}} ></div> */}
         <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>stocks-compared-to-QQQ-5y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(false, 10)}>stocks-compared-to-QQQ-10y </button>        
         <div>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
         </div>
         {props.admin &&
           <div>
