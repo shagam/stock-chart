@@ -23,7 +23,7 @@ import React, { useState, useRef } from 'react'
         setLoading(true);
         // await sendPasswordResetEmail(emailRef.current.value)
         await resetPassword (emailRef.current.value);
-        setMessage ('Check your inbox for further instructions');
+        setMessage ('Check your inbox for further instructions (Check also spam)');
         // history.push ('/')
 
       } catch (e) {setError ('Failed to reset passwrd' + e.message) && console.log (e)}
@@ -43,7 +43,7 @@ import React, { useState, useRef } from 'react'
             </div>
             <hr/>   
             {error && <Alert variant="danger"> {error} </Alert>}
-            {error && <Alert variant="success"> {message} </Alert>}
+            {message && <Alert variant="success"> {message} </Alert>}
   
             <Form onSubmit={handleSubmit}>
               <Form.Group id="email">
