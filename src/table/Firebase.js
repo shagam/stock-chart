@@ -192,9 +192,9 @@ const Firebase = (props) => {
             })
 
             // display alert and list on console.
-            const textForAlert = `symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}): `
+            const textForAlert = `symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}): \n `
             console.log (textForAlert + Object.keys(found_stocks_array))
-            alert (`${textForAlert}  ${str} `)
+            alert (`${textForAlert} with gain compared to qqq\n ${str} `)
           }
       }
       else
