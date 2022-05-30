@@ -190,9 +190,11 @@ const Firebase = (props) => {
               i++;
 
             })
-             
-            alert (`symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}):  ${str}`)
-            // setStockList([]);
+
+            // display alert and list on console.
+            const textForAlert = `symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}): `
+            console.log (textForAlert + Object.keys(found_stocks_array))
+            alert (`${textForAlert}  ${str} `)
           }
       }
       else
@@ -383,11 +385,9 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
 
-        {stockList.length > 0 &&
-          <textarea>
-             ${JSON.stringify (stockList)}
-          </textarea>       
-        }
+        {/* {stockListStr !== '' &&
+          <textarea rows={3} cols={80} value={stockListStr} />   
+        } */}
 
         </div>
         {props.admin &&
