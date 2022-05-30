@@ -123,7 +123,7 @@ const Firebase = (props) => {
       console.log (gain.docs.length);
       var found_stocks_array = {};
       for (let i = 0; i < gain.docs.length; i++) {
-;
+
   
         const symbol = gain.docs[i].data().__symbol;
         
@@ -160,7 +160,7 @@ const Firebase = (props) => {
               ratio = -1;
           }
           ratio = Number(ratio.toFixed(2))
-          console.log (ratio);
+          // console.log (ratio);
         }
 
         if (LOG_FLAG)
@@ -179,13 +179,20 @@ const Firebase = (props) => {
           if (len === 0)
             alert (`no symbols found in firebase that compare with QQQ , except symbols in table`)
           else {
-            // var str = "";
-            // for (var i = 0; i < len; i++) {
-            //   if (i % 4 === 0)
-            //     str += "\n"
-            //   str += found_stocks_array[i]
-            // }
-            alert (`symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}):  ${JSON.stringify(found_stocks_array)}`)
+            //*  build string list for display
+            var str = "";
+            var i = 0;
+            Object.keys(found_stocks_array).forEach(function (key) {
+              if (i % 5 === 0)
+                str += "\n"
+              str += key + ': ';
+              str += found_stocks_array[key] + "    ";
+              i++;
+
+            })
+             
+            alert (`symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}):  ${str}`)
+            // setStockList([]);
           }
       }
       else
@@ -375,6 +382,13 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
+
+        {stockList.length > 0 &&
+          <textarea>
+             ${JSON.stringify (stockList)}
+          </textarea>       
+        }
+
         </div>
         {props.admin &&
           <div>
