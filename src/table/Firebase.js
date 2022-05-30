@@ -215,7 +215,7 @@ const Firebase = (props) => {
       if (collect[sym] === undefined)
         collect[sym] = 1;
       else
-        collect[sym] ++;
+        collect[sym] ++; //skip stock already in table
     }
     console.log (collect);
     alert (JSON.stringify (collect))
