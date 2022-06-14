@@ -47,6 +47,7 @@ export const BasicTable = (props) => {
   const [splitsFlag, setSplitsFlag] = useState('');
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
+  const [openMarketFlag, setOpenMaretFlag] = useState(true);
   const [stockInfo, setStockInfo] = useState ('');
   // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
   // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
@@ -308,6 +309,7 @@ export const BasicTable = (props) => {
     // }               
   }
 
+  const openOrCloseText = openMarketFlag ? '1. open' : '4. close';
 
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
@@ -383,7 +385,7 @@ export const BasicTable = (props) => {
               else {
                 for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
-                  stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
+                  stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
                   // if (i > 1140)
                   //   continue;  //ignore splits before 22 years
                   if (i > 0) {
@@ -661,7 +663,9 @@ export const BasicTable = (props) => {
   // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"
   const { globalFilter } = state
 
-  const handleChange = () => {setSplitsCalcFlag(! splitsCalcFlag)}
+  // checkboxes 
+  const calcChange = () => {setSplitsCalcFlag(! splitsCalcFlag)}
+  const openMaretFlagChange = () => {setOpenMaretFlag ( ! openMarketFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   
   // const style = {
@@ -691,7 +695,9 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}> 
-          <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={handleChange} /> calc_splits </div>
+          <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits </div>
+          &nbsp; &nbsp;
+          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market </div>
           &nbsp; &nbsp;
           <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button> 
           &nbsp; &nbsp;       
