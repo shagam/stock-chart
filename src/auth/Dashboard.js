@@ -17,12 +17,13 @@ export default function Dashboard (props) {
     // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     signInWithPopup(auth, provider)
     .then((result => {
-      console.log(result)
+      // console.log(result)
+      console.log (result.user.displayName, result.user.email, result.user.photoURL)
       // This gives you a Google Access Token. You can use it to access the Google API.
-      const credential = provider.credentialFromResult(result);
-      const token = credential.accessToken;
+      // const credential = provider.credentialFromResult(result);
+      // const token = credential.accessToken;
       // The signed-in user info.
-      const user = result.user;
+      // const user = result.user;
 
     }))
     .catch((error) => {
