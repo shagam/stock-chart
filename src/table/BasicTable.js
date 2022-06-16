@@ -605,10 +605,10 @@ export const BasicTable = (props) => {
   //         Cell: ({row}) => (
   //           //<CheckBox {...row.getToggleRowSelectedProps()} />
   //           // <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-  //           <div>   
+  //           <div style={{display:'flex'}}>   
   //           <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
   //           <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
-  //           {/* <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button> */}
+  //           <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
   //           </div> 
   //         )
   //       }, 
@@ -764,7 +764,7 @@ export const BasicTable = (props) => {
                 {row.cells.map((cell) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
-                  <div>
+                  <div style={{display:'flex'}}>
                   <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                   <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
                   <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
