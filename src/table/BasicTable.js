@@ -323,7 +323,7 @@ export const BasicTable = (props) => {
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
-    const period = [['DAILY', 'Daily)'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
+    const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
     const weekly = false;
