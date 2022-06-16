@@ -53,7 +53,14 @@ export const GainValidate = (props) => {
     // const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
     // var weeks = Math.round (todayWeeks - priceWeeks);
 
-    props.rows[row_index].values.googDate =  props.gain_validation_json[valiate_index].year + "-" + (Number(props.gain_validation_json[valiate_index].month) + 1) + "-" + props.gain_validation_json[valiate_index].day;
+ 
+    const googDate =  props.gain_validation_json[valiate_index].year + "-" + (Number(props.gain_validation_json[valiate_index].month) + 1) + "-" + props.
+    gain_validation_json[valiate_index].day;
+    if (googDate === props.rows[row_index].values.googDate)
+      return '';
+
+    props.rows[row_index].values.googDate = googDate;
+
     props.rows[row_index].values.googPrice = props.gain_validation_json[valiate_index].price
 
     var p = -1;
