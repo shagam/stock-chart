@@ -4,7 +4,7 @@ import "./StockChart.css";
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 const StockChart = (props) => { 
-  const [chartFlag, setChartFlag] = useState(true);
+  const [chartFlag, setChartFlag] = useState(false);
   const LOG_FLAG = false;
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
