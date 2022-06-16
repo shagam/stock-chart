@@ -512,6 +512,7 @@ export const BasicTable = (props) => {
               updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
            }
         )
+        props.refreshCallBack(-1); 
   }
   
 
@@ -525,7 +526,7 @@ export const BasicTable = (props) => {
       rows.splice(index, 1);
       saveTable();
       props.refreshCallBack(-1); // force refresh
-      //window.location.reload();
+      window.location.reload();
     } catch (e) {console.log(e)}
   }
 

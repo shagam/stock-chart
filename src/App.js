@@ -28,7 +28,7 @@ function App() {
   // const navigate = useNavigate();
 
   const refreshCallBack = (childData) => {
-    setCount (count + childData);
+    setCount (count + 1);
   }
 
   //  Firebase: Error (auth/account-exists-with-different-credential).
@@ -56,6 +56,7 @@ function App() {
             </Router>
 
           </AuthProvider>
+          {/* <div>{count}</div> */}
         </div>
       </Container>
       <label count = {count} />
