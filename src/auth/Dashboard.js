@@ -18,6 +18,7 @@ export default function Dashboard (props) {
     signInWithPopup(auth, provider)
     .then((result => {
       console.log ('name: ', result.user.displayName, ' email: ', result.user.email, 'photo: ', result.user.photoURL)
+      setError ('');
     }))
     .catch((error) => {
       console.log(error.message)
@@ -38,6 +39,7 @@ export default function Dashboard (props) {
     signInWithPopup(auth, provider)
     .then((result) => {
       console.log ('name: ', result.user.displayName, ' email: ', result.user.email, 'photo: ', result.user.photoURL)
+      setError ('');
     })
     .catch((error) => {
       if (error) {
