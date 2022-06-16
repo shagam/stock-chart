@@ -195,6 +195,7 @@ export const GROUPED_COLUMNS = [
     Header: '',
     Footer: '',
     accessor: 'sym',
+    sticky: 'left',
     columns: [
       {
         Header: 'symbol',

@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react'
-import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
-//import { useSticky } from 'react-table-sticky'
+import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
+import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
 //import{ Styles } from './TableStyles'
 import MOCK_DATA from './mock-data.json'
