@@ -593,29 +593,28 @@ export const BasicTable = (props) => {
 
   },
   useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
-  //  (hooks) => {
-  //   hooks.visibleColumns.push((columns) => {
-  //     return [
-  //       {
-  //         id: 'selection',
-  //         Header: ({getToggleAllRowsSelectedProps}) => (
-  //           null
-  //           // <CheckBox {...getToggleAllRowsSelectedProps()} />
-  //         ),
-  //         Cell: ({row}) => (
-  //           //<CheckBox {...row.getToggleRowSelectedProps()} />
-  //           // <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-  //           <div style={{display:'flex'}}>   
-  //           <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-  //           <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
-  //           <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-  //           </div> 
-  //         )
-  //       }, 
-  //       ...columns
-  //     ]
-  //   })
-  // }  
+   (hooks) => {
+    hooks.visibleColumns.push((columns) => {
+      return [
+        {
+          id: 'selection',
+          Header: ({getToggleAllRowsSelectedProps}) => (
+            null
+            // <CheckBox {...getToggleAllRowsSelectedProps()} />
+          ),
+          Cell: ({row}) => (
+            //<CheckBox {...row.getToggleRowSelectedProps()} />
+            <div style={{display:'flex'}}>   
+            <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+            <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
+            <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+            </div> 
+          )
+        }, 
+        ...columns
+      ]
+    })
+  }  
   )
 
   function toggleGoogCompareColumns ()  {
@@ -764,11 +763,11 @@ export const BasicTable = (props) => {
                 {row.cells.map((cell) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
-                  <div style={{display:'flex'}}>
+                  {/* <div style={{display:'flex'}}>
                   <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                   <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
                   <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-                  </div>
+                  </div> */}
               </tr>
             )
           })}
