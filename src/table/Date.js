@@ -33,23 +33,23 @@ const dateSplit = (date) => {
   return dateSplit;
 } 
 
-const monNameToNumber = (monStr) => {
-  switch (monStr) {
-    case 'Jan': return 1;
-    case 'Feb': return 2;
-    case 'Mar': return 3;
-    case 'Apr': return 4;
-    case 'May': return 5;
-    case 'Jun': return 6;
-    case 'Jul': return 7;
-    case 'Aug': return 8;
-    case 'Sep': return 9;
-    case 'Oct': return 10;
-    case 'Nov': return 11;
-    case 'Fec': return 12;
-    default: alert ('wrong month str, cannot convert')
-  }
-}
+// const monNameToNumber = (monStr) => {
+//   switch (monStr) {
+//     case 'Jan': return 1;
+//     case 'Feb': return 2;
+//     case 'Mar': return 3;
+//     case 'Apr': return 4;
+//     case 'May': return 5;
+//     case 'Jun': return 6;
+//     case 'Jul': return 7;
+//     case 'Aug': return 8;
+//     case 'Sep': return 9;
+//     case 'Oct': return 10;
+//     case 'Nov': return 11;
+//     case 'Fec': return 12;
+//     default: alert ('wrong month str, cannot convert')
+//   }
+// }
 
 // array [year, month, day] month 1..12
 const monthsBack = (dateArray, months) => { // [y,m,d]
@@ -57,8 +57,8 @@ const monthsBack = (dateArray, months) => { // [y,m,d]
   dateArray[1] = Number(dateArray[1]);
   dateArray[2] = Number(dateArray[2]);
   var dateArray_ =  [...dateArray];
-  if (dateArray [1] - months >= 1)
-    dateArray_ [1] -= months;
+  if (dateArray[1] - months >= 1)
+    dateArray_[1] -= months;
   else {
     dateArray_[0] -= (Math.floor((months + 12 - dateArray_[1]) /12));
     dateArray_[1] = (dateArray_[1] + 12 - months) % 12;
@@ -81,6 +81,7 @@ const monthsBackTest = () => {
     date = monthsBack ([2022, 2, 15], 36);
     date = monthsBack ([2022, 2, 15], 72);
     date = monthsBack ([2022, 2, 15], 144);
+    console.log (date)
 }
 
 
@@ -90,8 +91,8 @@ const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
   dateArray[2] = Number(dateArray[2]);
   var dateArray_ =  [...dateArray];
 
-  if (dateArray_ [2] - days >= 1)
-    dateArray_ [2] -= days;
+  if (dateArray_[2] - days >= 1)
+    dateArray_[2] -= days;
   else {
     dateArray_[2] = dateArray_[2] - days + 31; // assume 30 days + one day
     if ( dateArray_[1] > 1) {
@@ -134,17 +135,17 @@ const daysFrom1970 = (dateArray) => {
   const dateDays = (dateArray[0] - 1970) * 365.25 + dateArray[1] * 30.416 + dateArray[2];
   return dateDays;
 }
-const dateDiff = (dateArray1, dateArray2) => {
-  const diff = daysFrom1970 (dateArray1) - daysFrom1970 (dateArray2)
-  return Math.abs(diff);
-}
+// const dateDiff = (dateArray1, dateArray2) => {
+//   const diff = daysFrom1970 (dateArray1) - daysFrom1970 (dateArray2)
+//   return Math.abs(diff);
+// }
 
-const same = (date1Split, date2Split) => {
-  if (date1Split[0] === date2Split[0] && date1Split[1] === date2Split[1] && date1Split[2] === date2Split[2])
-    return true;
-  else
-    return false;
-}
+// const same = (date1Split, date2Split) => {
+//   if (date1Split[0] === date2Split[0] && date1Split[1] === date2Split[1] && date1Split[2] === date2Split[2])
+//     return true;
+//   else
+//     return false;
+// }
 
 // return index of dataArray closest
 const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
