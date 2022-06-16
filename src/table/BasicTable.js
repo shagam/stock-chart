@@ -85,6 +85,8 @@ export const BasicTable = (props) => {
 
   const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, drop, recoverWeek, dropDate, priceDivHigh) => {
     // read old entries
+    if (drop === undefined)
+      drop = -1;
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 

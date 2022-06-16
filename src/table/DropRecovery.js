@@ -101,6 +101,7 @@ const StockRecoveryCalc = (props) => {
         //}
       }
       drop = Math.round (dropPrice / highPriceBeforeDeep * 1000, 3) / 1000;
+      console.log (props.StockSymbol, 'drop', drop)
       if (LOG_FLAG) {
         console.log ('drop: ' + drop);
         console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepWeek: ',  highPriceBeforeDeepWeek)
