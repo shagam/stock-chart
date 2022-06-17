@@ -330,7 +330,7 @@ export const BasicTable = (props) => {
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    const weekly = false;
+    const weekly = true;
     let API_Call;
     if (weekly)
       API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
