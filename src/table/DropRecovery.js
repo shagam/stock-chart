@@ -161,13 +161,13 @@ const DropRecovery = (props) => {
   }
 
   
-  function swap_period_4_mon() {
+  function swap_period_8_mon() {
     var date = new Date();
     var formattedDate = format(date, "yyyy-MM-dd");
     var dateArray = formattedDate.split('-');
 
     // date = date.split('T')[0];
-    const dateArray1 = monthsBack (dateArray, 4);
+    const dateArray1 = monthsBack (dateArray, 8);
     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
     setStartDate (new Date(dateStr));
     // setEndDate (new Date());
@@ -230,7 +230,7 @@ const DropRecovery = (props) => {
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
           <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
-          <button type="button" onClick={()=>swap_period_4_mon()}>  last4Months    </button>
+          <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button>
         </div>
       }
     </div>
