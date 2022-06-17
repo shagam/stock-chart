@@ -15,6 +15,7 @@ const DropRecovery = (props) => {
   // props.callBack 
   // props.stockChartYValues
   // props.stockChartXValues
+  // props.rows
 
   // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
   const [startDate, setStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
@@ -76,9 +77,9 @@ const DropRecovery = (props) => {
         }
       }
       if (LOG_FLAG) {
-        console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropIndex], dropDate);
-        console.log ('startBeforeDrop:', startBeforeDropIndex, ' startPrice: ', props.stockChartYValues[startBeforeDropIndex]);
-        console.log ('dropPrice: ', dropPrice, ' dropIndex: ', dropIndex);
+        console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropIndex]);
+        console.log ('startPrice: ', props.stockChartYValues[startBeforeDropIndex], 'beforeDropIndex:', startBeforeDropIndex);
+        console.log ('dropPrice: ', dropPrice, ' dropIndex: ', dropIndex, ' dropDate:', dropDate);
       }
     }
 
@@ -107,8 +108,17 @@ const DropRecovery = (props) => {
       }
       drop = Math.round (dropPrice / highPriceBeforeDeep * 1000, 3) / 1000;
       console.log (props.StockSymbol, 'drop', drop)
+
+      // avoid multiple cals of drop
+      const index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
+      if (index === -1) {
+        alert (`crash recovery symbol not found (${props.StockSymbol})`);
+        return;
+      } 
+      if (props.rows[index].values.drop === drop)
+        return;
+
       if (LOG_FLAG) {
-        console.log ('drop: ' + drop);
         console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
         console.log ('highPriceAfterDeep', highPriceAfterDeep, ' recoverIndex: ', recoverIndex);
       }
