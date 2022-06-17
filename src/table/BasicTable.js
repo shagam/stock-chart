@@ -94,7 +94,7 @@ export const BasicTable = (props) => {
       GOOGCompare = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh})
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh, sym: Symbol})
     } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
@@ -224,6 +224,8 @@ export const BasicTable = (props) => {
     rows[row_index].values.year10 = year10;
     rows[row_index].values.year20 = year20;
     rows[row_index].values.price = price;
+
+    rows[row_index].values.sym = sym; // added field
 
     if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== '---') {
       rows[row_index].values.splits_list = splits;
@@ -566,6 +568,8 @@ export const BasicTable = (props) => {
     newStock.id = nanoid();
     newStock.values.symbol = addFormData.symbol.toUpperCase();
     newStock.original.symbol = addFormData.symbol.toUpperCase();
+    newStock.values.sym = addFormData.symbol.toUpperCase();
+    newStock.original.sym = addFormData.symbol.toUpperCase();
     newStock.cells = null;
     newStock.allCells = [];
     
@@ -634,6 +638,7 @@ export const BasicTable = (props) => {
   const saveTable = () => {
     const stocks = [];
     for (let i = 0; i < rows.length; i++) {
+      rows[i].values.sym = rows[i].values.symbol;  //align added field sym
       stocks.push(rows[i].values);
     }
     const stocksStr = JSON.stringify(stocks);

@@ -184,6 +184,11 @@ export const COLUMNS = [
     Footer: 'priceDivHigh',    
     accessor: 'priceDivHigh'
   },
+  {
+    Header: 'symbol',
+    Footer: 'symbol',    
+    accessor: 'sym',
+  },
  
 
 ] 
@@ -412,6 +417,20 @@ export const GROUPED_COLUMNS = [
       },
 
     ]
+  },
+  {
+    Header: '',
+    Footer: '',
+    accessor: 'sym',   
+    columns: [
+      {
+        Header: 'symbol',
+        Footer: 'symbol',    
+        accessor: 'sym',
+      },
+
+    ]
   }
+
 ]
 
