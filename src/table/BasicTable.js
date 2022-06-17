@@ -94,7 +94,7 @@ export const BasicTable = (props) => {
       GOOGCompare = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh, sym: Symbol})
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh})
     } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
