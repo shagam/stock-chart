@@ -12,7 +12,7 @@ import CheckBox from './CheckBox'
 import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
-import StockRecoveryCalc from './DropRecovery'
+import DropRecovery from './DropRecovery'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -793,7 +793,7 @@ export const BasicTable = (props) => {
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
      
-        <StockRecoveryCalc StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
+        <DropRecovery StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
 
       <div id='manual_id'>    
         <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/>

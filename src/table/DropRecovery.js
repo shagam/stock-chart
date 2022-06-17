@@ -9,7 +9,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 //import './DropRecovery.css'
 
 
-const StockRecoveryCalc = (props) => {
+const DropRecovery = (props) => {
 
   // props.StockSymbol
   // props.callBack 
@@ -227,4 +227,4 @@ const StockRecoveryCalc = (props) => {
   )
 }
 
-export default StockRecoveryCalc;
+export default DropRecovery;
