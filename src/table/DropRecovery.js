@@ -16,8 +16,8 @@ const StockRecoveryCalc = (props) => {
   // props.stockChartYValues
   // props.stockChartXValues
 
-
-  const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
+  // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
+  const [startDate, setStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
   // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
   const [displayFlag, setDisplayFlag] = useState (false); 
  //  2007, 11, 1  2008 deep
@@ -25,7 +25,7 @@ const StockRecoveryCalc = (props) => {
   
   const searchDeepValue = () => {
 
-    const LOG_FLAG = false;
+    const LOG_FLAG = true;
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -36,66 +36,71 @@ const StockRecoveryCalc = (props) => {
     const startMon = startDate.getMonth();
     const startDay = startDate.getDay();
 
-    var startBeforeDropWeek = (todayYear - startYear) * 52 + (todayMon - startMon) * 4.34 + (todayDay - startDay) / 4.34;
-    startBeforeDropWeek = Math.round(startBeforeDropWeek);
+      
+
+    // var startBeforeDropWeek = (todayYear - startYear) * 52 + (todayMon - startMon) * 4.34 + (todayDay - startDay) / 4.34;
+    // startBeforeDropWeek = Math.round(startBeforeDropWeek);
+
+    const startDateArray = [startYear, startMon, startDay]
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, startDateArray)  
 
     //console.log (startDate.getFullYear(), startDate.getMonth(), startDate.getDay())    
     //console.log (props.StockSymbol, props.stockChartXValues[beforeDropWeek]);
 
-    if (startBeforeDropWeek < 10 && startBeforeDropWeek > 52*20) {
-      alert ('Not allowed before 20 years, and not less than 10 weeks');
-      return -1;
-    }
+    // if (startBeforeDropWeek < 10 && startBeforeDropWeek > 52*20) {
+    //   alert ('Not allowed before 20 years, and not less than 10 weeks');
+    //   return -1;
+    // }
     var highPriceBeforeDeep = 0;
-    var highPriceBeforeDeepWeek = 0;
+    var highPriceBeforeDeepIndex = 0;
 
-    var dropPrice = Number(props.stockChartYValues[startBeforeDropWeek]);
-    var dropWeek = -1;
+    var dropPrice = Number(props.stockChartYValues[startBeforeDropIndex]);
+    var dropIndex = -1;
     var dropDate = '';
     var highPriceAfterDeep = -1;
-    var recoverWeek = -1;
+    var recoverIndex = -1;
     var recoverPeriod = -1
     var drop = -1;
 
     // search for deepPrice after start date
     const deep = () => {
-      dropPrice = Number(props.stockChartYValues[startBeforeDropWeek]);
-      dropDate = props.stockChartXValues[startBeforeDropWeek];
-      for (var i = startBeforeDropWeek; i > 0; i--) {
+      dropPrice = Number(props.stockChartYValues[startBeforeDropIndex]);
+      dropDate = props.stockChartXValues[startBeforeDropIndex];
+      for (var i = startBeforeDropIndex; i > 0; i--) {
         // search for lowestPrrice 
         const price = Number(props.stockChartYValues[i] );
         if (dropPrice > price) {
           dropPrice = price;
-          dropWeek = i;
+          dropIndex = i;
           dropDate = props.stockChartXValues[i];
         }
       }
       if (LOG_FLAG) {
-        console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropWeek], dropDate);
-        console.log ('startBeforeDropWeek:', startBeforeDropWeek, ' startPrice: ', props.stockChartYValues[startBeforeDropWeek]);
-        console.log ('dropPrice: ', dropPrice, ' dropWeek: ', dropWeek);
+        console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropIndex], dropDate);
+        console.log ('startBeforeDrop:', startBeforeDropIndex, ' startPrice: ', props.stockChartYValues[startBeforeDropIndex]);
+        console.log ('dropPrice: ', dropPrice, ' dropIndex: ', dropIndex);
       }
     }
 
     // search for higest befor deep
     const highistBeforeDeep = () => {
-      for (let i = dropWeek; i <= startBeforeDropWeek * 4; i++) { 
+      for (let i = dropIndex; i <= startBeforeDropIndex * 4; i++) { 
         const price = Number(props.stockChartYValues[i]);
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
-          highPriceBeforeDeepWeek = i;
+          highPriceBeforeDeepIndex = i;
         }
       }
     }
 
     // check for recovery price after drop
     const recoveryWeeks = () => {
-      for (let i = dropWeek; i > 0; i--) {      
+      for (let i = dropIndex; i > 0; i--) {      
         const price = Number(props.stockChartYValues[i]);
         //if (highPriceAfterDeep < price) {
-          if (price > Number (props.stockChartYValues[highPriceBeforeDeepWeek])) {
+          if (price > Number (props.stockChartYValues[highPriceBeforeDeepIndex])) {
             highPriceAfterDeep = price;
-            recoverWeek = i;
+            recoverIndex = i;
             break; // recovery found
           }
         //}
@@ -104,12 +109,12 @@ const StockRecoveryCalc = (props) => {
       console.log (props.StockSymbol, 'drop', drop)
       if (LOG_FLAG) {
         console.log ('drop: ' + drop);
-        console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepWeek: ',  highPriceBeforeDeepWeek)
-        console.log ('highPriceAfterDeep', highPriceAfterDeep, ' recoverWeek: ', recoverWeek);
+        console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
+        console.log ('highPriceAfterDeep', highPriceAfterDeep, ' recoverIndex: ', recoverIndex);
       }
   
-      recoverPeriod = dropWeek - recoverWeek;
-      if (recoverWeek === -1)
+      recoverPeriod = dropIndex - recoverIndex;
+      if (recoverIndex === -1)
         recoverPeriod = -1;
     }
 
@@ -132,7 +137,7 @@ const StockRecoveryCalc = (props) => {
     const priceDivHigh = Number((props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
     console.log (props.StockSymbol, 'priceDivHigh', priceDivHigh)
     // fill columns in stock table
-    props.dropCallBack (props.StockSymbol, drop, dropWeek, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
+    props.dropCallBack (props.StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
 
   function swap_period_2008() {
