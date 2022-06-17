@@ -1,10 +1,40 @@
 
+import React from 'react'
 
-      // URL u = new URL ("https://www.stocksplithistory.com/?symbol="+ sym);
+export const StockSplitsGet = (sym) => {
 
+      sym = 'TSLA'
+      const url = "https://www.stocksplithistory.com/?symbol=" + sym;
 
+      fetch(url)
+      .then(
+            function(response) {
+                  const respStr = JSON.stringify (response);
+                  if (respStr.indexOf (' status: 200, ok: true') !== -1)
+                  console.log(response);
+                  return response.json();
+            }
+      )
+      .then(
+            (chartData) => {
+            const dataStr = JSON.stringify(chartData);
+            console.log (url);
+            console.log (dataStr.substring(0,150));
 
 // Pattern pattern = Pattern.compile("#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)");
+
+            const pattern = "/#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)/g";
+
+      }
+      )
+      return (
+            <div>StockSplitsGet</div>
+      )
+}
+
+
+
+
 
 
 
