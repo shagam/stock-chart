@@ -35,6 +35,8 @@ import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from './IpContext';
 
+import StockSplitsGet from '../splits/StockSplitsGet'
+
 export const BasicTable = (props) => {
 
   const [chartSymbol, setChartSymbol] = useState("");
@@ -772,9 +774,10 @@ export const BasicTable = (props) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
                   <div style={{display:'flex'}}>
-                  <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-                  <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
-                  <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+                    <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+                    <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
+                    <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+                    <button type="button" onClick={()=>StockSplitsGet(row.values.symbol)}>splits</button> 
                   </div>
               </tr>
             )

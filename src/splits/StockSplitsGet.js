@@ -1,11 +1,17 @@
 
-import React from 'react'
+import React, {useState} from 'react'
 
 export const StockSplitsGet = (sym) => {
 
-      sym = 'TSLA'
+      // const [splits, setSplits] = useState([])
+      var splitsArray = [];
+
+      console.log (sym)
+      // function getSplits () {
+            // sym = 'TSLA'
       const url = "https://www.stocksplithistory.com/?symbol=" + sym;
 
+      try{
       fetch(url)
       .then(
             function(response) {
@@ -24,13 +30,15 @@ export const StockSplitsGet = (sym) => {
 // Pattern pattern = Pattern.compile("#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)");
 
             const pattern = "/#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)/g";
+            }
 
-      }
       )
-      return (
-            <div>StockSplitsGet</div>
-      )
+      } catch (e) {console.log (e)}
+      return (splitsArray)
+        
 }
+
+export default StockSplitsGet
 
 
 
