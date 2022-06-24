@@ -1,5 +1,7 @@
 
 import React, {useState} from 'react'
+import axios from 'axios'
+import cors from 'cors'
 
 export const StockSplitsGet = (sym) => {
 
@@ -9,23 +11,24 @@ export const StockSplitsGet = (sym) => {
       console.log (sym)
       // function getSplits () {
             // sym = 'TSLA'
-      const url = "https://www.stocksplithistory.com/?symbol=" + sym;
-
+      var url = "https://www.stocksplithistory.com/?symbol=" + sym;
+      //  url = 'www.google.com'
+      const corsUrl = "https://localhost:5000/splits?stock=" + sym;
       try{
-      fetch(url)
+      fetch(corsUrl)
       .then(
             function(response) {
                   const respStr = JSON.stringify (response);
                   if (respStr.indexOf (' status: 200, ok: true') !== -1)
                   console.log(response);
-                  return response.json();
+                  // return response();
             }
       )
       .then(
             (chartData) => {
             const dataStr = JSON.stringify(chartData);
             console.log (url);
-            console.log (dataStr.substring(0,150));
+            // console.log (dataStr.substring(0,150));
 
 // Pattern pattern = Pattern.compile("#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)");
 
