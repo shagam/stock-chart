@@ -13,7 +13,7 @@ export const StockSplitsGet = (sym) => {
             // sym = 'TSLA'
       var url = "https://www.stocksplithistory.com/?symbol=" + sym;
       //  url = 'www.google.com'
-      const corsUrl = "https://localhost:5000/splits?stock=" + sym;
+      const corsUrl = "http://localhost:5000/splits?stock=" + sym;
       try{
       fetch(corsUrl)
       .then(
@@ -25,13 +25,13 @@ export const StockSplitsGet = (sym) => {
             }
       )
       .then(
-            (chartData) => {
-            const dataStr = JSON.stringify(chartData);
-            console.log (url);
+            (data) => {
+            const dataStr = JSON.stringify(data);
+            console.log (data);
             // console.log (dataStr.substring(0,150));
 
 // Pattern pattern = Pattern.compile("#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)");
-
+ 
             const pattern = "/#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)/g";
             }
 
