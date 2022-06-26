@@ -3,6 +3,9 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 
+// http://84.228.164.65:5000/splits?stock=MSFT
+// https://www.stocksplithistory.com/?symbol=MSFT
+
 export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
 
       // const [splits, setSplits] = useState([])
@@ -11,11 +14,13 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
       console.log (sym, rows.length)
       // function getSplits () {
             // sym = 'TSLA'
-      var url = "https://www.stocksplithistory.com/?symbol=" + sym;
+      // var url = "https://www.stocksplithistory.com/?symbol=" + sym;
       //  url = 'www.google.com'
-      const corsUrl = "http://84.228.164.85:5000/splits?stock=" + sym;
+      var corsUrl = "http://84.228.164.85:5000/splits?stock=" + sym;
+      corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;
+      corsUrl = "http://localhost:5000/splits?stock=" + sym;
 
-      fetch(corsUrl)
+      fetch(corsUrl, {mode:'cors'})
       .then(
             function(response) {
                   const respStr = JSON.stringify (response);
