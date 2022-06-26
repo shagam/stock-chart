@@ -155,7 +155,7 @@ export const BasicTable = (props) => {
     localStorage.setItem ('infoSymbol', symbol); 
     console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
     if (symbol === '' || symbol === undefined) {
-      alert (`bug, info sym vanished (${symbol})`);
+      alert (`bug, info sym vanished (${symbol})`); 
       return;
     }
     
