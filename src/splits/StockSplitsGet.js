@@ -30,6 +30,27 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
       axios.get (corsUrl)
       // getDate()
       .then ((result) => {
+        if (result.status !== 200)
+          return;
+
+          const splits = result.data;
+          console.log (splits[0]);
+          const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+          if (row_index === -1) {
+            alert ('stock missing: ' + sym)
+            return;
+          }
+
+          // const splitArray_build = [];
+          // for (let i = 0; i < rows.length; i++) {
+          //   if (rows[i].values.symbol !== sym)
+          //     continue;
+          //     const date = rows[i].values.year + '-' + rows[i].values.month + '-' + rows[i].values.day;
+          //     const split = {ratio: Number (rows[i].values.jump), date: date};
+          //     splitArray_build.push (split);
+          // }    
+
+
         console.log (getDate(), result.data, result.status, corsUrl)
       })
       .catch ((err) => {
