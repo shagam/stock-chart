@@ -63,10 +63,10 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
            console.dir (splitArray);
            if (rows[row_index].values.splits_list !== JSON.stringify(splitArray)) {
             console.log (rows[row_index].values.splits_list, JSON.stringify(splitArray))
-            // rows[row_index].values.splits_list = splitArray;
-            // rows[row_index].values.splits_calc = 'web';
+            rows[row_index].values.splits_list = JSON.stringify(splitArray);
+            rows[row_index].values.splits_calc = 'web';
             saveTable();
-            // refreshCallBack();
+            refreshCallBack();
            }
         }
 
