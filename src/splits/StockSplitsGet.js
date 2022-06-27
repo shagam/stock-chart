@@ -14,7 +14,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
+export const StockSplitsGet = (sym, rows) => {
 
       // const [splits, setSplits] = useState([])
 
@@ -65,8 +65,6 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
           console.log (rows[row_index].values.splits_list, JSON.stringify(splitArray))
           rows[row_index].values.splits_list = JSON.stringify(splitArray);
           rows[row_index].values.splits_calc = 'web';
-          saveTable();
-          refreshCallBack();
         }
         else {
           console.log ("delete obsolete splits")

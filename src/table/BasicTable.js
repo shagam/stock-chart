@@ -319,6 +319,7 @@ export const BasicTable = (props) => {
 
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
+
     localStorage.setItem ('chartSymbol', sym);
     console.log(`symbol: ${sym}`); 
     if (sym === '' || sym === undefined) {
@@ -327,6 +328,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+    StockSplitsGet(sym, rows, saveTable, props.refreshCallBack)
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -779,7 +781,7 @@ export const BasicTable = (props) => {
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                     <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
                     <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-                    <button type="button" onClick={()=>StockSplitsGet(row.values.symbol, rows, saveTable, props.refreshCallBack)}>splits</button> 
+                    {admin && <button type="button" onClick={()=>StockSplitsGet(row.values.symbol, rows)}>splits</button>}
                   </div>
               </tr>
             )
