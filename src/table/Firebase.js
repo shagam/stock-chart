@@ -333,7 +333,7 @@ const Firebase = (props) => {
   }
 
   const showAll  = async () => {
-    //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain").doc(doc.id). update ({your data}) }); });
+    //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain_").doc(doc.id). update ({your data}) }); });
     const all = [];  
     const gain = await getDocs(props.gainRef);
     for (let i = 0; i < gain.docs.length; i++) {

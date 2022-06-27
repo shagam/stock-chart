@@ -598,6 +598,8 @@ export const BasicTable = (props) => {
     data,
     initialState: {
       hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","googDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
+      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","googDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
+
     } // "gap",
 
   },
