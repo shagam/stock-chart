@@ -382,7 +382,7 @@ export const BasicTable = (props) => {
                 periodTag = "Time Series (Daily)"
 
               // prepare historical data for plotly chart
-              let i = 0;
+              // let i = 0;
 
               var splits = "";
               var splitArray = [];
@@ -394,22 +394,22 @@ export const BasicTable = (props) => {
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
                   // if (i > 1140)
                   //   continue;  //ignore splits before 22 years
-                  if (i > 0) {
-                    let jump = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                    if (jump > 1.4 && jump < 1.6) {
-                      jump = (jump * 2).toFixed(2);
-                      jump /= 2;
-                      const  split = {ratio: jump, date: key};
-                      splitArray.push(split);                       
-                    }
-                    if (jump > 1.8 || jump < 0.6) {
-                      jump = jump.toFixed(2);
-                      //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                      const  split = {ratio: jump, date: key};
-                      splitArray.push(split); 
-                    }                        
-                  }
-                  i++;
+                  // if (i > 0) {
+                  //   let jump = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
+                  //   if (jump > 1.4 && jump < 1.6) {
+                  //     jump = (jump * 2).toFixed(2);
+                  //     jump /= 2;
+                  //     const  split = {ratio: jump, date: key};
+                  //     splitArray.push(split);                       
+                  //   }
+                  //   if (jump > 1.8 || jump < 0.6) {
+                  //     jump = jump.toFixed(2);
+                  //     //splits += `date=${key}  ratio=${ratio} week=${i}, `;
+                  //     const  split = {ratio: jump, date: key};
+                  //     splitArray.push(split); 
+                  //   }                        
+                  // }
+                  // i++;
                 }
               }
               console.log (sym, rows[row_index].values.splits_calc, splitArray);
@@ -801,7 +801,7 @@ export const BasicTable = (props) => {
         <DropRecovery StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
 
       <div id='manual_id'>    
-        <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/>
+        {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
         {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
         
