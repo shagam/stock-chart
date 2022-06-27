@@ -228,16 +228,16 @@ export const BasicTable = (props) => {
     rows[row_index].values.price = price;
 
     rows[row_index].values.sym = sym; // added field
+    rows[row_index].values.splits_list = splits;
 
-    if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== 'web' && rows[row_index].values.splits_calc !== '---') {
-      rows[row_index].values.splits_list = splits;
-      if (splits === '')
-        rows[row_index].values.splits_calc = '';
-      else if (splitsCalcFlag)
-        rows[row_index].values.splits_calc = 'calc';
-      else
-        rows[row_index].values.splits_calc = 'raw';
-    }
+    // if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== 'web' && rows[row_index].values.splits_calc !== '---') {
+    //   if (splits === '')
+    //     rows[row_index].values.splits_calc = '';
+    //   else if (splitsCalcFlag)
+    //     rows[row_index].values.splits_calc = 'calc';
+    //   else
+    //     rows[row_index].values.splits_calc = 'raw';
+    // }
     //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
     props.refreshCallBack(-1); // force refresh
