@@ -32,25 +32,44 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
         if (result.status !== 200)
           return;
 
-          const splits = result.data;
-          console.log (splits[0]);
-          const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-          if (row_index === -1) {
-            alert ('stock missing: ' + sym)
-            return;
-          }
+        const splits = result.data;
+        if (splits.length > 0) {
+          console.log (getDate(), result.data, result.status, corsUrl)
+          console.log ('last web split: ', splits[splits.length - 1]);
+        }
 
-          // const splitArray_build = [];
-          // for (let i = 0; i < rows.length; i++) {
-          //   if (rows[i].values.symbol !== sym)
-          //     continue;
-          //     const date = rows[i].values.year + '-' + rows[i].values.month + '-' + rows[i].values.day;
-          //     const split = {ratio: Number (rows[i].values.jump), date: date};
-          //     splitArray_build.push (split);
-          // }    
+        const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+        if (row_index === -1) {
+          alert ('stock missing: ' + sym)
+          return;
+        }
 
+        if (rows[row_index].values.splits_list !== undefined) {
+          console.log ('old split: ', rows[row_index].values.splits_calc)
+          console.dir (rows[row_index].values.splits_list);
+        }
 
-        console.log (getDate(), result.data, result.status, corsUrl)
+        var splitArray = [];
+        for (let i = 0; i < splits.length; i++) {
+          if (splits[i].year < 2000)
+            continue;
+          const date = splits[i].year + '-' + splits[i].month + '-' + splits[i].day;
+          const split = {ratio: Number (splits[i].jump), date: date};
+          splitArray = [...splitArray, split]
+          // splitArray.push (split);
+        }
+
+        if (splitArray.length > 0) {
+           console.dir (splitArray);
+           if (rows[row_index].values.splits_list !== JSON.stringify(splitArray)) {
+            console.log (rows[row_index].values.splits_list, JSON.stringify(splitArray))
+            // rows[row_index].values.splits_list = splitArray;
+            // rows[row_index].values.splits_calc = 'web';
+            saveTable();
+            // refreshCallBack();
+           }
+        }
+
       })
       .catch ((err) => {
         console.log(err)
