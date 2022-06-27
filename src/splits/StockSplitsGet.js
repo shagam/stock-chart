@@ -23,7 +23,7 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
             // sym = 'TSLA'
       // var url = "https://www.stocksplithistory.com/?symbol=" + sym;
       //  url = 'www.google.com'
-      var corsUrl = "http://84.228.164.85:5000/splits?stock=" + sym;
+      var corsUrl = "http://84.228.164.65:5000/splits?stock=" + sym;
       // corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;
       // corsUrl = "http://localhost:5000/splits?stock=" + sym;
 
