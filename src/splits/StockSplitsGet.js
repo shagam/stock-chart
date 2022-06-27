@@ -68,6 +68,10 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
           saveTable();
           refreshCallBack();
         }
+        else {
+          rows[row_index].values.splits_list = undefined;
+          rows[row_index].values.splits_calc = undefined;
+        }
 
       })
       .catch ((err) => {
