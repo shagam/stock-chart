@@ -69,6 +69,7 @@ export const StockSplitsGet = (sym, rows, saveTable, refreshCallBack) => {
           refreshCallBack();
         }
         else {
+          console.log ("delete obsolete splits")
           rows[row_index].values.splits_list = undefined;
           rows[row_index].values.splits_calc = undefined;
         }
