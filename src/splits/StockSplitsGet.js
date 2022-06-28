@@ -17,7 +17,8 @@ function getDate() {
 export const StockSplitsGet = (sym, rows) => {
 
       // const [splits, setSplits] = useState([])
-
+      const LOG = false; 
+      if (LOG)
       console.log ('req params ', sym, rows.length)
 
       //  url = 'www.google.com'
@@ -33,9 +34,10 @@ export const StockSplitsGet = (sym, rows) => {
           return;
 
         const splits = result.data;
-        if (splits.length > 0) {
-          console.log (getDate(), result.data, result.status, corsUrl)
-          console.log ('last web split: ', splits[splits.length - 1]);
+        if (splits.length > 0 && LOG) {
+          console.log (getDate(), sym, result.data, result.status, corsUrl)
+          console.dir ("splits from server", splits)
+          // console.log ('last web split: ', splits[splits.length - 1]);
         }
 
         const row_index = rows.findIndex((row)=> row.values.symbol === sym);
@@ -45,7 +47,8 @@ export const StockSplitsGet = (sym, rows) => {
         }
 
         if (rows[row_index].values.splits_list !== undefined) {
-          console.log ('old split: ', rows[row_index].values.splits_calc)
+          // console.log ('old split: ', rows[row_index].values.splits_calc)
+          if (LOG)
           console.dir (rows[row_index].values.splits_list);
         }
 
@@ -55,21 +58,25 @@ export const StockSplitsGet = (sym, rows) => {
             continue;
           const date = splits[i].year + '-' + splits[i].month + '-' + splits[i].day;
           const split = {ratio: Number (splits[i].jump), date: date};
-          splitArray = [...splitArray, split]
-          // splitArray.push (split);
+          // splitArray = [...splitArray, split]
+          splitArray.push (split);
         }
 
         if (splitArray.length > 0) {
           console.dir (splitArray);
-
-          console.log (rows[row_index].values.splits_list, JSON.stringify(splitArray))
-          rows[row_index].values.splits_list = JSON.stringify(splitArray);
+          const stringify = JSON.stringify(splitArray)
+          if (LOG) {
+          console.log ("old splits", rows[row_index].values.splits_list)
+          console.log ("new splits", stringify)
+          }
+          rows[row_index].values.splits_list = stringify;
           rows[row_index].values.splits_calc = 'web';
         }
         else {
+          if (LOG)
           console.log ("delete obsolete splits")
-          rows[row_index].values.splits_list = undefined;
-          rows[row_index].values.splits_calc = undefined;
+          rows[row_index].values.splits_list = '';
+          rows[row_index].values.splits_calc = '';
         }
 
       })

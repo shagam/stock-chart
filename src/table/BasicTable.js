@@ -207,8 +207,8 @@ export const BasicTable = (props) => {
       return;
     }
 
-    if (Date.now() - rows[row_index].values.gain_mili < 1000)
-      return "duplicate";
+    // if (Date.now() - rows[row_index].values.gain_mili < 1000)
+    //   return "duplicate";
 
     firebase_stockSymbol_ip_pair(sym);
 
@@ -386,40 +386,30 @@ export const BasicTable = (props) => {
               // prepare historical data for plotly chart
               // let i = 0;
 
-              var splits = "";
-              var splitArray = [];
-              if ((rows[row_index].values.splits_calc === 'table' || rows[row_index].values.splits_calc === 'web' ) && rows[row_index].values.splits_list_table !== undefined && rows[row_index].values.splits_calc === '---' )
+              var splitArray = rows[row_index].values.splits_list;
+              if (LOG_FLAG)
+              console.dir (splitArray);
+              var splitArrayList = [];
+              if (splitArray.length > 0)
+                splitArrayList = JSON.parse(splitArray)
+              console.dir (splitArrayList)
+
+              if ((rows[row_index].values.splits_calc === 'table' || rows[row_index].values.splits_calc === 'web' ) && rows[row_index].values.splits_list_table !== undefined && rows[row_index].values.splits_calc === '---' ) {
                 splitArray = rows[row_index].values.splits_list_table;
-              else {
+                console.dir (splitArray);
+              }
+                else {
                 for (var key in chartData[`${periodTag}`]) {
                   stockChartXValuesFunction.push(key);
                   stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
-                  // if (i > 1140)
-                  //   continue;  //ignore splits before 22 years
-                  // if (i > 0) {
-                  //   let jump = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-                  //   if (jump > 1.4 && jump < 1.6) {
-                  //     jump = (jump * 2).toFixed(2);
-                  //     jump /= 2;
-                  //     const  split = {ratio: jump, date: key};
-                  //     splitArray.push(split);                       
-                  //   }
-                  //   if (jump > 1.8 || jump < 0.6) {
-                  //     jump = jump.toFixed(2);
-                  //     //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-                  //     const  split = {ratio: jump, date: key};
-                  //     splitArray.push(split); 
-                  //   }                        
-                  // }
-                  // i++;
                 }
               }
-              console.log (sym, rows[row_index].values.splits_calc, splitArray);
+              // console.log (sym, rows[row_index].values.splits_calc, splitArray);
               
               // compensate for splits
-              if (splitArray.length > 0 && splitsCalcFlag) {
-                for (let i = 0; i < splitArray.length; i++) {
-                  var jump = splitArray[i].ratio;
+              if (splitArrayList.length > 0 && splitsCalcFlag) {
+                for (let i = 0; i < splitArrayList.length; i++) {
+                  var jump = splitArrayList[i].ratio;
 
                   if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== 'web') {
                     if (jump > 1)
@@ -427,7 +417,8 @@ export const BasicTable = (props) => {
                     else
                       jump = 1 / Math.round (1/jump);
                   }
-                  const splitDate = splitArray[i].date.split('-');
+                  // console.log (splitArray);
+                  const splitDate = splitArrayList[i].date.split('-');
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
                   for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
                       stockChartYValuesFunction[j] /= jump;
@@ -444,19 +435,14 @@ export const BasicTable = (props) => {
         
               // var  GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
-              if (splitArray.length > 0)
-                splits = JSON.stringify(splitArray);
-              else
-                splits = '';  
-
               const updateMili = Date.now();
               const updateDate = getDate();
-              var date;
+              // var date;
               const todaySplit = todayDateSplit();
 
               var wk = Number(-1);
               var dateBackSplit = daysBack (todaySplit, 7);
-              var chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
               if (chartIndex === undefined)
                 wk = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));
               
@@ -517,7 +503,8 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              updateTableGain (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
+              console.log (splitArray);  
+              updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
            }
         )
         props.refreshCallBack(-1); 

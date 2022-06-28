@@ -1,0 +1,10 @@
+
+
+handleGainClick 
+	StockSplitsGet
+	updateTableGain 
+		firebaseGainAdd
+
+
+firebaseGainGetOne
+	updateTableGain
