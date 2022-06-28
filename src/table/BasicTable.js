@@ -391,7 +391,7 @@ export const BasicTable = (props) => {
               if (LOG_SPLITS)
               console.dir (splitArray);
               var splitArrayList = [];
-              if (splitArray.length > 0)
+              if (splitArray && splitArray.length > 0)
                 splitArrayList = JSON.parse(splitArray)
               
                 if (LOG_SPLITS)
