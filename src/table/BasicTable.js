@@ -63,6 +63,7 @@ export const BasicTable = (props) => {
   const [columnHideFlag, setColumnHideFlag] = useState(true);
 
   const LOG_FLAG = false;
+  const LOG_SPLITS = true;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
@@ -387,36 +388,25 @@ export const BasicTable = (props) => {
               // let i = 0;
 
               var splitArray = rows[row_index].values.splits_list;
-              if (LOG_FLAG)
+              if (LOG_SPLITS)
               console.dir (splitArray);
               var splitArrayList = [];
               if (splitArray.length > 0)
                 splitArrayList = JSON.parse(splitArray)
+              
+                if (LOG_SPLITS)
               console.dir (splitArrayList)
 
-              if ((rows[row_index].values.splits_calc === 'table' || rows[row_index].values.splits_calc === 'web' ) && rows[row_index].values.splits_list_table !== undefined && rows[row_index].values.splits_calc === '---' ) {
-                splitArray = rows[row_index].values.splits_list_table;
-                console.dir (splitArray);
+              // get chart arrays from data
+              for (var key in chartData[`${periodTag}`]) {
+                stockChartXValuesFunction.push(key);
+                stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
               }
-                else {
-                for (var key in chartData[`${periodTag}`]) {
-                  stockChartXValuesFunction.push(key);
-                  stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
-                }
-              }
-              // console.log (sym, rows[row_index].values.splits_calc, splitArray);
-              
+           
               // compensate for splits
               if (splitArrayList.length > 0 && splitsCalcFlag) {
                 for (let i = 0; i < splitArrayList.length; i++) {
                   var jump = splitArrayList[i].ratio;
-
-                  if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== 'web') {
-                    if (jump > 1)
-                      jump = Math.round (jump);
-                    else
-                      jump = 1 / Math.round (1/jump);
-                  }
                   // console.log (splitArray);
                   const splitDate = splitArrayList[i].date.split('-');
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
@@ -503,6 +493,7 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
+              if (LOG_SPLITS)
               console.log (splitArray);  
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
            }
