@@ -242,7 +242,7 @@ export const BasicTable = (props) => {
     //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
     props.refreshCallBack(-1); // force refresh
-    if (splits === '' || splits.length === 0 || splits[0].jump === 0)
+    if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)
       setSplitsFlag('');
     else
       setSplitsFlag('(splits)');
