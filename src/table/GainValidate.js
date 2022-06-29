@@ -25,7 +25,7 @@ export const GainValidate = (props) => {
 
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
   if (row_index === -1) {
-    props.rows[row_index].values.GOOGCompare = "symMiss";
+    props.rows[row_index].values.GOOGCompare = -1;
     return null;
   }
 
@@ -34,7 +34,7 @@ export const GainValidate = (props) => {
 
   const valiate_index = props.gain_validation_json.findIndex((dat)=> dat.symbol === props.symbol)
   if (valiate_index === -1) {
-    props.rows[row_index].values.GOOGCompare = 'none';
+    props.rows[row_index].values.GOOGCompare = -1;
     if (LOG_FLAG)
       console.log ('GainValidate none', props.symbol, valiate_index);
     return null;
