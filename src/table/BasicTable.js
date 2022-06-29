@@ -208,9 +208,6 @@ export const BasicTable = (props) => {
       return;
     }
 
-    // if (Date.now() - rows[row_index].values.gain_mili < 1000)
-    //   return "duplicate";
-
     firebase_stockSymbol_ip_pair(sym);
 
     rows[row_index].values.gain_mili = updateMili;
@@ -231,15 +228,6 @@ export const BasicTable = (props) => {
     rows[row_index].values.sym = sym; // added field
     rows[row_index].values.splits_list = splits;
 
-    // if (rows[row_index].values.splits_calc !== 'table' && rows[row_index].values.splits_calc !== 'web' && rows[row_index].values.splits_calc !== '---') {
-    //   if (splits === '')
-    //     rows[row_index].values.splits_calc = '';
-    //   else if (splitsCalcFlag)
-    //     rows[row_index].values.splits_calc = 'calc';
-    //   else
-    //     rows[row_index].values.splits_calc = 'raw';
-    // }
-    //rows[index].values.splits_calc = splits === '' ? '' : splitsCalc ? 'smooth' : 'raw';
     saveTable();
     props.refreshCallBack(-1); // force refresh
     if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)
@@ -358,8 +346,10 @@ export const BasicTable = (props) => {
                 alert (`Invalid symbol: (${sym})`)
                 return;
               }
-              console.log(API_Call);
-              console.log (dataStr.substring(0,150));
+              if (LOG_FLAG) {
+                console.log (API_Call);
+                console.log (dataStr.substring(0,150));
+              }
               // stocksChartHistory[StockSymbol] = data;
               // const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
               // localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
@@ -388,14 +378,14 @@ export const BasicTable = (props) => {
               // let i = 0;
 
               var splitArray = rows[row_index].values.splits_list;
-              if (LOG_SPLITS)
+              if (LOG_SPLITS && splitArray.length > 0)
               console.dir (splitArray);
               var splitArrayList = [];
               if (splitArray && splitArray.length > 0)
                 splitArrayList = JSON.parse(splitArray)
               
-                if (LOG_SPLITS)
-              console.dir (splitArrayList)
+              if (splitArrayList.lenght  > 0 && LOG_SPLITS)
+                console.dir (splitArrayList)
 
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
@@ -403,17 +393,44 @@ export const BasicTable = (props) => {
                 stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
               }
            
+              // collect compensation vars
+              var splitsIndexArray = [];
+
               // compensate for splits
-              if (splitArrayList.length > 0 && splitsCalcFlag) {
-                for (let i = 0; i < splitArrayList.length; i++) {
+              if (splitArrayList.length > 0) {
+                for (let i = 0; i < splitArrayList.length; i++) { 
                   var jump = splitArrayList[i].ratio;
                   // console.log (splitArray);
                   const splitDate = splitArrayList[i].date.split('-');
-                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate)  
-                  for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
-                      stockChartYValuesFunction[j] /= jump;
+                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate) 
+                  splitsIndexArray.push (chartIndex);
+
+                  if (splitsCalcFlag) {  // if flag is off do not compensate
+                    for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
+                        stockChartYValuesFunction[j] /= jump;
+                    }
                   }
                 }
+              }
+
+              // log compensation split smooth
+              if (splitArrayList.length > 0 && (LOG_SPLITS || true)) {
+                var comensationLog = 'smoothSplit:  \n';
+                for (let i = 0; i < splitsIndexArray.length; i++) {
+                  comensationLog += JSON.stringify(splitArrayList[i]);
+                  comensationLog += ' [' + splitsIndexArray[i] + '] ';
+                  if (splitsIndexArray[i] + 1 < stockChartXValuesFunction.length)
+                  comensationLog +=  stockChartXValuesFunction[splitsIndexArray[i] + 1] + " (" +  stockChartYValuesFunction[splitsIndexArray[i] + 1].toFixed(3) + ")   "
+                  comensationLog += stockChartXValuesFunction[splitsIndexArray[i]] +  " (" + stockChartYValuesFunction[splitsIndexArray[i]].toFixed(3) + ")   "
+                  if (splitsIndexArray[i] -2 >= 0) {
+                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -1] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -1 ].toFixed(3) + ")   "
+                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -2] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -2 ].toFixed(3) + ")   "
+                  // comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -3] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -3 ].toFixed(3) + ")   "
+                  }
+
+                  comensationLog += "\n";
+                }
+                console.log (comensationLog)
               }
 
               if (stockChartXValuesFunction.length === 0) {
