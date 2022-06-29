@@ -63,7 +63,7 @@ export const StockSplitsGet = (sym, rows) => {
         }
 
         if (splitArray.length > 0) {
-          console.dir (splitArray);
+          // console.dir (splitArray);
           const stringify = JSON.stringify(splitArray)
           if (LOG) {
           console.log ("old splits", rows[row_index].values.splits_list)
