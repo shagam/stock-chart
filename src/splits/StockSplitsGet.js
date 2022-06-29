@@ -70,7 +70,7 @@ export const StockSplitsGet = (sym, rows) => {
           console.log ("new splits", stringify)
           }
           rows[row_index].values.splits_list = stringify;
-          rows[row_index].values.splits_calc = 'web';
+          rows[row_index].values.splits_calc = splitArray.length;
         }
         else {
           if (LOG)
