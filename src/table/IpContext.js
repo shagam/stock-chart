@@ -15,7 +15,7 @@ function IpContext  () {
   const [userAgent, setUserAgent] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
 
-  const LOG_FLAG = true;
+  const LOG_FLAG = false;
 
   const ipRef = collection(db, "ipList")
 
@@ -64,7 +64,7 @@ function IpContext  () {
     }
 
     const res = await axios.get('https://geolocation-db.com/json/')
-    // if (LOG_FLAG)
+    if (LOG_FLAG)
     console.log('ip ', res.data);
     if (res.data !== '') {
       setLocalIP(res.data);
