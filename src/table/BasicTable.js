@@ -378,7 +378,7 @@ export const BasicTable = (props) => {
               // let i = 0;
 
               var splitArray = rows[row_index].values.splits_list;
-              if (LOG_SPLITS && splitArray.length > 0)
+              if (LOG_SPLITS && splitArray && splitArray.length > 0)
               console.dir (splitArray);
               var splitArrayList = [];
               if (splitArray && splitArray.length > 0)
