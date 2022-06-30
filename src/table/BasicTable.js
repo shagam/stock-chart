@@ -402,7 +402,7 @@ export const BasicTable = (props) => {
                 for (let i = 0; i < splitArrayList.length; i++) { 
                   var jump = splitArrayList[i].ratio;
                   // console.log (splitArray);
-                  const splitDate = splitArrayList[i].date.split('-');
+                  const splitDate = dateSplit (splitArrayList[i].date);
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym) 
                   splitsIndexArray.push (chartIndex);
 
