@@ -391,7 +391,8 @@ export const BasicTable = (props) => {
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
-                stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]).toFixed(3));
+                const yValue = Number (Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]).toFixed(3))
+                stockChartYValuesFunction.push(yValue);
               }
            
               // collect compensation vars
@@ -403,12 +404,24 @@ export const BasicTable = (props) => {
                   var jump = splitArrayList[i].ratio;
                   // console.log (splitArray);
                   const splitDate = dateSplit (splitArrayList[i].date);
-                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym) 
-                  splitsIndexArray.push (chartIndex);
+                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
+                  
+                  // verify correct split index
 
+                  if (chartIndex > 2 && chartIndex < stockChartXValuesFunction.length - 5) {
+                    var splitIndex = chartIndex - 3;
+                    for (; splitIndex <  chartIndex + 3; splitIndex ++) {
+                      if (Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]) > 1.5 ) {
+                        chartIndex = splitIndex + 1;
+                        console.log ('SplitIndex corrected', chartIndex);
+                      }
+                    } 
+                  }
+                  splitsIndexArray.push (chartIndex);
+                  // compensation calc
                   if (splitsCalcFlag) {  // if flag is off do not compensate
                     for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
-                        stockChartYValuesFunction[j] /= jump;
+                        (stockChartYValuesFunction[j] = Number (Number (stockChartYValuesFunction[j] / jump).toFixed(2)));
                     }
                   }
                 }
