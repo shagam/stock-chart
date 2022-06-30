@@ -391,7 +391,7 @@ export const BasicTable = (props) => {
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
-                stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]));
+                stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]).toFixed(3));
               }
            
               // collect compensation vars
@@ -421,12 +421,12 @@ export const BasicTable = (props) => {
                   comensationLog += JSON.stringify(splitArrayList[i]);
                   comensationLog += ' [' + splitsIndexArray[i] + '] ';
                   if (splitsIndexArray[i] + 1 < stockChartXValuesFunction.length)
-                  comensationLog +=  stockChartXValuesFunction[splitsIndexArray[i] + 1] + " (" +  stockChartYValuesFunction[splitsIndexArray[i] + 1].toFixed(3) + ")   "
-                  comensationLog += stockChartXValuesFunction[splitsIndexArray[i]] +  " (" + stockChartYValuesFunction[splitsIndexArray[i]].toFixed(3) + ")   "
+                  comensationLog +=  stockChartXValuesFunction[splitsIndexArray[i] + 1] + " (" +  stockChartYValuesFunction[splitsIndexArray[i] + 1] + ")   "
+                  comensationLog += stockChartXValuesFunction[splitsIndexArray[i]] +  " (" + stockChartYValuesFunction[splitsIndexArray[i]] + ")   "
                   if (splitsIndexArray[i] -2 >= 0) {
-                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -1] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -1 ].toFixed(3) + ")   "
-                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -2] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -2 ].toFixed(3) + ")   "
-                  // comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -3] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -3 ].toFixed(3) + ")   "
+                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -1] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -1 ] + ")   "
+                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -2] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -2 ] + ")   "
+                  // comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -3] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -3 ] + ")   "
                   }
 
                   comensationLog += "\n";
