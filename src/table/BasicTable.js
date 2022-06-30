@@ -403,7 +403,7 @@ export const BasicTable = (props) => {
                   var jump = splitArrayList[i].ratio;
                   // console.log (splitArray);
                   const splitDate = splitArrayList[i].date.split('-');
-                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate) 
+                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym) 
                   splitsIndexArray.push (chartIndex);
 
                   if (splitsCalcFlag) {  // if flag is off do not compensate
@@ -450,61 +450,61 @@ export const BasicTable = (props) => {
 
               var wk = Number(-1);
               var dateBackSplit = daysBack (todaySplit, 7);
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex === undefined)
                 wk = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));
               
               var wk2 = Number(-1);
               dateBackSplit = daysBack (todaySplit, 14);
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined) 
                 wk2 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));
   
               var mon = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 1);
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 1, sym);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 mon = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));
   
               var mon3 = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 3);
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 3, sym);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 mon3 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
   
               var mon6 = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 6);
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 6, sym);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 mon6 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
               var year = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 12);
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 12, sym);
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 year = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
               var year2 = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 24); 
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 24, sym); 
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 year2 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
               var year5 = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 60); // 5 years
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 60, sym); // 5 years
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 year5 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
               var year10 = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 120); // 10 years
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 120, sym); // 10 years
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined) 
                 year10 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
               var year20 = Number(-1);
-              dateBackSplit = monthsBack (todaySplit, 240); // 20 years
-              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit)
+              dateBackSplit = monthsBack (todaySplit, 240, sym); // 20 years
+              chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym)
               if (chartIndex !== undefined)
                 year20 = Number((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
   

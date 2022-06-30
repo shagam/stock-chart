@@ -54,11 +54,12 @@ const dateSplit = (date) => {
 
 // array [year, month, day] month 1..12
 const monthsBack = (dateArray, months) => { // [y,m,d]
-  dateArray[0] = Number(dateArray[0]);
-  dateArray[1] = Number(dateArray[1]);
-  dateArray[2] = Number(dateArray[2]);
   var dateArray_ =  [...dateArray];
-  if (dateArray[1] - months >= 1)
+  dateArray_[0] = Number(dateArray_[0]);
+  dateArray_[1] = Number(dateArray_[1]);
+  dateArray_[2] = Number(dateArray_[2]);
+
+  if (dateArray_[1] - months >= 1)
     dateArray_[1] -= months;
   else {
     dateArray_[0] -= (Math.floor((months + 12 - dateArray_[1]) /12));
@@ -68,11 +69,18 @@ const monthsBack = (dateArray, months) => { // [y,m,d]
     if (dateArray_[1] === 0)
       dateArray_[1] = 12;
   }
+  if (dateArray_[1] === 0) {
+    console.log('err')
+  }
   return dateArray_;
 }
 
 const monthsBackTest = () => {
     var testDate = [2022, 2, 15];
+    
+    var back = 6;
+    var date = monthsBack ([2022, 6, 30], back);
+    console.log (testDate, back, date)
 
     var back = 3;
     var date = monthsBack (testDate, back);
@@ -105,6 +113,7 @@ const monthsBackTest = () => {
     back = 144;
     date = monthsBack (testDate, back);
     console.log (testDate, back, date)
+
   }
   
   const daysBackTest = () => {
@@ -199,7 +208,7 @@ const daysFrom1970 = (dateArray) => {
 // }
 
 // return index of dataArray closest
-const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
+const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
 
   if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
   return undefined;
@@ -211,7 +220,7 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
 
   if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
-  console.log ('\nsplit date: ', testDateArray)
+  console.log ('\nsplit date: ', testDateArray, sym)
   for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
     var searchArray = dateSplit (stockChartXValuesFunction[searchIndex]);
@@ -220,8 +229,8 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
     console.log ('old:', oldestIndx, 'new:', newestIndx, 'moving:' , searchIndex, 'daysDiff:', daysDiff );
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
-      console.log ('found_: ', newestIndx, stockChartXValuesFunction[newestIndx])
-      return newestIndx;
+      console.log ('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx])
+      return oldestIndx;
     }
 
     if (daysDiff === 0) {
@@ -229,7 +238,7 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
       return searchIndex + 1;
     }
     if (daysDiff > 0) {
-      if (daysDiff < 3){
+      if (daysDiff < 2){
         console.log ('found+: ', searchIndex, stockChartXValuesFunction[searchIndex])
         return searchIndex;
       }

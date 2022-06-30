@@ -2,7 +2,7 @@ import React, {useState, } from 'react'
 // import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import {} from "date-fns";
+import { toDate } from "date-fns";
 import {format} from "date-fns"
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 
@@ -30,12 +30,12 @@ const DropRecovery = (props) => {
 
     const today = new Date();
     const todayYear = today.getFullYear();
-    const todayMon = today.getMonth();
-    const todayDay = today.getDay();
+    const todayMon = today.getMonth() + 1;
+    const todayDay = today.getDay() + 1;
 
     const startYear = startDate.getFullYear();
-    const startMon = startDate.getMonth();
-    const startDay = startDate.getDay();
+    const startMon = startDate.getMonth() + 1;
+    const startDay = startDate.getDay() + 1;
 
       
 
@@ -43,7 +43,7 @@ const DropRecovery = (props) => {
     // startBeforeDropWeek = Math.round(startBeforeDropWeek);
 
     const startDateArray = [startYear, startMon, startDay]
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, startDateArray)  
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.StockSymbol)  
 
     //console.log (startDate.getFullYear(), startDate.getMonth(), startDate.getDay())    
     //console.log (props.StockSymbol, props.stockChartXValues[beforeDropWeek]);
