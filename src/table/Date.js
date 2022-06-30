@@ -3,6 +3,9 @@ import React from 'react'
 import {format} from "date-fns"
 
 
+const LOG = false;
+const LOG_VERBOSE = false;
+
 const todayDate = () => {
   const date = new Date();
   const formattedDate = format(date, "yyyy-MM-dd");
@@ -220,25 +223,30 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
 
   if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
-  console.log ('\nsplit date: ', testDateArray, sym)
+  if (LOG)
+  console.log ('\nsearch date: ', testDateArray, sym)
   for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
     var searchArray = dateSplit (stockChartXValuesFunction[searchIndex]);
 
     const daysDiff = daysFrom1970(testDateArray) - daysFrom1970(searchArray);
+    if (LOG_VERBOSE)
     console.log ('old:', oldestIndx, 'new:', newestIndx, 'moving:' , searchIndex, 'daysDiff:', daysDiff );
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
+      if (LOG)
       console.log ('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx])
       return oldestIndx;
     }
 
     if (daysDiff === 0) {
+      if (LOG)
       console.log ('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1])
       return searchIndex + 1;
     }
     if (daysDiff > 0) {
       if (daysDiff < 2){
+        if (LOG)
         console.log ('found+: ', searchIndex, stockChartXValuesFunction[searchIndex])
         return searchIndex;
       }
