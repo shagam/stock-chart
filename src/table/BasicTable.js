@@ -31,7 +31,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
-import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
+import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from './IpContext';
 
@@ -151,7 +151,8 @@ export const BasicTable = (props) => {
 
     // get stock overview
   const handleInfoClick = (symbol) => {
-
+    // monthsBackTest ();
+    // daysBackTest()
     //callBack ("tableCallBack");
     localStorage.setItem ('infoSymbol', symbol); 
     console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);

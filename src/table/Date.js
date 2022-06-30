@@ -1,4 +1,5 @@
 
+import React from 'react'
 import {format} from "date-fns"
 
 
@@ -71,40 +72,90 @@ const monthsBack = (dateArray, months) => { // [y,m,d]
 }
 
 const monthsBackTest = () => {
-   var date = monthsBack ([2022, 2, 15], 2);
-    date = monthsBack ([2022, 2, 15], 3);
-    date = monthsBack ([2022, 2, 15], 5);
-    date = monthsBack ([2022, 2, 15], 8);
-    date = monthsBack ([2022, 2, 15], 12);
-    date = monthsBack ([2022, 2, 15], 13);
-    date = monthsBack ([2022, 2, 15], 14);
-    date = monthsBack ([2022, 2, 15], 36);
-    date = monthsBack ([2022, 2, 15], 72);
-    date = monthsBack ([2022, 2, 15], 144);
-    console.log (date)
-}
+    var testDate = [2022, 2, 15];
 
+    var back = 3;
+    var date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+    
+    back = 5;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+    
+    back = 6;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+    
+    back = 12;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+
+    back = 13;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+  
+    back = 14;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+
+    back = 36;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+
+    back = 144;
+    date = monthsBack (testDate, back);
+    console.log (testDate, back, date)
+  }
+  
+  const daysBackTest = () => {
+    var testDate = [2022, 2, 15];
+    var back = 60;
+    var date = daysBack (testDate, back);
+    console.log (testDate, back, date)
+    
+    back = 15;
+    date = daysBack (testDate, back);
+    console.log (testDate, back, date)
+    
+    back = 30;
+    date = daysBack (testDate, back);
+    console.log (testDate, back, date)   
+
+    back = 60;
+    date = daysBack (testDate, back);
+    console.log (testDate, back, date)  
+ 
+    back = 10;
+    date = daysBack ([2022, 3, 5], back);
+    console.log (testDate, back, date)
+
+  }
 
 const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
-  dateArray[0] = Number(dateArray[0]);
-  dateArray[1] = Number(dateArray[1]);
-  dateArray[2] = Number(dateArray[2]);
-  var dateArray_ =  [...dateArray];
 
-  if (dateArray_[2] - days >= 1)
-    dateArray_[2] -= days;
-  else {
-    dateArray_[2] = dateArray_[2] - days + 31; // assume 30 days + one day
-    if ( dateArray_[1] > 1) {
-      dateArray_[1] --;
-      if (dateArray_[1] === 2 && dateArray_[0] > 2)
-        dateArray_[0] -= 2
-    }
-    else {
-      dateArray_[1] = dateArray[1] + 12 - 1;
-      dateArray_[0] --;
-    }
+  var dateArray_ =  [...dateArray];
+  dateArray_[0] = Number(dateArray_[0]);
+  dateArray_[1] = Number(dateArray_[1] - 1);
+  dateArray_[2] = Number(dateArray_[2] - 1);
+  const years = Math.floor (days / 365.25);
+  const daysYearRemain = Math.floor (days % 365);
+  const months = Math.floor (daysYearRemain / 30);
+  const dayRemain = daysYearRemain  % 30;
+
+  dateArray_[2] -= dayRemain;
+  if (dateArray_[2] < 0) {
+    dateArray_[2] += 31;
+    dateArray_[1] -= 1;
   }
+  dateArray_[1] -= months;
+  if (dateArray_[1] < 0) {
+    dateArray_[1] += 12;
+    dateArray_[0] -= 1;
+    dateArray_[0] -= years;
+  }
+   
+  dateArray_[1] += 1
+  dateArray_[2] += 1
   return dateArray_;
 }
 
@@ -132,8 +183,8 @@ const compareDate = (date1, date2) => {
 }
 
 const daysFrom1970 = (dateArray) => {
-  const dateDays = (dateArray[0] - 1970) * 365.25 + dateArray[1] * 30.416 + dateArray[2];
-  return dateDays;
+  const dateDays = (dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2] - 1;
+  return Number(dateDays).toFixed(0);
 }
 // const dateDiff = (dateArray1, dateArray2) => {
 //   const diff = daysFrom1970 (dateArray1) - daysFrom1970 (dateArray2)
@@ -160,40 +211,39 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray) => {
 
   if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
-
+  console.log ('\nsplit date: ', testDateArray)
   for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
     var searchArray = dateSplit (stockChartXValuesFunction[searchIndex]);
 
-    if (oldestIndx - newestIndx <= 1)
-      return searchIndex;
+    const daysDiff = daysFrom1970(testDateArray) - daysFrom1970(searchArray);
+    console.log ('old:', oldestIndx, 'new:', newestIndx, 'moving:' , searchIndex, 'daysDiff:', daysDiff );
 
-    // if (same( searchArray, testDateArray))
-    //   return searchIndex;
-    // if (Math.abs (daysFrom1970 ( searchArray ) - daysFrom1970(testDateArray)) <= 3){
-    //   return searchIndex;
-    // }
-
-    const comp = compareDate (testDateArray, searchArray);
-    switch (comp) {
-      case 0:
-        return searchIndex;
-      //  alert (`date found__, ${searchIndex}`);
-      //  break;
-      case 1:
-        oldestIndx = searchIndex;
-        continue;
-      case -1:
-        newestIndx = searchIndex; 
-        continue;
-      default:
-        alert ('invalid campareDate result: ', comp);
+    if (Math.abs(oldestIndx - newestIndx) <= 1) {
+      console.log ('found_: ', newestIndx, stockChartXValuesFunction[newestIndx])
+      return newestIndx;
     }
-    console.log (oldestIndx, newestIndx, searchIndex);
+
+    if (daysDiff === 0) {
+      console.log ('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1])
+      return searchIndex + 1;
+    }
+    if (daysDiff > 0) {
+      if (daysDiff < 3){
+        console.log ('found+: ', searchIndex, stockChartXValuesFunction[searchIndex])
+        return searchIndex;
+      }
+      else
+        oldestIndx = searchIndex;
+    }
+    if (daysDiff < 0)
+      newestIndx = searchIndex; 
+
   }
   alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i =${i} searchArray=${searchArray}`);
 }
 
 
 
-export {getDate, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest}
+export {getDate, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack,
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest}
