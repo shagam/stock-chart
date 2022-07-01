@@ -12,6 +12,7 @@ const todayDate = () => {
   return formattedDate;
 }
 
+// [year, mon, day]
 const todayDateSplit = () => {
   const date = new Date();
   const formattedDate = format(date, "yyyy-MM-dd");
@@ -28,7 +29,7 @@ function getDate() {
   return formattedDate;    
 }
 
-
+// [year, mon, day]
 const dateSplit = (date) => {
   const dateSplit = date.split('-');
   dateSplit[0] = Number(dateSplit[0]);
