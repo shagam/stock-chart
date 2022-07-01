@@ -13,6 +13,7 @@ import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import DropRecovery from './DropRecovery'
+import PriceCompare from './PriceCompare'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -455,6 +456,13 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
         
               // var  GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
+              const oldestDate = stockChartXValuesFunction [stockChartXValuesFunction.length - 1];
+              const oldestDateComponets = dateSplit(oldestDate) // [year, month, day]
+              const oldest_year = oldestDateComponets[0]
+              const oldest_mon = oldestDateComponets[1]
+              const oldest_day = oldestDateComponets[2]
+
+              const priceObj = PriceCompare (sym, oldest_year, oldest_mon, oldest_day);
 
               const updateMili = Date.now();
               const updateDate = getDate();
