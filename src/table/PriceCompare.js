@@ -24,16 +24,18 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
     var corsUrl = "http://localhost:5000/price?stock=" + sym +
      "&year=" + year + "&mon=" + mon + "&day=" + day;
     console.log (getDate(), corsUrl)
-    var open;
+
     axios.get (corsUrl)
     .then ((result) => {
-      console.log ("Price Compare", getDate(), result.data, stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
-      open = result.data.open;
+      console.log ("Price Compare", getDate(), year, mon, day,
+      // stockChartXValuesFunction[stockChartXValuesFunction.length - backIndex],
+       result.data, stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
+
     })
     .catch ((err) => {
       console.log(err)
     })
-    return open;
+
 }
 
 export default PriceCompare;
