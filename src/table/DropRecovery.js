@@ -26,7 +26,7 @@ const DropRecovery = (props) => {
   
   const searchDeepValue = () => {
 
-    const LOG_FLAG = true;
+    const LOG_FLAG = false;
 
     const today = new Date();
     const todayYear = today.getFullYear();
