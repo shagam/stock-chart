@@ -1,39 +1,39 @@
 import React from 'react'
 import axios from 'axios'
 import cors from 'cors'
-import {getDate} from './Date'
+import {getDate, dateSplit} from './Date'
+// import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
+
 // import {
   // todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack,
   //  compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, 
   //  getDate} from './Date'
 
 
-function PriceCompare (sym, year, mon, day) {
+export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction) {
+
+  var backIndex = 1;
+  const oldestDate = stockChartXValuesFunction [stockChartXValuesFunction.length - backIndex];
+  const oldestDateComponets = dateSplit(oldestDate) // [year, month, day]
+  const year = oldestDateComponets[0]
+  const mon = oldestDateComponets[1]
+  const day = oldestDateComponets[2]
+
+
     //var corsUrl = "http://84.228.164.65:5000/splits?stock=" + sym;
     var corsUrl = "http://localhost:5000/price?stock=" + sym +
      "&year=" + year + "&mon=" + mon + "&day=" + day;
     console.log (getDate(), corsUrl)
-
+    var open;
     axios.get (corsUrl)
     .then ((result) => {
-      console.log ("\n", getDate(), "pageSize: ", result.data.length, result.data)
-
-      // const regex = new RegExp (pattern, 'm');
-      // var result1 = regex.exec(result.data)
-      // console.log (result[0])
- 
-      // const info = {
-      //   Open: result[1],
-      //   close: result[2],
-      // }
-      // return info;
+      console.log ("Price Compare", getDate(), result.data, stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
+      open = result.data.open;
     })
     .catch ((err) => {
       console.log(err)
     })
-  
-
-
+    return open;
 }
 
 export default PriceCompare;
