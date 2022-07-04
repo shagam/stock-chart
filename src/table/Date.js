@@ -1,5 +1,5 @@
 
-import React from 'react'
+// import React from 'react'
 import {format} from "date-fns"
 
 
@@ -258,7 +258,7 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
       newestIndx = searchIndex; 
 
   }
-  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i =${i} searchArray=${searchArray}`);
+  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i =${i} searchArray=${searchArray} ${sym}` );
 }
 
 
