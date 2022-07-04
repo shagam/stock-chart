@@ -795,7 +795,7 @@ export const BasicTable = (props) => {
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                     <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
                     <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-                    {admin && <button type="button" onClick={()=>StockSplitsGet(row.values.symbol, rows)}>splits</button>}
+                    {/* {admin && <button type="button" onClick={()=>StockSplitsGet(row.values.symbol, rows)}>splits</button>} */}
                   </div>
               </tr>
             )
