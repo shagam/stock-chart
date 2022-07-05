@@ -650,7 +650,7 @@ export const BasicTable = (props) => {
   // }  
   )
 
-  // swap first, and mage other column follow
+  // swap first, and force others columns in group to follow
   function toggleGoogCompareColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
     const isInvisible_ = allColumns[ind].isVisible;
