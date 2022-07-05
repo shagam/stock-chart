@@ -231,6 +231,11 @@ export const BasicTable = (props) => {
 
     rows[row_index].values.sym = sym; // added field
     rows[row_index].values.splits_list = splits;
+    // console.log (splits)
+    if (splits !== '') {
+      const splitsParse = JSON.parse(splits);
+      const splits_calc = splits.length;
+    }
 
     saveTable();
     props.refreshCallBack(-1); // force refresh
@@ -534,6 +539,7 @@ export const BasicTable = (props) => {
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
            }
         )
+        saveTable();
         props.refreshCallBack(-1); 
   }
   
