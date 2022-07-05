@@ -650,15 +650,26 @@ export const BasicTable = (props) => {
   // }  
   )
 
+  // swap first, and mage other column follow
   function toggleGoogCompareColumns ()  {
-    var ind = allColumns.findIndex((column)=> column.Header === 'alphaPrice');
+    var ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
+    const isInvisible_ = allColumns[ind].isVisible;
     allColumns[ind].toggleHidden();
-    ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
-    allColumns[ind].toggleHidden();
+
+    ind = allColumns.findIndex((column)=> column.Header === 'alphaPrice');
+    var isInvisible = allColumns[ind].isVisible;
+    if (isInvisible === isInvisible_)
+      allColumns[ind].toggleHidden();
+
     ind = allColumns.findIndex((column)=> column.Header === 'googDate');
-    allColumns[ind].toggleHidden();
+    isInvisible = allColumns[ind].isVisible;
+    if (isInvisible === isInvisible_)
+      allColumns[ind].toggleHidden();
+
     ind = allColumns.findIndex((column)=> column.Header === 'googPrice');
-    allColumns[ind].toggleHidden();
+    isInvisible = allColumns[ind].isVisible;
+    if (isInvisible === isInvisible_)
+      allColumns[ind].toggleHidden();
   }
 
   const saveTable = () => {
