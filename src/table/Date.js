@@ -224,9 +224,13 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
 
   if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
-  if (LOG)
+  if (LOG) 
   console.log ('\nsearch date: ', testDateArray, sym)
+  // console.log ('\nsearch date: ', JSON.stringify(testDateArray), sym)
   for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
+
+  // for (i = 0; i < Math.round(Math.log2(stockChartXValuesFunction.length * 4)); i++) {
+
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
     var searchArray = dateSplit (stockChartXValuesFunction[searchIndex]);
 
