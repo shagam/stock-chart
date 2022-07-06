@@ -1,4 +1,3 @@
-import React from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {getDate, dateSplit} from './Date'
@@ -29,8 +28,25 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
     .then ((result) => {
       console.log ("Price Compare", getDate(), year, mon, day,
       // stockChartXValuesFunction[stockChartXValuesFunction.length - backIndex],
-       result.data, stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
+      'other=', result.data.open, 'alpha=', stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
+ 
+      
+      // const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
 
+      // if (result.data !== '' || ! stockChartXValuesFunction) {
+      //   rows[row_index].values.googDate = oldestDate;
+      //   rows[row_index].values.googPrice = result.data.open;
+
+      //   // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
+      //   rows[row_index].values.alphaDate = stockChartXValuesFunction[stockChartXValuesFunction.length - backIndex];
+      //   rows[row_index].values.alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
+        
+      //   var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
+      //   rows[row_index].values.GOOGCompare = p;
+      //   console.log ('priceCompare alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googDate, rows[row_index].values.googPrice, 'ratio=', p)
+      // }
+      // else
+      //   rows[row_index].values.GOOGCompare = -1;
     })
     .catch ((err) => {
       console.log(err)
