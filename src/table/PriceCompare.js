@@ -19,8 +19,8 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
   const day = oldestDateComponets[2]
 
 
-    //var corsUrl = "http://84.228.164.65:5000/splits?stock=" + sym;
-    var corsUrl = "http://localhost:5000/price?stock=" + sym +
+    var corsUrl = "http://84.228.164.65:5000/price?stock=" + sym +
+    // var corsUrl = "http://localhost:5000/price?stock=" + sym +
      "&year=" + year + "&mon=" + mon + "&day=" + day;
     console.log (getDate(), corsUrl)
 
