@@ -465,7 +465,10 @@ export const BasicTable = (props) => {
         
               // var  GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
-              // const priceObj = PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction);
+              if (marketwatch)
+                PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction);
+              else
+                GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json)
 
               const updateMili = Date.now();
               const updateDate = getDate();
@@ -855,7 +858,7 @@ export const BasicTable = (props) => {
 
       <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
 
-      {/* <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} /> */}
+      {/* { marketwatch && <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />} */}
       
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
