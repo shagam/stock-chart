@@ -3,8 +3,7 @@
 import {format} from "date-fns"
 
 
-const LOG = false;
-const LOG_VERBOSE = false;
+const LOG = true;
 
 const todayDate = () => {
   const date = new Date();
@@ -225,18 +224,18 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
   if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
     return undefined;
   if (LOG) 
-  console.log ('\nsearch date: ', testDateArray, sym)
-  // console.log ('\nsearch date: ', JSON.stringify(testDateArray), sym)
-  // for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
+  // console.log ('\nsearch date: ', testDateArray, sym)
+  console.log ('\nsearch date: ', JSON.stringify(testDateArray), sym)
 
-  for (i = 0; i < Math.round(Math.log2(stockChartXValuesFunction.length * 8)); i++) {
+  var collectedLog = "";
+  const loopLimit = Math.round(Math.log2(stockChartXValuesFunction.length * 8));
+  for (i = 0; i < loopLimit; i++) {
 
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
     var movingDate = dateSplit (stockChartXValuesFunction[searchIndex]);
 
     const daysDiff = daysFrom1970(testDateArray) - daysFrom1970(movingDate);
-    if (LOG_VERBOSE)
-    console.log ('old:', oldestIndx, 'new:', newestIndx, 'moving:' , searchIndex, 'daysDiff:', daysDiff );
+    collectedLog += '\nold: ' + oldestIndx + ' new: ' + newestIndx + ' moving: ' + searchIndex + ' daysDiff: ' + daysDiff;
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
       if (LOG)
@@ -262,8 +261,8 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
       newestIndx = searchIndex; 
 
   }
-  console.log (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} movingDate=${movingDate} ${sym}` );
-  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} movingDate=${movingDate} ${sym}` );
+  console.log (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym}`, 'length=', stockChartXValuesFunction.length, collectedLog );
+  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym} length=${stockChartXValuesFunction.length}` );
 }
 
 
