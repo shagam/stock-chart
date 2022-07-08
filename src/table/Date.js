@@ -227,32 +227,32 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
   if (LOG) 
   console.log ('\nsearch date: ', testDateArray, sym)
   // console.log ('\nsearch date: ', JSON.stringify(testDateArray), sym)
-  for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
+  // for (i = 0; i < stockChartXValuesFunction.length/2; i++) {
 
-  // for (i = 0; i < Math.round(Math.log2(stockChartXValuesFunction.length * 4)); i++) {
+  for (i = 0; i < Math.round(Math.log2(stockChartXValuesFunction.length * 8)); i++) {
 
     var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
-    var searchArray = dateSplit (stockChartXValuesFunction[searchIndex]);
+    var movingDate = dateSplit (stockChartXValuesFunction[searchIndex]);
 
-    const daysDiff = daysFrom1970(testDateArray) - daysFrom1970(searchArray);
+    const daysDiff = daysFrom1970(testDateArray) - daysFrom1970(movingDate);
     if (LOG_VERBOSE)
     console.log ('old:', oldestIndx, 'new:', newestIndx, 'moving:' , searchIndex, 'daysDiff:', daysDiff );
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
       if (LOG)
-      console.log ('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx])
+      console.log ('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx], 'search=', testDateArray)
       return oldestIndx;
     }
 
     if (daysDiff === 0) {
       if (LOG)
-      console.log ('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1])
+      console.log ('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1], 'search=', testDateArray)
       return searchIndex + 1;
     }
     if (daysDiff > 0) {
       if (daysDiff < 2){
         if (LOG)
-        console.log ('found+: ', searchIndex, stockChartXValuesFunction[searchIndex])
+        console.log ('found+: ', searchIndex, stockChartXValuesFunction[searchIndex], 'search=', testDateArray)
         return searchIndex;
       }
       else
@@ -262,7 +262,8 @@ const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
       newestIndx = searchIndex; 
 
   }
-  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i =${i} searchArray=${searchArray} ${sym}` );
+  console.log (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} movingDate=${movingDate} ${sym}` );
+  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} movingDate=${movingDate} ${sym}` );
 }
 
 
