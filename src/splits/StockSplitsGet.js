@@ -54,8 +54,10 @@ export const StockSplitsGet = (sym, rows) => {
 
         var splitArray = [];
         for (let i = 0; i < splits.length; i++) {
-          if (splits[i].year < 2000)
+          if (splits[i].jump === undefined) //skip first entry whish contains update mili only.
             continue;
+          // if (splits[i].year < 2000)
+          //   continue;
           const date = splits[i].year + '-' + splits[i].month + '-' + splits[i].day;
           const split = {ratio: Number (splits[i].jump), date: date};
           // splitArray = [...splitArray, split]
