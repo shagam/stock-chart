@@ -51,7 +51,7 @@ export const BasicTable = (props) => {
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(true);
-  const [marketwatch, setMarketwatch] = useTable (true);
+  const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
   // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
   // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
