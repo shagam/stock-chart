@@ -119,29 +119,29 @@ const monthsBackTest = () => {
 
   }
   
-  const daysBackTest = () => {
-    var testDate = [2022, 2, 15];
-    var back = 60;
-    var date = daysBack (testDate, back);
-    console.log (testDate, back, date)
-    
-    back = 15;
-    date = daysBack (testDate, back);
-    console.log (testDate, back, date)
-    
-    back = 30;
-    date = daysBack (testDate, back);
-    console.log (testDate, back, date)   
+function daysBackTest() {
+  var testDate = [2022, 2, 15];
+  var back = 60;
+  var date = daysBack(testDate, back);
+  console.log(testDate, back, date);
 
-    back = 60;
-    date = daysBack (testDate, back);
-    console.log (testDate, back, date)  
- 
-    back = 10;
-    date = daysBack ([2022, 3, 5], back);
-    console.log (testDate, back, date)
+  back = 15;
+  date = daysBack(testDate, back);
+  console.log(testDate, back, date);
 
-  }
+  back = 30;
+  date = daysBack(testDate, back);
+  console.log(testDate, back, date);
+
+  back = 60;
+  date = daysBack(testDate, back);
+  console.log(testDate, back, date);
+
+  back = 10;
+  date = daysBack([2022, 3, 5], back);
+  console.log(testDate, back, date);
+
+}
 
 const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
 
@@ -211,58 +211,59 @@ const daysFrom1970 = (dateArray) => {
 // }
 
 // return index of dataArray closest
-const searchDateInArray = (stockChartXValuesFunction, testDateArray, sym) => {
+function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
 
   if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
-  return undefined;
+    return undefined;
 
   //var testDateArray = [2020, 11, 1];
   let i = 0;
   var newestIndx = 0;
-  var oldestIndx = stockChartXValuesFunction.length -1;
+  var oldestIndx = stockChartXValuesFunction.length - 1;
 
-  if (compareDate (testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length-1].split('-')) === -1)
+  if (compareDate(testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length - 1].split('-')) === -1)
     return undefined;
-  if (LOG) 
-  // console.log ('\nsearch date: ', testDateArray, sym)
-  console.log ('\nsearch date: ', JSON.stringify(testDateArray), sym)
+  if (LOG)
+    // console.log ('\nsearch date: ', testDateArray, sym)
+    console.log('\nsearch date: ', JSON.stringify(testDateArray), sym);
 
   var collectedLog = "";
   const loopLimit = Math.round(Math.log2(stockChartXValuesFunction.length * 8));
   for (i = 0; i < loopLimit; i++) {
 
-    var searchIndex = Math.round ((newestIndx + oldestIndx) / 2);
-    var movingDate = dateSplit (stockChartXValuesFunction[searchIndex]);
+    var searchIndex = Math.round((newestIndx + oldestIndx) / 2);
+    var movingDate = dateSplit(stockChartXValuesFunction[searchIndex]);
 
     const daysDiff = daysFrom1970(testDateArray) - daysFrom1970(movingDate);
     collectedLog += '\nold: ' + oldestIndx + ' new: ' + newestIndx + ' moving: ' + searchIndex + ' daysDiff: ' + daysDiff;
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
       if (LOG)
-      console.log ('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx], 'search=', testDateArray)
+        console.log('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx], 'search=', testDateArray);
       return oldestIndx;
     }
 
     if (daysDiff === 0) {
       if (LOG)
-      console.log ('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1], 'search=', testDateArray)
+        console.log('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1], 'search=', testDateArray);
       return searchIndex + 1;
     }
     if (daysDiff > 0) {
-      if (daysDiff < 2){
+      if (daysDiff < 2) {
         if (LOG)
-        console.log ('found+: ', searchIndex, stockChartXValuesFunction[searchIndex], 'search=', testDateArray)
+          console.log('found+: ', searchIndex, stockChartXValuesFunction[searchIndex], 'search=', testDateArray);
         return searchIndex;
       }
+
       else
         oldestIndx = searchIndex;
     }
     if (daysDiff < 0)
-      newestIndx = searchIndex; 
+      newestIndx = searchIndex;
 
   }
-  console.log (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym}`, 'length=', stockChartXValuesFunction.length, collectedLog );
-  alert (`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym} length=${stockChartXValuesFunction.length}` );
+  console.log(`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym}`, 'length=', stockChartXValuesFunction.length, collectedLog);
+  alert(`searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym} length=${stockChartXValuesFunction.length}`);
 }
 
 
