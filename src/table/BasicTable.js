@@ -418,13 +418,26 @@ export const BasicTable = (props) => {
                   // verify correct split index
 
                   if (chartIndex > 2 && chartIndex < stockChartXValuesFunction.length - 5) {
-                    var splitIndex = chartIndex - 3;
-                    for (; splitIndex <  chartIndex + 3; splitIndex ++) {
-                      if (Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]) > 1.5 ) {
+                    var splitIndex = chartIndex - 4;
+                    var maxJump = 1;
+                    var maxJumpIndex = chartIndex;
+                    for (; splitIndex <  chartIndex + 4; splitIndex ++) {
+                      var jump = Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]);
+                      if (jump > maxJump ) {
+                        maxJump = jump;
+                        maxJumpIndex = chartIndex;
                         chartIndex = splitIndex + 1;
-                        console.log ('SplitIndex corrected', chartIndex);
                       }
-                    } 
+                    }
+                    if (chartIndex !== maxJumpIndex) {
+                      var txt='';
+                      for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
+                        txt += stockChartYValuesFunction[j] + ' '
+                      }
+                      console.log ('SplitIndex corrected=', maxJumpIndex, 'uncorrected=', chartIndex, stockChartYValuesFunction[maxJumpIndex])
+                      console.log('hist=', txt);
+                      chartIndex = maxJumpIndex - 1;
+                    }
                   }
                   splitsIndexArray.push (chartIndex);
                   // compensation calc
