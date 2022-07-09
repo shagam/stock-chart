@@ -410,7 +410,7 @@ export const BasicTable = (props) => {
               // compensate for splits
                 for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) { 
                   var jump = splitArrayList[splitNum].ratio;
-                  console.log (JSON.stringify (splitArrayList[splitNum]));
+                  // console.log (JSON.stringify (splitArrayList[splitNum]));
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
                   
@@ -427,23 +427,28 @@ export const BasicTable = (props) => {
                         chartIndex = splitIndex + 1;
                       }
                     }
-                    if (chartIndex !== weekNum) {
-                      var txt='';
-                      for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
-                        txt += stockChartYValuesFunction[j] + ' '
-                      }
-                      console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
-                      console.log('hist=', txt);
-                      chartIndex = weekNum - 1;
+
+                    var txt='';
+                    for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
+                      txt += stockChartYValuesFunction[j] + ' '
                     }
+                    // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
+                    console.log('hist=', txt);
+                    chartIndex = weekNum;
+
                   }
+                  else
+                    console.log ('wrong index', chartIndex, stockChartXValuesFunction.length)
+
                   splitsIndexArray.push (chartIndex);
                   // compensation calc
+                  console.log (sym, 'compensate split', splitArrayList[splitNum])
                   if (splitsCalcFlag) {  // if flag is off do not compensate
                     for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
                         (stockChartYValuesFunction[j] = Number (Number (stockChartYValuesFunction[j] / jump).toFixed(2)));
                     }
                   }
+                  console.log ('loop end ', splitNum);
                 }            
 
               if (stockChartXValuesFunction.length === 0) {
