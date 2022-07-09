@@ -409,34 +409,33 @@ export const BasicTable = (props) => {
 
               // compensate for splits
               if (splitArrayList.length > 0) {
-                for (let i = 0; i < splitArrayList.length; i++) { 
-                  var jump = splitArrayList[i].ratio;
-                  // console.log (splitArray);
-                  const splitDate = dateSplit (splitArrayList[i].date);
+                for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) { 
+                  var jump = splitArrayList[splitNum].ratio;
+                  console.log (JSON.stringify (splitArrayList[splitNum]));
+                  const splitDate = dateSplit (splitArrayList[splitNum].date);
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
                   
-                  // verify correct split index
-
+                  // find max jump of split index
                   if (chartIndex > 2 && chartIndex < stockChartXValuesFunction.length - 5) {
                     var splitIndex = chartIndex - 4;
                     var maxJump = 1;
-                    var maxJumpIndex = chartIndex;
+                    var weekNum = chartIndex;
                     for (; splitIndex <  chartIndex + 4; splitIndex ++) {
                       var jump = Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]);
                       if (jump > maxJump ) {
                         maxJump = jump;
-                        maxJumpIndex = chartIndex;
+                        weekNum = chartIndex;
                         chartIndex = splitIndex + 1;
                       }
                     }
-                    if (chartIndex !== maxJumpIndex) {
+                    if (chartIndex !== weekNum) {
                       var txt='';
                       for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
                         txt += stockChartYValuesFunction[j] + ' '
                       }
-                      console.log ('SplitIndex corrected=', maxJumpIndex, 'uncorrected=', chartIndex, stockChartYValuesFunction[maxJumpIndex])
+                      console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
                       console.log('hist=', txt);
-                      chartIndex = maxJumpIndex - 1;
+                      chartIndex = weekNum - 1;
                     }
                   }
                   splitsIndexArray.push (chartIndex);
@@ -447,26 +446,6 @@ export const BasicTable = (props) => {
                     }
                   }
                 }
-              }
-
-              // log compensation split smooth
-              if (splitArrayList.length > 0 && (LOG_SPLITS || true)) {
-                var comensationLog = 'smoothSplit:  \n';
-                for (let i = 0; i < splitsIndexArray.length; i++) {
-                  comensationLog += JSON.stringify(splitArrayList[i]);
-                  comensationLog += ' [' + splitsIndexArray[i] + '] ';
-                  if (splitsIndexArray[i] + 1 < stockChartXValuesFunction.length)
-                  comensationLog +=  stockChartXValuesFunction[splitsIndexArray[i] + 1] + " (" +  stockChartYValuesFunction[splitsIndexArray[i] + 1] + ")   "
-                  comensationLog += stockChartXValuesFunction[splitsIndexArray[i]] +  " (" + stockChartYValuesFunction[splitsIndexArray[i]] + ")   "
-                  if (splitsIndexArray[i] -2 >= 0) {
-                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -1] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -1 ] + ")   "
-                    comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -2] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -2 ] + ")   "
-                  // comensationLog += stockChartXValuesFunction[splitsIndexArray[i] -3] + " (" + stockChartYValuesFunction[splitsIndexArray[i] -3 ] + ")   "
-                  }
-
-                  comensationLog += "\n";
-                }
-                console.log (comensationLog)
               }
 
               if (stockChartXValuesFunction.length === 0) {
@@ -576,8 +555,8 @@ export const BasicTable = (props) => {
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              if (LOG_SPLITS)
-              console.log (splitArray);  
+              // if (LOG_SPLITS)
+              // console.log (splitArray);  
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
            }
         )
