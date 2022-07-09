@@ -22,14 +22,12 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
     var corsUrl = "http://84.228.164.65:5000/price?stock=" + sym +
     // var corsUrl = "http://localhost:5000/price?stock=" + sym +
      "&year=" + year + "&mon=" + mon + "&day=" + day;
-    console.log (getDate(), corsUrl)
+    // console.log (getDate(), corsUrl)
 
     axios.get (corsUrl)
     .then ((result) => {
-      console.log ("Price Compare", getDate(), year, mon, day,
-      // stockChartXValuesFunction[stockChartXValuesFunction.length - backIndex],
-      'other=', result.data.open, 'alpha=', stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
-  
+      // console.log ("Price Compare", getDate(), year, mon, day,
+      // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
 
       if (result.data !== '' || ! stockChartXValuesFunction) {
@@ -42,7 +40,9 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
         
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
         rows[row_index].values.GOOGCompare = p;
-        console.log ('priceCompare alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googDate, rows[row_index].values.googPrice, 'ratio=', p)
+        const searcDate = year + '-' + mon + '-' + day;
+        console.log (sym, 'priceCompare alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:',
+         rows[row_index].values.googDate, rows[row_index].values.googPrice, 'ratio=', p)
       }
       else
         rows[row_index].values.GOOGCompare = -1;
