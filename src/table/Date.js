@@ -223,9 +223,9 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
 
   if (compareDate(testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length - 1].split('-')) === -1)
     return undefined;
-  if (LOG)
-    // console.log ('\nsearch date: ', testDateArray, sym)
-    console.log('\nsearch date: ', JSON.stringify(testDateArray), sym);
+  // if (LOG)
+  //   console.log ('\nsearch date: ', testDateArray, sym)
+  //   console.log('\nsearch date: ', JSON.stringify(testDateArray), sym);
 
   var collectedLog = "";
   const loopLimit = Math.round(Math.log2(stockChartXValuesFunction.length * 8));
@@ -239,19 +239,19 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
       if (LOG)
-        console.log('found_: ', oldestIndx, stockChartXValuesFunction[oldestIndx], 'search=', testDateArray);
+        console.log('found_: ', stockChartXValuesFunction[oldestIndx], 'search=', JSON.stringify(testDateArray), oldestIndx, sym);
       return oldestIndx;
     }
 
     if (daysDiff === 0) {
       if (LOG)
-        console.log('found_0: ', searchIndex + 1, stockChartXValuesFunction[searchIndex + 1], 'search=', testDateArray);
-      return searchIndex + 1;
+        console.log('found_0: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), searchIndex, sym);
+      return searchIndex;
     }
     if (daysDiff > 0) {
       if (daysDiff < 2) {
         if (LOG)
-          console.log('found+: ', searchIndex, stockChartXValuesFunction[searchIndex], 'search=', testDateArray);
+          console.log('found+: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), searchIndex, sym);
         return searchIndex;
       }
 
