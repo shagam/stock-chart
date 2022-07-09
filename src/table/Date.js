@@ -214,7 +214,7 @@ const daysFrom1970 = (dateArray) => {
 function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
 
   if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
-    return undefined;
+    return -2;
 
   //var testDateArray = [2020, 11, 1];
   let i = 0;
@@ -222,7 +222,7 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
   var oldestIndx = stockChartXValuesFunction.length - 1;
 
   if (compareDate(testDateArray, stockChartXValuesFunction[stockChartXValuesFunction.length - 1].split('-')) === -1)
-    return undefined;
+    return -1;
   // if (LOG)
   //   console.log ('\nsearch date: ', testDateArray, sym)
   //   console.log('\nsearch date: ', JSON.stringify(testDateArray), sym);
