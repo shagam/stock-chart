@@ -388,14 +388,14 @@ export const BasicTable = (props) => {
               // let i = 0;
 
               var splitArray = rows[row_index].values.splits_list;
-              if (LOG_SPLITS && splitArray && splitArray.length > 0)
-              console.dir (splitArray);
+              // if (LOG_SPLITS && splitArray && splitArray.length > 0)
+              //   console.dir (splitArray);
               var splitArrayList = [];
               if (splitArray && splitArray.length > 0)
                 splitArrayList = JSON.parse(splitArray)
               
-              if (splitArrayList.lenght  > 0 && LOG_SPLITS)
-                console.dir (splitArrayList)
+              // if (splitArrayList.lenght  > 0 && LOG_SPLITS)
+              //   console.dir (splitArrayList)
 
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
@@ -408,7 +408,6 @@ export const BasicTable = (props) => {
               var splitsIndexArray = [];
 
               // compensate for splits
-              if (splitArrayList.length > 0) {
                 for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) { 
                   var jump = splitArrayList[splitNum].ratio;
                   console.log (JSON.stringify (splitArrayList[splitNum]));
@@ -417,10 +416,10 @@ export const BasicTable = (props) => {
                   
                   // find max jump of split index
                   if (chartIndex > 2 && chartIndex < stockChartXValuesFunction.length - 5) {
-                    var splitIndex = chartIndex - 4;
+                    var splitIndex = chartIndex - 2;
                     var maxJump = 1;
                     var weekNum = chartIndex;
-                    for (; splitIndex <  chartIndex + 4; splitIndex ++) {
+                    for (; splitIndex <  chartIndex + 5; splitIndex ++) {
                       var jump = Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]);
                       if (jump > maxJump ) {
                         maxJump = jump;
@@ -445,8 +444,7 @@ export const BasicTable = (props) => {
                         (stockChartYValuesFunction[j] = Number (Number (stockChartYValuesFunction[j] / jump).toFixed(2)));
                     }
                   }
-                }
-              }
+                }            
 
               if (stockChartXValuesFunction.length === 0) {
                 console.log ('stockChartXValuesFunction  empty')
