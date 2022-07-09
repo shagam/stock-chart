@@ -60,7 +60,8 @@ function IpContext  () {
       setUserAgentMobile(true);
     } else {
       setUserAgentMobile(false);
-      console.log("not mobile device");
+      if (LOG_FLAG)
+        console.log("not mobile device");
     }
 
     const res = await axios.get('https://geolocation-db.com/json/')
