@@ -3,7 +3,7 @@
 import {format} from "date-fns"
 
 
-const LOG = true;
+const LOG = false;
 
 const todayDate = () => {
   const date = new Date();
