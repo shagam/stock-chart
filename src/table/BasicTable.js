@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react'
+import React, {useState, useMemo} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -65,7 +65,7 @@ export const BasicTable = (props) => {
   const [columnHideFlag, setColumnHideFlag] = useState(true);
 
   const LOG_FLAG = false;
-  const LOG_SPLITS = true;
+  const LOG_SPLITS = false;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
@@ -414,7 +414,8 @@ export const BasicTable = (props) => {
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
                   if (chartIndex < 1) {// error not fount
-                    console.log ("Split out of range", sym, JSON.stringify (splitArrayList[splitNum]), chartIndex)
+                    if (LOG_SPLITS)
+                      console.log ("Split out of range", sym, JSON.stringify (splitArrayList[splitNum]), chartIndex)
                     continue;
                   }
                   // find max jump of split index
@@ -434,7 +435,7 @@ export const BasicTable = (props) => {
                       }
                     }
 
-                    if (chartIndexOrg !== maxJumpWeekNum)
+                    if (chartIndexOrg !== maxJumpWeekNum && LOG_SPLITS)
                       console.log ('index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
 
                     var valuesBefore='';
@@ -442,9 +443,10 @@ export const BasicTable = (props) => {
                       valuesBefore += stockChartYValuesFunction[j] + ' '
                     }
                     // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
-                    console.log('Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
-                    console.log(sym, 'before compensation (' + chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesBefore);
-                    // chartIndex = maxJumpWeekNum;
+                    if (LOG_SPLITS) {
+                      console.log('Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
+                      console.log(sym, 'before compensation (' + chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesBefore);
+                    }
 
                   }
                   else
@@ -452,18 +454,21 @@ export const BasicTable = (props) => {
                   splitsIndexArray.push (chartIndex);
 
                   // compensation calc
-                  console.log (sym, 'compensate split', splitArrayList[splitNum])
+                  if (LOG_SPLITS)
+                    console.log (sym, 'compensate split', splitArrayList[splitNum])
                   if (splitsCalcFlag) {  // if flag is off do not compensate
                     for ( let k = maxJumpWeekNum; k < stockChartYValuesFunction.length; k++) {
                         (stockChartYValuesFunction[k] = Number (Number (Number (stockChartYValuesFunction[k]) / jump).toFixed(2)));
                     }
-                  } else console.log ('no compensation')
+                  } else
+                     if (LOG_SPLITS) console.log ('no compensation')
                   // after compensation
                   var valuesAfter='';
                   for (var l = chartIndex - 3; l < chartIndex + 3; l++) {
                     valuesAfter += stockChartYValuesFunction[l] + ' '
                   }
-                  console.log (sym, 'after compensation (', chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesAfter)
+                  if (LOG_SPLITS)
+                    console.log (sym, 'after compensation (', chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesAfter)
                   // console.log ('loop end ', splitNum);
                 }            
 
