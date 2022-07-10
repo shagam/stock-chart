@@ -414,7 +414,7 @@ export const BasicTable = (props) => {
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
                   if (chartIndex < 1) {// error not fount
-                    console.log ("Split out of range", sym, JSON.stringify (splitArrayList[splitNum]))
+                    console.log ("Split out of range", sym, JSON.stringify (splitArrayList[splitNum]), chartIndex)
                     continue;
                   }
                   // find max jump of split index
@@ -422,7 +422,7 @@ export const BasicTable = (props) => {
                     var maxJump = 1;
                     var maxJumpWeekNum = chartIndex;
                     const chartIndexOrg = chartIndex;
-                    for (var m = chartIndex - 3; m <  chartIndex + 5; m ++) {
+                    for (var m = chartIndex - 4; m <  chartIndex + 5; m ++) {
                       var jump_ = Math.abs (stockChartYValuesFunction[m] / stockChartYValuesFunction[m + 1]);
                       if (jump_ > maxJump) {
                         maxJump = jump_;
@@ -438,7 +438,7 @@ export const BasicTable = (props) => {
                       console.log ('index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
 
                     var valuesBefore='';
-                    for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
+                    for (var j = chartIndex - 3; j < chartIndex + 3; j++) {
                       valuesBefore += stockChartYValuesFunction[j] + ' '
                     }
                     // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
@@ -460,7 +460,7 @@ export const BasicTable = (props) => {
                   } else console.log ('no compensation')
                   // after compensation
                   var valuesAfter='';
-                  for (var l = chartIndex - 5; l < chartIndex + 5; l++) {
+                  for (var l = chartIndex - 3; l < chartIndex + 3; l++) {
                     valuesAfter += stockChartYValuesFunction[l] + ' '
                   }
                   console.log (sym, 'after compensation (', chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesAfter)
