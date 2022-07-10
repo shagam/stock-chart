@@ -165,8 +165,8 @@ export const COLUMNS = [
     accessor: 'GOOGCompare'
   },
   {
-    Header: 'drop',
-    Footer: 'drop',    
+    Header: 'deep',
+    Footer: 'deep',    
     accessor: 'drop'
   },
   {
@@ -175,8 +175,8 @@ export const COLUMNS = [
     accessor: 'recoverWeek'
   },
   {
-    Header: 'dropDate',
-    Footer: 'dropDate',    
+    Header: 'deepDate',
+    Footer: 'deepDate',    
     accessor: 'dropDate'
   },
   {
@@ -363,8 +363,8 @@ export const GROUPED_COLUMNS = [
     accessor: 'drop-recover',   
     columns: [
       {
-        Header: 'drop',
-        Footer: 'drop',    
+        Header: 'deep',
+        Footer: 'deep',    
         accessor: 'drop'
       },
       {
@@ -373,8 +373,8 @@ export const GROUPED_COLUMNS = [
         accessor: 'recoverWeek'
       },
       {
-        Header: 'dropDate',
-        Footer: 'dropDate',    
+        Header: 'deepDate',
+        Footer: 'deepDate',    
         accessor: 'dropDate'
       },
       {

@@ -433,13 +433,13 @@ export const BasicTable = (props) => {
                     if (chartIndexOrg !== maxJumpWeekNum)
                       console.log ('index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
 
-                    var txt='';
+                    var valuesBefore='';
                     for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
-                      txt += stockChartYValuesFunction[j] + ' '
+                      valuesBefore += stockChartYValuesFunction[j] + ' '
                     }
                     // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
                     console.log('Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
-                    console.log(sym, 'before compensation (',  + chartIndex + ') ' + txt);
+                    console.log(sym, 'before compensation (' + chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesBefore);
                     chartIndex = maxJumpWeekNum;
 
                   }
@@ -455,11 +455,11 @@ export const BasicTable = (props) => {
                     }
                   } else console.log ('no compensation')
                   // after compensation
-                  txt='';
+                  var valuesAfter='';
                   for (var l = chartIndex - 5; l < chartIndex + 5; l++) {
-                    txt += stockChartYValuesFunction[l] + ' '
+                    valuesAfter += stockChartYValuesFunction[l] + ' '
                   }
-                  console.log (sym, 'after compensation (',  + chartIndex + ') ' + txt )
+                  console.log (sym, 'after compensation (', chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesAfter)
                   // console.log ('loop end ', splitNum);
                 }            
 
