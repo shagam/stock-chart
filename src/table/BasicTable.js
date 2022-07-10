@@ -413,42 +413,54 @@ export const BasicTable = (props) => {
                   // console.log (JSON.stringify (splitArrayList[splitNum]));
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
-                  
+                  if (chartIndex < 1) {// error not fount
+                    console.log ("Split out of range", sym, JSON.stringify (splitArrayList[splitNum]))
+                    continue;
+                  }
                   // find max jump of split index
                   if (chartIndex > 2 && chartIndex < stockChartXValuesFunction.length - 5) {
-                    var splitIndex = chartIndex - 2;
                     var maxJump = 1;
-                    var weekNum = chartIndex;
-                    for (; splitIndex <  chartIndex + 5; splitIndex ++) {
-                      var jump = Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]);
-                      if (jump > maxJump ) {
-                        maxJump = jump;
-                        weekNum = chartIndex;
-                        chartIndex = splitIndex + 1;
+                    var maxJumpWeekNum = chartIndex;
+                    const chartIndexOrg = chartIndex;
+                    for (var m = chartIndex - 3; m <  chartIndex + 5; m ++) {
+                      var jump_ = Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]);
+                      if (jump_ > maxJump ) {
+                        maxJump = jump_;
+                        maxJumpWeekNum = m + 1; // adjust maxJumpWeekNum (add 1 for the first need to change)
                       }
                     }
+
+                    if (chartIndexOrg !== maxJumpWeekNum)
+                      console.log ('index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
 
                     var txt='';
                     for (var j = chartIndex - 5; j < chartIndex + 5; j++) {
                       txt += stockChartYValuesFunction[j] + ' '
                     }
                     // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
-                    console.log('hist=', txt);
-                    chartIndex = weekNum;
+                    console.log('Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
+                    console.log(sym, 'before compensation (',  + chartIndex + ') ' + txt);
+                    chartIndex = maxJumpWeekNum;
 
                   }
                   else
                     console.log ('wrong index', chartIndex, stockChartXValuesFunction.length)
-
                   splitsIndexArray.push (chartIndex);
+
                   // compensation calc
                   console.log (sym, 'compensate split', splitArrayList[splitNum])
                   if (splitsCalcFlag) {  // if flag is off do not compensate
-                    for ( let j = chartIndex; j < stockChartYValuesFunction.length; j++) {
-                        (stockChartYValuesFunction[j] = Number (Number (stockChartYValuesFunction[j] / jump).toFixed(2)));
+                    for ( let k = maxJumpWeekNum; k < stockChartYValuesFunction.length; k++) {
+                        (stockChartYValuesFunction[k] = Number (Number (Number (stockChartYValuesFunction[k]) / jump).toFixed(2)));
                     }
+                  } else console.log ('no compensation')
+                  // after compensation
+                  txt='';
+                  for (var l = chartIndex - 5; l < chartIndex + 5; l++) {
+                    txt += stockChartYValuesFunction[l] + ' '
                   }
-                  console.log ('loop end ', splitNum);
+                  console.log (sym, 'after compensation (',  + chartIndex + ') ' + txt )
+                  // console.log ('loop end ', splitNum);
                 }            
 
               if (stockChartXValuesFunction.length === 0) {
@@ -471,7 +483,6 @@ export const BasicTable = (props) => {
               const todaySplit = todayDateSplit();
 
               var wk = Number(-1);
-              var wk2 = Number(-1);
               var wk2 = Number(-1);
               var mon = Number(-1);
               var mon3 = Number(-1);
