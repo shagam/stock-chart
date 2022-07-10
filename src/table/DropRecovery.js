@@ -107,7 +107,7 @@ const DropRecovery = (props) => {
         //}
       }
       drop = Math.round (dropPrice / highPriceBeforeDeep * 1000, 3) / 1000;
-      console.log (props.StockSymbol, 'drop', drop)
+      // console.log (props.StockSymbol, 'drop', drop)
 
       // avoid multiple cals of drop
       const index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
@@ -145,7 +145,7 @@ const DropRecovery = (props) => {
       recoveryWeeks();
     }
     const priceDivHigh = Number((props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
-    console.log (props.StockSymbol, 'priceDivHigh', priceDivHigh)
+    console.log (props.StockSymbol, 'priceDivHigh=', priceDivHigh, 'drop=', drop)
     // fill columns in stock table
     props.dropCallBack (props.StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
