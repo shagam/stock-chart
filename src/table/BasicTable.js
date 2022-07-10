@@ -423,10 +423,14 @@ export const BasicTable = (props) => {
                     var maxJumpWeekNum = chartIndex;
                     const chartIndexOrg = chartIndex;
                     for (var m = chartIndex - 3; m <  chartIndex + 5; m ++) {
-                      var jump_ = Math.abs (stockChartYValuesFunction[chartIndex] / stockChartYValuesFunction[chartIndex + 1]);
-                      if (jump_ > maxJump ) {
+                      var jump_ = Math.abs (stockChartYValuesFunction[m] / stockChartYValuesFunction[m + 1]);
+                      if (jump_ > maxJump) {
                         maxJump = jump_;
                         maxJumpWeekNum = m + 1; // adjust maxJumpWeekNum (add 1 for the first need to change)
+                      }
+                      if (1 / jump_ > maxJump ) {
+                        maxJump = 1 / jump_;
+                        maxJumpWeekNum = m + 1;
                       }
                     }
 
@@ -440,7 +444,7 @@ export const BasicTable = (props) => {
                     // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
                     console.log('Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
                     console.log(sym, 'before compensation (' + chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesBefore);
-                    chartIndex = maxJumpWeekNum;
+                    // chartIndex = maxJumpWeekNum;
 
                   }
                   else
