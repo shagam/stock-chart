@@ -9,13 +9,33 @@ import {dateSplit} from './Date'
   //  getDate} from './Date'
 
 
-export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceBack) {
+export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_) {
+  
+  // choose entry for compare
+  var entry = stockChartXValuesFunction.length - 1;
+  var requestedEntry = Number(requestedEntry_)
+  if (requestedEntry === 0)
+    entry = stockChartXValuesFunction.length - 1;
+  if (requestedEntry < 0) { // negative go back from end
+    if (requestedEntry + stockChartXValuesFunction.length > 0)
+      entry = stockChartXValuesFunction.length + requestedEntry;
+    else {
+      entry = 0;
+      console.log ('out of range', stockChartXValuesFunction.length - 1);
+    }
+  }
+  else { // positive: use requested entry if possible.
+    if (requestedEntry < stockChartXValuesFunction.length)
+      entry = requestedEntry;
+    else {
+      entry = stockChartXValuesFunction.length - 1;
+      console.log ('out of range', stockChartXValuesFunction.length - 1);
+    }
+  }
+  console.log ('compare price, request=', requestedEntry, 'entry=', entry, 'limit:', stockChartXValuesFunction.length - 1)
 
 
-  if (comparePriceBack >= stockChartXValuesFunction.length)
-    comparePriceBack = stockChartXValuesFunction.length - 10;
-
-  const oldestDate = stockChartXValuesFunction[stockChartXValuesFunction.length - comparePriceBack];
+  const oldestDate = stockChartXValuesFunction[entry];
   const oldestDateComponets = dateSplit(oldestDate) // [year, month, day]
   const year = oldestDateComponets[0]
   const mon = oldestDateComponets[1]
@@ -29,7 +49,7 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
     axios.get (corsUrl)
     .then ((result) => {
       // console.log ("Price Compare", getDate(), year, mon, day,
-      // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex])
+      // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
 
       if (result.data !== '' || ! stockChartXValuesFunction) {
@@ -37,8 +57,8 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
         rows[row_index].values.googPrice = result.data.open;
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
-        rows[row_index].values.alphaDate = stockChartXValuesFunction[stockChartXValuesFunction.length - comparePriceBack];
-        rows[row_index].values.alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - comparePriceBack]
+        rows[row_index].values.alphaDate = stockChartXValuesFunction[entry];
+        rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
         
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
         rows[row_index].values.GOOGCompare = p;

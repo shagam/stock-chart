@@ -44,7 +44,7 @@ export const BasicTable = (props) => {
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
-  const [comparePriceBack, setComparePriceBack ] = useState(1);
+  const [comparePriceBack, setComparePriceBack ] = useState(Number(-1));  // last entry by default
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
@@ -784,7 +784,7 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}> 
-          {admin && <GlobalFilter className="stock_button_class" filter={comparePriceBack} setFilter={setComparePriceBack} name='PriceDateBack' />}
+          {true && <GlobalFilter className="stock_button_class" filter={comparePriceBack} setFilter={setComparePriceBack} name='PriceDateBack +/-' />}
 
           <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} /> marketwatch </div>
           &nbsp; &nbsp;
