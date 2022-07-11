@@ -412,6 +412,8 @@ export const BasicTable = (props) => {
                   var jump = splitArrayList[splitNum].ratio;
                   // console.log (JSON.stringify (splitArrayList[splitNum]));
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
+                  if (splitArrayList[splitNum].date == null)
+                    alert (sym, 'wrong split info', splitNum)
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym)
                   if (chartIndex < 1) {// error not fount
                     if (LOG_SPLITS)
