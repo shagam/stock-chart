@@ -1,6 +1,6 @@
 import axios from 'axios'
-import cors from 'cors'
-import {getDate, dateSplit} from './Date'
+// import cors from 'cors'
+import {dateSplit} from './Date'
 // import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
 
 // import {
@@ -9,15 +9,17 @@ import {getDate, dateSplit} from './Date'
   //  getDate} from './Date'
 
 
-export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction) {
+export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceBack) {
 
-  var backIndex = 1;
-  const oldestDate = stockChartXValuesFunction [stockChartXValuesFunction.length - backIndex];
+
+  if (comparePriceBack >= stockChartXValuesFunction.length)
+    comparePriceBack = stockChartXValuesFunction.length - 10;
+
+  const oldestDate = stockChartXValuesFunction[stockChartXValuesFunction.length - comparePriceBack];
   const oldestDateComponets = dateSplit(oldestDate) // [year, month, day]
   const year = oldestDateComponets[0]
   const mon = oldestDateComponets[1]
   const day = oldestDateComponets[2]
-
 
     var corsUrl = "http://84.228.164.65:5000/price?stock=" + sym +
     // var corsUrl = "http://localhost:5000/price?stock=" + sym +
@@ -35,8 +37,8 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
         rows[row_index].values.googPrice = result.data.open;
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
-        rows[row_index].values.alphaDate = stockChartXValuesFunction[stockChartXValuesFunction.length - backIndex];
-        rows[row_index].values.alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
+        rows[row_index].values.alphaDate = stockChartXValuesFunction[stockChartXValuesFunction.length - comparePriceBack];
+        rows[row_index].values.alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - comparePriceBack]
         
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
         rows[row_index].values.GOOGCompare = p;

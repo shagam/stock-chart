@@ -44,7 +44,7 @@ export const BasicTable = (props) => {
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
-
+  const [comparePriceBack, setComparePriceBack ] = useState(1);
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
@@ -482,7 +482,7 @@ export const BasicTable = (props) => {
               // var  GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
               if (marketwatch)
-                PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction);
+                PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceBack);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json)
 
@@ -784,6 +784,8 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}> 
+          {admin && <GlobalFilter className="stock_button_class" filter={comparePriceBack} setFilter={setComparePriceBack} name='PriceDateBack' />}
+
           <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} /> marketwatch </div>
           &nbsp; &nbsp;
 
@@ -795,7 +797,7 @@ export const BasicTable = (props) => {
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
           &nbsp; &nbsp;   
-          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter}  />
+          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' />
           &nbsp;&nbsp;
           <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All
           &nbsp;&nbsp;       
