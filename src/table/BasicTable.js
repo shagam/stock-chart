@@ -758,13 +758,16 @@ export const BasicTable = (props) => {
   const openMaretFlagChange = () => {setOpenMaretFlag ( ! openMarketFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
-  const date1 = '2020-05-01'
-  const date2 = '2020-06-17'
+  var date1 = '2020-05-01'
+  var date2 = '2020-06-17'
+  date1 = '2015-06-01'
+  date2 = '2021-07-22'
   const freq = 'week'
+  const limit = 1500;
   function test () {
     // e.preventDefault();
     console.log('You clicked submit.');
-    polygon('AMZN', rows, date1, date2, 20, freq)
+    polygon('AMZN', rows, date1, date2, freq, limit)
   }
   // function polygon (sym, rows, date1, date2, limit, freq) {
 

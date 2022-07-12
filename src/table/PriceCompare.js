@@ -77,25 +77,48 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
 
 // https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to
 
-export function polygon (sym, rows, date1, date2, limit, freq) {
+export function polygon (sym, rows, date1, date2, freq, limit) {
 
-  date1 = '2021-06-01';
-  date2 = '2021-07-22'
-  limit = 120;
+  // date1 = '2021-06-01'
+  // date2 = '2021-07-22'
+  // limit = 120;
   // freq = 'week'
+const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
 
   var url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/' + freq + '/' + date1 + '/' + date2 +
   '?adjusted=true&sort=asc&limit=120?apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  
 
   // url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/week/2021-07-22/2021-08-22?adjusted=true&sort=asc&limit=120&apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
 
-  url ='https://api.polygon.io/v2/aggs/ticker/' + sym + '/range/1/' +freq+ '/' + date1 + '/' + date2+'?adjusted=true&sort=asc&limit=120&apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
+  url ='https://api.polygon.io/v2/aggs/ticker/' + sym + '/range/1/' +freq+ '/' + date1 + '/' + date2+'?adjusted=true&sort=asc&limit=' + limit +'&'+ apikey
 
   console.log (url)
 
   axios.get (url)
   .then ((result) => {
     console.dir (result.data)
+
+    var pattern = "#CCCCCC\">(\\d\\d)/(\\d\\d)/(\\d\\d\\d\\d)</TD><TD align=\"center\" style=\"padding: 4px; border-bottom: 1px solid #CCCCCC\">(\\d*) for (\\d*)";
+    // pattern = "CCCCCC"
+    const regex1 = new RegExp (pattern, 'g');
+
+    const text = result.data;
+    var count = 0;
+    const splits = [];
+
+    while ((result = regex1.exec(text)) !== null){
+        count++
+      const oneSplit = {
+        stock: sym,
+        jump: (Number(result[4] / result[5])).toFixed(4),
+        year: Number(result [3]),
+        month: Number(result[1]),
+        day: Number(result[2]),
+      }
+      splits.push(oneSplit);
+
+    };
+
 
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
