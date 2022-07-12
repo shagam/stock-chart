@@ -75,7 +75,85 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
 
 }
 
-export default PriceCompare;
+// https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to
+
+export function polygon (sym, rows, date1, date2, limit, freq) {
+
+  date1 = '2021-06-01';
+  date2 = '2021-07-22'
+  limit = 120;
+  // freq = 'week'
+
+  var url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/' + freq + '/' + date1 + '/' + date2 +
+  '?adjusted=true&sort=asc&limit=120?apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  
+
+  // url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/week/2021-07-22/2021-08-22?adjusted=true&sort=asc&limit=120&apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
+
+  url ='https://api.polygon.io/v2/aggs/ticker/' + sym + '/range/1/' +freq+ '/' + date1 + '/' + date2+'?adjusted=true&sort=asc&limit=120&apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
+
+  console.log (url)
+
+  axios.get (url)
+  .then ((result) => {
+    console.dir (result.data)
+
+
+    const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
+
+
+  })
+  .catch ((err) => {
+    console.log(err)
+  })
+
+  return [{},{}]
+}
+
+
+
+
+
+// {
+//   "adjusted": true,
+//   "queryCount": 2,
+//   "request_id": "6a7e466379af0a71039d60cc78e72282",
+//   "results": [
+//    {
+//     "c": 75.0875,
+//     "h": 75.15,
+//     "l": 73.7975,
+//     "n": 1,
+//     "o": 74.06,
+//     "t": 1577941200000,
+//     "v": 135647456,
+//     "vw": 74.6099
+//    },
+//    {
+//     "c": 74.3575,
+//     "h": 75.145,
+//     "l": 74.125,
+//     "n": 1,
+//     "o": 74.2875,
+//     "t": 1578027600000,
+//     "v": 146535512,
+//     "vw": 74.7026
+//    }
+//   ],
+//   "resultsCount": 2,
+//   "status": "OK",
+//   "ticker": "AAPL"
+//  }
+
+
+
+// https://coderrocketfuel.com/article/convert-a-unix-timestamp-to-a-date-in-vanilla-javascript
+// Table of Contents
+// Convert the Unix Timestamp to Milliseconds
+// Create a Date Object Using new Date()
+// Create Human-Friendly Date Strings With .toLocaleString()
+
+// https://financialmodelingprep.com/api/v3/financial-statement-symbol-lists?apikey=abe76877b8d46e8ac06532061260f4d4
+
 
 // https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ?window=6M
 

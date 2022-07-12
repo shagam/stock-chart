@@ -13,7 +13,7 @@ import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import DropRecovery from './DropRecovery'
-import PriceCompare from './PriceCompare'
+import  {PriceCompare, polygon} from './PriceCompare'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -758,7 +758,17 @@ export const BasicTable = (props) => {
   const openMaretFlagChange = () => {setOpenMaretFlag ( ! openMarketFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
-  
+  const date1 = '2020-05-01'
+  const date2 = '2020-06-17'
+  const freq = 'week'
+  function test () {
+    // e.preventDefault();
+    console.log('You clicked submit.');
+    polygon('AMZN', rows, date1, date2, 20, freq)
+  }
+  // function polygon (sym, rows, date1, date2, limit, freq) {
+
+   
   // const style = {
   //   padding: '0px',
   //   margin: '0px'
@@ -786,6 +796,7 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}> 
+          <div> <button onClick={test} > test </button> </div>  &nbsp; &nbsp;
           {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-' />}
 
           <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} /> marketwatch </div>
