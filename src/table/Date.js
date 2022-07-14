@@ -195,8 +195,11 @@ const compareDate = (date1, date2) => {
 }
 
 const daysFrom1970 = (dateArray) => {
-  const dateDays = (dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2] - 1;
-  return Number(dateDays).toFixed(0);
+  const days = (new Date(dateArray).getTime()  / 24 / 3600 / 1000).toFixed(0)
+  const dateDays = ((dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2]).toFixed(0);
+  return Number(days);
+
+
 }
 // const dateDiff = (dateArray1, dateArray2) => {
 //   const diff = daysFrom1970 (dateArray1) - daysFrom1970 (dateArray2)
