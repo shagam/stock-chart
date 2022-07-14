@@ -3,7 +3,7 @@ import axios from 'axios'
 import {dateSplit} from './Date'
 import {format} from "date-fns"
 // import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
-
+const LOG = false;
 // import {
   // todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack,
   //  compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, 
@@ -103,12 +103,14 @@ const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
   // url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/week/2021-07-22/2021-08-22?adjusted=true&sort=asc&limit=120&apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
 
   url ='https://api.polygon.io/v2/aggs/ticker/' + sym + '/range/1/' +freq+ '/' + date1 + '/' + date2+'?adjusted=true&sort=asc&limit=' + limit +'&'+ apikey
-
-  console.log (url)
+  if (LOG)
+    console.log (url)
   var gain = [];
   axios.get (url)
   .then ((result) => {
-    console.dir (result.data)
+    if (LOG)
+      console.dir (result.data)
+      
     for (var i = 0; i < result.data.results.length; i++) {
       const mili = result.data.results[i].t
       const close = result.data.results[i].c.toFixed(2)
@@ -116,7 +118,7 @@ const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
       const date = new Date(result.data.results[i].t) //.toLocaleString())
       const date1 = format(date, "yyyy-MMM-dd")
       // const date1 = date.toLocaleString()
-      console.log(open, close, date1, mili)
+      // console.log(open, close, date1, mili)
       const gain1 = {
         date: date1,
         mili: mili,
