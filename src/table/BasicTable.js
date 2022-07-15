@@ -32,7 +32,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
-import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate, dateStr} from './Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from './IpContext';
 
@@ -41,6 +41,7 @@ import StockSplitsGet from '../splits/StockSplitsGet'
 export const BasicTable = (props) => {
 
   const [chartSymbol, setChartSymbol] = useState("");
+  const [lastGain, setLastGain] = useState("");
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
@@ -758,16 +759,16 @@ export const BasicTable = (props) => {
   const openMaretFlagChange = () => {setOpenMaretFlag ( ! openMarketFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
-  var date1 = '2020-05-01'
-  var date2 = '2020-06-17'
-  date1 = '2015-06-01'
-  date2 = '2021-07-22'
+
   const freq = 'week'
   const limit = 1500;
   function polygonCompare () {
     // e.preventDefault();
     //console.log('You clicked submit.');
     if (chartSymbol) {
+      const date1Split = monthsBack(todayDateSplit(), 24);
+      const date1 = dateStr (date1Split)
+      const date2 = todayDate();
       polygon(chartSymbol, rows, date1, date2, freq, limit)
     }
     else

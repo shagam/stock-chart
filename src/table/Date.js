@@ -194,12 +194,20 @@ const compareDate = (date1, date2) => {
   return 0;
 }
 
+function dateStr (date1Split) {
+  var date =  date1Split[0] + '-';
+  if (date1Split[1] < 9) date += '0';
+  date += date1Split[1];
+  date += '-'
+  if (date1Split[2] < 9) date += '0';
+  date += date1Split[2]
+  return date
+}
+
 const daysFrom1970 = (dateArray) => {
   const days = (new Date(dateArray).getTime()  / 24 / 3600 / 1000).toFixed(0)
-  const dateDays = ((dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2]).toFixed(0);
+  // const dateDays = ((dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2]).toFixed(0);
   return Number(days);
-
-
 }
 // const dateDiff = (dateArray1, dateArray2) => {
 //   const diff = daysFrom1970 (dateArray1) - daysFrom1970 (dateArray2)
@@ -272,4 +280,4 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
 
 
 export {getDate, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr}
