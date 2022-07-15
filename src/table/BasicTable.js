@@ -764,10 +764,14 @@ export const BasicTable = (props) => {
   date2 = '2021-07-22'
   const freq = 'week'
   const limit = 1500;
-  function test () {
+  function polygonCompare () {
     // e.preventDefault();
-    console.log('You clicked submit.');
-    polygon('AMZN', rows, date1, date2, freq, limit)
+    //console.log('You clicked submit.');
+    if (chartSymbol) {
+      polygon(chartSymbol, rows, date1, date2, freq, limit)
+    }
+    else
+      alert ('Need to click gain for a symbol')
   }
   // function polygon (sym, rows, date1, date2, limit, freq) {
 
@@ -799,11 +803,6 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}> 
-          <div> <button onClick={test} > test </button> </div>  &nbsp; &nbsp;
-          {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-' />}
-
-          <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} /> marketwatch </div>
-          &nbsp; &nbsp;
 
           <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits </div>
           &nbsp; &nbsp;
@@ -845,7 +844,14 @@ export const BasicTable = (props) => {
             onChange={handleAddFormChange}
           />
           <button type="submit"> Add  ({rows.length})  </button>
-        </form>  
+          <div>  &nbsp;  <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div> 
+          {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
+          <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
+          &nbsp; &nbsp;
+
+        </form> 
+   
+ 
       </div>
 
       <table id="stockTable" {...getTableProps()}>
