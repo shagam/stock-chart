@@ -769,7 +769,8 @@ export const BasicTable = (props) => {
       const date1Split = monthsBack(todayDateSplit(), 24);
       const date1 = dateStr (date1Split)
       const date2 = todayDate();
-      polygon(chartSymbol, rows, date1, date2, freq, limit)
+      const polygonData = polygon(chartSymbol, rows, date1, date2, freq, limit)
+      console.dir (polygonData)
     }
     else
       alert ('Need to click gain for a symbol')
@@ -791,10 +792,6 @@ export const BasicTable = (props) => {
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
-          {/* <div style={{display:'flex'}}>
-          {currentUser && <div><strong>Email:  </strong> {currentUser.email}</div> } */}
-        {/* </div> */}
-  
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
         </div>
 
@@ -804,7 +801,6 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}> 
-
           <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits </div>
           &nbsp; &nbsp;
           <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market </div>

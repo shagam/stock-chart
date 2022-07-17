@@ -91,18 +91,12 @@ export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYV
  
 export function polygon (sym, rows, date1, date2, freq, limit) {
 
-  // date1 = '2021-06-01'
-  // date2 = '2021-07-22'
-  // limit = 120;
-  // freq = 'week'
 const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
 
-  var url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/' + freq + '/' + date1 + '/' + date2 +
-  '?adjusted=true&sort=asc&limit=120?apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  
+  // var url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/' + freq + '/' + date1 + '/' + date2 +
+  // '?adjusted=true&sort=asc&limit=120?apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  
 
-  // url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/week/2021-07-22/2021-08-22?adjusted=true&sort=asc&limit=120&apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
-
-  url ='https://api.polygon.io/v2/aggs/ticker/' + sym + '/range/1/' +freq+ '/' + date1 + '/' + date2+'?adjusted=true&sort=asc&limit=' + limit +'&'+ apikey
+  const url ='https://api.polygon.io/v2/aggs/ticker/' + sym + '/range/1/' +freq+ '/' + date1 + '/' + date2+'?adjusted=true&sort=asc&limit=' + limit +'&'+ apikey
   if (LOG)
     console.log (url)
   var gain = [];
@@ -138,7 +132,7 @@ const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'
     console.log(err)
   })
 
-  return [gain]
+  return gain;
 }
 
 
