@@ -803,8 +803,7 @@ export const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
 
-        <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
-          &nbsp; &nbsp;
+        <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
 
           <div>  &nbsp;  <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div> 
           <div>  &nbsp;  <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div> 
@@ -911,7 +910,7 @@ export const BasicTable = (props) => {
       <div id='manual_id'>    
         {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
-        {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />} */}
+        {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
         
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
 

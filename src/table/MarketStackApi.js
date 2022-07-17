@@ -23,7 +23,7 @@ export const MarketstackApi = (props) => {
       sym = props.symbol;
     console.log ('MarketstackApi', props);
     if (sym === '' || sym === undefined) {
-      console.log (`Splits chart sym vanished (${sym})`);
+      alert ('Need to click <gain> for  a symbol' );
       return;
     }
 
@@ -47,13 +47,13 @@ export const MarketstackApi = (props) => {
 
     //const API_KEY = '46bea3e9fabc17363dbbe15839cb0fe3';  // eli.shagam.gmail.com
     const API_KEY = '2b5394f2ced526a03a5a7886403a22ce'; // Goldstein.dina@gmail.com
-    var DATE = '2021-04-01'
+    var DATE = '2021-07-15'
     //var DATE = startDate;
     const startYear = startDate.getFullYear();
     const startMon = startDate.getMonth() + 1;
     const startDay = startDate.getDate() + 1;
     DATE = startYear + '-' +  startMon + '-' + startDay;
-
+    const limit = 100 
     const date = new Date();
     // var DATE = Number(date.getFullYear()) - 1;
     // if (date.getMonth() > 11)
@@ -65,7 +65,7 @@ export const MarketstackApi = (props) => {
 
     //let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_from=${DATE}&limit=1&offset=100`
 
-    let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_to=${DATE}&limit=20`
+    let API_Call = 'http://api.marketstack.com/v1/eod?access_key=' + API_KEY + '&symbols=' + sym + '&date_from=' + DATE + '&limit=' + limit
 
     // & date_to = YYYY-MM-DD
 
@@ -144,6 +144,8 @@ export const MarketstackApi = (props) => {
             setStockChartXValues (stockChartXValuesFunction);
             setStockChartYValues (stockChartYValuesFunction);
 
+            console.dir (stockChartXValuesFunction)
+            console.dir (stockChartYValuesFunction)
             if (splitArray.length > 0)
               splits = JSON.stringify(splitArray);
             else
@@ -171,7 +173,7 @@ export const MarketstackApi = (props) => {
        <div>
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
 
-          <button type="button" onClick={()=>searchSplits('NVDA')}>marketStackSearch </button>
+          <button type="button" onClick={()=>searchSplits(props.symbol)}>marketStackSearch </button>
         </div> 
       }     
     </>
