@@ -41,7 +41,6 @@ import StockSplitsGet from '../splits/StockSplitsGet'
 export const BasicTable = (props) => {
 
   const [chartSymbol, setChartSymbol] = useState("");
-  const [lastGain, setLastGain] = useState("");
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
@@ -54,8 +53,6 @@ export const BasicTable = (props) => {
   const [openMarketFlag, setOpenMaretFlag] = useState(true);
   const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
-  // const [ipStockSymbol, setIpStockSymbol] = useState(undefined);
-  // const [firebaseFillMili, setFirebaseFillMili] = useState(0);
 
   const gainRef = collection(db, "stock-gain_")
   const infoRef = collection(db, "stock-info")
@@ -361,9 +358,6 @@ export const BasicTable = (props) => {
                 console.log (API_Call);
                 console.log (dataStr.substring(0,150));
               }
-              // stocksChartHistory[StockSymbol] = data;
-              // const stocksHistoryStr = JSON.stringify(stocksChartHistory); 
-              // localStorage.setItem ('stocksChartHistory', stocksHistoryStr);
               
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
@@ -481,8 +475,6 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
-        
-              // var  GOOGCompare = GainValidate (chartSymbol, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.refreshCallBack);
 
               if (marketwatch)
                 PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate);
