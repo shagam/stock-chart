@@ -13,7 +13,7 @@ import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import DropRecovery from './DropRecovery'
-import  {PriceCompare, polygon} from './PriceCompare'
+import {marketwatchPriceCompare, polygon} from './PriceCompare'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -477,7 +477,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate);
+                marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json)
 
@@ -802,13 +802,12 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}>
-
-        <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
-
+          <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
           <div>  &nbsp;  <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div> 
           <div>  &nbsp;  <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div> 
           {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
         </div>
+
         <div id="buttons_id" style={{display:'flex'}}>
           <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits </div>
           &nbsp; &nbsp;

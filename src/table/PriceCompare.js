@@ -10,7 +10,7 @@ const LOG = false;
   //  getDate} from './Date'
 
 
-export function PriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_) {
+export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_) {
   
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;
