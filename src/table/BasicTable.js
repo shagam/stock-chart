@@ -767,9 +767,18 @@ export const BasicTable = (props) => {
     else
       alert ('Need to click gain for a symbol')
   }
-  // function polygon (sym, rows, date1, date2, limit, freq) {
 
-   
+  function marketStackCompare () {
+    if (chartSymbol) {
+      const date1Split = monthsBack(todayDateSplit(), 24);
+      const date1 = dateStr (date1Split)
+      const date2 = todayDate();
+      if (admin)
+        MarketStackApi (chartSymbol, admin) 
+    }
+    else
+      alert ('Need to click gain for a symbol')
+  }
   // const style = {
   //   padding: '0px',
   //   margin: '0px'
@@ -792,7 +801,16 @@ export const BasicTable = (props) => {
             alert(WinNetwork.UserName);  
         </script>  */}
 
-        <div id="buttons_id" style={{display:'flex'}}> 
+        <div id="buttons_id" style={{display:'flex'}}>
+
+        <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
+          &nbsp; &nbsp;
+
+          <div>  &nbsp;  <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div> 
+          <div>  &nbsp;  <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div> 
+          {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
+        </div>
+        <div id="buttons_id" style={{display:'flex'}}>
           <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits </div>
           &nbsp; &nbsp;
           <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market </div>
@@ -804,7 +822,7 @@ export const BasicTable = (props) => {
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' />
           &nbsp;&nbsp;
           <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All
-          &nbsp;&nbsp;       
+          &nbsp;&nbsp;        
           <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide  </div>
         </div>
 
@@ -833,13 +851,9 @@ export const BasicTable = (props) => {
             onChange={handleAddFormChange}
           />
           <button type="submit"> Add  ({rows.length})  </button>
-          <div>  &nbsp;  <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div> 
-          {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
-          <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
-          &nbsp; &nbsp;
+          </form>
 
-        </form> 
-   
+     
  
       </div>
 
@@ -897,7 +911,7 @@ export const BasicTable = (props) => {
       <div id='manual_id'>    
         {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
-        {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
+        {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />} */}
         
         <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
 
