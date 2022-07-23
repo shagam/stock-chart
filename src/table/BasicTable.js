@@ -231,11 +231,15 @@ export const BasicTable = (props) => {
     rows[row_index].values.sym = sym; // added field
     rows[row_index].values.splits_list = splits;
     // console.log (splits)
+    try {
     if (splits !== '') {
+      if (splits.startsWith('u')) {
+        alert ('bad splits json ' + splits + ' ' + sym)
+      }
       const splitsParse = JSON.parse(splits);
       const splits_calc = splits.length;
     }
-
+    } catch (e) {console.log('Bad splits', e, sym. splits) }
     saveTable();
     props.refreshCallBack(-1); // force refresh
     if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)
