@@ -20,12 +20,11 @@ function IpContext  () {
   const ipRef = collection(db, "ipList")
 
   useEffect (() => { 
-    //getGain();
     getIp();
-     //getInfo();
+  // eslint-disable-next-line
+  }, []) 
 
-  }, [])
-
+   // eslint-disable-line_
 
   function getDate() {
     const date = new Date();
