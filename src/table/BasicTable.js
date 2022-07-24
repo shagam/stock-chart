@@ -90,7 +90,7 @@ export const BasicTable = (props) => {
     // read old entries
     if (drop === undefined)
       drop = -1;
-    if (splits == undefined)
+    if (splits === undefined)
       splits = '';
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
@@ -239,7 +239,7 @@ export const BasicTable = (props) => {
       const splitsParse = JSON.parse(splits);
       const splits_calc = splits.length;
     }
-    } catch (e) {console.log('Bad splits', e, sym. splits) }
+    } catch (e) {console.log('Bad splits', e, sym.splits) }
     saveTable();
     props.refreshCallBack(-1); // force refresh
     if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)

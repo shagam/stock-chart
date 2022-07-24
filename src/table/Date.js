@@ -85,8 +85,8 @@ const monthsBackTest = () => {
     var date = monthsBack ([2022, 6, 30], back);
     console.log (testDate, back, date)
 
-    var back = 3;
-    var date = monthsBack (testDate, back);
+    back = 3;
+    date = monthsBack (testDate, back);
     console.log (testDate, back, date)
     
     back = 5;

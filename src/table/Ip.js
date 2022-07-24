@@ -51,7 +51,7 @@ function Ip (props) {
         ipTable_one += "state: '" + ipReadList.docs[i].data().state  + "', ";
         if (longtitude) {
         ipTable_one += "latitude: '" + ipReadList.docs[i].data().latitude  + "', ";
-        ipTable_one += "longitude: "  + "'" + ipReadList.docs[i].data().longitude  + "', ";
+        ipTable_one += "longitude: '" + ipReadList.docs[i].data().longitude  + "', ";
         }
         // ipTable_one += "postal: " +   ipReadList.docs[i].data().postal + ", ";
         if (userAgent)
