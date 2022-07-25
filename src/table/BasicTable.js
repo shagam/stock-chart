@@ -645,6 +645,7 @@ export const BasicTable = (props) => {
     saveTable();
     props.refreshCallBack(-1);
     //window.location.reload();
+    event.target.reset(); // clear input field
   }
 
   const {
