@@ -481,7 +481,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate);
+                marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json)
 

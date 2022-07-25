@@ -10,7 +10,7 @@ const LOG = false;
   //  getDate} from './Date'
 
 
-export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_) {
+export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack) {
   
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;
@@ -64,8 +64,9 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
         rows[row_index].values.GOOGCompare = p;
         const searcDate = year + '-' + mon + '-' + day;
-        console.log (sym, 'priceCompare alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:',
-         rows[row_index].values.googDate, rows[row_index].values.googPrice, 'ratio=', p)
+        console.log (sym, 'priceCompare alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
+        if (rows[row_index].values.googDate !== rows[row_index].values.alphaDate) {
+          console.log (rows[row_index].values.googDate) }
       }
       else
         rows[row_index].values.GOOGCompare = -1;
@@ -73,7 +74,7 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
     .catch ((err) => {
       console.log(err)
     })
-
+    refreshCallBack();
 }
 
 // https://polygon.io/docs/stocks/get_v2_aggs_ticker__stocksticker__range__multiplier___timespan___from___to
