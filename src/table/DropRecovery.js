@@ -23,7 +23,7 @@ const DropRecovery = (props) => {
   const [displayFlag, setDisplayFlag] = useState (false); 
   //  2007, 11, 1  2008 deep
 
-  const LOG_FLAG = false;
+  const LOG_FLAG = true;
   
   const searchDeepValue = () => {
 
@@ -49,13 +49,6 @@ const DropRecovery = (props) => {
     const startDateArray = [startYear, startMon, startDay]
     var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.StockSymbol)  
 
-    //console.log (startDate.getFullYear(), startDate.getMonth(), startDate.getDay())    
-    //console.log (props.StockSymbol, props.stockChartXValues[beforeDropWeek]);
-
-    // if (startBeforeDropWeek < 10 && startBeforeDropWeek > 52*20) {
-    //   alert ('Not allowed before 20 years, and not less than 10 weeks');
-    //   return -1;
-    // }
     var highPriceBeforeDeep = 0;
     var highPriceBeforeDeepIndex = 0;
 
@@ -81,9 +74,9 @@ const DropRecovery = (props) => {
         }
       }
       if (LOG_FLAG) {
-        console.log ('StockSymbol: ', props.StockSymbol, ' startDate_X_Array',  props.stockChartXValues[startBeforeDropIndex]);
-        console.log ('startPrice: ', props.stockChartYValues[startBeforeDropIndex], 'beforeDropIndex:', startBeforeDropIndex);
-        console.log ('dropPrice: ', dropPrice, ' dropIndex: ', dropIndex, ' dropDate:', dropDate);
+        console.log (props.StockSymbol, ' startDate',  props.stockChartXValues[startBeforeDropIndex], 
+          'startPrice:', props.stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
+        console.log ('dropDate:', dropDate, 'dropPrice:', dropPrice, ' dropIndex:', dropIndex );
       }
     }
 
@@ -149,7 +142,7 @@ const DropRecovery = (props) => {
       recoveryWeeks();
     }
     const priceDivHigh = Number((props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
-    console.log (props.StockSymbol, 'priceDivHigh=', priceDivHigh, 'drop=', drop)
+    console.log (props.StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', drop)
     // fill columns in stock table
     props.dropCallBack (props.StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
