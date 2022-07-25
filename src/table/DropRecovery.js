@@ -21,12 +21,16 @@ const DropRecovery = (props) => {
   const [startDate, setStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
   // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
   const [displayFlag, setDisplayFlag] = useState (false); 
- //  2007, 11, 1  2008 deep
+  //  2007, 11, 1  2008 deep
 
+  const LOG_FLAG = false;
   
   const searchDeepValue = () => {
 
-    const LOG_FLAG = false;
+    if (props.StockSymbol === undefined || props.StockSymbol === '' || props.stockChartXValues === undefined) {
+      alert ('Need to click <gain> for a symbol before calc drop recover')
+      return;
+    }
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -186,9 +190,9 @@ const DropRecovery = (props) => {
 
   //  skip analysis if no symbol
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
-  if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
-  && props.stockChartYValues.length !== 0)
-    searchDeepValue (); 
+  // if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
+  // && props.stockChartYValues.length !== 0)
+  //   searchDeepValue (); 
 
 
 
@@ -210,6 +214,7 @@ const DropRecovery = (props) => {
     // fontSize: 200,
     border: '2px solid magenta'
   };
+  // style={{display:'flex'}}
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
@@ -222,7 +227,8 @@ const DropRecovery = (props) => {
             /> Drop-Recovery
       </div>
       {displayFlag && 
-        <div>     
+        <div> 
+          <button type="button" onClick={()=>searchDeepValue()}>Drop_recovery    </button>    
           <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           <div color='yellow' > Start date (click gain on few stocks) </div>
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
