@@ -33,7 +33,9 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
       console.log ('out of range', stockChartXValuesFunction.length - 1);
     }
   }
-  console.log ('compare price, request=', requestedEntry, 'entry=', entry, 'limit:', stockChartXValuesFunction.length - 1)
+
+  const limitTxt = entry === stockChartXValuesFunction.length - 1 ? '' :  'limit: ' + (stockChartXValuesFunction.length - 1)
+  console.log ('compare price, requesIndx=', requestedEntry, 'entry=', entry, limitTxt)
 
 
   const oldestDate = stockChartXValuesFunction[entry];
