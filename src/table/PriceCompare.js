@@ -42,7 +42,7 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
   const mon = oldestDateComponets[1]
   const day = oldestDateComponets[2]
 
-    var corsUrl = "http://84.228.164.65:5000/price?stock=" + sym +
+    var corsUrl = "http://84.95.84.236:5000/price?stock=" + sym +
     // var corsUrl = "http://localhost:5000/price?stock=" + sym +
      "&year=" + year + "&mon=" + mon + "&day=" + day;
     // console.log (getDate(), corsUrl)

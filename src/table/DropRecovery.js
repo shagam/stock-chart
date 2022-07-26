@@ -144,6 +144,8 @@ const DropRecovery = (props) => {
     const priceDivHigh = Number((props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
     console.log (props.StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', drop)
     // fill columns in stock table
+    if (recoverPeriod === undefined)
+      alert (props.StockSymbol + ' recoverWeek undef')
     props.dropCallBack (props.StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
 
