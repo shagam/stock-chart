@@ -35,7 +35,7 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
   }
 
   const limitTxt = entry === stockChartXValuesFunction.length - 1 ? '' :  'limit: ' + (stockChartXValuesFunction.length - 1)
-  console.log ('compare price, requesIndx=', requestedEntry, 'entry=', entry, limitTxt)
+  console.log (sym, 'compare price, requesIndx=', requestedEntry, 'entry=', entry, limitTxt)
 
 
   const oldestDate = stockChartXValuesFunction[entry];
