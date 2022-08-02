@@ -12,7 +12,7 @@ import CheckBox from './CheckBox'
 import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
-import DropRecovery from './DropRecovery'
+import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {marketwatchPriceCompare, polygon} from './PriceCompare'
 
 import StockInfo from './StockInfo'
@@ -61,6 +61,11 @@ export const BasicTable = (props) => {
   const [flex, setFlex] = useState ();
 
   const [columnHideFlag, setColumnHideFlag] = useState(true);
+  const [searchDeepDate, setSearchDeepDate] = useState()
+  const [lastgain, setLastGain] = useState() 
+
+  const [dropStartDate, setDropStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
+
 
   const LOG_FLAG = false;
   const LOG_SPLITS = false;
@@ -402,7 +407,10 @@ export const BasicTable = (props) => {
                 const yValue = Number (Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]).toFixed(3))
                 stockChartYValuesFunction.push(yValue);
               }
-           
+
+              // save last gain for compare and avoid dowble split compentation
+              setLastGain (stockChartYValuesFunction[stockChartYValuesFunction.length - 1])
+                
               // collect compensation vars
               var splitsIndexArray = [];
 
@@ -908,9 +916,7 @@ export const BasicTable = (props) => {
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
-     
-        <DropRecovery StockSymbol = {chartSymbol} rows = {rows} dropCallBack = {dropCallBack} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} allColumns={allColumns}  />
-
+        <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} dropStartDate={dropStartDate} setDropStartDate={setDropStartDate} />
       <div id='manual_id'>    
         {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 

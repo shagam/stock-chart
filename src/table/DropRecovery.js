@@ -9,25 +9,12 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 //import './DropRecovery.css'
 
 
-const DropRecovery = (props) => {
 
-  // props.StockSymbol
-  // props.callBack 
-  // props.stockChartYValues
-  // props.stockChartXValues
-  // props.rows
-
-  // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
-  const [startDate, setStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
-  // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
-  const [displayFlag, setDisplayFlag] = useState (false); 
-  //  2007, 11, 1  2008 deep
-
+function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, dropCallBack, startDate) {
+ 
   const LOG_FLAG = true;
-  
-  const searchDeepValue = () => {
 
-    if (props.StockSymbol === undefined || props.StockSymbol === '' || props.stockChartXValues === undefined) {
+    if (StockSymbol === undefined || StockSymbol === '' || stockChartXValues === undefined) {
       alert ('Need to click <gain> for a symbol before calc drop recover')
       return;
     }
@@ -47,12 +34,12 @@ const DropRecovery = (props) => {
     // startBeforeDropWeek = Math.round(startBeforeDropWeek);
 
     const startDateArray = [startYear, startMon, startDay]
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.StockSymbol)  
+    var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol)  
 
     var highPriceBeforeDeep = 0;
     var highPriceBeforeDeepIndex = 0;
 
-    var dropPrice = Number(props.stockChartYValues[startBeforeDropIndex]);
+    var dropPrice = Number(stockChartYValues[startBeforeDropIndex]);
     var dropIndex = -1;
     var dropDate = '';
     var highPriceAfterDeep = -1;
@@ -62,20 +49,20 @@ const DropRecovery = (props) => {
 
     // search for deepPrice after start date
     const deep = () => {
-      dropPrice = Number(props.stockChartYValues[startBeforeDropIndex]);
-      dropDate = props.stockChartXValues[startBeforeDropIndex];
+      dropPrice = Number(stockChartYValues[startBeforeDropIndex]);
+      dropDate = stockChartXValues[startBeforeDropIndex];
       for (var i = startBeforeDropIndex; i > 0; i--) {
         // search for lowestPrrice 
-        const price = Number(props.stockChartYValues[i] );
+        const price = Number(stockChartYValues[i] );
         if (dropPrice > price) {
           dropPrice = price;
           dropIndex = i;
-          dropDate = props.stockChartXValues[i];
+          dropDate = stockChartXValues[i];
         }
       }
       if (LOG_FLAG) {
-        console.log (props.StockSymbol, ' startDate',  props.stockChartXValues[startBeforeDropIndex], 
-          'startPrice:', props.stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
+        console.log (StockSymbol, ' startDate', stockChartXValues[startBeforeDropIndex], 
+          'startPrice:', stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
         console.log ('dropDate:', dropDate, 'dropPrice:', dropPrice, ' dropIndex:', dropIndex );
       }
     }
@@ -83,7 +70,7 @@ const DropRecovery = (props) => {
     // search for higest befor deep
     const highistBeforeDeep = () => {
       for (let i = dropIndex; i <= startBeforeDropIndex * 4; i++) { 
-        const price = Number(props.stockChartYValues[i]);
+        const price = Number(stockChartYValues[i]);
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
           highPriceBeforeDeepIndex = i;
@@ -94,9 +81,9 @@ const DropRecovery = (props) => {
     // check for recovery price after drop
     const recoveryWeeks = () => {
       for (let i = dropIndex; i > 0; i--) {      
-        const price = Number(props.stockChartYValues[i]);
+        const price = Number(stockChartYValues[i]);
         //if (highPriceAfterDeep < price) {
-          if (price > Number (props.stockChartYValues[highPriceBeforeDeepIndex])) {
+          if (price > Number (stockChartYValues[highPriceBeforeDeepIndex])) {
             highPriceAfterDeep = price;
             recoverIndex = i;
             break; // recovery found
@@ -107,12 +94,12 @@ const DropRecovery = (props) => {
       // console.log (props.StockSymbol, 'drop', drop)
 
       // avoid multiple cals of drop
-      const index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
+      const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
       if (index === -1) {
-        alert (`crash recovery symbol not found (${props.StockSymbol})`);
+        alert (`crash recovery symbol not found (${StockSymbol})`);
         return;
       } 
-      if (props.rows[index].values.drop === drop)
+      if (rows[index].values.drop === drop)
         return;
 
       if (LOG_FLAG) {
@@ -141,21 +128,36 @@ const DropRecovery = (props) => {
       highistBeforeDeep();
       recoveryWeeks();
     }
-    const priceDivHigh = Number((props.stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
-    console.log (props.StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', drop)
+    const priceDivHigh = Number((stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
+    console.log (StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', drop)
     // fill columns in stock table
     if (recoverPeriod === undefined)
-      alert (props.StockSymbol + ' recoverWeek undef')
-    props.dropCallBack (props.StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
+      alert (StockSymbol + ' recoverWeek undef')
+    dropCallBack (StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
   }
 
+
+const DropRecoveryButtons = (props) => {
+  // props.StockSymbol
+  // props.rows
+  // props.allColumhs
+  // props.dropStartDate
+  // props.setDropStartDate
+  // 
+
+   // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
+
+   // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
+   const [displayFlag, setDisplayFlag] = useState (false); 
+   //  2007, 11, 1  2008 deep
+ 
   function swap_period_2008() {
-      setStartDate (new Date(2007, 9, 15));
+    props.setDropStartDate (new Date(2007, 9, 15));
       // setEndDate (new Date(2009, 1, 1));
   }
 
   function swap_period_2020() {
-    setStartDate (new Date(2020, 1, 5));
+    props.setDropStartDate (new Date(2020, 1, 5));
     // setEndDate (new Date(2020, 4, 15));
   }
 
@@ -168,16 +170,28 @@ const DropRecovery = (props) => {
     // date = date.split('T')[0];
     const dateArray1 = monthsBack (dateArray, 8);
     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
-    setStartDate (new Date(dateStr));
+    props.setDropStartDate (new Date(dateStr));
     // setEndDate (new Date());
   }
 
   function toggleDropRecoveryColumns ()  {
-    var ind = props.allColumns.findIndex((column)=> column.Header === 'drop');
+    var ind = props.allColumns.findIndex((column)=> column.Header === 'deep');
+    if (ind === -1) {
+      alert ('column drop invalid')
+      return
+    }
     props.allColumns[ind].toggleHidden();
-    ind = props.allColumns.findIndex((column)=> column.Header === 'dropDate');
+    ind = props.allColumns.findIndex((column)=> column.Header === 'deepDate');
+    if (ind === -1) {
+      alert ('column dropDate invalid')
+      return
+    }
     props.allColumns[ind].toggleHidden();
     ind = props.allColumns.findIndex((column)=> column.Header === 'recoverWeek');
+    if (ind === -1) {
+      alert ('column recoverWeek invalid')
+      return
+    }
     props.allColumns[ind].toggleHidden();
     // ind = props.allColumns.findIndex((column)=> column.Header === 'priceDivHigh');
     // props.allColumns[ind].toggleHidden();
@@ -223,10 +237,10 @@ const DropRecovery = (props) => {
       </div>
       {displayFlag && 
         <div> 
-          <button type="button" onClick={()=>searchDeepValue()}>Drop_recovery    </button>    
+          {/* <button type="button" onClick={()=>searchDeepValue()}>Drop_recovery    </button>     */}
           <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           <div color='yellow' > Start date (click gain on few stocks) </div>
-          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+          <DatePicker dateFormat="yyyy-LLL-dd" selected={props.dropStartDate} onChange={(date) => props.setDropStartDate(date)} /> 
             
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
@@ -238,4 +252,4 @@ const DropRecovery = (props) => {
   )
 }
 
-export default DropRecovery;
+export {DropRecoveryButtons, searchDeepValue}
