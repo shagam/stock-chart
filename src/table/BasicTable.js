@@ -254,6 +254,9 @@ export const BasicTable = (props) => {
 
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
       rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
+      if (LOG_FLAG)
+      console.log(sym,'to firebase deep:', rows[row_index].values.drop, 'recoverIndex:', rows[row_index].values.recoverWeek,
+      rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh)
 
     firebaseGainAdd (sym, updateDate, updateMili, splits,
       wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.GOOGCompare, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh);  // save in firestore
@@ -587,6 +590,7 @@ export const BasicTable = (props) => {
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray);  
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, dropCallBack, dropStartDate)
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
            }
         )
@@ -754,6 +758,12 @@ export const BasicTable = (props) => {
     rows[index].values.recoverWeek = recoverWeek;
     rows[index].values.dropDate = dropDate;
     rows[index].values.priceDivHigh = priceDivHigh;
+    if (LOG_FLAG) {
+      console.log(stockSymbol, 'old drop:', rows[index].values.drop, 'recoverIndx:', rows[index].values.recoverWeek,
+      'deep date/val:', rows[index].values.dropDate, rows[index].values.priceDivHigh)
+
+      console.log (stockSymbol, 'new drop:', drop, deepWeek, recoverWeek, dropDate, priceDivHigh)
+    }
   }
 
   // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"
