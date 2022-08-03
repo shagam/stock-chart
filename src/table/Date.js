@@ -3,7 +3,7 @@
 import {format} from "date-fns"
 
 
-const LOG = false;
+const LOG = true;
 
 const todayDate = () => {
   const date = new Date();
@@ -250,19 +250,19 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
       if (LOG)
-        console.log('found_: ', stockChartXValuesFunction[oldestIndx], 'search=', JSON.stringify(testDateArray), oldestIndx, sym);
+        console.log(sym, 'found_: ', stockChartXValuesFunction[oldestIndx], 'search=', JSON.stringify(testDateArray), 'index:', oldestIndx);
       return oldestIndx;
     }
 
     if (daysDiff === 0) {
       if (LOG)
-        console.log('found_0: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), searchIndex, sym);
+        console.log(sym, 'found_0: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), 'index:', searchIndex);
       return searchIndex;
     }
     if (daysDiff > 0) {
       if (daysDiff < 2) {
         if (LOG)
-          console.log('found+: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), searchIndex, sym);
+          console.log(sym, 'found+: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), 'index:', searchIndex);
         return searchIndex;
       }
 
