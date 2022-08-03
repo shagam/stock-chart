@@ -66,7 +66,7 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
         rows[row_index].values.GOOGCompare = p;
         const searcDate = year + '-' + mon + '-' + day;
-        console.log (sym, 'priceCompare alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
+        console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
         if (rows[row_index].values.googDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.googDate) }
       }

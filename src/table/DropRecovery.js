@@ -35,11 +35,12 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     const startDateArray = [startYear, startMon, startDay]
     var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol)  
-
     var highPriceBeforeDeep = 0;
     var highPriceBeforeDeepIndex = 0;
 
     var dropPrice = Number(stockChartYValues[startBeforeDropIndex]);
+    if (LOG_FLAG)
+      console.log (StockSymbol, 'startDate:', startDateArray, 'startIndex:', startBeforeDropIndex, 'dropPrice:', dropPrice)
     var dropIndex = -1;
     var dropDate = '';
     var highPriceAfterDeep = -1;
@@ -61,9 +62,9 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         }
       }
       if (LOG_FLAG) {
-        console.log (StockSymbol, ' startDate', stockChartXValues[startBeforeDropIndex], 
+        console.log (StockSymbol, 'startDate', stockChartXValues[startBeforeDropIndex], 
           'startPrice:', stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
-        console.log ('dropDate:', dropDate, 'dropPrice:', dropPrice, ' dropIndex:', dropIndex );
+        console.log (StockSymbol, 'dropDate:', dropDate, 'dropPrice:', dropPrice, ' dropIndex:', dropIndex );
       }
     }
 
@@ -99,12 +100,12 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         alert (`crash recovery symbol not found (${StockSymbol})`);
         return;
       } 
-      if (rows[index].values.drop === drop)
-        return;
+      // if (rows[index].values.drop === drop)
+      //   return;
 
       if (LOG_FLAG) {
-        console.log ('highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
-        console.log ('highPriceAfterDeep', highPriceAfterDeep, ' recoverIndex: ', recoverIndex);
+        console.log (StockSymbol, 'highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
+        console.log (StockSymbol, 'highPriceAfterDeep', highPriceAfterDeep, ' recoverIndex: ', recoverIndex);
       }
   
       recoverPeriod = dropIndex - recoverIndex;
@@ -129,11 +130,14 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       recoveryWeeks();
     }
     const priceDivHigh = Number((stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
-    console.log (StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', drop)
+    if (LOG_FLAG)
+      console.log (StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', drop)
     // fill columns in stock table
-    if (recoverPeriod === undefined)
-      alert (StockSymbol + ' recoverWeek undef')
+    // if (recoverPeriod === undefined)
+    //   alert (StockSymbol + ' recoverWeek undef')
     dropCallBack (StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
+    if (LOG_FLAG)
+      console.log (StockSymbol, 'deep:', drop, 'dropIndex:', dropIndex, 'recoverIndex:', recoverPeriod, 'dropDate', dropDate, 'drop:', priceDivHigh)
   }
 
 
