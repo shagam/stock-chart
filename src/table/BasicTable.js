@@ -494,7 +494,7 @@ export const BasicTable = (props) => {
               if (marketwatch)
                 marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack);
               else
-                GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json)
+                GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
               const updateMili = Date.now();
               const updateDate = getDate();
@@ -825,17 +825,15 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}>
-          <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch </div>
-          <div>  &nbsp;  <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div> 
-          <div>  &nbsp;  <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div> 
-          {true && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
+          {admin && <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch &nbsp;</div>}
+          {admin && <div> <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
+          {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
+          {admin && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
-          <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits </div>
-          &nbsp; &nbsp;
-          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market </div>
-          &nbsp; &nbsp;
+          {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp; &nbsp;</div>}     
+          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp; &nbsp;</div>      
           <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button> 
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
