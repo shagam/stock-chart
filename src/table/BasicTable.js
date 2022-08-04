@@ -411,7 +411,7 @@ export const BasicTable = (props) => {
                 stockChartYValuesFunction.push(yValue);
               }
 
-              // save last gain for compare and avoid dowble split compentation
+              // save last gain for compare and avoid dowble split compensation
               setLastGain (stockChartYValuesFunction[stockChartYValuesFunction.length - 1])
                 
               // collect compensation vars
@@ -431,11 +431,13 @@ export const BasicTable = (props) => {
                     continue;
                   }
                   // find max jump of split index
-                  if (chartIndex > 2 && chartIndex < stockChartXValuesFunction.length - 5) {
+                  if (chartIndex < stockChartXValuesFunction.length - 5) {
                     var maxJump = 1;
                     var maxJumpWeekNum = chartIndex;
                     const chartIndexOrg = chartIndex;
-                    for (var m = chartIndex - 4; m <  chartIndex + 5; m ++) {
+                    var m = chartIndex >= 4 ?  chartIndex - 4 : 0;
+                    const maxEnd = chartIndex + 5 < stockChartYValuesFunction.length - 2 ? chartIndex + 5 : stockChartYValuesFunction.length - 2
+                    for (; m <  chartIndex + 5; m ++) {
                       var jump_ = Math.abs (stockChartYValuesFunction[m] / stockChartYValuesFunction[m + 1]);
                       if (jump_ > maxJump) {
                         maxJump = jump_;
@@ -474,7 +476,7 @@ export const BasicTable = (props) => {
                     }
                   } else
                      if (LOG_SPLITS) console.log ('no compensation')
-                  // after compensation
+                  // print after compensation
                   var valuesAfter='';
                   for (var l = chartIndex - 3; l < chartIndex + 3; l++) {
                     valuesAfter += stockChartYValuesFunction[l] + ' '
