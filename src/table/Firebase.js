@@ -400,7 +400,7 @@ const Firebase = (props) => {
         }
       </div>
       <div  style =  {{ border: '2px solid green', display:'flex'}} > 
-        <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />
+        {props.admin && <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />}
       </div>
     </>
   )
