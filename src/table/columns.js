@@ -386,9 +386,9 @@ export const GROUPED_COLUMNS = [
     ]
   },
   {
-    Header: 'gain-compare',
-    Footer: 'gain-compare',
-    accessor: 'gain-compare',   
+    Header: 'verify',
+    Footer: 'verify',
+    accessor: 'verify',   
     columns: [
       {
         Header: 'alphaDate',
