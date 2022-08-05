@@ -321,7 +321,7 @@ export const Splits = (props) => {
             <tbody id="tableBodyId" {...getTableBodyProps()}>
               {
                 rows.map(row => {
-                  // {style: (row.GOOGCompare > 1.1 || row.GOOGCompare < 0.9) ? {background: red}}
+                  // {style: (row.verify_1 > 1.1 || row.verify_1 < 0.9) ? {background: red}}
                   prepareRow(row)
                   return (
                     <tr id='stock_row_id_'

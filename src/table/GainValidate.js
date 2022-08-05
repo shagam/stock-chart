@@ -25,7 +25,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
 
   const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
   if (row_index === -1) {
-    rows[row_index].values.GOOGCompare = -1;
+    rows[row_index].values.verify_1 = -1;
     return;
   }
 
@@ -34,7 +34,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
 
   const valiate_index = gain_validation_json.findIndex((dat)=> dat.symbol === symbol)
   if (valiate_index === -1) {
-    rows[row_index].values.GOOGCompare = -1;
+    rows[row_index].values.verify_1 = -1;
     if (LOG_FLAG)
       console.log ('GainValidate none', symbol, valiate_index);
     return;
@@ -85,7 +85,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
       rows[row_index].values.alphaDate = stockChartXValues[chartIndex];
     }
 
-    rows[row_index].values.GOOGCompare = p;
+    rows[row_index].values.verify_1 = p;
     return null; 
      //refreshCallBack (-1);
   } catch (e) { alert (e)}

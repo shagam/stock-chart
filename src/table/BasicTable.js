@@ -91,7 +91,7 @@ export const BasicTable = (props) => {
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
 
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, GOOGCompare, drop, recoverWeek, dropDate, priceDivHigh) => {
+  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, verify_1, drop, recoverWeek, dropDate, priceDivHigh) => {
     // read old entries
     if (drop === undefined)
       drop = -1;
@@ -100,11 +100,11 @@ export const BasicTable = (props) => {
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
-    if (GOOGCompare === undefined)
-      GOOGCompare = -1;
+    if (verify_1 === undefined)
+      verify_1 = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, GOOGCompare: GOOGCompare, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh})
+    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, verify_1: verify_1, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh})
     } catch (e) {console.log (e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
@@ -259,7 +259,7 @@ export const BasicTable = (props) => {
       rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh)
 
     firebaseGainAdd (sym, updateDate, updateMili, splits,
-      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.GOOGCompare, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh);  // save in firestore
+      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.verify_1, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh);  // save in firestore
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {
@@ -709,7 +709,7 @@ export const BasicTable = (props) => {
   )
 
   // swap first, and force others columns in group to follow
-  function toggleGoogCompareColumns ()  {
+  function toggleverify_1Columns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
     const isInvisible_ = allColumns[ind].isVisible;
     allColumns[ind].toggleHidden();
@@ -836,7 +836,7 @@ export const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp; &nbsp;</div>}     
           <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp; &nbsp;</div>      
-          <button type="button" className="CompareColumns" onClick={()=>toggleGoogCompareColumns()}>googCompareColumns </button> 
+          <button type="button" className="CompareColumns" onClick={()=>toggleverify_1Columns()}>verify_1Columns </button> 
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
           &nbsp; &nbsp;   
@@ -896,7 +896,7 @@ export const BasicTable = (props) => {
       <tbody id="tableBodyId" {...getTableBodyProps()}>
         {
           rows.map(row => {
-            // {style: (row.GOOGCompare > 1.1 || row.GOOGCompare < 0.9) ? {background: red}}
+            // {style: (row.verify_1 > 1.1 || row.verify_1 < 0.9) ? {background: red}}
             prepareRow(row)
             return (
               <tr id='stock_row_id'

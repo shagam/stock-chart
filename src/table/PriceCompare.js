@@ -51,6 +51,7 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
 
     axios.get (corsUrl)
     .then ((result) => {
+      console.log (result.data)
       // console.log ("Price Compare", getDate(), year, mon, day,
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
@@ -64,14 +65,14 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
         
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
-        rows[row_index].values.GOOGCompare = p;
+        rows[row_index].values.verify_1 = p;
         const searcDate = year + '-' + mon + '-' + day;
         console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
         if (rows[row_index].values.googDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.googDate) }
       }
       else
-        rows[row_index].values.GOOGCompare = -1;
+        rows[row_index].values.verify_1 = -1;
     })
     .catch ((err) => {
       console.log(err)
