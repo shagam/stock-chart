@@ -10,7 +10,7 @@ const LOG = false;
   //  getDate} from './Date'
 
 
-export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack) {
+export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd) {
   
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;
@@ -67,18 +67,21 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
         var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
         rows[row_index].values.verify_1 = p;
         rows[row_index].values.verifyUpdateMili = Date.now();
-        
+
         const searcDate = year + '-' + mon + '-' + day;
         console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
         if (rows[row_index].values.googDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.googDate) }
       }
-      else
+      else {
         rows[row_index].values.verify_1 = -1;
+        rows[row_index].values.verifyUpdateMili = Date.now();
+      }
     })
     .catch ((err) => {
       console.log(err)
     })
+    firebaseGainAdd(sym);
     refreshCallBack();
 }
 

@@ -93,24 +93,28 @@ export const BasicTable = (props) => {
 
   const firebaseGainAdd = async (symbol) => {
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+    if (row_index === -1) {
+      console.log (symbol, 'missing symbol')
+      return;
+    }
 
     if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > 20 * 1000) {
-      console.log ('Abort firebase fain update, missing gain')
+      console.log (symbol, 'Abort firebase gain update, missing gain')
       return; // write only if fresh gain info
     }
 
     if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > 20 * 1000){
-      console.log (symbol, 'Abort firebase fain update, missing splits')
+      console.log (symbol, 'Abort firebase gain update, missing splits')
       return; // write only if fresh splits info
     }
 
     if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > 20 * 1000) {
-      console.log (symbol, 'Abort firebase fain update, missing verify')
+      console.log (symbol, 'Abort firebase gain update, missing verify')
       return; // write only if fresh verify info
     }
  
     if (rows[row_index].values.dropUpdateMili === undefined || Date.now() - rows[row_index].values.dropUpdateMili > 20 * 1000) {
-      console.log (symbol, 'Abort firebase fain update, missing drop')
+      console.log (symbol, 'Abort firebase gain update, missing drop')
       return; // write only if fresh drop info     
     }
 
@@ -518,7 +522,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack);
+                marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack, firebaseGainAdd);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
