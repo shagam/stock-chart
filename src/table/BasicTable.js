@@ -98,23 +98,24 @@ export const BasicTable = (props) => {
       console.log (symbol, 'missing symbol')
       return;
     }
+    const oneDayMili = 1000 * 3600 + 24;
 
-    if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > 20 * 1000) {
+    if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > oneDayMili) {
       console.log (symbol, 'Abort firebase gain update, missing gain')
       return; // write only if fresh gain info
     }
 
-    if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > 20 * 1000){
+    if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
       console.log (symbol, 'Abort firebase gain update, missing splits')
       return; // write only if fresh splits info
     }
 
-    if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > 20 * 1000) {
+    if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
       console.log (symbol, 'Abort firebase gain update, missing verify')
       return; // write only if fresh verify info
     }
  
-    if (rows[row_index].values.dropUpdateMili === undefined || Date.now() - rows[row_index].values.dropUpdateMili > 20 * 1000) {
+    if (rows[row_index].values.dropUpdateMili === undefined || Date.now() - rows[row_index].values.dropUpdateMili > oneDayMili) {
       console.log (symbol, 'Abort firebase gain update, missing drop')
       return; // write only if fresh drop info     
     }
