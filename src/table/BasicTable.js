@@ -13,7 +13,7 @@ import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
-import {marketwatchPriceCompare, polygon} from './PriceCompare'
+import {marketwatchGainValidate, polygon} from './PriceCompare'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -525,7 +525,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack, firebaseGainAdd);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack, firebaseGainAdd);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 

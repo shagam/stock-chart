@@ -10,7 +10,7 @@ const LOG = false;
   //  getDate} from './Date'
 
 
-export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd) {
+export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd) {
   
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;
