@@ -69,6 +69,7 @@ export const BasicTable = (props) => {
 
   const LOG_FLAG = false;
   const LOG_SPLITS = false;
+  const LOG_FIREBASE = true;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
@@ -137,7 +138,7 @@ export const BasicTable = (props) => {
       dropDate: rows[row_index].values.dropDate, priceDivHigh: rows[row_index].values.priceDivHigh})
     } catch (e) {console.log (symbol, e)}
     // delete old entries
-    if (gain.docs.length > 0 && LOG_FLAG)
+    if (gain.docs.length > 0 &&  LOG_FIREBASE)
       console.log (symbol, 'gain-send', gain.docs.length);
     for (let i = 0; i < gain.docs.length; i++) {
       //const id = gain.docs[i].id;
@@ -287,6 +288,8 @@ export const BasicTable = (props) => {
       if (LOG_FLAG)
       console.log(sym,'to firebase deep:', rows[row_index].values.drop, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh)
+    
+    console.log (sym, 'try firebase gain update, from gain')
 
     firebaseGainAdd (sym);  // save in firestore
   }

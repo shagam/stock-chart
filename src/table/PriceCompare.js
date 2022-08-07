@@ -75,12 +75,13 @@ export function marketwatchPriceCompare (sym, rows, stockChartXValuesFunction, s
       }
       else {
         rows[row_index].values.verify_1 = -1;
-        rows[row_index].values.verifyUpdateMili = Date.now();
+        rows[row_index].values.verifyUpdateMili = Date.now(); // update fresh info even if no data
       }
     })
     .catch ((err) => {
       console.log(err)
     })
+    console.log (sym, 'try firebase gain update from priceCompare')
     firebaseGainAdd(sym);
     refreshCallBack();
 }
