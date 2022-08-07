@@ -86,6 +86,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     }
 
     rows[row_index].values.verify_1 = p;
+    rows[row_index].values.verifyUpdateMili = Date.now();
     return null; 
      //refreshCallBack (-1);
   } catch (e) { alert (e)}

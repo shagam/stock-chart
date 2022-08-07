@@ -91,21 +91,47 @@ export const BasicTable = (props) => {
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
 
-  const firebaseGainAdd = async (symbol, updateDate, updateMili, splits, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, verify_1, drop, recoverWeek, dropDate, priceDivHigh) => {
-    // read old entries
-    if (drop === undefined)
-      drop = -1;
-    if (splits === undefined)
-      splits = '';
+  const firebaseGainAdd = async (symbol) => {
+    const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+
+    if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > 20 * 1000) {
+      console.log ('Abort firebase fain update, missing gain')
+      return; // write only if fresh gain info
+    }
+
+    if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > 20 * 1000){
+      console.log (symbol, 'Abort firebase fain update, missing splits')
+      return; // write only if fresh splits info
+    }
+
+    if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > 20 * 1000) {
+      console.log (symbol, 'Abort firebase fain update, missing verify')
+      return; // write only if fresh verify info
+    }
+ 
+    if (rows[row_index].values.dropUpdateMili === undefined || Date.now() - rows[row_index].values.dropUpdateMili > 20 * 1000) {
+      console.log (symbol, 'Abort firebase fain update, missing drop')
+      return; // write only if fresh drop info     
+    }
+
+
+    // read old entries, to avoid duplicates
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
-    if (verify_1 === undefined)
-      verify_1 = -1;
     // add new entry
     try {
-    await addDoc (gainRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, splits: splits, wk: wk, wk2: wk2, mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5, year10: year10, year20: year20, price: price, verify_1: verify_1, drop: drop, recoverWeek: recoverWeek, dropDate: dropDate, priceDivHigh: priceDivHigh})
-    } catch (e) {console.log (e)}
+    await addDoc (gainRef, {__symbol: rows[row_index].values.symbol,
+      _ip: localIpv4,
+      _updateDate: rows[row_index].values.gain_date,
+      _updateMili:rows[row_index].values.gain_mili,
+      splits: rows[row_index].values.splits_list, wk: rows[row_index].values.wk, wk2: rows[row_index].values.wk2,
+      mon: rows[row_index].values.mon, mon3: rows[row_index].values.mon3, mon6: rows[row_index].values.mon6,
+      year: rows[row_index].values.year, year2: rows[row_index].values.year2, year5: rows[row_index].values.year5,
+      year10: rows[row_index].values.year10, year20: rows[row_index].values.year20, price: rows[row_index].values.price,
+      verify_1: rows[row_index].values.verify_1, drop: rows[row_index].values.drop, recoverWeek: rows[row_index].values.recoverWeek,
+      dropDate: rows[row_index].values.dropDate, priceDivHigh: rows[row_index].values.priceDivHigh})
+    } catch (e) {console.log (symbol, e)}
     // delete old entries
     if (gain.docs.length > 0 && LOG_FLAG)
       console.log (symbol, 'gain-send', gain.docs.length);
@@ -208,7 +234,7 @@ export const BasicTable = (props) => {
         )
   }
 
-  const updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
+  const   updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
@@ -258,10 +284,8 @@ export const BasicTable = (props) => {
       console.log(sym,'to firebase deep:', rows[row_index].values.drop, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh)
 
-    firebaseGainAdd (sym, updateDate, updateMili, splits,
-      wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, rows[row_index].values.verify_1, rows[row_index].values.drop, rows[row_index].values.recoverWeek, rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh);  // save in firestore
+    firebaseGainAdd (sym);  // save in firestore
   }
-
   const updateTableInfo = (childData, updateDate, updateMili)  => {
     if (childData === null || childData === {} || childData["Exchange"] == null) {
       console.log ('ChildData missing');
@@ -760,6 +784,7 @@ export const BasicTable = (props) => {
     rows[index].values.recoverWeek = recoverWeek;
     rows[index].values.dropDate = dropDate;
     rows[index].values.priceDivHigh = priceDivHigh;
+    rows[index].values.dropUpdateMili = Date.now();
     if (LOG_FLAG) {
       console.log(stockSymbol, 'old drop:', rows[index].values.drop, 'recoverIndx:', rows[index].values.recoverWeek,
       'deep date/val:', rows[index].values.dropDate, rows[index].values.priceDivHigh)

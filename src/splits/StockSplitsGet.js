@@ -73,12 +73,14 @@ export const StockSplitsGet = (sym, rows) => {
           }
           rows[row_index].values.splits_list = stringify;
           rows[row_index].values.splits_calc = splitArray.length;
+          rows[row_index].values.splitsUpdateMili = Date.now();
         }
         else {
           if (LOG)
           console.log ("delete obsolete splits")
           rows[row_index].values.splits_list = '';
           rows[row_index].values.splits_calc = '';
+          rows[row_index].values.splitsUpdateMili = Date.now();
         }
 
       })
