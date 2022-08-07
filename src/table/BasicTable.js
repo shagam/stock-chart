@@ -13,7 +13,7 @@ import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
-import {marketwatchGainValidate, polygon} from './PriceCompare'
+import {marketwatchGainValidate, polygon} from './GainValidateMarketwatch'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
