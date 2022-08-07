@@ -46,20 +46,20 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
     //const symbol_ = props.rows[row_index].values.symbol;
     // weeks in year 365.25 / 7 = 52.17857  
     // weeks in month 365.25 / 12 / 7
-    const googDateSplit = [gain_validation_json[valiate_index].year, gain_validation_json[valiate_index].month + 1, gain_validation_json[valiate_index].day + 1];
-    const chartIndex = searchDateInArray (stockChartXValues, googDateSplit, symbol);
+    const verifyDateSplit = [gain_validation_json[valiate_index].year, gain_validation_json[valiate_index].month + 1, gain_validation_json[valiate_index].day + 1];
+    const chartIndex = searchDateInArray (stockChartXValues, verifyDateSplit, symbol);
 
     //var priceWeeks  = (gain_validation_json[valiate_index].year - 2000) * 52.17857 + gain_validation_json[valiate_index].month * 4.3452 + gain_validation_json[valiate_index].day / 7;
     // const todayWeeks = todayYear * 52.17857 + todayMon * 4.3452 + todayDay / 7;
     // var weeks = Math.round (todayWeeks - priceWeeks);
 
  
-    const googDate =  gain_validation_json[valiate_index].year + "-" + (Number(gain_validation_json[valiate_index].month) + 1) + "-" + 
+    const varifyDate =  gain_validation_json[valiate_index].year + "-" + (Number(gain_validation_json[valiate_index].month) + 1) + "-" + 
   gain_validation_json[valiate_index].day;
-    if (googDate === rows[row_index].values.googDate)
+    if (varifyDate === rows[row_index].values.verifyDate)
       return '';
 
-    rows[row_index].values.googDate = googDate;
+    rows[row_index].values.verifyDate = varifyDate;
 
     rows[row_index].values.googPrice = gain_validation_json[valiate_index].price
 

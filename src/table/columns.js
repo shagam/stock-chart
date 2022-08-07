@@ -150,9 +150,9 @@ export const COLUMNS = [
     accessor: 'alphaPrice'
   },
    {
-    Header: 'googDate',
-    Footer: 'googDate',    
-    accessor: 'googDate'
+    Header: 'verifyDate',
+    Footer: 'verifyDate',    
+    accessor: 'verifyDate'
   },
   {
     Header: 'googPrice',
@@ -401,9 +401,9 @@ export const GROUPED_COLUMNS = [
         accessor: 'alphaPrice'
       },
        {
-        Header: 'googDate',
-        Footer: 'googDate',    
-        accessor: 'googDate'
+        Header: 'verifyDate',
+        Footer: 'verifyDate',    
+        accessor: 'verifyDate'
       },
       {
         Header: 'googPrice',

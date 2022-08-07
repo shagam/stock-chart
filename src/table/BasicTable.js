@@ -709,8 +709,8 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","googDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
-      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","googDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
+      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
 
     } // "gap",
 
@@ -751,7 +751,7 @@ export const BasicTable = (props) => {
     if (isInvisible === isInvisible_)
       allColumns[ind].toggleHidden();
 
-    ind = allColumns.findIndex((column)=> column.Header === 'googDate');
+    ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
     isInvisible = allColumns[ind].isVisible;
     if (isInvisible === isInvisible_)
       allColumns[ind].toggleHidden();

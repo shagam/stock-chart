@@ -57,7 +57,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
       const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
 
       if (result.data !== '' || ! stockChartXValuesFunction) {
-        rows[row_index].values.googDate = oldestDate;
+        rows[row_index].values.verifyDate = oldestDate;
         rows[row_index].values.googPrice = result.data.open;
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
@@ -70,8 +70,8 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
         const searcDate = year + '-' + mon + '-' + day;
         console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
-        if (rows[row_index].values.googDate !== rows[row_index].values.alphaDate) {
-          console.log (rows[row_index].values.googDate) }
+        if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
+          console.log (rows[row_index].values.verifyDate) }
         console.log (sym, 'try firebase gain update from priceCompare')
         firebaseGainAdd(sym);
       }
