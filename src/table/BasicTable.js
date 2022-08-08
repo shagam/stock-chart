@@ -140,7 +140,7 @@ export const BasicTable = (props) => {
     } catch (e) {console.log (symbol, e)}
     // delete old entries
     if (gain.docs.length > 0 &&  LOG_FIREBASE)
-      console.log (symbol, 'gain-send', gain.docs.length);
+      console.log (symbol, 'gain-send stocks:', gain.docs.length);
     for (let i = 0; i < gain.docs.length; i++) {
       //const id = gain.docs[i].id;
       var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
@@ -362,7 +362,7 @@ export const BasicTable = (props) => {
     setChartSymbol (sym);
 
     localStorage.setItem ('chartSymbol', sym);
-    console.log(`symbol: ${sym}`); 
+    console.log('gain/chart symbol:', sym); 
     if (sym === '' || sym === undefined) {
       alert (`bug, chart sym vanished (${sym})`);
       return;
