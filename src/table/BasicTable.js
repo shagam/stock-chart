@@ -277,8 +277,8 @@ export const BasicTable = (props) => {
       const splits_calc = splits.length;
     }
     } catch (e) {console.log('Bad splits', e, sym.splits) }
-    saveTable();
-    props.refreshCallBack(-1); // force refresh
+    // saveTable();
+    // props.refreshCallBack(-1); // force refresh
     if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)
       setSplitsFlag('');
     else
@@ -626,10 +626,12 @@ export const BasicTable = (props) => {
               // console.log (splitArray);  
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, dropCallBack, dropStartDate)
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
-           }
+
+              saveTable();
+              props.refreshCallBack(-1);               
+            }
         )
-        saveTable();
-        props.refreshCallBack(-1); 
+
   }
   
 
@@ -771,7 +773,7 @@ export const BasicTable = (props) => {
     const stocksStr = JSON.stringify(stocks);
     if (stocks.length > 0) {
       localStorage.setItem ('stocks', stocksStr);
-      console.log ('stocks table saved, length:', stocks.length, rows.length)
+      console.log ('stocks saveTable, length:', stocks.length, rows.length)
     }
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
