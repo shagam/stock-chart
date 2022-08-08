@@ -136,7 +136,7 @@ export const BasicTable = (props) => {
       year: rows[row_index].values.year, year2: rows[row_index].values.year2, year5: rows[row_index].values.year5,
       year10: rows[row_index].values.year10, year20: rows[row_index].values.year20, price: rows[row_index].values.price,
       verify_1: rows[row_index].values.verify_1, drop: rows[row_index].values.drop, recoverWeek: rows[row_index].values.recoverWeek,
-      dropDate: rows[row_index].values.dropDate, priceDivHigh: rows[row_index].values.priceDivHigh})
+      deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
     } catch (e) {console.log (symbol, e)}
     // delete old entries
     if (gain.docs.length > 0 &&  LOG_FIREBASE)
@@ -288,7 +288,7 @@ export const BasicTable = (props) => {
       rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
       if (LOG_FLAG)
       console.log(sym,'to firebase deep:', rows[row_index].values.drop, 'recoverIndex:', rows[row_index].values.recoverWeek,
-      rows[row_index].values.dropDate, rows[row_index].values.priceDivHigh)
+      rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
     
     console.log (sym, 'try firebase gain update, from gain')
 
@@ -711,8 +711,8 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
-      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","dropDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","deepDate"]
+      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","deepDate"]
 
     } // "gap",
 
@@ -784,7 +784,7 @@ export const BasicTable = (props) => {
     setFlex (flex);
   }
 
-  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, dropDate, priceDivHigh) => {
+  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
     //console.log (stockSymbol, drop, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
     if (index === -1) {
@@ -794,14 +794,14 @@ export const BasicTable = (props) => {
     // rows[index]values.
     rows[index].values.drop = drop;
     rows[index].values.recoverWeek = recoverWeek;
-    rows[index].values.dropDate = dropDate;
+    rows[index].values.deepDate = deepDate;
     rows[index].values.priceDivHigh = priceDivHigh;
     rows[index].values.dropUpdateMili = Date.now();
     if (LOG_FLAG) {
       console.log(stockSymbol, 'old drop:', rows[index].values.drop, 'recoverIndx:', rows[index].values.recoverWeek,
-      'deep date/val:', rows[index].values.dropDate, rows[index].values.priceDivHigh)
+      'deep date/val:', rows[index].values.deepDate, rows[index].values.priceDivHigh)
 
-      console.log (stockSymbol, 'new drop:', drop, deepWeek, recoverWeek, dropDate, priceDivHigh)
+      console.log (stockSymbol, 'new deep:', drop, deepWeek, recoverWeek, deepDate, priceDivHigh)
     }
   }
 

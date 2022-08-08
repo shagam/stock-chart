@@ -256,7 +256,7 @@ const Firebase = (props) => {
         // dropRecover info
         props.rows[row_index].values.drop = gain_.drop;
         props.rows[row_index].values.recoverWeek = gain_.recoverWeek;
-        props.rows[row_index].values.dropDate = gain_.dropDate; 
+        props.rows[row_index].values.deepDate = gain_.deepDate; 
         // if (gain_.priceDivHigh !== undefined)
         props.rows[row_index].values.priceDivHigh = gain_.priceDivHigh;
       }

@@ -42,7 +42,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     if (LOG_FLAG)
       console.log (StockSymbol, 'startDate:', startDateArray, 'startIndex:', startBeforeDropIndex, 'dropPrice:', dropPrice)
     var dropIndex = -1;
-    var dropDate = '';
+    var deepDate = '';
     var highPriceAfterDeep = -1;
     var recoverIndex = -1;
     var recoverPeriod = -1
@@ -51,20 +51,20 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     // search for deepPrice after start date
     const deep = () => {
       dropPrice = Number(stockChartYValues[startBeforeDropIndex]);
-      dropDate = stockChartXValues[startBeforeDropIndex];
+      deepDate = stockChartXValues[startBeforeDropIndex];
       for (var i = startBeforeDropIndex; i > 0; i--) {
         // search for lowestPrrice 
         const price = Number(stockChartYValues[i] );
         if (dropPrice > price) {
           dropPrice = price;
           dropIndex = i;
-          dropDate = stockChartXValues[i];
+          deepDate = stockChartXValues[i];
         }
       }
       if (LOG_FLAG) {
         console.log (StockSymbol, 'startDate', stockChartXValues[startBeforeDropIndex], 
           'startPrice:', stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
-        console.log (StockSymbol, 'dropDate:', dropDate, 'dropPrice:', dropPrice, ' dropIndex:', dropIndex );
+        console.log (StockSymbol, 'deepDate:', deepDate, 'dropPrice:', dropPrice, ' dropIndex:', dropIndex );
       }
     }
 
@@ -135,9 +135,9 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     // fill columns in stock table
     // if (recoverPeriod === undefined)
     //   alert (StockSymbol + ' recoverWeek undef')
-    dropCallBack (StockSymbol, drop, dropIndex, recoverPeriod, dropDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
+    dropCallBack (StockSymbol, drop, dropIndex, recoverPeriod, deepDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
     if (LOG_FLAG)
-      console.log (StockSymbol, 'deep:', drop, 'dropIndex:', dropIndex, 'recoverIndex:', recoverPeriod, 'dropDate', dropDate, 'drop:', priceDivHigh)
+      console.log (StockSymbol, 'deep:', drop, 'dropIndex:', dropIndex, 'recoverIndex:', recoverPeriod, 'deepDate', deepDate, 'drop:', priceDivHigh)
   }
 
 
@@ -187,7 +187,7 @@ const DropRecoveryButtons = (props) => {
     props.allColumns[ind].toggleHidden();
     ind = props.allColumns.findIndex((column)=> column.Header === 'deepDate');
     if (ind === -1) {
-      alert ('column dropDate invalid')
+      alert ('column deepDate invalid')
       return
     }
     props.allColumns[ind].toggleHidden();
