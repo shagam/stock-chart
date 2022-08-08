@@ -235,7 +235,7 @@ const Firebase = (props) => {
         props.rows[row_index].values.sym = symbol; // added field
         props.rows[row_index].values.splits_list = gain_.splits;
         if (gain_.splits)
-          props.rows[row_index].values.splits_calc = JSON.parse(gain_.splits).length;
+          props.rows[row_index].values.splitsCount = JSON.parse(gain_.splits).length;
         props.rows[row_index].values.gain_mili = gain_.updateMili;
         props.rows[row_index].values.gain_date = gain_.updateDate;
     

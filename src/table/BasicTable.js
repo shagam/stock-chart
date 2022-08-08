@@ -274,7 +274,7 @@ export const BasicTable = (props) => {
         alert ('bad splits json ' + splits + ' ' + sym)
       }
       const splitsParse = JSON.parse(splits);
-      const splits_calc = splits.length;
+      const splitsCount = splits.length;
     }
     } catch (e) {console.log('Bad splits', e, sym.splits) }
     // saveTable();

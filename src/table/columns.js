@@ -130,7 +130,7 @@ export const COLUMNS = [
   {
     Header: 'splits',
     Footer: 'splits',    
-    accessor: 'splits_calc'
+    accessor: 'splitsCount'
   },
   {
     Header: 'gain_date',
@@ -348,7 +348,7 @@ export const GROUPED_COLUMNS = [
       {
         Header: 'splits',
         Footer: 'splits',    
-        accessor: 'splits_calc'
+        accessor: 'splitsCount'
       },
       {
         Header: 'gain_date',
