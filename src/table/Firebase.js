@@ -228,21 +228,40 @@ const Firebase = (props) => {
       var userQuery = query (props.gainRef, where('__symbol', '==', symbol));
       const gain = await getDocs(userQuery);
 
-      const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
-      if (rowIndex !== -1 && gain !== undefined && gain.docs.length > 0) {
+      const row_index = props.rows.findIndex((row)=> row.values.symbol === symbol);            
+      if (row_index !== -1 && gain !== undefined && gain.docs.length > 0) {
         const gain_ = gain.docs[0].data()
-        props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
 
-        props.rows[rowIndex].values.verify_1 = Number(gain_.verify_1);
+        props.rows[row_index].values.sym = symbol; // added field
+        props.rows[row_index].values.splits_list = gain_.splits;
+        props.rows[row_index].values.gain_mili = gain_.updateMili;
+        props.rows[row_index].values.gain_date = gain_.updateDate;
+    
+        props.rows[row_index].values.wk = gain_.wk; 
+        props.rows[row_index].values.wk2 = gain_.wk2; 
+        props.rows[row_index].values.mon = gain_.mon; 
+        props.rows[row_index].values.mon3 = gain_.mon3;
+        props.rows[row_index].values.mon6 = gain_.mon6; 
+        props.rows[row_index].values.year = gain_.year; 
+        props.rows[row_index].values.year2 = gain_.year2; 
+        props.rows[row_index].values.year5 = gain_.year5; 
+        props.rows[row_index].values.year10 = gain_.year10;
+        props.rows[row_index].values.year20 = gain_.year20;
+        props.rows[row_index].values.price = gain_.price;
+
+        // props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
+
+        props.rows[row_index].values.verify_1 = Number(gain_.verify_1);
 
         // dropRecover info
-        props.rows[rowIndex].values.drop = gain_.drop;
-        props.rows[rowIndex].values.recoverWeek = gain_.recoverWeek;
-        props.rows[rowIndex].values.dropDate = gain_.dropDate; 
-        if (gain_.priceDivHigh !== undefined)
-          props.rows[rowIndex].values.priceDivHigh = gain_.priceDivHigh;
+        props.rows[row_index].values.drop = gain_.drop;
+        props.rows[row_index].values.recoverWeek = gain_.recoverWeek;
+        props.rows[row_index].values.dropDate = gain_.dropDate; 
+        // if (gain_.priceDivHigh !== undefined)
+        props.rows[row_index].values.priceDivHigh = gain_.priceDivHigh;
       }
  
+      // delete duplicates except last one
       if (gain.docs.length > 0) {
         var latestIndex = 0;
         if (gain.docs.length > 1) {
@@ -327,6 +346,7 @@ const Firebase = (props) => {
       firebaseInfoGetOne((props.rows[i].values.symbol));
       firebaseGainGetOne((props.rows[i].values.symbol));
     }
+    console.log ('gain, info inserted in table')
     props.saveTable();
     props.refreshCallBack(-1);
     } catch (e) { console.log (e)}

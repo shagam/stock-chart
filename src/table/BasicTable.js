@@ -325,8 +325,8 @@ export const BasicTable = (props) => {
     if (rows[index].values.price !== undefined)
       rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
     
-    saveTable();
-    props.refreshCallBack(-1);
+    // saveTable();
+    // props.refreshCallBack(-1);
     childData.Address = '';   // Clear some data to decrese traffic
     childData.Description = '';
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
@@ -769,8 +769,10 @@ export const BasicTable = (props) => {
       stocks.push(rows[i].values);
     }
     const stocksStr = JSON.stringify(stocks);
-    if (stocks.length > 0)
+    if (stocks.length > 0) {
       localStorage.setItem ('stocks', stocksStr);
+      console.log ('stocks table saved, length:', stocks.length, rows.length)
+    }
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
