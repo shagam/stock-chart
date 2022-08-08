@@ -44,7 +44,7 @@ export const BasicTable = (props) => {
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
-  const [comparePriceDate, setComparePriceDate ] = useState(Number(-1));  // last entry by default
+  const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
   const [API_KEY, setAPI_KEY] = useState('');
   const [splitsFlag, setSplitsFlag] = useState('');
@@ -526,7 +526,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, comparePriceDate, props.refreshCallBack, firebaseGainAdd);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
@@ -864,10 +864,10 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}>
-          {admin && <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatch &nbsp;</div>}
-          {admin && <div> <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
+          {admin && <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
+          {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />}
+          {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
           {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
-          {admin && <GlobalFilter className="stock_button_class" filter={comparePriceDate} setFilter={setComparePriceDate} name='ComparePriceDate +/-'  />}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
