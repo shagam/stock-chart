@@ -40,12 +40,12 @@ The guessed splits column, can be shown by checkbox <splits_list<   Purple chart
 
 DROP-RECOVERY
 
-The tool analyses stock drop during market drop.  Shows drop-level, and stock recovery duration in weeks t. The tool is valid only during an overall bull market, with some bear periods. The tool is limited to 22 years because of AlphaVantage data.
+The tool analyses stock deep during market deep.  Shows deep-level, and stock recovery duration in weeks t. The tool is valid only during an overall bull market, with some bear periods. The tool is limited to 22 years because of AlphaVantage data.
 Steps:
 * Open Drop-Recovery pan, by pressing <Drop-Recovery> check box.
-* Choose a date range of the drop (Or big correction)
+* Choose a date range of the deep (Or big correction)
 * The tool turns on 3 related columns: 
-o Drop: how low did the stock drop from highest price before drop.  (0.7 means a drop of 30%)
+o Drop: how low did the stock deep from highest price before deep.  (0.7 means a deep of 30%)
 o Recover week: how many weeks it took to reach the pre correction stock price.
 o Drop bottom week date approximation.
 * Press the <gain> button of some stocks.
@@ -53,8 +53,8 @@ o Drop bottom week date approximation.
 o Search for the lowest price within selected dates
 o Search for highest price before correction
 o Search for recovery duration in weeks
-o Calculate drop, and recovery duration.
-Default dates are:  2008 market drop, and Mar 2020 market drop. 
+o Calculate deep, and recovery duration.
+Default dates are:  2008 market deep, and Mar 2020 market deep. 
 Press <swap_2008_or_2020>  to swap between 2  correction periods.
 
 SHOW-STOCKS-COMPARED-WITH-QQQ
@@ -86,12 +86,12 @@ PE(TTM): PE of Trailing 12 Months
 PEG:  PE / Yearly earnings growth
 Div:  Yearly dividend per stock / Atock _price   (0.05  means the that for $100 worth of stocks, you get $1)
 BETA:  fluctuation compared with other stocks of same industry  (0.8 means less volatile than average)
-EV/EBITDA:  Enterprise value (Current Market Cap + Debt + Minority Interest + preferred shares – cash) / (earnings before interest, taxes, depreciation, and amortization) 
+EV/EBITDA:  Enterprise value (Current Market Cap + Debt + Minority Interest + preferred shares ï¿½ cash) / (earnings before interest, taxes, depreciation, and amortization)ï¿½
 EV/Revenue: Enterprise value / yearly revenue
 PriceToBook:  Company valuation / Book value.
 Target: Analysts expected price / actual price
 
-Wk (Week), 2wk, Mon (Month),  2Mon, 6Mon, yr(year), ….  Latest_price / old price (week /mon/year)  Ago) 
+Wk (Week), 2wk, Mon (Month),  2Mon, 6Mon, yr(year), ï¿½.  Latest_price / old price (week /mon/year)  Ago) 
 
 Splits:  a flag that shows if splits were calculated. To see raw gain data (turn off <calc_splits> to prevent splits guessing), (Calculated when <gain> pressed) 
 Split_list:  guessed split list of splits or reversed splits.  (Assumed because of sudden value change)
@@ -99,8 +99,8 @@ Split_list:  guessed split list of splits or reversed splits.  (Assumed because 
 Info_date:  Date when info retrieved (<info> button pressed)
 Gain_date: Date when gain retrieved (<gain> button pressed)
 
-Drop:  Lowest price during drop / highest price before drop (Calculated when <gain> pressed)
-RecoveyWeek: number of weeks to reach price before drop
+Drop:  Lowest price during deep / highest price before deep (Calculated when <gain> pressed)
+RecoveyWeek: number of weeks to reach price before deep
 Drop_date: estimated week of lowest price.
 
 PLATFORMS

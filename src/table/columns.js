@@ -167,7 +167,7 @@ export const COLUMNS = [
   {
     Header: 'deep',
     Footer: 'deep',    
-    accessor: 'drop'
+    accessor: 'deep'
   },
   {
     Header: 'recoverWeek',
@@ -358,14 +358,14 @@ export const GROUPED_COLUMNS = [
     ]
   },
   {
-    Header: 'drop-recover',
-    Footer: 'drop-recover',
-    accessor: 'drop-recover',   
+    Header: 'deep-recover',
+    Footer: 'deep-recover',
+    accessor: 'deep-recover',   
     columns: [
       {
         Header: 'deep',
         Footer: 'deep',    
-        accessor: 'drop'
+        accessor: 'deep'
       },
       {
         Header: 'recoverWeek',

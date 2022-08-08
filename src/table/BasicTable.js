@@ -64,7 +64,7 @@ export const BasicTable = (props) => {
   const [searchDeepDate, setSearchDeepDate] = useState()
   const [lastgain, setLastGain] = useState() 
 
-  const [dropStartDate, setDropStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
+  const [deepStartDate, setDropStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
 
 
   const LOG_FLAG = false;
@@ -115,9 +115,9 @@ export const BasicTable = (props) => {
       return; // write only if fresh verify info
     }
  
-    if (rows[row_index].values.dropUpdateMili === undefined || Date.now() - rows[row_index].values.dropUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing drop')
-      return; // write only if fresh drop info     
+    if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
+      console.log (symbol, 'Abort firebase gain update, missing deep')
+      return; // write only if fresh deep info     
     }
 
 
@@ -135,7 +135,7 @@ export const BasicTable = (props) => {
       mon: rows[row_index].values.mon, mon3: rows[row_index].values.mon3, mon6: rows[row_index].values.mon6,
       year: rows[row_index].values.year, year2: rows[row_index].values.year2, year5: rows[row_index].values.year5,
       year10: rows[row_index].values.year10, year20: rows[row_index].values.year20, price: rows[row_index].values.price,
-      verify_1: rows[row_index].values.verify_1, drop: rows[row_index].values.drop, recoverWeek: rows[row_index].values.recoverWeek,
+      verify_1: rows[row_index].values.verify_1, deep: rows[row_index].values.deep, recoverWeek: rows[row_index].values.recoverWeek,
       deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
     } catch (e) {console.log (symbol, e)}
     // delete old entries
@@ -287,7 +287,7 @@ export const BasicTable = (props) => {
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
       rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
       if (LOG_FLAG)
-      console.log(sym,'to firebase deep:', rows[row_index].values.drop, 'recoverIndex:', rows[row_index].values.recoverWeek,
+      console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
     
     console.log (sym, 'try firebase gain update, from gain')
@@ -624,7 +624,7 @@ export const BasicTable = (props) => {
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray);  
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, dropCallBack, dropStartDate)
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate)
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
 
               saveTable();
@@ -711,8 +711,8 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","deepDate"]
-      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","drop","recoverWeek","deepDate"]
+      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
+      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","googPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
 
     } // "gap",
 
@@ -784,24 +784,24 @@ export const BasicTable = (props) => {
     setFlex (flex);
   }
 
-  const dropCallBack = (stockSymbol, drop, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
-    //console.log (stockSymbol, drop, deepWeek, recoverWeek);
+  const deepCallBack = (stockSymbol, deep, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
+    //console.log (stockSymbol, deep, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
     if (index === -1) {
       alert (`crash recovery symbol not found (${stockSymbol})`);
       return;
     } 
     // rows[index]values.
-    rows[index].values.drop = drop;
+    rows[index].values.deep = deep;
     rows[index].values.recoverWeek = recoverWeek;
     rows[index].values.deepDate = deepDate;
     rows[index].values.priceDivHigh = priceDivHigh;
-    rows[index].values.dropUpdateMili = Date.now();
+    rows[index].values.deepUpdateMili = Date.now();
     if (LOG_FLAG) {
-      console.log(stockSymbol, 'old drop:', rows[index].values.drop, 'recoverIndx:', rows[index].values.recoverWeek,
+      console.log(stockSymbol, 'old deep:', rows[index].values.deep, 'recoverIndx:', rows[index].values.recoverWeek,
       'deep date/val:', rows[index].values.deepDate, rows[index].values.priceDivHigh)
 
-      console.log (stockSymbol, 'new deep:', drop, deepWeek, recoverWeek, deepDate, priceDivHigh)
+      console.log (stockSymbol, 'new deep:', deep, deepWeek, recoverWeek, deepDate, priceDivHigh)
     }
   }
 
@@ -963,7 +963,7 @@ export const BasicTable = (props) => {
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
-        <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} dropStartDate={dropStartDate} setDropStartDate={setDropStartDate} />
+        <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
       <div id='manual_id'>    
         {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
