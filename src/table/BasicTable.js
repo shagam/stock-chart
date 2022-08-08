@@ -753,10 +753,10 @@ export const BasicTable = (props) => {
     if (isInvisible === isInvisible_)
       allColumns[ind].toggleHidden();
 
-    ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
-    isInvisible = allColumns[ind].isVisible;
-    if (isInvisible === isInvisible_)
-      allColumns[ind].toggleHidden();
+    // ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
+    // isInvisible = allColumns[ind].isVisible;
+    // if (isInvisible === isInvisible_)
+    //   allColumns[ind].toggleHidden();
 
     ind = allColumns.findIndex((column)=> column.Header === 'verifyPrice');
     isInvisible = allColumns[ind].isVisible;
