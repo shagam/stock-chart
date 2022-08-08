@@ -12,7 +12,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, dropCallBack, startDate) {
  
-  const LOG_FLAG = true;
+  const LOG_FLAG = false;
 
     if (StockSymbol === undefined || StockSymbol === '' || stockChartXValues === undefined) {
       alert ('Need to click <gain> for a symbol before calc drop recover')

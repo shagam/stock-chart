@@ -35,6 +35,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   }
 
   const limitTxt = entry === stockChartXValuesFunction.length - 1 ? '' :  'limit: ' + (stockChartXValuesFunction.length - 1)
+  if (LOG)
   console.log (sym, 'compare price, requesIndx=', requestedEntry, 'entry=', entry, limitTxt)
 
 
@@ -51,6 +52,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
     axios.get (corsUrl)
     .then ((result) => {
+      if (LOG)
       console.log (result.data)
       // console.log ("Price Compare", getDate(), year, mon, day,
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
@@ -69,9 +71,11 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
+        if (LOG)
         console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
+        if (LOG)  
         console.log (sym, 'try firebase gain update from priceCompare')
         firebaseGainAdd(sym);
       }
