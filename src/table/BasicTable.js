@@ -743,7 +743,7 @@ export const BasicTable = (props) => {
   )
 
   // swap first, and force others columns in group to follow
-  function toggleverify_1Columns ()  {
+  function toggleverifyColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
     const isInvisible_ = allColumns[ind].isVisible;
     allColumns[ind].toggleHidden();
@@ -873,7 +873,7 @@ export const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp; &nbsp;</div>}     
           <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp; &nbsp;</div>      
-          <button type="button" className="CompareColumns" onClick={()=>toggleverify_1Columns()}>verify_1Columns </button> 
+          <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>verifyColumns </button> 
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
           &nbsp; &nbsp;   
