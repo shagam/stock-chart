@@ -155,9 +155,9 @@ export const COLUMNS = [
     accessor: 'verifyDate'
   },
   {
-    Header: 'googPrice',
-    Footer: 'googPrice',
-    accessor: 'googPrice',
+    Header: 'verifyPrice',
+    Footer: 'verifyPrice',
+    accessor: 'verifyPrice',
   },
   {
     Header: 'verify_1',
@@ -406,9 +406,9 @@ export const GROUPED_COLUMNS = [
         accessor: 'verifyDate'
       },
       {
-        Header: 'googPrice',
-        Footer: 'googPrice',
-        accessor: 'googPrice',
+        Header: 'verifyPrice',
+        Footer: 'verifyPrice',
+        accessor: 'verifyPrice',
       },
       {
         Header: 'verify_1',

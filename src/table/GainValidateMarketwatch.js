@@ -60,19 +60,19 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
       if (result.data !== '' || ! stockChartXValuesFunction) {
         rows[row_index].values.verifyDate = oldestDate;
-        rows[row_index].values.googPrice = result.data.open;
+        rows[row_index].values.verifyPrice = result.data.open;
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
         rows[row_index].values.alphaDate = stockChartXValuesFunction[entry];
         rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
         
-        var p = (rows[row_index].values.alphaPrice / rows[row_index].values.googPrice).toFixed(2)
+        var p = (rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
         rows[row_index].values.verify_1 = p;
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
         if (LOG)
-        console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.googPrice, 'ratio=', p);
+        console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.verifyPrice, 'ratio=', p);
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
         if (LOG)  

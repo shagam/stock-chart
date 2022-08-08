@@ -61,7 +61,7 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
 
     rows[row_index].values.verifyDate = varifyDate;
 
-    rows[row_index].values.googPrice = gain_validation_json[valiate_index].price
+    rows[row_index].values.verifyPrice = gain_validation_json[valiate_index].price
 
     var p = -1;
     var AlphaHistoricPrice = -1
