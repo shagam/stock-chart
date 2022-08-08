@@ -427,6 +427,7 @@ export const GROUPED_COLUMNS = [
         Header: 'symbol',
         Footer: 'symbol',    
         accessor: 'sym',
+        sticky: 'right'
       },
 
     ]
