@@ -80,7 +80,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
         if (LOG)  
-        console.log (sym, 'try firebase gain update from priceCompare')
+          console.log (sym, 'try firebase gain update from priceCompare')
         firebaseGainAdd(sym);
       }
       else {
