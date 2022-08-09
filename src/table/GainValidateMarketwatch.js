@@ -70,8 +70,8 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.alphaDate = stockChartXValuesFunction[entry];
         rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
         
-        var p = (rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
-        rows[row_index].values.verify_1 = p;
+        var p = Number(rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
+        rows[row_index].values.verify_1 = Number(p);
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
