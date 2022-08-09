@@ -795,10 +795,10 @@ export const BasicTable = (props) => {
       return;
     } 
     // rows[index]values.
-    rows[index].values.deep = deep;
-    rows[index].values.recoverWeek = recoverWeek;
+    rows[index].values.deep = Number(deep);
+    rows[index].values.recoverWeek = Number(recoverWeek);
     rows[index].values.deepDate = deepDate;
-    rows[index].values.priceDivHigh = priceDivHigh;
+    rows[index].values.priceDivHigh = Number(priceDivHigh);
     rows[index].values.deepUpdateMili = Date.now();
     if (LOG_FLAG) {
       console.log(stockSymbol, 'old deep:', rows[index].values.deep, 'recoverIndx:', rows[index].values.recoverWeek,
