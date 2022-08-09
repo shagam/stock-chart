@@ -48,7 +48,7 @@ export const StockSplitsGet = (sym, rows) => {
 
         if (rows[row_index].values.splits_list !== undefined) {
           // console.log ('old split: ', rows[row_index].values.splitsCount)
-          if (LOG)
+          if (LOG && rows[row_index].values.splits_list)
           console.dir (rows[row_index].values.splits_list);
         }
 
@@ -67,9 +67,8 @@ export const StockSplitsGet = (sym, rows) => {
         if (splitArray.length > 0) {
           // console.dir (splitArray);
           const stringify = JSON.stringify(splitArray)
-          if (LOG) {
+          if (LOG && rows[row_index].values.splits_list !== stringify) {
           console.log ("old splits", rows[row_index].values.splits_list)
-          console.log ("new splits", stringify)
           }
           rows[row_index].values.splits_list = stringify;
           rows[row_index].values.splitsCount = splitArray.length;

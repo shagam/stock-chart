@@ -137,15 +137,20 @@ export const BasicTable = (props) => {
       year10: rows[row_index].values.year10, year20: rows[row_index].values.year20, price: rows[row_index].values.price,
       verify_1: rows[row_index].values.verify_1, deep: rows[row_index].values.deep, recoverWeek: rows[row_index].values.recoverWeek,
       deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
+      if (LOG_FIREBASE)
+        console.log (symbol, 'gain-send to firebase');
+      saveTable();
+      props.refreshCallBack(-1); 
     } catch (e) {console.log (symbol, e)}
+
     // delete old entries
-    if (gain.docs.length > 0 &&  LOG_FIREBASE)
-      console.log (symbol, 'gain-send stocks:', gain.docs.length);
+    // if (LOG_FIREBASE && gain.docs.length > 0)
+    //   console.log (symbol, 'delete old entries:', gain.docs.length)  
     for (let i = 0; i < gain.docs.length; i++) {
       //const id = gain.docs[i].id;
       var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
       await deleteDoc (gainDoc);    
-    }               
+    }           
   }
 
   // send stock info to firebase, delete old and add new one (No woory about format change)
@@ -463,7 +468,7 @@ export const BasicTable = (props) => {
                     continue;
                   }
                   // find max jump of split index
-                  if (chartIndex < stockChartXValuesFunction.length - 5) {
+                  if (true || chartIndex < stockChartXValuesFunction.length - 5) {
                     var maxJump = 1;
                     var maxJumpWeekNum = chartIndex;
                     const chartIndexOrg = chartIndex;
@@ -496,7 +501,7 @@ export const BasicTable = (props) => {
 
                   }
                   else
-                    console.log ('wrong index', chartIndex, stockChartXValuesFunction.length)
+                    console.log ('wrong dislay index, split close to end', chartIndex, stockChartXValuesFunction.length)
                   splitsIndexArray.push (chartIndex);
 
                   // compensation calc
@@ -627,8 +632,8 @@ export const BasicTable = (props) => {
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate)
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
 
-              saveTable();
-              props.refreshCallBack(-1);               
+              // saveTable();
+              // props.refreshCallBack(-1);               
             }
         )
 
