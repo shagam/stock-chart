@@ -92,7 +92,7 @@ export const BasicTable = (props) => {
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
 
-  const firebaseGainAdd = async (symbol) => {
+  const firebaseGainAdd = async (symbol, src) => {
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index === -1) {
       console.log (symbol, 'missing symbol')
@@ -101,22 +101,22 @@ export const BasicTable = (props) => {
     const oneDayMili = 1000 * 3600 + 24;
 
     if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing gain')
+      console.log (symbol, 'Abort firebase gain update, missing gain. src:', src)
       return; // write only if fresh gain info
     }
 
     if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
-      console.log (symbol, 'Abort firebase gain update, missing splits')
+      console.log (symbol, 'Abort firebase gain update, missing splits. src:', src)
       return; // write only if fresh splits info
     }
 
     if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing verify')
+      console.log (symbol, 'Abort firebase gain update, missing verify. src:', src)
       return; // write only if fresh verify info
     }
  
     if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing deep')
+      console.log (symbol, 'Abort firebase gain update, missing deep. src:', src)
       return; // write only if fresh deep info     
     }
 
@@ -138,7 +138,7 @@ export const BasicTable = (props) => {
       verify_1: rows[row_index].values.verify_1, deep: rows[row_index].values.deep, recoverWeek: rows[row_index].values.recoverWeek,
       deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
       if (LOG_FIREBASE)
-        console.log (symbol, 'gain-send to firebase');
+        console.log (symbol, 'gain-send to firebase. src:', src);
       saveTable();
       props.refreshCallBack(-1); 
     } catch (e) {console.log (symbol, e)}
@@ -291,13 +291,11 @@ export const BasicTable = (props) => {
 
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
       rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
-      if (LOG_FLAG)
+    if (LOG_FLAG)
       console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
-    
-    console.log (sym, 'try firebase gain update, from gain')
 
-    firebaseGainAdd (sym);  // save in firestore
+    firebaseGainAdd (sym, 'gain');  // save in firestore
   }
   const updateTableInfo = (childData, updateDate, updateMili)  => {
     if (childData === null || childData === {} || childData["Exchange"] == null) {

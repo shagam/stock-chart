@@ -79,9 +79,8 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.verifyPrice, 'ratio=', p);
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
-        if (LOG)  
-          console.log (sym, 'try firebase gain update from priceCompare')
-        firebaseGainAdd(sym);
+          
+        firebaseGainAdd(sym, 'validate');
       }
       else {
         rows[row_index].values.verify_1 = -1;
