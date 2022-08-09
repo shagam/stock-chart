@@ -290,7 +290,7 @@ export const BasicTable = (props) => {
       setSplitsFlag('(splits)');
 
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
-      rows[row_index].values.target = (rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2)
+      rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
       if (LOG_FLAG)
       console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
@@ -328,7 +328,7 @@ export const BasicTable = (props) => {
     rows[index].values.info_date = updateDate;
 
     if (rows[index].values.price !== undefined)
-      rows[index].values.target = (rows[index].values.target_raw/rows[index].values.price).toFixed(2)
+      rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
     
     // saveTable();
     // props.refreshCallBack(-1);
