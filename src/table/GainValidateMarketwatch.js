@@ -8,6 +8,10 @@ const LOG = false;
   // todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack,
   //  compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, 
   //  getDate} from './Date'
+  // var url = "https://bigcharts.marketwatch.com/historical/default.asp?symb=" + req.query.stock
+  // url += '&closeDate=' + req.query.mon
+  // url += '%2F' + req.query.day
+  // url += '%2F' + req.query.year
 
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd) {
