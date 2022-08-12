@@ -89,9 +89,14 @@ export const BasicTable = (props) => {
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
  
+  function refreshByToggleColumns ()  {
+    var ind = allColumns.findIndex((column)=> column.Header === 'symbol');
+    const isInvisible_ = allColumns[ind].isVisible;
+    allColumns[ind].toggleHidden();  // toggle twice force render refresh
+    allColumns[ind].toggleHidden();
+  }
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
-
   const firebaseGainAdd = async (symbol, src) => {
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index === -1) {
@@ -140,7 +145,6 @@ export const BasicTable = (props) => {
       if (LOG_FIREBASE)
         console.log (symbol, 'gain-send to firebase. src:', src);
       saveTable();
-      props.refreshCallBack(-1); 
     } catch (e) {console.log (symbol, e)}
 
     // delete old entries
@@ -282,8 +286,6 @@ export const BasicTable = (props) => {
       const splitsCount = splits.length;
     }
     } catch (e) {console.log('Bad splits', e, sym.splits) }
-    // saveTable();
-    // props.refreshCallBack(-1); // force refresh
     if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)
       setSplitsFlag('');
     else
@@ -328,8 +330,6 @@ export const BasicTable = (props) => {
     if (rows[index].values.price !== undefined)
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
     
-    // saveTable();
-    // props.refreshCallBack(-1);
     childData.Address = '';   // Clear some data to decrese traffic
     childData.Description = '';
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
@@ -628,10 +628,7 @@ export const BasicTable = (props) => {
               // if (LOG_SPLITS)
               // console.log (splitArray);  
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate)
-              updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);        
-
-              // saveTable();
-              // props.refreshCallBack(-1);               
+              updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
             }
         )
 
@@ -647,7 +644,6 @@ export const BasicTable = (props) => {
       } 
       rows.splice(index, 1);
       saveTable();
-      props.refreshCallBack(-1); // force refresh
       // window.location.reload();
     } catch (e) {console.log(e)}
   }
@@ -694,7 +690,6 @@ export const BasicTable = (props) => {
     rows.push (newStock);
     //firebaseGetAndFill();      
     saveTable();
-    props.refreshCallBack(-1);
     //window.location.reload();
     event.target.reset(); // clear input field
   }
@@ -781,7 +776,9 @@ export const BasicTable = (props) => {
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
+    refreshByToggleColumns ();
   }
+
   const flexCallBack = (flex) => {
     console.log (flex);
     setFlex (flex);
@@ -960,8 +957,6 @@ export const BasicTable = (props) => {
      {/* {console.log (chartSymbol)} */}
 
       <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
-
-      {/* { marketwatch && <GainValidate symbol ={chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gain_validation_json={gain_validation_json} refreshCallBack = {props.refreshCallBack} />} */}
       
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
