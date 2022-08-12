@@ -138,7 +138,6 @@ const Firebase = (props) => {
           // if need to add
           addSym (symbol, gain.docs[i].data());
           props.saveTable();
-          props.refreshCallBack();
         }
         else {
           const dat = gain.docs[i].data();
@@ -350,7 +349,6 @@ const Firebase = (props) => {
     }
     console.log ('gain, info inserted in table')
     props.saveTable();
-    props.refreshCallBack(-1);
     } catch (e) { console.log (e)}
   }
 

@@ -115,7 +115,6 @@ export const Splits = (props) => {
       } 
       rows.splice(rowIndex, 1);
       saveTable();
-      props.refreshCallBack(-1);
   }
 
   const insertSplitInStockTable = (sym) => {
@@ -174,7 +173,6 @@ export const Splits = (props) => {
       insetInSplitsTable(split);
     }
     saveTable();
-    props.refreshCallBack(-1);
   }
   
 
@@ -190,7 +188,6 @@ export const Splits = (props) => {
       // build array for specific stock
     }
     props.saveTable();
-    props.refreshCallBack(-1);
   }
 
 
