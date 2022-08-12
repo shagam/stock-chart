@@ -103,7 +103,7 @@ export const Splits = (props) => {
     // try {
       await addDoc (splitRef, {_key: key, _symbol: split.symbol, jump: split.jump, year: split.year, month: split.month, day: split.day, _ip: props.localIpv4})
     // } catch (e) {console.log (e)}
-    saveTable();
+    saveTable(split.symbol);
   }
 
 
@@ -114,7 +114,7 @@ export const Splits = (props) => {
         return;
       } 
       rows.splice(rowIndex, 1);
-      saveTable();
+      saveTable(symbol);
   }
 
   const insertSplitInStockTable = (sym) => {

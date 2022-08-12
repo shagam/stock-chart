@@ -137,7 +137,7 @@ const Firebase = (props) => {
         if (add_flag) {
           // if need to add
           addSym (symbol, gain.docs[i].data());
-          props.saveTable();
+          props.saveTable(symbol);
         }
         else {
           const dat = gain.docs[i].data();
@@ -197,8 +197,9 @@ const Firebase = (props) => {
           }
       }
       else
-        window.location.reload();
-      const ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
+        // window.location.reload();
+        props.saveTable('all');
+      // const ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
       // if (add_flag)
       //   props.allColumns[ind].toggleHidden();
         
@@ -348,7 +349,7 @@ const Firebase = (props) => {
       firebaseGainGetOne((props.rows[i].values.symbol));
     }
     console.log ('gain, info inserted in table')
-    props.saveTable();
+    props.saveTable('any');
     } catch (e) { console.log (e)}
   }
 

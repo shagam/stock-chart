@@ -144,7 +144,7 @@ export const BasicTable = (props) => {
       deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
       if (LOG_FIREBASE)
         console.log (symbol, 'gain-send to firebase. src:', src);
-      saveTable();
+      saveTable(symbol);
     } catch (e) {console.log (symbol, e)}
 
     // delete old entries
@@ -643,7 +643,7 @@ export const BasicTable = (props) => {
         return;
       } 
       rows.splice(index, 1);
-      saveTable();
+      saveTable(symbol);
       // window.location.reload();
     } catch (e) {console.log(e)}
   }
@@ -689,7 +689,7 @@ export const BasicTable = (props) => {
     
     rows.push (newStock);
     //firebaseGetAndFill();      
-    saveTable();
+    saveTable(newStock.values.symbol);
     //window.location.reload();
     event.target.reset(); // clear input field
   }
@@ -762,7 +762,7 @@ export const BasicTable = (props) => {
       allColumns[ind].toggleHidden();
   }
 
-  const saveTable = () => {
+  const saveTable = (sym) => {
     const stocks = [];
     for (let i = 0; i < rows.length; i++) {
       rows[i].values.sym = rows[i].values.symbol;  //align added field sym
@@ -771,7 +771,7 @@ export const BasicTable = (props) => {
     const stocksStr = JSON.stringify(stocks);
     if (stocks.length > 0) {
       localStorage.setItem ('stocks', stocksStr);
-      console.log ('stocks saveTable, length:', stocks.length, rows.length)
+      console.log ('stocks saveTable, length:', stocks.length, sym)
     }
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
