@@ -261,6 +261,8 @@ const Firebase = (props) => {
         props.rows[row_index].values.deepDate = gain_.deepDate; 
         // if (gain_.priceDivHigh !== undefined)
         props.rows[row_index].values.priceDivHigh = gain_.priceDivHigh;
+        if (row_index === props.rows.length - 1) // if last one call save refresh
+          props.saveTable('any');  
       }
  
       // delete duplicates except last one
@@ -341,15 +343,15 @@ const Firebase = (props) => {
     var ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
     // props.allColumns[ind].toggleHidden();
 
-    // fill missing data
+    // fill missing data get from firebase 
     for (let i = 0; i < props.rows.length; i++) {
-      // get from firebase 
-
       firebaseInfoGetOne((props.rows[i].values.symbol));
       firebaseGainGetOne((props.rows[i].values.symbol));
     }
     console.log ('gain, info inserted in table')
-    props.saveTable('any');
+    // setTimeout(function() {
+    //   props.saveTable('any');    
+    // }, 500);
     } catch (e) { console.log (e)}
   }
 
