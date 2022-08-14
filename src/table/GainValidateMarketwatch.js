@@ -62,7 +62,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym);
       if (result.data.err)
-        console.log (sym, result.data.err) 
+        console.log (sym, result.data.err, corsUrl) 
 
       if ((result.data !== '' || ! stockChartXValuesFunction) && ! result.data.err) {
         rows[row_index].values.verifyDate = oldestDate;
