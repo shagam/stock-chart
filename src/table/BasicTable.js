@@ -227,7 +227,7 @@ export const BasicTable = (props) => {
             }
         )
         .then(
-            function (data) {
+            setError() && function (data) {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   if (dataStr === '{}') {
@@ -248,6 +248,7 @@ export const BasicTable = (props) => {
                 }
             }
         )
+    
   }
 
   const   updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
@@ -778,6 +779,7 @@ export const BasicTable = (props) => {
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
     refreshByToggleColumns ();
+    setError('')
   }
 
   const flexCallBack = (flex) => {
@@ -857,7 +859,7 @@ export const BasicTable = (props) => {
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
-          {error && <div>  &nbsp; &nbsp; {error} </div>}
+          {error && <div>  &nbsp; &nbsp; {getDate() + ' ' + error} </div>}
         </div>
 
         {/* <script type="text/javascript"> 
