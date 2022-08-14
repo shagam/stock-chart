@@ -49,9 +49,9 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   const mon = oldestDateComponets[1]
   const day = oldestDateComponets[2]
 
-    var corsUrl = "http://84.95.84.236:5000/price?stock=" + sym +
-    // var corsUrl = "http://localhost:5000/price?stock=" + sym +
-     "&year=" + year + "&mon=" + mon + "&day=" + day;
+    var corsUrl = "http://84.95.84.236:5000/price?stock=" + sym
+    //corsUrl = "http://localhost:5000/price?stock=" + sym
+     + "&year=" + year + "&mon=" + mon + "&day=" + day;
     // console.log (getDate(), corsUrl)
 
     axios.get (corsUrl)
@@ -60,9 +60,11 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
       console.log (result.data)
       // console.log ("Price Compare", getDate(), year, mon, day,
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
-      const row_index = rows.findIndex((row)=> row.values.symbol === sym); 
+      const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+      if (result.data.err)
+        console.log (sym, result.data.err) 
 
-      if (result.data !== '' || ! stockChartXValuesFunction) {
+      if ((result.data !== '' || ! stockChartXValuesFunction) && ! result.data.err) {
         rows[row_index].values.verifyDate = oldestDate;
         rows[row_index].values.verifyPrice = result.data.open;
 
