@@ -14,7 +14,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows) => {
+export const StockSplitsGet = (sym, rows, setError) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = false; 
@@ -32,7 +32,7 @@ export const StockSplitsGet = (sym, rows) => {
       .then ((result) => {
         if (result.status !== 200)
           return;
-
+        setError('');
         const splits = result.data;
         if (splits.length > 0 && LOG) {
           console.log (getDate(), sym, result.data, result.status, corsUrl)
@@ -84,7 +84,8 @@ export const StockSplitsGet = (sym, rows) => {
 
       })
       .catch ((err) => {
-        console.log(err)
+        setError(err.message + '   url: ' + corsUrl)
+        console.log(err, corsUrl)
       })
     
         

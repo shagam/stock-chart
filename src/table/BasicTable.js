@@ -40,6 +40,7 @@ import StockSplitsGet from '../splits/StockSplitsGet'
 
 export const BasicTable = (props) => {
 
+  const [error, setError] = useState()
   const [chartSymbol, setChartSymbol] = useState("");
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -372,7 +373,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    StockSplitsGet(sym, rows, saveTable, props.refreshCallBack)
+    StockSplitsGet(sym, rows, setError)
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -856,6 +857,7 @@ export const BasicTable = (props) => {
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
+          {error && <div>  &nbsp; &nbsp; {error} </div>}
         </div>
 
         {/* <script type="text/javascript"> 
