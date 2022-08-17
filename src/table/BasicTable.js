@@ -14,6 +14,7 @@ import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {marketwatchGainValidate, polygon} from './GainValidateMarketwatch'
+import CustomSelect from './CustomSelect'
 
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -55,6 +56,8 @@ export const BasicTable = (props) => {
   const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
 
+  const homeUrl = '84.95.84.236'
+  const [corsServer, setCorsServer] = useState (homeUrl);
   const gainRef = collection(db, "stock-gain_")
   const infoRef = collection(db, "stock-info")
 
@@ -531,7 +534,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd, corsServer);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
@@ -817,6 +820,15 @@ export const BasicTable = (props) => {
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
 
+  const corsServerOptions = [
+    {label: homeUrl, value: homeUrl},
+    {label: 'localhost', value: 'localhost'},
+  ]
+
+  function corsServerChange (val) {
+    setCorsServer (val.value);
+  }
+
   const freq = 'week'
   const limit = 1500;
   function polygonCompare () {
@@ -868,7 +880,8 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}>
-          {admin && <div> <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
+          {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />}
+          {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
           {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />}
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
           {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
