@@ -76,7 +76,7 @@ export const BasicTable = (props) => {
   const LOG_FLAG = false;
   const LOG_SPLITS = false;
   const LOG_FIREBASE = true;
-  const LOG_alpha = FaPlusSquare;
+  const LOG_alpha = false;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
