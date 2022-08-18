@@ -15,7 +15,7 @@ import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {marketwatchGainValidate, polygon} from './GainValidateMarketwatch'
 import CustomSelect from './CustomSelect'
-
+import InputNumber from './InputNumber'
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
 import Manual from '../manual/Manual'
@@ -895,7 +895,8 @@ export const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
-          {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />}
+          {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
+          {/* <InputNumber init={verifyDateOffset} title='VerifyOffset' setNumber={setVerifyDateOffset}/> */}
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
           {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
         </div>
