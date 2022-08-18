@@ -38,6 +38,7 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from './IpContext';
 
 import StockSplitsGet from '../splits/StockSplitsGet'
+import '../GlobalVar'
 
 export const BasicTable = (props) => {
 
@@ -48,7 +49,8 @@ export const BasicTable = (props) => {
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   const [apiKeyIndex, setApiKeyIndex] = useState (0);
-  const [API_KEY, setAPI_KEY] = useState('');
+  var aleph = localStorage.getItem('alphaVantage');
+  const [API_KEY, setAPI_KEY] = useState(aleph);
   const [splitsFlag, setSplitsFlag] = useState('');
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
@@ -74,6 +76,7 @@ export const BasicTable = (props) => {
   const LOG_FLAG = false;
   const LOG_SPLITS = false;
   const LOG_FIREBASE = true;
+  const LOG_alpha = FaPlusSquare;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
@@ -181,19 +184,26 @@ export const BasicTable = (props) => {
   }
 
   const alphaCallBack = (key) => {
+    if (LOG_alpha)
+      console.log ('setState new', key, 'old state', API_KEY) 
     setAPI_KEY (key);
-  }      
+  } 
+
   const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
   const getAPI_KEY = () => {
-    if (API_KEY !== '')
+    if (API_KEY !== undefined && API_KEY !== '') {
+      if (LOG_alpha)
+        console.log ('get state', API_KEY)
       return API_KEY;
+    }
 
-    const key = localStorage.getItem("alphaVantage");
-    if (key !== undefined && key !== '')
-      setAPI_KEY (key);
+    // const key = localStorage.getItem("alphaVantage");
+    // if (key !== undefined && key !== '') {
+    //   setAPI_KEY (key);
 
     setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
-    //console.log ('API_KEY: ' + API_KEY_array[apiKeyIndex]); 
+    if (LOG_alpha)
+      console.log ('array get API_KEY: ' + API_KEY_array[apiKeyIndex]); 
     return API_KEY_array[apiKeyIndex];
   }
 
@@ -827,6 +837,9 @@ export const BasicTable = (props) => {
 
   function corsServerChange (val) {
     setCorsServer (val.value);
+    const serverOld = global.server
+    global.server = val.value
+    console.log (serverOld, global.server)
   }
 
   const freq = 'week'
@@ -880,7 +893,7 @@ export const BasicTable = (props) => {
         </script>  */}
 
         <div id="buttons_id" style={{display:'flex'}}>
-          {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />}
+          {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
           {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />}
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
