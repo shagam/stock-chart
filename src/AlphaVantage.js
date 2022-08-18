@@ -14,7 +14,7 @@ const  AlphaVantage = (props) => {
         // const fieldValue = event.target.value;
 
         // console.log(event);
-        console.log(event.target.name + " " + event.target.value.toUpperCase());
+        console.log('alpha key change', event.target.name + " " + event.target.value.toUpperCase());
         setAlpha (event.target.value.toUpperCase());
     }
 
@@ -22,7 +22,7 @@ const  AlphaVantage = (props) => {
         event.preventDefault();
 
         console.log("final data is: ", alpha);
-        localStorage.setItem('alphaVantage', `${alpha}`);
+        localStorage.setItem('alphaVantage', alpha);
         props.alphaCallBack (alpha);
     }
 
