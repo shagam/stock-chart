@@ -17,7 +17,7 @@ const  Config = (props) => {
 
   const flexSubmit = (event) => {
       event.preventDefault();
-      localStorage.setItem('flex', `${flex}`);
+      localStorage.setItem('flex', flex);
       props.flexCallBack (flex);
   }
 
