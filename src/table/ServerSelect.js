@@ -20,10 +20,8 @@ export const ServerSelect = (props) => {
   }
 
   return (
-    <>
     <div style={{display: 'flex'}}>
     {props.title} &nbsp;&nbsp;
-
     {props.options.map((servSel) => (
       <div key={servSel} >
         <input style={{zoom: '150%'}}  type='radio' name="radioValues" value={servSel} 
@@ -32,7 +30,6 @@ export const ServerSelect = (props) => {
       </div>
     ))}
   </div>
-  </>
   )
 }
 
