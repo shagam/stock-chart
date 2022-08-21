@@ -8,60 +8,30 @@ export const ServerSelect = (props) => {
   // props.title
   // props.options
 
-  const servList = ['localhost', '84.95.84.236', 'stocks.dinagold.org'];
   const [serv, setServ] = useState (props.options[0])
 
   const LOG = false;
-  function onChangeInput (value) {
-    props.setCategory(value.value)
-    // console.log (value)
-  }
-  function exec (e) {
-    setServ (e.target.value);
-    props.setServ (e.target.value);
+
+  function exec (s) {
+    setServ (s);
+    props.setServ (s);
     if (LOG)
-      console.log('server:', e.target.value)
+      console.log('server:', s)
   }
-  // const categoryOptions = [
-  //   {label: 'all', value: 'all'},
-  //   {label: 'Landscape', value: 'Landscape'},
-  //   {label: 'Structure', value: 'Structure'},
-  //   {label: 'Nature', value: 'Nature'},
-  //   {label: 'Fabrique', value: 'Fabrique'},
-  //   {label: 'Other', value: 'Other'},
-  // ]
 
-  // getIndex of default category
-  // function searchInitialCategory (cat) {
-  //   for (var i = 0; i < categoryOptions.length; i++) {
-  //     if (categoryOptions[i].value === cat)
-  //       return i;
-  //   }
-  //   return 0; // default is all
-  // }
-
-//  const { isAndroid } = MobileContext();
-
-  var style = {};
-  // if (! isAndroid)
-  //   style = {display: 'flex', color: 'red',
-  //  zoom: '150%'}
-  // else
-  //   style = {display: 'flex'}
-
-  const oldMode = false;
   return (
     <>
-  <div> {props.title};&nbsp;;&nbsp;</div>
-    {<div style={{display: 'flex'}}>
-    {/* category: &nbsp;&nbsp;&nbsp; */}
+    <div style={{display: 'flex'}}>
+    {props.title} &nbsp;&nbsp;
+
     {props.options.map((servSel) => (
-      <div key = {servSel}  style={style} >
-        <input  type='radio' style={{zoom: '150%', display: 'flex'}} name={props.title} value={servSel} checked={serv === servSel} onChange={exec} /> 
-        <div>{servSel}&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      <div key={servSel} >
+        <input style={{zoom: '150%'}}  type='radio' name="radioValues" value={servSel} 
+        checked={serv === servSel} onChange={(e) => exec (e.target.value)}  />
+         <b>&nbsp;{servSel}&nbsp;&nbsp;</b> 
       </div>
     ))}
-  </div>}
+  </div>
   </>
   )
 }
