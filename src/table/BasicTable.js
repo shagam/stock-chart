@@ -39,11 +39,14 @@ import IpContext from './IpContext';
 
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
+import { ServerSelect } from './ServerSelect'
 
 export const BasicTable = (props) => {
 
   const [error, setError] = useState()
   const [chartSymbol, setChartSymbol] = useState("");
+  const servList = ['localhost', '84.95.84.236', 'stocks.dinagold.org'];
+  const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
@@ -58,8 +61,8 @@ export const BasicTable = (props) => {
   const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
 
-  const homeUrl = '84.95.84.236'
-  const [corsServer, setCorsServer] = useState (homeUrl);
+  // const homeUrl = '84.95.84.236'
+  // const [corsServer, setCorsServer] = useState (homeUrl);
   const gainRef = collection(db, "stock-gain_")
   const infoRef = collection(db, "stock-info")
 
@@ -181,6 +184,11 @@ export const BasicTable = (props) => {
       var infoDoc = doc(db, "stock-info", info.docs[i].id);
       await deleteDoc (infoDoc);    
     }
+  }
+
+  function setSer (serv) {
+    console.log (serv)
+    setServSelect('setServer:', serv)
   }
 
   const alphaCallBack = (key) => {
@@ -379,6 +387,8 @@ export const BasicTable = (props) => {
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
 
+    console.log ('server', servSelect)
+
     localStorage.setItem ('chartSymbol', sym);
     console.log('gain/chart symbol:', sym); 
     if (sym === '' || sym === undefined) {
@@ -387,7 +397,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    StockSplitsGet(sym, rows, setError)
+    StockSplitsGet(sym, rows, setError, servSelect)
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -544,7 +554,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd, corsServer);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd, servSelect);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
@@ -830,18 +840,6 @@ export const BasicTable = (props) => {
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
 
-  const corsServerOptions = [
-    {label: homeUrl, value: homeUrl},
-    {label: 'localhost', value: 'localhost'},
-  ]
-
-  function corsServerChange (val) {
-    setCorsServer (val.value);
-    const serverOld = global.server
-    global.server = val.value
-    console.log (serverOld, global.server)
-  }
-
   const freq = 'week'
   const limit = 1500;
   function polygonCompare () {
@@ -899,6 +897,7 @@ export const BasicTable = (props) => {
           {/* <InputNumber init={verifyDateOffset} title='VerifyOffset' setNumber={setVerifyDateOffset}/> */}
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
           {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
+          {true && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>

@@ -14,7 +14,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = false; 
@@ -22,7 +22,7 @@ export const StockSplitsGet = (sym, rows, setError) => {
       console.log ('req params ', sym, rows.length)
 
       //  url = 'www.google.com'
-      var corsUrl = "http://84.95.84.236:5000/splits?stock=" + sym;
+      var corsUrl = "http://" + corsServer + ":5000/splits?stock=" + sym;
       // corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;
       // corsUrl = "http://localhost:5000/splits?stock=" + sym;
       // corsUrl = "https://www.stocksplithistory.com/?symbol=" + sym;
