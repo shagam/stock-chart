@@ -187,8 +187,8 @@ export const BasicTable = (props) => {
   }
 
   function setSer (serv) {
-    console.log (serv)
-    setServSelect('setServer:', serv)
+    console.log ('setServer new:', serv, 'old:', servSelect)
+    setServSelect(serv)
   }
 
   const alphaCallBack = (key) => {
@@ -224,6 +224,7 @@ export const BasicTable = (props) => {
     // monthsBackTest ();
     // daysBackTest()
     //callBack ("tableCallBack");
+    console.log ('server', servSelect, 'openMarket', openMarketFlag)
     localStorage.setItem ('infoSymbol', symbol); 
     console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
     if (symbol === '' || symbol === undefined) {
