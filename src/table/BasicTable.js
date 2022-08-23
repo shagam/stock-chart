@@ -224,7 +224,7 @@ export const BasicTable = (props) => {
     // monthsBackTest ();
     // daysBackTest()
     //callBack ("tableCallBack");
-    console.log ('server', servSelect, 'openMarket', openMarketFlag)
+
     localStorage.setItem ('infoSymbol', symbol); 
     console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
     if (symbol === '' || symbol === undefined) {
@@ -742,28 +742,28 @@ export const BasicTable = (props) => {
 
   },
   useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
-   (hooks) => {
-    hooks.visibleColumns.push((columns) => {
-      return [
-        {
-          id: 'selection',
-          Header: ({getToggleAllRowsSelectedProps}) => (
-            null
-            // <CheckBox {...getToggleAllRowsSelectedProps()} />
-          ),
-          Cell: ({row}) => (
-            //<CheckBox {...row.getToggleRowSelectedProps()} />
-            <div style={{display:'flex'}}>   
-            <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-            <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
-            <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-            </div> 
-          )
-        }, 
-        ...columns
-      ]
-    })
-  }  
+  //  (hooks) => {
+  //   hooks.visibleColumns.push((columns) => {
+  //     return [
+  //       {
+  //         id: 'selection',
+  //         Header: ({getToggleAllRowsSelectedProps}) => (
+  //           null
+  //           // <CheckBox {...getToggleAllRowsSelectedProps()} />
+  //         ),
+  //         Cell: ({row}) => (
+  //           //<CheckBox {...row.getToggleRowSelectedProps()} />
+  //           <div style={{display:'flex'}}>   
+  //           <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+  //           <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
+  //           <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+  //           </div> 
+  //         )
+  //       }, 
+  //       ...columns
+  //     ]
+  //   })
+  // }  
   )
 
   // swap first, and force others columns in group to follow
@@ -857,6 +857,10 @@ export const BasicTable = (props) => {
       alert ('Need to click gain for a symbol')
   }
 
+  function test () {
+    console.log ('checkBox (marketwatch):', marketwatch, 'radio(servSelect):', servSelect, 'number(flex):', flex)
+  }
+
   function marketStackCompare () {
     if (chartSymbol) {
       const date1Split = monthsBack(todayDateSplit(), 24);
@@ -899,6 +903,7 @@ export const BasicTable = (props) => {
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
           {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
           {true && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
+          <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
@@ -972,11 +977,11 @@ export const BasicTable = (props) => {
                 {row.cells.map((cell) => {
                   return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                 })}
-                  {/* <div style={{display:'flex'}}>
+                  <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                     <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
                     <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-                  </div> */}
+                  </div>
               </tr>
             )
           })}
