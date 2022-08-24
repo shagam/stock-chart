@@ -45,7 +45,7 @@ export const BasicTable = (props) => {
 
   const [error, setError] = useState()
   const [chartSymbol, setChartSymbol] = useState("");
-  const servList = ['localhost', '84.95.84.236', 'stocks.dinagold.org'];
+  const servList = ['serv.dinagold.org', 'localhost', '84.95.84.236'];
   const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
