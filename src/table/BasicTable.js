@@ -15,7 +15,7 @@ import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {marketwatchGainValidate, polygon} from './GainValidateMarketwatch'
 import CustomSelect from './CustomSelect'
-import InputNumber from './InputNumber'
+import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
 import Manual from '../manual/Manual'
@@ -67,7 +67,8 @@ export const BasicTable = (props) => {
   const infoRef = collection(db, "stock-info")
 
   const ipStockRef = collection(db, "stockIp")
-  const [flex, setFlex] = useState ();
+    var flexConfig = localStorage.getItem('flex');
+  const [flex, setFlex] = useState (flexConfig);
 
   const [columnHideFlag, setColumnHideFlag] = useState(true);
   const [searchDeepDate, setSearchDeepDate] = useState()
@@ -387,8 +388,6 @@ export const BasicTable = (props) => {
 
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
-
-    console.log ('server', servSelect)
 
     localStorage.setItem ('chartSymbol', sym);
     console.log('gain/chart symbol:', sym); 
@@ -807,7 +806,7 @@ export const BasicTable = (props) => {
   }
 
   const flexCallBack = (flex) => {
-    console.log (flex);
+    // console.log (flex);
     setFlex (flex);
   }
 
@@ -858,7 +857,7 @@ export const BasicTable = (props) => {
   }
 
   function test () {
-    console.log ('checkBox (marketwatch):', marketwatch, 'radio(servSelect):', servSelect, 'number(flex):', flex)
+    console.log ('checkBox (marketwatch):', marketwatch, 'radio(servSelect):', servSelect, 'number(flex):', flex, 'verifyOffset:', verifyDateOffset)
   }
 
   function marketStackCompare () {
@@ -899,7 +898,8 @@ export const BasicTable = (props) => {
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
           {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
-          {/* <InputNumber init={verifyDateOffset} title='VerifyOffset' setNumber={setVerifyDateOffset}/> */}
+          <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
+
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
           {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
           {true && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
