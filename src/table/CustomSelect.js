@@ -1,6 +1,11 @@
 // import React from 'react'
 // import Select from 'react-select'
 
+// const corsServerOptions = [
+//   {label: 'all', value: 'all'},
+//   {label: 'Landscape', value: 'Landscape'},
+//   {label: 'Structure', value: 'Structure'},
+// ]
 
 // // const selectStyle= {
 // //   width: '100%',
@@ -23,6 +28,7 @@
 //     </div>
 //   )
 // }
+
 
 
 // export default CustomSelect;
