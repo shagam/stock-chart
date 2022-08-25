@@ -170,10 +170,12 @@ export const MarketstackApi = (props) => {
             /> marketStack
       </div>
       {displayFlag &&
-       <div>
+       <div style={{display:'flex'}} >
+          <button type="button" onClick={()=>searchSplits(props.symbol)}>marketStackSearch </button>
+          &nbsp;&nbsp;
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
 
-          <button type="button" onClick={()=>searchSplits(props.symbol)}>marketStackSearch </button>
+
         </div> 
       }     
     </>
