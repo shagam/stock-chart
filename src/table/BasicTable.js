@@ -904,7 +904,7 @@ export const BasicTable = (props) => {
           <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
 
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
-          {admin && <div> <button onClick={marketStackCompare} > marketStack </button> &nbsp; </div>} 
+
           {true && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
           <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>
         </div>
