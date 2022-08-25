@@ -237,7 +237,8 @@ export const BasicTable = (props) => {
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
     //console.log(`Overview info (${symbol})`);
-    console.log (`${API_Call}`);            
+    console.log (`${API_Call}`); 
+    setError();           
     fetch(API_Call)
         .then(
             function(response) {
@@ -250,7 +251,7 @@ export const BasicTable = (props) => {
             }
         )
         .then(
-            setError() && function (data) {
+            function (data) {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
                   if (dataStr === '{}') {
