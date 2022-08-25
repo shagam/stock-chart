@@ -84,16 +84,18 @@ export function AuthProvider ({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
-    if (user) console.log(user.email);
-      if (user && (user.email === 'eli.shagam@gmail.com' 
-      || user.email === 'j321111@gmail.com' 
-      || user.email === 'dina146@bezeqint.net')) {
-        setAdmin(true)
-        console.log ('setAdmin', ) 
+      if (user) {
+        if (user.email === 'eli.shagam@gmail.com' 
+        || user.email === 'j321111@gmail.com' 
+        || user.email === 'dina146@bezeqint.net') {
+          setAdmin(true)
+          console.log ('logged email:', user.email, ' (admin)', ) 
+        }
+        else {
+          setAdmin(false)
+          console.log('logged email:', user.email);
+        }
       }
-      // else
-      //   setAdmin(false)
-
       setLoading(false)
     })
     return unsubscribe;
