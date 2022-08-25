@@ -45,7 +45,7 @@ export const BasicTable = (props) => {
 
   const [error, setError] = useState()
   const [chartSymbol, setChartSymbol] = useState("");
-  const servList = ['serv.dinagold.org', 'localhost', '84.95.84.236'];
+  const servList = ['84.95.84.236', 'serv.dinagold.org', 'localhost', ];
   const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -227,7 +227,7 @@ export const BasicTable = (props) => {
     //callBack ("tableCallBack");
 
     localStorage.setItem ('infoSymbol', symbol); 
-    console.log(`symbol: ${symbol} infoSymbol: ${symbol}`);
+    console.log(symbol, '(info)');
     if (symbol === '' || symbol === undefined) {
       alert (`bug, info sym vanished (${symbol})`); 
       return;
@@ -237,7 +237,8 @@ export const BasicTable = (props) => {
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
     //console.log(`Overview info (${symbol})`);
-    console.log (`${API_Call}`); 
+    if (LOG_FLAG)
+      console.log (`${API_Call}`);
     setError();           
     fetch(API_Call)
         .then(
@@ -269,6 +270,7 @@ export const BasicTable = (props) => {
                   const updateDate = getDate();
                   updateTableInfo (data, updateDate, updateMili);
                   setStockInfo (JSON.stringify(data));
+                  saveTable(symbol);
                 }
             }
         )
@@ -391,7 +393,7 @@ export const BasicTable = (props) => {
     setChartSymbol (sym);
 
     localStorage.setItem ('chartSymbol', sym);
-    console.log('gain/chart symbol:', sym); 
+    console.log(sym, 'gain/chart (symbol)'); 
     if (sym === '' || sym === undefined) {
       alert (`bug, chart sym vanished (${sym})`);
       return;
@@ -797,7 +799,7 @@ export const BasicTable = (props) => {
     const stocksStr = JSON.stringify(stocks);
     if (stocks.length > 0) {
       localStorage.setItem ('stocks', stocksStr);
-      console.log ('stocks saveTable, length:', stocks.length, sym)
+      console.log (sym, 'stocks saveTable, length:', stocks.length)
     }
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
