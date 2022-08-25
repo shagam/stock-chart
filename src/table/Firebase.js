@@ -375,11 +375,13 @@ const Firebase = (props) => {
     }
 
     var list = "";
-    for (let i = 0; i < all.length; i++)
+    var alertList = "";
+    for (let i = 0; i < all.length; i++) {
+      alertList +=  all[i] + "   ";
       list += all[i] + "\n";
-       
+    }
     // alert (all.toString() + "  (" + all.length + ")"); 
-    alert ("(" + all.length + ")\n" + all.toString()); 
+    alert ("(" + all.length + ")\n" + alertList); 
     console.log ("(" + all.length + ")\n" + list); 
     //gain.docs.map(doc) =>  
     //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
