@@ -14,15 +14,22 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError, corsServer) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer, ssl) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = false; 
       if (LOG)
       console.log ('req params ', sym, rows.length)
 
-      //  url = 'www.google.com'
-      var corsUrl = "http://" + corsServer + ":5000/splits?stock=" + sym;
+      var corsUrl;
+      // if (corsServer === 'serv.dinagold.org')
+      if (ssl)
+        corsUrl = "https://";
+      else
+        corsUrl = "http://"
+
+      corsUrl += corsServer+ ":5000/splits?stock=" + sym;
+
       // corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;
       // corsUrl = "http://localhost:5000/splits?stock=" + sym;
       // corsUrl = "https://www.stocksplithistory.com/?symbol=" + sym;

@@ -46,6 +46,7 @@ export const BasicTable = (props) => {
   const [error, setError] = useState()
   const [chartSymbol, setChartSymbol] = useState("");
   const servList = ['84.95.84.236', 'serv.dinagold.org', 'localhost', ];
+  const [ssl, setSsl] = useState(false)
   const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -400,7 +401,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    StockSplitsGet(sym, rows, setError, servSelect)
+    StockSplitsGet(sym, rows, setError, servSelect, ssl)
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -557,7 +558,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd, servSelect);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd, servSelect, ssl);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
@@ -842,6 +843,7 @@ export const BasicTable = (props) => {
   const openMaretFlagChange = () => {setOpenMaretFlag ( ! openMarketFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
   const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
+  const sslToggle = () => {setSsl (! ssl)}
 
   const freq = 'week'
   const limit = 1500;
@@ -905,7 +907,9 @@ export const BasicTable = (props) => {
 
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
+          <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>
           {true && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
+
           <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>
         </div>
 

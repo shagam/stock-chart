@@ -14,7 +14,7 @@ const LOG = false;
   // url += '%2F' + req.query.year
 
 
-export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer) {
+export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl) {
   
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;
@@ -49,10 +49,17 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   const mon = oldestDateComponets[1]
   const day = oldestDateComponets[2]
 
+  var corsUrl;
+  // if (corsServer === 'serv.dinagold.org')
+  if (ssl)
+    corsUrl = "https://";
+  else
+    corsUrl = "http://"; 
+  corsUrl += corsServer + ":5000/price?stock=" + sym
+
   // var corsUrl = "http://84.95.84.236:5000/price?stock=" + sym
-    var corsUrl = "http://" + corsServer + ":5000/price?stock=" + sym
     //corsUrl = "http://localhost:5000/price?stock=" + sym
-     + "&year=" + year + "&mon=" + mon + "&day=" + day;
+    corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
     // console.log (getDate(), corsUrl)
 
     axios.get (corsUrl)
