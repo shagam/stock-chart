@@ -82,7 +82,7 @@ export const BasicTable = (props) => {
   const LOG_SPLITS = false;
   const LOG_FIREBASE = true;
   const LOG_alpha = false;
-
+  const useData = false;
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
@@ -666,12 +666,21 @@ export const BasicTable = (props) => {
 
   const handleDeleteClick = (symbol) => {
     try {
+      if (useData) { // avoid unclean access to rows
+        const index = data.findIndex((row)=> row.symbol === symbol);
+        if (index === -1) {
+          alert ('symbol not found ', symbol);
+          return;
+        } 
+        data.splice(index, 1);
+      } else {
       const index = rows.findIndex((row)=> row.values.symbol === symbol);
       if (index === -1) {
         alert ('symbol not found ', symbol);
         return;
       } 
       rows.splice(index, 1);
+      }
       saveTable(symbol);
       // window.location.reload();
     } catch (e) {console.log(e)}
@@ -705,6 +714,14 @@ export const BasicTable = (props) => {
       return;
     }
 
+    if (useData) {
+      const newSym = addFormData.symbol
+      const newStock = {
+        'symbol': addFormData.symbol
+      }
+      data.push ( newStock)
+      saveTable(newSym);
+    } else {
     var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     prepareRow(newStock);
 
@@ -719,6 +736,7 @@ export const BasicTable = (props) => {
     rows.push (newStock);
     //firebaseGetAndFill();      
     saveTable(newStock.values.symbol);
+    }
     //window.location.reload();
     event.target.reset(); // clear input field
   }
@@ -793,9 +811,16 @@ export const BasicTable = (props) => {
 
   const saveTable = (sym) => {
     const stocks = [];
+    if (useData) {
+      for (let i = 0; i < data.length; i++) {
+        data[i].sym = data[i].symbol;  //align added field sym
+        stocks.push(data[i]);
+      }
+    } else {
     for (let i = 0; i < rows.length; i++) {
       rows[i].values.sym = rows[i].values.symbol;  //align added field sym
       stocks.push(rows[i].values);
+    }
     }
     const stocksStr = JSON.stringify(stocks);
     if (stocks.length > 0) {
