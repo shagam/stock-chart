@@ -932,10 +932,10 @@ export const BasicTable = (props) => {
 
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
-          <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>
-          {true && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
+          {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
+          {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
 
-          <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>
+          {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
