@@ -19,7 +19,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl) => {
       // const [splits, setSplits] = useState([])
       const LOG = false; 
       if (LOG)
-      console.log ('req params ', sym, rows.length)
+      console.log (sym, 'req params ', rows.length)
 
       var corsUrl;
       // if (corsServer === 'serv.dinagold.org')
