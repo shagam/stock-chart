@@ -73,9 +73,19 @@ const Firebase = (props) => {
     newStock.values.splits = fireGain.splits;
     newStock.values.price = fireGain.price;
     newStock.values.splits_list = fireGain.splits;
+
+    newStock.values.verify_1 = Number(fireGain.verify_1);
+
+    // deepRecover info
+    newStock.values.deep = fireGain.deep;
+    newStock.values.recoverWeek = fireGain.recoverWeek;
+    newStock.values.deepDate = fireGain.deepDate; 
+    // if (gain_.priceDivHigh !== undefined)
+    newStock.values.priceDivHigh = fireGain.priceDivHigh;
     props.prepareRow(newStock);
 
     props.rows.push (newStock);
+    props.saveTable('any');  
   }
 
   // get all stocks better than QQQ
