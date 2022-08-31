@@ -3,7 +3,8 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 
-// http://84.228.164.65:5000/splits?stock=MSFT
+// https://84.95.84.236:5000/splits?stock=MSFT
+// https://dinagold.org:5000/splitsNew?stock=MSFT
 // https://www.stocksplithistory.com/?symbol=MSFT
 
 function getDate() {
