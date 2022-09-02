@@ -21,14 +21,21 @@ export const ServerSelect = (props) => {
 
   return (
     <div style={{display: 'flex'}}>
-    {props.title} &nbsp;&nbsp;
-    {props.options.map((servSel) => (
+    {props.title} &nbsp;
+
+    <select   value={serv}  onChange={(e) =>setServ (e.target.value)} >
+      {props.options.map((s) => (
+          <option key={s} value={s} > {s} &nbsp; </option> 
+      ))}  
+    </select>
+
+    {/* {props.options.map((servSel) => (
       <div key={servSel} >
         <input style={{zoom: '150%'}}  type='radio' name="radioValues" value={servSel} 
         checked={serv === servSel} onChange={(e) => exec (e.target.value)}  />
          <b>&nbsp;{servSel}&nbsp;&nbsp;</b> 
       </div>
-    ))}
+    ))} */}
   </div>
   )
 }
