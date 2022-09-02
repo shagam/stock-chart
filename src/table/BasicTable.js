@@ -320,8 +320,8 @@ export const BasicTable = (props) => {
       setSplitsFlag('');
     else
       setSplitsFlag('(splits)');
-
-    if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== 0)
+    console.dir (rows[row_index].values)
+    if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
       rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
     if (LOG_FLAG)
       console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
@@ -357,7 +357,7 @@ export const BasicTable = (props) => {
     rows[index].values.info_mili = updateMili;
     rows[index].values.info_date = updateDate;
 
-    if (rows[index].values.price !== undefined)
+    if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined)
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
     
     childData.Address = '';   // Clear some data to decrese traffic
@@ -559,7 +559,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset, props.refreshCallBack, firebaseGainAdd, servSelect, ssl);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json) // static table
 
@@ -1027,7 +1027,7 @@ export const BasicTable = (props) => {
       <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
       
       <div>
-        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {props.refreshCallBack} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
+        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
         <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
       <div id='manual_id'>    

@@ -85,7 +85,7 @@ const Firebase = (props) => {
     props.prepareRow(newStock);
 
     props.rows.push (newStock);
-    props.saveTable('any');  
+    // props.saveTable('any');  
   }
 
   // get all stocks better than QQQ
@@ -271,8 +271,10 @@ const Firebase = (props) => {
         props.rows[row_index].values.deepDate = gain_.deepDate; 
         // if (gain_.priceDivHigh !== undefined)
         props.rows[row_index].values.priceDivHigh = gain_.priceDivHigh;
-        if (row_index === props.rows.length - 1) // if last one call save refresh
-          props.saveTable('any');  
+        if (props.rows[row_index].values.target_raw !== undefined && props.rows[row_index].values.price !== undefined)
+          props.rows[row_index].values.target = Number((props.rows[row_index].values.target_raw/props.rows[row_index].values.price).toFixed(2))
+        // if (row_index === props.rows.length - 1) // if last one call save refresh
+        //   props.saveTable('any');  
       }
  
       // delete duplicates except last one
@@ -358,6 +360,7 @@ const Firebase = (props) => {
       firebaseInfoGetOne((props.rows[i].values.symbol));
       firebaseGainGetOne((props.rows[i].values.symbol));
     }
+    props.refreshCallBack()
     console.log ('gain, info inserted in table')
     // setTimeout(function() {
     //   props.saveTable('any');    
