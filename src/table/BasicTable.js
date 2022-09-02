@@ -13,7 +13,8 @@ import StockChart from '../Stock-chart'
 import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
-import {marketwatchGainValidate, polygon} from './GainValidateMarketwatch'
+import {marketwatchGainValidate} from './GainValidateMarketwatch'
+import {polygon} from './Polygon'
 import CustomSelect from './CustomSelect'
 import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
@@ -930,7 +931,7 @@ export const BasicTable = (props) => {
           {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
           <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
 
-          {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
+          {<div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
