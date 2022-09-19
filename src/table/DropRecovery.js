@@ -36,6 +36,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const startDateArray = [startYear, startMon, startDay]
     var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol)  
     var highPriceBeforeDeep = 0;
+    var highPriceDateBeforeDeep = '';
     var highPriceBeforeDeepIndex = 0;
 
     var deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
@@ -74,6 +75,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         const price = Number(stockChartYValues[i]);
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
+          highPriceDateBeforeDeep = stockChartXValues[i]
           highPriceBeforeDeepIndex = i;
         }
       }
@@ -104,8 +106,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       //   return;
 
       if (LOG_FLAG) {
-        console.log (StockSymbol, 'highPriceBeforeDeep: ', highPriceBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
-        console.log (StockSymbol, 'highPriceAfterDeep', highPriceAfterDeep, ' recoverIndex: ', recoverIndex);
+        console.log (StockSymbol, 'highPriceBeforeDeep:', highPriceBeforeDeep, highPriceDateBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
+        console.log (StockSymbol, 'highPriceAfterDeep:', highPriceAfterDeep, ' recoverIndex:', recoverIndex);
       }
   
       recoverPeriod = deepIndex - recoverIndex;
@@ -137,7 +139,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     //   alert (StockSymbol + ' recoverWeek undef')
     deepCallBack (StockSymbol, deep, deepIndex, recoverPeriod, deepDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
     if (LOG_FLAG)
-      console.log (StockSymbol, 'deep:', deep, 'deepIndex:', deepIndex, 'recoverIndex:', recoverPeriod, 'deepDate', deepDate, 'deep:', priceDivHigh)
+      console.log (StockSymbol, 'deep:', deep, 'deepIndex:', deepIndex, deepDate, 'recoverIndex:', recoverPeriod, 'priceDivHigh:', priceDivHigh)
   }
 
 
