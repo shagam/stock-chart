@@ -9,7 +9,16 @@ const StockChart = (props) => {
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
-  
+  const [oldestPrice, setOldestPrice] = useState()
+
+  // if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
+  //   return null;
+
+  if (! props.stockChartYValues || props.stockChartYValues[props.stockChartYValues.length - 1] === oldestPrice)
+    return null;
+  else
+    setOldestPrice (props.stockChartYValues[props.stockChartYValues.length - 1])
+
   if (LOG_FLAG)
     console.log(props.stockChartXValues, props.stockChartYValues)
 
@@ -27,9 +36,7 @@ const StockChart = (props) => {
     console.log ("(Stock-chart.js) symbol Udef");
     return null; //"Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
-  if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
-    return null;
- 
+  
   var graphColor;
   if (splitsFlag === '')
     graphColor = 'green';
