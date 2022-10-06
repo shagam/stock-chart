@@ -3,7 +3,7 @@ import axios from 'axios'
 import {dateSplit} from './Date'
 import {format} from "date-fns"
 // import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
-const LOG = false;
+
 // import {
   // todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack,
   //  compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, 
@@ -14,8 +14,10 @@ const LOG = false;
   // url += '%2F' + req.query.year
 
 
-export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl) {
+export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags) {
   
+  const LOG = logFlags.includes("marketwatch");
+
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;
   var requestedEntry = Number(requestedEntry_)

@@ -5,11 +5,13 @@ import "./StockChart.css";
 
 const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(false);
-  const LOG_FLAG = false;
+  const LOG_FLAG = props.logFlags.includes('chart');
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
   
+  if (LOG_FLAG)
+    console.log(props.stockChartXValues, props.stockChartYValues)
 
   const isEmpty = (str) => {
     if (str == null)

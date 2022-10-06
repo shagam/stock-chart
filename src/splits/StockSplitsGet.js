@@ -15,10 +15,10 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError, corsServer, ssl) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) => {
 
       // const [splits, setSplits] = useState([])
-      const LOG = false; 
+      const LOG = logFlags.includes('splits'); 
       if (LOG)
       console.log (sym, 'req params ', rows.length)
 
