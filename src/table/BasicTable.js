@@ -78,7 +78,7 @@ export const BasicTable = (props) => {
   const [lastgain, setLastGain] = useState() 
 
   const [deepStartDate, setDropStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
-
+  const [logFlags, setLogFlags] = useState([]);
 
   const LOG_FLAG = false;
   const LOG_SPLITS = false;
@@ -658,7 +658,7 @@ export const BasicTable = (props) => {
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray);  
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate)
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags)
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
             }
         )
@@ -1028,7 +1028,7 @@ export const BasicTable = (props) => {
       <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
       
       <div>
-        {admin && <LogFlags />}
+        {<LogFlags setLogFlags={setLogFlags} />}
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
         <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
