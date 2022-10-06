@@ -22,6 +22,7 @@ import GainValidate from './GainValidate'
 import Manual from '../manual/Manual'
 import Firebase from './Firebase'
 import Config from './Config'
+import LogFlags from '../LogFlags'
 
 import {nanoid} from 'nanoid';
 
@@ -1027,6 +1028,7 @@ export const BasicTable = (props) => {
       <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} />
       
       <div>
+        {admin && <LogFlags />}
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
         <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
