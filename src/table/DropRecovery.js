@@ -40,8 +40,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     var highPriceBeforeDeepIndex = 0;
 
     var deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
-    if (LOG_FLAG)
-      console.log (StockSymbol, 'startDate:', startDateArray, 'startIndex:', startBeforeDropIndex, 'deepPrice:', deepPrice)
+    // if (LOG_FLAG)
+    //   console.log (StockSymbol, 'startDate:', startDateArray, 'startIndex:', startBeforeDropIndex, 'deepPrice:', deepPrice)
     var deepIndex = -1;
     var deepDate = '';
     var highPriceAfterDeep = -1;
@@ -71,7 +71,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     // search for higest befor deep
     const highistBeforeDeep = () => {
-      for (let i = deepIndex; i <= startBeforeDropIndex * 4; i++) { 
+      for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
         const price = Number(stockChartYValues[i]);
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
@@ -82,16 +82,19 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     }
 
     // check for recovery price after deep
+    var recoverDate = ''
+    highPriceAfterDeep = deepPrice;
+
+    
     const recoveryWeeks = () => {
       for (let i = deepIndex; i > 0; i--) {      
         const price = Number(stockChartYValues[i]);
-        //if (highPriceAfterDeep < price) {
-          if (price > Number (stockChartYValues[highPriceBeforeDeepIndex])) {
+        if (highPriceAfterDeep < price) {
             highPriceAfterDeep = price;
             recoverIndex = i;
+            recoverDate = stockChartXValues[i];
             break; // recovery found
-          }
-        //}
+        }
       }
       deep = Math.round (deepPrice / highPriceBeforeDeep * 1000, 3) / 1000;
       // console.log (props.StockSymbol, 'deep', deep)
@@ -106,8 +109,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       //   return;
 
       if (LOG_FLAG) {
-        console.log (StockSymbol, 'highPriceBeforeDeep:', highPriceBeforeDeep, highPriceDateBeforeDeep, ' highPriceBeforeDeepIndex: ',  highPriceBeforeDeepIndex)
-        console.log (StockSymbol, 'highPriceAfterDeep:', highPriceAfterDeep, ' recoverIndex:', recoverIndex);
+        console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex)
+        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex);
       }
   
       recoverPeriod = deepIndex - recoverIndex;
