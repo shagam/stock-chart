@@ -107,7 +107,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
       if (LOG_FLAG) {
         console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
-        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex, 'recoveryWeeks:', deepIndex - recoverIndex);
+        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex, 'recoveryWeeks(since deep):', deepIndex - recoverIndex);
       }
   
       recoverPeriod = deepIndex - recoverIndex;
