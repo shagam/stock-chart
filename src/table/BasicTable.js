@@ -82,9 +82,10 @@ export const BasicTable = (props) => {
 
   const LOG_FLAG = false;
   const LOG_SPLITS = false;
-  const LOG_FIREBASE = true;
+  const LOG_FIREBASE = false;
   const LOG_alpha = false;
   const useData = false;
+
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
@@ -125,12 +126,14 @@ export const BasicTable = (props) => {
     }
 
     if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
-      console.log (symbol, 'Abort firebase gain update, missing splits. src:', src)
+      if (LOG_FIREBASE)
+        console.log (symbol, 'Abort firebase gain update, missing splits. src:', src)
       return; // write only if fresh splits info
     }
 
     if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing verify. src:', src)
+      if (LOG_FIREBASE)
+        console.log (symbol, 'Abort firebase gain update, missing verify. src:', src)
       return; // write only if fresh verify info
     }
  
@@ -396,7 +399,8 @@ export const BasicTable = (props) => {
     setChartSymbol (sym);
 
     localStorage.setItem ('chartSymbol', sym);
-    console.log(sym, 'gain/chart (symbol)'); 
+    if (LOG_FLAG)
+      console.log(sym, 'gain/chart (symbol)'); 
     if (sym === '' || sym === undefined) {
       alert (`bug, chart sym vanished (${sym})`);
       return;
