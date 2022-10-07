@@ -84,13 +84,11 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     // check for recovery price after deep
     var recoverDate = ''
-    highPriceAfterDeep = deepPrice;
-
 
     const recoveryWeeks = () => {
       for (let i = deepIndex; i > 0; i--) {      
         const price = Number(stockChartYValues[i]);
-        if (highPriceAfterDeep < price) {
+        if (highPriceBeforeDeep < price) {
             highPriceAfterDeep = price;
             recoverIndex = i;
             recoverDate = stockChartXValues[i];
