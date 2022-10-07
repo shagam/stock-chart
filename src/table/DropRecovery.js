@@ -79,13 +79,14 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
           highPriceBeforeDeepIndex = i;
         }
       }
+      deep = Math.round (deepPrice / highPriceBeforeDeep * 1000, 3) / 1000;
     }
 
     // check for recovery price after deep
     var recoverDate = ''
     highPriceAfterDeep = deepPrice;
 
-    
+
     const recoveryWeeks = () => {
       for (let i = deepIndex; i > 0; i--) {      
         const price = Number(stockChartYValues[i]);
@@ -96,8 +97,6 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
             break; // recovery found
         }
       }
-      deep = Math.round (deepPrice / highPriceBeforeDeep * 1000, 3) / 1000;
-      // console.log (props.StockSymbol, 'deep', deep)
 
       // avoid multiple cals of deep
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
@@ -109,8 +108,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       //   return;
 
       if (LOG_FLAG) {
-        console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex)
-        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex);
+        console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
+        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex, 'recoveryWeeks:', deepIndex - recoverIndex);
       }
   
       recoverPeriod = deepIndex - recoverIndex;
@@ -136,13 +135,11 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     }
     const priceDivHigh = Number((stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
     if (LOG_FLAG)
-      console.log (StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'lowestDrop=', deep)
+      console.log (StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh)
     // fill columns in stock table
     // if (recoverPeriod === undefined)
     //   alert (StockSymbol + ' recoverWeek undef')
     deepCallBack (StockSymbol, deep, deepIndex, recoverPeriod, deepDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
-    if (LOG_FLAG)
-      console.log (StockSymbol, 'deep:', deep, 'deepIndex:', deepIndex, deepDate, 'recoverIndex:', recoverPeriod, 'priceDivHigh:', priceDivHigh)
   }
 
 
