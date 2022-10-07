@@ -11,13 +11,13 @@ const StockChart = (props) => {
   var splitsFlag = props.splitsFlag;
   const [oldestPrice, setOldestPrice] = useState()
 
-  // if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
-  //   return null;
-
-  if (! props.stockChartYValues || props.stockChartYValues[props.stockChartYValues.length - 1] === oldestPrice)
+  if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
     return null;
-  else
-    setOldestPrice (props.stockChartYValues[props.stockChartYValues.length - 1])
+
+  // if (! props.stockChartYValues || props.stockChartYValues[props.stockChartYValues.length - 1] === oldestPrice)
+  //   return null;
+  // else
+  //   setOldestPrice (props.stockChartYValues[props.stockChartYValues.length - 1])
 
   if (LOG_FLAG)
     console.log(props.stockChartXValues, props.stockChartYValues)
