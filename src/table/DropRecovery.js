@@ -158,15 +158,19 @@ const DropRecoveryButtons = (props) => {
    //  2007, 11, 1  2008 deep
  
   function swap_period_2008() {
-    props.setDropStartDate (new Date(2007, 9, 15));
+    props.setDropStartDate (new Date(2007, 9, 15)); // 2007 Oct 15
       // setEndDate (new Date(2009, 1, 1));
   }
 
   function swap_period_2020() {
-    props.setDropStartDate (new Date(2020, 1, 5));
+    props.setDropStartDate (new Date(2020, 1, 5));  // 2020 Feb 5
     // setEndDate (new Date(2020, 4, 15));
   }
 
+  function swap_period_2022() {
+    props.setDropStartDate (new Date(2022, 0, 1));  // 2022 Jan 1 
+    // setEndDate (new Date(2020, 4, 15));
+  }
   
   function swap_period_8_mon() {
     var date = new Date();
@@ -251,7 +255,8 @@ const DropRecoveryButtons = (props) => {
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
           <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
-          <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button>
+          <button type="button" onClick={()=>swap_period_2022()}>  2022   </button>
+          {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
         </div>
       }
     </div>
