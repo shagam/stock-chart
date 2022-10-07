@@ -248,15 +248,24 @@ const DropRecoveryButtons = (props) => {
       {displayFlag && 
         <div> 
           {/* <button type="button" onClick={()=>searchDeepValue()}>Drop_recovery    </button>     */}
-          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
-          <div color='yellow' > Start date (click gain on few stocks) </div>
-          <DatePicker dateFormat="yyyy-LLL-dd" selected={props.deepStartDate} onChange={(date) => props.setDropStartDate(date)} /> 
-            
+
+
+          <div  style={{display:'flex', }}> 
+            <div style={{color: 'magenta'}}  > Start_date:   </div>
+            &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={props.deepStartDate} onChange={(date) => props.setDropStartDate(date)} /> 
+
+          </div>
+
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
-          <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
-          <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
-          <button type="button" onClick={()=>swap_period_2022()}>  2022   </button>
+          <div style={{display:'flex', }}> 
+            <div style={{color: 'magenta'}}>Main Drop period: &nbsp; </div>
+            <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
+            <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
+            <button type="button" onClick={()=>swap_period_2022()}>  2022   </button>
+          </div>
           {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
+          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
+
         </div>
       }
     </div>
