@@ -1028,9 +1028,7 @@ export const BasicTable = (props) => {
        
     <div>
      {/* {console.log (chartSymbol)} */}
-     {<LogFlags setLogFlags={setLogFlags} />}
-      <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} logFlags = {logFlags} />
-      
+     {<LogFlags setLogFlags={setLogFlags} />}      
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db} admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
       </div>
@@ -1045,6 +1043,8 @@ export const BasicTable = (props) => {
         <Manual />
         
         <StockInfo stockInfo = {stockInfo} />
+        <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} logFlags = {logFlags} />
+
         <hr/>
       </div>
     </div> 
