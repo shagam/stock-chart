@@ -77,7 +77,7 @@ export const BasicTable = (props) => {
   const [searchDeepDate, setSearchDeepDate] = useState()
   const [lastgain, setLastGain] = useState() 
 
-  const [deepStartDate, setDropStartDate] = useState(new Date(2022, 0, 1)); // jan 1 2022
+  const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
   const [logFlags, setLogFlags] = useState([]);
 
   const LOG_FLAG = false;

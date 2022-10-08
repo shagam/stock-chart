@@ -166,7 +166,7 @@ const DropRecoveryButtons = (props) => {
   }
 
   function swap_period_2022() {
-    props.setDropStartDate (new Date(2022, 0, 1));  // 2022 Jan 1 
+    props.setDropStartDate (new Date(2021, 11, 1));  // 2021 dec 1 
     // setEndDate (new Date(2020, 4, 15));
   }
   
