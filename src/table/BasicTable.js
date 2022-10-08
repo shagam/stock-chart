@@ -1045,6 +1045,8 @@ export const BasicTable = (props) => {
         <Manual />
         
         <StockInfo stockInfo = {stockInfo} />
+        <hr/>
+        <h5>Bottom</h5>
       </div>
     </div> 
     </>
