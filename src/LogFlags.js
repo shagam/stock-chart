@@ -47,7 +47,7 @@ const LogFlags = (props) => {
       </div>
 
        <div className="checkList">
-         <div className="title"> {checkedItems_}</div>
+
          <div className="list-container"  style={{display:'flex'}}>
            {showFlags && checkList.map((item, index) => (
              <div key={index}>
@@ -56,6 +56,7 @@ const LogFlags = (props) => {
              </div>
            ))}
          </div>
+         <div className="title"> {checkedItems_}</div>
        </div>
      </div>
    );
