@@ -10,7 +10,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 
 
-function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags) {
+function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly) {
 
     const LOG_FLAG = logFlags.includes('drop');
 
@@ -104,10 +104,11 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       } 
       // if (rows[index].values.deep === deep)
       //   return;
-
+      console.log (weekly)
       if (LOG_FLAG) {
+        const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
         console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
-        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex, 'recoveryWeeks(since deep):', deepIndex - recoverIndex);
+        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex,  recoverText + '(since deep):', deepIndex - recoverIndex);
       }
   
       recoverPeriod = deepIndex - recoverIndex;
