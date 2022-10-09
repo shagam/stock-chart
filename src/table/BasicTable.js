@@ -82,10 +82,12 @@ export const BasicTable = (props) => {
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
   const [logFlags, setLogFlags] = useState([]);
 
-  const LOG_FLAG = logFlags.includes('table');
+  const LOG_FLAG = logFlags.includes('aux');
+  const LOG_API = logFlags.includes('api');
   const LOG_SPLITS = logFlags.includes('splits');
   const LOG_FIREBASE = logFlags.includes('firebase');
   const LOG_alpha = logFlags.includes('alpha');
+  const LOG_DROP = logFlags.includes('drop');
   const useData = false;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
@@ -245,7 +247,7 @@ export const BasicTable = (props) => {
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
     //console.log(`Overview info (${symbol})`);
-    if (LOG_FLAG)
+    if (LOG_API)
       console.log (`${API_Call}`);
     setError();           
     fetch(API_Call)
@@ -263,6 +265,8 @@ export const BasicTable = (props) => {
             function (data) {
               if (data != null) {
                   const dataStr = JSON.stringify(data);
+                  if (LOG_API)
+                    console.dir(data)
                   if (dataStr === '{}') {
                     alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
                     return;
@@ -326,10 +330,11 @@ export const BasicTable = (props) => {
       setSplitsFlag('');
     else
       setSplitsFlag('(splits)');
+    if (LOG_API)
     console.dir (rows[row_index].values)
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
       rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
-    if (LOG_FLAG)
+    if (LOG_DROP)
       console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
@@ -437,9 +442,10 @@ export const BasicTable = (props) => {
                 alert (`Invalid symbol: (${sym})`)
                 return;
               }
-              if (LOG_FLAG) {
+              if (LOG_API) {
                 console.log (API_Call);
-                console.log (dataStr.substring(0,150));
+                console.dir (chartData)
+                // console.log (dataStr.substring(0,150));
               }
               
               // too frequent AlphaVantage api calls
@@ -859,7 +865,7 @@ export const BasicTable = (props) => {
     rows[index].values.deepDate = deepDate;
     rows[index].values.priceDivHigh = Number(priceDivHigh);
     rows[index].values.deepUpdateMili = Date.now();
-    if (LOG_FLAG) {
+    if (LOG_DROP) {
       console.log(stockSymbol, 'old deep:', rows[index].values.deep, 'recoverIndx:', rows[index].values.recoverWeek,
       'deep date/val:', rows[index].values.deepDate, rows[index].values.priceDivHigh)
 
