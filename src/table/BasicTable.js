@@ -64,6 +64,8 @@ export const BasicTable = (props) => {
   const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
 
+  const [weekly, setWeekly] = useState (true);
+
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
   const gainRef = collection(db, "stock-gain_")
@@ -413,7 +415,6 @@ export const BasicTable = (props) => {
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
-    const weekly = true;
     let API_Call;
     if (weekly)
       API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
@@ -945,8 +946,9 @@ export const BasicTable = (props) => {
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
-          {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp; &nbsp;</div>}     
-          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp; &nbsp;</div>      
+          {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
+          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp;</div>      
+          <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  
           <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>verifyColumns </button> 
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
