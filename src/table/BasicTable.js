@@ -87,7 +87,8 @@ export const BasicTable = (props) => {
   const LOG_SPLITS = logFlags.includes('splits');
   const LOG_FIREBASE = logFlags.includes('firebase');
   const LOG_alpha = logFlags.includes('alpha');
-  const LOG_DROP = logFlags.includes('drop');
+  const LOG_DROP = logFlags.includes('drop_');
+
   const useData = false;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
