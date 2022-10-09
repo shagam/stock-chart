@@ -7,7 +7,7 @@ const LogFlags = (props) => {
   const [showFlags, setShowFlafs] = useState(false)
    // State with list of all checked item
    const [checked, setChecked] = useState([]);
-   const checkList = ["drop", "firebase", "marketwatch", "splits", "chart"];
+   const checkList = ["drop", "firebase", "marketwatch", "splits", "chart", "table",'alpha'];
  
    // Add/Remove checked item from list
    const handleCheck = (event) => {

@@ -80,10 +80,10 @@ export const BasicTable = (props) => {
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
   const [logFlags, setLogFlags] = useState([]);
 
-  const LOG_FLAG = false;
-  const LOG_SPLITS = false;
-  const LOG_FIREBASE = false;
-  const LOG_alpha = false;
+  const LOG_FLAG = logFlags.includes('table');
+  const LOG_SPLITS = logFlags.includes('splits');
+  const LOG_FIREBASE = logFlags.includes('firebase');
+  const LOG_alpha = logFlags.includes('alpha');
   const useData = false;
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
