@@ -104,7 +104,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       } 
       // if (rows[index].values.deep === deep)
       //   return;
-      console.log (weekly)
+
       if (LOG_FLAG) {
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
         console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
