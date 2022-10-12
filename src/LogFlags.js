@@ -22,23 +22,23 @@ const LogFlags = (props) => {
    };
  
    // Generate string of checked items
-  //  const checkedItems = checked.length
-  //    ? checked.reduce((total, item) => {
-  //        return total + ", " + item;
-  //      })
-  //    : "";
+   const checkedItems = checked.length
+     ? checked.reduce((total, item) => {
+         return total + ", " + item;
+       })
+     : "";
  
 
    // Return classes based on whether item is checked
    var isChecked = (item) =>
      checked.includes(item) ? "checked-item" : "not-checked-item";
  
-    var checkedItems_ = ''
-    checkList.forEach (function (item) { 
-      if (checked.includes(item)) {
-        checkedItems_ === '' ? checkedItems_ += item : checkedItems_ += ", " + item
-      }
-    })  
+    // var checkedItems_ = ''
+    // checkList.forEach (function (item) { 
+    //   if (checked.includes(item)) {
+    //     checkedItems_ === '' ? checkedItems_ += item : checkedItems_ += ", " + item
+    //   }
+    // })  
 
    return (
      <div className="app" style={{ border: '2px solid magenta', padding: '0px'}}>
@@ -56,7 +56,7 @@ const LogFlags = (props) => {
              </div>
            ))}
          </div>
-         <div className="title"> {checkedItems_}</div>
+         <div className="title"> {checkedItems}</div>
        </div>
      </div>
    );
