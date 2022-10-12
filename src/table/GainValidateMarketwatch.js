@@ -92,7 +92,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
           
-        firebaseGainAdd(sym, 'validate');
+        // firebaseGainAdd(sym, 'validate');
       }
       else {
         rows[row_index].values.verify_1 = -1;
