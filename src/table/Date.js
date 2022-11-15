@@ -209,7 +209,7 @@ const daysFrom1970 = (dateArray) => {
   const days = (dateMili  / 24 / 3600 / 1000).toFixed(0)
   // const dateDays = ((dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2]).toFixed(0);
   if (isNaN (days)) {
-    alert ('NaN DateArray: ' + dateArray)
+    alert ('NaN DateArray: ' + dateArray + ' ' + dateMili)
     return -1;
   }
   return Number(days);
