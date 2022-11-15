@@ -273,7 +273,8 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym) {
       newestIndx = searchIndex;
 
   }
-  const log = `searchDateInArray loop newest=${newestIndx} oldest=${oldestIndx} i=${i} loopLimit=${loopLimit} movingDate=${movingDate} ${sym}`+ 'length=' + stockChartXValuesFunction.length + collectedLog;
+  const log = 'searchDateInArray loop newest=' + newestIndx + ' oldest=' + oldestIndx + ' i=' + i + ' loopLimit=' + loopLimit + 
+  ' movingDate=' + movingDate + ' ' + sym + ' length=' + stockChartXValuesFunction.length + collectedLog;
   console.log(log);
   alert(log);
 }
