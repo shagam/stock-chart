@@ -14,6 +14,7 @@ function IpContext  () {
   const [localIpv4, setLocalIPv4] = useState('');
   const [userAgent, setUserAgent] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
+  const [ios, setIos] = useState(false);
 
   const LOG_FLAG = false;
 
@@ -63,6 +64,15 @@ function IpContext  () {
         console.log("not mobile device");
     }
 
+    if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
+      setIos(true);
+      if (LOG_FLAG)
+        console.log("ios device");
+    } else {
+      setIos(false);
+    }
+
+
     const res = await axios.get('https://geolocation-db.com/json/')
     if (LOG_FLAG)
     console.log('ip ', res.data);
@@ -99,7 +109,8 @@ function IpContext  () {
     localIp,
     localIpv4,
     userAgent,
-    userAgentMobile
+    userAgentMobile,
+    ios
   }
   return (value)
 

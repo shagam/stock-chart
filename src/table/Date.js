@@ -1,7 +1,7 @@
 
 // import React from 'react'
 import {format} from "date-fns"
-
+import ipContext from './ipContext'
 
 const LOG = false;
 
@@ -204,7 +204,17 @@ function dateStr (date1Split) {
   return date
 }
 
+const daysFrom1970_ios = (dateArray) => {
+  const dateDays = (dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2] - 1;
+  return Number(dateDays).toFixed(0);
+}
+
 const daysFrom1970 = (dateArray) => {
+  const {ios} = ipContext();
+  if (ios) {
+    return daysFrom1970_ios (dateArray);
+  }
+
   const dateStr = dateArray[0] + '-' + dateArray[1] + '-' + dateArray[2]
   const dateMili = new Date(dateStr).getTime();
   const days = (dateMili  / 24 / 3600 / 1000).toFixed(0)
