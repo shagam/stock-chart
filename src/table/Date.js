@@ -210,18 +210,12 @@ const daysFrom1970_ios = (dateArray) => {
 }
 
   const {ios} = IpContext();const daysFrom1970 = (dateArray) => {
-  // const {ios} = IpContext();
-  // if (ios) {
-  //   return daysFrom1970_ios (dateArray);
-  // }
-
   const dateStr = dateArray[0] + '-' + dateArray[1] + '-' + dateArray[2]
   const dateMili = new Date(dateStr).getTime();
   const days = (dateMili  / 24 / 3600 / 1000).toFixed(0)
   // const dateDays = ((dateArray[0] - 1970) * 365.25 + (dateArray[1] -1) * 30.416 + dateArray[2]).toFixed(0);
   if (isNaN (days)) {
-    alert ('NaN DateArray: ' + dateArray + ' ' + dateStr+ ' ' + dateMili)
-    return -1;
+    return daysFrom1970_ios (dateArray);  // ios does not support Date(dateStr).getTime();
   }
   return Number(days);
 
