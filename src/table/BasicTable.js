@@ -25,6 +25,7 @@ import Config from './Config'
 import LogFlags from '../LogFlags'
 
 import {nanoid} from 'nanoid';
+import {format} from "date-fns"
 
 //import cloneDeep from 'lodash/cloneDeep';
 
@@ -114,7 +115,7 @@ export const BasicTable = (props) => {
     const isInvisible_ = allColumns[ind].isVisible;
      
     // toggle twice force render refresh
-    setTimeout(() => console.log(), 1000); 
+    // setTimeout(() => console.log(), 50); 
 
     allColumns[ind].toggleHidden(); 
     allColumns[ind].toggleHidden(); 
@@ -344,6 +345,7 @@ export const BasicTable = (props) => {
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
     firebaseGainAdd (sym, 'gain');  // save in firestore
+    saveTable(sym);
   }
   const updateTableInfo = (childData, updateDate, updateMili)  => {
     if (childData === null || childData === {} || childData["Exchange"] == null) {
@@ -843,7 +845,9 @@ export const BasicTable = (props) => {
     const stocksStr = JSON.stringify(stocks);
     if (stocks.length > 0) {
       localStorage.setItem ('stocks', stocksStr);
-      console.log (sym, 'stocks saveTable, length:', stocks.length)
+      const date = new Date();
+      const formattedDate = format(date, "yyyy-MMM-dd hh:mm");
+      console.log (sym, `(${formattedDate}) stocks saveTable, length:`, stocks.length)
     }
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
