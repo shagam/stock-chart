@@ -147,7 +147,7 @@ const Firebase = (props) => {
         if (add_flag) {
           // if need to add
           addSym (symbol, gain.docs[i].data());
-          props.saveTable(symbol);
+          // props.saveTable(symbol);
         }
         else {
           const dat = gain.docs[i].data();
@@ -366,6 +366,7 @@ const Firebase = (props) => {
     //   props.saveTable('any');    
     // }, 500);
     } catch (e) { console.log (e)}
+    props.saveTable('all');
   }
 
   const showAll  = async () => {
