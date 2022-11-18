@@ -1,28 +1,28 @@
 
 [
     {
-        "symbol": "AMZN"       
+        "symbol": "AMZN",
+        "sym": "AMZN"          
     },
     {
-        "symbol": "GOOG"  
+        "symbol": "GOOG",
+        "sym": "GOOG" 
     },
     {
-        "symbol": "NVDA"  
+        "symbol": "NVDA",
+        "sym": "NVDA"  
     },
     {
-        "symbol": "TSLA" 
-    },  
+        "symbol": "TSLA",
+        "sym": "TSLA" 
+    },   
     {
-        "symbol": "MRNA"  
-    }, 
-    {
-        "symbol": "QQQ"
+        "symbol": "QQQ",
+        "sym": "QQQ"
     },
     {
-        "symbol": "BRK.A"
-    },
-    {
-        "symbol": "META"
+        "symbol": "BRK.A",
+        "sym": "BRK.A"
     }
 
 ]

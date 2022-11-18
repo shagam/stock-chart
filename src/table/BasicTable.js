@@ -109,11 +109,15 @@ export const BasicTable = (props) => {
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
  
-  function refreshByToggleColumns ()  {
+  async function refreshByToggleColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'symbol');
     const isInvisible_ = allColumns[ind].isVisible;
-    allColumns[ind].toggleHidden();  // toggle twice force render refresh
-    allColumns[ind].toggleHidden();
+     
+    // toggle twice force render refresh
+    setTimeout(() => console.log(), 1000); 
+
+    allColumns[ind].toggleHidden(); 
+    allColumns[ind].toggleHidden(); 
   }
   
   // send stock gain to firebase, delete old and add new one (No woory about format change)
