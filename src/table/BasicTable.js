@@ -380,6 +380,10 @@ export const BasicTable = (props) => {
     
     childData.Address = '';   // Clear some data to decrese traffic
     childData.Description = '';
+    const EPS = Number (childData["EPS"]);
+    const BookValue = Number (childData["BookValue"]);
+    const graham = Math.sqrt(22.5 * EPS * BookValue).toFixed(2)
+    console.log ('EPS=', EPS, ' BookValue=', BookValue, ' grahamPrice=', graham, ' price=', rows[index].values.price)
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
     // save overview per symbol
     // stocksOverview[symbol] = childData;
