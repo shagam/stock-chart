@@ -78,7 +78,6 @@ export const BasicTable = (props) => {
 
   const [columnHideFlag, setColumnHideFlag] = useState(true);
   const [searchDeepDate, setSearchDeepDate] = useState()
-  const [lastgain, setLastGain] = useState() 
 
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
   const [logFlags, setLogFlags] = useState([]);
@@ -498,9 +497,6 @@ export const BasicTable = (props) => {
                 const yValue = Number (Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]).toFixed(3))
                 stockChartYValuesFunction.push(yValue);
               }
-
-              // save last gain for compare and avoid dowble split compensation
-              setLastGain (stockChartYValuesFunction[stockChartYValuesFunction.length - 1])
                 
               // collect compensation vars
               var splitsIndexArray = [];
