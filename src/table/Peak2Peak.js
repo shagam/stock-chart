@@ -30,15 +30,42 @@ const Peak2PeakGui = (props) => {
  
     const LOG_FLAG = props.logFlags.includes('eak2Peak');
 
+    const quasiTop = (initDate) => {
+      var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol)
+      console.log (dateIndex)
+      const range = 20;
+      var priceIndex = -1;
+      var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
+      var endIndex = dateIndex + range*2 < props.stockChartYValues.length ? dateIndex + range*2 : dateIndex;
+      var highPrice = props.stockChartYValues[dateIndex];
+      for (let i = startIndex; i <= endIndex; i++) { 
+        const price = Number(props.stockChartYValues[i]);
+        if (highPrice < price) {  // at least weeks to recover
+          highPrice  = price;
+          priceIndex = i;
+          console.log ('index=', i, price, 'highPrice=', highPrice)
+        }
+      }
+      return priceIndex;
+
+    }
+
+
+
     function peak2PeakCalc () {
-        console.log ('calc')
+        setCalcResults(); 
+        // console.log ('calc')
         if (props.symbol === ''  || props.stockChartXValues.length === 0) {
-          alert ('Need to click <gain> for a symbol before calc peak2peak -')
+          // alert ('Need to click <gain> for a symbol before calc peak2peak -')
           setCalcResults('symbol Undefined. click <gain> for some symbol')
           return;
         }
+        if (! props.weekly) {
+          setCalcResults('calc only for weekly mode ')
+          alert('calc only for weekly mode ')
+          return;
+        }
 
-    
         const startYear = startDate.getFullYear();
         const startMon = startDate.getMonth() + 1;
         const startDay = startDate.getDay() + 1;
@@ -46,7 +73,15 @@ const Peak2PeakGui = (props) => {
         const endYear = endDate.getFullYear();
         const endMon = endDate.getMonth() + 1;
         const endDay = endDate.getDay() + 1;
-    }    
+
+        const startDateArray = [startYear, startMon, startDay]
+        const endDateArray =[endYear, endMon, endDay]
+        const indexFirst = quasiTop (startDateArray)
+        const indexEnd = quasiTop (endDateArray)
+        const diff = indexFirst - indexEnd
+        console.log ('weeks:', diff)
+
+      }    
 
     function swap_period_8_mon() {
         var date = new Date();
@@ -88,6 +123,8 @@ const Peak2PeakGui = (props) => {
       {displayFlag && 
         <div> 
             {props.symbol && <div> Symbol: {props.symbol}</div>}
+            {calcResults && <div style={{ color: 'red'}} > calcResults: {calcResults}</div>}
+
            <div  style={{display:'flex' }}> 
             <div style={{ color: 'magenta'}}  >Start_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
@@ -98,7 +135,7 @@ const Peak2PeakGui = (props) => {
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
            </div>
 
-            {calcResults && <div>calcResults: {calcResults}</div>}
+
             <button type="button" onClick={()=>peak2PeakCalc ()}>Calc peak2peak </button>
         </div>
       }

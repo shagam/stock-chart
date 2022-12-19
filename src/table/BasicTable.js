@@ -1053,7 +1053,7 @@ export const BasicTable = (props) => {
       </div>
         <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
         
-        <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags = {logFlags}
+        <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly}
         />
       <div id='manual_id'>    
         {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
