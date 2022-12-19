@@ -38,7 +38,7 @@ const Peak2PeakGui = (props) => {
       const range = 20;
       var priceIndex = -1;
       var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
-      var endIndex = dateIndex + range*2 < props.stockChartYValues.length ? dateIndex + range*2 : dateIndex;
+      var endIndex = dateIndex + range < props.stockChartYValues.length ? dateIndex + range : dateIndex;
       var highPrice = props.stockChartYValues[dateIndex];
       for (let i = startIndex; i <= endIndex; i++) { 
         const price = Number(props.stockChartYValues[i]);
@@ -80,7 +80,14 @@ const Peak2PeakGui = (props) => {
         const endMon = endDate.getMonth() + 1;
         const endDay = endDate.getDay() + 1;
 
-        const startDateArray = [startYear, startMon, startDay]
+        // calc start day
+        var startDateArray = [startYear, startMon, startDay]
+        const lastDate = props.stockChartXValues[props.stockChartXValues.length - 1]
+        const lastDateSplit = lastDate.split('-')
+        const compDate = compareDate (startDateArray, lastDateSplit)
+        if (compDate === -1)
+          startDateArray = lastDateSplit;
+        
         const endDateArray =[endYear, endMon, endDay]
         const indexFirst = quasiTop (startDateArray)
         const indexEnd = quasiTop (endDateArray)
