@@ -32,7 +32,8 @@ const Peak2PeakGui = (props) => {
 
     const quasiTop = (initDate) => {
       var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol)
-      console.log (dateIndex)
+      if(LOG_FLAG)
+      console.log ('dateIndexRaw=', dateIndex)
       const range = 20;
       var priceIndex = -1;
       var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
@@ -43,7 +44,8 @@ const Peak2PeakGui = (props) => {
         if (highPrice < price) {  // at least weeks to recover
           highPrice  = price;
           priceIndex = i;
-          console.log ('index=', i, price, 'highPrice=', highPrice)
+          if (LOG_FLAG)
+            console.log ('index=', i, price, 'highPrice=', highPrice)
         }
       }
       return priceIndex;
@@ -78,29 +80,33 @@ const Peak2PeakGui = (props) => {
         const endDateArray =[endYear, endMon, endDay]
         const indexFirst = quasiTop (startDateArray)
         const indexEnd = quasiTop (endDateArray)
-        const diff = indexFirst - indexEnd
-        console.log ('weeks:', diff)
+        const weeksDiff = indexFirst - indexEnd
+        const yearsDiff = Number (weeksDiff/52).toFixed (2)
+        const gain = Number (props.stockChartYValues[indexEnd] / props.stockChartYValues[indexFirst]).toFixed (3)
+
+        const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
+        const textResults = 'yearlyGain=' + yearlyGain + '  gain=' + gain + '  weeks=' + weeksDiff + '  years=' + yearsDiff + 
+        '  dates=' + props.stockChartXValues[indexFirst] + ',  ' + props.stockChartXValues[indexEnd] 
+        console.log ( textResults)
+        setCalcResults(textResults)
 
       }    
 
-    function swap_period_8_mon() {
-        var date = new Date();
-        var formattedDate = format(date, "yyyy-MM-dd");
-        var dateArray = formattedDate.split('-');
+    // function swap_period_8_mon() {
+    //     var date = new Date();
+    //     var formattedDate = format(date, "yyyy-MM-dd");
+    //     var dateArray = formattedDate.split('-');
 
-        // date = date.split('T')[0];
-        const dateArray1 = monthsBack (dateArray, 8);
-        const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
-        props.setDropStartDate (new Date(dateStr));
-        // setEndDate (new Date());
-    }
+    //     // date = date.split('T')[0];
+    //     const dateArray1 = monthsBack (dateArray, 8);
+    //     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
+    //     props.setDropStartDate (new Date(dateStr));
+    //     // setEndDate (new Date());
+    // }
 
   //  skip analysis if no symbol
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
-  // if (row_index !== -1 && props.StockSymbol !== '' && props.StockSymbol !== undefined  
-  // && props.stockChartYValues.length !== 0)
-  //   searchDeepValue (); 
-
+ 
   const style = {
     // background: 'blue',
     // color: 'red',
