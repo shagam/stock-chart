@@ -27,7 +27,8 @@ const Peak2PeakGui = (props) => {
 
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [calcResults, setCalcResults] = useState ();
- 
+    const [calcInfo, setCalcInfo] = useState ();
+
     const LOG_FLAG = props.logFlags.includes('eak2Peak');
 
     const quasiTop = (initDate) => {
@@ -56,14 +57,17 @@ const Peak2PeakGui = (props) => {
 
     function peak2PeakCalc () {
         setCalcResults(); 
+        setCalcInfo()
         // console.log ('calc')
         if (props.symbol === ''  || props.stockChartXValues.length === 0) {
           // alert ('Need to click <gain> for a symbol before calc peak2peak -')
           setCalcResults('symbol Undefined. click <gain> for some symbol')
+          setCalcInfo('.')
           return;
         }
         if (! props.weekly) {
           setCalcResults('calc only for weekly mode ')
+          setCalcInfo('.')
           alert('calc only for weekly mode ')
           return;
         }
@@ -85,10 +89,12 @@ const Peak2PeakGui = (props) => {
         const gain = Number (props.stockChartYValues[indexEnd] / props.stockChartYValues[indexFirst]).toFixed (3)
 
         const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-        const textResults = 'sym='+ props.symbol + '  yearlyGain=' + yearlyGain + '  gain=' + gain + '  weeks=' + weeksDiff + '  years=' + yearsDiff + 
-        '  dates=' + props.stockChartXValues[indexFirst] + ',  ' + props.stockChartXValues[indexEnd] 
-        console.log ( textResults)
+        const textResults = 'sym='+ props.symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain
+        const textInfo = ` (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${props.stockChartXValues[indexFirst]} \xa0 to= ${props.stockChartXValues[indexEnd]}  )`;
+        console.log (textResults)
+        console.log (textInfo)
         setCalcResults(textResults)
+        setCalcInfo ( textInfo)
 
       }    
 
@@ -128,8 +134,9 @@ const Peak2PeakGui = (props) => {
 
       {displayFlag && 
         <div> 
-            {props.symbol && <div> Symbol: {props.symbol}</div>}
-            {calcResults && <div style={{ color: 'red'}} > {calcResults}</div>}
+            {/* {props.symbol && <div> Symbol: {props.symbol}</div>} */}
+            {calcResults && <div style={{ color: 'red'}} >  <hr/> {calcResults}  </div>}
+            {calcInfo && <div style={{ color: 'green'}} >  {calcInfo} <hr/> </div>}
 
            <div  style={{display:'flex' }}> 
             <div style={{ color: 'magenta'}}  >Start_date:   </div>
