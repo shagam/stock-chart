@@ -8,49 +8,6 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 import { columnIsLastLeftSticky } from 'react-table-sticky';
 import LogFlags from '../LogFlags'
 
-function Peak2PeakCalc (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, endDate, logFlags) {
-
-
-
-    if (StockSymbol === undefined || StockSymbol === '' || stockChartXValues === undefined) {
-      alert ('Need to click <gain> for a symbol before calc peak2peak')
-      return;
-    }
-
-
-    const startYear = startDate.getFullYear();
-    const startMon = startDate.getMonth() + 1;
-    const startDay = startDate.getDay() + 1;
-
-    const endYear = startDate.getFullYear();
-    const endMon = startDate.getMonth() + 1;
-    const endDay = startDate.getDay() + 1;
-
-    // var startBeforeDropWeek = (todayYear - startYear) * 52 + (todayMon - startMon) * 4.34 + (todayDay - startDay) / 4.34;
-    // startBeforeDropWeek = Math.round(startBeforeDropWeek);
-
-    const startDateArray = [startYear, startMon, startDay]
- 
-    // if (LOG_FLAG)
-    //   console.log (StockSymbol, 'startDate:', startDateArray, 'startIndex:', startBeforeDropIndex, 'deepPrice:', deepPrice)
-
-    // search for deepPrice after start date
- 
-    // search for higest befor deep
-     // check for recovery price after deep
-    var recoverDate = ''
-
-         // avoid multiple cals of deep
-      const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
-      if (index === -1) {
-        alert (`crash recovery symbol not found (${StockSymbol})`);
-        return;
-      } 
-      // if (rows[index].values.deep === deep)
-      //   return;
-
-}
-
 
 
 const Peak2PeakGui = (props) => {
@@ -149,4 +106,4 @@ const Peak2PeakGui = (props) => {
   )
 }
 
-export {Peak2PeakGui, Peak2PeakCalc}
+export {Peak2PeakGui}
