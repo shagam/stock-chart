@@ -85,7 +85,7 @@ const Peak2PeakGui = (props) => {
         const gain = Number (props.stockChartYValues[indexEnd] / props.stockChartYValues[indexFirst]).toFixed (3)
 
         const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-        const textResults = 'yearlyGain=' + yearlyGain + '  gain=' + gain + '  weeks=' + weeksDiff + '  years=' + yearsDiff + 
+        const textResults = 'sym='+ props.symbol + '  yearlyGain=' + yearlyGain + '  gain=' + gain + '  weeks=' + weeksDiff + '  years=' + yearsDiff + 
         '  dates=' + props.stockChartXValues[indexFirst] + ',  ' + props.stockChartXValues[indexEnd] 
         console.log ( textResults)
         setCalcResults(textResults)
@@ -129,7 +129,7 @@ const Peak2PeakGui = (props) => {
       {displayFlag && 
         <div> 
             {props.symbol && <div> Symbol: {props.symbol}</div>}
-            {calcResults && <div style={{ color: 'red'}} > calcResults: {calcResults}</div>}
+            {calcResults && <div style={{ color: 'red'}} > {calcResults}</div>}
 
            <div  style={{display:'flex' }}> 
             <div style={{ color: 'magenta'}}  >Start_date:   </div>
