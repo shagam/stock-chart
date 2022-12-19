@@ -36,10 +36,11 @@ const Peak2PeakGui = (props) => {
       if(LOG_FLAG)
       console.log ('dateIndexRaw=', dateIndex)
       const range = 20;
-      var priceIndex = -1;
+
       var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
+      var priceIndex = startIndex;
       var endIndex = dateIndex + range < props.stockChartYValues.length ? dateIndex + range : dateIndex;
-      var highPrice = props.stockChartYValues[dateIndex];
+      var highPrice = props.stockChartYValues[startIndex];
       for (let i = startIndex; i <= endIndex; i++) { 
         const price = Number(props.stockChartYValues[i]);
         if (highPrice < price) {  // at least weeks to recover
