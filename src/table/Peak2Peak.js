@@ -22,33 +22,40 @@ const Peak2PeakGui = (props) => {
   // stockChartXValues
   // stockChartYValues
 
-    const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1
+    const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
     const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
 
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [calcResults, setCalcResults] = useState ();
     const [calcInfo, setCalcInfo] = useState ();
+    const [searchPeak, setSearchPeak] = useState (true);
 
-    const LOG_FLAG = props.logFlags.includes('eak2Peak');
+    const LOG_FLAG = props.logFlags.includes('peak2Peak');
 
     const quasiTop = (initDate) => {
       var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol)
       if(LOG_FLAG)
-      console.log ('dateIndexRaw=', dateIndex)
-      const range = 20;
+      console.log ('\nindex=', dateIndex, 'price=', props.stockChartYValues [dateIndex], props.stockChartXValues [dateIndex], 'start_index')
+      const range = 70;
 
-      var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
+      var startIndex = dateIndex - range/2 > 0 ? dateIndex -= range/2 : 0
       var priceIndex = startIndex;
       var endIndex = dateIndex + range < props.stockChartYValues.length ? dateIndex + range : dateIndex;
       var highPrice = props.stockChartYValues[startIndex];
-      for (let i = startIndex; i <= endIndex; i++) { 
+
+      if (! searchPeak)
+        return dateIndex; // do not search
+
+      for (let i = startIndex; i < endIndex; i++) { 
         const price = Number(props.stockChartYValues[i]);
         if (highPrice < price) {  // at least weeks to recover
           highPrice  = price;
           priceIndex = i;
           if (LOG_FLAG)
-            console.log ('index=', i, price, 'highPrice=', highPrice)
+            console.log ('index=', i, 'price=', price, props.stockChartXValues[i])
         }
+        if (LOG_FLAG && i === endIndex - 1)
+          console.log ('index=', i, 'last')// end of loop
       }
       return priceIndex;
 
@@ -86,12 +93,20 @@ const Peak2PeakGui = (props) => {
         const lastDate = props.stockChartXValues[props.stockChartXValues.length - 1]
         const lastDateSplit = lastDate.split('-')
         const compDate = compareDate (startDateArray, lastDateSplit)
-        if (compDate === -1)
-          startDateArray = lastDateSplit;
-        
+        if (compDate === -1) {
+          if (searchPeak)
+            startDateArray = lastDateSplit;
+          else {
+            setCalcResults('search peak disabled; date beyond range')
+            setCalcInfo ('.')
+            return;            
+          }
+
+        }
         const endDateArray =[endYear, endMon, endDay]
         const indexFirst = quasiTop (startDateArray)
         const indexEnd = quasiTop (endDateArray)
+
         const weeksDiff = indexFirst - indexEnd
         const yearsDiff = Number (weeksDiff/52).toFixed (2)
         const gain = Number (props.stockChartYValues[indexEnd] / props.stockChartYValues[indexFirst]).toFixed (3)
@@ -142,7 +157,7 @@ const Peak2PeakGui = (props) => {
 
       {displayFlag && 
         <div> 
-            {/* {props.symbol && <div> Symbol: {props.symbol}</div>} */}
+            {props.symbol && <div> {props.symbol}</div>}
             {calcResults && <div style={{ color: 'red'}} >  <hr/> {calcResults}  </div>}
             {calcInfo && <div style={{ color: 'green'}} >  {calcInfo} <hr/> </div>}
 
@@ -155,9 +170,14 @@ const Peak2PeakGui = (props) => {
             <div style={{ color: 'magenta'}}  > End_date:   </div>
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
            </div>
+           
+           <div> &nbsp; 
+            <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
+           
+            <button type="button" onClick={()=>peak2PeakCalc ()}>Calc peak2peak gain </button>           
+           </div>
 
 
-            <button type="button" onClick={()=>peak2PeakCalc ()}>Calc peak2peak </button>
         </div>
       }
     </div>
