@@ -35,10 +35,10 @@ const Peak2PeakGui = (props) => {
     const quasiTop = (initDate) => {
       var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol)
       if(LOG_FLAG)
-      console.log ('\nindex=', dateIndex, 'price=', props.stockChartYValues [dateIndex], props.stockChartXValues [dateIndex], 'start_index')
-      const range = 70;
+      console.log ('\nindex=', dateIndex, 'price=', props.stockChartYValues[dateIndex], props.stockChartXValues[dateIndex], 'start_index')
+      const range = 35;
 
-      var startIndex = dateIndex - range/2 > 0 ? dateIndex -= range/2 : 0
+      var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
       var priceIndex = startIndex;
       var endIndex = dateIndex + range < props.stockChartYValues.length ? dateIndex + range : dateIndex;
       var highPrice = props.stockChartYValues[startIndex];
@@ -47,6 +47,8 @@ const Peak2PeakGui = (props) => {
         return dateIndex; // do not search
 
       for (let i = startIndex; i < endIndex; i++) { 
+        if (LOG_FLAG && i === startIndex)
+          console.log ('index=', i, 'first', props.stockChartXValues[startIndex])// end of loop
         const price = Number(props.stockChartYValues[i]);
         if (highPrice < price) {  // at least weeks to recover
           highPrice  = price;
@@ -55,7 +57,7 @@ const Peak2PeakGui = (props) => {
             console.log ('index=', i, 'price=', price, props.stockChartXValues[i])
         }
         if (LOG_FLAG && i === endIndex - 1)
-          console.log ('index=', i, 'last')// end of loop
+          console.log ('index=', i, 'last', props.stockChartXValues[endIndex])// end of loop
       }
       return priceIndex;
 
