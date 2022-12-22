@@ -964,7 +964,7 @@ export const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
           <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp;</div>      
-          <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  
+          {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
           <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>verifyColumns </button> 
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
