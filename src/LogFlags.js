@@ -41,8 +41,13 @@ const LogFlags = (props) => {
  
 
    // Return classes based on whether item is checked
+<<<<<<< HEAD
   //  var isChecked = (item) =>
   //    checked.includes(item) ? "checked-item" : "not-checked-item";
+=======
+   var isChecked = (item) =>
+     checked.includes(item) ? "checked-item" : "not-checked-item";
+>>>>>>> 7b4e35ce732fd4e7c909354c72c9b91ebacd3e76
  
     // var checkedItems_ = ''
     // checkList.forEach (function (item) { 
