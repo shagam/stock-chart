@@ -33,7 +33,7 @@ const Peak2PeakGui = (props) => {
     const LOG_FLAG = props.logFlags.includes('peak2Peak');
 
     const quasiTop = (initDate) => {
-      var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol)
+      var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol, props.logFlags)
       if(LOG_FLAG)
       console.log ('\nindex=', dateIndex, 'price=', props.stockChartYValues[dateIndex], props.stockChartXValues[dateIndex], 'start_index')
       const range = 35;

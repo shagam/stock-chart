@@ -34,7 +34,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     // startBeforeDropWeek = Math.round(startBeforeDropWeek);
 
     const startDateArray = [startYear, startMon, startDay]
-    var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol)  
+    var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol, logFlags)  
     var highPriceBeforeDeep = 0;
     var highPriceDateBeforeDeep = '';
     var highPriceBeforeDeepIndex = 0;
