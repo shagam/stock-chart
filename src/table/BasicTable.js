@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react'
+import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -92,6 +92,13 @@ export const BasicTable = (props) => {
 
   const useData = false;
 
+  var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
+  if (! hiddenCols) {
+    hiddenCols = ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
+
+    console.log ('hiddenColumns', hiddenCols)
+  }
+
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
@@ -120,7 +127,42 @@ export const BasicTable = (props) => {
     allColumns[ind].toggleHidden(); 
     allColumns[ind].toggleHidden(); 
   }
-  
+ 
+  // useEffect(() => {
+  //   // hiddenColumnRestore ()
+  // });
+
+  // function hiddenColumnRestore () {
+  //   console.log ('hiddenColumnRestore', visibleCols)
+  //   if (visibleCols) { 
+  //     allColumns.forEach ((col, ind) => {
+  //       const visible = allColumns[ind].isVisible;
+  //       const incl =  visibleCols.includes(col.id);
+  //       if (incl && ! visible) {
+  //         allColumns[ind].toggleHidden();
+  //         // console.log ('toggle_hidden on', ind, col.id)
+  //       }
+  //       if (! incl && visible) {
+  //         allColumns[ind].toggleHidden();
+  //         // console.log ('toggle_hidden off', col.id)
+  //       }
+  //     })
+  //   }
+  // }
+
+  function hiddenColumnsSave () {
+    var hiddenArray = [];
+    for (let ind = 0; ind < allColumns.length; ind++) {
+      if (! allColumns[ind].isVisible) {
+        hiddenArray.push (allColumns[ind].id)
+      }
+    }
+    localStorage.setItem ('columnsHidden', JSON.stringify(hiddenArray))
+    if (logFlags.includes('hiddenCols'))
+      console.log ('hiddenColumnsSave', JSON.stringify(hiddenArray))
+  }
+
+
   // send stock gain to firebase, delete old and add new one (No woory about format change)
   const firebaseGainAdd = async (symbol, src) => {
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
@@ -772,12 +814,13 @@ export const BasicTable = (props) => {
     state,
     setGlobalFilter,
     // selectedFlatRows,
+    visibleColumns,
     allColumns, getToggleHideAllColumnsProps,
   } = useTable ({
     columns,
     data,
     initialState: {
-      hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
+      hiddenColumns: hiddenCols
       // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
 
     } // "gap",
@@ -973,7 +1016,8 @@ export const BasicTable = (props) => {
           &nbsp;&nbsp;
           <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All
           &nbsp;&nbsp;        
-          <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide  </div>
+          <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide &nbsp; </div>
+          {/* <button type="button" className="stock_button_class" onClick={()=>hiddenColumnRestore()}> restoreVisible    </button> */}
         </div>
 
       {columnHideFlag && 
@@ -988,6 +1032,7 @@ export const BasicTable = (props) => {
             </div>
           ))
           }
+          {hiddenColumnsSave()}
         </div>
       }
        
