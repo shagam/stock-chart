@@ -27,7 +27,7 @@ import LogFlags from '../LogFlags'
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
-
+import cookieConsent from "react-cookie-consent"
 //import cloneDeep from 'lodash/cloneDeep';
 
 
@@ -44,6 +44,7 @@ import IpContext from './IpContext';
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
+import CookieConsent from 'react-cookie-consent'
 
 export const BasicTable = (props) => {
 
@@ -1002,7 +1003,8 @@ export const BasicTable = (props) => {
             var WinNetwork = new ActiveXObject("WScript.Network"); 
             alert(WinNetwork.UserName);  
         </script>  */}
-
+        <CookieConsent debug={true}>Site use localStorage for for persistance </CookieConsent>
+        
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}

@@ -18,7 +18,7 @@ import Dashboard from './auth/Dashboard'
 import Login from './auth/Login';
 import ForgotPassword from './auth/ForgotPassword';
 import UpdateProfile from './auth/UpdateProfile';
-
+import CookieConsent from "react-cookie-consent"
 
 
 
@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div className="App-continer">
-
+        <CookieConsent debug={true}> Site use localStorage for for persistance</CookieConsent>
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
         <h2  style={{color:'green'}}> Stock compare tool</h2>      
