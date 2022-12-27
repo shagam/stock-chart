@@ -977,6 +977,18 @@ export const BasicTable = (props) => {
   //   //border: '2px solid green'
   // };
 
+  function getColor(val) {
+    if (val === undefined || val === -1)
+      return 'Black'
+    if (typeof (val) !== 'number')
+      return 'black'
+    if (val < 1)
+      return 'orange'
+    else
+      return 'black'//RGBA(170,214,136,0.4)';
+  }
+
+
   return (
     <>
         <div className='w-100 text-left mt-2 d-flex '>   
@@ -1077,7 +1089,7 @@ export const BasicTable = (props) => {
               <tr id='stock_row_id'
                 {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps({style: {color: getColor(cell.value)}})}>{cell.render('Cell')}</td>
                 })}
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
