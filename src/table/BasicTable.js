@@ -75,7 +75,7 @@ export const BasicTable = (props) => {
 
   const ipStockRef = collection(db, "stockIp")
     var flexConfig = localStorage.getItem('flex');
-  const [flex, setFlex] = useState (flexConfig);
+
 
   const [columnHideFlag, setColumnHideFlag] = useState(true);
   const [searchDeepDate, setSearchDeepDate] = useState()
@@ -900,11 +900,6 @@ export const BasicTable = (props) => {
     setError('')
   }
 
-  const flexCallBack = (flex) => {
-    // console.log (flex);
-    setFlex (flex);
-  }
-
   const deepCallBack = (stockSymbol, deep, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
     //console.log (stockSymbol, deep, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
@@ -953,7 +948,7 @@ export const BasicTable = (props) => {
   }
 
   function test () {
-    console.log ('checkBox (marketwatch):', marketwatch, 'radio(servSelect):', servSelect, 'number(flex):', flex, 'verifyOffset:', verifyDateOffset)
+    console.log ('checkBox (marketwatch):', marketwatch, 'radio(servSelect):', servSelect, 'verifyOffset:', verifyDateOffset)
   }
 
   function marketStackCompare () {
@@ -1105,7 +1100,7 @@ export const BasicTable = (props) => {
 
         {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
         
-        <Config flexCallBack = {flexCallBack} alphaCallBack = {alphaCallBack}/>
+        <Config alphaCallBack = {alphaCallBack}/>
 
         <Manual />
         
