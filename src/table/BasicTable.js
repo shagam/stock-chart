@@ -820,7 +820,13 @@ export const BasicTable = (props) => {
     columns,
     data,
     initialState: {
-      hiddenColumns: hiddenCols
+      hiddenColumns: hiddenCols,
+      sortBy: [
+        {
+            id: 'symbol',
+            desc: false
+        }
+      ]
       // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
 
     } // "gap",
