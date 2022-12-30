@@ -75,7 +75,7 @@ export const BasicTable = (props) => {
   const infoRef = collection(db, "stock-info")
 
   const ipStockRef = collection(db, "stockIp")
-    var flexConfig = localStorage.getItem('flex');
+    // var flexConfig = localStorage.getItem('flex');
 
 
   const [columnHideFlag, setColumnHideFlag] = useState(true);
@@ -1119,7 +1119,7 @@ export const BasicTable = (props) => {
 
         {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
         
-        <Config alphaCallBack = {alphaCallBack}/>
+        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} />
 
         <Manual />
         

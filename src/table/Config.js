@@ -10,6 +10,12 @@ const  Config = (props) => {
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
+  function purgeStockTable () {
+    for (let index = props.rows.length -1; index >= 0; index--)
+      props.rows.splice(index, 1);
+    props.saveTable();
+  }
+
   const style = {
     // background: 'blue',
     // color: 'red',
@@ -27,7 +33,9 @@ const  Config = (props) => {
       { configFlag &&
         <div id = "config_id">
           <AlphaVantage alphaCallBack={props.alphaCallBack} />
-
+          <div> </div>
+          <hr/> 
+          <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
         </div>
       }
 
