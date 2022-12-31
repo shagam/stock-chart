@@ -16,6 +16,16 @@ const  Config = (props) => {
     props.saveTable();
   }
 
+  function refreshPage() {
+    window.location.reload(false);
+    console.log ('refresh Page')
+  }
+
+  function columnsHiddenPurge() {
+    localStorage.removeItem('columnsHidden')
+    refreshPage()
+  }
+
   const style = {
     // background: 'blue',
     // color: 'red',
@@ -36,8 +46,8 @@ const  Config = (props) => {
           <div> </div>
           <hr/> 
           <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
-          <div> &nbsp; <button onClick={localStorage.removeItem('columnsHidden')} > Purge Hidden columns </button> &nbsp; </div>
-          {/* <div> &nbsp; <button onClick={window.location.reload()} > Refresh </button> &nbsp; </div> */}
+          <div> &nbsp; <button onClick={columnsHiddenPurge} > Purge Hidden columns </button> &nbsp; </div>
+          <div> &nbsp; <button onClick={refreshPage} > Refresh </button> &nbsp; </div>
         </div>
       }
 
