@@ -36,6 +36,8 @@ const  Config = (props) => {
           <div> </div>
           <hr/> 
           <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
+          <div> &nbsp; <button onClick={localStorage.removeItem('columnsHidden')} > Purge Hidden columns </button> &nbsp; </div>
+          {/* <div> &nbsp; <button onClick={window.location.reload()} > Refresh </button> &nbsp; </div> */}
         </div>
       }
 
