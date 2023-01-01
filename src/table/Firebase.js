@@ -232,7 +232,7 @@ const Firebase = (props) => {
   }
 
    // get one symbol GAIN from firebase  and clean duplicates
-   const firebaseGainGetOne = async (symbol) => {
+   const firebaseGainGetOne = async (symbol, saveTable) => {
     try {
       // get one symbol gain from firebase
       var userQuery = query (props.gainRef, where('__symbol', '==', symbol));
@@ -300,6 +300,8 @@ const Firebase = (props) => {
           }               
         }
       }
+      if (saveTable) // save table and refresh only on last one
+        props.saveTable('all');
     } catch(e) {console.log (e)}
   }
 
@@ -357,8 +359,9 @@ const Firebase = (props) => {
 
     // fill missing data get from firebase 
     for (let i = 0; i < props.rows.length; i++) {
+      const saveTableFlag = i == props.rows.length - 1; // save table and refresh only on last one
       firebaseInfoGetOne((props.rows[i].values.symbol));
-      firebaseGainGetOne((props.rows[i].values.symbol));
+      firebaseGainGetOne((props.rows[i].values.symbol), saveTableFlag);
     }
     props.refreshCallBack()
     console.log ('gain, info inserted in table')
@@ -366,7 +369,8 @@ const Firebase = (props) => {
     //   props.saveTable('any');    
     // }, 500);
     } catch (e) { console.log (e)}
-    props.saveTable('all');
+    // setTimeout(() => props.saveTable('all'), 700);
+    // props.saveTable('all');
   }
 
   const showAll  = async () => {
