@@ -1121,7 +1121,7 @@ export const BasicTable = (props) => {
 
         {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
         
-        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} />
+        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns} />
 
         <Manual />
         

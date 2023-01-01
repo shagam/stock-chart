@@ -47,6 +47,8 @@ const  Config = (props) => {
           <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
           <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
           <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div>
+          <div> &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp; </div>
+          
         </div>
       }
 
