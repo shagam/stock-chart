@@ -98,8 +98,8 @@ export const BasicTable = (props) => {
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
     hiddenCols = hiddenColsDefault;
-
-    console.log ('hiddenColumns', hiddenCols)
+    if (LOG_FLAG)
+      console.log ('hiddenColumns', hiddenCols)
   }
 
   var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);

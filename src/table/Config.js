@@ -18,7 +18,6 @@ const  Config = (props) => {
 
   function refreshPage() {
     window.location.reload(false);
-    console.log ('refresh Page')
   }
 
   function columnsHiddenPurge() {
