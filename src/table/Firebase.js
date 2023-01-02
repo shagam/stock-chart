@@ -359,7 +359,7 @@ const Firebase = (props) => {
 
     // fill missing data get from firebase 
     for (let i = 0; i < props.rows.length; i++) {
-      const saveTableFlag = i == props.rows.length - 1; // save table and refresh only on last one
+      const saveTableFlag = i === props.rows.length - 1; // save table and refresh only on last one
       firebaseInfoGetOne((props.rows[i].values.symbol));
       firebaseGainGetOne((props.rows[i].values.symbol), saveTableFlag);
     }
