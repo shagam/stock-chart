@@ -331,8 +331,8 @@ export const BasicTable = (props) => {
                       
                   const updateMili = Date.now();
                   const updateDate = getDate();
-                  updateTableInfo (data, updateDate, updateMili);
                   setStockInfo (JSON.stringify(data));
+                  updateTableInfo (data, updateDate, updateMili);
                   saveTable(symbol);
                 }
             }
@@ -425,10 +425,21 @@ export const BasicTable = (props) => {
     
     childData.Address = '';   // Clear some data to decrese traffic
     childData.Description = '';
+    
+    // calc Graham price
     const EPS = Number (childData["EPS"]);
     const BookValue = Number (childData["BookValue"]);
     const graham = Math.sqrt(22.5 * EPS * BookValue).toFixed(2)
-    console.log (symbol, `grahamPrice=${graham} price=${rows[index].values.price} EPS=${EPS} BookValue=${BookValue}`)
+
+    var grahamTxt =`grahamPrice=${graham}`
+    const price=rows[index].values.price
+    if (price) 
+      grahamTxt += '  CurrentPrice=' + price;
+    grahamTxt  +=  `   ( EPS=${EPS}  BookValue=${BookValue} )`
+
+    console.log (symbol, grahamTxt)
+    setStockInfo (JSON.stringify(childData) + "\n\n" + grahamTxt);
+    
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
     // save overview per symbol
     // stocksOverview[symbol] = childData;
