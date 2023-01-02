@@ -441,10 +441,6 @@ export const BasicTable = (props) => {
     setStockInfo (JSON.stringify(childData) + "\n\n" + grahamTxt);
     
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
-    // save overview per symbol
-    // stocksOverview[symbol] = childData;
-    // const stocksOverviewStr = JSON.stringify(stocksOverview);
-    // localStorage.setItem('stocksOverview', stocksOverviewStr);
   }
             
   // save pair (stockSymbol ip)

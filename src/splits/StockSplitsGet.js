@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 
-// https://84.95.84.236:5000/splits?stock=MSFT
+// https://62.90.44.227:5000/splits?stock=MSFT
 // https://dinagold.org:5000/splitsNew?stock=MSFT
 // https://www.stocksplithistory.com/?symbol=MSFT
 
