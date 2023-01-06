@@ -44,7 +44,7 @@ import IpContext from './IpContext';
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
-import Errors from './Errors'
+import ErrorList from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
 
 export const BasicTable = (props) => {
@@ -1009,7 +1009,7 @@ export const BasicTable = (props) => {
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
           {error && <div>  &nbsp; &nbsp; {getDate() + ' ' + error} </div>}
         </div>
-        {<Errors errorList={errors}/> }
+        {<ErrorList errorList={errors}/> }
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}

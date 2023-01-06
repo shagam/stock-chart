@@ -3,7 +3,7 @@ import React from 'react'
 // import 'react-responsive-combo-box/dist/index.css'
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export function Errors (props) {
+export function ErrorList (props) {
 
     return (
         <div  className=' text-left mt-10'> 
@@ -19,4 +19,4 @@ export function Errors (props) {
 
 }
 
-export default Errors
+export default ErrorList
