@@ -1007,9 +1007,9 @@ export const BasicTable = (props) => {
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
-          {error && <div>  &nbsp; &nbsp; {getDate() + ' ' + error} </div>}
         </div>
-        {<ErrorList errorList={errors}/> }
+        {error && <div>  &nbsp; &nbsp; {getDate() + ' ' + error} </div>}
+        {/* {<ErrorList errorList={errors}/> } */}
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
