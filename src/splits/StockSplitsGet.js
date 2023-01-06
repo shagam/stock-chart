@@ -4,14 +4,14 @@ import axios from 'axios'
 import cors from 'cors'
 
 // https://62.90.44.227:5000/splits?stock=MSFT
-// https://dinagold.org:5000/splitsNew?stock=MSFT
+// https://dinagold.org:5000/splits?stock=MSFT
 // https://www.stocksplithistory.com/?symbol=MSFT
 
 function getDate() {
   const today = new Date();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  // var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
+  // var formattedDate = format(date, "yyyy-MMM-dd HH:mm"); 
   return date + " " + time;    
 }
 
@@ -92,7 +92,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
 
       })
       .catch ((err) => {
-        setError(err.message + '   url: ' + corsUrl)
+        setError(err.message + ',  ' + corsUrl)
         console.log(err, corsUrl)
       })
     
