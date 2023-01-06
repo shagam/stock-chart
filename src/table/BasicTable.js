@@ -44,11 +44,13 @@ import IpContext from './IpContext';
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
+import Errors from './Errors'
 import CookieConsent from 'react-cookie-consent'
 
 export const BasicTable = (props) => {
 
   const [error, setError] = useState()
+  const [errors, setErrors] = useState(["Red", "Yellow", "Blue", "Orange"])
   const [chartSymbol, setChartSymbol] = useState("");
   const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
   const [ssl, setSsl] = useState(true)
@@ -631,7 +633,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, setError);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
 
@@ -913,7 +915,7 @@ export const BasicTable = (props) => {
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
     localStorage.setItem ('state', JSON.stringify(state));
     refreshByToggleColumns ();
-    setError('')
+    // setError('')
   }
 
   const deepCallBack = (stockSymbol, deep, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
@@ -1007,11 +1009,7 @@ export const BasicTable = (props) => {
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
           {error && <div>  &nbsp; &nbsp; {getDate() + ' ' + error} </div>}
         </div>
-
-        {/* <script type="text/javascript"> 
-            var WinNetwork = new ActiveXObject("WScript.Network"); 
-            alert(WinNetwork.UserName);  
-        </script>  */}
+        {<Errors errorList={errors}/> }
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
