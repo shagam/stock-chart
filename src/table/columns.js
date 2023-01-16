@@ -180,8 +180,8 @@ export const COLUMNS = [
     accessor: 'deepDate'
   },
   {
-    Header: 'price/High',
-    Footer: 'priceDivHigh',    
+    Header: 'price/high',
+    Footer: 'price/high',    
     accessor: 'priceDivHigh'
   },
   {
@@ -378,8 +378,8 @@ export const GROUPED_COLUMNS = [
         accessor: 'deepDate'
       },
       {
-        Header: 'price/High',
-        Footer: 'price/High',    
+        Header: 'price/high',
+        Footer: 'price/high',    
         accessor: 'priceDivHigh'
       },
     
