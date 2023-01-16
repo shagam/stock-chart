@@ -989,9 +989,15 @@ export const BasicTable = (props) => {
   //   //border: '2px solid green'
   // };
 
-  function getColor(val) {
+  function getColor(val, column) {
     if (val === undefined || val === -1)
       return 'Black'
+    if (column.id === 'verify_1') {
+      if (val > 1.5 || val < 0.7)  // inconsistant data
+        return 'red'
+      else
+        return 'black'
+    }
     if (typeof (val) !== 'number')
       return 'black'
     if (val < 1)
@@ -1097,7 +1103,7 @@ export const BasicTable = (props) => {
               <tr id='stock_row_id'
                 {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps({style: {color: getColor(cell.value)}})}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps({style: {color: getColor(cell.value, cell.column)}})}>{cell.render('Cell')}</td>
                 })}
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
