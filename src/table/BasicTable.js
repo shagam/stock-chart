@@ -438,8 +438,8 @@ export const BasicTable = (props) => {
     if (price) 
       grahamTxt += '  CurrentPrice=' + price;
     grahamTxt  +=  `   ( EPS=${EPS}  BookValue=${BookValue} )`
-
-    console.log (symbol, grahamTxt)
+    if (LOG_FLAG)
+      console.log (symbol, grahamTxt)
     setStockInfo (JSON.stringify(childData) + "\n\n" + grahamTxt);
     
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
