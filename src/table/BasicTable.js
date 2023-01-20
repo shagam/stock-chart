@@ -1006,6 +1006,9 @@ export const BasicTable = (props) => {
       return 'black'//RGBA(170,214,136,0.4)';
   }
 
+  function clickedRow (row) {
+    console.log (row.id, row.values.symbol)
+  }
 
   return (
     <>
@@ -1101,6 +1104,7 @@ export const BasicTable = (props) => {
             prepareRow(row)
             return (
               <tr id='stock_row_id'
+              // <tr id='stock_row_id' key={row.id} onClick={() => clickedRow (row)}
                 {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return <td {...cell.getCellProps({style: {color: getColor(cell.value, cell.column)}})}>{cell.render('Cell')}</td>
