@@ -37,7 +37,8 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
-import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate, dateStr} from './Date'
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from './IpContext';
 
@@ -117,7 +118,7 @@ export const BasicTable = (props) => {
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
-    errors.unshift ([getDate(), err])
+    errors.unshift ([getDateSec(), err])
 
     refreshByToggleColumns()
   }
