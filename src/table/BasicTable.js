@@ -117,13 +117,8 @@ export const BasicTable = (props) => {
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
-    const LIMIT = 4;
     errors.unshift ([getDate(), err])
-    // purge old errors
-    if (errors.length > LIMIT) {
-      for (let i = 0; i < errors.length - LIMIT; i++)
-        errors.pop()
-    }
+
     refreshByToggleColumns()
   }
 
