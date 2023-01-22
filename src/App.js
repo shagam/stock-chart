@@ -19,6 +19,7 @@ import Login from './auth/Login';
 import ForgotPassword from './auth/ForgotPassword';
 import UpdateProfile from './auth/UpdateProfile';
 import CookieConsent from "react-cookie-consent"
+import {getDate} from './table/Date'
 
 
 
@@ -26,6 +27,8 @@ function App() {
   const [count, setCount] = useState (0);
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
+  const nowStr = getDate()
+  console.log(nowStr  + '  %cstock compare load', 'background: #fff; color: #22ef11');
 
   const refreshCallBack = (childData) => {
     setCount (count + 1);
