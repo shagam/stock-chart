@@ -49,8 +49,7 @@ import CookieConsent from 'react-cookie-consent'
 
 export const BasicTable = (props) => {
 
-  const [error, setError] = useState()
-  const [errors, setErrors] = useState(["Red", "Yellow", "Blue", "Orange"])
+  const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
   const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
   const [ssl, setSsl] = useState(true)
@@ -117,7 +116,16 @@ export const BasicTable = (props) => {
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
       // const cafeList = document.querySelector("#gain-history")
-
+  function errorAdd (err) {
+    const LIMIT = 4;
+    errors.unshift ([getDate(), err])
+    // purge old errors
+    if (errors.length > LIMIT) {
+      for (let i = 0; i < errors.length - LIMIT; i++)
+        errors.pop()
+    }
+    refreshByToggleColumns()
+  }
 
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
@@ -301,8 +309,7 @@ export const BasicTable = (props) => {
 
     //console.log(`Overview info (${symbol})`);
     if (LOG_API)
-      console.log (`${API_Call}`);
-    setError();           
+      console.log (`${API_Call}`);        
     fetch(API_Call)
         .then(
             function(response) {
@@ -479,7 +486,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    StockSplitsGet(sym, rows, setError, servSelect, ssl, logFlags)
+    StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags)
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -633,7 +640,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, setError);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
 
@@ -1017,8 +1024,7 @@ export const BasicTable = (props) => {
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
           <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
         </div>
-        {error && <div>  &nbsp; &nbsp; {getDate() + ' ' + error} </div>}
-        {/* {<ErrorList errorList={errors}/> } */}
+        {errors.length > 0 && <ErrorList errorList={errors}/> }
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}

@@ -17,7 +17,7 @@ import {format} from "date-fns"
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
   
   const LOG = logFlags.includes("marketwatch");
-  setError();
+  // setError();
 
   // choose entry for compare
   var entry = stockChartXValuesFunction.length - 1;

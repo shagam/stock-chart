@@ -40,7 +40,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
       .then ((result) => {
         if (result.status !== 200)
           return;
-        setError('');
+        // setError('');
         const splits = result.data;
         if (splits.length > 0 && LOG) {
           console.log (getDate(), sym, result.data, result.status, corsUrl)
