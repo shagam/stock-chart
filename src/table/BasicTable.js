@@ -994,7 +994,7 @@ export const BasicTable = (props) => {
       return 'Black'
     if (column.id === 'verify_1') {
       if (val > 1.2 || val < 0.8)  // inconsistant data
-        return 'rgb(250,10,0)'
+        return 'rgb(250,10,0)' // red '#ff0000'
       else
         return 'black'
     }
