@@ -22,7 +22,8 @@ export function ErrorList (props) {
             {/* <hr/>  */}
             <div className="container" style ={{overflow: 'scroll', hight: '17%'}} >
                 { visible && props.errorList.map((err) => (
-                <div key={err[1]}  style ={{display: 'flex'}} >
+                    // display each err in array in one line
+                <div style ={{display: 'flex'}} >
                     {err.map((dd) => <div>&nbsp; {dd}</div>)} 
                 </div>
                 ))
