@@ -21,9 +21,9 @@ export function ErrorList (props) {
             <Container  className='d-flex align-items-left justify-content-left' style={{maxHeight: "15vh", padding: '0px', margin:'0px'}}  > 
             {/* <hr/>  */}
             <div className="container" style ={{overflow: 'scroll', hight: '17%'}} >
-                { visible && props.errorList.map((d) => (
-                <div key={d[1]}>
-                    {d[0]}  &nbsp; {d[1]}
+                { visible && props.errorList.map((err) => (
+                <div key={err[1]}  style ={{display: 'flex'}} >
+                    {err.map((dd) => <div>&nbsp; {dd}</div>)} 
                 </div>
                 ))
                 }

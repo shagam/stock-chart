@@ -118,8 +118,12 @@ export const BasicTable = (props) => {
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
-    errors.unshift ([getDateSec(), err])
+    var txt = "";
+    err.forEach ((e) => {
+      txt += e + ' ';
+    })
 
+    {errors.unshift ([getDateSec(), txt])}
     refreshByToggleColumns()
   }
 
