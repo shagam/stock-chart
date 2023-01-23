@@ -29,7 +29,7 @@ function getDate() {
 
 function getDateSec() {
   const date = new Date();
-  var formattedDate = format(date, "yyyy-MMM-dd - HH:mm:ss");
+  var formattedDate = format(date, "yyyy-MMM-dd  HH:mm:ss");
   return formattedDate;    
 }
 
