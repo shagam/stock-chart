@@ -6,8 +6,15 @@ import { Container } from 'react-bootstrap'
 
 export function ErrorList (props) {
     const [visible, setVisible] = useState(false)
-
+    const str ="<div style ={{color: 'red'}}> red </div>"
     // style={{display: 'flex'}}
+
+    function concat (arr) {
+        var txt = '';
+        arr.forEach ((t) => {txt += t + '  '})
+        return txt;
+    }
+
     return (  
   
         <div  >   
@@ -23,8 +30,8 @@ export function ErrorList (props) {
             <div className="container" style ={{overflow: 'scroll', hight: '17%'}} >
                 { visible && props.errorList.map((err) => (
                     // display each err in array in one line
-                <div style ={{display: 'flex'}} >
-                    {err.map((dd) => <div>&nbsp; {dd}</div>)} 
+                <div key={concat(err)} style ={{display: 'flex'}} >
+                    <div> {concat (err)} </div> 
                 </div>
                 ))
                 }
