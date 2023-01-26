@@ -28,7 +28,7 @@ function App() {
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
   const nowStr = getDate()
-  console.log(nowStr  + '  %cstock compare load', 'background: #fff; color: #22ef11');
+  console.log(nowStr  + '  %cstock compare start', 'background: #fff; color: #22ef11');
 
   const refreshCallBack = (childData) => {
     setCount (count + 1);
