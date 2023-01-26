@@ -1108,7 +1108,7 @@ export const BasicTable = (props) => {
               // <tr id='stock_row_id' key={row.id} onClick={() => clickedRow (row)}
                 {...row.getRowProps()}>
                 {row.cells.map((cell) => {
-                  return <td {...cell.getCellProps({style: {color: getColor(cell.value, cell.column)}})}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps({style: {margin: '0px',  padding: '3px', color: getColor(cell.value, cell.column)}})}>{cell.render('Cell')}</td>
                 })}
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
