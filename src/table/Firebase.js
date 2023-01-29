@@ -206,9 +206,10 @@ const Firebase = (props) => {
             alert (`${textForAlert} with gain compared to qqq\n ${str} `)
           }
       }
-      else
-        // window.location.reload();
+      else {
         props.saveTable('all');
+        window.location.reload();
+      }
       // const ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
       // if (add_flag)
       //   props.allColumns[ind].toggleHidden();
