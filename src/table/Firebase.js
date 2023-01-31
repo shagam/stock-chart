@@ -378,8 +378,11 @@ const Firebase = (props) => {
 
   const showAll  = async () => {
     //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain_").doc(doc.id). update ({your data}) }); });
-    const all = [];  
+    const all = [];
+    var gainLength;
+    var infoLength;  
     const gain = await getDocs(props.gainRef);
+    // gainLength = gain.docs.length;
     for (let i = 0; i < gain.docs.length; i++) {
       const sym = gain.docs[i].data().__symbol;
       all.push (sym);
@@ -387,6 +390,7 @@ const Firebase = (props) => {
       // all.push (gain.docs[i].data().__symbol);
 
     const info = await getDocs(props.infoRef);
+    // infoLength = info.docs.length;
     for (let i = 0; i < info.docs.length; i++) {
       const sym = info.docs[i].data().__symbol;
       if (all.indexOf(sym) === -1)
@@ -402,8 +406,8 @@ const Firebase = (props) => {
       list += all[i] + "\n";
     }
     // alert (all.toString() + "  (" + all.length + ")"); 
-    alert ("(" + all.length + ")\n" + alertList); 
-    console.log ("(" + all.length + ")\n" + list); 
+    console.log ("firestore list (total=" , all.length, 'gain=', gain.docs.length, 'info=', info.docs.length, ")\n" + alertList); 
+    alert ("firestore list (total=" + all.length + '  gain=' + gain.docs.length+ '  info=' + info.docs.length + ")\n" + alertList); 
     //gain.docs.map(doc) =>  
     //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
     //console.log ('firebase read gain: ', gain.docs.length, stocksGain.length);
