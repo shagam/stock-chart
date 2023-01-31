@@ -15,35 +15,7 @@ const Firebase = (props) => {
 
   const LOG_FLAG = false;
 
-
-  //read from firebase gain
-  const firebaseGainGetAll = async () => {
-    const gain = await getDocs(props.gainRef);
-    setStocksGainAll (gain);
-    setStocksGain(gain.docs.map((doc) =>({...doc.data(), id: doc.id})))
-    console.log ('firebase read gain: ', gain.docs.length, stocksGain.length);
-  }
-
-  //read from firebase info
-  const firebaseInfoGetAll = async () => {
-    const info = await getDocs(props.infoRef)
-    setStocksInfoAll (info);
-    setStocksInfo(info.docs.map((doc) =>({...doc.data(), id: doc.id})))
-    if (LOG_FLAG)
-    console.log ('firebase read info: ', info.docs.length, stocksInfo.length);
-  }
-
- 
-  // main entry
-  const count_gain_info = () => {
-    firebaseGainGetAll();
-    firebaseInfoGetAll();
-
-    if (LOG_FLAG)
-    console.log ('stocksGain (count): ', stocksGain.length, 'stocksInfo (count): ', stocksInfo.length);
-   // console.log ("ipList: ", ipList.length);
-  }
-
+  
   function addSym (sym, fireGain) {
     const sym_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
     if (sym_index === -1) 
@@ -376,7 +348,7 @@ const Firebase = (props) => {
     // props.saveTable('all');
   }
 
-  const showAll  = async () => {
+  const firebaseStatistics  = async () => {
     //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain_").doc(doc.id). update ({your data}) }); });
     const allGain = [];
     const gain = await getDocs(props.gainRef);
@@ -409,7 +381,7 @@ const Firebase = (props) => {
     console.log ('firesbase gain list (', allGain.length, ")\n" + allGain);
     console.log ('\nfirebase info list (', allInfo.length, ")\n" + allInfo);
 
-    alert ('firesbase gain list (' + allGain.length + ') ' + allGain + '\n\n  info list (' + allInfo.length + ")" + allInfo + ")\n"); 
+    alert ('firesbase gain list (' + allGain.length + ') ' + allGain + '\n\nfirebase info list (' + allInfo.length + ")" + allInfo + ")\n"); 
     //gain.docs.map(doc) =>  
     //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
     //console.log ('firebase read gain: ', gain.docs.length, stocksGain.length);
@@ -437,15 +409,11 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
 
-        {/* {stockListStr !== '' &&
-          <textarea rows={3} cols={80} value={stockListStr} />   
-        } */}
-        <button type="button" onClick={()=>showAll ()}>firebase-lists</button>
+        <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
         </div>
         {props.admin &&
           <div>
-            <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} &bpsp; </div>
-            <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
+ 
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
           </div>
         }
