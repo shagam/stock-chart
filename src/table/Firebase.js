@@ -394,7 +394,7 @@ const Firebase = (props) => {
       // if (! all.find (sym))
         // all.push (sym);
     }
-
+    all.sort();
     var list = "";
     var alertList = "";
     for (let i = 0; i < all.length; i++) {
@@ -434,20 +434,19 @@ const Firebase = (props) => {
         {/* {stockListStr !== '' &&
           <textarea rows={3} cols={80} value={stockListStr} />   
         } */}
-
+        <button type="button" onClick={()=>showAll ()}>showAll</button>
         </div>
         {props.admin &&
           <div>
             <div> Firebase   gain: {stocksGain.length}, info: {stocksInfo.length} &bpsp; </div>
             <button type="button" onClick={()=>count_gain_info()}>count_gain_info </button>  
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
-            <button type="button" onClick={()=>showAll ()}>showAll</button>
           </div>
         }
       </div>
-      <div  style =  {{ border: '2px solid green', display:'flex'}} > 
+      {/* <div  style =  {{ border: '2px solid green', display:'flex'}} > 
         {props.admin && <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />}
-      </div>
+      </div> */}
     </>
   )
 }
