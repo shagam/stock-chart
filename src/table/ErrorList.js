@@ -22,7 +22,7 @@ export function ErrorList (props) {
                 <input 
                     type="checkbox" checked={visible}
                     onChange={() => {setVisible (!visible)}}
-                /> errors
+                /> errors ({props.errorList.length})
             </div>
 
             <Container  className='d-flex align-items-left justify-content-left' style={{maxHeight: "15vh", padding: '0px', margin:'0px'}}  > 
