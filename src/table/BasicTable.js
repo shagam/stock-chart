@@ -325,7 +325,8 @@ export const BasicTable = (props) => {
                   if (dataStr === '{}') {
                     const index = rows.findIndex((row)=> row.values.symbol === symbol);
                     rows[index].values.PE = -2  // flag non valid
-                    alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
+                    // alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
+                    errorAdd([` ${symbol} etf or invalid symbol (has no info) data="${dataStr}" PE=-2 `])
                     return;
                   }
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
