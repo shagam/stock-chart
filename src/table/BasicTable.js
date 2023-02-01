@@ -323,6 +323,8 @@ export const BasicTable = (props) => {
                   if (LOG_API)
                     console.dir(data)
                   if (dataStr === '{}') {
+                    const index = rows.findIndex((row)=> row.values.symbol === symbol);
+                    rows[index].values.PE = -2  // flag non valid
                     alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
                     return;
                   }
