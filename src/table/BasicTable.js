@@ -407,9 +407,13 @@ export const BasicTable = (props) => {
 
     rows[index].values.Exchange = childData["Exchange"].substring(0,4);
     rows[index].values.Industry = childData["Industry"];
-
-    rows[index].values.PE = Number (childData["PERatio"]);
-    rows[index].values.PEG = Number (childData["PEGRatio"]); 
+    const PE = childData["PERatio"];
+    // if (PE === 'None') {
+    //   console.log (symbol)
+    // }
+    rows[index].values.PE = (PE === 'None' || PE === undefined) ? -1 : Number(PE);
+    const PEG = childData["PEGRatio"];
+    rows[index].values.PEG = (PEG === 'None' || PEG === undefined) ? -1 : Number (PEG); 
     rows[index].values.TrailPE = Number (childData["TrailingPE"]);
     rows[index].values.ForwPE = Number (childData["ForwardPE"]);
     rows[index].values.Div = Number (childData["DividendYield"]);
