@@ -32,16 +32,27 @@ const Firebase = (props) => {
     newStock.values.gain_date = fireGain._updateDate;
     newStock.values.gain_mili = fireGain._updateMili;
 
-    newStock.values.wk = fireGain.wk;
-    newStock.values.wk2 = fireGain.wk2;
-    newStock.values.mon = fireGain.mon;
-    newStock.values.mon3 = fireGain.mon3;
-    newStock.values.mon6 = fireGain.mon6;
-    newStock.values.year = fireGain.year;
-    newStock.values.year2 = fireGain.year2;
-    newStock.values.year5 = fireGain.year5;
-    newStock.values.year10 = fireGain.year10;
-    newStock.values.year20 = fireGain.year20;
+    newStock.values.wk = fireGain.wk.toFixed(2);
+    newStock.values.wk2 = fireGain.wk2.toFixed(2);
+    newStock.values.mon = fireGain.mon.toFixed(2);
+    newStock.values.mon3 = fireGain.mon3.toFixed(2);
+    newStock.values.mon6 = fireGain.mon6.toFixed(2);
+    newStock.values.year = fireGain.year.toFixed(2);
+    newStock.values.year2 = fireGain.year2.toFixed(2);
+    newStock.values.year5 = fireGain.year5.toFixed(2);
+    newStock.values.year10 = fireGain.year10.toFixed(2);
+    newStock.values.year20 = fireGain.year20.toFixed(2);
+    if (newStock.values.year === '-1.00')
+      newStock.values.year = -1
+    if (newStock.values.year2 === '-1.00')
+      newStock.values.year2 = -1
+    if (newStock.values.year5 === '-1.00')
+      newStock.values.year5 = -1
+    if (newStock.values.year10 === '-1.00')
+      newStock.values.year10 = -1
+    if (newStock.values.year20 === '-1.00')
+      newStock.values.year20 = -1
+
     newStock.values.splits = fireGain.splits;
     newStock.values.price = fireGain.price;
     newStock.values.splits_list = fireGain.splits;
@@ -140,7 +151,7 @@ const Firebase = (props) => {
             default:
               ratio = -1;
           }
-          ratio = Number(ratio.toFixed(2))
+          ratio = (ratio.toFixed(2))
           // console.log (ratio);
         }
 
