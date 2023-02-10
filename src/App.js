@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="App-continer">
-        <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent>
+        {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
         <h2  style={{color:'green'}}> Stock compare tool</h2>      
