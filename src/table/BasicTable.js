@@ -95,7 +95,7 @@ export const BasicTable = (props) => {
 
   const useData = false;
 
-  const hiddenColsDefault = ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
+  const hiddenColsDefault = ["Exchange","Industry","Cap","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
@@ -424,7 +424,7 @@ export const BasicTable = (props) => {
     rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
     rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
     rows[index].values.target_raw = Number (childData["AnalystTargetPrice"]);
-
+    rows[index].values.Cap = Number (childData["MarketCapitalization"] / 1000 / 1000 / 1000).toFixed(2);
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
     //Sector         
 

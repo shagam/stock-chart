@@ -16,6 +16,11 @@ export const COLUMNS = [
     accessor: 'Industry'
   },
   {
+    Header: 'Cap',
+    Footer: 'Cap',    
+    accessor: 'Cap'
+  },
+  {
     Header: 'PE',
     Footer: 'PE',
     accessor: 'PE'
@@ -224,6 +229,11 @@ export const GROUPED_COLUMNS = [
         Header: 'Industry',
         Footer: 'Industry',    
         accessor: 'Industry'
+      },
+      {
+        Header: 'Cap',
+        Footer: 'Cap',    
+        accessor: 'Cap'
       },
       {
         Header: 'PE',
