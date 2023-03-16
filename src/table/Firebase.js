@@ -52,8 +52,8 @@ const Firebase = (props) => {
       newStock.values.year10 = -1
     if (newStock.values.year20 === '-1.00')
       newStock.values.year20 = -1
-
-    newStock.values.splits = fireGain.splits;
+    if (fireGain.splits)
+    newStock.values.splits = JSON.parse (fireGain.splits).length;
     newStock.values.price = fireGain.price;
     newStock.values.splits_list = fireGain.splits;
 
@@ -229,7 +229,7 @@ const Firebase = (props) => {
         props.rows[row_index].values.sym = symbol; // added field
         props.rows[row_index].values.splits_list = gain_.splits;
         if (gain_.splits)
-          props.rows[row_index].values.splitsCount = JSON.parse(gain_.splits).length;
+          props.rows[row_index].values.splits = JSON.parse(gain_.splits).length;
         props.rows[row_index].values.gain_mili = gain_._updateMili;
         props.rows[row_index].values.gain_date = gain_._updateDate;
     

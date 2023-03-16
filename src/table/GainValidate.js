@@ -72,8 +72,6 @@ export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues,
       p = Number(p).toFixed(3)
       } catch (e) {alert ('p  ' + p)}
     
-      // if (p > 1.1 || p < 0.9)
-      //   rows[row_index].values.splitsCount = p;
       console.log (symbol, chartIndex, p, stockChartXValues[chartIndex], gain_validation_json[valiate_index], stockChartYValues[chartIndex]);
 
       var alphaPrice = Number (stockChartYValues[chartIndex]);

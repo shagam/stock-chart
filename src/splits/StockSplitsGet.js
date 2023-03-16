@@ -55,7 +55,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
         }
 
         if (rows[row_index].values.splits_list !== undefined) {
-          // console.log ('old split: ', rows[row_index].values.splitsCount)
+          // console.log ('old split: ', rows[row_index].values.splits)
           if (LOG && rows[row_index].values.splits_list)
           console.dir (rows[row_index].values.splits_list);
         }
@@ -79,14 +79,14 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
           console.log ("old splits", rows[row_index].values.splits_list)
           }
           rows[row_index].values.splits_list = stringify;
-          rows[row_index].values.splitsCount = splitArray.length;
+          rows[row_index].values.splits = splitArray.length;
           rows[row_index].values.splitsUpdateMili = Date.now();
         }
         else {
           if (LOG)
           console.log ("delete obsolete splits")
           rows[row_index].values.splits_list = '';
-          rows[row_index].values.splitsCount = '';
+          rows[row_index].values.splits = '';
           rows[row_index].values.splitsUpdateMili = Date.now();
         }
 
