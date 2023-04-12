@@ -115,7 +115,8 @@ const Peak2PeakGui = (props) => {
 
         const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
         const textResults = 'sym='+ props.symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
-        const textInfo = ` (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${props.stockChartXValues[indexFirst]} \xa0 to= ${props.stockChartXValues[indexEnd]}  )`;
+        const textInfo = 'sym='+ props.symbol + ` \xa0 \xa0 (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${props.stockChartXValues[indexFirst]} \xa0 to= ${props.stockChartXValues[indexEnd]}  )`;
+        
         console.log (textResults)
         console.log (textInfo)
         setCalcResults(textResults)
