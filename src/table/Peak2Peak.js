@@ -161,8 +161,8 @@ const Peak2PeakGui = (props) => {
       {displayFlag && 
         <div> 
             {props.symbol && <div> {props.symbol}</div>}
-            {calcResults && <div style={{ color: 'red'}} >  <hr/> {calcResults}  </div>}
-            {calcInfo && <div style={{ color: 'green'}} >  {calcInfo} <hr/> </div>}
+            {calcResults && calcResults.includes(props.symbol) && <div style={{ color: 'red'}} >  <hr/> {calcResults}  </div>}
+            {calcInfo && calcResults.includes(props.symbol) && <div style={{ color: 'green'}} >  {calcInfo} <hr/> </div>}
 
            <div  style={{display:'flex' }}> 
             <div style={{ color: 'magenta'}}  >Start_date:   </div>
