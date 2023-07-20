@@ -14,9 +14,10 @@ import {format} from "date-fns"
   // url += '%2F' + req.query.year
 
 
-export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
+export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
   
-  const LOG = logFlags.includes("marketwatch");
+  const LOG = logFlags.includes("verify_1");
   // setError();
 
   // choose entry for compare
