@@ -95,7 +95,9 @@ export const BasicTable = (props) => {
 
   const useData = false;
 
-  const hiddenColsDefault = ["Exchange","Industry","Cap","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
+  const hiddenColsDefault = ["Exchange","Industry","Cap","PEG","target","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
+  "EVToEBITDA","EVToRevenue","wk","wk2","mon","mon3","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice",
+  "info_date","gain_date","deep","recoverWeek","deepDate"]
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
