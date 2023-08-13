@@ -14,7 +14,8 @@ import {format} from "date-fns"
   // url += '%2F' + req.query.year
 
 
-export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
+export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, 
+  refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
   
   const LOG = logFlags.includes("marketwatch");
   // setError();
@@ -64,11 +65,12 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     //corsUrl = "http://localhost:5000/price?stock=" + sym
     corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
     // console.log (getDate(), corsUrl)
-
+  if (LOG)
+  console.log (sym, corsUrl)
     axios.get (corsUrl)
     .then ((result) => {
       if (LOG)
-      console.log (result.data)
+      console.log (sym, result.data)
       // console.log ("Price Compare", getDate(), year, mon, day,
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym);
