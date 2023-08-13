@@ -72,8 +72,8 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   console.log (sym, corsUrl)
     axios.get (corsUrl)
     .then ((result) => {
-      if (LOG)
-      console.log (sym, result.data)
+      if (LOG && result.data)
+      console.log (sym, JSON.stringify(result.data))
       // console.log ("Price Compare", getDate(), year, mon, day,
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym);
