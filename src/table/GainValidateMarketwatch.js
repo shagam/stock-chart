@@ -57,7 +57,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   // if (corsServer === 'serv.dinagold.org')
   if (ssl) {
     corsUrl = "https://";
-    corsUrl += corsServer + ":5001/price?stock=" + sym
+    corsUrl += corsServer + ":5000/price?stock=" + sym
   }
   else {
     corsUrl = "http://"; 

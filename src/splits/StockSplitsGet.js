@@ -26,7 +26,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
       // if (corsServer === 'serv.dinagold.org')
       if (ssl) {
         corsUrl = "https://";
-        corsUrl += corsServer+ ":5001/splits?stock=" + sym;
+        corsUrl += corsServer+ ":5000/splits?stock=" + sym;
       }
       else {
         corsUrl = "http://"

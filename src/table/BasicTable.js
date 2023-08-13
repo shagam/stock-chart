@@ -53,7 +53,7 @@ export const BasicTable = (props) => {
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
   const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
-  const [ssl, setSsl] = useState(false)
+  const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -1059,7 +1059,7 @@ export const BasicTable = (props) => {
 
           {<div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
-          {true && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
+          {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
