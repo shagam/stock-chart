@@ -577,7 +577,7 @@ export const BasicTable = (props) => {
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym, logFlags)
                   if (chartIndex < 1) {// error not fount
                     if (LOG_SPLITS)
-                      console.log ("Split out of range", sym, JSON.stringify (splitArrayList[splitNum]), chartIndex)
+                      console.log (sym, "Split out of range", JSON.stringify (splitArrayList[splitNum]), chartIndex)
                     continue;
                   }
                   // find max jump of split index
@@ -600,7 +600,7 @@ export const BasicTable = (props) => {
                     }
 
                     if (chartIndexOrg !== maxJumpWeekNum && LOG_SPLITS)
-                      console.log ('index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
+                      console.log (sym, 'index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
 
                     var valuesBefore='';
                     for (var j = chartIndex - 3; j < chartIndex + 3; j++) {
@@ -608,7 +608,7 @@ export const BasicTable = (props) => {
                     }
                     // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
                     if (LOG_SPLITS) {
-                      console.log('Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
+                      console.log(sym, 'Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
                       console.log(sym, 'before compensation (' + chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesBefore);
                     }
 

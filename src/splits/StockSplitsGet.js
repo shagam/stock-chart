@@ -20,7 +20,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
       // const [splits, setSplits] = useState([])
       const LOG = logFlags.includes('splits'); 
       if (LOG)
-      console.log (sym, 'req params ', rows.length)
+        console.log (sym, getDate(), 'req params ', rows.length)
 
       var corsUrl;
       // if (corsServer === 'serv.dinagold.org')
@@ -32,6 +32,8 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
         corsUrl = "http://"
         corsUrl += corsServer+ ":5000/splits?stock=" + sym;
       }
+      if (LOG)
+        console.log (sym, corsUrl)
       // corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;
       // corsUrl = "http://localhost:5000/splits?stock=" + sym;
       // corsUrl = "https://www.stocksplithistory.com/?symbol=" + sym;
@@ -44,8 +46,9 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
         // setError('');
         const splits = result.data;
         if (splits.length > 0 && LOG) {
-          console.log (getDate(), sym, result.data, result.status, corsUrl)
-          console.dir ("splits from server", splits)
+          // console.log('\x1B[31mhello\x1B[34m world');
+          console.log (sym, getDate(), result.data, result.status)
+          console.dir (sym, "splits from server", splits)
           // console.log ('last web split: ', splits[splits.length - 1]);
         }
 
@@ -85,7 +88,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
         }
         else {
           if (LOG)
-          console.log ("delete obsolete splits")
+          console.log (sym, "delete obsolete splits")
           rows[row_index].values.splits_list = '';
           rows[row_index].values.splits = '';
           rows[row_index].values.splitsUpdateMili = Date.now();
