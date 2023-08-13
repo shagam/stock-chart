@@ -506,7 +506,7 @@ export const BasicTable = (props) => {
         .then(
             function(response) {
                 const respStr = JSON.stringify (response);
-                if (respStr.indexOf (' status: 200, ok: true') !== -1)
+                if (response.status != 200 || ! response.ok)
                     console.log(response);
                 return response.json();
             }
@@ -530,6 +530,11 @@ export const BasicTable = (props) => {
                   //setChartData ('');
                   return;
               }
+              const limit_100_PerDay = 'You have reached the 100 requests/day limit for your free API key'
+              if (dataStr.indexOf (limit_100_PerDay) !== -1) {
+                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call} `);
+                return;
+              }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
                 alert (dataStr.substring(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
                 //setChartData ('');
