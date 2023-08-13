@@ -7,7 +7,7 @@ const LogFlags = (props) => {
   const [showFlags, setShowFlafs] = useState(false)
    // State with list of all checked item
    const [checked, setChecked] = useState([]);
-   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "firebase", "marketwatch", "splits", "chart", 'alpha','api', "aux","date"];
+   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "firebase", "verify_1", "splits", "chart", 'alpha','api', "aux","date"];
  
    
   useEffect(() => {

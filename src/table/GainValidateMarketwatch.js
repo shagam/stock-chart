@@ -14,10 +14,10 @@ import {format} from "date-fns"
   // url += '%2F' + req.query.year
 
 
-export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, requestedEntry_, 
-  refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
-  
-  const LOG = logFlags.includes("marketwatch");
+export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
+ 
+  const LOG = logFlags.includes("verify_1");
   // setError();
 
   // choose entry for compare
@@ -55,11 +55,14 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
   var corsUrl;
   // if (corsServer === 'serv.dinagold.org')
-  if (ssl)
+  if (ssl) {
     corsUrl = "https://";
-  else
+    corsUrl += corsServer + ":5001/price?stock=" + sym
+  }
+  else {
     corsUrl = "http://"; 
-  corsUrl += corsServer + ":5000/price?stock=" + sym
+    corsUrl += corsServer + ":5000/price?stock=" + sym
+  }
 
   // var corsUrl = "http://62.90.44.227:5000/price?stock=" + sym
     //corsUrl = "http://localhost:5000/price?stock=" + sym

@@ -24,13 +24,14 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
 
       var corsUrl;
       // if (corsServer === 'serv.dinagold.org')
-      if (ssl)
+      if (ssl) {
         corsUrl = "https://";
-      else
+        corsUrl += corsServer+ ":5001/splits?stock=" + sym;
+      }
+      else {
         corsUrl = "http://"
-
-      corsUrl += corsServer+ ":5000/splits?stock=" + sym;
-
+        corsUrl += corsServer+ ":5000/splits?stock=" + sym;
+      }
       // corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;
       // corsUrl = "http://localhost:5000/splits?stock=" + sym;
       // corsUrl = "https://www.stocksplithistory.com/?symbol=" + sym;

@@ -53,7 +53,7 @@ export const BasicTable = (props) => {
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
   const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
-  const [ssl, setSsl] = useState(true)
+  const [ssl, setSsl] = useState(false)
   const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
@@ -95,7 +95,9 @@ export const BasicTable = (props) => {
 
   const useData = false;
 
-  const hiddenColsDefault = ["Exchange","Industry","Cap","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
+  const hiddenColsDefault = ["Exchange","Industry","Cap","PEG","target","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
+  "EVToEBITDA","EVToRevenue","wk","wk2","mon","mon3","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice",
+  "info_date","gain_date","deep","recoverWeek","deepDate"]
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
@@ -1057,7 +1059,7 @@ export const BasicTable = (props) => {
 
           {<div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
-          {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
+          {true && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
