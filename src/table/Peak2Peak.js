@@ -37,6 +37,7 @@ const Peak2PeakGui = (props) => {
     const LOG_FLAG = props.logFlags.includes('peak2Peak');
 
     const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags) => {
+      const LOG_FLAG = props.logFlags.includes('peak2Peak');
       var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
       if(LOG_FLAG)
       console.log ('\nindex=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex], 'start_index')
@@ -69,7 +70,7 @@ const Peak2PeakGui = (props) => {
 
 
 
-    function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues, weekly, logFlags) {
+    function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues, weekly, logFlags, searchPeak, startDate, endDate) {
         setCalcResults(); 
         setCalcInfo()
         // console.log ('calc')
@@ -183,7 +184,8 @@ const Peak2PeakGui = (props) => {
            <div> &nbsp; 
             <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
-            <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.weekly, props.logFlags)}>Calc peak2peak gain </button>           
+            <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate)}>Calc peak2peak gain </button>           
            </div>
 
 
