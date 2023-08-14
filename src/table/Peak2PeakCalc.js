@@ -36,19 +36,20 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
 
-  export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues, weekly, logFlags, searchPeak, startDate, endDate) {
+  export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
+     weekly, logFlags, searchPeak, startDate, endDate, setCalcResults, setCalcInfo) {
 
-    //   setCalcResults(); 
-    //   setCalcInfo()
+      setCalcResults(); 
+      setCalcInfo()
       // console.log ('calc')
       if (symbol === ''  || stockChartXValues.length === 0) {
         // alert ('Need to click <gain> for a symbol before calc peak2peak -')
-        // setCalcResults('symbol Undefined. click <gain> for some symbol')
-        // setCalcInfo('.')
+        setCalcResults('symbol Undefined. click <gain> for some symbol')
+        setCalcInfo('.')
         return;
       }
       if (! weekly) {
-        // setCalcResults('calc only for weekly mode ')
+        setCalcResults('calc only for weekly mode ')
         // setCalcInfo('.')
         alert('calc only for weekly mode ')
         return;
@@ -71,8 +72,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         if (searchPeak)
           startDateArray = lastDateSplit;
         else {
-        //   setCalcResults('search peak disabled; date beyond range')
-        //   setCalcInfo ('.')
+          setCalcResults('search peak disabled; date beyond range')
+          setCalcInfo ('.')
           return;            
         }
 
@@ -91,9 +92,11 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       
       console.log (textResults)
       console.log (textInfo)
-    //   setCalcResults(textResults)
-    //   setCalcInfo ( textInfo)
+      setCalcResults(textResults)
+      setCalcInfo ( textInfo)
       const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
       if (row_index !== -1)
         rows[row_index].values.peak2Peak = yearlyGain;
     }    
+
+    export default peak2PeakCalc;
