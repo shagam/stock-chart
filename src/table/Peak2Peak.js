@@ -21,6 +21,8 @@ const Peak2PeakGui = (props) => {
   // props.setEndDate
   // stockChartXValues
   // stockChartYValues
+  // logFlags
+  // weekly
 
     const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
     const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
@@ -65,17 +67,17 @@ const Peak2PeakGui = (props) => {
 
 
 
-    function peak2PeakCalc () {
+    function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues, weekly) {
         setCalcResults(); 
         setCalcInfo()
         // console.log ('calc')
-        if (props.symbol === ''  || props.stockChartXValues.length === 0) {
+        if (symbol === ''  || stockChartXValues.length === 0) {
           // alert ('Need to click <gain> for a symbol before calc peak2peak -')
           setCalcResults('symbol Undefined. click <gain> for some symbol')
           setCalcInfo('.')
           return;
         }
-        if (! props.weekly) {
+        if (! weekly) {
           setCalcResults('calc only for weekly mode ')
           setCalcInfo('.')
           alert('calc only for weekly mode ')
@@ -92,7 +94,7 @@ const Peak2PeakGui = (props) => {
 
         // calc start day
         var startDateArray = [startYear, startMon, startDay]
-        const lastDate = props.stockChartXValues[props.stockChartXValues.length - 1]
+        const lastDate = stockChartXValues[stockChartXValues.length - 1]
         const lastDateSplit = lastDate.split('-')
         const compDate = compareDate (startDateArray, lastDateSplit)
         if (compDate === -1) {
@@ -111,19 +113,19 @@ const Peak2PeakGui = (props) => {
 
         const weeksDiff = indexFirst - indexEnd
         const yearsDiff = Number (weeksDiff/52).toFixed (2)
-        const gain = Number (props.stockChartYValues[indexEnd] / props.stockChartYValues[indexFirst]).toFixed (3)
+        const gain = Number (stockChartYValues[indexEnd] / stockChartYValues[indexFirst]).toFixed (3)
 
         const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-        const textResults = 'sym='+ props.symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
-        const textInfo = 'sym='+ props.symbol + ` \xa0 \xa0 (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${props.stockChartXValues[indexFirst]} \xa0 to= ${props.stockChartXValues[indexEnd]}  )`;
+        const textResults = 'sym='+ symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
+        const textInfo = 'sym='+ symbol + ` \xa0 \xa0 (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
         
         console.log (textResults)
         console.log (textInfo)
         setCalcResults(textResults)
         setCalcInfo ( textInfo)
-        const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+        const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
         if (row_index !== -1)
-          props.rows[row_index].values.peak2Peak = yearlyGain;
+          rows[row_index].values.peak2Peak = yearlyGain;
       }    
 
     // function swap_period_8_mon() {
@@ -139,7 +141,7 @@ const Peak2PeakGui = (props) => {
     // }
 
   //  skip analysis if no symbol
-  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.StockSymbol);
+
  
   const style = {
     // background: 'blue',
@@ -179,7 +181,7 @@ const Peak2PeakGui = (props) => {
            <div> &nbsp; 
             <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
-            <button type="button" onClick={()=>peak2PeakCalc ()}>Calc peak2peak gain </button>           
+            <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.weekly)}>Calc peak2peak gain </button>           
            </div>
 
 
