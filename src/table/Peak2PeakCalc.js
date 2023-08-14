@@ -82,7 +82,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
             if (setCalcResults) {
                 const err = 'peak2Peak, search peak disabled; date beyond range';
                 setCalcResults(err)
-                console.log (err)
+                console.log ('%c' + err, 'color: red')
                 setCalcInfo ('.')
             }
           return;            
