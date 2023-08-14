@@ -24,6 +24,7 @@ import Manual from '../manual/Manual'
 import Firebase from './Firebase'
 import Config from './Config'
 import LogFlags from '../LogFlags'
+import peak2PeakCalc from './Peak2PeakCalc'
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
@@ -380,7 +381,7 @@ export const BasicTable = (props) => {
     rows[row_index].values.splits_list = splits;
     // console.log (splits)
     try {
-    if (splits !== '') {
+    if (splits) {
       if (splits.startsWith('u')) {
         alert ('bad splits json ' + splits + ' ' + sym)
       }
@@ -654,6 +655,9 @@ export const BasicTable = (props) => {
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
+
+                peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
+                  weekly, logFlags, true, new Date(2007, 10, 1), new Date(2021, 11, 1), null, null) //setCalcResults, setCalcInfo
 
               const updateMili = Date.now();
               const updateDate = getDate();
