@@ -181,7 +181,7 @@ export const BasicTable = (props) => {
       console.log (symbol, 'missing symbol')
       return;
     }
-    const oneDayMili = 1000 * 3600 + 24;
+    const oneDayMili = 1000 * 3600 * 24;
 
     if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > oneDayMili) {
       console.log (symbol, 'Abort firebase gain update, missing gain. src:', src)
