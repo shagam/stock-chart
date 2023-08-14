@@ -6,6 +6,8 @@ import { toDate } from "date-fns";
 import {format} from "date-fns"
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 import { columnIsLastLeftSticky } from 'react-table-sticky';
+import peak2PeakCalc from './Peak2PeakCalc'
+
 import LogFlags from '../LogFlags'
 
 
@@ -34,32 +36,32 @@ const Peak2PeakGui = (props) => {
 
     const LOG_FLAG = props.logFlags.includes('peak2Peak');
 
-    const quasiTop = (initDate) => {
-      var dateIndex = searchDateInArray (props.stockChartXValues, initDate, props.symbol, props.logFlags)
+    const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags) => {
+      var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
       if(LOG_FLAG)
-      console.log ('\nindex=', dateIndex, 'price=', props.stockChartYValues[dateIndex], props.stockChartXValues[dateIndex], 'start_index')
+      console.log ('\nindex=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex], 'start_index')
       const range = 35;
 
       var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
       var priceIndex = startIndex;
-      var endIndex = dateIndex + range < props.stockChartYValues.length ? dateIndex + range : dateIndex;
-      var highPrice = props.stockChartYValues[startIndex];
+      var endIndex = dateIndex + range < stockChartYValues.length ? dateIndex + range : dateIndex;
+      var highPrice = stockChartYValues[startIndex];
 
       if (! searchPeak)
         return dateIndex; // do not search
 
       for (let i = startIndex; i < endIndex; i++) { 
         if (LOG_FLAG && i === startIndex)
-          console.log ('index=', i, 'first', props.stockChartXValues[startIndex])// end of loop
-        const price = Number(props.stockChartYValues[i]);
+          console.log ('index=', i, 'first', stockChartXValues[startIndex])// end of loop
+        const price = Number(stockChartYValues[i]);
         if (highPrice < price) {  // at least weeks to recover
           highPrice  = price;
           priceIndex = i;
           if (LOG_FLAG)
-            console.log ('index=', i, 'price=', price, props.stockChartXValues[i])
+            console.log ('index=', i, 'price=', price, stockChartXValues[i])
         }
         if (LOG_FLAG && i === endIndex - 1)
-          console.log ('index=', i, 'last', props.stockChartXValues[endIndex])// end of loop
+          console.log ('index=', i, 'last', stockChartXValues[endIndex])// end of loop
       }
       return priceIndex;
 
@@ -67,7 +69,7 @@ const Peak2PeakGui = (props) => {
 
 
 
-    function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues, weekly) {
+    function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues, weekly, logFlags) {
         setCalcResults(); 
         setCalcInfo()
         // console.log ('calc')
@@ -108,8 +110,8 @@ const Peak2PeakGui = (props) => {
 
         }
         const endDateArray =[endYear, endMon, endDay]
-        const indexFirst = quasiTop (startDateArray)
-        const indexEnd = quasiTop (endDateArray)
+        const indexFirst = quasiTop (symbol, startDateArray, stockChartXValues, stockChartYValues, logFlags)
+        const indexEnd = quasiTop (symbol, endDateArray, stockChartXValues, stockChartYValues, logFlags)
 
         const weeksDiff = indexFirst - indexEnd
         const yearsDiff = Number (weeksDiff/52).toFixed (2)
@@ -181,7 +183,7 @@ const Peak2PeakGui = (props) => {
            <div> &nbsp; 
             <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
-            <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.weekly)}>Calc peak2peak gain </button>           
+            <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.weekly, props.logFlags)}>Calc peak2peak gain </button>           
            </div>
 
 
