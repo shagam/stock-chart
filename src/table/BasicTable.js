@@ -182,26 +182,30 @@ export const BasicTable = (props) => {
       return;
     }
     const oneDayMili = 1000 * 3600 * 24;
-
-    if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing gain. src:', src)
+    var diff = Date.now() - rows[row_index].values.gain_mili;
+    if (rows[row_index].values.gain_mili === undefined || diff > oneDayMili) {
+      let date = new Date(rows[row_index].values.gain_mili);
+      console.log (symbol, 'Abort firebase gain update, missing gain. src:', src, 'diff:', diff / 1000, date.toString())
       return; // write only if fresh gain info
     }
 
+    diff = Date.now() - rows[row_index].values.splitsUpdateMili;
     if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
       if (LOG_FIREBASE)
-        console.log (symbol, 'Abort firebase gain update, missing splits. src:', src)
+        console.log (symbol, 'Abort firebase gain update, missing splits. src:', src, 'diff:', diff)
       return; // write only if fresh splits info
     }
 
+    diff = Date.now() - rows[row_index].values.verifyUpdateMili;
     if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
       if (LOG_FIREBASE)
-        console.log (symbol, 'Abort firebase gain update, missing verify. src:', src)
+        console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
       return; // write only if fresh verify info
     }
  
+    diff = Date.now() - rows[row_index].values.deepUpdateMili;
     if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing deep. src:', src)
+      console.log (symbol, 'Abort firebase gain update, missing deep. src:', src, 'diff:', diff)
       return; // write only if fresh deep info     
     }
 
@@ -226,6 +230,7 @@ export const BasicTable = (props) => {
       if (LOG_FIREBASE)
         console.log (symbol, 'gain-send to firebase. src:', src);
       saveTable(symbol);
+      rows[row_index].values.fireMili = Date.now();
     } catch (e) {console.log (symbol, e)}
 
     // delete old entries

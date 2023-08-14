@@ -128,8 +128,8 @@ export const COLUMNS = [
     accessor: 'year20'
   },
   {
-    Header: 'peak2Peak',
-    Footer: 'peak2Peak',    
+    Header: 'Long',
+    Footer: 'Long',    
     accessor: 'peak2Peak'
   },
   {
@@ -356,8 +356,8 @@ export const GROUPED_COLUMNS = [
         accessor: 'year20'
       },
       {
-        Header: 'peak2Peak',
-        Footer: 'peak2Peak',    
+        Header: 'Long',
+        Footer: 'Long',    
         accessor: 'peak2Peak'
       },
       {
