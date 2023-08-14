@@ -1,5 +1,6 @@
 import React, {useState, } from 'react'
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
+import { setLogger } from 'react-query';
 
 
 const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak) => {
@@ -79,7 +80,9 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           startDateArray = lastDateSplit;
         else {
             if (setCalcResults) {
-                setCalcResults('search peak disabled; date beyond range')
+                const err = 'peak2Peak, search peak disabled; date beyond range';
+                setCalcResults(err)
+                console.log (err)
                 setCalcInfo ('.')
             }
           return;            
