@@ -128,6 +128,11 @@ export const COLUMNS = [
     accessor: 'year20'
   },
   {
+    Header: 'peak2Peak',
+    Footer: 'peak2Peak',    
+    accessor: 'peak2Peak'
+  },
+  {
     Header: 'splits_list',
     Footer: 'splis_list',    
     accessor: 'splits_list'
@@ -349,6 +354,11 @@ export const GROUPED_COLUMNS = [
         Header: '20yr',
         Footer: '20yr',    
         accessor: 'year20'
+      },
+      {
+        Header: 'peak2Peak',
+        Footer: 'peak2Peak',    
+        accessor: 'peak2Peak'
       },
       {
         Header: 'splits_list',

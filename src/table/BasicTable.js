@@ -218,7 +218,8 @@ export const BasicTable = (props) => {
       splits: rows[row_index].values.splits_list, wk: rows[row_index].values.wk, wk2: rows[row_index].values.wk2,
       mon: rows[row_index].values.mon, mon3: rows[row_index].values.mon3, mon6: rows[row_index].values.mon6,
       year: rows[row_index].values.year, year2: rows[row_index].values.year2, year5: rows[row_index].values.year5,
-      year10: rows[row_index].values.year10, year20: rows[row_index].values.year20, price: rows[row_index].values.price,
+      year10: rows[row_index].values.year10, year20: rows[row_index].values.year20,
+      peak2Peak: rows[row_index].values.peak2Peak, price: rows[row_index].values.price,
       verify_1: rows[row_index].values.verify_1, deep: rows[row_index].values.deep, recoverWeek: rows[row_index].values.recoverWeek,
       deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
       if (LOG_FIREBASE)
@@ -372,6 +373,7 @@ export const BasicTable = (props) => {
     rows[row_index].values.year5 = year5; 
     rows[row_index].values.year10 = year10;
     rows[row_index].values.year20 = year20;
+    // rows[row_index].values.peak2Peak = peak2Peak;
     rows[row_index].values.price = price;
 
     rows[row_index].values.sym = sym; // added field
@@ -506,7 +508,7 @@ export const BasicTable = (props) => {
         .then(
             function(response) {
                 const respStr = JSON.stringify (response);
-                if (response.status != 200 || ! response.ok)
+                if (response.status !== 200 || ! response.ok)
                     console.log(response);
                 return response.json();
             }

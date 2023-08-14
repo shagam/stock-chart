@@ -121,7 +121,9 @@ const Peak2PeakGui = (props) => {
         console.log (textInfo)
         setCalcResults(textResults)
         setCalcInfo ( textInfo)
-
+        const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+        if (row_index !== -1)
+          props.rows[row_index].values.peak2Peak = yearlyGain;
       }    
 
     // function swap_period_8_mon() {

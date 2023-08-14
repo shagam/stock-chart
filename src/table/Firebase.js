@@ -42,6 +42,7 @@ const Firebase = (props) => {
     newStock.values.year5 = fireGain.year5.toFixed(2);
     newStock.values.year10 = fireGain.year10.toFixed(2);
     newStock.values.year20 = fireGain.year20.toFixed(2);
+    newStock.values.peak2Peak = fireGain.peak2Peak.toFixed(2);
     if (newStock.values.year === '-1.00')
       newStock.values.year = -1
     if (newStock.values.year2 === '-1.00')
@@ -243,6 +244,7 @@ const Firebase = (props) => {
         props.rows[row_index].values.year5 = gain_.year5; 
         props.rows[row_index].values.year10 = gain_.year10;
         props.rows[row_index].values.year20 = gain_.year20;
+        props.rows[row_index].values.peak2Peak = gain_.peak2Peak;
         props.rows[row_index].values.price = gain_.price;
 
         // props.updateTableGain (gain_.__symbol, gain_.splits, gain_._updateDate, gain_._updateMili, gain_.wk, gain_.wk2, gain_.mon, gain_.mon3, gain_.mon6, gain_.year, gain_.year2, gain_.year5, gain_.year10, gain_.year20, gain_.price);
