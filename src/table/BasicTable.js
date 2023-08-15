@@ -196,12 +196,12 @@ export const BasicTable = (props) => {
       return; // write only if fresh splits info
     }
 
-    diff = Date.now() - rows[row_index].values.verifyUpdateMili;
-    if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
-      if (LOG_FIREBASE)
-        console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
-      return; // write only if fresh verify info
-    }
+    // diff = Date.now() - rows[row_index].values.verifyUpdateMili;
+    // if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
+    //   if (LOG_FIREBASE)
+    //     console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
+    //   return; // write only if fresh verify info
+    // }
  
     diff = Date.now() - rows[row_index].values.deepUpdateMili;
     if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
@@ -214,6 +214,7 @@ export const BasicTable = (props) => {
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
+    rows[row_index].values.gain_date = getDate();
     // add new entry
     try {
     await addDoc (gainRef, {__symbol: rows[row_index].values.symbol,
@@ -230,9 +231,7 @@ export const BasicTable = (props) => {
       if (LOG_FIREBASE)
         console.log (symbol, 'gain-send to firebase. src:', src);
       saveTable(symbol);
-      rows[row_index].values.fireMili = Date.now();
     } catch (e) {console.log (symbol, e)}
-
     // delete old entries
     // if (LOG_FIREBASE && gain.docs.length > 0)
     //   console.log (symbol, 'delete old entries:', gain.docs.length)  
@@ -367,7 +366,7 @@ export const BasicTable = (props) => {
     firebase_stockSymbol_ip_pair(sym);
 
     rows[row_index].values.gain_mili = updateMili;
-    rows[row_index].values.gain_date = updateDate;
+    // rows[row_index].values.gain_date = updateDate;
 
     rows[row_index].values.wk = wk; 
     rows[row_index].values.wk2 = wk2; 
