@@ -79,7 +79,7 @@ const Peak2PeakGui = (props) => {
             <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
             <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setCalcResults, setCalcInfo)}>Calc peak2peak gain </button>           
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, setCalcResults, setCalcInfo)}>Calc peak2peak gain </button>           
            </div>
 
 
