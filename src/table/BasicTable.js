@@ -181,7 +181,7 @@ export const BasicTable = (props) => {
       console.log (symbol, 'missing symbol')
       return;
     }
-    const oneDayMili = 1000 * 3600 * 24;
+    const oneDayMili = 1000 * 3600 + 24;
     var diff = Date.now() - rows[row_index].values.gain_mili;
     if (rows[row_index].values.gain_mili === undefined || diff > oneDayMili) {
       let date = new Date(rows[row_index].values.gain_mili);
