@@ -181,27 +181,31 @@ export const BasicTable = (props) => {
       console.log (symbol, 'missing symbol')
       return;
     }
-    const oneDayMili = 1000 * 3600 + 24;
-
-    if (rows[row_index].values.gain_mili === undefined || Date.now() - rows[row_index].values.gain_mili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing gain. src:', src)
+    const oneDayMili = 1000 * 3600 * 24;
+    var diff = Date.now() - rows[row_index].values.gain_mili;
+    if (rows[row_index].values.gain_mili === undefined || diff > oneDayMili) {
+      let date = new Date(rows[row_index].values.gain_mili);
+      console.log (symbol, 'Abort firebase gain update, missing gain. src:', src, 'diff:', diff / 1000, date.toString())
       return; // write only if fresh gain info
     }
 
+    diff = Date.now() - rows[row_index].values.splitsUpdateMili;
     if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
       if (LOG_FIREBASE)
-        console.log (symbol, 'Abort firebase gain update, missing splits. src:', src)
+        console.log (symbol, 'Abort firebase gain update, missing splits. src:', src, 'diff:', diff)
       return; // write only if fresh splits info
     }
 
-    if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
-      if (LOG_FIREBASE)
-        console.log (symbol, 'Abort firebase gain update, missing verify. src:', src)
-      return; // write only if fresh verify info
-    }
+    // diff = Date.now() - rows[row_index].values.verifyUpdateMili;
+    // if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
+    //   if (LOG_FIREBASE)
+    //     console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
+    //   return; // write only if fresh verify info
+    // }
  
+    diff = Date.now() - rows[row_index].values.deepUpdateMili;
     if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing deep. src:', src)
+      console.log (symbol, 'Abort firebase gain update, missing deep. src:', src, 'diff:', diff)
       return; // write only if fresh deep info     
     }
 
@@ -210,6 +214,7 @@ export const BasicTable = (props) => {
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
 
+    rows[row_index].values.gain_date = getDate();
     // add new entry
     try {
     await addDoc (gainRef, {__symbol: rows[row_index].values.symbol,
@@ -227,7 +232,6 @@ export const BasicTable = (props) => {
         console.log (symbol, 'gain-send to firebase. src:', src);
       saveTable(symbol);
     } catch (e) {console.log (symbol, e)}
-
     // delete old entries
     // if (LOG_FIREBASE && gain.docs.length > 0)
     //   console.log (symbol, 'delete old entries:', gain.docs.length)  
@@ -362,7 +366,7 @@ export const BasicTable = (props) => {
     firebase_stockSymbol_ip_pair(sym);
 
     rows[row_index].values.gain_mili = updateMili;
-    rows[row_index].values.gain_date = updateDate;
+    // rows[row_index].values.gain_date = updateDate;
 
     rows[row_index].values.wk = wk; 
     rows[row_index].values.wk2 = wk2; 
@@ -657,7 +661,7 @@ export const BasicTable = (props) => {
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
 
                 peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-                  weekly, logFlags, true, new Date(2007, 10, 1), new Date(2021, 11, 1), null, null) //setCalcResults, setCalcInfo
+                  weekly, logFlags, true, new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, null) //setCalcResults, setCalcInfo
 
               const updateMili = Date.now();
               const updateDate = getDate();
