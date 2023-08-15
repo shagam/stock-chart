@@ -7,7 +7,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
     const LOG_FLAG = logFlags.includes('peak2Peak');
     var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
     if(LOG_FLAG)
-    console.log ('\nindex=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex], 'start_index')
+      console.log ( symbol, 'P2P quasyTop ', initDate, ' index=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex])
     const range = 35;
 
     var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
@@ -38,7 +38,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
   export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
-     weekly, logFlags, searchPeak, startDate, endDate, setCalcResults, setCalcInfo) {
+     weekly, logFlags, searchPeak, startDate, endDate, errorAdd, setCalcResults, setCalcInfo) {
+      const LOG_FLAG = logFlags.includes('peak2Peak');
       if (setCalcResults) {
         setCalcResults(); 
         setCalcInfo()
@@ -49,14 +50,12 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         // alert ('Need to click <gain> for a symbol before calc peak2peak -')
         if (setCalcResults) {
             setCalcResults('symbol Undefined. click <gain> for some symbol')
-            setCalcInfo('.')
         }
         return;
       }
       if (! weekly) {
         if (setCalcResults) {
             setCalcResults('calc only for weekly mode ')
-            setCalcInfo('.')
         }
         alert('calc only for weekly mode ')
         return;
@@ -80,8 +79,10 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           startDateArray = lastDateSplit;
         else {
             if (setCalcResults) {
-                const err = 'peak2Peak, search peak disabled; date beyond range';
+                const err = symbol + ' peak2Peak, search peak fail; date beyond range ' + startDateArray + '  ' + lastDateSplit;
                 setCalcResults(err)
+                if (errorAdd)
+                  errorAdd(err)
                 console.log ('%c' + err, 'color: red')
                 setCalcInfo ('.')
             }
@@ -98,11 +99,13 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const gain = Number (stockChartYValues[indexEnd] / stockChartYValues[indexFirst]).toFixed (3)
 
       const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-      const textResults = 'sym='+ symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
-      const textInfo = 'sym='+ symbol + ` \xa0 \xa0 (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
-      
-      console.log (textResults)
-      console.log (textInfo)
+      const textResults =  symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
+      const textInfo = symbol + ` \xa0 \xa0 (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
+     
+      if (LOG_FLAG) {
+        console.log (textResults, textInfo)
+
+      }
       if (setCalcResults) {
         setCalcResults(textResults)
         setCalcInfo ( textInfo)
