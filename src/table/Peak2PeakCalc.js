@@ -1,6 +1,6 @@
 import React, {useState, } from 'react'
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
-import { setLogger } from 'react-query';
+
 
 
 const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak) => {
