@@ -26,6 +26,13 @@ const  AlphaVantage = (props) => {
         props.alphaCallBack (alpha);
     }
 
+    function clearKey () {
+      // console.log("clear");
+      localStorage.removeItem ('alphaVantage');
+      setAlpha(null)
+      props.alphaCallBack(null)
+    }
+
     //console.log('AlphaVantage render');
 
     return (
@@ -41,6 +48,7 @@ const  AlphaVantage = (props) => {
             // value={alpha}
           />
           <button type="submit"> Enter new key</button>
+          <button type="button" onClick={()=>clearKey()}>Clear AlphaVantage key </button> 
         </form>
 
       </div>
