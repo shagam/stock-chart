@@ -272,7 +272,8 @@ export const BasicTable = (props) => {
     setAPI_KEY (key);
   } 
 // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
-  const API_KEY_array=['71CKKX7NZI1G1FRK'];  
+  const HIGH_LIMIT_KEY = '71CKKX7NZI1G1FRK'
+  const API_KEY_array=[HIGH_LIMIT_KEY ];  
   const getAPI_KEY = () => {
     if (API_KEY !== undefined && API_KEY !== null && API_KEY !== '') {
       if (LOG_alpha)
@@ -581,7 +582,8 @@ export const BasicTable = (props) => {
               var splitsIndexArray = [];
 
               // compensate for splits
-                for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) { 
+              if (HIGH_LIMIT_KEY !== getAPI_KEY()) // high limit no need for compensation
+                for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) {
                   var jump = splitArrayList[splitNum].ratio;
                   // console.log (JSON.stringify (splitArrayList[splitNum]));
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
@@ -590,7 +592,7 @@ export const BasicTable = (props) => {
                   var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym, logFlags)
                   if (chartIndex < 1) {// error not fount
                     if (LOG_SPLITS)
-                      console.log (sym, "Split out of range", JSON.stringify (splitArrayList[splitNum]), chartIndex)
+                      console.log (sym, "Split drop/jump date not found", splitNum, JSON.stringify (splitArrayList[splitNum]), chartIndex)
                     continue;
                   }
                   // find max jump of split index
@@ -632,7 +634,7 @@ export const BasicTable = (props) => {
 
                   // compensation calc
                   if (LOG_SPLITS)
-                    console.log (sym, 'compensate split', splitArrayList[splitNum])
+                    console.log (sym, 'compensate split', splitNum, splitArrayList[splitNum])
                   if (splitsCalcFlag) {  // if flag is off do not compensate
                     for ( let k = maxJumpWeekNum; k < stockChartYValuesFunction.length; k++) {
                         (stockChartYValuesFunction[k] = Number (Number (Number (stockChartYValuesFunction[k]) / jump).toFixed(2)));
