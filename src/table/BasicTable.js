@@ -271,10 +271,10 @@ export const BasicTable = (props) => {
       console.log ('setState new', key, 'old state', API_KEY) 
     setAPI_KEY (key);
   } 
-
-  const API_KEY_array=['C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'];  
+// ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
+  const API_KEY_array=['71CKKX7NZI1G1FRK'];  
   const getAPI_KEY = () => {
-    if (API_KEY !== undefined && API_KEY !== '') {
+    if (API_KEY !== undefined && API_KEY !== null && API_KEY !== '') {
       if (LOG_alpha)
         console.log ('get state', API_KEY)
       return API_KEY;
@@ -287,6 +287,7 @@ export const BasicTable = (props) => {
     setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
     if (LOG_alpha)
       console.log ('array get API_KEY: ' + API_KEY_array[apiKeyIndex]); 
+    // return API_KEY_array[0];
     return API_KEY_array[apiKeyIndex];
   }
 
@@ -533,13 +534,13 @@ export const BasicTable = (props) => {
               
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                  alert (`${dataStr} (${sym}) \n\n${API_Call} `);
+                  alert (`${dataStr} (${sym}) \n\n${API_Call} ${API_KEY_array[0]}  `);
                   //setChartData ('');
                   return;
               }
               const limit_100_PerDay = 'You have reached the 100 requests/day limit for your free API key'
               if (dataStr.indexOf (limit_100_PerDay) !== -1) {
-                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call} `);
+                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call}  ${API_KEY_array[0]} ` );
                 return;
               }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
