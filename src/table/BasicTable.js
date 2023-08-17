@@ -292,6 +292,10 @@ export const BasicTable = (props) => {
     return API_KEY_array[apiKeyIndex];
   }
 
+  function isAdjusted () {
+    return (getAPI_KEY() === HIGH_LIMIT_KEY) 
+  }
+
   //const [rows, setRows] = useState (data);
 
   const [addFormData, setAddFormData] = useState({    })
@@ -485,7 +489,44 @@ export const BasicTable = (props) => {
     // }               
   }
 
-  const openOrCloseText = openMarketFlag ? '1. open' : '4. close';
+  // 1. open: '87.7500'
+  // 2. high: '97.7300'
+  // 3. low:  '86.7500'
+  // 4. close: '90.6200'
+  // 5. adjusted close: '0.6867'
+  // 6. volume: '25776200'
+  // 7. dividend amount:'0.0000'
+
+  // const openOrCloseText = openMarketFlag ? '1. open' : '4. close';
+  let periodTag;
+  if (weekly)
+    periodTag = 'Weekly Adjusted Time Series';
+  else
+    periodTag = "Time Series (Daily)"
+
+  function getYValue (chartData, key, openMarketFlag) {
+    var yValue;
+    if (isAdjusted()) {
+      const adjustedCloseValue = Number (Number (chartData[`${periodTag}`][key]['5. adjusted close']).toFixed(3))
+      if (openMarketFlag) {
+        const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']).toFixed(3))
+        const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']).toFixed(3))
+        yValue = adjustedCloseValue / closeVal * openVal;
+      } else {
+        yValue = adjustedCloseValue
+      }
+    } else { // not adjusted
+      if (openMarketFlag) {
+        yValue = Number (Number (chartData[`${periodTag}`][key]['1. open']).toFixed(3))
+      } else {
+        yValue = Number (Number (chartData[`${periodTag}`][key]['4. close']).toFixed(3))
+      }
+    }
+    return yValue;
+  }
+
+
+
 
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
@@ -499,6 +540,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+    if (! isAdjusted ())  // high limit no need for compensation
     StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags)
 
     const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
@@ -552,12 +594,7 @@ export const BasicTable = (props) => {
 
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
-              let periodTag;
-              if (weekly)
-                periodTag = 'Weekly Adjusted Time Series';
-              else
-                periodTag = "Time Series (Daily)"
-
+   
               // prepare historical data for plotly chart
               // let i = 0;
 
@@ -574,7 +611,7 @@ export const BasicTable = (props) => {
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
-                const yValue = Number (Number (chartData[`${periodTag}`][key][`${openOrCloseText}`]).toFixed(3))
+                const yValue = getYValue (chartData, key, openMarketFlag)
                 stockChartYValuesFunction.push(yValue);
               }
                 
@@ -582,7 +619,7 @@ export const BasicTable = (props) => {
               var splitsIndexArray = [];
 
               // compensate for splits
-              if (HIGH_LIMIT_KEY !== getAPI_KEY()) // high limit no need for compensation
+              if (! isAdjusted ()) // high limit no need for compensation
                 for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) {
                   var jump = splitArrayList[splitNum].ratio;
                   // console.log (JSON.stringify (splitArrayList[splitNum]));
@@ -657,6 +694,7 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
+              localStorage.setItem ('yValues', stockChartYValuesFunction); // adjust testing info 
 
               if (marketwatch)
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
