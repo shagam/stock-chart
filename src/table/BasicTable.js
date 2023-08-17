@@ -694,7 +694,8 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
-              // localStorage.setItem ('yValues', stockChartYValuesFunction); // adjust testing info 
+
+              console.log (stockChartXValuesFunction)
               console.log (stockChartYValuesFunction)
               if (marketwatch)
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
