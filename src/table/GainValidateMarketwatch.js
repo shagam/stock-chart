@@ -44,7 +44,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
   const limitTxt = entry === stockChartXValuesFunction.length - 1 ? '' :  'limit: ' + (stockChartXValuesFunction.length - 1)
   if (LOG)
-  console.log (sym, 'compare price, requesIndx=', requestedEntry, 'entry=', entry, limitTxt)
+  console.log (sym, 'AlphaVantage price, requesIndx=', requestedEntry, 'entry=', entry, stockChartXValuesFunction[entry], 'val', stockChartYValuesFunction[entry], limitTxt)
 
 
   const oldestDate = stockChartXValuesFunction[entry];
@@ -94,7 +94,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
         const searcDate = year + '-' + mon + '-' + day;
         if (LOG)
-        console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch:', rows[row_index].values.verifyPrice, 'ratio=', p);
+        console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch-price:', rows[row_index].values.verifyPrice, 'ratio=', p);
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
           
