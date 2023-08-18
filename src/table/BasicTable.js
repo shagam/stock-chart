@@ -315,7 +315,7 @@ export const BasicTable = (props) => {
       return;
     }
     
-    var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
+    // var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
     //console.log(`Overview info (${symbol})`);
