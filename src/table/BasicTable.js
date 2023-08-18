@@ -277,7 +277,7 @@ export const BasicTable = (props) => {
   const getAPI_KEY = () => {
     if (API_KEY !== undefined && API_KEY !== null && API_KEY !== '') {
       if (LOG_alpha)
-        console.log ('get state', API_KEY)
+        console.log ('getAPI_KEY', API_KEY)
       return API_KEY;
     }
 
@@ -291,9 +291,10 @@ export const BasicTable = (props) => {
     // return API_KEY_array[0];
     return API_KEY_array[apiKeyIndex];
   }
+  const API_KEY_static = getAPI_KEY();
 
   function isAdjusted () {
-    return (getAPI_KEY() === HIGH_LIMIT_KEY) 
+    return (API_KEY_static === HIGH_LIMIT_KEY) 
   }
 
   //const [rows, setRows] = useState (data);
@@ -313,8 +314,8 @@ export const BasicTable = (props) => {
       return;
     }
     
-    var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
-    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
+     // 'C542IZRPH683PFNZ';
+    let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY_static}` 
 
     //console.log(`Overview info (${symbol})`);
     if (LOG_API)
@@ -543,15 +544,15 @@ export const BasicTable = (props) => {
     if (! isAdjusted ())  // high limit no need for compensation
     StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags)
 
-    const API_KEY_ = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
+    //'BC9UV9YUBWM3KQGF';
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
     let API_Call;
     if (weekly)
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_}`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_static}`;
     else
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY_}`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY_static}`;
     
     fetch(API_Call)
         .then(
@@ -577,13 +578,13 @@ export const BasicTable = (props) => {
               
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                  alert (`${dataStr} (${sym}) \n\n${API_Call} ${API_KEY_array[0]}  `);
+                  alert (`${dataStr} (${sym}) \n\n${API_Call} ${API_KEY_static}  `);
                   //setChartData ('');
                   return;
               }
               const limit_100_PerDay = 'You have reached the 100 requests/day limit for your free API key'
               if (dataStr.indexOf (limit_100_PerDay) !== -1) {
-                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call}  ${API_KEY_array[0]} ` );
+                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call}  ${API_KEY_static} ` );
                 return;
               }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
