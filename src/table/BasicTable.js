@@ -752,7 +752,7 @@ export const BasicTable = (props) => {
                   mon3 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
           
                 dateBackSplit = monthsBack (todaySplit, 6, sym);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, lags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
                 if (chartIndex !== undefined)
                   mon6 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
