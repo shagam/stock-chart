@@ -60,9 +60,26 @@ export const BasicTable = (props) => {
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
-  const [apiKeyIndex, setApiKeyIndex] = useState (0);
+  
+  const [logFlags, setLogFlags] = useState([]);
+  const LOG_FLAG = logFlags.includes('aux');
+  const LOG_API = logFlags.includes('api');
+  const LOG_SPLITS = logFlags.includes('splits');
+  const LOG_FIREBASE = logFlags.includes('firebase');
+  const LOG_alpha = logFlags.includes('alpha');
+  const LOG_DROP = logFlags.includes('drop_');
+
+
+  // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
+  const HIGH_LIMIT_KEY = '71CKKX7NZI1G1FRK'
+
   var aleph = localStorage.getItem('alphaVantage');
   const [API_KEY, setAPI_KEY] = useState(aleph);
+  if (API_KEY === null)
+    setAPI_KEY(HIGH_LIMIT_KEY)
+  if (LOG_alpha)
+    console.log (API_KEY)
+
   const [splitsFlag, setSplitsFlag] = useState('');
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
@@ -85,15 +102,7 @@ export const BasicTable = (props) => {
   const [searchDeepDate, setSearchDeepDate] = useState()
 
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
-  const [logFlags, setLogFlags] = useState([]);
-
-  const LOG_FLAG = logFlags.includes('aux');
-  const LOG_API = logFlags.includes('api');
-  const LOG_SPLITS = logFlags.includes('splits');
-  const LOG_FIREBASE = logFlags.includes('firebase');
-  const LOG_alpha = logFlags.includes('alpha');
-  const LOG_DROP = logFlags.includes('drop_');
-
+  
   const useData = false;
 
   const hiddenColsDefault = ["Exchange","Industry","Cap","PEG","target","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
@@ -271,38 +280,16 @@ export const BasicTable = (props) => {
       console.log ('setState new', key, 'old state', API_KEY) 
     setAPI_KEY (key);
   } 
-// ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
-  const HIGH_LIMIT_KEY = '71CKKX7NZI1G1FRK'
-  const API_KEY_array=[HIGH_LIMIT_KEY ];  
-  const getAPI_KEY = () => {
-    if (API_KEY !== undefined && API_KEY !== null && API_KEY !== '') {
-      if (LOG_alpha)
-        console.log ('get state', API_KEY)
-      return API_KEY;
-    }
-
-    // const key = localStorage.getItem("alphaVantage");
-    // if (key !== undefined && key !== '') {
-    //   setAPI_KEY (key);
-
-    setApiKeyIndex  ((apiKeyIndex + 1) % API_KEY_array.length);
-    if (LOG_alpha)
-      console.log ('array get API_KEY: ' + API_KEY_array[apiKeyIndex]); 
-    // return API_KEY_array[0];
-    return API_KEY_array[apiKeyIndex];
-  }
-
-  const API_KEY_static = getAPI_KEY(); //'BC9UV9YUBWM3KQGF';
 
   function isAdjusted () {
-    return (API_KEY_static === HIGH_LIMIT_KEY) 
+    return (API_KEY === HIGH_LIMIT_KEY) 
   }
 
   //const [rows, setRows] = useState (data);
 
   const [addFormData, setAddFormData] = useState({    })
 
-    // get stock overview
+// get stock overview
   const handleInfoClick = (symbol) => {
     // monthsBackTest ();
     // daysBackTest()
@@ -315,7 +302,6 @@ export const BasicTable = (props) => {
       return;
     }
     
-    // var API_KEY =  getAPI_KEY(); // 'C542IZRPH683PFNZ';
     let API_Call = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}` 
 
     //console.log(`Overview info (${symbol})`);
@@ -545,15 +531,14 @@ export const BasicTable = (props) => {
     if (! isAdjusted ())  // high limit no need for compensation
     StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags)
 
-
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
 
     let API_Call;
     if (weekly)
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY_static}`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY}`;
     else
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY_static}`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY}`;
     
     fetch(API_Call)
         .then(
@@ -579,13 +564,13 @@ export const BasicTable = (props) => {
               
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                  alert (`${dataStr} (${sym}) \n\n${API_Call} ${API_KEY_static}  `);
+                  alert (`${dataStr} (${sym}) \n\n${API_Call} ${API_KEY}  `);
                   //setChartData ('');
                   return;
               }
               const limit_100_PerDay = 'You have reached the 100 requests/day limit for your free API key'
               if (dataStr.indexOf (limit_100_PerDay) !== -1) {
-                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call}  ${API_KEY_static} ` );
+                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call}  ${API_KEY} ` );
                 return;
               }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
@@ -767,7 +752,7 @@ export const BasicTable = (props) => {
                   mon3 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
           
                 dateBackSplit = monthsBack (todaySplit, 6, sym);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, lags)
                 if (chartIndex !== undefined)
                   mon6 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
