@@ -528,7 +528,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    if (! isAdjusted ())  // high limit no need for compensation
+    // if (! isAdjusted ())  // high limit no need for compensation
     StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags)
 
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];

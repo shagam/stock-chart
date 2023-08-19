@@ -13,6 +13,17 @@ import {format} from "date-fns"
   // url += '%2F' + req.query.day
   // url += '%2F' + req.query.year
 
+  // if reverse split MarkeWatch fail
+  function reverseSplit (splits) {
+    if (! splits)
+      return false;
+    const splits_list = JSON.parse(splits)
+    for (let n = 0; n < splits_list.length; n++) { 
+      if (splits_list[n].ratio < 1)
+        return true;
+    }
+    return false;
+  }
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
    requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
@@ -89,7 +100,11 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
         
         var p = Number(rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
-        rows[row_index].values.verify_1 = Number(p);
+        if (reverseSplit(rows[row_index].values.splits_list)) {
+          rows[row_index].values.verify_1 = 'Rv-split';
+        }
+        else  
+          rows[row_index].values.verify_1 = Number(p);
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
