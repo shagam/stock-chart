@@ -100,6 +100,8 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
         
         var p = Number(rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
+
+        //MarketWatch fail whenReverse split
         if (reverseSplit(rows[row_index].values.splits_list)) {
           rows[row_index].values.verify_1 = 'Rv-split';
         }
