@@ -106,8 +106,8 @@ export const BasicTable = (props) => {
   const useData = false;
 
   const hiddenColsDefault = ["Exchange","Industry","Cap","PEG","target","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
-  "EVToEBITDA","EVToRevenue","wk","wk2","mon","mon3","mon6","year20","splits_list","alphaPrice","alphaDate","verifyDate","verifyPrice",
-  "info_date","gain_date","deep","recoverWeek","deepDate"]
+  "EVToEBITDA","EVToRevenue","wk","wk2","mon","mon3","mon6","year20","splits_list","splits","alphaPrice","alphaDate","verifyDate","verifyPrice",
+  "info_date","gain_date","deep","recoverWeek","deepDate","verify_1"]
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
@@ -528,7 +528,7 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    // if (! isAdjusted ())  // high limit no need for compensation
+    if (! isAdjusted ())  // high limit no need for compensation
     StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags)
 
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
@@ -684,12 +684,13 @@ export const BasicTable = (props) => {
               if (LOG_SPLITS) {
                 console.log (stockChartXValuesFunction)
                 console.log (stockChartYValuesFunction)
-              }            
+              } 
+              if (! isAdjusted ()) {           
               if (marketwatch)
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
-
+              }
                 peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
                   weekly, logFlags, true, new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, null) //setCalcResults, setCalcInfo
 
