@@ -198,13 +198,14 @@ export const BasicTable = (props) => {
       return; // write only if fresh gain info
     }
 
-    diff = Date.now() - rows[row_index].values.splitsUpdateMili;
-    if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
-      if (LOG_FIREBASE)
-        console.log (symbol, 'Abort firebase gain update, missing splits. src:', src, 'diff:', diff)
-      return; // write only if fresh splits info
+    if (! isAdjusted()) {
+      diff = Date.now() - rows[row_index].values.splitsUpdateMili;
+      if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
+        if (LOG_FIREBASE)
+          console.log (symbol, 'Abort firebase gain update, missing splits. src:', src, 'diff:', diff)
+        return; // write only if fresh splits info
+      }
     }
-
     // diff = Date.now() - rows[row_index].values.verifyUpdateMili;
     // if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
     //   if (LOG_FIREBASE)
