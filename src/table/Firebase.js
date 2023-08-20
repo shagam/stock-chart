@@ -9,7 +9,7 @@ import Ip from './Ip'
 
 const Firebase = (props) => {
   const [stocksGain, setStocksGain] = useState([]);
-  const [stocksInfo, setStocksInfo] = useState([]);
+  const [stocksInfo, setStocksInfo]  = useState([]);
   const [stocksGainAll, setStocksGainAll] = useState([]);
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
 
@@ -42,7 +42,10 @@ const Firebase = (props) => {
     newStock.values.year5 = fireGain.year5.toFixed(2);
     newStock.values.year10 = fireGain.year10.toFixed(2);
     newStock.values.year20 = fireGain.year20.toFixed(2);
-    newStock.values.peak2Peak = fireGain.peak2Peak.toFixed(2);
+    if (fireGain.peak2Peak)
+      newStock.values.peak2Peak = fireGain.peak2Peak.toFixed(2);
+    else
+      newStock.values.peak2Peak = -1;
     if (newStock.values.year === '-1.00')
       newStock.values.year = -1
     if (newStock.values.year2 === '-1.00')
@@ -198,7 +201,7 @@ const Firebase = (props) => {
       // if (add_flag)
       //   props.allColumns[ind].toggleHidden();
         
-    } catch(e) { console.log (e); alert (e)}
+    } catch(e) { console.log (e)}
   }
 
   // collect statistics per stock symbol
