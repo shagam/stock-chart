@@ -117,10 +117,9 @@ const Firebase = (props) => {
           console.log ('dup')
         }
       }
-      {
-        props.saveTable('all');
-        window.location.reload();
-      }
+
+      props.saveTable('all');
+      window.location.reload();
   }
 
 
