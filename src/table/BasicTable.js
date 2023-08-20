@@ -205,14 +205,15 @@ export const BasicTable = (props) => {
           console.log (symbol, 'Abort firebase gain update, missing splits. src:', src, 'diff:', diff)
         return; // write only if fresh splits info
       }
+
+      diff = Date.now() - rows[row_index].values.verifyUpdateMili;
+      if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
+        if (LOG_FIREBASE)
+          console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
+        return; // write only if fresh verify info
+      }
     }
-    // diff = Date.now() - rows[row_index].values.verifyUpdateMili;
-    // if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
-    //   if (LOG_FIREBASE)
-    //     console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
-    //   return; // write only if fresh verify info
-    // }
- 
+
     diff = Date.now() - rows[row_index].values.deepUpdateMili;
     if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
       console.log (symbol, 'Abort firebase gain update, missing deep. src:', src, 'diff:', diff)
