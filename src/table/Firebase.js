@@ -32,18 +32,18 @@ const Firebase = (props) => {
     newStock.values.gain_date = fireGain._updateDate;
     newStock.values.gain_mili = fireGain._updateMili;
 
-    newStock.values.wk = fireGain.wk.toFixed(2);
-    newStock.values.wk2 = fireGain.wk2.toFixed(2);
-    newStock.values.mon = fireGain.mon.toFixed(2);
-    newStock.values.mon3 = fireGain.mon3.toFixed(2);
-    newStock.values.mon6 = fireGain.mon6.toFixed(2);
-    newStock.values.year = fireGain.year.toFixed(2);
-    newStock.values.year2 = fireGain.year2.toFixed(2);
-    newStock.values.year5 = fireGain.year5.toFixed(2);
-    newStock.values.year10 = fireGain.year10.toFixed(2);
-    newStock.values.year20 = fireGain.year20.toFixed(2);
+    newStock.values.wk = fireGain.wk;
+    newStock.values.wk2 = fireGain.wk2;
+    newStock.values.mon = fireGain.mon;
+    newStock.values.mon3 = fireGain.mon3;
+    newStock.values.mon6 = fireGain.mon6;
+    newStock.values.year = fireGain.year;
+    newStock.values.year2 = fireGain.year2;
+    newStock.values.year5 = fireGain.year5;
+    newStock.values.year10 = fireGain.year10;
+    newStock.values.year20 = fireGain.year20;
     if (fireGain.peak2Peak)
-      newStock.values.peak2Peak = fireGain.peak2Peak.toFixed(2);
+      newStock.values.peak2Peak = fireGain.peak2Peak;
     else
       newStock.values.peak2Peak = -1;
     if (newStock.values.year === '-1.00')
@@ -74,6 +74,55 @@ const Firebase = (props) => {
     props.rows.push (newStock);
     // props.saveTable('any');  
   }
+
+  async function peak2PeakBest () {
+    const QQQ_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
+    if (QQQ_index === -1) {
+      alert ('QQQ missing in table');
+      return; // cannot compare with QQQ
+    }
+    if (props.rows[QQQ_index].values.peak2Peak === undefined) {
+      alert ('need to get QQQ gain by pressing <gain> ');
+      return; // cannot compare with QQQ
+    }
+    var userQuery = query (props.gainRef, where(
+      'peak2Peak', '>', (props.rows[QQQ_index].values.peak2Peak) ));
+
+      const gain = await getDocs(userQuery);
+      if (LOG_FLAG)
+      console.log (gain.docs.length);
+      var found_stocks_array = {};
+      for (let i = 0; i < gain.docs.length; i++) {
+  
+        const symbol = gain.docs[i].data().__symbol;
+        
+        const symIndex = props.rows.findIndex((row)=> row.values.symbol === symbol); 
+        if (symIndex !== -1) {
+          if (LOG_FLAG)
+          console.log ('stock alreay in table ', i, symbol);
+          continue; // already in table
+        }
+
+        const dat = gain.docs[i].data();
+        addSym (symbol, dat);
+
+
+        if (LOG_FLAG)
+        console.log ('stock equ QQQ added ', i, symbol);
+        if (found_stocks_array[symbol] === undefined) {
+          // found_stocks_array[symbol] = ratio;
+        }
+        else {
+          if (LOG_FLAG)
+          console.log ('dup')
+        }
+      }
+      {
+        props.saveTable('all');
+        window.location.reload();
+      }
+  }
+
 
   // get all stocks better than QQQ
   const firebaseGainGetBest = async (add_flag, periodYears) => {
@@ -417,13 +466,18 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseGainGetBest(false, 1)}>stocks-compared-to-QQQ-1y </button>
         {/* <div style={{padding: '1px'}} ></div> */}
         <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>stocks-compared-to-QQQ-2y </button>
+        <div>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>stocks-compared-to-QQQ-5y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 10)}>stocks-compared-to-QQQ-10y </button>        
+        </div>
         <div>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
+        </div>
+        <div>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
+        <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button>
 
         <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
         </div>
