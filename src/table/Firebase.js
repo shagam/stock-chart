@@ -143,20 +143,20 @@ const Firebase = (props) => {
       console.log (props.rows[QQQ_index].values.mon6) 
       
       var userQuery = query (props.gainRef, where(
-       'year', '>', (props.rows[QQQ_index].values.year * 0.92) ));
+       'year', '>', (Number(props.rows[QQQ_index].values.year) * 0.92) ));
 
 
       if (periodYears === 2)
         userQuery = query (props.gainRef, where(
-        'year2', '>', (props.rows[QQQ_index].values.year2 * 0.92) ));
+        'year2', '>', (Number(props.rows[QQQ_index].values.year2) * 0.92) ));
 
         if (periodYears === 5)
         userQuery = query (props.gainRef, where(
-        'year5', '>', (props.rows[QQQ_index].values.year5 * 0.92) ));
+        'year5', '>', (Number(props.rows[QQQ_index].values.year5) * 0.92) ));
 
         if (periodYears === 10)
         userQuery = query (props.gainRef, where(
-        'year10', '>', (props.rows[QQQ_index].values.year10 * 0.92) ));        
+        'year10', '>', (Number(props.rows[QQQ_index].values.year10) * 0.92) ));        
 
         // || 'mon6', '>', props.rows[QQQ_index].values.mon6 
         // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
@@ -169,8 +169,8 @@ const Firebase = (props) => {
       var found_stocks_array = {};
       for (let i = 0; i < gain.docs.length; i++) {
 
-  
-        const symbol = gain.docs[i].data().__symbol;
+        const dat = gain.docs[i].data();
+        const symbol = dat.__symbol;
         
         const symIndex = props.rows.findIndex((row)=> row.values.symbol === symbol); 
         if (symIndex !== -1) {
