@@ -26,7 +26,7 @@ import {format} from "date-fns"
   }
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError) {
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError, setText) {
  
   const LOG = logFlags.includes("verify_1");
   // setError();
@@ -110,8 +110,12 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
+        const txt = sym + ' date: ' + rows[row_index].values.alphaDate + '  alpha-price: ' + rows[row_index].values.alphaPrice.toFixed(2) + 
+        ' marketwatch-price: ' + rows[row_index].values.verifyPrice + ' ratio='+ p;
         if (LOG)
-        console.log (sym, 'alpha:', rows[row_index].values.alphaDate, rows[row_index].values.alphaPrice, 'marketwatch-price:', rows[row_index].values.verifyPrice, 'ratio=', p);
+          console.log (txt);
+        if (setText)
+          setText(txt)
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
           

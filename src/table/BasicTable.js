@@ -25,6 +25,7 @@ import Firebase from './Firebase'
 import Config from './Config'
 import LogFlags from '../LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
+import Verify from './Verify'
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
@@ -689,7 +690,7 @@ export const BasicTable = (props) => {
               } 
               if (! isAdjusted ()) {           
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd, null);
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
               }
@@ -1211,8 +1212,14 @@ export const BasicTable = (props) => {
       </div>
         <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
         
-        <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly}
-        />
+        <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
+          stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
+        
+        <Verify symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} 
+          stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
+          firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
+          {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}
+   
       <div id='manual_id'>    
         {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
