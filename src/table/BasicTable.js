@@ -225,7 +225,10 @@ export const BasicTable = (props) => {
     // read old entries, to avoid duplicates
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
-
+    if (rows[row_index].values.splits_list === null)
+        rows[row_index].values.splits_list = '[]';
+    if (rows[row_index].values.splits === null)
+      rows[row_index].values.splits = 0;
     rows[row_index].values.gain_date = getDate();
     // add new entry
     try {
