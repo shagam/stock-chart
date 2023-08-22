@@ -15,7 +15,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags, setSplitInfo) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = logFlags.includes('splits'); 
@@ -85,6 +85,8 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags) =
           rows[row_index].values.splits_list = stringify;
           rows[row_index].values.splits = splitArray.length;
           rows[row_index].values.splitsUpdateMili = Date.now();
+          if (setSplitInfo)
+            setSplitInfo(stringify)
         }
         else {
           if (LOG)
