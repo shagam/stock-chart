@@ -9,6 +9,8 @@ const StockChart = (props) => {
   const StockSymbol = props.StockSymbol;
   //const chartData = props.dat;
   var splitsFlag = props.splitsFlag;
+
+
   const [oldestPrice, setOldestPrice] = useState()
 
   if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
@@ -37,13 +39,25 @@ const StockChart = (props) => {
     return null; //"Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
   
-  var graphColor;
-  if (splitsFlag === '')
-    graphColor = 'green';
-  else
-    graphColor = 'purple';
-
   const chartFlagChange = () => {setChartFlag (! chartFlag)}
+
+  const singleChart = [
+    {
+      x: props.stockChartXValues,
+      y: props.stockChartYValues,
+      type: 'scatter',
+      mode: 'lines+markers',
+      marker: { color: 'green' },
+      name: props.StockSymbol
+    },
+  ]
+
+  var title = props.gainChart.length > 1 ? 'normalized graph: symbol (max/min)' : props.StockSymbol
+  var gainChart = props.gainChart.length > 1 ? props.gainChart : singleChart;
+  // gainChart = singleChart;
+
+  // if (props.gainChart.length > 1)
+  // console.log (props.gainChart )
 
   return (
     <div>
@@ -57,17 +71,8 @@ const StockChart = (props) => {
       {/* <h4>  historical_gain({StockSymbol}): {histString}  </h4> */}
       <div id = 'chart_id'>
       {chartFlag && <Plot
-        data={[
-          {
-            x: props.stockChartXValues,
-            y: props.stockChartYValues,
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: { color: graphColor },
-            },
-        ]}
-        layout={{ width: 720, height: 400, title: 'stock_symbol:   ' + StockSymbol + ' ' + splitsFlag,
-      }}
+        data={gainChart}
+        layout={{ width: 1000, height: 600, title: title }}
       />
 
     }

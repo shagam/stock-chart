@@ -54,6 +54,8 @@ export const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
+  const [gainMap, setGainMap] = useState([]);
+  const [gainChart, setGainChart] = useState ([]);
   const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
@@ -100,7 +102,7 @@ export const BasicTable = (props) => {
 
 
   const [columnHideFlag, setColumnHideFlag] = useState(true);
-  const [searchDeepDate, setSearchDeepDate] = useState()
+  // const [searchDeepDate, setSearchDeepDate] = useState()
 
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
   
@@ -519,8 +521,40 @@ export const BasicTable = (props) => {
     return yValue;
   }
 
+  function buildGainCharData () {
+    const dat = [];
+    selectedFlatRows.forEach ((sel) => {
+
+      const symm = sel.values.symbol;
+
+      // normalize y to 100
+      if (gainMap[symm]) {
+        var max = gainMap[symm].y[0];
+        var min = gainMap[symm].y[0];
+        for (let i = 0; i < gainMap[symm].y.length; i++) {
+          if (max < gainMap[symm].y[i])
+            max = gainMap[symm].y[i]
+          if (min > gainMap[symm].y[i])
+            min = gainMap[symm].y[i]
+        }
+        for (let i = 0; i < gainMap[symm].y.length; i++)
+          gainMap[symm].y[i] = gainMap[symm].y[i] * 100 / max; 
 
 
+        dat.push ({
+          'x': gainMap[symm].x,
+          'y': gainMap[symm].y,
+          type: 'scatter',
+          // marker: { color: 'green' },
+          // 'sym': symm,
+          'name': symm + ' (' + (max/min).toFixed(2) + ')',
+          'mode': 'lines+markers',
+          // 'marker': { color: 'red' },
+        })
+      }
+    })
+    return dat;
+  }
 
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
@@ -687,6 +721,12 @@ export const BasicTable = (props) => {
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
               setStockChartYValues (stockChartYValuesFunction);
+
+              gainMap[sym]  = {'x': stockChartXValuesFunction, 'y': stockChartYValuesFunction}
+              const chartData_ = buildGainCharData();
+              // console.log (chartData_)
+              setGainChart (chartData_)
+
               if (LOG_SPLITS) {
                 console.log (stockChartXValuesFunction)
                 console.log (stockChartYValuesFunction)
@@ -894,9 +934,9 @@ export const BasicTable = (props) => {
     headerGroups,
     rows,
     prepareRow,
+    selectedFlatRows,
     state,
     setGlobalFilter,
-    // selectedFlatRows,
     visibleColumns,
     allColumns, getToggleHideAllColumnsProps,
   } = useTable ({
@@ -910,34 +950,24 @@ export const BasicTable = (props) => {
             desc: false
         }
       ]
-      // hiddenColumns: ["Exchange","Industry","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio","EVToEBITDA","EVToRevenue","wk","wk2","mon", "mon6", "year", "year20","alphaPrice","alphaDate","verifyDate","verifyPrice","info_date","gain_date","deep","recoverWeek","deepDate"]
-
-    } // "gap",
-
+    } 
   },
   useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
-  //  (hooks) => {
-  //   hooks.visibleColumns.push((columns) => {
-  //     return [
-  //       {
-  //         id: 'selection',
-  //         Header: ({getToggleAllRowsSelectedProps}) => (
-  //           null
-  //           // <CheckBox {...getToggleAllRowsSelectedProps()} />
-  //         ),
-  //         Cell: ({row}) => (
-  //           //<CheckBox {...row.getToggleRowSelectedProps()} />
-  //           <div style={{display:'flex'}}>   
-  //           <button type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
-  //           <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button> 
-  //           <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-  //           </div> 
-  //         )
-  //       }, 
-  //       ...columns
-  //     ]
-  //   })
-  // }  
+   (hooks) => {
+    hooks.visibleColumns.push((columns) => {
+      return [
+        {
+          id: 'selection',
+          Header: ({getToggleAllRowsSelectedProps}) => (
+            <CheckBox {...getToggleAllRowsSelectedProps()} />
+          ),
+          Cell: ({row}) => (
+            <CheckBox {...row.getToggleRowSelectedProps()} /> 
+          )
+        }, ...columns
+      ]
+    })
+  }  
   )
 
   // swap first, and force others columns in group to follow
@@ -1207,6 +1237,11 @@ export const BasicTable = (props) => {
     </table>
        
     <div>
+      {/* <code> 
+        {
+        JSON.stringify ({selectedRows: selectedFlatRows.map((row) => row.original.symbol)})
+        },
+      </code> */}
      {/* {console.log (chartSymbol)} */}
      {<LogFlags setLogFlags={setLogFlags} />}      
       <div>
@@ -1233,7 +1268,8 @@ export const BasicTable = (props) => {
         <Manual />
         
         <StockInfo stockInfo = {stockInfo} />
-        <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}    splitsFlag = {splitsFlag} logFlags = {logFlags} />
+        <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues} gainChart = {gainChart}
+            splitsFlag = {splitsFlag} logFlags = {logFlags} />
 
         <hr/>
       </div>
