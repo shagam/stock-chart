@@ -6,9 +6,9 @@ import "./StockChart.css";
 const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(false); // hide / show page
   const LOG_FLAG = props.logFlags.includes('chart');
-  const StockSymbol = props.StockSymbol;
 
-  const [chartData, setChartData] = useState("");
+
+  // const [chartData, setChartData] = useState("");
   // const [gainChart, setGainChart] = useState ([]);
 
   //const chartData = props.dat;
@@ -38,7 +38,7 @@ const StockChart = (props) => {
   }
 
   //console.log (JSON.stringify(`${StockSymbol}`));
-  if (isEmpty (`${StockSymbol}`)) {
+  if (isEmpty (`${props.StockSymbol}`)) {
     if (LOG_FLAG)
     console.log ("(Stock-chart.js) symbol Udef");
     return null; //"Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
@@ -99,7 +99,7 @@ const StockChart = (props) => {
   // console.log (chartData_)
 
   var title;
-  if (props.gainChart.length > 1) {
+  if (chartData_.length > 1) {
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
     title = 'normalized log graph: symbol (max/min)';

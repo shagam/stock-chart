@@ -55,7 +55,7 @@ export const BasicTable = (props) => {
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
-  const [gainChart, setGainChart] = useState ([]);
+
   const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
@@ -521,46 +521,6 @@ export const BasicTable = (props) => {
     return yValue;
   }
 
-  function buildGainCharData () {
-    const dat = [];
-    selectedFlatRows.forEach ((sel) => {
-
-      const symm = sel.values.symbol;
-
-      // normalize y to 100
-
-      if (gainMap[symm]) {
-        var y = [];
-        var max = gainMap[symm].y[0];
-        var min = gainMap[symm].y[0];
-        for (let i = 0; i < gainMap[symm].y.length; i++) {
-          if (max < gainMap[symm].y[i])
-            max = gainMap[symm].y[i]
-          if (min > gainMap[symm].y[i])
-            min = gainMap[symm].y[i]
-
-          // y[i] = gainMap[symm].y[i]
-        } 
-        for (let i = 0; i < gainMap[symm].y.length; i++) {
-          y[i] =  Math.log (gainMap[symm].y[i]  * 1000 / max)
-        }
-
-        console.log (symm, min.toFixed(2), max.toFixed(2))
-        dat.push ({
-          'x': gainMap[symm].x,
-          'y': y,
-          type: 'scatter',
-          // marker: { color: 'green' },
-          // 'sym': symm,
-          'name': symm + ' (' + (max/min).toFixed(2) + ')',
-          'mode': 'lines+markers',
-          // 'marker': { color: 'red' },
-        })
-      }
-    })
-    return dat;
-  }
-
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
 
@@ -728,10 +688,7 @@ export const BasicTable = (props) => {
               setStockChartYValues (stockChartYValuesFunction);
 
               gainMap[sym]  = {'x': stockChartXValuesFunction, 'y': stockChartYValuesFunction}
-              const chartData_ = buildGainCharData();
-              // console.log (chartData_)
-              setGainChart (chartData_)
-
+          
               if (LOG_SPLITS) {
                 console.log (stockChartXValuesFunction)
                 console.log (stockChartYValuesFunction)
