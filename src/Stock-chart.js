@@ -4,12 +4,17 @@ import "./StockChart.css";
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 const StockChart = (props) => { 
-  const [chartFlag, setChartFlag] = useState(false);
+  const [chartFlag, setChartFlag] = useState(false); // hide / show page
   const LOG_FLAG = props.logFlags.includes('chart');
   const StockSymbol = props.StockSymbol;
-  //const chartData = props.dat;
-  var splitsFlag = props.splitsFlag;
 
+  const [chartData, setChartData] = useState("");
+  // const [gainChart, setGainChart] = useState ([]);
+
+  //const chartData = props.dat;
+
+  // props.gainMap
+  // props.selectedFlatRows
 
   const [oldestPrice, setOldestPrice] = useState()
 
@@ -52,11 +57,60 @@ const StockChart = (props) => {
     },
   ]
 
-  var title = props.gainChart.length > 1 ? 'normalized graph: symbol (max/min)' : props.StockSymbol
-  var gainChart = props.gainChart.length > 1 ? props.gainChart : singleChart;
-  // gainChart = singleChart;
+  function buildGainCharData () {
+    const dat = [];
+    props.selectedFlatRows.forEach ((sel) => {
 
-  // if (props.gainChart.length > 1)
+      const symm = sel.values.symbol;
+
+      // normalize y to 100
+      const gainMapSym = props.gainMap[symm];
+      if (props.gainMap[symm]) {
+        var y = [];
+        var max = gainMapSym.y[0];
+        var min = gainMapSym.y[0];
+        for (let i = 0; i < gainMapSym.y.length; i++) {
+          if (max < gainMapSym.y[i])
+            max = gainMapSym.y[i]
+          if (min > gainMapSym.y[i])
+            min = gainMapSym.y[i]
+        } 
+        for (let i = 0; i < gainMapSym.y.length; i++) {
+          // y[i] = gainMap[symm].y[i]
+          y[i] =  Math.log (gainMapSym.y[i]  * 10000 / max)
+        }
+
+        // console.log (symm, min.toFixed(2), max.toFixed(2))
+        dat.push ({
+          'x': gainMapSym.x,
+          'y': y,
+          type: 'scatter',
+          'name': symm + ' (' + (max/min).toFixed(2) + ')',
+          'mode': 'lines+markers',
+          // 'marker': { color: 'red' },
+        })
+      }
+    })
+    return dat;
+  }
+
+  var gainChart;
+  const chartData_ = buildGainCharData();
+  // console.log (chartData_)
+
+  var title;
+  if (props.gainChart.length > 1) {
+    // setChartData (props.gainChart)
+    gainChart = chartData_// props.gainChart;
+    title = 'normalized log graph: symbol (max/min)';
+  }
+  else {
+    // setChartData (singleChart)
+    gainChart = singleChart;
+    title = props.StockSymbol
+  }
+
+  // if (chartData.length > 1)
   // console.log (props.gainChart )
 
   return (
