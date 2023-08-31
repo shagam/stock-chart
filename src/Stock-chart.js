@@ -16,7 +16,10 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
  
   const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
-  const {userAgent, userAgentMobile, isAndroid, isIPhone} = MobileContext();
+  const [modeBarRemove, setModeBarRemove] = useState([]);
+
+  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
   const LOG_FLAG = props.logFlags.includes('chart');
 
 
@@ -42,6 +45,9 @@ const StockChart = (props) => {
   if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
     return null;
 
+
+  if (isMobile) 
+    setModeBarRemove(['zoom', 'pan'])
 
   const isEmpty = (str) => {
     if (str == null)
@@ -179,7 +185,7 @@ const StockChart = (props) => {
         </div>
 
         <div id = 'chart_id'>
-          <Plot  data={gainChart} layout={{ width: 1000, height: 600, title: title,  }} config={{displayModeBar: ! isAndroid && ! isIPhone}} />
+          <Plot  data={gainChart} layout={{ width: 1000, height: 600, title: title,  }} config={{'modeBarButtonsToRemove': modeBarRemove}} />
         </div>
 
       </div>}
