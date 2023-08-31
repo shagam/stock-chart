@@ -1,11 +1,28 @@
 import React, {useState} from 'react';
 import Plot from 'react-plotly.js';
+import {format} from "date-fns"
 import "./StockChart.css";
+
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './table/Date';
 // import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
 
 const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(false); // hide / show page
+  const [logarithmic, setLogarithmic] = useState(false);
+ 
+  const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
+
   const LOG_FLAG = props.logFlags.includes('chart');
+
+
+  // var date = new Date();
+   // console.log (props.dateArr)
+
+  // // date = date.split('T')[0];
+  // const dateArray1 = monthsBack (dateArray, 8);
+  // const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
+  // props.setChartDate (new Date(dateStr));
 
 
   // const [chartData, setChartData] = useState("");
@@ -21,13 +38,6 @@ const StockChart = (props) => {
   if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
     return null;
 
-  // if (! props.stockChartYValues || props.stockChartYValues[props.stockChartYValues.length - 1] === oldestPrice)
-  //   return null;
-  // else
-  //   setOldestPrice (props.stockChartYValues[props.stockChartYValues.length - 1])
-
-  if (LOG_FLAG)
-    console.log(props.stockChartXValues, props.stockChartYValues)
 
   const isEmpty = (str) => {
     if (str == null)
@@ -46,10 +56,20 @@ const StockChart = (props) => {
   
   const chartFlagChange = () => {setChartFlag (! chartFlag)}
 
+  // calc log if required
+  var y = [];
+  for (let i = 0; i < props.stockChartYValues.length; i++){
+    if (logarithmic)
+      y[i] = Math.log (props.stockChartYValues[i])
+    else
+      y[i] = props.stockChartYValues[i]
+  }
+
+  // chart of a single ticker
   const singleChart = [
     {
       x: props.stockChartXValues,
-      y: props.stockChartYValues,
+      y: y,
       type: 'scatter',
       mode: 'lines+markers',
       marker: { color: 'green' },
@@ -58,15 +78,27 @@ const StockChart = (props) => {
   ]
 
   function buildGainCharData () {
-    const dat = [];
+
+    var formattedDate = format(chartDate, "yyyy-MM-dd");
+    var dateArr = formattedDate.split('-');
+    // var dateBackSplit = monthsBack(dateArr, 60);
+      // if (! gainMap)
+      //   return;
+    const dat = []; // build ticker gain array
     props.selectedFlatRows.forEach ((sel) => {
 
       const symm = sel.values.symbol;
 
       // normalize y to 100
       const gainMapSym = props.gainMap[symm];
-      if (props.gainMap[symm]) {
+
+      // const chartIndex = searchDateInArray (gainMapSym.x, dateArr, symm, props.logFlags)
+    
+      // normalize y to 100
+      if (gainMapSym) { //map of more than one symbol
         var y = [];
+
+        //find min max
         var max = gainMapSym.y[0];
         var min = gainMapSym.y[0];
         for (let i = 0; i < gainMapSym.y.length; i++) {
@@ -75,9 +107,15 @@ const StockChart = (props) => {
           if (min > gainMapSym.y[i])
             min = gainMapSym.y[i]
         } 
+
+        // newest val / old value
+        const gain = gainMapSym.y[0] / gainMapSym.y[gainMapSym.y.length - 1]
+
         for (let i = 0; i < gainMapSym.y.length; i++) {
-          // y[i] = gainMap[symm].y[i]
-          y[i] =  Math.log (gainMapSym.y[i]  * 10000 / max)
+          if (logarithmic)
+            y[i] =  Math.log (gainMapSym.y[i])
+          else
+            y[i] =  gainMapSym.y[i];
         }
 
         // console.log (symm, min.toFixed(2), max.toFixed(2))
@@ -85,7 +123,7 @@ const StockChart = (props) => {
           'x': gainMapSym.x,
           'y': y,
           type: 'scatter',
-          'name': symm + ' (' + (max/min).toFixed(2) + ')',
+          'name': symm + ' (' + gain.toFixed(2) + ')',
           'mode': 'lines+markers',
           // 'marker': { color: 'red' },
         })
@@ -96,40 +134,51 @@ const StockChart = (props) => {
 
   var gainChart;
   const chartData_ = buildGainCharData();
-  // console.log (chartData_)
 
-  var title;
+  var title = 'symbol (newest/oldest)'
   if (chartData_.length > 1) {
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
-    title = 'normalized log graph: symbol (max/min)';
+
+    if (logarithmic)
+      title += ' [logarithmic]';
+
+    if (LOG_FLAG)
+      console.log (props.chartDate)
   }
   else {
     // setChartData (singleChart)
     gainChart = singleChart;
-    title = props.StockSymbol
+    title = props.StockSymbol;
+    if (LOG_FLAG)
+      console.log(props.stockChartXValues, props.stockChartYValues)
   }
+
+  function toggleLogarithmic () {setLogarithmic (! logarithmic)}
+
 
   // if (chartData.length > 1)
   // console.log (props.gainChart )
 
   return (
     <div>
-        <div>
+      <div>
           <input
             type="checkbox" checked={chartFlag}
             onChange={ chartFlagChange}
           /> chart
-    </div>
-
+      </div>
+      
+      <div> &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={toggleLogarithmic} />  Logarithem &nbsp;</div>
       {/* <h4>  historical_gain({StockSymbol}): {histString}  </h4> */}
       <div id = 'chart_id'>
-      {chartFlag && <Plot
-        data={gainChart}
-        layout={{ width: 1000, height: 600, title: title }}
-      />
 
-    }
+
+      {chartFlag &&
+
+         <Plot  data={gainChart}  layout={{ width: 1000, height: 600, title: title }} />
+
+      }
       </div>
     </div>
   );
