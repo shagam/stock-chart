@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import Plot from 'react-plotly.js';
 import {format} from "date-fns"
+import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
+import MobileContext from './contexts/MobileContext'
 import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -12,7 +16,7 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
  
   const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
-
+  const {userAgent, userAgentMobile, isAndroid, isIPhone} = MobileContext();
   const LOG_FLAG = props.logFlags.includes('chart');
 
 
@@ -167,12 +171,17 @@ const StockChart = (props) => {
       </div>
 
       {chartFlag && <div>
-        <div> &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithem &nbsp;</div>
+
+        <div style={{color: 'magenta'}}  > 
+          <div  style={{display:'flex', color: 'magenta'}} > &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithem &nbsp;&nbsp; &nbsp; &nbsp; </div>
+          <div> <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} />  </div>
+
+        </div>
 
         <div id = 'chart_id'>
-          <Plot  data={gainChart}  layout={{ width: 1000, height: 600, title: title }} />
+          <Plot  data={gainChart} layout={{ width: 1000, height: 600, title: title,  }} config={{displayModeBar: ! isAndroid && ! isIPhone}} />
         </div>
-        
+
       </div>}
     </div>
   );
