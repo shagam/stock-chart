@@ -7,6 +7,7 @@ export const MobileContext = () => {
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   const [isAndroid, setIsAndroid] = useState("");
   const [isIPhone, setIsIphone] = useState("");
+  const [isMobile, setIsMobile] = useState("");
 
     const LOG = false;
   
@@ -15,7 +16,7 @@ export const MobileContext = () => {
     checkMobile();
      //getInfo();
 
-  }, [])
+  })
 
   
 
@@ -43,13 +44,16 @@ export const MobileContext = () => {
     else
       setIsIphone(false);
 
+    setIsMobile(isAndroid || isIPhone)
+
   }
 
   const value = {
     userAgent,
     userAgentMobile,
     isAndroid,
-    isIPhone
+    isIPhone,
+    isMobile
   }
   return (value)
 
