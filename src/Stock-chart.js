@@ -154,9 +154,6 @@ const StockChart = (props) => {
       console.log(props.stockChartXValues, props.stockChartYValues)
   }
 
-  function toggleLogarithmic () {setLogarithmic (! logarithmic)}
-
-
   // if (chartData.length > 1)
   // console.log (props.gainChart )
 
@@ -168,18 +165,15 @@ const StockChart = (props) => {
             onChange={ chartFlagChange}
           /> chart
       </div>
-      
-      <div> &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={toggleLogarithmic} />  Logarithem &nbsp;</div>
-      {/* <h4>  historical_gain({StockSymbol}): {histString}  </h4> */}
-      <div id = 'chart_id'>
 
+      {chartFlag && <div>
+        <div> &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithem &nbsp;</div>
 
-      {chartFlag &&
-
-         <Plot  data={gainChart}  layout={{ width: 1000, height: 600, title: title }} />
-
-      }
-      </div>
+        <div id = 'chart_id'>
+          <Plot  data={gainChart}  layout={{ width: 1000, height: 600, title: title }} />
+        </div>
+        
+      </div>}
     </div>
   );
 }
