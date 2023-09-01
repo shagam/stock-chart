@@ -184,7 +184,7 @@ const StockChart = (props) => {
         </div>
 
         <div id = 'chart_id'>
-          <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }} config={{'modeBarButtonsToRemove': modeBarRemove}} />
+          <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }} config={{'modeBarButtonsToRemove': props.modeBarRemove}} />
         </div>
 
       </div>}

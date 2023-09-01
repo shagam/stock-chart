@@ -56,8 +56,9 @@ export const BasicTable = (props) => {
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
+  const [modeBarRemove, setModeBarRemove] = useState(['zoom', 'zoomIn', 'zoomOut', 'pan']);
 
-  const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
+  const servList = ['dinagold.org', '62.90.44.227', 'localhost', ];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
   //const [chartData, setChartData] = useState("");
@@ -142,6 +143,9 @@ export const BasicTable = (props) => {
   const {localIp, localIpv4} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   
+  // if (isMobile) 
+  //   setModeBarRemove(['zoom', 'zoomIn', 'zoomOut', 'pan'])
+
   async function refreshByToggleColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'symbol');
     const isInvisible_ = allColumns[ind].isVisible;
@@ -1233,7 +1237,7 @@ export const BasicTable = (props) => {
         
         <StockInfo stockInfo = {stockInfo} />
         <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-         gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} isMobile = {isMobile} logFlags = {logFlags} />
+         gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} isMobile = {isMobile} modeBarRemove = {modeBarRemove} logFlags = {logFlags} />
 
         <hr/>
       </div>
