@@ -22,8 +22,12 @@ const StockChart = (props) => {
 
   // var date = new Date();
    // console.log (props.dateArr)
-
-  // // date = date.split('T')[0];
+   const chartYear = chartDate.getFullYear();
+   const chartMon = chartDate.getMonth() + 1; // [1..12]
+   const chartDay = chartDate.getDate(); // [1..31]
+   const chartDateArr = [chartYear,chartMon, chartDay]
+  // const dateTxt = ''//chartDate.split('T')[0];
+  // const dateArr = [] dateTxt//.split('-');
   // const dateArray1 = monthsBack (dateArray, 8);
   // const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
   // props.setChartDate (new Date(dateStr));
@@ -85,6 +89,11 @@ const StockChart = (props) => {
       name: props.StockSymbol
     },
   ]
+
+  function findIndex (singleChart) {
+    const chartIndex = searchDateInArray (singleChart.x, chartDateArr, singleChart.name, props.logFlags)
+    return chartIndex;
+  }
 
   function buildGainCharData () {
 
@@ -177,14 +186,17 @@ const StockChart = (props) => {
 
       {chartFlag && <div>
 
-        <div style={{color: 'magenta'}}  > 
-          <div  style={{display:'flex', color: 'magenta'}} > &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithem &nbsp;&nbsp; &nbsp; &nbsp; </div>
+        <div style={{color: 'black'}}  > 
+          <div  style={{display:'flex', }} > &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} /> &nbsp; Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
           <div> <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} />  </div>
 
         </div>
 
         <div id = 'chart_id'>
-          <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }} config={{'modeBarButtonsToRemove': props.modeBarRemove}} />
+          {props.isMobile && <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }}
+             config={{'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
+          {! props.isMobile && <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }}
+             config={{'modeBarButtonsToRemove': []}} />}
         </div>
 
       </div>}
