@@ -48,6 +48,7 @@ const StockChart = (props) => {
 
   if (isMobile) 
     setModeBarRemove(['zoom', 'pan'])
+    // setModeBarRemove(['zoom','zoomOut','zoomIn','pan'])
 
   const isEmpty = (str) => {
     if (str == null)
