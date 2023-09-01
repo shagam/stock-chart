@@ -43,6 +43,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from './IpContext';
+import MobileContext from '../contexts/MobileContext'
 
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
@@ -139,7 +140,8 @@ export const BasicTable = (props) => {
 
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
- 
+  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+  
   async function refreshByToggleColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'symbol');
     const isInvisible_ = allColumns[ind].isVisible;
@@ -1231,7 +1233,7 @@ export const BasicTable = (props) => {
         
         <StockInfo stockInfo = {stockInfo} />
         <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-         gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} logFlags = {logFlags} />
+         gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} isMobile = {isMobile} logFlags = {logFlags} />
 
         <hr/>
       </div>

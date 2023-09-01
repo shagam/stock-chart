@@ -4,7 +4,6 @@ import {format} from "date-fns"
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-import MobileContext from './contexts/MobileContext'
 import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -16,9 +15,7 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
  
   const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
-  const [modeBarRemove, setModeBarRemove] = useState([]);
-
-  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+  const [modeBarRemove, setModeBarRemove] = useState(['zoom', 'zoomIn', 'zoomOut', 'pan']);
 
   const LOG_FLAG = props.logFlags.includes('chart');
 
@@ -46,8 +43,9 @@ const StockChart = (props) => {
     return null;
 
 
-  if (isMobile) 
-    setModeBarRemove(['zoom', 'pan'])
+  // if (props.isMobile) 
+    // console.log ('isMobile: ', props.isMobile)
+    // setModeBarRemove(['zoom', 'zoomIn', 'zoomOut', 'pan'])
     // setModeBarRemove(['zoom','zoomOut','zoomIn','pan'])
 
   const isEmpty = (str) => {
@@ -186,7 +184,7 @@ const StockChart = (props) => {
         </div>
 
         <div id = 'chart_id'>
-          <Plot  data={gainChart} layout={{ width: 1000, height: 600, title: title,  }} config={{'modeBarButtonsToRemove': modeBarRemove}} />
+          <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }} config={{'modeBarButtonsToRemove': modeBarRemove}} />
         </div>
 
       </div>}
