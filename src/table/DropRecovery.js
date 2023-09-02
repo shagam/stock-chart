@@ -22,11 +22,11 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMon = today.getMonth() + 1;
-    const todayDay = today.getDay() + 1;
+    const todayDay = today.getDate();
 
     const startYear = startDate.getFullYear();
     const startMon = startDate.getMonth() + 1;
-    const startDay = startDate.getDay() + 1;
+    const startDay = startDate.getDate();
 
       
 

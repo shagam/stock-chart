@@ -15,7 +15,6 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
  
   const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
-  const [modeBarRemove, setModeBarRemove] = useState(['zoom', 'zoomIn', 'zoomOut', 'pan']);
 
   const LOG_FLAG = props.logFlags.includes('chart');
 

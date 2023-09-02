@@ -51,7 +51,7 @@ export const MarketstackApi = (props) => {
     //var DATE = startDate;
     const startYear = startDate.getFullYear();
     const startMon = startDate.getMonth() + 1;
-    const startDay = startDate.getDate() + 1;
+    const startDay = startDate.getDate();
     DATE = startYear + '-' +  startMon + '-' + startDay;
     const limit = 1000 
     const date = new Date();

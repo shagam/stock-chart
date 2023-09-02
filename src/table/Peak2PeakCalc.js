@@ -63,11 +63,11 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
       const startYear = startDate.getFullYear();
       const startMon = startDate.getMonth() + 1;
-      const startDay = startDate.getDay() + 1;
+      const startDay = startDate.getDate();
   
       const endYear = endDate.getFullYear();
       const endMon = endDate.getMonth() + 1;
-      const endDay = endDate.getDay() + 1;
+      const endDay = endDate.getDate();
 
       // calc start day
       var startDateArray = [startYear, startMon, startDay]
