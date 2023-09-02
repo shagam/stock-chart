@@ -18,38 +18,18 @@ const StockChart = (props) => {
 
   const LOG_FLAG = props.logFlags.includes('chart');
 
-
-  // var date = new Date();
-   // console.log (props.dateArr)
    const chartYear = chartDate.getFullYear();
    const chartMon = chartDate.getMonth() + 1; // [1..12]
    const chartDay = chartDate.getDate(); // [1..31]
    const chartDateArr = [chartYear,chartMon, chartDay]
-  // const dateTxt = ''//chartDate.split('T')[0];
-  // const dateArr = [] dateTxt//.split('-');
-  // const dateArray1 = monthsBack (dateArray, 8);
-  // const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
-  // props.setChartDate (new Date(dateStr));
-
-
-  // const [chartData, setChartData] = useState("");
-  // const [gainChart, setGainChart] = useState ([]);
-
-  //const chartData = props.dat;
 
   // props.gainMap
   // props.selectedFlatRows
 
   const [oldestPrice, setOldestPrice] = useState()
 
-  if (props.stockChartXValues === undefined || props.stockChartXValues.length === 0)
+  if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0)
     return null;
-
-
-  // if (props.isMobile) 
-    // console.log ('isMobile: ', props.isMobile)
-    // setModeBarRemove(['zoom', 'zoomIn', 'zoomOut', 'pan'])
-    // setModeBarRemove(['zoom','zoomOut','zoomIn','pan'])
 
   const isEmpty = (str) => {
     if (str == null)
@@ -65,36 +45,66 @@ const StockChart = (props) => {
     console.log ("(Stock-chart.js) symbol Udef");
     return null; //"Stock-chart: Missing chartSymbol"; //<error "(Stock-chart.js) symbol Udef"/>;
   }
-  
+
   const chartFlagChange = () => {setChartFlag (! chartFlag)}
 
-  // calc log if required
-  var y = [];
+
+  // clip arr according to date
+  function clipOldEntries (arrIn, chartIndex) {
+
+    if (chartIndex < 0) {
+      console.log ('clipFail,', chartDateArr, arrIn)
+      return arrIn;
+    }
+
+    var arrOut = [];
+    if (arrIn.length <= chartIndex)
+      return arrIn;
+
+    for (let i = 0; i < chartIndex; i++)
+      arrOut[i] = arrIn[i];
+    if (LOG_FLAG)
+      console.log ('arrClipped ', arrIn, arrOut)
+    return arrOut;
+  }
+
+
+
+
+  // calc logarith if required
+  var yAfterLog = [];
   for (let i = 0; i < props.stockChartYValues.length; i++){
     if (logarithmic)
-      y[i] = Math.log (props.stockChartYValues[i])
+      yAfterLog[i] = Math.log (props.stockChartYValues[i])
     else
-      y[i] = props.stockChartYValues[i]
+      yAfterLog[i] = props.stockChartYValues[i]
   }
 
-  // chart of a single ticker
-  const singleChart = [
-    {
-      x: props.stockChartXValues,
-      y: y,
-      type: 'scatter',
-      mode: 'lines+markers',
-      marker: { color: 'green' },
-      name: props.StockSymbol
-    },
-  ]
-
-  function findIndex (singleChart) {
-    const chartIndex = searchDateInArray (singleChart.x, chartDateArr, singleChart.name, props.logFlags)
-    return chartIndex;
+ 
+  // clip older part of array
+  var xAfterClip = [];
+  var yAfterClip = [];
+ 
+  const chartIndex = searchDateInArray (props.stockChartXValues, chartDateArr, props.StockSymbol, props.logFlags);
+  if (chartIndex > 0) {
+    xAfterClip = clipOldEntries(props.stockChartXValues, chartIndex); 
+    yAfterClip = clipOldEntries(yAfterLog, chartIndex); 
   }
 
-  function buildGainCharData () {
+ // chart of a single ticker
+ const singleChart = [
+  {
+    x: xAfterClip,
+    y: yAfterClip,
+    type: 'scatter',
+    mode: 'lines+markers',
+    marker: { color: 'green' },
+    name: props.StockSymbol
+  },
+]
+
+
+  function buildGainChartData () {
 
     var formattedDate = format(chartDate, "yyyy-MM-dd");
     var dateArr = formattedDate.split('-');
@@ -150,7 +160,7 @@ const StockChart = (props) => {
   }
 
   var gainChart;
-  const chartData_ = buildGainCharData();
+  const chartData_ = buildGainChartData();
 
   var title = 'symbol (newest/oldest)'
   if (chartData_.length > 1) {
@@ -164,15 +174,15 @@ const StockChart = (props) => {
       console.log (props.chartDate)
   }
   else {
-    // setChartData (singleChart)
     gainChart = singleChart;
-    title = props.StockSymbol;
+    const max = singleChart[0].y[0];
+    const min = singleChart[0].y[singleChart[0].y.length - 1] 
+    const minMax = max / min;
+    title = props.StockSymbol + ' (' + minMax.toFixed(2) + ') ';
     if (LOG_FLAG)
       console.log(props.stockChartXValues, props.stockChartYValues)
   }
 
-  // if (chartData.length > 1)
-  // console.log (props.gainChart )
 
   return (
     <div>
