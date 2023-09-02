@@ -123,32 +123,39 @@ const StockChart = (props) => {
     
       // normalize y to 100
       if (gainMapSym) { //map of more than one symbol
-        var y = [];
+        var yAfterLog = [];
 
         //find min max
-        var max = gainMapSym.y[0];
-        var min = gainMapSym.y[0];
-        for (let i = 0; i < gainMapSym.y.length; i++) {
-          if (max < gainMapSym.y[i])
-            max = gainMapSym.y[i]
-          if (min > gainMapSym.y[i])
-            min = gainMapSym.y[i]
-        } 
+        // var max = gainMapSym.y[0];
+        // var min = gainMapSym.y[0];
+        // for (let i = 0; i < gainMapSym.y.length; i++) {
+        //   if (max < gainMapSym.y[i])
+        //     max = gainMapSym.y[i]
+        //   if (min > gainMapSym.y[i])
+        //     min = gainMapSym.y[i]
+        // } 
+
+        const chartIndex = searchDateInArray (gainMapSym.x, chartDateArr, sel.values.symbol, props.logFlags);
+        if (chartIndex > 0) {
+          xAfterClip = clipOldEntries(gainMapSym.x, chartIndex); 
+          yAfterClip = clipOldEntries(gainMapSym.y, chartIndex); 
+        }
+
 
         // newest val / old value
         const gain = gainMapSym.y[0] / gainMapSym.y[gainMapSym.y.length - 1]
 
-        for (let i = 0; i < gainMapSym.y.length; i++) {
+        for (let i = 0; i < yAfterClip.length; i++) {
           if (logarithmic)
-            y[i] =  Math.log (gainMapSym.y[i])
+            yAfterLog[i] =  Math.log (yAfterClip[i])
           else
-            y[i] =  gainMapSym.y[i];
+            yAfterLog[i] =  yAfterClip[i];
         }
 
         // console.log (symm, min.toFixed(2), max.toFixed(2))
         dat.push ({
-          'x': gainMapSym.x,
-          'y': y,
+          'x': xAfterClip,
+          'y': yAfterLog,
           type: 'scatter',
           'name': symm + ' (' + gain.toFixed(2) + ')',
           'mode': 'lines+markers',
