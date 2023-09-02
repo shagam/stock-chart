@@ -162,7 +162,7 @@ const StockChart = (props) => {
   var gainChart;
   const chartData_ = buildGainChartData();
 
-  var title = 'symbol (newest/oldest)'
+  var title = 'symbol (gain)'
   if (chartData_.length > 1) {
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
@@ -178,7 +178,7 @@ const StockChart = (props) => {
     const max = singleChart[0].y[0];
     const min = singleChart[0].y[singleChart[0].y.length - 1] 
     const minMax = max / min;
-    title = props.StockSymbol + ' (' + minMax.toFixed(2) + ') ';
+    title = props.StockSymbol + ' (gain ' + minMax.toFixed(2) + ') ';
     if (LOG_FLAG)
       console.log(props.stockChartXValues, props.stockChartYValues)
   }
