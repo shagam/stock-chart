@@ -143,7 +143,7 @@ const StockChart = (props) => {
 
 
         // newest val / old value
-        const gain = gainMapSym.y[0] / gainMapSym.y[gainMapSym.y.length - 1]
+        const gain = yAfterClip[0] / yAfterClip[yAfterClip.length - 1]
 
         for (let i = 0; i < yAfterClip.length; i++) {
           if (logarithmic)
@@ -174,7 +174,7 @@ const StockChart = (props) => {
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
 
-    if (logarithmic)
+    if (logarithmic)  
       title += ' [logarithmic]';
 
     if (LOG_FLAG)
