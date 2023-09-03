@@ -232,10 +232,12 @@ export const BasicTable = (props) => {
     // read old entries, to avoid duplicates
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
     const gain = await getDocs(userQuery);
-    if (rows[row_index].values.splits_list === null)
+    if (rows[row_index].values.splits_list === undefined)
         rows[row_index].values.splits_list = '[]';
-    if (rows[row_index].values.splits === null)
+    if (rows[row_index].values.splits === undefined)
       rows[row_index].values.splits = 0;
+      if (rows[row_index].values.verify_1 === undefined)
+      rows[row_index].values.verify_1 = -1;
     rows[row_index].values.gain_date = getDate();
     // add new entry
     try {
