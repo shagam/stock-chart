@@ -90,6 +90,10 @@ const StockChart = (props) => {
     xAfterClip = clipOldEntries(props.stockChartXValues, chartIndex); 
     yAfterClip = clipOldEntries(yAfterLog, chartIndex); 
   }
+  else { // short history
+    xAfterClip = props.stockChartXValues; 
+    yAfterClip = yAfterLog; 
+  }
 
  // chart of a single ticker
  const singleChart = [
@@ -180,14 +184,16 @@ const StockChart = (props) => {
     if (LOG_FLAG)
       console.log (props.chartDate)
   }
-  else {
+  else { // singleChart
     gainChart = singleChart;
-    const max = singleChart[0].y[0];
-    const min = singleChart[0].y[singleChart[0].y.length - 1] 
-    const minMax = max / min;
-    title = props.StockSymbol + ' (gain ' + minMax.toFixed(2) + ') ';
-    if (LOG_FLAG)
-      console.log(props.stockChartXValues, props.stockChartYValues)
+    const newest = singleChart[0].y[0];
+    const oldest = singleChart[0].y[singleChart[0].y.length - 1] 
+    const gainSingle = newest / oldest;
+    title = props.StockSymbol + ' (gain ' + gainSingle.toFixed(2) + ') ';
+    if (LOG_FLAG) {
+      console.log (props.stockChartXValues)
+      console.log (props.stockChartYValues)
+    }
   }
 
 
