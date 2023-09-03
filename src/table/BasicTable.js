@@ -235,7 +235,7 @@ export const BasicTable = (props) => {
     if (rows[row_index].values.splits_list === undefined)
         rows[row_index].values.splits_list = '[]';
     if (rows[row_index].values.splits === undefined)
-      rows[row_index].values.splits = 0;
+      rows[row_index].values.splits = -1;
       if (rows[row_index].values.verify_1 === undefined)
       rows[row_index].values.verify_1 = -1;
     rows[row_index].values.gain_date = getDate();
