@@ -611,7 +611,7 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
                 const yValue = getYValue (chartData, key, openMarketFlag)
-                stockChartYValuesFunction.push(yValue);
+                stockChartYValuesFunction.push(yValue.toFixed(2));
               }
                 
               // collect compensation vars
