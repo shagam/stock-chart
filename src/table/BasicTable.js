@@ -1238,7 +1238,7 @@ export const BasicTable = (props) => {
         
         <StockInfo stockInfo = {stockInfo} />
         <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-         gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} isMobile = {isMobile} logFlags = {logFlags} />
+         gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
 
         <hr/>
       </div>

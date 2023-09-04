@@ -107,7 +107,18 @@ const StockChart = (props) => {
   },
 ]
 
+  function yearlyGain (gain, weeksDiff) {
+    if (! props.weekly)
+      return -1
+    // const weeksDiff = indexOldest - indexNewest
+    // const gain = Number (stockChartYValues[indexNewest] / stockChartYValues[indexOldest]).toFixed (3)
+    const yearsDiff = Number (weeksDiff/52).toFixed (2)
+    const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
+    return yearlyGain;
+  }
 
+
+  // build multiChart
   function buildGainChartData () {
 
     var formattedDate = format(chartDate, "yyyy-MM-dd");
@@ -155,13 +166,14 @@ const StockChart = (props) => {
           else
             yAfterLog[i] =  yAfterClip[i];
         }
+        const yearlyGain_ = yearlyGain (gain, yAfterLog.length);
 
         // console.log (symm, min.toFixed(2), max.toFixed(2))
         dat.push ({
           'x': xAfterClip,
           'y': yAfterLog,
           type: 'scatter',
-          'name': symm + ' (' + gain.toFixed(2) + ')',
+          'name': symm + ' (' + gain.toFixed(2) + ' yearly: '+ yearlyGain_ +  ')',
           'mode': 'lines+markers',
           // 'marker': { color: 'red' },
         })
@@ -188,8 +200,10 @@ const StockChart = (props) => {
     gainChart = singleChart;
     const newest = singleChart[0].y[0];
     const oldest = singleChart[0].y[singleChart[0].y.length - 1] 
+    const weeksDiff = singleChart[0].y.length
     const gainSingle = newest / oldest;
-    title = props.StockSymbol + ' (gain ' + gainSingle.toFixed(2) + ') ';
+    const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
+    title = props.StockSymbol + ' (gain ' + gainSingle.toFixed(2) + ', yearlyGain: ' + yearlyGain_ + ') ';
     if (LOG_FLAG) {
       console.log (props.stockChartXValues)
       console.log (props.stockChartYValues)
@@ -215,7 +229,10 @@ const StockChart = (props) => {
         </div>
 
         <div id = 'chart_id'>
-          {props.isMobile && <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }}
+        {/* xaxis={'title': 'x-axis','fixedrange':True},
+       yaxis={'title': 'y-axis','fixedrange':True}) */}
+          {props.isMobile && <Plot  data={gainChart} 
+            layout={{ width: 800, height: 500, title: title, xaxis: {fixedrange: true}  }}
              config={{'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
           {! props.isMobile && <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }}
              config={{'modeBarButtonsToRemove': []}} />}
