@@ -102,7 +102,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         var p = Number(rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
 
         //MarketWatch fail whenReverse split
-        if (reverseSplit(rows[row_index].values.splits_list)) {
+         if (reverseSplit(rows[row_index].values.splits_list)) {
           rows[row_index].values.verify_1 = 'Rv-split';
         }
         else  
@@ -110,8 +110,11 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
-        const txt = sym + ' date: ' + rows[row_index].values.alphaDate + '  alpha-price: ' + rows[row_index].values.alphaPrice.toFixed(2) + 
-        ' marketwatch-price: ' + rows[row_index].values.verifyPrice + ' ratio='+ p;
+        const alphPrice = rows[row_index].values.alphaPrice;
+        var txt = sym + ' date: ' + rows[row_index].values.alphaDate;
+        if (alphPrice)
+          txt += '  alpha-price: ' + alphPrice.toFixed(2); 
+        txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice + ' verify_1 ratio='+ p;
         if (LOG)
           console.log (txt);
         if (setText)
