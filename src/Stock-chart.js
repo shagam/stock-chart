@@ -100,7 +100,7 @@ const StockChart = (props) => {
     const weeksDiff = yAfterClip.length
     const gainSingle = newest / oldest;
     const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
-    title = symbol + ' (gain ' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
+    title = symbol + ' (' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
 
 
     // chart of a single ticker
@@ -204,7 +204,7 @@ const StockChart = (props) => {
           {props.isMobile && <Plot  data={gainChart} 
             layout={{ width: 800, height: 500, title: title, xaxis: {fixedrange: true}  }}
              config={{'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
-          {! props.isMobile && <Plot  data={gainChart} layout={{ width: 800, height: 500, title: title,  }}
+          {! props.isMobile && <Plot  data={gainChart} layout={{ width: 1000, height: 600, title: title,  }}
              config={{'modeBarButtonsToRemove': []}} />}
         </div>
 
