@@ -70,43 +70,56 @@ const StockChart = (props) => {
 
 
 
+  function buildOneChart (stockChartXValues, stockChartYValues, symbol) {
+    var yAfterLog = [];
+ 
+     // clip older part of array
+    var xAfterClip = [];
+    var yAfterClip = [];
+  
+    const chartIndex = searchDateInArray (stockChartXValues, chartDateArr, props.StockSymbol, props.logFlags);
+    if (chartIndex > 0) {
+      xAfterClip = clipOldEntries(stockChartXValues, chartIndex); 
+      yAfterClip = clipOldEntries(stockChartYValues, chartIndex); 
+    }
+    else { // short history
+      xAfterClip = stockChartXValues; 
+      yAfterClip = stockChartYValues; 
+    }
 
-  // calc logarith if required
-  var yAfterLog = [];
-  for (let i = 0; i < props.stockChartYValues.length; i++){
-    if (logarithmic)
-      yAfterLog[i] = Math.log (props.stockChartYValues[i])
-    else
-      yAfterLog[i] = props.stockChartYValues[i]
+    // calc log
+    for (let i = 0; i < yAfterClip.length; i++){
+      if (logarithmic)
+        yAfterLog[i] = Math.log (yAfterClip[i])
+      else
+        yAfterLog[i] = yAfterClip[i]
+    }
+
+    const newest = yAfterClip[0];
+    const oldest = yAfterClip[yAfterClip.length - 1] 
+    const weeksDiff = yAfterClip.length
+    const gainSingle = newest / oldest;
+    const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
+    title = symbol + ' (gain ' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
+
+
+    // chart of a single ticker
+    const singleChart =
+      {
+        x: xAfterClip,
+        y: yAfterLog,
+        type: 'scatter',
+        mode: 'lines+markers',
+        //    marker: { color: 'green' },
+        name: title
+      }
+  
+    return singleChart;
   }
+  
+  const singleChart = [buildOneChart (props.stockChartXValues, props.stockChartYValues, props.StockSymbol)];
 
  
-  // clip older part of array
-  var xAfterClip = [];
-  var yAfterClip = [];
- 
-  const chartIndex = searchDateInArray (props.stockChartXValues, chartDateArr, props.StockSymbol, props.logFlags);
-  if (chartIndex > 0) {
-    xAfterClip = clipOldEntries(props.stockChartXValues, chartIndex); 
-    yAfterClip = clipOldEntries(yAfterLog, chartIndex); 
-  }
-  else { // short history
-    xAfterClip = props.stockChartXValues; 
-    yAfterClip = yAfterLog; 
-  }
-
- // chart of a single ticker
- const singleChart = [
-  {
-    x: xAfterClip,
-    y: yAfterClip,
-    type: 'scatter',
-    mode: 'lines+markers',
-    marker: { color: 'green' },
-    name: props.StockSymbol
-  },
-]
-
   function yearlyGain (gain, weeksDiff) {
     if (! props.weekly)
       return -1
@@ -130,55 +143,15 @@ const StockChart = (props) => {
     props.selectedFlatRows.forEach ((sel) => {
 
       const symm = sel.values.symbol;
-
-      // normalize y to 100
       const gainMapSym = props.gainMap[symm];
 
-      // const chartIndex = searchDateInArray (gainMapSym.x, dateArr, symm, props.logFlags)
-    
-      // normalize y to 100
-      if (gainMapSym) { //map of more than one symbol
-        var yAfterLog = [];
-
-        //find min max
-        // var max = gainMapSym.y[0];
-        // var min = gainMapSym.y[0];
-        // for (let i = 0; i < gainMapSym.y.length; i++) {
-        //   if (max < gainMapSym.y[i])
-        //     max = gainMapSym.y[i]
-        //   if (min > gainMapSym.y[i])
-        //     min = gainMapSym.y[i]
-        // } 
-
-        const chartIndex = searchDateInArray (gainMapSym.x, chartDateArr, sel.values.symbol, props.logFlags);
-        if (chartIndex > 0) {
-          xAfterClip = clipOldEntries(gainMapSym.x, chartIndex); 
-          yAfterClip = clipOldEntries(gainMapSym.y, chartIndex); 
-        }
-
-
-        // newest val / old value
-        const gain = yAfterClip[0] / yAfterClip[yAfterClip.length - 1]
-
-        for (let i = 0; i < yAfterClip.length; i++) {
-          if (logarithmic)
-            yAfterLog[i] =  Math.log (yAfterClip[i])
-          else
-            yAfterLog[i] =  yAfterClip[i];
-        }
-        const yearlyGain_ = yearlyGain (gain, yAfterLog.length);
-
-        // console.log (symm, min.toFixed(2), max.toFixed(2))
-        dat.push ({
-          'x': xAfterClip,
-          'y': yAfterLog,
-          type: 'scatter',
-          'name': symm + ' (' + gain.toFixed(2) + ' yearly: '+ yearlyGain_ +  ')',
-          'mode': 'lines+markers',
-          // 'marker': { color: 'red' },
-        })
-      }
+      var chart;
+      if (gainMapSym) {
+          chart = buildOneChart (props.gainMap[symm].x, props.gainMap[symm].y, symm);
+            dat.push (chart)
+      }  
     })
+    console.log (dat)
     return dat;
   }
 
@@ -186,7 +159,7 @@ const StockChart = (props) => {
   const chartData_ = buildGainChartData();
 
   var title = 'symbol (gain)'
-  if (chartData_.length > 1) {
+  if (chartData_.length > 1) {  // multiChart
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
 
@@ -198,12 +171,9 @@ const StockChart = (props) => {
   }
   else { // singleChart
     gainChart = singleChart;
-    const newest = singleChart[0].y[0];
-    const oldest = singleChart[0].y[singleChart[0].y.length - 1] 
-    const weeksDiff = singleChart[0].y.length
-    const gainSingle = newest / oldest;
-    const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
-    title = props.StockSymbol + ' (gain ' + gainSingle.toFixed(2) + ', yearlyGain: ' + yearlyGain_ + ') ';
+    title = singleChart[0].name;
+    singleChart[0].marker = { 'color': 'green' }
+    console.log (title)
     if (LOG_FLAG) {
       console.log (props.stockChartXValues)
       console.log (props.stockChartYValues)
