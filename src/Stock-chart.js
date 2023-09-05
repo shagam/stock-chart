@@ -151,7 +151,7 @@ const StockChart = (props) => {
             dat.push (chart)
       }  
     })
-    console.log (dat)
+    // console.log (dat)
     return dat;
   }
 
@@ -162,10 +162,6 @@ const StockChart = (props) => {
   if (chartData_.length > 1) {  // multiChart
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
-
-    if (logarithmic)  
-      title += ' [logarithmic]';
-
     if (LOG_FLAG)
       console.log (props.chartDate)
   }
@@ -179,6 +175,9 @@ const StockChart = (props) => {
       console.log (props.stockChartYValues)
     }
   }
+  if (logarithmic)  
+    title += ' [logarithmic]';
+
 
 
   return (
