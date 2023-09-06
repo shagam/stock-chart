@@ -619,6 +619,7 @@ export const BasicTable = (props) => {
 
               // compensate for splits
               if (! isAdjusted ()) // high limit no need for compensation
+                console.log ('adjustSplits')
                 for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) {
                   var jump = splitArrayList[splitNum].ratio;
                   // console.log (JSON.stringify (splitArrayList[splitNum]));
