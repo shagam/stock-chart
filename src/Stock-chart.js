@@ -63,8 +63,10 @@ const StockChart = (props) => {
 
     for (let i = 0; i < chartIndex; i++)
       arrOut[i] = arrIn[i];
-    if (LOG_FLAG)
-      console.log ('arrClipped ', arrIn, arrOut)
+    if (LOG_FLAG) {
+      console.log ('arr org', arrIn)
+      console.log ('arr clipped ', arrOut)
+    }
     return arrOut;
   }
 
@@ -148,9 +150,42 @@ const StockChart = (props) => {
       var chart;
       if (gainMapSym) {
           chart = buildOneChart (props.gainMap[symm].x, props.gainMap[symm].y, symm);
-            dat.push (chart)
-      }  
+          dat.push (chart)
+      }
     })
+
+    // find highest
+    var highest = 0;
+    var i_highest = -1;
+    for (let i = 0; i < dat.length; i++) {
+      if (highest < dat[i].y[0]) {
+        highest = dat[i].y[0];
+        i_highest = i;
+      }
+    }
+
+    if (false) {// calc scale
+      var scale = [];
+      var len = [];
+      var lenHigh = 0;
+      var lenShort = 0;
+      for (let i = 0; i < dat.length; i++) {
+        scale[i] = (highest / dat[i].y[0]).toFixed(2);
+        len[i] = dat[i].y.length;
+      }
+      if (LOG_FLAG)
+        console.log (scale, '  ', len)
+
+      // apply scale
+      for (let i = 0; i < dat.length; i++) {
+        if (dat[i].y.length < lenHigh)
+          continue;
+        for (let j = 0; j < dat[i].y.length; j++)
+          dat[i].y[j] *= scale[i];
+        if (LOG_FLAG)
+          console.log (dat[i].name, 'start: ' + dat[i].y[0].toFixed(2))
+      }
+  }
     // console.log (dat)
     return dat;
   }
@@ -169,7 +204,7 @@ const StockChart = (props) => {
     gainChart = singleChart;
     title = singleChart[0].name;
     singleChart[0].marker = { 'color': 'green' }
-    console.log (title)
+    // console.log (title)
     if (LOG_FLAG) {
       console.log (props.stockChartXValues)
       console.log (props.stockChartYValues)
@@ -198,12 +233,13 @@ const StockChart = (props) => {
         </div>
 
         <div id = 'chart_id'>
-        {/* xaxis={'title': 'x-axis','fixedrange':True},
+        {/* yaxis={'title': 'x-axis','fixedrange':True, 'autorange': false},
        yaxis={'title': 'y-axis','fixedrange':True}) */}
           {props.isMobile && <Plot  data={gainChart} 
-            layout={{ width: 800, height: 500, title: title, xaxis: {fixedrange: true}  }}
+            layout={{ width: 800, height: 500, title: title, yaxis: {fixedrange: false}  }}
              config={{'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
-          {! props.isMobile && <Plot  data={gainChart} layout={{ width: 1000, height: 600, title: title,  }}
+          {! props.isMobile && <Plot  data={gainChart} 
+            layout={{ width: 1000, height: 600, title: title, yaxis: {autorange: true, }}}
              config={{'modeBarButtonsToRemove': []}} />}
         </div>
 
