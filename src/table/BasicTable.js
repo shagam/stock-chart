@@ -1048,9 +1048,9 @@ export const BasicTable = (props) => {
 
   // color some column hide checkbox
   function getCheckBoxColor (header) {
-    if (header == 'info_date')
+    if (header === 'info_date')
       return 'magenta'
-      if (header == 'gain_date')
+      if (header === 'gain_date')
       return 'red'
     return 'black'
   }
