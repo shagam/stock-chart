@@ -110,10 +110,11 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
-        const alphPrice = rows[row_index].values.alphaPrice;
+        var alphaPrice = rows[row_index].values.alphaPrice;
         var txt = sym + ' date: ' + rows[row_index].values.alphaDate;
-        if (alphPrice)
-          txt += '  alpha-price: ' + alphPrice.toFixed(2); 
+        if (alphaPrice)
+          alphaPrice = Number(alphaPrice).toFixed(2)
+        txt += '  alpha-price: ' + alphaPrice; 
         txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice + ' verify_1 ratio='+ p;
         if (LOG)
           console.log (txt);
