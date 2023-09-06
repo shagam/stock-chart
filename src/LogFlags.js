@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useMemo, useEffect} from 'react'
 // import "./logFlagaStyles.css";
 // https://contactmentor.com/checkbox-list-react-js-example/
 
@@ -6,17 +6,10 @@ const LogFlags = (props) => {
 
   const [showFlags, setShowFlafs] = useState(false)
    // State with list of all checked item
-   const [checked, setChecked] = useState([]);
+   const logFlagsRaw = localStorage.getItem('logFlags')
+   const [checked, setChecked] = useState(JSON.parse(logFlagsRaw));
    const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "firebase", "verify_1", "splits", "chart", 'alpha','api', "aux","date"];
  
-   
-  useEffect(() => {
-    const flags = JSON.parse(localStorage.getItem('logFlags')) 
-     if (flags)
-        setChecked(flags)
-  }, []);
-
-
 
    // Add/Remove checked item from list
    const handleCheck = (event) => {
@@ -51,11 +44,16 @@ const LogFlags = (props) => {
     //     checkedItems_ === '' ? checkedItems_ += item : checkedItems_ += ", " + item
     //   }
     // })  
+    function showToggle () {
+      setShowFlafs(!showFlags)
+      props.setLogFlags(checked)
+    }
+
 
    return (
      <div className="app" style={{ border: '2px solid magenta', padding: '0px'}}>
       <div>
-        <input  type="checkbox" checked={showFlags}  onChange={() => {setShowFlafs(!showFlags)}} /> &nbsp; Console Log flags
+        <input  type="checkbox" checked={showFlags}  onChange={() => {showToggle()}} /> &nbsp; Console Log flags
       </div>
 
        <div className="checkList">
