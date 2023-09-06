@@ -1060,6 +1060,15 @@ export const BasicTable = (props) => {
   //   //border: '2px solid green'
   // };
 
+  // color some column hide checkbox
+  function getCheckBoxColor (header) {
+    if (header == 'info_date')
+      return 'magenta'
+      if (header == 'gain_date')
+      return 'red'
+    return 'black'
+  }
+  
   function getColor(val, column, sym) {
     // if (column.id === 'year') {
     //   console.log ('getColor', column.headers, sym, val)
@@ -1138,8 +1147,8 @@ export const BasicTable = (props) => {
           {
           allColumns.map(column => (
             <div key={column.id}>
-              <label id="column_Label_id">
-                <input type='checkbox' {...column.getToggleHiddenProps()}  />
+              <label id="column_Label_id" style={{'color': getCheckBoxColor(column.Header) }}>
+                <input   type='checkbox' {...column.getToggleHiddenProps()}  />
                 &nbsp;{column.Header}   &nbsp; &nbsp;
               </label>
             </div>
