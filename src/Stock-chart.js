@@ -15,7 +15,7 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(false);
 
-  const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
+  const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
 
   const LOG_FLAG = props.logFlags.includes('chart');
   const LOG_CHART_1 = props.logFlags.includes('chart1');
@@ -230,7 +230,7 @@ const StockChart = (props) => {
       {chartFlag && <div>
 
         <div style={{color: 'black', display:'flex',}}  > 
-          <div> <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
+          <div style={{display:'flex',}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
           <div>  <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
           <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp;&nbsp; &nbsp; &nbsp; </div>    
         </div>
