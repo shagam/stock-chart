@@ -141,9 +141,6 @@ export const BasicTable = (props) => {
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
-  
-  // if (isMobile) 
-  //   setModeBarRemove(['zoom', 'zoomIn', 'zoomOut', 'pan'])
 
   async function refreshByToggleColumns ()  {
     var ind = allColumns.findIndex((column)=> column.Header === 'symbol');
@@ -603,9 +600,6 @@ export const BasicTable = (props) => {
               var splitArrayList = [];
               if (splitArray && splitArray.length > 0)
                 splitArrayList = JSON.parse(splitArray)
-              
-              // if (splitArrayList.lenght  > 0 && LOG_SPLITS)
-              //   console.dir (splitArrayList)
 
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
@@ -1051,14 +1045,6 @@ export const BasicTable = (props) => {
     else
       alert ('Need to click gain for a symbol')
   }
-  // const style = {
-  //   padding: '0px',
-  //   margin: '0px'
-  //   //background: 'blue',
-  //   // color: 'red',
-  //   // fontSize: 200,
-  //   //border: '2px solid green'
-  // };
 
   // color some column hide checkbox
   function getCheckBoxColor (header) {
@@ -1070,16 +1056,6 @@ export const BasicTable = (props) => {
   }
   
   function getColor(val, column, sym) {
-    // if (column.id === 'year') {
-    //   console.log ('getColor', column.headers, sym, val)
-    //   // if (val < 1) {
-    //   //   return 'orange'
-    //   // }
-    //   // else {
-    //   //   return 'black'//RGBA(170,214,136,0.4)';
-    //   // }
-    // }
-
     if (val === undefined || val === -1 || val === '-1.00')
       return 'Black'
     if (column.id === 'verify_1') {
@@ -1215,7 +1191,7 @@ export const BasicTable = (props) => {
       </tbody>
     </table>
        
-    <div>
+    <div id='trailer_id'>
       {/* <code> 
         {
         JSON.stringify ({selectedRows: selectedFlatRows.map((row) => row.original.symbol)})
