@@ -13,10 +13,12 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(false); // hide / show page
   const [logarithmic, setLogarithmic] = useState(false);
- 
+  const [scaleFlag, setScaleFlag] = useState(false);
+
   const [chartDate, setChartDate] = useState (new Date(2007, 9, 15));
 
   const LOG_FLAG = props.logFlags.includes('chart');
+  const LOG_CHART_1 = props.logFlags.includes('chart1');
 
    const chartYear = chartDate.getFullYear();
    const chartMon = chartDate.getMonth() + 1; // [1..12]
@@ -63,10 +65,10 @@ const StockChart = (props) => {
 
     for (let i = 0; i < chartIndex; i++)
       arrOut[i] = arrIn[i];
-    if (LOG_FLAG) {
-      console.log ('arr org', arrIn)
-      console.log ('arr clipped ', arrOut)
-    }
+    // if (LOG_FLAG) {
+    //   console.log ('arr org', arrIn)
+    //   console.log ('arr clipped ', arrOut)
+    // }
     return arrOut;
   }
 
@@ -164,13 +166,14 @@ const StockChart = (props) => {
       }
     }
 
-    if (false) {// calc scale
+    if (scaleFlag) {// calc scale
       var scale = [];
       var len = [];
       var lenHigh = 0;
       var lenShort = 0;
+
       for (let i = 0; i < dat.length; i++) {
-        scale[i] = (highest / dat[i].y[0]).toFixed(2);
+        scale[i] = (highest - dat[i].y[0]).toFixed(2);
         len[i] = dat[i].y.length;
       }
       if (LOG_FLAG)
@@ -181,9 +184,9 @@ const StockChart = (props) => {
         if (dat[i].y.length < lenHigh)
           continue;
         for (let j = 0; j < dat[i].y.length; j++)
-          dat[i].y[j] *= scale[i];
+          dat[i].y[j] -= scale[i];
         if (LOG_FLAG)
-          console.log (dat[i].name, 'start: ' + dat[i].y[0].toFixed(2))
+          console.log (dat[i].name, 'start: ' + dat[i].y[0])
       }
   }
     // console.log (dat)
@@ -205,7 +208,7 @@ const StockChart = (props) => {
     title = singleChart[0].name;
     singleChart[0].marker = { 'color': 'green' }
     // console.log (title)
-    if (LOG_FLAG) {
+    if (LOG_CHART_1) {
       console.log (props.stockChartXValues)
       console.log (props.stockChartYValues)
     }
@@ -226,10 +229,10 @@ const StockChart = (props) => {
 
       {chartFlag && <div>
 
-        <div style={{color: 'black'}}  > 
-          <div  style={{display:'flex', }} > &nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} /> &nbsp; Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
-          <div> <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} />  </div>
-
+        <div style={{color: 'black', display:'flex',}}  > 
+          <div> <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
+          <div>  <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
+          <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp;&nbsp; &nbsp; &nbsp; </div>    
         </div>
 
         <div id = 'chart_id'>
