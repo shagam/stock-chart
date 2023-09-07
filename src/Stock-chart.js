@@ -191,13 +191,20 @@ const StockChart = (props) => {
     })
 
     // find highest
-    var highest = 0;
-    var i_highest = -1;
+    
+    var first = [];
+    var last = [];
+    var firstHigh = 0;
+    var lastHigh = 0;
     for (let i = 0; i < dat.length; i++) {
-      if (highest < dat[i].y[0]) {
-        highest = dat[i].y[0];
-        i_highest = i;
-      }
+      first [i] = dat[i].y[0];
+      last[i] = dat[i].y[dat[i].y.length - 1]
+      if (first[i] > firstHigh)
+        firstHigh = first[i];
+      if (last[i] > lastHigh)
+        lastHigh = last[i];
+      last[i] = dat[i].y[dat[i].length - 1];
+
     }
 
     if (scaleFlag) {// calc scale
@@ -207,21 +214,21 @@ const StockChart = (props) => {
       var lenShort = 0;
 
       for (let i = 0; i < dat.length; i++) {
-        scale[i] = (highest - dat[i].y[0]).toFixed(2);
+        scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]);
         len[i] = dat[i].y.length;
       }
       if (LOG_FLAG)
         console.log (scale, '  ', len)
 
-      // // apply scale
-      // for (let i = 0; i < dat.length; i++) {
-      //   if (dat[i].y.length < lenHigh)
-      //     continue;
-      //   for (let j = 0; j < dat[i].y.length; j++)
-      //     dat[i].y[j] -= scale[i];
-      //   if (LOG_FLAG)
-      //     console.log (dat[i].name, 'start: ' + dat[i].y[0])
-      // }
+      // apply scale
+      for (let i = 0; i < dat.length; i++) {
+        if (dat[i].y.length < lenHigh)
+          continue;
+        for (let j = 0; j < dat[i].y.length; j++)
+          dat[i].y[j] *= scale[i];
+        if (LOG_FLAG)
+          console.log (dat[i].name, 'start: ' + dat[i].y[0])
+      }
 
       // FIND MIN MAX AFTER SCALE
 
