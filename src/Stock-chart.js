@@ -50,6 +50,37 @@ const StockChart = (props) => {
 
   const chartFlagChange = () => {setChartFlag (! chartFlag)}
 
+  function minMax (arr, symbol) {
+    var min = 1000000;
+    var max = 0;
+    var minIndex = -1;
+    var maxIndex = -1;
+
+    for (let i = 0; i < arr.length; i++) {
+      const val = Number (arr[i])
+      if (min > val) {
+        min = val;
+        minIndex = i;
+      }
+      if (max < val) {
+        max = val
+        maxIndex = i;
+      }   
+    }
+    const  results = {
+      sym: symbol,
+      len: arr.length,
+      min_: min,
+      max_: max,
+      minIndex_: minIndex,
+      maxIndex_: maxIndex,
+      first: arr[0],
+      last: arr[arr.length - 1]
+    }
+    return results;
+  }
+
+
 
   // clip arr according to date
   function clipOldEntries (arrIn, chartIndex) {
@@ -76,6 +107,10 @@ const StockChart = (props) => {
 
   function buildOneChart (stockChartXValues, stockChartYValues, symbol) {
     var yAfterLog = [];
+
+    var res = minMax(stockChartYValues, symbol)
+    if (LOG_CHART_1)
+      console.log ('buildOne minMax', res)
  
      // clip older part of array
     var xAfterClip = [];
@@ -134,8 +169,7 @@ const StockChart = (props) => {
     return yearlyGain;
   }
 
-
-  // build multiChart
+    // build multiChart
   function buildGainChartData () {
 
     var formattedDate = format(chartDate, "yyyy-MM-dd");
@@ -179,25 +213,36 @@ const StockChart = (props) => {
       if (LOG_FLAG)
         console.log (scale, '  ', len)
 
-      // apply scale
-      for (let i = 0; i < dat.length; i++) {
-        if (dat[i].y.length < lenHigh)
-          continue;
-        for (let j = 0; j < dat[i].y.length; j++)
-          dat[i].y[j] -= scale[i];
-        if (LOG_FLAG)
-          console.log (dat[i].name, 'start: ' + dat[i].y[0])
+      // // apply scale
+      // for (let i = 0; i < dat.length; i++) {
+      //   if (dat[i].y.length < lenHigh)
+      //     continue;
+      //   for (let j = 0; j < dat[i].y.length; j++)
+      //     dat[i].y[j] -= scale[i];
+      //   if (LOG_FLAG)
+      //     console.log (dat[i].name, 'start: ' + dat[i].y[0])
+      // }
+
+      // FIND MIN MAX AFTER SCALE
+
+      for (let i = 0; i < dat.length; i++) { // loop on symbols
+        const res = minMax (dat[i].y, dat[i].name)
+        console.log (dat[i].name, 'end:', res)
       }
-  }
+      // if (LOG_FLAG)
+      // console.log (dat)
+    }
     // console.log (dat)
     return dat;
   }
 
   var gainChart;
-  const chartData_ = buildGainChartData();
+  var chartData_
+  // if (props.gainMap.length > 0)
+    chartData_ = buildGainChartData();
 
   var title = 'symbol (gain)'
-  if (chartData_.length > 1) {  // multiChart
+  if (chartData_ && chartData_.length > 1) {  // multiChart
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
     if (LOG_FLAG)
