@@ -605,7 +605,10 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
                 const yValue = getYValue (chartData, key, openMarketFlag)
-                stockChartYValuesFunction.push(yValue.toFixed(2));
+                if (yValue > 0.1)
+                  stockChartYValuesFunction.push(yValue.toFixed(2));
+                else
+                  stockChartYValuesFunction.push(yValue.toFixed(4));
               }
                 
               // collect compensation vars
@@ -668,7 +671,7 @@ export const BasicTable = (props) => {
                     console.log (sym, 'compensate split', splitNum, splitArrayList[splitNum])
                   if (splitsCalcFlag) {  // if flag is off do not compensate
                     for ( let k = maxJumpWeekNum; k < stockChartYValuesFunction.length; k++) {
-                        (stockChartYValuesFunction[k] = Number (Number (Number (stockChartYValuesFunction[k]) / jump).toFixed(2)));
+                        (stockChartYValuesFunction[k] = Number (Number (Number (stockChartYValuesFunction[k]) / jump).toFixed(3)));
                     }
                   } else
                      if (LOG_SPLITS) console.log ('no compensation')
