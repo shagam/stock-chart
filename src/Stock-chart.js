@@ -197,7 +197,7 @@ const StockChart = (props) => {
     var firstHigh = 0;
     var lastHigh = 0;
     for (let i = 0; i < dat.length; i++) {
-      first [i] = dat[i].y[0];
+      first[i] = dat[i].y[0];
       last[i] = dat[i].y[dat[i].y.length - 1]
       if (first[i] > firstHigh)
         firstHigh = first[i];
