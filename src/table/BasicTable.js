@@ -604,7 +604,7 @@ export const BasicTable = (props) => {
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
-                const yValue = getYValue (chartData, key, openMarketFlag)
+                const yValue = Number(getYValue (chartData, key, openMarketFlag))
                 if (yValue > 0.1)
                   stockChartYValuesFunction.push(yValue.toFixed(2));
                 else
