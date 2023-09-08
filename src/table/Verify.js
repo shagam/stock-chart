@@ -69,7 +69,7 @@ function Verify (props) {
             date: props.stockChartXValues[i],
           }
 
-          if (spikes.length == 0)
+          if (spikes.length === 0)
             spikes.push(props.symbol)
           spikes.push (info)
         }
