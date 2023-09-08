@@ -72,6 +72,10 @@ function Verify (props) {
           if (spikes.length === 0)
             spikes.push(props.symbol)
           spikes.push (info)
+          if (info.jump > 1)
+            console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #22ef11')
+          else
+            console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #ee1122')
         }
       }
       if (spikes.length > 0) {
