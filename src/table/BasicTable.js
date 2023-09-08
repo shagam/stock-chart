@@ -605,6 +605,7 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                 stockChartXValuesFunction.push(key);
                 const yValue = Number(getYValue (chartData, key, openMarketFlag))
+
                 if (yValue > 0.1)
                   stockChartYValuesFunction.push(yValue.toFixed(2));
                 else
@@ -615,7 +616,7 @@ export const BasicTable = (props) => {
               var splitsIndexArray = [];
 
               // compensate for splits
-              if (! isAdjusted ()) // high limit no need for compensation
+              if (! isAdjusted ()) {// high limit no need for compensation
                 console.log ('adjustSplits')
                 for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) {
                   var jump = splitArrayList[splitNum].ratio;
@@ -684,7 +685,7 @@ export const BasicTable = (props) => {
                     console.log (sym, 'after compensation (', chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesAfter)
                   // console.log ('loop end ', splitNum);
                 }            
-
+              }
               if (stockChartXValuesFunction.length === 0) {
                 console.log ('stockChartXValuesFunction  empty')
                 return;
@@ -697,6 +698,7 @@ export const BasicTable = (props) => {
               if (LOG_SPLITS) {
                 console.log (stockChartXValuesFunction)
                 console.log (stockChartYValuesFunction)
+                console.log (chartData)
               } 
               if (! isAdjusted ()) {           
               if (marketwatch)
