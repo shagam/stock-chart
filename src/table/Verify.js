@@ -23,7 +23,7 @@ function Verify (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [verifyTxt, setVerifyText] = useState ();
     const [splitInfo, setSplitInfo] = useState ();
-
+    const [spikeInfo, setSpikesInfo] = useState ();
 
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
@@ -50,6 +50,37 @@ function Verify (props) {
       }
       StockSplitsGet(props.symbol, props.rows, props.errorAdd, servList[0], true, props.logFlags, setSplitInfo)
     }
+
+    function spikes () {
+      if (! props.symbol) {
+        alert ("Missing symbol, press gain for a symbol")
+        return;
+      }
+      var spikes = [];
+      for (let i = 0; i <  props.stockChartYValues.length - 1; i++) {
+        setSpikesInfo();
+        const ratio = props.stockChartYValues[i] / props.stockChartYValues[i+1];
+        if (ratio > 1.5 || ratio < 0.5) {
+          const info = {
+            jump: ratio.toFixed(3),
+            index: i,
+            y: props.stockChartYValues[i],
+            y1: props.stockChartYValues[i+1],
+            date: props.stockChartXValues[i],
+          }
+
+          if (spikes.length == 0)
+            spikes.push(props.symbol)
+          spikes.push (info)
+        }
+      }
+      if (spikes.length > 0) {
+        setSpikesInfo (JSON.stringify(spikes))
+        console.log (spikes)
+      }
+    }
+
+
 
   const style = {
     // background: 'blue',
@@ -79,6 +110,9 @@ function Verify (props) {
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits {props.symbol}  </button>  
           <div  style={{display:'flex' }}>  {splitInfo} &nbsp;  </div>
+          <br></br>
+          <button type="button" onClick={()=>spikes ()}>Spikes {props.symbol}  </button>  
+          <div  style={{display:'flex' }}>  {spikeInfo} &nbsp;  </div>
         </div>
       }
     </div>
