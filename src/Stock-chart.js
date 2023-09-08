@@ -8,7 +8,7 @@ import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './table/Date';
-// import {c_stockSymbol, c_API_KEY, c_callBack} from './Constants'
+
 
 const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(false); // hide / show page
@@ -50,6 +50,7 @@ const StockChart = (props) => {
 
   const chartFlagChange = () => {setChartFlag (! chartFlag)}
 
+  // find min max of an array of numbers
   function minMax (arr, symbol) {
     var min = 1000000;
     var max = 0;
@@ -162,8 +163,6 @@ const StockChart = (props) => {
   function yearlyGain (gain, weeksDiff) {
     if (! props.weekly)
       return -1
-    // const weeksDiff = indexOldest - indexNewest
-    // const gain = Number (stockChartYValues[indexNewest] / stockChartYValues[indexOldest]).toFixed (3)
     const yearsDiff = Number (weeksDiff/52).toFixed (2)
     const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
     return yearlyGain;
@@ -174,7 +173,6 @@ const StockChart = (props) => {
 
     var formattedDate = format(chartDate, "yyyy-MM-dd");
     var dateArr = formattedDate.split('-');
-    // var dateBackSplit = monthsBack(dateArr, 60);
       // if (! gainMap)
       //   return;
     const dat = []; // build ticker gain array
@@ -229,17 +227,9 @@ const StockChart = (props) => {
         if (LOG_FLAG)
           console.log (dat[i].name, 'start: ' + dat[i].y[0])
       }
-
-      // FIND MIN MAX AFTER SCALE
-
-      for (let i = 0; i < dat.length; i++) { // loop on symbols
-        const res = minMax (dat[i].y, dat[i].name)
-        console.log (dat[i].name, 'end:', res)
-      }
-      // if (LOG_FLAG)
-      // console.log (dat)
     }
-    // console.log (dat)
+    // if (LOG_FLAG)
+    //  console.log (dat)
     return dat;
   }
 
@@ -248,7 +238,7 @@ const StockChart = (props) => {
   // if (props.gainMap.length > 0)
     chartData_ = buildGainChartData();
 
-  var title = 'symbol (gain)'
+  var title = 'symbol (gain, yearlyGain)'
   if (chartData_ && chartData_.length > 1) {  // multiChart
     // setChartData (props.gainChart)
     gainChart = chartData_// props.gainChart;
@@ -268,6 +258,17 @@ const StockChart = (props) => {
   if (logarithmic)  
     title += ' [logarithmic]';
 
+      
+  function swap_period_back_months(months) {
+    var date = new Date();
+    var formattedDate = format(date, "yyyy-MM-dd");
+    var dateArray = formattedDate.split('-');
+
+    // date = date.split('T')[0];
+    const dateArray1 = monthsBack (dateArray, months);
+    const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
+    setChartDate (new Date(dateStr));
+  }
 
 
   return (
@@ -283,7 +284,14 @@ const StockChart = (props) => {
 
         <div style={{color: 'black', display:'flex',}}  > 
           <div style={{display:'flex',}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
-          <div>  <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
+          
+          <button type="button" onClick={()=>swap_period_back_months(6)}>  6 Mon   </button>
+          <button type="button" onClick={()=>swap_period_back_months(12)}>  1 Year   </button>
+          <button type="button" onClick={()=>swap_period_back_months(24)}>  2 Years   </button>
+          <button type="button" onClick={()=>swap_period_back_months(60)}>  5 Years   </button>
+          <button type="button" onClick={()=>swap_period_back_months(120)}>  10 Years   </button>
+
+          <div> &nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
           <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp;&nbsp; &nbsp; &nbsp; </div>    
         </div>
 
