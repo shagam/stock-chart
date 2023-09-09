@@ -190,15 +190,15 @@ const StockChart = (props) => {
 
     // find highest
     
-    var first = [];
+    // var first = [];
     var last = [];
-    var firstHigh = 0;
+    // var firstHigh = 0;
     var lastHigh = 0;
     for (let i = 0; i < dat.length; i++) {
-      first[i] = dat[i].y[0];
+      // first[i] = dat[i].y[0];
       last[i] = dat[i].y[dat[i].y.length - 1]
-      if (first[i] > firstHigh)
-        firstHigh = first[i];
+      // if (first[i] > firstHigh)
+      //   firstHigh = first[i];
       if (last[i] > lastHigh)
         lastHigh = last[i];
       last[i] = dat[i].y[dat[i].length - 1];
@@ -209,7 +209,7 @@ const StockChart = (props) => {
       var scale = [];
       var len = [];
       var lenHigh = 0;
-      var lenShort = 0;
+      // var lenShort = 0;
 
       for (let i = 0; i < dat.length; i++) {
         scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]);
@@ -290,6 +290,7 @@ const StockChart = (props) => {
           <button type="button" onClick={()=>swap_period_back_months(24)}>  2 Years   </button>
           <button type="button" onClick={()=>swap_period_back_months(60)}>  5 Years   </button>
           <button type="button" onClick={()=>swap_period_back_months(120)}>  10 Years   </button>
+          <button type="button" onClick={()=>swap_period_back_months(264)}>  22 Years   </button>
 
           <div> &nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
           <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp;&nbsp; &nbsp; &nbsp; </div>    
