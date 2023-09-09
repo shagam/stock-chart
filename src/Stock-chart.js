@@ -169,7 +169,7 @@ const StockChart = (props) => {
   }
 
     // build multiChart
-  function buildGainChartData () {
+  function buildGainChartMutiple () {
 
     var formattedDate = format(chartDate, "yyyy-MM-dd");
     var dateArr = formattedDate.split('-');
@@ -235,8 +235,9 @@ const StockChart = (props) => {
 
   var gainChart;
   var chartData_
-  // if (props.gainMap.length > 0)
-    chartData_ = buildGainChartData();
+  if (props.selectedFlatRows.length >1)
+    chartData_ = buildGainChartMutiple();
+
 
   var title = 'symbol (gain, yearlyGain)'
   if (chartData_ && chartData_.length > 1) {  // multiChart
@@ -292,8 +293,8 @@ const StockChart = (props) => {
           <button type="button" onClick={()=>swap_period_back_months(120)}>  10 Years   </button>
           <button type="button" onClick={()=>swap_period_back_months(264)}>  22 Years   </button>
 
-          <div> &nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp; &nbsp; </div>
-          <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp;&nbsp; &nbsp; &nbsp; </div>    
+          <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
+          <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>    
         </div>
 
         <div id = 'chart_id'>
