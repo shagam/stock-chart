@@ -17,8 +17,8 @@ const StockChart = (props) => {
 
   const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
 
-  const LOG_FLAG = props.logFlags.includes('chart');
-  const LOG_CHART_1 = props.logFlags.includes('chart1');
+  const LOG_FLAG = props.logFlags && props.logFlags.includes('chart');
+  const LOG_CHART_1 = props.logFlags && props.logFlags.includes('chart1');
 
    const chartYear = chartDate.getFullYear();
    const chartMon = chartDate.getMonth() + 1; // [1..12]

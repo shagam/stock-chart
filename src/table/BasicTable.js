@@ -66,12 +66,12 @@ export const BasicTable = (props) => {
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   
   const [logFlags, setLogFlags] = useState([]);
-  const LOG_FLAG = logFlags.includes('aux');
-  const LOG_API = logFlags.includes('api');
-  const LOG_SPLITS = logFlags.includes('splits');
-  const LOG_FIREBASE = logFlags.includes('firebase');
-  const LOG_alpha = logFlags.includes('alpha');
-  const LOG_DROP = logFlags.includes('drop_');
+  const LOG_FLAG = logFlags && logFlags.includes('aux');
+  const LOG_API = logFlags && logFlags.includes('api');
+  const LOG_SPLITS = logFlags && logFlags.includes('splits');
+  const LOG_FIREBASE = logFlags && logFlags.includes('firebase');
+  const LOG_alpha = logFlags && logFlags.includes('alpha');
+  const LOG_DROP = logFlags && logFlags.includes('drop_');
 
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
@@ -183,7 +183,7 @@ export const BasicTable = (props) => {
       }
     }
     localStorage.setItem ('columnsHidden', JSON.stringify(hiddenArray))
-    if (logFlags.includes('hiddenCols'))
+    if (logFlags && logFlags.includes('hiddenCols'))
       console.log ('hiddenColumnsSave', JSON.stringify(hiddenArray))
   }
 
@@ -415,7 +415,7 @@ export const BasicTable = (props) => {
     saveTable(sym);
   }
   const updateTableInfo = (childData, updateDate, updateMili)  => {
-    if (childData === null || childData === {} || childData["Exchange"] == null) {
+    if (childData === null || childData["Exchange"] == null) {
       console.log ('ChildData missing');
       return;
     }
