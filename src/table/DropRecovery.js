@@ -12,7 +12,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly) {
 
-    const LOG_FLAG = logFlags.includes('drop');
+    const LOG_FLAG = logFlags && logFlags.includes('drop');
 
     if (StockSymbol === undefined || StockSymbol === '' || stockChartXValues === undefined) {
       alert ('Need to click <gain> for a symbol before calc deep recover')

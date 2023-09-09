@@ -34,7 +34,7 @@ const Peak2PeakGui = (props) => {
     const [calcInfo, setCalcInfo] = useState ();
     const [searchPeak, setSearchPeak] = useState (true);
 
-    const LOG_FLAG = props.logFlags.includes('peak2Peak');
+    const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
    
 

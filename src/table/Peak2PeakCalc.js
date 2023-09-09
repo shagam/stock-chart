@@ -4,7 +4,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 
 const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak) => {
-    const LOG_FLAG = logFlags.includes('peak2Peak');
+    const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
     var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
     if(LOG_FLAG)
       console.log ( symbol, 'P2P quasyTop ', initDate, ' index=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex])
@@ -39,7 +39,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
   export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
      weekly, logFlags, searchPeak, startDate, endDate, errorAdd, setCalcResults, setCalcInfo) {
-      const LOG_FLAG = logFlags.includes('peak2Peak');
+      const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
       if (setCalcResults) {
         setCalcResults(); 
         setCalcInfo()

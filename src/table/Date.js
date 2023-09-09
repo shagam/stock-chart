@@ -265,19 +265,19 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFla
     collectedLog += '\nold: ' + oldestIndx + ' new: ' + newestIndx + ' moving: ' + searchIndex + ' daysDiff: ' + daysDiff;
 
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
-      if (logFlags.includes('date'))
+      if (logFlags && logFlags.includes('date'))
         console.log(sym, 'found_: ', stockChartXValuesFunction[oldestIndx], 'search=', JSON.stringify(testDateArray), 'index:', oldestIndx);
       return oldestIndx;
     }
 
     if (daysDiff === 0) {
-      if (logFlags.includes('date'))
+      if (logFlags && logFlags.includes('date'))
         console.log(sym, 'found_0: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), 'index:', searchIndex);
       return searchIndex;
     }
     if (daysDiff > 0) {
       if (daysDiff < 2) {
-        if (logFlags.includes('date'))
+        if (logFlags && logFlags.includes('date'))
           console.log(sym, 'found+: ', stockChartXValuesFunction[searchIndex], 'search=', JSON.stringify(testDateArray), 'index:', searchIndex);
         return searchIndex;
       }

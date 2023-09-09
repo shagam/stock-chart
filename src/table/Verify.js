@@ -19,7 +19,7 @@ function Verify (props) {
   // weekly
 
 
-    const LOG_FLAG = props.logFlags.includes('verify_1');
+    const LOG_FLAG = props.logFlags && props.logFlags.includes('verify_1');
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [verifyTxt, setVerifyText] = useState ();
     const [splitInfo, setSplitInfo] = useState ();
