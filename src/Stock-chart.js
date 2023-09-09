@@ -235,7 +235,7 @@ const StockChart = (props) => {
 
   var gainChart;
   var chartData_
-  if (props.selectedFlatRows.length >1)
+  if (props.selectedFlatRows.length > 1)
     chartData_ = buildGainChartMutiple();
 
 
