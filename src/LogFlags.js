@@ -6,7 +6,9 @@ const LogFlags = (props) => {
 
   const [showFlags, setShowFlafs] = useState(false)
    // State with list of all checked item
-   const logFlagsRaw = localStorage.getItem('logFlags')
+   var logFlagsRaw = localStorage.getItem('logFlags')
+   if (! logFlagsRaw)
+    logFlagsRaw = "[]";
    const [checked, setChecked] = useState(JSON.parse(logFlagsRaw));
    const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "firebase", "verify_1", "splits", "chart", 'chart1', 'alpha','api', "aux","date"];
  
