@@ -1,16 +1,8 @@
 
 [
     {
-        "symbol": "AMZN",
-        "sym": "AMZN"          
-    },
-    {
-        "symbol": "GOOG",
-        "sym": "GOOG" 
-    },
-    {
-        "symbol": "NVDA",
-        "sym": "NVDA"  
+        "symbol": "DIA",
+        "sym": "DIA"          
     },
     {
         "symbol": "TSLA",
