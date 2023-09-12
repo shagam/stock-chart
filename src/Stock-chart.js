@@ -141,7 +141,7 @@ const StockChart = (props) => {
     const gainSingle = newest / oldest;
     const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
     title = symbol + ' (' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
-
+    const titleSingle = symbol + ' (gain: ' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
 
     // chart of a single ticker
     const singleChart =
@@ -151,7 +151,9 @@ const StockChart = (props) => {
         type: 'scatter',
         mode: 'lines+markers',
         //    marker: { color: 'green' },
-        name: title
+        name: title,
+        nameSingle: titleSingle
+
       }
   
     return singleChart;
@@ -248,7 +250,7 @@ const StockChart = (props) => {
   }
   else { // singleChart
     gainChart = singleChart;
-    title = singleChart[0].name;
+    title = singleChart[0].nameSingle;
     singleChart[0].marker = { 'color': 'green' }
     // console.log (title)
     if (LOG_CHART_1) {
