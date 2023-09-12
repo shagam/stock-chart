@@ -12,6 +12,7 @@ const Firebase = (props) => {
   const [stocksInfo, setStocksInfo]  = useState([]);
   const [stocksGainAll, setStocksGainAll] = useState([]);
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
+  const [displayFlag, setDisplayFlag] = useState(false);
 
   const LOG_FLAG = false;
 
@@ -460,11 +461,24 @@ const Firebase = (props) => {
   // };
   return (
     <>
+      <div>
+        <input
+          type="checkbox" checked={displayFlag}
+          onChange={() => {setDisplayFlag (! displayFlag)}}
+        /> Firebase
+      </div>
+
+      {displayFlag && 
       <div style = {{ border: '2px solid green'}}> 
         <button type="button" onClick={()=>firebaseGetAndFill()} >Fill_gain_info </button>
+        <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button>
+        <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
+        
+        <div>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 1)}>stocks-compared-to-QQQ-1y </button>
         {/* <div style={{padding: '1px'}} ></div> */}
         <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>stocks-compared-to-QQQ-2y </button>
+        </div>
         <div>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>stocks-compared-to-QQQ-5y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(false, 10)}>stocks-compared-to-QQQ-10y </button>        
@@ -472,21 +486,20 @@ const Firebase = (props) => {
         <div>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
         <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
-        <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
+        </div>
+        <div><button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button>
+        <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
         </div>
         <div>
-        <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
-        <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button>
 
-        <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
         </div>
         {props.admin &&
           <div>
- 
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
           </div>
         }
       </div>
+    }
       {/* <div  style =  {{ border: '2px solid green', display:'flex'}} > 
         {props.admin && <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />}
       </div> */}
