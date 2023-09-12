@@ -31,7 +31,7 @@ table th {
 } */
 
 div.tbl {
-  height: 55vh;
+  /* height: 55vh; */
   overflow-y: auto;
 }
 

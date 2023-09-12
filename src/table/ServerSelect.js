@@ -8,7 +8,7 @@ export const ServerSelect = (props) => {
   // props.title
   // props.options
 
-  const [serv, setServ] = useState (props.options[0])
+  const [serv, setServ] = useState (props.defaultValue)
 
   const LOG = false;
 

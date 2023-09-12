@@ -16,7 +16,6 @@ import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {Peak2PeakGui} from './Peak2Peak'
 import {marketwatchGainValidate} from './GainValidateMarketwatch'
 import {polygon} from './Polygon'
-import CustomSelect from './CustomSelect'
 import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
 import GainValidate from './GainValidate'
@@ -60,6 +59,10 @@ export const BasicTable = (props) => {
   const servList = ['dinagold.org', '62.90.44.227', 'localhost', ];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
+
+  const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
+  const [tblHight, setTblHight] = useState(tblHightList[2]);
+
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
@@ -285,6 +288,10 @@ export const BasicTable = (props) => {
     console.log ('setServer new:', serv, 'old:', servSelect)
     setServSelect(serv)
   }
+  // function setTblHight_ (serv) {
+  //   console.log ('setServer new:', serv, 'old:', servSelect)
+  //   setTblHight(serv)
+  // }
 
   const alphaCallBack = (key) => {
     if (LOG_alpha)
@@ -1110,7 +1117,8 @@ export const BasicTable = (props) => {
           {<div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
-          {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList}/> </div>}
+          {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList} defaultValue={servList[0]}/> </div>}
+          {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHightList[3]}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
         </div>

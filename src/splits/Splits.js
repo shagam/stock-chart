@@ -268,7 +268,7 @@ export const Splits = (props) => {
     overflowY: 'scroll',
     /* background: yellow; */
     textAlign: 'center',
-    height: '40vh',
+    // height: '40vh',
     display: 'block'
     // padding: '-20px',
     // margin: '-20px'
