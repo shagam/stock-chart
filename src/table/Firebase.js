@@ -460,7 +460,7 @@ const Firebase = (props) => {
   //   border: '2px solid green'
   // };
   return (
-    <>
+    <div style = {{ border: '2px solid green'}}>
       <div>
         <input
           type="checkbox" checked={displayFlag}
@@ -469,7 +469,7 @@ const Firebase = (props) => {
       </div>
 
       {displayFlag && 
-      <div style = {{ border: '2px solid green'}}> 
+      <div> 
         <button type="button" onClick={()=>firebaseGetAndFill()} >Fill_gain_info </button>
         <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button>
         <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
@@ -503,7 +503,7 @@ const Firebase = (props) => {
       {/* <div  style =  {{ border: '2px solid green', display:'flex'}} > 
         {props.admin && <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />}
       </div> */}
-    </>
+    </div>
   )
 }
 
