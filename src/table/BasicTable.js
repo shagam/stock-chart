@@ -84,7 +84,6 @@ export const BasicTable = (props) => {
   if (LOG_alpha)
     console.log (API_KEY)
 
-  const [splitsFlag, setSplitsFlag] = useState('');
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(true);
@@ -399,10 +398,7 @@ export const BasicTable = (props) => {
       const splitsCount = splits.length;
     }
     } catch (e) {console.log('Bad splits', e, sym.splits) }
-    if (! splits || splits === '' || splits.length === 0 || splits[0].jump === 0)
-      setSplitsFlag('');
-    else
-      setSplitsFlag('(splits)');
+
     if (LOG_API)
     console.dir (rows[row_index].values)
     if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
@@ -1083,6 +1079,18 @@ export const BasicTable = (props) => {
   function clickedRow (row) {
     console.log (row.id, row.values.symbol)
   }
+
+  const stockTableStyle = {
+    border: '2px solid green',
+    display: 'block',
+    height: '55vh',
+    width: '100%',
+    /* min-width: 1900px; */
+    'overflowy': 'scroll',
+    /* background: yellow; */
+    'textAlign': 'center'
+  }
+  
 
   return (
     <>
