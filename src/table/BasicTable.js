@@ -104,7 +104,7 @@ export const BasicTable = (props) => {
     // var flexConfig = localStorage.getItem('flex');
 
 
-  const [columnHideFlag, setColumnHideFlag] = useState(true);
+  const [columnHideFlag, setColumnHideFlag] = useState(false);
   // const [searchDeepDate, setSearchDeepDate] = useState()
 
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
