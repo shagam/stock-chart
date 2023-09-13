@@ -964,7 +964,7 @@ export const BasicTable = (props) => {
       allColumns[ind].toggleHidden();
 
     ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
-    var isInvisible = allColumns[ind].isVisible;
+    isInvisible = allColumns[ind].isVisible;
     if (isInvisible === isInvisible_)
       allColumns[ind].toggleHidden();
   }
