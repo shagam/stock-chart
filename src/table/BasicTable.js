@@ -1112,9 +1112,9 @@ export const BasicTable = (props) => {
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
           {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
-          <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
+          {admin && <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>}
 
-          {<div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
+          {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList} defaultValue={servList[0]}/> </div>}
