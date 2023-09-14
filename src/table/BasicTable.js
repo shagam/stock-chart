@@ -942,33 +942,7 @@ export const BasicTable = (props) => {
   }  
   )
 
-  // swap first, and force others columns in group to follow
-  function toggleverifyColumns ()  {
-    var ind = allColumns.findIndex((column)=> column.Header === 'alphaDate');
-    const isInvisible_ = allColumns[ind].isVisible;
-    allColumns[ind].toggleHidden();
-
-    ind = allColumns.findIndex((column)=> column.Header === 'alphaPrice');
-    var isInvisible = allColumns[ind].isVisible;
-    if (isInvisible === isInvisible_)
-      allColumns[ind].toggleHidden();
-
-    // ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
-    // isInvisible = allColumns[ind].isVisible;
-    // if (isInvisible === isInvisible_)
-    //   allColumns[ind].toggleHidden();
-
-    ind = allColumns.findIndex((column)=> column.Header === 'verifyPrice');
-    isInvisible = allColumns[ind].isVisible;
-    if (isInvisible === isInvisible_)
-      allColumns[ind].toggleHidden();
-
-    ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
-    isInvisible = allColumns[ind].isVisible;
-    if (isInvisible === isInvisible_)
-      allColumns[ind].toggleHidden();
-  }
-
+  
   const saveTable = (sym) => {
     const stocks = [];
     if (useData) {
@@ -1132,7 +1106,7 @@ export const BasicTable = (props) => {
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
           <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp;</div>      
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
-          <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>verifyColumns </button> 
+
           &nbsp; &nbsp;       
           <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
           &nbsp; &nbsp;   
@@ -1234,7 +1208,7 @@ export const BasicTable = (props) => {
         <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
           stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
         
-        <Verify symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} 
+        <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
           stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
           firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
           {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}

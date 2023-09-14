@@ -84,6 +84,32 @@ function Verify (props) {
       }
     }
 
+// swap first, and force others columns in group to follow
+function toggleverifyColumns ()  {
+  var ind = props.allColumns.findIndex((column)=> column.Header === 'alphaDate');
+  const isInvisible_ = props.allColumns[ind].isVisible;
+  props.allColumns[ind].toggleHidden();
+
+  ind = props.allColumns.findIndex((column)=> column.Header === 'alphaPrice');
+  var isInvisible = props.allColumns[ind].isVisible;
+  if (isInvisible === isInvisible_)
+  props.allColumns[ind].toggleHidden();
+
+  // ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
+  // isInvisible = allColumns[ind].isVisible;
+  // if (isInvisible === isInvisible_)
+  //   allColumns[ind].toggleHidden();
+
+  ind = props.allColumns.findIndex((column)=> column.Header === 'verifyPrice');
+  isInvisible = props.allColumns[ind].isVisible;
+  if (isInvisible === isInvisible_)
+  props.allColumns[ind].toggleHidden();
+
+  ind = props.allColumns.findIndex((column)=> column.Header === 'verify_1');
+  isInvisible = props.allColumns[ind].isVisible;
+  if (isInvisible === isInvisible_)
+  props.allColumns[ind].toggleHidden();
+}
 
 
   const style = {
@@ -107,9 +133,13 @@ function Verify (props) {
 
       {displayFlag && 
         <div> 
-          {props.symbol && <div> {props.symbol}</div>}             
+          {props.symbol && <div> {props.symbol}</div>}   
+          <br></br>
 
-          <button type="button" onClick={()=>verify ()}>verify {props.symbol}  </button>
+            <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
+            &nbsp; &nbsp;
+            <button type="button" onClick={()=>verify ()}>verify {props.symbol}  </button>
+
           <div  style={{display:'flex' }}>  {verifyTxt} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits {props.symbol}  </button>  
