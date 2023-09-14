@@ -97,7 +97,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
         rows[row_index].values.alphaDate = stockChartXValuesFunction[entry];
-        rows[row_index].values.alphaPrice = stockChartYValuesFunction[entry]
+        rows[row_index].values.alphaPrice = Number(stockChartYValuesFunction[entry]).toFixed(2);
         
         var p = Number(rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
 
