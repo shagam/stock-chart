@@ -703,7 +703,8 @@ export const BasicTable = (props) => {
                 console.log (stockChartYValuesFunction)
                 console.log (chartData)
               } 
-              if (! isAdjusted ()) {           
+              const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
+              if (allColumns[ind].isVisible) {           
               if (marketwatch)
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd, null);
               else
