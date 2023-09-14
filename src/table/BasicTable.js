@@ -700,7 +700,7 @@ export const BasicTable = (props) => {
 
               gainMap[sym]  = {'x': stockChartXValuesFunction, 'y': stockChartYValuesFunction}
           
-              if (LOG_SPLITS) {
+              if (logFlags.includes('xyValue')) {
                 console.log (stockChartXValuesFunction)
                 console.log (stockChartYValuesFunction)
                 console.log (chartData)
