@@ -540,8 +540,10 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    if (! isAdjusted ())  // high limit no need for compensation
-    StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags, null) // no need for return value
+
+    const ind = allColumns.findIndex((column)=> column.Header === 'splits_list');
+    if (allColumns[ind].isVisible || ! isAdjusted ())  // high limit no need for compensation
+      StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags, null) // no need for return value
 
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
@@ -704,7 +706,7 @@ export const BasicTable = (props) => {
                 console.log (chartData)
               } 
               const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
-              if (allColumns[ind].isVisible) {           
+              if (allColumns[ind].isVisible || ! isAdjusted) {           
               if (marketwatch)
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd, null);
               else
