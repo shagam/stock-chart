@@ -1094,7 +1094,6 @@ export const BasicTable = (props) => {
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
           {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
-          {admin && <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>}
 
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
@@ -1212,7 +1211,7 @@ export const BasicTable = (props) => {
           stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
         
         <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-          stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
+          stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
           firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
           {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}
    

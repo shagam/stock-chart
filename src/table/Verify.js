@@ -3,6 +3,7 @@ import React, {useState, } from 'react'
 import LogFlags from '../LogFlags'
 import {marketwatchGainValidate} from './GainValidateMarketwatch'
 import StockSplitsGet from '../splits/StockSplitsGet'
+import GetInt from '../utils/GetInt'
 
 function Verify (props) {
 
@@ -135,11 +136,13 @@ function toggleverifyColumns ()  {
         <div> 
           {props.symbol && <div> {props.symbol}</div>}   
           <br></br>
-
+          <div style={{display:'flex'}}>
             <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
             &nbsp; &nbsp;
+            <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
+            &nbsp; &nbsp; &nbsp;
             <button type="button" onClick={()=>verify ()}>verify {props.symbol}  </button>
-
+          </div>
           <div  style={{display:'flex' }}>  {verifyTxt} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits {props.symbol}  </button>  
