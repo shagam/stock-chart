@@ -72,17 +72,17 @@ function IpContext  () {
       setIos(false);
     }
 
-
-    const res = await axios.get('https://geolocation-db.com/json/')
-    if (LOG_FLAG)
-    console.log('ip ', res.data);
-    if (res.data !== '') {
-      setLocalIP(res.data);
-      // setAdmin (res.data.IPv4 === '84.228.164.64');
-      setLocalIPv4 (res.data.IPv4);
-    }
-    else
-      console.log ('no ip');
+    try {
+      const res = await axios.get('https://geolocation-db.com/json/')
+      if (LOG_FLAG)
+      console.log('ip ', res.data);
+      if (res.data !== '') {
+        setLocalIP(res.data);
+        // setAdmin (res.data.IPv4 === '84.228.164.64');
+        setLocalIPv4 (res.data.IPv4);
+      }
+      else
+        console.log ('no ip');
 
     // admin password
      // save ip
@@ -101,6 +101,10 @@ function IpContext  () {
       //const id = ipInfo.docs[i].id;
       var ipDoc = doc(db, "ipList", ipInfo.docs[i].id);
       await deleteDoc (ipDoc);    
+    }
+
+    } catch (err) {
+      console.log (err.message)
     }
   } 
   
