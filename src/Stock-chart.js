@@ -16,6 +16,7 @@ const StockChart = (props) => {
   const [scaleFlag, setScaleFlag] = useState(false);
 
   const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
+  const [months, setMonths] = useState();
 
   const LOG_FLAG = props.logFlags && props.logFlags.includes('chart');
   const LOG_CHART_1 = props.logFlags && props.logFlags.includes('chart1');
@@ -259,16 +260,23 @@ const StockChart = (props) => {
     }
   }
   if (logarithmic)  
-    title += ' [logarithmic]';
+    title += ' [logarithmic]';    
 
-      
-  function swap_period_back_months(months) {
+
+  function setChartDate_ (d) {
+    setMonths(0); // turn off radio buttons
+    setChartDate(d)
+  }
+
+  const onOptionChange = e => {
+    const mon = e.target.value;
+    setMonths(mon)
+
     var date = new Date();
     var formattedDate = format(date, "yyyy-MM-dd");
     var dateArray = formattedDate.split('-');
-
-    // date = date.split('T')[0];
-    const dateArray1 = monthsBack (dateArray, months);
+    const dateArray1 = monthsBack (dateArray, Number(mon));
+    // setMonthsBack (months);
     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
     setChartDate (new Date(dateStr));
   }
@@ -286,17 +294,23 @@ const StockChart = (props) => {
       {chartFlag && <div>
 
         <div style={{color: 'black', display:'flex',}}  > 
-          <div style={{display:'flex',}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
+          <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate_(date)} /> &nbsp; &nbsp; </div>
           
-          <button type="button" onClick={()=>swap_period_back_months(6)}>  6 Mon   </button>
-          <button type="button" onClick={()=>swap_period_back_months(12)}>  1 Year   </button>
-          <button type="button" onClick={()=>swap_period_back_months(24)}>  2 Years   </button>
-          <button type="button" onClick={()=>swap_period_back_months(60)}>  5 Years   </button>
-          <button type="button" onClick={()=>swap_period_back_months(120)}>  10 Years   </button>
-          <button type="button" onClick={()=>swap_period_back_months(264)}>  22 Years   </button>
+          <input style={{'margin-left':'1px', 'padding-left': '1px'}} type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
+            <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 6_mon</label>
+          <input type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
+            <label style={{'margin-right':'10px', 'padding-right': '10px'}}> 1_Year</label>  
+          <input type="radio" name="mon" value='24' id='24' checked={months==='24'} onChange={onOptionChange}/>
+            <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 2_year </label> 
+          <input type="radio" name="mon" value='60' id='60' checked={months==='60'} onChange={onOptionChange}/> 
+            <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 5_year </label> 
+          <input type="radio" name="mon" value='120' id='120' checked={months==='120'}onChange={onOptionChange} />
+             <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 10_year </label>
+          <input type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
+             <label style={{'margin-right':'10px', 'padding-right': '25px'}}> 22_Year </label>
 
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
-          <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>    
+          {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>    }
         </div>
 
         <div id = 'chart_id'>
