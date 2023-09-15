@@ -1114,9 +1114,10 @@ export const BasicTable = (props) => {
           &nbsp; &nbsp;   
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' />
           &nbsp;&nbsp;
-          <CheckBox {...getToggleHideAllColumnsProps()} />   Toggle All
-          &nbsp;&nbsp;        
+           
           <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide &nbsp; </div>
+          {columnHideFlag && <div> <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All </div>}
+          &nbsp;&nbsp; 
           {/* <button type="button" className="stock_button_class" onClick={()=>hiddenColumnRestore()}> restoreVisible    </button> */}
         </div>
 
