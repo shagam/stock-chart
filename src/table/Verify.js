@@ -63,11 +63,11 @@ function Verify (props) {
         const ratio = props.stockChartYValues[i] / props.stockChartYValues[i+1];
         if (ratio > 1.5 || ratio < 0.5) {
           const info = {
+            date: props.stockChartXValues[i],
             jump: ratio.toFixed(3),
             index: i,
             y: props.stockChartYValues[i],
             y1: props.stockChartYValues[i+1],
-            date: props.stockChartXValues[i],
           }
 
           if (spikes.length === 0)
