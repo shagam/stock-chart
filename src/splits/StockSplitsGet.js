@@ -71,7 +71,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags, s
           // if (splits[i].year < 2000)
           //   continue;
           const date = splits[i].year + '-' + splits[i].month + '-' + splits[i].day;
-          const split = {ratio: Number (splits[i].jump), date: date};
+          const split = {date: date, ratio: Number (splits[i].jump)};
           // splitArray = [...splitArray, split]
           splitArray.push (split);
         }
