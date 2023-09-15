@@ -72,8 +72,9 @@ function IpContext  () {
       setIos(false);
     }
 
+    const url = 'https://geolocation-db.com/json/';
     try {
-      const res = await axios.get('https://geolocation-db.com/json/')
+      const res = await axios.get(url)
       if (LOG_FLAG)
       console.log('ip ', res.data);
       if (res.data !== '') {
@@ -104,7 +105,7 @@ function IpContext  () {
     }
 
     } catch (err) {
-      console.log (err.message)
+      console.log (err.message, url)
     }
   } 
   
