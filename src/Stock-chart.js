@@ -295,20 +295,20 @@ const StockChart = (props) => {
 
         <div style={{color: 'black', display:'flex',}}  > 
 
-          <div style={{display:'flex', width: '300px'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate_(date)} /> &nbsp; &nbsp; </div>
+          <div style={{display:'flex', width: '300px'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate_(date)} /> &nbsp; &nbsp; </div>
           
-          <input style={{'margin-right': '2px', width: '20px'}} type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
-            <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 6_mon</label>
-          <input style={{'margin-right': '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
-            <label style={{'margin-right':'10px', 'padding-right': '10px'}}> 1_Year</label>  
-          <input style={{'margin-right': '2px', width: '20px'}} type="radio" name="mon" value='24' id='24' checked={months==='24'} onChange={onOptionChange}/>
-            <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 2_year </label> 
-          <input style={{'margin-right': '2px', width: '20px'}} type="radio" name="mon" value='60' id='60' checked={months==='60'} onChange={onOptionChange}/> 
-            <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 5_year </label> 
-          <input style={{'margin-right': '2px', width: '20px'}} type="radio" name="mon" value='120' id='120' checked={months==='120'}onChange={onOptionChange} />
-             <label style={{'margin-right':'10px', 'padding-right': '3px'}}> 10_year </label>
-          <input style={{'margin-right': '2px', width: '20px'}} type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
-             <label style={{'margin-right':'10px', 'padding-right': '25px'}}> 22_Year </label>
+          <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
+          <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>  
+          <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='24' id='24' checked={months==='24'} onChange={onOptionChange}/>
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> 2_year </label> 
+          <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='60' id='60' checked={months==='60'} onChange={onOptionChange}/> 
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> 5_year </label> 
+          <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='120' id='120' checked={months==='120'}onChange={onOptionChange} />
+             <label style={{marginRight:'10px', paddingRight: '1px'}}> 10_year </label>
+          <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
+             <label style={{marginRight:'10px', paddingRight: '25px'}}> 22_Year </label>
 
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
           {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>    }
