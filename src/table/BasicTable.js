@@ -1110,9 +1110,9 @@ export const BasicTable = (props) => {
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
 
           &nbsp; &nbsp;       
-          <button type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
+          <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
           &nbsp; &nbsp;   
-          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' />
+          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
           &nbsp;&nbsp;
            
           <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide &nbsp; </div>
