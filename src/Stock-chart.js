@@ -322,7 +322,7 @@ const StockChart = (props) => {
             layout={{ width: 700, height: 350, title: title, yaxis: {fixedrange: false}  }}
              config={{'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
           {! props.isMobile && <Plot  data={gainChart} 
-            layout={{ width: 1000, height: 500, title: title, yaxis: {autorange: true, }}}
+            layout={{ width: 850, height: 500, title: title, yaxis: {autorange: true, }}}
              config={{'modeBarButtonsToRemove': []}} />}
         </div>
 
