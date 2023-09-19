@@ -1,13 +1,17 @@
 
 [
     {
-        "symbol": "DIA",
-        "sym": "DIA"          
-    },
-    {
         "symbol": "TSLA",
         "sym": "TSLA" 
     },   
+    {
+        "symbol": "NVDA",
+        "sym": "NVDA" 
+    },   
+    {
+        "symbol": "DIA",
+        "sym": "DIA"          
+    },
     {
         "symbol": "QQQ",
         "sym": "QQQ"
