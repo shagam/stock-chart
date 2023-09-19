@@ -24,7 +24,7 @@ function Verify (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [verifyTxt, setVerifyText] = useState ();
     const [splitInfo, setSplitInfo] = useState ();
-    const [spikeInfo, setSpikesInfo] = useState ();
+    const [spikeInfo, setSpikesInfo] = useState ([]);
 
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
@@ -78,6 +78,7 @@ function Verify (props) {
           // if (spikes.length === 0)
           //   spikes.push(props.symbol)
           spikes.push (info)
+
           // if (info.jump > 1)
           //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #22ff11')
           // else
@@ -85,9 +86,13 @@ function Verify (props) {
         }
       }
       if (spikes.length > 0) {
-        setSpikesInfo (JSON.stringify(spikes))
+        setSpikesInfo (spikes)
         console.log (spikes)
       }
+    }
+
+    function renderList(array) {
+      return array.map((item) => <li>{JSON.stringify(item)}</li>);
     }
 
 // swap first, and force others columns in group to follow
@@ -154,8 +159,7 @@ function toggleverifyColumns ()  {
           <div  style={{display:'flex' }}>  {splitInfo} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>spikes ()}>Spikes {props.symbol}  </button>  
-          {/* {spikeInfo && spikeInfo.length > 1 && spikeInfo.map ((spik) => ({spik}))} */}
-          <div  style={{display:'flex' }}>  {spikeInfo} &nbsp;  </div>
+          {spikeInfo.length > 0 && renderList(spikeInfo)}
         </div>
       }
     </div>
