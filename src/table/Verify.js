@@ -58,25 +58,30 @@ function Verify (props) {
         return;
       }
       var spikes = [];
-      for (let i = 0; i <  props.stockChartYValues.length - 1; i++) {
+
+      for (let i = 0; i <  props.stockChartYValues.length - 2; i++) {
         setSpikesInfo();
-        const ratio = props.stockChartYValues[i] / props.stockChartYValues[i+1];
-        if (ratio > 1.5 || ratio < 0.5) {
+        const ratio = Number (props.stockChartYValues[i+1] / props.stockChartYValues[i]);
+        const ratio_1 = Number (props.stockChartYValues[i+1] / props.stockChartYValues[i+2]);
+
+        if (ratio > 1.7 && ratio_1 > 1.7) {
           const info = {
             date: props.stockChartXValues[i],
-            jump: ratio.toFixed(3),
+            jump: ratio.toFixed(2),
+            jump_1: ratio_1.toFixed(2),
             index: i,
-            y: props.stockChartYValues[i],
-            y1: props.stockChartYValues[i+1],
+            // y: props.stockChartYValues[i],
+            // y1: props.stockChartYValues[i+1],
+            // y2: props.stockChartYValues[i+2],
           }
 
-          if (spikes.length === 0)
-            spikes.push(props.symbol)
+          // if (spikes.length === 0)
+          //   spikes.push(props.symbol)
           spikes.push (info)
-          if (info.jump > 1)
-            console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #22ef11')
-          else
-            console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #ee1122')
+          // if (info.jump > 1)
+          //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #22ff11')
+          // else
+          //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #ee1122')
         }
       }
       if (spikes.length > 0) {
@@ -149,6 +154,7 @@ function toggleverifyColumns ()  {
           <div  style={{display:'flex' }}>  {splitInfo} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>spikes ()}>Spikes {props.symbol}  </button>  
+          {/* {spikeInfo && spikeInfo.length > 1 && spikeInfo.map ((spik) => ({spik}))} */}
           <div  style={{display:'flex' }}>  {spikeInfo} &nbsp;  </div>
         </div>
       }
