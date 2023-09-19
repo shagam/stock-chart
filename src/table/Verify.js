@@ -87,12 +87,18 @@ function Verify (props) {
       }
       if (spikes.length > 0) {
         setSpikesInfo (spikes)
-        console.log (spikes)
+        console.log ('spikes:', spikes)
       }
     }
 
     function renderList(array) {
-      return array.map((item) => <li>{JSON.stringify(item)}</li>);
+      if (array.length < 1)
+        return;
+      if (array[0].date)
+        return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
+      else
+        return array.map((item) => <li>{JSON.stringify(item)}</li>);
+
     }
 
 // swap first, and force others columns in group to follow
