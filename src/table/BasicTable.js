@@ -154,28 +154,6 @@ export const BasicTable = (props) => {
     allColumns[ind].toggleHidden(); 
     allColumns[ind].toggleHidden(); 
   }
- 
-  // useEffect(() => {
-  //   // hiddenColumnRestore ()
-  // });
-
-  // function hiddenColumnRestore () {
-  //   console.log ('hiddenColumnRestore', visibleCols)
-  //   if (visibleCols) { 
-  //     allColumns.forEach ((col, ind) => {
-  //       const visible = allColumns[ind].isVisible;
-  //       const incl =  visibleCols.includes(col.id);
-  //       if (incl && ! visible) {
-  //         allColumns[ind].toggleHidden();
-  //         // console.log ('toggle_hidden on', ind, col.id)
-  //       }
-  //       if (! incl && visible) {
-  //         allColumns[ind].toggleHidden();
-  //         // console.log ('toggle_hidden off', col.id)
-  //       }
-  //     })
-  //   }
-  // }
 
   function hiddenColumnsSave () {
     var hiddenArray = [];
@@ -821,10 +799,8 @@ export const BasicTable = (props) => {
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
             }
         )
-
   }
   
-
   const handleDeleteClick = (symbol) => {
     try {
       if (useData) { // avoid unclean access to rows
@@ -1148,9 +1124,6 @@ export const BasicTable = (props) => {
           />
           <button type="submit"> Add  ({rows.length})  </button>
           </form>
-
-     
- 
       </div>
 
       <table id="stockTable" {...getTableProps()}>
