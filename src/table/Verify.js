@@ -68,7 +68,7 @@ function Verify (props) {
           const info = {
             date: props.stockChartXValues[i],
             jump: ratio.toFixed(2),
-            jump_1: ratio_1.toFixed(2),
+            jump_back: (1/ratio_1).toFixed(2),
             index: i,
             // y: props.stockChartYValues[i],
             // y1: props.stockChartYValues[i+1],
