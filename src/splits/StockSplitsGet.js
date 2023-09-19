@@ -86,7 +86,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags, s
           rows[row_index].values.splits = splitArray.length;
           rows[row_index].values.splitsUpdateMili = Date.now();
           if (setSplitInfo)
-            setSplitInfo(sym + ' ' + stringify)
+            setSplitInfo(stringify)
         }
         else {
           if (LOG)

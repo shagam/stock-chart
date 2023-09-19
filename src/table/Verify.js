@@ -156,8 +156,8 @@ function toggleverifyColumns ()  {
           <div  style={{display:'flex' }}>  {verifyTxt} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits {props.symbol}  </button>  
-          <div  style={{display:'flex' }}>  {splitInfo} &nbsp;  </div>
-          <br></br>
+          {splitInfo && renderList(JSON.parse(splitInfo))}
+          <br></br>           <br></br>
           <button type="button" onClick={()=>spikes ()}>Spikes {props.symbol}  </button>  
           {spikeInfo.length > 0 && renderList(spikeInfo)}
         </div>
