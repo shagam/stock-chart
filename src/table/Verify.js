@@ -165,7 +165,7 @@ function toggleverifyColumns ()  {
           {splitInfo && renderList(JSON.parse(splitInfo))}
           <br></br>           <br></br>
           <button type="button" onClick={()=>spikes ()}>Spikes {props.symbol}  </button>  
-          {spikeInfo.length > 0 && renderList(spikeInfo)}
+          {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
         </div>
       }
     </div>
