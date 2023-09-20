@@ -1,4 +1,4 @@
-import React, {useState, } from 'react'
+import React, {useState, useEffect} from 'react'
 
 import LogFlags from '../LogFlags'
 import {marketwatchGainValidate} from './GainValidateMarketwatch'
@@ -43,7 +43,13 @@ function Verify (props) {
              props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyText);
     }
 
-    
+    useEffect(() => {
+      setVerifyText()
+      setSplitInfo();
+      setSpikesInfo([])
+    },[props.symbol]) 
+
+
     function splitsGet () {
       if (! props.symbol) {
         alert ("Missing symbol, press gain for a symbol")
@@ -157,14 +163,14 @@ function toggleverifyColumns ()  {
             &nbsp; &nbsp;
             <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
             &nbsp; &nbsp; &nbsp;
-            <button type="button" onClick={()=>verify ()}>verify {props.symbol}  </button>
+            <button type="button" onClick={()=>verify ()}>verify   </button>
           </div>
           <div  style={{display:'flex' }}>  {verifyTxt} &nbsp;  </div>
           <br></br>
-          <button type="button" onClick={()=>splitsGet ()}>Splits {props.symbol}  </button>  
+          <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}
           <br></br>           <br></br>
-          <button type="button" onClick={()=>spikes ()}>Spikes {props.symbol}  </button>  
+          <button type="button" onClick={()=>spikes ()}>Spikes  </button>  
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
         </div>
       }
