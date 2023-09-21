@@ -19,9 +19,12 @@ const StockInfo = (props) => {
       
       <div id="textarea_id"> 
       {infoFlag &&
-        <textarea type='text' name='stockInfo' cols='80' rows='20' readOnly
-        defaultValue={infoStr}  >
-        </textarea>
+        <div>
+          <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>
+          <textarea type='text' name='stockInfo' cols='80' rows='20' readOnly
+          defaultValue={infoStr}  >
+          </textarea>
+        </div>
       }
       </div>
     </div>
