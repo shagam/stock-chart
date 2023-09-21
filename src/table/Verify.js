@@ -156,7 +156,7 @@ function toggleverifyColumns ()  {
 
       {displayFlag && 
         <div> 
-          {props.symbol && <div> {props.symbol}</div>}   
+          {props.symbol && <div  style={{color: 'magenta' }}> {props.symbol}</div>}   
           <br></br>
           <div style={{display:'flex'}}>
             <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
