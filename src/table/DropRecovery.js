@@ -195,6 +195,7 @@ const DropRecoveryButtons = (props) => {
       alert ('column deepDate invalid')
       return
     }
+    
     props.allColumns[ind].toggleHidden();
     ind = props.allColumns.findIndex((column)=> column.Header === 'recoverWeek');
     if (ind === -1) {
@@ -265,6 +266,12 @@ const DropRecoveryButtons = (props) => {
           {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
           <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
 
+          {props.StockSymbol && row_index>0 && <div>symbol: {props.StockSymbol}
+          &nbsp;&nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
+          &nbsp;&nbsp; deep:  {props.rows[row_index].values.deep}
+          &nbsp;&nbsp; recoverWeek:  {props.rows[row_index].values.recoverWeek} 
+           {/* {console.log (props.StockSymbol, row_index, props.rows[row_index].values.recoverWeek)} */}
+           </div>}
         </div>
       }
     </div>
