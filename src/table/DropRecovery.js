@@ -246,7 +246,8 @@ const DropRecoveryButtons = (props) => {
             /> Drop-Recovery
       </div>
       {displayFlag && 
-        <div> 
+        <div>
+          <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>
           {/* <button type="button" onClick={()=>searchDeepValue()}>Drop_recovery    </button>     */}
 
 
@@ -269,8 +270,8 @@ const DropRecoveryButtons = (props) => {
 
           <br></br>  
           {props.StockSymbol && row_index>0 && 
-            <div style={{display:'flex'}} >symbol: {props.StockSymbol}
-             &nbsp;&nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
+            <div style={{display:'flex'}} >
+             &nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
               <div style={{ color: 'green'}}>
                 &nbsp;&nbsp; deep:  {props.rows[row_index].values.deep}
                 &nbsp;&nbsp; recoverWeek:  {props.rows[row_index].values.recoverWeek} 

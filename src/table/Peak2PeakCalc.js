@@ -99,8 +99,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const gain = Number (stockChartYValues[indexEnd] / stockChartYValues[indexFirst]).toFixed (3)
 
       const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-      const textResults =  symbol + ' \xa0 \xa0 yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
-      const textInfo = symbol + ` \xa0 \xa0 (gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
+      const textResults = 'yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(1) + '%'
+      const textInfo =  `(gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
      
       if (LOG_FLAG) {
         console.log (textResults, textInfo)

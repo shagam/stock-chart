@@ -61,7 +61,8 @@ const Peak2PeakGui = (props) => {
 
       {displayFlag && 
         <div> 
-            {props.symbol && <div> {props.symbol}</div>}
+            {props.symbol && <div  style={{color: 'magenta' }}> {props.symbol} </div>}
+            
             <div  style={{display:'flex' }}> 
             <div style={{ color: 'black'}}  >Start_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
@@ -79,8 +80,8 @@ const Peak2PeakGui = (props) => {
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setCalcResults, setCalcInfo)}>Calc peak2peak gain </button>           
            </div>
            
-           {calcResults && calcResults.includes(props.symbol) && <div style={{ color: 'green'}} >  <hr/> {calcResults}  </div>}
-           {calcInfo && calcResults.includes(props.symbol) && <div style={{ color: 'black'}} >  {calcInfo} <hr/> </div>}
+           {calcResults && <div   style={{ color: 'green'}} >  <hr/> &nbsp; {calcResults}  </div>}
+           {calcInfo &&  <div style={{ color: 'black'}} > &nbsp; {calcInfo} </div>}
         </div>
       }
     </div>
