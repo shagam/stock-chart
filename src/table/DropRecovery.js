@@ -259,19 +259,25 @@ const DropRecoveryButtons = (props) => {
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <div style={{display:'flex', }}> 
             <div style={{color: 'magenta'}}>Main Drop period: &nbsp; </div>
-            <button type="button" onClick={()=>swap_period_2008()}>  2008   </button>
-            <button type="button" onClick={()=>swap_period_2020()}>  2020   </button>
-            <button type="button" onClick={()=>swap_period_2022()}>  2022   </button>
+            <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
+            <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
+            <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp; &nbsp;
+            <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           </div>
           {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
-          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
+   
 
-          {props.StockSymbol && row_index>0 && <div>symbol: {props.StockSymbol}
-          &nbsp;&nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
-          &nbsp;&nbsp; deep:  {props.rows[row_index].values.deep}
-          &nbsp;&nbsp; recoverWeek:  {props.rows[row_index].values.recoverWeek} 
-           {/* {console.log (props.StockSymbol, row_index, props.rows[row_index].values.recoverWeek)} */}
-           </div>}
+          <br></br>  
+          {props.StockSymbol && row_index>0 && 
+            <div style={{display:'flex'}} >symbol: {props.StockSymbol}
+             &nbsp;&nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
+              <div style={{ color: 'green'}}>
+                &nbsp;&nbsp; deep:  {props.rows[row_index].values.deep}
+                &nbsp;&nbsp; recoverWeek:  {props.rows[row_index].values.recoverWeek} 
+              </div>
+            </div>
+          }
+          
         </div>
       }
     </div>
