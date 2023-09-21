@@ -63,12 +63,12 @@ const Peak2PeakGui = (props) => {
         <div> 
             {props.symbol && <div> {props.symbol}</div>}
             <div  style={{display:'flex' }}> 
-            <div style={{ color: 'magenta'}}  >Start_date:   </div>
+            <div style={{ color: 'black'}}  >Start_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
            </div>
       
            <div  style={{display:'flex' }}> 
-            <div style={{ color: 'magenta'}}  > End_date:   </div>
+            <div style={{ color: 'black'}}  > End_date:   </div>
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
            </div>
            
