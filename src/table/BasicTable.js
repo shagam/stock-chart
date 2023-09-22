@@ -54,6 +54,7 @@ export const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
+  const [infoSymbol, setInfoSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
 
   const servList = ['dinagold.org', '62.90.44.227', 'localhost', ];
@@ -336,6 +337,7 @@ export const BasicTable = (props) => {
                       
                   const updateMili = Date.now();
                   const updateDate = getDate();
+                  setInfoSymbol(symbol)
                   setStockInfo (JSON.stringify(data));
                   updateTableInfo (data, updateDate, updateMili);
                   saveTable(symbol);
@@ -1198,7 +1200,7 @@ export const BasicTable = (props) => {
 
         <Manual />
         
-        <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} />
+        <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />
         <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
          gainMap = {gainMap} selectedFlatRows = {selectedFlatRows} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
 

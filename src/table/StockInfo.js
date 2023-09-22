@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 const StockInfo = (props) => {
 
@@ -6,7 +6,13 @@ const StockInfo = (props) => {
 
   const infoFlagChange = () => {setInfoFlag (! infoFlag)}
 
-  const infoStr= props.stockInfo.split(",").join(',\n');
+  const [infoStr, setInfoStr] = useState()
+
+
+  useEffect(() => {
+    setInfoStr (props.stockInfo.split(",").join(',\n'));
+  },[props.infoSymbol, props.stockInfo]) 
+
 
   return (
     <div>
@@ -18,11 +24,11 @@ const StockInfo = (props) => {
       </div>
       
       <div id="textarea_id"> 
-      {infoFlag &&
+      {infoFlag && infoStr &&
         <div>
-          <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>
+          <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
           <textarea type='text' name='stockInfo' cols='80' rows='20' readOnly
-          defaultValue={infoStr}  >
+          value={infoStr}  >
           </textarea>
         </div>
       }
