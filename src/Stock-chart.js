@@ -12,6 +12,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 
 const StockChart = (props) => { 
   const [chartFlag, setChartFlag] = useState(false); // hide / show page
+  const [multi, setMulti] = useState(false);
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(false);
 
@@ -311,6 +312,9 @@ const StockChart = (props) => {
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
              <label style={{marginRight:'10px', paddingRight: '25px'}}> 22_Year </label>
 
+        </div>
+        <div style={{display:'flex'}}>
+          <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
           {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>    }
         </div>
