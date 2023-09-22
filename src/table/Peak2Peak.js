@@ -1,4 +1,4 @@
-import React, {useState, } from 'react'
+import React, {useState, useEffect} from 'react'
 // import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -36,10 +36,11 @@ const Peak2PeakGui = (props) => {
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
+    useEffect(() => {
+      setCalcResults();
+      setCalcInfo();
+    },[props.symbol]) 
    
-
-  
- 
   const style = {
     // background: 'blue',
     // color: 'red',
