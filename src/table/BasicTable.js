@@ -1179,13 +1179,11 @@ export const BasicTable = (props) => {
     </table>
        
     <div id='trailer_id'>
-      {/* <code> 
-        {
-        JSON.stringify ({selectedRows: selectedFlatRows.map((row) => row.original.symbol)})
-        },
-      </code> */}
-     {/* {console.log (chartSymbol)} */}
-     {<LogFlags setLogFlags={setLogFlags} />}      
+
+      <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
+         gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
+
+      {<LogFlags setLogFlags={setLogFlags} />}      
       <div>
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
@@ -1210,9 +1208,7 @@ export const BasicTable = (props) => {
         <Manual />
         
         <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />
-        <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-         gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
-
+   
         <hr/>
       </div>
     </div> 
