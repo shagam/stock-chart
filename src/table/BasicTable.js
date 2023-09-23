@@ -909,21 +909,21 @@ export const BasicTable = (props) => {
     } 
   },
   useGlobalFilter, useSortBy, useRowSelect, //useSticky, useBlockLayout, useFlexLayout, useAbsoluteLayout
-   (hooks) => {
-    hooks.visibleColumns.push((columns) => {
-      return [
-        {
-          id: 'selection',
-          Header: ({getToggleAllRowsSelectedProps}) => (
-            <CheckBox {...getToggleAllRowsSelectedProps()} />
-          ),
-          Cell: ({row}) => (
-            <CheckBox {...row.getToggleRowSelectedProps()} /> 
-          )
-        }, ...columns
-      ]
-    })
-  }  
+  //  (hooks) => {
+  //   hooks.visibleColumns.push((columns) => {
+  //     return [
+  //       {
+  //         id: 'selection',
+  //         Header: ({getToggleAllRowsSelectedProps}) => (
+  //           <CheckBox {...getToggleAllRowsSelectedProps()} />
+  //         ),
+  //         Cell: ({row}) => (
+  //           <CheckBox {...row.getToggleRowSelectedProps()} /> 
+  //         )
+  //       }, ...columns
+  //     ]
+  //   })
+  // }  
   )
 
   
