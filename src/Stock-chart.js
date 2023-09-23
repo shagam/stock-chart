@@ -8,6 +8,7 @@ import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './table/Date';
+import { keys } from '@material-ui/core/styles/createBreakpoints';
 
 
 const StockChart = (props) => { 
@@ -28,7 +29,6 @@ const StockChart = (props) => {
    const chartDateArr = [chartYear,chartMon, chartDay]
 
   // props.gainMap
-  // props.selectedFlatRows
 
   const [oldestPrice, setOldestPrice] = useState()
 
@@ -180,9 +180,8 @@ const StockChart = (props) => {
       // if (! gainMap)
       //   return;
     const dat = []; // build ticker gain array
-    props.selectedFlatRows.forEach ((sel) => {
 
-      const symm = sel.values.symbol;
+    for (var symm in props.gainMap) {
       const gainMapSym = props.gainMap[symm];
 
       var chart;
@@ -190,7 +189,7 @@ const StockChart = (props) => {
           chart = buildOneChart (props.gainMap[symm].x, props.gainMap[symm].y, symm);
           dat.push (chart)
       }
-    })
+    }
 
     // find highest
     
@@ -238,23 +237,16 @@ const StockChart = (props) => {
   }
 
   var gainChart;
-  var chartData_
-  if (props.selectedFlatRows.length > 1)
-    chartData_ = buildGainChartMutiple();
-
-
-  var title = 'symbol (gain, yearlyGain)'
-  if (chartData_ && chartData_.length > 1) {  // multiChart
-    // setChartData (props.gainChart)
-    gainChart = chartData_// props.gainChart;
+  var title
+  if (multi) {
+    gainChart = buildGainChartMutiple();
+    title = 'symbol (gain, yearlyGain)'
     if (LOG_FLAG)
       console.log (props.chartDate)
   }
   else { // singleChart
     gainChart = singleChart;
     title = singleChart[0].nameSingle;
-    singleChart[0].marker = { 'color': 'green' }
-    // console.log (title)
     if (LOG_CHART_1) {
       console.log (props.stockChartXValues)
       console.log (props.stockChartYValues)
