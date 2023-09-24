@@ -12,7 +12,7 @@ import { keys } from '@material-ui/core/styles/createBreakpoints';
 
 
 const StockChart = (props) => { 
-  const [chartFlag, setChartFlag] = useState(false); // hide / show page
+  const [chartFlag, setChartFlag] = useState(true); // hide / show page
   const [multi, setMulti] = useState(false);
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(false);
@@ -183,12 +183,8 @@ const StockChart = (props) => {
 
     for (var symm in props.gainMap) {
       const gainMapSym = props.gainMap[symm];
-
-      var chart;
-      if (gainMapSym) {
-          chart = buildOneChart (props.gainMap[symm].x, props.gainMap[symm].y, symm);
-          dat.push (chart)
-      }
+        const chart = buildOneChart (props.gainMap[symm].x, props.gainMap[symm].y, symm);
+        dat.push (chart)
     }
 
     // find highest
