@@ -89,7 +89,7 @@ table tbody {
 #stockTable {
   border: 2px solid green;
   display: block;
-  height: 45vh;
+  height: 35vh;
   width: 100%;
   /* min-width: 1900px; */
   overflow-y: scroll;
