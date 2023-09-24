@@ -1061,11 +1061,13 @@ export const BasicTable = (props) => {
     'textAlign': 'center'
   }
   
-  function gainColor (sym) {
+  function gainButtonColor (sym) {
+    var col = {};
     if (gainMap[sym])
-      return 'magenta'
-    else
-      return 'black';
+      col['color'] = '#00cc00'   
+    if (sym === chartSymbol)
+      col['background'] = 'pink'
+    return col;
   }
 
   return (
@@ -1170,7 +1172,7 @@ export const BasicTable = (props) => {
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                     <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
-                    <button style={{color: gainColor(row.values.symbol)}} type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+                    <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
                   </div>
               </tr>
             )
