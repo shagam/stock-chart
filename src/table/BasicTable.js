@@ -25,7 +25,7 @@ import Config from './Config'
 import LogFlags from '../LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
 import Verify from './Verify'
-
+import {spikesSmooth, spikesGet} from './Spikes'
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
 
@@ -91,6 +91,7 @@ export const BasicTable = (props) => {
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(true);
+  const [smoothSpikes, setSmoothSpikes] = useState(true);
   const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
 
@@ -599,7 +600,11 @@ export const BasicTable = (props) => {
                 else
                   stockChartYValuesFunction.push(yValue.toFixed(4));
               }
-                
+
+              if (smoothSpikes)
+                spikesSmooth (sym, stockChartXValuesFunction, stockChartYValuesFunction, logFlags)
+
+
               // collect compensation vars
               var splitsIndexArray = [];
 
@@ -1095,7 +1100,8 @@ export const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
-          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp;</div>      
+          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp;&nbsp;</div> 
+          <div> <input  type="checkbox" checked={smoothSpikes}  onChange={() => setSmoothSpikes(! smoothSpikes)} />  smoothSpikes </div>
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
 
           &nbsp; &nbsp;       
