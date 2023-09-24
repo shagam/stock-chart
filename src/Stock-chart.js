@@ -183,7 +183,9 @@ const StockChart = (props) => {
 
     for (var symm in props.gainMap) {
       const gainMapSym = props.gainMap[symm];
-        const chart = buildOneChart (props.gainMap[symm].x, props.gainMap[symm].y, symm);
+      if (! gainMapSym)
+        continue;
+        const chart = buildOneChart (gainMapSym.x, gainMapSym.y, symm);
         dat.push (chart)
     }
 
