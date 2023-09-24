@@ -4,6 +4,7 @@ import LogFlags from '../LogFlags'
 import {marketwatchGainValidate} from './GainValidateMarketwatch'
 import StockSplitsGet from '../splits/StockSplitsGet'
 import GetInt from '../utils/GetInt'
+import {spikesSmooth, spikesGet} from './Spikes'
 
 function Verify (props) {
 
@@ -63,38 +64,11 @@ function Verify (props) {
         alert ("Missing symbol, press gain for a symbol")
         return;
       }
-      var spikes = [];
-
-      for (let i = 0; i <  props.stockChartYValues.length - 2; i++) {
-        setSpikesInfo();
-        const ratio = Number (props.stockChartYValues[i+1] / props.stockChartYValues[i]);
-        const ratio_1 = Number (props.stockChartYValues[i+1] / props.stockChartYValues[i+2]);
-
-        if (ratio > 1.7 && ratio_1 > 1.7) {
-          const info = {
-            date: props.stockChartXValues[i],
-            jump: ratio.toFixed(2),
-            jump_back: (1/ratio_1).toFixed(2),
-            index: i,
-            // y: props.stockChartYValues[i],
-            // y1: props.stockChartYValues[i+1],
-            // y2: props.stockChartYValues[i+2],
-          }
-
-          // if (spikes.length === 0)
-          //   spikes.push(props.symbol)
-          spikes.push (info)
-
-          // if (info.jump > 1)
-          //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #22ff11')
-          // else
-          //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #ee1122')
-        }
-      }
-      if (spikes.length > 0) {
-        setSpikesInfo (spikes)
-        console.log ('spikes:', spikes)
-      }
+      var spikes =  spikesGet (props.symbol, props.stockChartXValues, props.stockChartYValues, props.logFlags);
+      // if (spikes.length > 0) {
+      //   setSpikesInfo (spikes)
+      //   console.log ('spikes:', spikes)
+      // }
     }
 
     function renderList(array) {
