@@ -131,13 +131,13 @@ function toggleverifyColumns ()  {
       {displayFlag && 
         <div> 
           {props.symbol && <div  style={{color: 'magenta' }}> {props.symbol}</div>}   
-          {/* <br></br> */}
           <div style={{display:'flex'}}>
-            <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
-            &nbsp; &nbsp;
             <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
             &nbsp; &nbsp; &nbsp;
+            <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
+            {/* &nbsp; &nbsp; */}
           </div>
+          <br></br>
           <button type="button" onClick={()=>verify ()}>verify   </button>
           <div  style={{display:'flex' }}>  {verifyTxt} &nbsp;  </div>
           <br></br>
