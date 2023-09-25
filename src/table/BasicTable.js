@@ -511,10 +511,6 @@ export const BasicTable = (props) => {
 
   const handleGainClick = (sym) => {
     setChartSymbol (sym);
-    if (gainMap[sym]) {
-      gainMap[sym]=undefined;
-      return;
-    }
     localStorage.setItem ('chartSymbol', sym);
     if (LOG_FLAG)
       console.log(sym, 'gain/chart (symbol)'); 
