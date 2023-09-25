@@ -115,7 +115,10 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         if (alphaPrice)
           alphaPrice = Number(alphaPrice).toFixed(2)
         txt += '  alpha-price: ' + alphaPrice; 
-        txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice + ' verify_1 ratio='+ p;
+        txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice;
+        txt += ' entry: ' + entry + ' (' + (stockChartXValuesFunction.length - 1) + ')'
+        txt += ' verify_1='+ p;
+        // '  %cstock compare start', 'background: #fff; color: #22ef11')
         if (LOG)
           console.log (txt);
         if (setText)
