@@ -489,22 +489,20 @@ export const BasicTable = (props) => {
     periodTag = "Time Series (Daily)"
 
   function getYValue (chartData, key, openMarketFlag) {
+    const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']).toFixed(3))
+    const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']).toFixed(3))
     var yValue;
     if (isAdjusted()) {
       const adjustedCloseValue = Number (Number (chartData[`${periodTag}`][key]['5. adjusted close']).toFixed(3))
-      if (openMarketFlag) {
-        const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']).toFixed(3))
-        const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']).toFixed(3))
+      if (openMarketFlag)
         yValue = adjustedCloseValue / closeVal * openVal;
-      } else {
+      else
         yValue = adjustedCloseValue
-      }
     } else { // not adjusted
-      if (openMarketFlag) {
-        yValue = Number (Number (chartData[`${periodTag}`][key]['1. open']).toFixed(3))
-      } else {
-        yValue = Number (Number (chartData[`${periodTag}`][key]['4. close']).toFixed(3))
-      }
+      if (openMarketFlag)
+        yValue = openVal;
+      else
+        yValue = closeVal;
     }
     return yValue;
   }
