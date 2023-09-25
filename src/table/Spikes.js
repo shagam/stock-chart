@@ -14,7 +14,7 @@ function spikesGet (symbol, stockChartXValues, stockChartYValues, logFlags) {
     const ratio = Number (stockChartYValues[i+1] / stockChartYValues[i]);
     const ratio_1 = Number (stockChartYValues[i+1] / stockChartYValues[i+2]);
 
-    if (ratio > 1.7 && ratio_1 > 1.7) {
+    if (ratio > 1.7 && ratio_1 > 1.7) {  //  spike?
       const info = {
         date: stockChartXValues[i],
         jump: ratio.toFixed(2),
@@ -33,6 +33,17 @@ function spikesGet (symbol, stockChartXValues, stockChartYValues, logFlags) {
       //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #22ff11')
       // else
       //   console.log ('%c' + JSON.stringify(info), 'background: #fff; color: #ee1122')
+    }
+    else { // check for jump
+      if (ratio > 1.7 || ratio <  1/1.7) {
+      const info = {
+        date: stockChartXValues[i],
+        jump: ratio.toFixed(2),
+        index: i,
+      }
+      spikes.push (info)
+
+      }      
     }
   }
   if (logFlags.includes('spikes') && spikes.length > 0) {
