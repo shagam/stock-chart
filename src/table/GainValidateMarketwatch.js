@@ -120,7 +120,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         // txt += '  alpha-price: ' + alphaPrice; 
         ver['alphaPrice'] = alphaPrice
         // txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice;
-        ver ['marketwatchPrice'] = rows[row_index].values.verifyPrice;
+        ver['marketwatchPrice'] = rows[row_index].values.verifyPrice;
         // txt += ' entry: ' + entry + ' (' + (stockChartXValuesFunction.length - 1) + ')'
         ver['entry'] = entry;
         ver['max'] = stockChartXValuesFunction.length - 1
