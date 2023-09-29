@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 
-import Ip from './Ip'
+// import Ip from './Ip'
 // import "./Firebase.css"
 
 const Firebase = (props) => {
