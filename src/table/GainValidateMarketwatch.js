@@ -111,18 +111,29 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
         const searcDate = year + '-' + mon + '-' + day;
         var alphaPrice = rows[row_index].values.alphaPrice;
-        var txt = sym + ' date: ' + rows[row_index].values.alphaDate;
+        const ver = {};
+        // var txt = sym + ' date: ' + rows[row_index].values.alphaDate;
+        ver['sym'] = sym;
+        ver['date'] = rows[row_index].values.alphaDate;
         if (alphaPrice)
           alphaPrice = Number(alphaPrice).toFixed(2)
-        txt += '  alpha-price: ' + alphaPrice; 
-        txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice;
-        txt += ' entry: ' + entry + ' (' + (stockChartXValuesFunction.length - 1) + ')'
-        txt += ' verify_1='+ p;
+        // txt += '  alpha-price: ' + alphaPrice; 
+        ver['alphaPrice'] = alphaPrice
+        // txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice;
+        ver ['marketwatchPrice'] = rows[row_index].values.verifyPrice;
+        // txt += ' entry: ' + entry + ' (' + (stockChartXValuesFunction.length - 1) + ')'
+        ver['entry'] = entry;
+        ver['max'] = stockChartXValuesFunction.length - 1
+        // txt += ' verify_1='+ p;
+        ver['verify_1'] = p
         // '  %cstock compare start', 'background: #fff; color: #22ef11')
-        if (LOG)
-          console.log (txt);
-        if (setText)
-          setText(txt)
+        if (LOG) {
+          // console.log (txt);
+          console.log (ver)
+        }
+        if (setText) {
+          setText(ver)
+        }
         if (rows[row_index].values.verifyDate !== rows[row_index].values.alphaDate) {
           console.log (rows[row_index].values.verifyDate) }
           

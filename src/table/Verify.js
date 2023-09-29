@@ -23,7 +23,7 @@ function Verify (props) {
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('verify_1');
     const [displayFlag, setDisplayFlag] = useState (false); 
-    const [verifyTxt, setVerifyText] = useState ();
+    const [verifyTxt, setVerifyText] = useState ({});
     const [splitInfo, setSplitInfo] = useState ();
     const [spikeInfo, setSpikesInfo] = useState ([]);
 
@@ -139,7 +139,7 @@ function toggleverifyColumns ()  {
           </div>
           <br></br>
           <button type="button" onClick={()=>verify ()}>verify   </button>
-          <div  style={{display:'flex' }}>  {verifyTxt} &nbsp;  </div>
+          <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}
