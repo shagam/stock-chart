@@ -138,7 +138,7 @@ function toggleverifyColumns ()  {
             {/* &nbsp; &nbsp; */}
           </div>
           <br></br>
-          <button type="button" onClick={()=>verify ()}>verify   </button>
+          <button type="button" onClick={()=>verify ()}>verify &nbsp;(MarketWatch)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
