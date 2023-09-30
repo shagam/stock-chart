@@ -785,14 +785,14 @@ export const BasicTable = (props) => {
                 if (chartIndex !== undefined)
                   year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));         
               }
-              if (year2 === '-1.00')
-                year2 = -1;  
-              if (year5 === '-1.00')
-                year5 = -1;   
-              if (year10 === '-1.00')
-                year10 = -1;   
-              if (year20 === '-1.00')
-                year20 = -1;   
+              // if (year2 === '-1.00')
+              //   year2 = -1;  
+              // if (year5 === '-1.00')
+              //   year5 = -1;   
+              // if (year10 === '-1.00')
+              //   year10 = -1;   
+              // if (year20 === '-1.00')
+              //   year20 = -1;   
 
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
