@@ -927,6 +927,7 @@ export const BasicTable = (props) => {
 
   
   const saveTable = (sym) => {
+    setGlobalFilter () // if not cleared will save only displayed rows
     const stocks = [];
     if (useData) {
       for (let i = 0; i < data.length; i++) {
