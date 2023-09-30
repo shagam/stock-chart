@@ -144,20 +144,20 @@ const Firebase = (props) => {
       console.log (props.rows[QQQ_index].values.mon6) 
       
       var userQuery = query (props.gainRef, where(
-       'year', '>', (Number(props.rows[QQQ_index].values.year) * 0.92) ));
+       'year', '>', props.rows[QQQ_index].values.year ));
 
 
       if (periodYears === 2)
         userQuery = query (props.gainRef, where(
-        'year2', '>', (Number(props.rows[QQQ_index].values.year2) * 0.92) ));
+        'year2', '>', props.rows[QQQ_index].values.year2 ));
 
         if (periodYears === 5)
         userQuery = query (props.gainRef, where(
-        'year5', '>', (Number(props.rows[QQQ_index].values.year5) * 0.92) ));
+        'year5', '>', props.rows[QQQ_index].values.year5 ));
 
         if (periodYears === 10)
         userQuery = query (props.gainRef, where(
-        'year10', '>', (Number(props.rows[QQQ_index].values.year10) * 0.92) ));        
+        'year10', '>', props.rows[QQQ_index].values.year10 ));        
 
         // || 'mon6', '>', props.rows[QQQ_index].values.mon6 
         // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
