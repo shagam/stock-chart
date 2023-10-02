@@ -24,28 +24,24 @@ function Verify (props) {
     const LOG_FLAG = props.logFlags && props.logFlags.includes('verify_1');
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [verifyTxt, setVerifyText] = useState ({});
+    const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
     const [splitInfo, setSplitInfo] = useState ();
     const [spikeInfo, setSpikesInfo] = useState ([]);
 
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
-    function verify () {
-        // <Verify symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} 
-        //   stockChartYValues = {stockChartYValues} logFlags = {logFlags} errorAdd={errorAdd}/>
-
-        //marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,
-        //refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd);
-
+    function verify (nasdaq) {
         if (! props.symbol) {
             alert ("Missing symbol, press gain for a symbol")
             return;
         }
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-             props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyText);
+          props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
     }
 
     useEffect(() => {
       setVerifyText()
+      setVerifyNasdaqText()
       setSplitInfo();
       setSpikesInfo([])
     },[props.symbol]) 
@@ -138,8 +134,11 @@ function toggleverifyColumns ()  {
             {/* &nbsp; &nbsp; */}
           </div>
           <br></br>
-          <button type="button" onClick={()=>verify ()}>verify &nbsp;(MarketWatch)   </button>
+          <button type="button" onClick={()=>verify (false)}>verify &nbsp;(MarketWatch)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)} &nbsp;  </div>
+          <br></br>
+          <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
+          <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
           <br></br>
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}

@@ -26,7 +26,7 @@ import {format} from "date-fns"
   }
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError, setText) {
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError, setText, nasdaq) {
  
   const LOG = logFlags.includes("verify_1");
   // setError();
@@ -66,14 +66,15 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
 
   var corsUrl;
   // if (corsServer === 'serv.dinagold.org')
-  if (ssl) {
+  if (ssl) 
     corsUrl = "https://";
-    corsUrl += corsServer + ":5000/price?stock=" + sym
-  }
-  else {
+  else 
     corsUrl = "http://"; 
+
+  if (! nasdaq)
     corsUrl += corsServer + ":5000/price?stock=" + sym
-  }
+  else
+    corsUrl += corsServer + ":5000/priceNasdaq?stock=" + sym
 
   // var corsUrl = "http://62.90.44.227:5000/price?stock=" + sym
     //corsUrl = "http://localhost:5000/price?stock=" + sym
