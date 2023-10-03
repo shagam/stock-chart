@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import LogFlags from '../LogFlags'
-import {marketwatchGainValidate} from './GainValidateMarketwatch'
+import {marketwatchGainValidate, nasdaqTest} from './GainValidateMarketwatch'
 import StockSplitsGet from '../splits/StockSplitsGet'
 import GetInt from '../utils/GetInt'
 import {spikesSmooth, spikesGet} from './Spikes'
@@ -31,12 +31,22 @@ function Verify (props) {
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
     function verify (nasdaq) {
-        if (! props.symbol) {
-            alert ("Missing symbol, press gain for a symbol")
-            return;
-        }
+      setVerifyText()
+      setVerifyNasdaqText()
+      if (! props.symbol) {
+          alert ("Missing symbol, press gain for a symbol")
+          return;
+      }
+      if (! nasdaq)
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
           props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
+      else
+        marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
+          props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
+    }
+
+    function verifyTest () {
+      nasdaqTest();
     }
 
     useEffect(() => {
@@ -140,6 +150,9 @@ function toggleverifyColumns ()  {
           <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
           <br></br>
+          {/* <button type="button" onClick={()=>verifyTest (true)}>verify &nbsp;(test)   </button>
+          <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
+          <br></br> */}
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}
           <br></br>           <br></br>
