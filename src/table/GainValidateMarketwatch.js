@@ -121,7 +121,10 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         // txt += '  alpha-price: ' + alphaPrice; 
         ver['alphaPrice'] = alphaPrice
         // txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice;
-        ver['marketwatchPrice'] = rows[row_index].values.verifyPrice;
+        if (!nasdaq)
+          ver['marketwatchPrice'] = rows[row_index].values.verifyPrice;
+        else
+          ver['nasdaqPrice'] = rows[row_index].values.verifyPrice;
         // txt += ' entry: ' + entry + ' (' + (stockChartXValuesFunction.length - 1) + ')'
         ver['entry'] = entry;
         ver['max'] = stockChartXValuesFunction.length - 1
@@ -151,4 +154,17 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     })
 
     refreshCallBack();
+}
+
+export function nasdaqTest () {
+  const url='https://data.nasdaq.com/api/v3/datasets/WIKI/NVDA/data.json?start_date=2010-05-01&end_date=2024-2-2&limit=1'
+  axios.get (url)
+  .then ((result) => {
+    const res_date = result.data.dataset_data.data[0][0];
+    const res_open = result.data.dataset_data.data[0][8].toFixed(2);
+    const res_close = result.data.dataset_data.data[0][11].toFixed(2);
+    console.log("\n",result.data.dataset_data.column_names, result.data.dataset_data.data,
+        res_date, res_open, res_close)
+
+  })
 }
