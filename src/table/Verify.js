@@ -31,8 +31,8 @@ function Verify (props) {
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
     function verify (nasdaq) {
-      setVerifyText()
-      setVerifyNasdaqText()
+      // setVerifyText()
+      // setVerifyNasdaqText()
       if (! props.symbol) {
           alert ("Missing symbol, press gain for a symbol")
           return;
