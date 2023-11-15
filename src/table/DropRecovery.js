@@ -243,7 +243,7 @@ const DropRecoveryButtons = (props) => {
             <input
               type="checkbox" checked={displayFlag}
               onChange={displayFlagChange}
-            /> Drop-Recovery (Long)
+            /> Drop-Recovery
       </div>
       {displayFlag && 
         <div>

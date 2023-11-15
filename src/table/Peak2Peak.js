@@ -57,7 +57,7 @@ const Peak2PeakGui = (props) => {
         <input
             type="checkbox" checked={displayFlag}
             onChange={displayFlagChange}
-        /> Peak2Peak
+        /> Peak2Peak (Long term gain)
       </div>
 
       {displayFlag && 
