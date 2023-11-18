@@ -13,7 +13,7 @@ const StockInfo = (props) => {
         <input
           type="checkbox" checked={gainFlag}
           onChange={gainFlagChange}
-        /> StockGain
+        /> StockGainRaw
       </div>
       
       <div id="textarea_id"> 
