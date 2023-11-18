@@ -18,6 +18,7 @@ import {marketwatchGainValidate} from './GainValidateMarketwatch'
 import {polygon} from './Polygon'
 import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
+import StockGain from './StockGain'
 import GainValidate from './GainValidate'
 import Manual from '../manual/Manual'
 import Firebase from './Firebase'
@@ -67,6 +68,7 @@ export const BasicTable = (props) => {
   //const [chartData, setChartData] = useState("");
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
+  const [gainData, setGainData] = useState();
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   
   const [logFlags, setLogFlags] = useState([]);
@@ -573,7 +575,8 @@ export const BasicTable = (props) => {
 
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
-   
+              var gainArray = [];
+              var gainArrayTxt = "";
               // prepare historical data for plotly chart
               // let i = 0;
 
@@ -586,6 +589,7 @@ export const BasicTable = (props) => {
 
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
+                gainArrayTxt += key + ' ' + JSON.stringify(chartData[periodTag][key]) + '\n' // prepare for gain display
                 stockChartXValuesFunction.push(key);
                 const yValue = Number(getYValue (chartData, key, openMarketFlag))
 
@@ -594,7 +598,9 @@ export const BasicTable = (props) => {
                 else
                   stockChartYValuesFunction.push(yValue.toFixed(4));
               }
-
+              // gainArrayTxt.replace(/6. volume.*}/g,'}')
+              //,"6. volume":"154509700","7. dividend amount":"0.0000"
+              setGainData(gainArrayTxt)
               if (smoothSpikes)
                 spikesSmooth (sym, stockChartXValuesFunction, stockChartYValuesFunction, logFlags)
 
@@ -1211,7 +1217,7 @@ export const BasicTable = (props) => {
         <Manual />
         
         <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />
-   
+        <StockGain stockGain = {gainData} infoSymbol={chartSymbol} />
         <hr/>
       </div>
     </div> 
