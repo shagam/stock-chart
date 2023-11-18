@@ -65,7 +65,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       if (LOG_FLAG) {
         console.log (StockSymbol, 'startDate', stockChartXValues[startBeforeDropIndex], 
           'startPrice:', stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
-        console.log (StockSymbol, 'deepDate:', deepDate, 'deepPrice:', deepPrice, ' deepIndex:', deepIndex );
+        console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
       }
     }
 
@@ -95,6 +95,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
             break; // recovery found
         }
       }
+      const recoverWeeks = (highPriceAfterDeep > highPriceBeforeDeep) ? deepIndex - recoverIndex : -1;
 
       // avoid multiple cals of deep
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
@@ -107,8 +108,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
       if (LOG_FLAG) {
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
-        console.log (StockSymbol, 'highBeforeDeep:', highPriceDateBeforeDeep, highPriceBeforeDeep, ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
-        console.log (StockSymbol, 'highAfterDeep:', recoverDate, highPriceAfterDeep, ' recoverIndex:', recoverIndex,  recoverText + '(since deep):', deepIndex - recoverIndex);
+        console.log (StockSymbol, 'highBeforeDeep:', highPriceBeforeDeep, '('+ highPriceDateBeforeDeep +')', ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
+        console.log (StockSymbol, 'highAfterDeep:', highPriceAfterDeep, '('+ recoverDate +')', ' recoverIndex:', recoverIndex,  recoverText + '(since deep):', recoverWeeks);
       }
   
       recoverPeriod = deepIndex - recoverIndex;
@@ -134,7 +135,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     }
     const priceDivHigh = Number((stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
     if (LOG_FLAG)
-      console.log (StockSymbol, 'todayPrice/highBeforeDrop=', priceDivHigh, 'latestPrice ~', stockChartYValues[0], '(',stockChartXValues[0],')'  )
+      console.log (StockSymbol, 'latestPrice: ', stockChartYValues[0], '(' + stockChartXValues[0] +')' , 'todayPrice/highBeforeDrop=', priceDivHigh )
     // fill columns in stock table
     // if (recoverPeriod === undefined)
     //   alert (StockSymbol + ' recoverWeek undef')
