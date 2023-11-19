@@ -63,8 +63,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         }
       }
       if (LOG_FLAG) {
-        console.log (StockSymbol, 'startDate', stockChartXValues[startBeforeDropIndex], 
-          'startPrice:', stockChartYValues[startBeforeDropIndex], 'startIndex:', startBeforeDropIndex);
+        console.log (StockSymbol, 'deep search start', stockChartYValues[startBeforeDropIndex], '(' + stockChartXValues[startBeforeDropIndex] +'}', 
+        'index:', startBeforeDropIndex);
         console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
       }
     }
