@@ -92,7 +92,7 @@ export const BasicTable = (props) => {
 
   
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
-  const [openMarketFlag, setOpenMaretFlag] = useState(true);
+  const [openMarketFlag, setOpenMaretFlag] = useState(false);
   const [smoothSpikes, setSmoothSpikes] = useState(true);
   const [marketwatch, setMarketwatch] = useState (true);
   const [stockInfo, setStockInfo] = useState ('');
