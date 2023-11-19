@@ -20,7 +20,7 @@ const StockInfo = (props) => {
       {gainFlag && props.stockGain &&
         <div>
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
-          <textarea type='text' name='stockInfo' cols='164' rows='20' readOnly
+          <textarea type='text' name='stockInfo' cols='120' rows='15' readOnly
             value={props.stockGain}  >
           </textarea>
         </div>

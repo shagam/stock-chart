@@ -588,7 +588,9 @@ export const BasicTable = (props) => {
 
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
-                gainArrayTxt += key + '  ' + i + ' ' + JSON.stringify(chartData[periodTag][key]) + '\n' // prepare for gain display
+                var str = JSON.stringify(chartData[periodTag][key])
+                str = str.replace (/,"6. volume":"\d*","7. dividend amount":"\d*.\d*"/, '')
+                gainArrayTxt += key + '  ' + i + ' ' + str + '\n' // prepare for gain display
 
                 i++
                 stockChartXValuesFunction.push(key);
