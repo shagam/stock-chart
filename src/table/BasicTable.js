@@ -589,8 +589,8 @@ export const BasicTable = (props) => {
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
                 var str = JSON.stringify(chartData[periodTag][key])
-                str = str.replace (/,"6. volume":"\d*","7. dividend amount":"\d*.\d*"/, '')
-                str = str.replace (/,"2. high":"\d*.\d*","3. low":"\d*.\d*"/,'')
+                str = str.replace (/,"6. volume":"\d*","7. dividend amount":"\d*\.?\d*"/, '')
+                str = str.replace (/,"2. high":"\d*\.?\d*","3. low":"\d*\.?\d*"/,'')
                 gainArrayTxt += key + '  ' + i + ' ' + str + '\n' // prepare for gain display
 
                 i++
