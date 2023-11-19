@@ -575,11 +575,10 @@ export const BasicTable = (props) => {
 
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
-              var gainArray = [];
+      
               var gainArrayTxt = "";
               // prepare historical data for plotly chart
-              // let i = 0;
-
+              let i = 0; // line number
               var splitArray = rows[row_index].values.splits_list;
               // if (LOG_SPLITS && splitArray && splitArray.length > 0)
               //   console.dir (splitArray);
@@ -589,7 +588,9 @@ export const BasicTable = (props) => {
 
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
-                gainArrayTxt += key + ' ' + JSON.stringify(chartData[periodTag][key]) + '\n' // prepare for gain display
+                gainArrayTxt += key + '  ' + i + ' ' + JSON.stringify(chartData[periodTag][key]) + '\n' // prepare for gain display
+
+                i++
                 stockChartXValuesFunction.push(key);
                 const yValue = Number(getYValue (chartData, key, openMarketFlag))
 
