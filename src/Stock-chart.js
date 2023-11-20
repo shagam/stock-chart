@@ -12,7 +12,7 @@ import { keys } from '@material-ui/core/styles/createBreakpoints';
 
 
 const StockChart = (props) => { 
-  const [chartFlag, setChartFlag] = useState(true); // hide / show page
+  const [chartFlag, setChartFlag] = useState(false); // hide / show page
   const [multi, setMulti] = useState(false);
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(false);
