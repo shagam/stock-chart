@@ -808,8 +808,8 @@ export const BasicTable = (props) => {
               if (price === undefined)
                 price = -1;
               // if (LOG_SPLITS)
-              // console.log (splitArray);  
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly)
+              // console.log (splitArray); 
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`])
               updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
             }
         )

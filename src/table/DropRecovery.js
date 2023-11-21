@@ -10,7 +10,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 
 
-function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly) {
+function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly, gainObj) {
 
     const LOG_FLAG = logFlags && logFlags.includes('drop');
 
@@ -18,6 +18,13 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       alert ('Need to click <gain> for a symbol before calc deep recover')
       return;
     }
+
+    function gainHigh(i) {return Number(gainObj[stockChartXValues[i]]['2. high'])}
+    function gainLow(i) {return Number(gainObj[stockChartXValues[i]]['3. low'])}
+    // console.log (gainObj[stockChartXValues[0]]['2. high'], gainObj[stockChartXValues[0]]['3. low'])
+    
+    // if(LOG_FLAG) 
+    //   console.log (gainHigh(0), gainLow(0), gainObj[stockChartXValues[0]])
 
     const today = new Date();
     const todayYear = today.getFullYear();
@@ -51,11 +58,13 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     // search for deepPrice after start date
     const deep_ = () => {
-      deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
+      // deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
+      const startBeforeDropValue = gainLow(startBeforeDropIndex) // gainObj[stockChartXValues[startBeforeDropIndex]]['3. low']
+      deepPrice = startBeforeDropValue;
       deepDate = stockChartXValues[startBeforeDropIndex];
       for (var i = startBeforeDropIndex; i >= 0; i--) {
         // search for lowestPrrice 
-        const price = Number(stockChartYValues[i] );
+        const price = gainLow(i) // [i]]['3. low'])
         if (deepPrice > price) {
           deepPrice = price;
           deepIndex = i;
@@ -63,17 +72,18 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         }
       }
       if (LOG_FLAG) {
-        console.log (StockSymbol, 'deep search start', stockChartYValues[startBeforeDropIndex], '(' + stockChartXValues[startBeforeDropIndex] +'}', 
+        console.log (StockSymbol, 'deep search start', startBeforeDropValue, '(' + stockChartXValues[startBeforeDropIndex] +'}', 
         'index:', startBeforeDropIndex);
         console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
       }
     }
 
+    const recoverFactor = 0.94; // recover criteria when close enough
     // search for higest befor deep
     const highistBeforeDeep = () => {
       for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
-        const price = Number(stockChartYValues[i]);
-        if (highPriceBeforeDeep < price) {  // at least weeks to recover
+        const price = gainHigh(i)
+        if (highPriceBeforeDeep * recoverFactor < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
           highPriceDateBeforeDeep = stockChartXValues[i]
           highPriceBeforeDeepIndex = i;
@@ -87,15 +97,16 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     const recoveryWeeks = () => {
       for (let i = deepIndex; i > 0; i--) {      
-        const price = Number(stockChartYValues[i]);
-        if (highPriceBeforeDeep < price) {
+        const price = gainHigh(i)
+        // console.log (price)
+        if (highPriceBeforeDeep * recoverFactor < price) {
             highPriceAfterDeep = price;
             recoverIndex = i;
             recoverDate = stockChartXValues[i];
             break; // recovery found
         }
       }
-      const recoverWeeks = (highPriceAfterDeep > highPriceBeforeDeep) ? deepIndex - recoverIndex : -1;
+      recoverPeriod = (highPriceAfterDeep > highPriceBeforeDeep * 0.94) ? highPriceBeforeDeepIndex - recoverIndex : -1;
 
       // avoid multiple cals of deep
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
@@ -109,12 +120,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       if (LOG_FLAG) {
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
         console.log (StockSymbol, 'highBeforeDeep:', highPriceBeforeDeep, '('+ highPriceDateBeforeDeep +')', ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
-        console.log (StockSymbol, 'highAfterDeep:', highPriceAfterDeep, '('+ recoverDate +')', ' recoverIndex:', recoverIndex,  recoverText + '(since deep):', recoverWeeks);
-      }
-  
-      recoverPeriod = deepIndex - recoverIndex;
-      if (recoverIndex === -1)
-        recoverPeriod = -1;
+        console.log (StockSymbol, 'highAfterDeep:', highPriceAfterDeep, '('+ recoverDate +')', ' recoverIndex:', recoverIndex,  recoverText + '(since high):', recoverPeriod);
+      }  
     }
 
 
@@ -133,7 +140,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       highistBeforeDeep();
       recoveryWeeks();
     }
-    const priceDivHigh = Number((stockChartYValues[0] / highPriceBeforeDeep).toFixed(3));
+    const lastPriceHigh = gainHigh(0);
+    const priceDivHigh = Number(lastPriceHigh / highPriceBeforeDeep).toFixed(3);
     if (LOG_FLAG)
       console.log (StockSymbol, 'latestPrice: ', stockChartYValues[0], '(' + stockChartXValues[0] +')' , 'todayPrice/highBeforeDrop=', priceDivHigh )
     // fill columns in stock table
