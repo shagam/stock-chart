@@ -18,6 +18,7 @@ const StockChart = (props) => {
   const [scaleFlag, setScaleFlag] = useState(true);
 
   const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
+  const [endDate, setEndDate] = useState (new Date())
   const [months, setMonths] = useState();
 
   const LOG_FLAG = props.logFlags && props.logFlags.includes('chart');
@@ -27,6 +28,11 @@ const StockChart = (props) => {
    const chartMon = chartDate.getMonth() + 1; // [1..12]
    const chartDay = chartDate.getDate(); // [1..31]
    const chartDateArr = [chartYear,chartMon, chartDay]
+
+   const endYear = endDate.getFullYear();
+   const endMon = endDate.getMonth() + 1; // [1..12]
+   const endDay = endDate.getDate(); // [1..31]
+   const endDateArr = [endYear,endMon, endDay]
 
   // props.gainMap
 
@@ -84,12 +90,10 @@ const StockChart = (props) => {
   }
 
 
-
   // clip arr according to date
   function clipOldEntries (arrIn, chartIndex) {
-
     if (chartIndex < 0) {
-      console.log ('clipFail,', chartDateArr, arrIn)
+      console.log ('clipFail,', chartDateArr)
       return arrIn;
     }
 
@@ -99,14 +103,22 @@ const StockChart = (props) => {
 
     for (let i = 0; i < chartIndex; i++)
       arrOut[i] = arrIn[i];
-    // if (LOG_FLAG) {
-    //   console.log ('arr org', arrIn)
-    //   console.log ('arr clipped ', arrOut)
-    // }
     return arrOut;
   }
 
-
+  // clip newest entries
+  function clipTrailingEntries (arrIn, endIndex) {
+    if (endIndex < 0 || endIndex >= arrIn.length) {
+      console.log ('ClipTrailFail,', endDateArr)
+      return arrIn;
+    }
+    var arrOut = [];
+    if (arrIn.length <= endIndex)
+      return arrIn;
+    for (let i = 0; i < arrIn.length - endIndex; i++)
+      arrOut[i] = arrIn[i + endIndex];
+    return arrOut;
+  }
 
   function buildOneChart (stockChartXValues, stockChartYValues, symbol) {
     var yAfterLog = [];
@@ -116,17 +128,28 @@ const StockChart = (props) => {
       console.log ('buildOne minMax', res)
  
      // clip older part of array
+    var xAfterClip_ = [];
+    var yAfterClip_ = [];
     var xAfterClip = [];
     var yAfterClip = [];
-  
+
     const chartIndex = searchDateInArray (stockChartXValues, chartDateArr, props.StockSymbol, props.logFlags);
     if (chartIndex > 0) {
-      xAfterClip = clipOldEntries(stockChartXValues, chartIndex); 
-      yAfterClip = clipOldEntries(stockChartYValues, chartIndex); 
+      xAfterClip_ = clipOldEntries(stockChartXValues, chartIndex); 
+      yAfterClip_ = clipOldEntries(stockChartYValues, chartIndex);
     }
     else { // short history
-      xAfterClip = stockChartXValues; 
-      yAfterClip = stockChartYValues; 
+      xAfterClip_ = stockChartXValues; 
+      yAfterClip_ = stockChartYValues; 
+    }
+    const endIndex = searchDateInArray (stockChartXValues, endDateArr, props.StockSymbol, props.logFlags);
+    if (endIndex > 0) {
+      xAfterClip = clipTrailingEntries(xAfterClip_, endIndex); 
+      yAfterClip = clipTrailingEntries(yAfterClip_, endIndex);      
+    }
+    else {
+      xAfterClip = xAfterClip_; 
+      yAfterClip = yAfterClip_; 
     }
 
     // calc log
@@ -303,6 +326,9 @@ const StockChart = (props) => {
              <label style={{marginRight:'10px', paddingRight: '25px'}}> 22_Year </label>
 
         </div>
+          <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+            dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp; </div>
+
         <div style={{display:'flex'}}>
           <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
