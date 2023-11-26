@@ -259,7 +259,7 @@ const StockChart = (props) => {
 
   var gainChart;
   var title
-  if (multi) {
+  if (multi && Object.keys(props.gainMap).length > 1) {
     gainChart = buildGainChartMutiple();
     title = 'symbol (gain, yearlyGain)'
     if (LOG_FLAG)
