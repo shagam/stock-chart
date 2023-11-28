@@ -78,7 +78,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       }
     }
 
-    const recoverFactor = 0.94; // recover criteria when close enough
+    const recoverFactor = 1//0.94; // recover criteria when close enough
     // search for higest befor deep
     const highistBeforeDeep = () => {
       for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
@@ -106,7 +106,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
             break; // recovery found
         }
       }
-      recoverPeriod = (highPriceAfterDeep > highPriceBeforeDeep * 0.94) ? highPriceBeforeDeepIndex - recoverIndex : -1;
+      recoverPeriod = (highPriceAfterDeep > (highPriceBeforeDeep * recoverFactor)) ? highPriceBeforeDeepIndex - recoverIndex : -1;
 
       // avoid multiple cals of deep
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
