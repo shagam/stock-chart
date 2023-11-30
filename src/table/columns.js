@@ -78,21 +78,6 @@ export const COLUMNS = [
     accessor: 'gap'
   },
   {
-    Header: 'wk',
-    Footer: 'wk',    
-    accessor: 'wk'
-  },
-  {
-    Header: '2wk',
-    Footer: '2wk',    
-    accessor: 'wk2'
-  },  
-  {
-    Header: 'mn',
-    Footer: 'mn',    
-    accessor: 'mon'
-  },
-  {
     Header: '3mn',
     Footer: '3mn',    
     accessor: 'mon3'
@@ -305,21 +290,6 @@ export const GROUPED_COLUMNS = [
         Footer: '-',    
         accessor: 'gap'
       },  
-      {
-        Header: 'wk',
-        Footer: 'wk',    
-        accessor: 'wk'
-      },
-      {
-        Header: '2wk',
-        Footer: '2wk',    
-        accessor: 'wk2'
-      },  
-      {
-        Header: 'mn',
-        Footer: 'mn',    
-        accessor: 'mon'
-      },
       {
         Header: '3mn',
         Footer: '3mn',    

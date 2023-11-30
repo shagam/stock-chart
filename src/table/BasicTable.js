@@ -116,7 +116,7 @@ export const BasicTable = (props) => {
   const useData = false;
 
   const hiddenColsDefault = ["Exchange","Industry","Cap","PEG","target","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
-  "EVToEBITDA","EVToRevenue","wk","wk2","mon","mon3","mon6","year20","splits_list","splits","alphaPrice","alphaDate","verifyDate","verifyPrice",
+  "EVToEBITDA","EVToRevenue","mon3","mon6","year20","splits_list","splits","alphaPrice","alphaDate","verifyDate","verifyPrice",
   "info_date","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"]
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
@@ -226,8 +226,8 @@ export const BasicTable = (props) => {
       _ip: localIpv4,
       _updateDate: rows[row_index].values.gain_date,
       _updateMili:rows[row_index].values.gain_mili,
-      splits: rows[row_index].values.splits_list, wk: rows[row_index].values.wk, wk2: rows[row_index].values.wk2,
-      mon: rows[row_index].values.mon, mon3: rows[row_index].values.mon3, mon6: rows[row_index].values.mon6,
+      splits: rows[row_index].values.splits_list,
+      mon3: rows[row_index].values.mon3, mon6: rows[row_index].values.mon6,
       year: rows[row_index].values.year, year2: rows[row_index].values.year2, year5: rows[row_index].values.year5,
       year10: rows[row_index].values.year10, year20: rows[row_index].values.year20,
       peak2Peak: rows[row_index].values.peak2Peak, price: rows[row_index].values.price,
@@ -350,7 +350,7 @@ export const BasicTable = (props) => {
     
   }
 
-  const   updateTableGain = (sym, splits, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price) => {
+  const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
@@ -362,10 +362,6 @@ export const BasicTable = (props) => {
 
     rows[row_index].values.gain_mili = updateMili;
     // rows[row_index].values.gain_date = updateDate;
-
-    rows[row_index].values.wk = wk; 
-    rows[row_index].values.wk2 = wk2; 
-    rows[row_index].values.mon = mon; 
     rows[row_index].values.mon3 = mon3;
     rows[row_index].values.mon6 = mon6; 
     rows[row_index].values.year = year; 
@@ -712,9 +708,6 @@ export const BasicTable = (props) => {
               // var date;
               const todaySplit = todayDateSplit();
 
-              var wk = Number(-1);
-              var wk2 = Number(-1);
-              var mon = Number(-1);
               var mon3 = Number(-1);
               var mon6 = Number(-1);
               var year = Number(-1);
@@ -724,11 +717,6 @@ export const BasicTable = (props) => {
               var year20 = Number(-1);
 
               if (weekly) {
-                wk =((stockChartYValuesFunction[0] / stockChartYValuesFunction[1]).toFixed(2));
-                if (stockChartYValuesFunction.length > 2)
-                  wk2 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[2]).toFixed(2));
-                if (stockChartYValuesFunction.length > 4)
-                  mon = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[4]).toFixed(2));
                 if (stockChartYValuesFunction.length > 13)
                   mon3 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
                 if (stockChartYValuesFunction.length > 26)
@@ -748,18 +736,8 @@ export const BasicTable = (props) => {
                 var dateBackSplit = daysBack (todaySplit, 7);
                 chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
                 if (chartIndex === undefined)
-                  wk = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2))
-          
-                dateBackSplit = daysBack (todaySplit, 14);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
-                if (chartIndex !== undefined) 
-                  wk2 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));
-
-                dateBackSplit = monthsBack (todaySplit, 1, sym);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
-                if (chartIndex !== undefined)
-                  mon = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));
-    
+                  return
+              
                 dateBackSplit = monthsBack (todaySplit, 3, sym);
                 chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
                 if (chartIndex !== undefined)
@@ -810,7 +788,7 @@ export const BasicTable = (props) => {
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`])
-              updateTableGain (sym, splitArray, updateDate, updateMili, wk, wk2, mon, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
+              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
             }
         )
   }

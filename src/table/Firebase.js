@@ -33,9 +33,6 @@ const Firebase = (props) => {
     newStock.values.gain_date = fireGain._updateDate;
     newStock.values.gain_mili = fireGain._updateMili;
 
-    newStock.values.wk = fireGain.wk;
-    newStock.values.wk2 = fireGain.wk2;
-    newStock.values.mon = fireGain.mon;
     newStock.values.mon3 = fireGain.mon3;
     newStock.values.mon6 = fireGain.mon6;
     newStock.values.year = fireGain.year;
@@ -286,9 +283,6 @@ const Firebase = (props) => {
         props.rows[row_index].values.gain_mili = gain_._updateMili;
         props.rows[row_index].values.gain_date = gain_._updateDate;
     
-        props.rows[row_index].values.wk = gain_.wk; 
-        props.rows[row_index].values.wk2 = gain_.wk2; 
-        props.rows[row_index].values.mon = gain_.mon; 
         props.rows[row_index].values.mon3 = gain_.mon3;
         props.rows[row_index].values.mon6 = gain_.mon6; 
         props.rows[row_index].values.year = gain_.year; 
