@@ -586,7 +586,7 @@ export const BasicTable = (props) => {
               for (var key in chartData[`${periodTag}`]) {
                 var str = JSON.stringify(chartData[periodTag][key])
                 str = str.replace (/,"6. volume":"\d*","7. dividend amount":"\d*\.?\d*"/, '')
-                // str = str.replace (/,"2. high":"\d*\.?\d*","3. low":"\d*\.?\d*"/,'')
+                // str = str.replace (/00"/g, '')
                 gainArrayTxt += key + '  ' + i + ' ' + str + '\n' // prepare for gain display
 
                 i++
@@ -598,8 +598,6 @@ export const BasicTable = (props) => {
                 else
                   stockChartYValuesFunction.push(yValue.toFixed(4));
               }
-              // gainArrayTxt.replace(/6. volume.*}/g,'}')
-              //,"6. volume":"154509700","7. dividend amount":"0.0000"
               setGainData(gainArrayTxt)
               if (smoothSpikes)
                 spikesSmooth (sym, stockChartXValuesFunction, stockChartYValuesFunction, logFlags)
