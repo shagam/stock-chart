@@ -100,11 +100,11 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
           for (let i = 0; i < splitsArray.length; i++) {
             const oneSplit = splitsArray[i];
             const oneSplitDate = dateSplit (oneSplit.date)
-            if (oneSplitDate [0] < oldestDateSplit[0])  // skip old splits
+            if (oneSplitDate[0] < oldestDateSplit[0])  // skip old splits
               continue;
-            if (oneSplitDate [1] < oldestDateSplit[1])
+            if (oneSplitDate[1] < oldestDateSplit[1])
               continue;
-            if (oneSplitDate [2] < oldestDateSplit[2])
+            if (oneSplitDate[2] < oldestDateSplit[2])
               continue;
             closeValue /= oneSplit.ratio;
           }
