@@ -31,6 +31,14 @@ function Verify (props) {
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
     function verify (nasdaq) {
+      const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+      if (row_index  === -1)
+        return;
+      if  (nasdaq && props.rows[row_index].values.Exchange !== 'NASD') {
+        console.log (props.symbol, props.rows[row_index].values.Exchange)
+        return;
+      }
+
       // setVerifyText()
       // setVerifyNasdaqText()
       if (! props.symbol) {
