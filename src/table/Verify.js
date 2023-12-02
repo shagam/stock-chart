@@ -19,6 +19,7 @@ function Verify (props) {
   // stockChartYValues
   // logFlags
   // weekly
+  // errorAdd
 
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('verify_1');
@@ -36,6 +37,7 @@ function Verify (props) {
         return;
       if  (nasdaq && props.rows[row_index].values.Exchange !== 'NASD') {
         console.log (props.symbol, props.rows[row_index].values.Exchange)
+        props.errorAdd (['Allowed Only for NASDAQ (press <info> for a stock to see Exchange)'])
         return;
       }
 
