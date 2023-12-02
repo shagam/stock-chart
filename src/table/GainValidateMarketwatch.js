@@ -91,10 +91,27 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
       const row_index = rows.findIndex((row)=> row.values.symbol === sym);
       if (result.data.err)
         console.log (sym, result.data.err, corsUrl) 
-
+      var closeValue = result.data.close;
       if ((result.data !== '' || ! stockChartXValuesFunction) && ! result.data.err) {
+        if (nasdaq) {
+          const splitsArray = JSON.parse(rows[row_index].values.splits_list)
+          // compensate for splits
+          const oldestDateSplit = dateSplit(oldestDate)
+          for (let i = 0; i < splitsArray.length; i++) {
+            const oneSplit = splitsArray[i];
+            const oneSplitDate = dateSplit (oneSplit.date)
+            if (oneSplitDate [0] < oldestDateSplit[0])
+              continue;
+            if (oneSplitDate [1] < oldestDateSplit[1])
+              continue;
+            if (oneSplitDate [2] < oldestDateSplit[2])
+              continue;
+            closeValue /= oneSplit.ratio;
+          }
+        }
+
         rows[row_index].values.verifyDate = oldestDate;
-        rows[row_index].values.verifyPrice = result.data.open;
+        rows[row_index].values.verifyPrice = closeValue;
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
         rows[row_index].values.alphaDate = stockChartXValuesFunction[entry];
