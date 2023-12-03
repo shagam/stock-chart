@@ -74,7 +74,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       if (LOG_FLAG) {
         console.log (StockSymbol, 'deep search start', startBeforeDropValue, '(' + stockChartXValues[startBeforeDropIndex] +'}', 
         'index:', startBeforeDropIndex);
-        console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
+        // console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
       }
     }
 
@@ -118,8 +118,9 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       //   return;
 
       if (LOG_FLAG) {
+        console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', ' deep:', deep, 'index:', deepIndex );
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
-        console.log (StockSymbol, 'highBeforeDeep:', highPriceBeforeDeep, '('+ highPriceDateBeforeDeep +')', ' Index: ',  highPriceBeforeDeepIndex, 'lowestDrop=', deep)
+        console.log (StockSymbol, 'highBeforeDeep:', highPriceBeforeDeep, '('+ highPriceDateBeforeDeep +')', ' index: ',  highPriceBeforeDeepIndex)
         console.log (StockSymbol, 'highAfterDeep:', highPriceAfterDeep, '('+ recoverDate +')', ' recoverIndex:', recoverIndex,  recoverText + '(since high):', recoverPeriod);
       }  
     }
@@ -143,7 +144,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const lastPriceHigh = gainHigh(0);
     const priceDivHigh = Number(lastPriceHigh / highPriceBeforeDeep).toFixed(3);
     if (LOG_FLAG)
-      console.log (StockSymbol, 'latestPrice: ', stockChartYValues[0], '(' + stockChartXValues[0] +')' , 'todayPrice/highBeforeDrop=', priceDivHigh )
+      console.log (StockSymbol, 'latestPrice:', stockChartYValues[0], '(' + stockChartXValues[0] +')', 'price/highBeforeDrop=', priceDivHigh)
     // fill columns in stock table
     // if (recoverPeriod === undefined)
     //   alert (StockSymbol + ' recoverWeek undef')

@@ -111,7 +111,7 @@ export const BasicTable = (props) => {
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   // const [searchDeepDate, setSearchDeepDate] = useState()
 
-  const [deepStartDate, setDropStartDate] = useState(new Date(2021, 11, 1)); // 2021 dec 1
+  const [deepStartDate, setDropStartDate] = useState(new Date(2021, 9, 1)); // 2021 oct 1   Mon 0-11
   
   const useData = false;
 
