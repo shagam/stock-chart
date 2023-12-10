@@ -1161,37 +1161,36 @@ export const BasicTable = (props) => {
        
     <div id='trailer_id'>
 
-      <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-         gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
-
       {<LogFlags setLogFlags={setLogFlags} />}      
-      <div>
+
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
-      </div>
-        <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
-        
-        <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
-          stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
-        
-        <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-          stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
-          firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
-          {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}
-   
-      <div id='manual_id'>    
-        {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
-        {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
-        
-        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns} />
+        {chartSymbol && <div>
+          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
+          <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
+          
+          <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
+            stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
+          
+          <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+            stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
+            firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
+            {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}
+    
 
-        <Manual />
+          {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
+
+          {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
+
+          <StockGain stockGain = {gainData} infoSymbol={chartSymbol} />
+        </div>}
         
         <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />
-        <StockGain stockGain = {gainData} infoSymbol={chartSymbol} />
+        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns} />
+        <Manual />
         <hr/>
-      </div>
     </div> 
     </>
   )
