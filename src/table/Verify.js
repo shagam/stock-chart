@@ -224,7 +224,7 @@ function Verify (props) {
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
           <br></br>
 
-          <button type="button" onClick={()=>monthGain()}>monthDateCompare</button>
+          <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>
           <div>{monGainTxt} </div>
           <br></br>        
           
