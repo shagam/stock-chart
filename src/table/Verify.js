@@ -5,6 +5,9 @@ import {marketwatchGainValidate, nasdaqTest} from './GainValidateMarketwatch'
 import StockSplitsGet from '../splits/StockSplitsGet'
 import GetInt from '../utils/GetInt'
 import {spikesSmooth, spikesGet} from './Spikes'
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
+
 
 function Verify (props) {
 
@@ -28,6 +31,7 @@ function Verify (props) {
     const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
     const [splitInfo, setSplitInfo] = useState ();
     const [spikeInfo, setSpikesInfo] = useState ([]);
+    const [monGainTxt, setMonGainText] = useState ();
 
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
@@ -97,32 +101,91 @@ function Verify (props) {
 
     }
 
-// swap first, and force others columns in group to follow
-function toggleverifyColumns ()  {
-  var ind = props.allColumns.findIndex((column)=> column.Header === 'alphaDate');
-  const isInvisible_ = props.allColumns[ind].isVisible;
-  props.allColumns[ind].toggleHidden();
+    function nextMonthIndex (i, month) {
+      const date = props.stockChartXValues[i];
+      if(date === undefined) {
+        var b = 1
+      }
+      const dateSplit_ = dateSplit (date);
+      var monthNum = dateSplit_[1];
 
-  ind = props.allColumns.findIndex((column)=> column.Header === 'alphaPrice');
-  var isInvisible = props.allColumns[ind].isVisible;
-  if (isInvisible === isInvisible_)
-  props.allColumns[ind].toggleHidden();
+      for (let j = i; j < props.stockChartXValues.length; j++) {
+        const nextDate = props.stockChartXValues[j];
+        const nextDateSplit = dateSplit (nextDate);
+        const nextMonth = nextDateSplit[1];
+        if (nextMonth !== monthNum)
+          return j;
+      }
+      return -1; // error
+    }
 
-  // ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
-  // isInvisible = allColumns[ind].isVisible;
-  // if (isInvisible === isInvisible_)
-  //   allColumns[ind].toggleHidden();
+    function monthGain () {    
 
-  ind = props.allColumns.findIndex((column)=> column.Header === 'verifyPrice');
-  isInvisible = props.allColumns[ind].isVisible;
-  if (isInvisible === isInvisible_)
-  props.allColumns[ind].toggleHidden();
+    const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1]
+    var i = 0;
+    for (; i < props.stockChartYValues.length; ) {
+      var nextIndex = nextMonthIndex(i);
+      if (nextIndex < 0) {
+        break;
+      }
+      const date = props.stockChartXValues[i];
+      const dateSplit_ = dateSplit (date);
+      const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; 
 
-  ind = props.allColumns.findIndex((column)=> column.Header === 'verify_1');
-  isInvisible = props.allColumns[ind].isVisible;
-  if (isInvisible === isInvisible_)
-  props.allColumns[ind].toggleHidden();
-}
+
+      if (nextIndex - i >= 3) {
+        const p = (props.stockChartYValues[i] / props.stockChartYValues[nextIndex]).toFixed(3)
+        mGain[mon] *= Number(p);
+        mGain[mon]= Number(mGain[mon].toFixed(3))
+        const a = 1;
+      }
+      i = nextIndex; 
+    }
+    const mGainObj = {}
+    mGainObj.Jan = mGain[0];
+    mGainObj.Feb = mGain[1];
+    mGainObj.Mar = mGain[2];
+    mGainObj.Apr = mGain[3];
+    mGainObj.May = mGain[4];
+    mGainObj.Jun = mGain[5];
+    mGainObj.Jul = mGain[6];
+    mGainObj.Aug = mGain[7];
+    mGainObj.Sep = mGain[8];
+    mGainObj.Oct = mGain[9];
+    mGainObj.Nov = mGain[10];
+    mGainObj.Dec = mGain[11]; 
+    var mGainTxt = JSON.stringify (mGainObj)
+    mGainTxt = mGainTxt.replace (/,/g, ',  ')
+    mGainTxt = mGainTxt.replace (/"/g, '')
+    setMonGainText(mGainTxt)
+  }
+
+  // swap first, and force others columns in group to follow
+  function toggleverifyColumns ()  {
+    var ind = props.allColumns.findIndex((column)=> column.Header === 'alphaDate');
+    const isInvisible_ = props.allColumns[ind].isVisible;
+    props.allColumns[ind].toggleHidden();
+
+    ind = props.allColumns.findIndex((column)=> column.Header === 'alphaPrice');
+    var isInvisible = props.allColumns[ind].isVisible;
+    if (isInvisible === isInvisible_)
+    props.allColumns[ind].toggleHidden();
+
+    // ind = allColumns.findIndex((column)=> column.Header === 'verifyDate');
+    // isInvisible = allColumns[ind].isVisible;
+    // if (isInvisible === isInvisible_)
+    //   allColumns[ind].toggleHidden();
+
+    ind = props.allColumns.findIndex((column)=> column.Header === 'verifyPrice');
+    isInvisible = props.allColumns[ind].isVisible;
+    if (isInvisible === isInvisible_)
+    props.allColumns[ind].toggleHidden();
+
+    ind = props.allColumns.findIndex((column)=> column.Header === 'verify_1');
+    isInvisible = props.allColumns[ind].isVisible;
+    if (isInvisible === isInvisible_)
+    props.allColumns[ind].toggleHidden();
+  }
 
 
   const style = {
@@ -160,12 +223,15 @@ function toggleverifyColumns ()  {
           <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
           <br></br>
-          {/* <button type="button" onClick={()=>verifyTest (true)}>verify &nbsp;(test)   </button>
-          <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
-          <br></br> */}
+
+          <button type="button" onClick={()=>monthGain()}>monthDateCompare</button>
+          <div>{monGainTxt} </div>
+          <br></br>        
+          
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}
           <br></br>           <br></br>
+          
           <button type="button" onClick={()=>spikes ()}>Spikes  </button>  
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
         </div>
