@@ -134,28 +134,28 @@ function Verify (props) {
 
 
       if (nextIndex - i >= 3) {
-        const p = (props.stockChartYValues[i] / props.stockChartYValues[nextIndex]).toFixed(3)
+        const p = (props.stockChartYValues[i] / props.stockChartYValues[nextIndex])
         mGain[mon] *= Number(p);
-        mGain[mon]= Number(mGain[mon].toFixed(3))
+        mGain[mon]= (Number(mGain[mon]))
         const a = 1;
       }
       i = nextIndex; 
     }
     const mGainObj = {}
-    mGainObj.Jan = mGain[0];
-    mGainObj.Feb = mGain[1];
-    mGainObj.Mar = mGain[2];
-    mGainObj.Apr = mGain[3];
-    mGainObj.May = mGain[4];
-    mGainObj.Jun = mGain[5];
-    mGainObj.Jul = mGain[6];
-    mGainObj.Aug = mGain[7];
-    mGainObj.Sep = mGain[8];
-    mGainObj.Oct = mGain[9];
-    mGainObj.Nov = mGain[10];
-    mGainObj.Dec = mGain[11]; 
+    mGainObj.Jan = Number(mGain[0] + 0.0005).toFixed(2);
+    mGainObj.Feb = Number(mGain[1] + 0.0005).toFixed(2);
+    mGainObj.Mar = Number(mGain[2] + 0.0005).toFixed(2);
+    mGainObj.Apr = Number(mGain[3] + 0.0005).toFixed(2);
+    mGainObj.May = Number(mGain[4] + 0.0005).toFixed(2);
+    mGainObj.Jun = Number(mGain[5] + 0.0005).toFixed(2);
+    mGainObj.Jul = Number(mGain[6] + 0.0005).toFixed(2);
+    mGainObj.Aug = Number(mGain[7] + 0.0005).toFixed(2);
+    mGainObj.Sep = Number(mGain[8] + 0.0005).toFixed(2);
+    mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
+    mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
+    mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
     var mGainTxt = JSON.stringify (mGainObj)
-    mGainTxt = mGainTxt.replace (/,/g, ',  ')
+    mGainTxt = mGainTxt.replace (/,/g, '  ')
     mGainTxt = mGainTxt.replace (/"/g, '')
     setMonGainText(mGainTxt)
   }
