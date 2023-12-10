@@ -110,14 +110,17 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
           }
         }
 
+        const alphaDate = stockChartXValuesFunction[entry];
+        const alphaPrice = Number(stockChartYValuesFunction[entry]).toFixed(2);
+
         rows[row_index].values.verifyDate = oldestDate;
         rows[row_index].values.verifyPrice = closeValue;
 
         // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
-        rows[row_index].values.alphaDate = stockChartXValuesFunction[entry];
-        rows[row_index].values.alphaPrice = Number(stockChartYValuesFunction[entry]).toFixed(2);
-        
-        var p = Number(rows[row_index].values.alphaPrice / rows[row_index].values.verifyPrice).toFixed(2)
+        rows[row_index].values.alphaDate = alphaDate;
+        rows[row_index].values.alphaPrice = alphaPrice;
+ 
+        var p = Number(alphaPrice / closeValue).toFixed(2)
 
         //MarketWatch fail whenReverse split
          if (reverseSplit(rows[row_index].values.splits_list)) {
@@ -128,28 +131,25 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         rows[row_index].values.verifyUpdateMili = Date.now();
 
         const searcDate = year + '-' + mon + '-' + day;
-        var alphaPrice = rows[row_index].values.alphaPrice;
+   
+        // build return object
         const ver = {};
-        // var txt = sym + ' date: ' + rows[row_index].values.alphaDate;
+
         ver['sym'] = sym;
-        ver['date'] = rows[row_index].values.alphaDate;
-        if (alphaPrice)
-          alphaPrice = Number(alphaPrice).toFixed(2)
-        // txt += '  alpha-price: ' + alphaPrice; 
+        ver['date'] = alphaDate
+
         ver['alphaPrice'] = alphaPrice
-        // txt +=  ' marketwatch-price: ' + rows[row_index].values.verifyPrice;
+
         if (!nasdaq)
           ver['marketwatchPrice'] = rows[row_index].values.verifyPrice;
         else
           ver['nasdaqPrice'] = rows[row_index].values.verifyPrice;
-        // txt += ' entry: ' + entry + ' (' + (stockChartXValuesFunction.length - 1) + ')'
+
         ver['entry'] = entry;
         ver['max'] = stockChartXValuesFunction.length - 1
-        // txt += ' verify_1='+ p;
         ver['verify_1'] = p
-        // '  %cstock compare start', 'background: #fff; color: #22ef11')
+
         if (LOG) {
-          // console.log (txt);
           console.log (ver)
         }
         if (setText) {
