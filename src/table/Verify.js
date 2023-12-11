@@ -32,7 +32,8 @@ function Verify (props) {
     const [splitInfo, setSplitInfo] = useState ();
     const [spikeInfo, setSpikesInfo] = useState ([]);
     const [monGainTxt, setMonGainText] = useState ();
-
+    const [totalMonGain, setTotalMonGain] = useState ();
+    var totalGain;
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
     function verify (nasdaq) {
@@ -68,6 +69,8 @@ function Verify (props) {
       setVerifyNasdaqText()
       setSplitInfo();
       setSpikesInfo([])
+      setMonGainText()
+      setTotalMonGain()
     },[props.symbol]) 
 
 
@@ -157,6 +160,9 @@ function Verify (props) {
     mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
     mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
     mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
+    const totalGain = mGain[0] * mGain[1] * mGain[2] * mGain[3] * mGain[4] * mGain[5]
+                    * mGain[6] * mGain[7] * mGain[8] * mGain[9] * mGain[10] * mGain[11];
+    setTotalMonGain (totalGain.toFixed(3))
     var mGainTxt = JSON.stringify (mGainObj)
     mGainTxt = mGainTxt.replace (/,/g, '  ')
     mGainTxt = mGainTxt.replace (/"/g, '')
@@ -229,6 +235,7 @@ function Verify (props) {
 
           <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>
           <div>{monGainTxt} </div>
+          {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
           <br></br>        
           
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
