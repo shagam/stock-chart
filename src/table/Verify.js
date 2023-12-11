@@ -138,6 +138,9 @@ function Verify (props) {
         mGain[mon] *= Number(p);
         mGain[mon]= (Number(mGain[mon]))
         const a = 1;
+        if (props.logFlags.includes('month')) {
+          console.log (props.stockChartXValues[nextIndex], ' ', props.stockChartXValues[i],  '  month:', mon, 'gain:', p.toFixed(2))
+        }
       }
       i = nextIndex; 
     }
