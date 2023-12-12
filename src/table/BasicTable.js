@@ -1187,7 +1187,7 @@ export const BasicTable = (props) => {
           <StockGain stockGain = {gainData} infoSymbol={chartSymbol} />
         </div>}
         
-        <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />
+        {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
         <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns} />
         <Manual />
         <hr/>
