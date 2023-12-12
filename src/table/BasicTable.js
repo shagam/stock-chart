@@ -1161,7 +1161,7 @@ export const BasicTable = (props) => {
        
     <div id='trailer_id'>
 
-      {<LogFlags setLogFlags={setLogFlags} />}      
+      {! isMobile && <LogFlags setLogFlags={setLogFlags} />}      
 
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
