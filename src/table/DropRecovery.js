@@ -111,7 +111,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       // avoid multiple cals of deep
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
       if (index === -1) {
-        alert (`crash recovery symbol not found (${StockSymbol})`);
+        alert (`crash recovery symbol not found recoveryWeeks (${StockSymbol})`);
         return;
       } 
       // if (rows[index].values.deep === deep)

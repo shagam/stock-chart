@@ -788,14 +788,14 @@ export const BasicTable = (props) => {
       if (useData) { // avoid unclean access to rows
         const index = data.findIndex((row)=> row.symbol === symbol);
         if (index === -1) {
-          alert ('symbol not found ', symbol);
+          alert ('symbol not found, delete ', symbol);
           return;
         } 
         data.splice(index, 1);
       } else {
       const index = rows.findIndex((row)=> row.values.symbol === symbol);
       if (index === -1) {
-        alert ('symbol not found ', symbol);
+        alert ('symbol not found, delete_', symbol);
         return;
       } 
       rows.splice(index, 1);
@@ -936,7 +936,7 @@ export const BasicTable = (props) => {
     //console.log (stockSymbol, deep, deepWeek, recoverWeek);
     const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
     if (index === -1) {
-      alert (`crash recovery symbol not found (${stockSymbol})`);
+      alert (`crash recovery symbol not found, deep (${stockSymbol})`);
       return;
     } 
     // rows[index]values.
