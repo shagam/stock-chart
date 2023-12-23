@@ -20186,16 +20186,6 @@
     "lodash" "^4.6.1"
     "prop-types" "^15.6.0"
 
-"react-helmet@^6.1.0":
-  "integrity" "sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw=="
-  "resolved" "https://registry.npmjs.org/react-helmet/-/react-helmet-6.1.0.tgz"
-  "version" "6.1.0"
-  dependencies:
-    "object-assign" "^4.1.1"
-    "prop-types" "^15.7.2"
-    "react-fast-compare" "^3.1.1"
-    "react-side-effect" "^2.1.0"
-
 "react-icons@^4.3.1":
   "integrity" "sha512-IBaDuHiShdZqmfc/TwHu6+d6k2ltNCf3AszxNmjJc1KUfXdEeRJOKyNvLmAHaarhzGmTSVygNdyu8/opXv2gaw=="
   "resolved" "https://registry.npmjs.org/react-icons/-/react-icons-4.12.0.tgz"
@@ -24189,41 +24179,6 @@
     "semver" "^7.3.4"
     "semver-diff" "^3.1.1"
     "xdg-basedir" "^4.0.0"
-
-"update@^0.7.4":
-  "integrity" "sha512-B7HArWh4T6TSmMffmxlbD9gZM0QdboQ8N/p5aHcyhGCuuVRHSk37pvuQlAvi1XBrQMrEX5WJUQyQR8+jy/x4iQ=="
-  "resolved" "https://registry.npmjs.org/update/-/update-0.7.4.tgz"
-  "version" "0.7.4"
-  dependencies:
-    "arr-union" "^3.1.0"
-    "assemble-core" "^0.25.0"
-    "assemble-loader" "^0.6.1"
-    "base-cli-process" "^0.1.18"
-    "base-config-process" "^0.1.9"
-    "base-generators" "^0.4.5"
-    "base-questions" "^0.7.3"
-    "base-runtimes" "^0.2.0"
-    "base-store" "^0.4.4"
-    "common-config" "^0.1.0"
-    "data-store" "^0.16.1"
-    "export-files" "^2.1.1"
-    "extend-shallow" "^2.0.1"
-    "find-pkg" "^0.1.2"
-    "fs-exists-sync" "^0.1.0"
-    "global-modules" "^0.2.2"
-    "gulp-choose-files" "^0.1.3"
-    "is-valid-app" "^0.2.0"
-    "isobject" "^2.1.0"
-    "lazy-cache" "^2.0.1"
-    "log-utils" "^0.2.1"
-    "parser-front-matter" "^1.4.1"
-    "resolve-dir" "^0.1.0"
-    "resolve-file" "^0.2.0"
-    "set-blocking" "^2.0.0"
-    "strip-color" "^0.1.0"
-    "text-table" "^0.2.0"
-    "through2" "^2.0.1"
-    "yargs-parser" "^2.4.1"
 
 "upper-case@^1.1.1":
   "integrity" "sha512-WRbjgmYzgXkCV7zNVpy5YgrHgbBv126rMALQQMrmzOVC4GM2waQ9x7xtm8VU+1yF2kWyPzI9zbZ48n4vSxwfSA=="
