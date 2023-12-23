@@ -20,7 +20,7 @@ import ForgotPassword from './auth/ForgotPassword';
 import UpdateProfile from './auth/UpdateProfile';
 import CookieConsent from "react-cookie-consent"
 import {getDateSec} from './table/Date'
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 
 
 
