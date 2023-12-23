@@ -20,6 +20,7 @@ import ForgotPassword from './auth/ForgotPassword';
 import UpdateProfile from './auth/UpdateProfile';
 import CookieConsent from "react-cookie-consent"
 import {getDateSec} from './table/Date'
+import { Helmet } from 'react-helmet';
 
 
 
@@ -39,10 +40,16 @@ function App() {
 
   return (
     <div className="App-continer">
+      <Helmet>
+        <title>Stocks-analyse-compare</title>
+        <meta name='description' content='Analyse and compare stocks and ETF in US stock market'/>
+        <meta name='keywords' content='Analyse, compare, stock, market, ETF, crash, recovery, long-term-gain, chart, table, sort' />
+      </Helmet>
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
-        <h2  style={{color:'green'}}> Stocks compare tool</h2>      
+        <h2  style={{color:'green'}}> Stocks analyze and compare</h2>  
+        {/* <div>About</div>     */}
           <AuthProvider>
 
                    {/* <hr/>  */}
