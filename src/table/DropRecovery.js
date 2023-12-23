@@ -99,7 +99,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       for (let i = deepIndex; i >= 0; i--) {      
         const price = gainHigh(i)
         // console.log (price)
-        if (i == 0) { // for debug of last iteration
+        if (i === 0) { // for debug of last iteration
           const a = 1;
           const b = 1;
         }
