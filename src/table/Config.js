@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import GetInt from '../utils/GetInt'
 import AlphaVantage from '../AlphaVantage'
+import { Link, useNavigate } from 'react-router-dom'
 
 const  Config = (props) => { 
 
@@ -41,7 +42,10 @@ const  Config = (props) => {
 
       { configFlag &&
         <div id = "config_id">
+          <div> <Link to="/dashboard" > Login Dashboard </Link>  </div> 
+          <hr/>
           <div  style={{display:'flex'}}>
+         
             <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
             <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
             <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div>
@@ -49,7 +53,7 @@ const  Config = (props) => {
           </div>
           <AlphaVantage alphaCallBack={props.alphaCallBack} />
           <div> </div>
-          {/* <hr/> */}
+
         </div>
       }
 
