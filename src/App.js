@@ -40,11 +40,11 @@ function App() {
 
   return (
     <div className="App-continer">
-      <Helmet>
+      {/* <Helmet>
         <title>Stocks-analyse-compare</title>
         <meta name='description' content='Analyse and compare stocks and ETF in US stock market'/>
         <meta name='keywords' content='Analyse, compare, stock, market, ETF, crash, recovery, long-term-gain, chart, table, sort' />
-      </Helmet>
+      </Helmet> */}
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
