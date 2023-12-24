@@ -42,10 +42,10 @@ function App() {
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
-        <h2  style={{color:'green'}}> Stocks compare tool</h2>
-        <div>About</div>    
+        <h2  style={{color:'green'}}> Stocks compare tool</h2>      
           <AuthProvider>
 
+                   {/* <hr/>  */}
             <Router>
               <Routes>
                 <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} />}/>
