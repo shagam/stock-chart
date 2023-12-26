@@ -29,6 +29,7 @@ function App() {
   // const navigate = useNavigate();
   const nowStr = getDateSec()
   console.log(nowStr  + '  %cstock compare start', 'background: #fff; color: #22ef11');
+  const [aboutFlag, setAboutFlag] = useState(false);
 
   const refreshCallBack = (childData) => {
     setCount (count + 1);
@@ -42,7 +43,79 @@ function App() {
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
-        <h2  style={{color:'green'}}> Stocks analyse and compare</h2>      
+        <h2  style={{color:'green'}}> Stocks analyse and compare</h2> 
+        <div>
+          <input type="checkbox" checked={aboutFlag} onChange={() => {setAboutFlag (! aboutFlag)}} /> About
+          {aboutFlag && <div>
+
+            <div style={{display:'flex'}} >
+              <h6> Analyse and compares stocks / ETF, in the US stock market,</h6> &nbsp; <h6  style={{color:'red'}}> for long term investors.  </h6>
+              <h6> &nbsp; main features </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}> AlphVatage.co, </h6> <h6> &nbsp; Analysis based on Historical stock prices, recievd from AlphVantage.co </h6>
+            </div>
+
+            <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
+            <a href="https://youtu.be/NseqJZNqxaI" >English Tutorial</a>  &nbsp; &nbsp; 
+            {/* <a href="https://stocks-compare.netlify.app" >Link to Stocks analyse and compare</a>  */}
+
+            <hr/> 
+  
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}> long term yearly growth (peak2Peak) </h6> <h6> &nbsp; - from the peak before the 2008 deep, to the peak before 2022 deep  . </h6>
+            </div>
+
+            <h6>  &nbsp; &nbsp; Hitech ETF, QQQ NASDAQ has an annual average gain of 15%. </h6>
+            <h6>   &nbsp; &nbsp; Behemoth S&P BRK-A, DIA  have an annual average gain of merely 10% </h6>
+            
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>  Drop recovery analysis </h6> <h6> &nbsp; - calculate the drop and recovery time. </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>  </h6> <h6> &nbsp; &nbsp; 2008  QQQ  drops 53%, recovered within 3 years </h6>
+              <h6>,   2022  QQQ  Drops 36%,  almost recovered within 2 years   . </h6>
+            </div>
+    
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}> Logarithmic graph </h6> <h6> &nbsp; - Facilitate comparison of far crashes, like 2022 drop to 2008 drop. </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}> Target price </h6> <h6> &nbsp; - based an many analysts prediction. Value above 1 means stock price expcted to rise. </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}> Chart </h6> <h6> &nbsp; compare a few stocks, yearly_gain, zoom, date range, logarithmic. </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}> Table </h6> <h6> &nbsp; compare many stocks, yearly_gain, column sort, column-hide, filter, basic stock info . </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>volatility </h6> <h6> &nbsp; During deep periods, Hitech drop dramatically, 60% more than S&P. However hitech grows more during bear market  </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>Get stocks preformed better than QQQ </h6> <h6> &nbsp; Year, 2Year, 5Year, 10Year (from select list)</h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>Price / high </h6> <h6> &nbsp; Compare today price with high bifore deep. (How far from recovery) </h6>
+            </div>
+
+            <hr/> 
+            <h6>       Open source -  github.com/shagam/stock-chart </h6>
+
+            <h6>      Written in ReactJS, on top of JavaScript.</h6> 
+            <h6>      The tool is free. Pease share it with anyone </h6>
+            <hr/> 
+         </div>
+          }
+        </div>   
           <AuthProvider>
 
                    {/* <hr/>  */}
