@@ -48,15 +48,16 @@ function App() {
           <input type="checkbox" checked={aboutFlag} onChange={() => {setAboutFlag (! aboutFlag)}} /> About
           {aboutFlag && <div>
 
-            <div style={{display:'flex'}} >
-              <h6> Analyse and compares stocks / ETF, in the US stock market,</h6> &nbsp; <h6  style={{color:'red'}}> for long term investors.  </h6>
-              <h6> &nbsp; main features </h6>
-            </div>
+
+            <h5> Analyse and compares stocks / ETF, in the US stock market,</h5> 
+            <h5  style={{color:'red'}}> for long term investors.  </h5>
+            <h5>  main unique features </h5>
 
             <div style={{display:'flex'}} >
               <h6 style={{color:'red'}}> AlphVatage.co, </h6> <h6> &nbsp; Analysis based on Historical stock prices, recievd from AlphVantage.co </h6>
             </div>
-
+            
+            <hr/> 
             <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
             <a href="https://youtu.be/NseqJZNqxaI" >English Tutorial</a>  &nbsp; &nbsp; 
             {/* <a href="https://stocks-compare.netlify.app" >Link to Stocks analyse and compare</a>  */}
