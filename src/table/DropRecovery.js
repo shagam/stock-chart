@@ -60,7 +60,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const deep_ = () => {
       // deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
       if (startBeforeDropIndex === -1) {
-        console.log ('Fail to calc dropRecovery')
+        console.log ('DropRecovery: Fail to calc deep date')
         return;
       }
       const startBeforeDropValue = gainLow(startBeforeDropIndex) // gainObj[stockChartXValues[startBeforeDropIndex]]['3. low']
@@ -85,6 +85,10 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const recoverFactor = 0.97; // recover criteria when close enough
     // search for higest befor deep
     const highistBeforeDeep = () => {
+      if (startBeforeDropIndex < 0 || deepIndex < 0) {
+        console.log ('DroRecovery: Fail to calc highistBeforeDeep ')
+        return;
+      }
       for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
         const price = gainHigh(i)
         if (highPriceBeforeDeep * recoverFactor < price) {  // at least weeks to recover
