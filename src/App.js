@@ -51,12 +51,12 @@ function App() {
 
             <h5> Analyse and compares stocks / ETF, in the US stock market,</h5> 
             <h5  style={{color:'red'}}> for long term investors.  </h5>
-            <h5>  main unique features </h5>
+            <h5> Main unique features. to augment the traditional stock market tools. </h5>
 
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}> AlphVatage.co, </h6> <h6> &nbsp; Analysis based on Historical stock prices, recievd from AlphVantage.co </h6>
+              <h6 style={{color:'red'}}> AlphVatage.co, </h6> <h6> &nbsp; Analysis based on Historical stock prices, recievd from AlphVantage.co</h6>
             </div>
-            
+
             <hr/> 
             <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
             <a href="https://youtu.be/NseqJZNqxaI" >English Tutorial</a>  &nbsp; &nbsp; 
@@ -65,10 +65,10 @@ function App() {
             <hr/> 
   
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}> long term yearly growth (peak2Peak) </h6> <h6> &nbsp; - from the peak before the 2008 deep, to the peak before 2022 deep  . </h6>
+              <h6 style={{color:'red'}}> Long term yearly growth (peak2Peak) </h6> <h6> &nbsp; - from the peak before the 2008 deep, to the peak before 2022 deep  . </h6>
             </div>
 
-            <h6>  &nbsp; &nbsp; Hitech ETF, QQQ NASDAQ has an annual average gain of 15%. </h6>
+            <h6>  &nbsp; &nbsp; Hi-Tech ETF, QQQ NASDAQ has an annual average gain of 15%. </h6>
             <h6>   &nbsp; &nbsp; Behemoth S&P BRK-A, DIA  have an annual average gain of merely 10% </h6>
             
             <div style={{display:'flex'}} >
@@ -81,6 +81,10 @@ function App() {
             </div>
     
             <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>volatility </h6> <h6> &nbsp; During deep periods, Hi-Tech drop 50% more than S&P. However Hi-Tech grows more during bear market  </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
               <h6 style={{color:'red'}}> Logarithmic graph </h6> <h6> &nbsp; - Facilitate comparison of far crashes, like 2022 drop to 2008 drop. </h6>
             </div>
 
@@ -89,15 +93,11 @@ function App() {
             </div>
 
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}> Chart </h6> <h6> &nbsp; compare a few stocks, yearly_gain, zoom, date range, logarithmic. </h6>
+              <h6 style={{color:'red'}}> Chart </h6> <h6> &nbsp; Compares a few stocks, yearly_gain, zoom, date range, logarithmic. </h6>
             </div>
 
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}> Table </h6> <h6> &nbsp; compare many stocks, yearly_gain, column sort, column-hide, filter, basic stock info . </h6>
-            </div>
-
-            <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}>volatility </h6> <h6> &nbsp; During deep periods, Hitech drop dramatically, 60% more than S&P. However hitech grows more during bear market  </h6>
+              <h6 style={{color:'red'}}> Table </h6> <h6> &nbsp; Compare many stocks, yearly_gain, column sort, column-hide, filter, basic stock info . </h6>
             </div>
 
             <div style={{display:'flex'}} >
@@ -107,7 +107,11 @@ function App() {
             <div style={{display:'flex'}} >
               <h6 style={{color:'red'}}>Price / high </h6> <h6> &nbsp; Compare today price with high bifore deep. (How far from recovery) </h6>
             </div>
-
+            <div style={{display:'flex'}} >
+              <h6> I base my selection on 2 factors: &nbsp; </h6><h6 style={{color:'red'}}>Long Term gain (The past),
+              </h6><h6> &nbsp; and on  &nbsp;</h6><h6 style={{color:'red'}}> analist target, prediction. (Near future) </h6>
+            </div>
+            <h6> Wisdom of the crowd </h6>
             <hr/> 
             <h6>       Open source -  github.com/shagam/stock-chart </h6>
 
