@@ -58,8 +58,8 @@ function App() {
             </div>
 
             <hr/> 
+            <a href="https://youtu.be/NseqJZNqxaI" >English tutorial</a>  &nbsp; &nbsp; 
             <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
-            <a href="https://youtu.be/NseqJZNqxaI" >English Tutorial</a>  &nbsp; &nbsp; 
             {/* <a href="https://stocks-compare.netlify.app" >Link to Stocks analyse and compare</a>  */}
 
             <hr/> 
