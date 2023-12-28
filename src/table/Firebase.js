@@ -454,7 +454,7 @@ const Firebase = (props) => {
       alert ('QQQ missing in table');
       return; // cannot compare with QQQ
     }
-    const ratio = 0.44;
+    const ratio = 0.85;
     const allGain = [];
     const gain = await getDocs(props.gainRef);
     // gainLength = gain.docs.length;
