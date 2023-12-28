@@ -1073,8 +1073,8 @@ export const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
-          <div> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> open_market &nbsp;&nbsp;</div> 
-          <div> <input  type="checkbox" checked={smoothSpikes}  onChange={() => setSmoothSpikes(! smoothSpikes)} />  smoothSpikes </div>
+          <div style={{display:'flex'}}> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> &nbsp;openMarket &nbsp;&nbsp;</div> 
+          <div style={{display:'flex'}}> <input  type="checkbox" checked={smoothSpikes}  onChange={() => setSmoothSpikes(! smoothSpikes)} />  &nbsp;smoothSpikes </div>
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
 
           &nbsp; &nbsp;       
@@ -1083,8 +1083,8 @@ export const BasicTable = (props) => {
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
           &nbsp;&nbsp;
            
-          <div> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> columnHide &nbsp; </div>
-          {columnHideFlag && <div> <CheckBox {...getToggleHideAllColumnsProps()} /> Toggle All </div>}
+          <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
+          {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
           &nbsp;&nbsp; 
           {/* <button type="button" className="stock_button_class" onClick={()=>hiddenColumnRestore()}> restoreVisible    </button> */}
         </div>
