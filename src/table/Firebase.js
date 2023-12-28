@@ -447,6 +447,78 @@ const Firebase = (props) => {
 
   }
 
+  // Remove firebase entries wors than QQQ
+  const worst  = async (del) => {
+    const QQQ_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
+    if (QQQ_index === -1) {
+      alert ('QQQ missing in table');
+      return; // cannot compare with QQQ
+    }
+    const ratio = 0.44;
+    const allGain = [];
+    const gain = await getDocs(props.gainRef);
+    // gainLength = gain.docs.length;
+    const info = await getDocs(props.infoRef);
+
+    for (let i = 0; i < gain.docs.length; i++) {
+      const symDat = gain.docs[i].data();
+      const gainId = gain.docs[i].id;
+      const QQQDat = props.rows[QQQ_index].values;
+      const sym = symDat.__symbol;
+      // if (sym === 'QQQX') {
+      //   const a = 10;
+      // }
+      if (QQQDat.mon6 * ratio <= symDat.mon6)
+      continue;
+      if (QQQDat.year * ratio <= symDat.year)
+        continue;
+      if (QQQDat.year2  * ratio <= symDat.year2)
+        continue;
+      if (QQQDat.year5  * ratio <= symDat.year5)
+        continue;
+      if (symDat.year10 === undefined) {
+        continue;
+      }
+      if (QQQDat.year10  * ratio <= symDat.year10)
+        continue;
+      if (symDat.year20 === undefined) {
+        continue;
+      }
+      if (QQQDat.year20  * ratio <= symDat.year20)
+        continue;
+      
+      allGain.push (sym);
+      if (del) {
+        // del gain
+        var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
+        await deleteDoc (gainDoc);
+        console.log ('del firebase gain', sym)
+      }
+    }
+    allGain.sort();
+    if (allGain.length === 0) {
+      console.log ('No sym found worse than QQQ')
+      return;
+    }
+
+    if (! del)
+      alert ('Symbols worse than QQQ ratio: ' + ratio + '  List (' + allGain.length + ') ' + JSON.stringify(allGain))
+    else
+      console.log (allGain)
+
+    // delete info of sym
+    if (del) {
+      for (let i = 0; i < info.docs.length; i++) {
+        const sym = info.docs[i].data().__symbol;
+        if (allGain.includes (sym)) {
+          var infoDoc = doc(db, "stock-info", info.docs[i].id);
+          await deleteDoc (infoDoc);
+          console.log ('del firebase info', sym)
+        }  
+      }
+    }
+  }
+
   // const style = {
   //   //background: 'blue',
   //   // color: 'red',
@@ -485,6 +557,12 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button>
         </div>
         <div>
+
+        {/* // show/remove from FireBase all stocks worse than QQQ */}
+        <div>
+          <button type="button" onClick={()=>worst(false)}>Show worse than QQQ</button>
+          <button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>
+        </div>
 
         </div>
         {props.admin &&
