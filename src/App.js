@@ -43,7 +43,7 @@ function App() {
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
-        <h2  style={{color:'green'}}> Stocks analyse and compare</h2> 
+        <h2  style={{color:'green'}}> Stocks analyse & compare</h2> 
         <div>
           <input type="checkbox" checked={aboutFlag} onChange={() => {setAboutFlag (! aboutFlag)}} /> About
           {aboutFlag && <div>
