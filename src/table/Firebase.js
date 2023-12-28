@@ -503,8 +503,8 @@ const Firebase = (props) => {
 
     if (! del)
       alert ('Symbols worse than QQQ ratio: ' + ratio + '  List (' + allGain.length + ') ' + JSON.stringify(allGain))
-    else
-      console.log (allGain)
+    // else
+    //   console.log (allGain)
 
     // delete info of sym
     if (del) {
