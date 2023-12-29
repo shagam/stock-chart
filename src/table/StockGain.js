@@ -21,7 +21,7 @@ const StockInfo = (props) => {
           <input  type="checkbox" checked={props.gainRawDividand}  onChange={() => props.setGainRawDividand(! props.gainRawDividand)} /> filterDiv (Require pressing gain button)
 
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
-          <textarea type='text' name='stockInfo' cols='125' rows='15' readOnly
+          <textarea type='text' name='stockInfo' cols={props.gainRawDividand ? 125 : 180} rows='15' readOnly
             value={props.stockGain}  >
           </textarea>
         </div>
