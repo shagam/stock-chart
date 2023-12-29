@@ -598,8 +598,10 @@ export const BasicTable = (props) => {
                 else
                   stockChartYValuesFunction.push(yValue.toFixed(4));
               }
-              if (gainRawDividand)  // filter volume and 
-                gainArrayTxt = gainArrayTxt.replace (/,"6. volume":"\d*","7. dividend amount":"\d*\.?\d*"/g, '')
+              if (gainRawDividand) { // filter volume and 
+                gainArrayTxt = gainArrayTxt.replace (/,"6. volume":"\d*"/g, '')      
+              }
+              gainArrayTxt = gainArrayTxt.replace (/,"7. dividend amount":"0.000*"/g, '')  
               setGainData(gainArrayTxt)
 
               if (smoothSpikes)
