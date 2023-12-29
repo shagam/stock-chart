@@ -98,6 +98,7 @@ export const BasicTable = (props) => {
   const [stockInfo, setStockInfo] = useState ('');
 
   const [weekly, setWeekly] = useState (true);
+  const [gainRawDividand, setGainRawDividand] = useState (true);
 
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
@@ -585,7 +586,6 @@ export const BasicTable = (props) => {
               // get chart arrays from data
               for (var key in chartData[`${periodTag}`]) {
                 var str = JSON.stringify(chartData[periodTag][key])
-                str = str.replace (/,"6. volume":"\d*","7. dividend amount":"\d*\.?\d*"/, '')
                 // str = str.replace (/00"/g, '')
                 gainArrayTxt += key + '  ' + i + ' ' + str + '\n' // prepare for gain display
 
@@ -598,7 +598,10 @@ export const BasicTable = (props) => {
                 else
                   stockChartYValuesFunction.push(yValue.toFixed(4));
               }
+              if (gainRawDividand)  // filter volume and 
+                gainArrayTxt = gainArrayTxt.replace (/,"6. volume":"\d*","7. dividend amount":"\d*\.?\d*"/g, '')
               setGainData(gainArrayTxt)
+
               if (smoothSpikes)
                 spikesSmooth (sym, stockChartXValuesFunction, stockChartYValuesFunction, logFlags)
 
@@ -1115,7 +1118,7 @@ export const BasicTable = (props) => {
             onChange={handleAddFormChange}
           />
           <button type="submit"> Add  ({rows.length})  </button>
-          </form>
+        </form>
       </div>
 
       <table id="stockTable" {...getTableProps()}>
@@ -1184,7 +1187,7 @@ export const BasicTable = (props) => {
 
           {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
 
-          <StockGain stockGain = {gainData} infoSymbol={chartSymbol} />
+          <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
         </div>}
         
         {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
