@@ -1078,7 +1078,7 @@ export const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
-          <div style={{display:'flex'}}> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> &nbsp;openMarket &nbsp;&nbsp;</div> 
+          {admin && <div style={{display:'flex'}}> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> &nbsp;openMarket &nbsp;&nbsp;</div> }
           <div style={{display:'flex'}}> <input  type="checkbox" checked={smoothSpikes}  onChange={() => setSmoothSpikes(! smoothSpikes)} />  &nbsp;smoothSpikes </div>
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
 
