@@ -48,7 +48,8 @@ const  Config = (props) => {
              <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
             <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
             <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div>
-            <div> &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp; </div>
+            <div> &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;&nbsp; </div>
+            <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable &nbsp;   </button>
           </div>
  
           <hr/>
