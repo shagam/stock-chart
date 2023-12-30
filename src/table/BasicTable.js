@@ -1087,8 +1087,6 @@ export const BasicTable = (props) => {
            
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
-          &nbsp;&nbsp; 
-          {/* <button type="button" className="stock_button_class" onClick={()=>hiddenColumnRestore()}> restoreVisible    </button> */}
         </div>
 
       {columnHideFlag && 
