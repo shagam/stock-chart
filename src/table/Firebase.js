@@ -533,28 +533,28 @@ const Firebase = (props) => {
       </div>
 
       {displayFlag && 
-      <div> 
+      <div> &nbsp;
         <button type="button" onClick={()=>firebaseGetAndFill()} >Fill_gain_info </button> &nbsp;
         <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button> &nbsp;
         <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
         
         <hr/>
-        <div>
+        <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 1)}>show-stocks-compared-to-QQQ-1y </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
         </div>
  
-        <div>
+        <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>show-stocks-compared-to-QQQ-2y </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
         </div>
  
-        <div>
+        <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 5)}>show-stocks-compared-to-QQQ-5y </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, 5)}>Fill-stocks-compared-to-QQQ-5y </button> 
         </div>
 
-        <div>
+        <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 10)}>show-stocks-compared-to-QQQ-10y </button>  &nbsp;      
           <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button> 
         </div>
@@ -562,7 +562,7 @@ const Firebase = (props) => {
 
         {/* // show/remove from FireBase all stocks worse than QQQ */}
         <hr/>
-        <div>
+        <div>&nbsp;
           <button type="button" onClick={()=>worst(false)}>Show worse than QQQ</button>
           &nbsp;<button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>
         </div>
