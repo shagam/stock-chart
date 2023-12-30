@@ -1078,11 +1078,9 @@ export const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
-          {admin && <div style={{display:'flex'}}> <input  type="checkbox" checked={openMarketFlag}  onChange={openMaretFlagChange} /> &nbsp;openMarket &nbsp;&nbsp;</div> }
-          <div style={{display:'flex'}}> <input  type="checkbox" checked={smoothSpikes}  onChange={() => setSmoothSpikes(! smoothSpikes)} />  &nbsp;smoothSpikes </div>
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
 
-          &nbsp; &nbsp;       
+          &nbsp;       
           <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>saveTable()}>saveTable    </button>
           &nbsp; &nbsp;   
           <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
@@ -1191,9 +1189,10 @@ export const BasicTable = (props) => {
 
           <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
         </div>}
-        
+
         {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
-        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns} />
+        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
+        smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
         <Manual />
         <hr/>
     </div> 
