@@ -454,7 +454,7 @@ const Firebase = (props) => {
       alert ('QQQ missing in table');
       return; // cannot compare with QQQ
     }
-    const ratio = 0.85;
+    const ratio = 0.95;
     const allGain = [];
     const gain = await getDocs(props.gainRef);
     // gainLength = gain.docs.length;
@@ -468,8 +468,8 @@ const Firebase = (props) => {
       // if (sym === 'QQQX') {
       //   const a = 10;
       // }
-      if (QQQDat.mon6 * ratio <= symDat.mon6)
-      continue;
+      // if (QQQDat.mon6 * ratio <= symDat.mon6)
+      //   continue;
       if (QQQDat.year * ratio <= symDat.year)
         continue;
       if (QQQDat.year2  * ratio <= symDat.year2)
