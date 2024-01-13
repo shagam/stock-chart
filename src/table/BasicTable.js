@@ -458,12 +458,20 @@ export const BasicTable = (props) => {
     setStockInfo (JSON.stringify(childData) + "\n\n" + grahamTxt);
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
 
+
     // save target prices for symbol in array
     if (targetPriceState[symbol] === undefined)
       targetPriceState[symbol]  = [];
     const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now()};
     var latest = 0;
     var latestIndex;
+
+    // avoid too many
+    if (targetPriceState[symbol].length > 20)  {
+      targetPriceState.shift() // remove oldest
+      localStorage.setItem('targetPrices', JSON.stringify(targetPriceState));      
+    }
+
     for (let i = 0; i < targetPriceState[symbol].length; i++) {
       if (targetPriceState[symbol][i].dateMili > latest) {
         latest = targetPriceState[symbol][i].dateMili;
