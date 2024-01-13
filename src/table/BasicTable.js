@@ -91,6 +91,7 @@ export const BasicTable = (props) => {
     console.log (API_KEY)
 
   
+  // const [targetPriceState, setTargetPriceState] = useState({});
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(false);
   const [smoothSpikes, setSmoothSpikes] = useState(true);
@@ -144,7 +145,7 @@ export const BasicTable = (props) => {
     errors.unshift ([getDateSec(), ...err])
     refreshByToggleColumns()
   }
-
+  var targetPriceState = useMemo(() => JSON.parse (localStorage.getItem("targetPrices")), []);
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
@@ -421,7 +422,8 @@ export const BasicTable = (props) => {
     rows[index].values.BETA = Number (childData["Beta"]);
     rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
     rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
-    rows[index].values.target_raw = Number (childData["AnalystTargetPrice"]);
+    const targetRaw = Number (childData["AnalystTargetPrice"]);
+    rows[index].values.target_raw = targetRaw 
     rows[index].values.Cap = Number (childData["MarketCapitalization"] / 1000 / 1000 / 1000).toFixed(2);
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
     //Sector         
@@ -448,8 +450,25 @@ export const BasicTable = (props) => {
     if (LOG_FLAG)
       console.log (symbol, grahamTxt)
     setStockInfo (JSON.stringify(childData) + "\n\n" + grahamTxt);
-    
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
+
+    // save target prices for symbol in array
+    if (targetPriceState[symbol] === undefined)
+      targetPriceState[symbol]  = [];
+    const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now()};
+    var latest = 0;
+    var latestIndex;
+    for (let i = 0; i < targetPriceState[symbol].length; i++) {
+      if (targetPriceState[symbol][i].dateMili > latest) {
+        latest = targetPriceState[symbol][i].dateMili;
+        latestIndex = i;
+      }
+    }
+    // avoid duplicates
+    if (latestIndex === undefined || targetPriceState[symbol][latestIndex].target !== symTargetOne.target) {
+      targetPriceState[symbol].push (symTargetOne)
+      localStorage.setItem('targetPrices', JSON.stringify(targetPriceState));
+    }
   }
             
   // save pair (stockSymbol ip)
