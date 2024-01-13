@@ -145,7 +145,13 @@ export const BasicTable = (props) => {
     errors.unshift ([getDateSec(), ...err])
     refreshByToggleColumns()
   }
+
   var targetPriceState = useMemo(() => JSON.parse (localStorage.getItem("targetPrices")), []);
+  if (targetPriceState === null) {
+    targetPriceState = {};
+    localStorage.setItem("targetPrices", JSON.stringify(targetPriceState))
+  }
+
   const { login, currentUser, admin } = useAuth();
   const {localIp, localIpv4} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
