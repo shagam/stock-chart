@@ -120,7 +120,7 @@ export const BasicTable = (props) => {
   const useData = false;
 
   const hiddenColsDefault = ["Exchange","Industry","Cap","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
-  "EVToEBITDA","EVToRevenue","mon3","mon6","year20","splits_list","splits","alphaPrice","alphaDate","verifyDate","verifyPrice",
+  "EVToEBITDA","EVToRevenue","price","mon3","mon6","year20","splits_list","splits","alphaPrice","alphaDate","verifyDate","verifyPrice",
   "info_date","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"] // ,"target"
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))

@@ -78,6 +78,11 @@ export const COLUMNS = [
     accessor: 'gap'
   },
   {
+    Header: 'price',
+    Footer: 'price',    
+    accessor: 'price'
+  },
+  {
     Header: '3mn',
     Footer: '3mn',    
     accessor: 'mon3'
@@ -289,7 +294,12 @@ export const GROUPED_COLUMNS = [
         Header: '-',
         Footer: '-',    
         accessor: 'gap'
-      },  
+      },
+      {
+        Header: 'price',
+        Footer: 'price',    
+        accessor: 'price'
+      },      
       {
         Header: '3mn',
         Footer: '3mn',    
