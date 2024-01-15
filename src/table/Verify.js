@@ -35,6 +35,7 @@ function Verify (props) {
     const [totalMonGain, setTotalMonGain] = useState ();
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
+    const [target, setTarget] = useState ();
 
     var totalGain;
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
@@ -94,8 +95,7 @@ function Verify (props) {
       if (row_index  === -1)
         return;
       setPrice (props.rows[row_index].values.price)
-      // console.log (tar)
-      // setTargetInfo (tar)
+      setTarget (props.rows[row_index].values.target)
     }
 
     function spikes () {
@@ -263,7 +263,7 @@ function Verify (props) {
           <br></br>           <br></br>
 
           <button type="button" onClick={()=>targetGet ()}>targetPriceHistory  </button> 
-          {price && <div>price: {price} </div> }
+          {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (above 1 - means growth) </div> }
           {targetInfo && renderList(targetInfo)}
           <br></br>           <br></br>
 
