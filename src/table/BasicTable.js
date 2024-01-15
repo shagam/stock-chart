@@ -954,7 +954,7 @@ export const BasicTable = (props) => {
       localStorage.setItem ('stocks', stocksStr);
       const date = new Date();
       const formattedDate = format(date, "yyyy-MMM-dd hh:mm");
-      console.log (sym, `(${formattedDate}) stocks saveTable, length:`, stocks.length)
+      console.log (sym, `(${formattedDate}) stocks saveTable, stockCount:`, stocks.length)
     }
     else
       localStorage.removeItem ('stocks'); // reading empty array cause a bug
@@ -1179,7 +1179,7 @@ export const BasicTable = (props) => {
                 })}
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-                    <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
+                    <button type="button" onClick={()=>handleInfoClick(row.values.symbol, true)}>info</button>     
                     <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true)}>gain</button> 
                   </div>
               </tr>
