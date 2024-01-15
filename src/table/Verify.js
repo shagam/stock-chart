@@ -229,31 +229,39 @@ function Verify (props) {
         <input
             type="checkbox" checked={displayFlag}
             onChange={displayFlagChange}
-        /> Verify
+        /> Tools
       </div>
 
       {displayFlag && 
         <div> 
-          {props.symbol && <div  style={{color: 'magenta' }}> {props.symbol}</div>}   
+          <div  style={{color: 'magenta' }}> {props.symbol}</div>  
+    
+          <button type="button" onClick={()=>targetGet ()}>targetPriceHistory  </button> 
+          {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
+          {targetInfo && renderList(targetInfo)}
+          <br></br>           <br></br>
+
+          <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>
+          <div>{monGainTxt} </div>
+          {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
+          <br></br>            
+    
           <div style={{display:'flex'}}>
             <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
             &nbsp; &nbsp; &nbsp;
             <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
             {/* &nbsp; &nbsp; */}
-          </div>
+          </div>   
           <br></br>
+
           <button type="button" onClick={()=>verify (false)}>verify &nbsp;(MarketWatch)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)} &nbsp;  </div>
           <br></br>
+    
           <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
           <br></br>
-
-          <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>
-          <div>{monGainTxt} </div>
-          {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
-          <br></br>        
-          
+  
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}
           <br></br>           <br></br>
@@ -261,12 +269,7 @@ function Verify (props) {
           <button type="button" onClick={()=>spikes ()}>Spikes  </button>  
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
           <br></br>           <br></br>
-
-          <button type="button" onClick={()=>targetGet ()}>targetPriceHistory  </button> 
-          {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
-          {targetInfo && renderList(targetInfo)}
-          <br></br>           <br></br>
-
+ 
         </div>
       }
     </div>
