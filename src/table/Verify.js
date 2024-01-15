@@ -260,7 +260,7 @@ function Verify (props) {
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
           <br></br>           <br></br>
 
-          <button type="button" onClick={()=>targetGet ()}>targetPriceArray  </button> 
+          <button type="button" onClick={()=>targetGet ()}>targetPriceHistory  </button> 
           {price && <div>price: {price} </div> }
           {targetInfo && renderList(targetInfo)}
           <br></br>           <br></br>
