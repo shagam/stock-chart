@@ -300,7 +300,7 @@ export const BasicTable = (props) => {
   const [addFormData, setAddFormData] = useState({    })
 
 // get stock overview
-  const handleInfoClick = (symbol) => {
+  const handleInfoClick = (symbol, save) => {
     // monthsBackTest ();
     // daysBackTest()
     //callBack ("tableCallBack");
@@ -353,11 +353,20 @@ export const BasicTable = (props) => {
                   setInfoSymbol(symbol)
                   setStockInfo (JSON.stringify(data));
                   updateTableInfo (data, updateDate, updateMili);
-                  saveTable(symbol);
+                  if (save) // skip save for info all
+                    saveTable(symbol);
                 }
             }
         )
     
+  }
+
+  // get all info for targetPrice
+  function handleGainClickAll() {
+    rows.forEach ((row, i) => {
+      handleInfoClick (row.values.symbol, false) 
+    })
+    saveTable();
   }
 
   const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price) => {
@@ -1124,6 +1133,8 @@ export const BasicTable = (props) => {
            
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
+          {<div> &nbsp; <button onClick={ handleGainClickAll} > targetPriceAll </button> &nbsp; </div>}
+
         </div>
 
       {columnHideFlag && 
