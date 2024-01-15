@@ -300,7 +300,7 @@ export const BasicTable = (props) => {
   const [addFormData, setAddFormData] = useState({    })
 
 // get stock overview
-  const handleInfoClick = (symbol, save) => {
+  const handleInfoClick = (symbol, saveTabl) => {
     // monthsBackTest ();
     // daysBackTest()
     //callBack ("tableCallBack");
@@ -353,7 +353,7 @@ export const BasicTable = (props) => {
                   setInfoSymbol(symbol)
                   setStockInfo (JSON.stringify(data));
                   updateTableInfo (data, updateDate, updateMili);
-                  if (save) // skip save for info all
+                  if (saveTabl) // skip save for info all
                     saveTable(symbol);
                 }
             }
@@ -362,14 +362,14 @@ export const BasicTable = (props) => {
   }
 
   // get all info for targetPrice
-  function handleGainClickAll() {
+  function handleInfoClickAll() {
     rows.forEach ((row, i) => {
       handleInfoClick (row.values.symbol, false) 
     })
     saveTable();
   }
 
-  const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price) => {
+  const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
@@ -413,8 +413,10 @@ export const BasicTable = (props) => {
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
     firebaseGainAdd (sym, 'gain');  // save in firestore
-    saveTable(sym);
+    if (saveTabl)
+      saveTable(sym);
   }
+
   const updateTableInfo = (childData, updateDate, updateMili)  => {
     if (childData === null || childData["Exchange"] == null) {
       console.log ('ChildData missing');
@@ -552,7 +554,7 @@ export const BasicTable = (props) => {
     return yValue;
   }
 
-  const handleGainClick = (sym) => {
+  const handleGainClick = (sym, saveTabl) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
     if (LOG_FLAG)
@@ -829,11 +831,19 @@ export const BasicTable = (props) => {
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`])
-              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, undefined);                      
+              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, undefined, saveTabl);                      
             }
         )
   }
-  
+
+   // get all info for targetPrice
+  function gainAll() {
+    rows.forEach ((row, i) => {
+      handleGainClick (row.values.symbol, false) 
+    })
+    saveTable();
+  }
+
   const handleDeleteClick = (symbol) => {
     try {
       if (useData) { // avoid unclean access to rows
@@ -1133,7 +1143,8 @@ export const BasicTable = (props) => {
            
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
-          {<div> &nbsp; <button onClick={ handleGainClickAll} > targetPriceAll </button> &nbsp; </div>}
+          {admin && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
+          {admin && <div> &nbsp; <button onClick={ handleInfoClickAll} > targetPriceAll </button> &nbsp; </div>}
 
         </div>
 
@@ -1199,7 +1210,7 @@ export const BasicTable = (props) => {
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                     <button type="button" onClick={()=>handleInfoClick(row.values.symbol)}>info</button>     
-                    <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol)}>gain</button> 
+                    <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true)}>gain</button> 
                   </div>
               </tr>
             )
