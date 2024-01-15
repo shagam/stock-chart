@@ -27,6 +27,8 @@ import LogFlags from '../LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
 import Verify from './Verify'
 import {spikesSmooth, spikesGet} from './Spikes'
+import {targetPriceAdd} from './TargetPrice'
+
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
 
@@ -460,6 +462,8 @@ export const BasicTable = (props) => {
 
 
     // save target prices for symbol in array
+    targetPriceAdd (symbol, targetRaw)
+
     if (targetPriceState[symbol] === undefined)
       targetPriceState[symbol]  = [];
     const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now()};
