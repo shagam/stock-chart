@@ -74,6 +74,8 @@ function Verify (props) {
       setSpikesInfo([])
       setMonGainText()
       setTotalMonGain()
+      setTargetInfo()
+      setPrice()
     },[props.symbol]) 
 
 
