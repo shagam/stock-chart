@@ -93,7 +93,6 @@ export const BasicTable = (props) => {
     console.log (API_KEY)
 
   
-  // const [targetPriceState, setTargetPriceState] = useState({});
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(false);
   const [smoothSpikes, setSmoothSpikes] = useState(true);
@@ -146,12 +145,6 @@ export const BasicTable = (props) => {
   function errorAdd (err) {
     errors.unshift ([getDateSec(), ...err])
     refreshByToggleColumns()
-  }
-
-  var targetPriceState = useMemo(() => JSON.parse (localStorage.getItem("targetPrices")), []);
-  if (targetPriceState === null) {
-    targetPriceState = {};
-    localStorage.setItem("targetPrices", JSON.stringify(targetPriceState))
   }
 
   const { login, currentUser, admin } = useAuth();
@@ -472,32 +465,9 @@ export const BasicTable = (props) => {
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
 
 
-    // save target prices for symbol in array
+    // save target prices history for a symbol in array
     targetPriceAdd (symbol, targetRaw)
 
-    if (targetPriceState[symbol] === undefined)
-      targetPriceState[symbol]  = [];
-    const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now()};
-    var latest = 0;
-    var latestIndex;
-
-    // avoid too many
-    if (targetPriceState[symbol].length > 20)  {
-      targetPriceState.shift() // remove oldest
-      localStorage.setItem('targetPrices', JSON.stringify(targetPriceState));      
-    }
-
-    for (let i = 0; i < targetPriceState[symbol].length; i++) {
-      if (targetPriceState[symbol][i].dateMili > latest) {
-        latest = targetPriceState[symbol][i].dateMili;
-        latestIndex = i;
-      }
-    }
-    // avoid duplicates
-    if (latestIndex === undefined || targetPriceState[symbol][latestIndex].target !== symTargetOne.target) {
-      targetPriceState[symbol].push (symTargetOne)
-      localStorage.setItem('targetPrices', JSON.stringify(targetPriceState));
-    }
   }
             
   // save pair (stockSymbol ip)
