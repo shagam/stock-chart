@@ -7,7 +7,7 @@ import GetInt from '../utils/GetInt'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
-
+import {getTargetPriceArray} from './TargetPrice'
 
 function Verify (props) {
 
@@ -33,6 +33,9 @@ function Verify (props) {
     const [spikeInfo, setSpikesInfo] = useState ([]);
     const [monGainTxt, setMonGainText] = useState ();
     const [totalMonGain, setTotalMonGain] = useState ();
+    const [targetInfo, setTargetInfo] = useState ();
+    const [price, setPrice] = useState ();
+
     var totalGain;
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
@@ -80,6 +83,17 @@ function Verify (props) {
         return;
       }
       StockSplitsGet(props.symbol, props.rows, props.errorAdd, servList[0], true, props.logFlags, setSplitInfo)
+    }
+
+    function targetGet (symbol) {
+      const tar = getTargetPriceArray (props.symbol, setTargetInfo)
+
+      const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+      if (row_index  === -1)
+        return;
+      setPrice (props.rows[row_index].values.price)
+      // console.log (tar)
+      // setTargetInfo (tar)
     }
 
     function spikes () {
@@ -244,6 +258,13 @@ function Verify (props) {
           
           <button type="button" onClick={()=>spikes ()}>Spikes  </button>  
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
+          <br></br>           <br></br>
+
+          <button type="button" onClick={()=>targetGet ()}>targetPriceArray  </button> 
+          {price && <div>price: {price} </div> }
+          {targetInfo && renderList(targetInfo)}
+          <br></br>           <br></br>
+
         </div>
       }
     </div>

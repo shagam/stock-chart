@@ -49,11 +49,17 @@ async  function targetPriceAdd (symbol, targetRaw) {
     }
 }
 
-function targetPriceGui () {
+async function getTargetPriceArray (symbol, setTargetInfo) {
 
+    var userQuery = query (targetRef, where ('symbol', '==', symbol));
+    const fromFireBase = await getDocs (userQuery);
 
-
-    
+    const targetPriceArray = fromFireBase.docs.length > 0? JSON.parse(fromFireBase.docs[0].data().dat) : [];
+    var str = JSON.stringify (targetPriceArray)
+    str = str.replace (/,"dateMili":\d*/g, '')
+    const arr = JSON.parse (str)
+    setTargetInfo (arr)
+    // return targetPriceArray;   
 }
 
-export {targetPriceAdd}
+export {targetPriceAdd, getTargetPriceArray}
