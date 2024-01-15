@@ -263,7 +263,7 @@ function Verify (props) {
           <br></br>           <br></br>
 
           <button type="button" onClick={()=>targetGet ()}>targetPriceHistory  </button> 
-          {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (above 1 - means growth) </div> }
+          {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
           {targetInfo && renderList(targetInfo)}
           <br></br>           <br></br>
 
