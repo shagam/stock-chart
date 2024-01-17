@@ -37,6 +37,9 @@ async  function targetPriceAdd (symbol, targetRaw) {
     if (latestIndex === -1 || targetPriceArray[latestIndex].target !== symTargetOne.target) {
         targetPriceArray.push (symTargetOne)
         console.log (symbol, 'add new targetPrice', targetRaw)
+        if (targetPriceArray.length > 1) {
+           console.log ('Ratio: ', targetPriceArray[0] / targetPriceArray[1]); // show the change of last target
+        }
         const arrayStringify = JSON.stringify(targetPriceArray);
 
         if (fromFireBase.docs.length > 0) {  // entry already exist
