@@ -238,7 +238,7 @@ export const BasicTable = (props) => {
       deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
       if (LOG_FIREBASE)
         console.log (symbol, 'gain-send to firebase. src:', src);
-      saveTable(symbol);
+      // saveTable(symbol);
     } catch (e) {console.log (symbol, e)}
     // delete old entries
     // if (LOG_FIREBASE && gain.docs.length > 0)
@@ -801,7 +801,7 @@ export const BasicTable = (props) => {
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`])
-              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, undefined, saveTabl);                      
+              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl);                      
             }
         )
   }
