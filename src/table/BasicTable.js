@@ -148,7 +148,7 @@ export const BasicTable = (props) => {
   }
 
   const { login, currentUser, admin } = useAuth();
-  const {localIp, localIpv4} = IpContext();
+  const {localIp, localIpv4, eliHome} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
   async function refreshByToggleColumns ()  {
@@ -1113,8 +1113,8 @@ export const BasicTable = (props) => {
            
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
-          {admin && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
-          {admin && <div> &nbsp; <button onClick={ handleInfoClickAll} > targetPriceAll </button> &nbsp; </div>}
+          {eliHome && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
+          {eliHome && <div> &nbsp; <button onClick={ handleInfoClickAll} > targetPriceAll </button> &nbsp; </div>}
 
         </div>
 

@@ -15,6 +15,7 @@ function IpContext  () {
   const [userAgent, setUserAgent] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   const [ios, setIos] = useState(false);
+  const [eliHome, setEliHome] = useState(false);
 
   const LOG_FLAG = false;
 
@@ -79,8 +80,9 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         setLocalIP(res.data);
-        // setAdmin (res.data.IPv4 === '84.228.164.64');
+        setEliHome (res.data.IPv4 === '62.90.44.227');
         setLocalIPv4 (res.data.IPv4);
+
       }
       else
         console.log ('no ip');
@@ -115,7 +117,8 @@ function IpContext  () {
     localIpv4,
     userAgent,
     userAgentMobile,
-    ios
+    ios,
+    eliHome
   }
   return (value)
 
