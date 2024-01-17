@@ -34,11 +34,15 @@ async  function targetPriceAdd (symbol, targetRaw) {
     }
 
     // empty or different
+    const TARGET_CHANGE_THRESHOLD = 1.03
     if (latestIndex === -1 || targetPriceArray[latestIndex].target !== symTargetOne.target) {
         targetPriceArray.push (symTargetOne)
         console.log (symbol, 'add new targetPrice', targetRaw)
         if (targetPriceArray.length > 1) {
-           console.log ('Ratio: ', targetPriceArray[0] / targetPriceArray[1]); // show the change of last target
+            const tar0 =  targetPriceArray[0];
+            const tar1 =  targetPriceArray[1];            
+            if (tar1 / tar0 > TARGET_CHANGE_THRESHOLD|| tar0 / tar1 > TARGET_CHANGE_THRESHOLD)
+                console.log ('Ratio: ', tar0/ tar1); // show the change of last target
         }
         const arrayStringify = JSON.stringify(targetPriceArray);
 
