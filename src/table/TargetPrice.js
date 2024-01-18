@@ -44,12 +44,12 @@ async  function targetPriceAdd (symbol, targetRaw) {
 
     if (latestIndex === -1 || targetPriceArray[latestIndex].target !== symTargetOne.target) {
         targetPriceArray.push (symTargetOne)
-        console.log (symbol, 'add new targetPrice', targetRaw)
+        console.log (symbol, 'add new targetPrice', targetRaw, ' size: ', targetPriceArray.length)
         if (targetPriceArray.length > 1) {
             const tar0 =  targetPriceArray[0].target;
-            const tar1 =  targetPriceArray[1].target;            
+            const tar1 =  targetPriceArray[targetPriceArray.length - 1].target;            
             if (bigDiff (tar0, tar1)) {
-                console.log ('Ratio: ', tar0/ tar1); // show the change of last target
+                console.log ('Ratio: ', tar0 / tar1); // show the change of last target
             }
         }
         const arrayStringify = JSON.stringify(targetPriceArray);
@@ -89,8 +89,8 @@ async function targetHistAll () {
             const tar0 =  dat[0].target;
             const tar1 =  dat[dat.length - 1].target;            
 
-            if (dat.length > 1 && bigDiff (tar0, tar1)) {
-                console.log (sym)
+            if ((dat.length > 1 && bigDiff (tar0, tar1)) || dat.length > 2) {
+                console.log (sym, dat.length)
                 console.dir (dat)
             }
             allTarget[sym] = dat;

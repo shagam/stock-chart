@@ -299,7 +299,8 @@ export const BasicTable = (props) => {
     //callBack ("tableCallBack");
 
     localStorage.setItem ('infoSymbol', symbol); 
-    console.log(symbol, '(info)');
+    if (saveTabl)
+      console.log(symbol, '(info)');
     if (symbol === '' || symbol === undefined) {
       alert (`bug, info sym vanished (${symbol})`); 
       return;
