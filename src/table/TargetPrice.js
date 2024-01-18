@@ -7,6 +7,13 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 
 const targetRef = collection(db, "targetPriceArray")
 
+const TARGET_CHANGE_THRESHOLD = 1.05
+function bigDiff (tar0, tar1) {
+    if (tar1 / tar0 > TARGET_CHANGE_THRESHOLD|| tar0 / tar1 > TARGET_CHANGE_THRESHOLD)
+        return true;
+    return false
+}
+
 async  function targetPriceAdd (symbol, targetRaw) {
 
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
@@ -34,15 +41,16 @@ async  function targetPriceAdd (symbol, targetRaw) {
     }
 
     // empty or different
-    const TARGET_CHANGE_THRESHOLD = 1.03
+
     if (latestIndex === -1 || targetPriceArray[latestIndex].target !== symTargetOne.target) {
         targetPriceArray.push (symTargetOne)
         console.log (symbol, 'add new targetPrice', targetRaw)
         if (targetPriceArray.length > 1) {
-            const tar0 =  targetPriceArray[0];
-            const tar1 =  targetPriceArray[1];            
-            if (tar1 / tar0 > TARGET_CHANGE_THRESHOLD|| tar0 / tar1 > TARGET_CHANGE_THRESHOLD)
+            const tar0 =  targetPriceArray[0].target;
+            const tar1 =  targetPriceArray[1].target;            
+            if (bigDiff (tar0, tar1)) {
                 console.log ('Ratio: ', tar0/ tar1); // show the change of last target
+            }
         }
         const arrayStringify = JSON.stringify(targetPriceArray);
 
@@ -69,4 +77,28 @@ async function getTargetPriceArray (symbol, setTargetInfo) {
     // return targetPriceArray;   
 }
 
-export {targetPriceAdd, getTargetPriceArray}
+async function targetHistAll () {
+    const allTarget = {};
+    const tagetHistory = await getDocs(targetRef);
+    // gainLength = gain.docs.length;
+
+    for (let i = 0; i < tagetHistory.docs.length; i++) {
+        const sym = tagetHistory.docs[i].data().symbol;
+        try {
+            const dat = JSON.parse (tagetHistory.docs[i].data().dat)
+            const tar0 =  dat[0].target;
+            const tar1 =  dat[dat.length - 1].target;            
+
+            if (dat.length > 1 && bigDiff (tar0, tar1)) {
+                console.log (sym)
+                console.dir (dat)
+            }
+            allTarget[sym] = dat;
+        } catch (e) {console.log (sym, e.message)}
+    }
+
+    // allTarget.sort();
+
+}
+
+export {targetPriceAdd, getTargetPriceArray, targetHistAll}

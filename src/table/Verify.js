@@ -7,7 +7,7 @@ import GetInt from '../utils/GetInt'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
-import {getTargetPriceArray} from './TargetPrice'
+import {getTargetPriceArray, targetHistAll} from './TargetPrice'
 
 function Verify (props) {
 
@@ -235,8 +235,10 @@ function Verify (props) {
       {displayFlag && 
         <div> 
           <div  style={{color: 'magenta' }}> {props.symbol}</div>  
-    
-          <button type="button" onClick={()=>targetGet ()}>targetPriceHistory  </button> 
+
+          <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> 
+          &nbsp; &nbsp;
+          <button type="button" onClick={()=>targetHistAll ()}>targetHistoryAll</button> 
           {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
           {targetInfo && renderList(targetInfo)}
           <br></br>           <br></br>
