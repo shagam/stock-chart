@@ -28,6 +28,8 @@ import peak2PeakCalc from './Peak2PeakCalc'
 import Verify from './Verify'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
+import {Tools} from './Tools'
+
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
@@ -1195,6 +1197,9 @@ export const BasicTable = (props) => {
 
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
+
+        <Tools symbol = {chartSymbol} rows = {rows}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+        logFlags = {logFlags} errorAdd={errorAdd} /> 
 
         {chartSymbol && <div>
           <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}

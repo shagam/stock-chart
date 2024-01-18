@@ -31,13 +31,7 @@ function Verify (props) {
     const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
     const [splitInfo, setSplitInfo] = useState ();
     const [spikeInfo, setSpikesInfo] = useState ([]);
-    const [monGainTxt, setMonGainText] = useState ();
-    const [totalMonGain, setTotalMonGain] = useState ();
-    const [targetInfo, setTargetInfo] = useState ();
-    const [price, setPrice] = useState ();
-    const [target, setTarget] = useState ();
 
-    var totalGain;
     const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
 
     function verify (nasdaq) {
@@ -73,10 +67,6 @@ function Verify (props) {
       setVerifyNasdaqText()
       setSplitInfo();
       setSpikesInfo([])
-      setMonGainText()
-      setTotalMonGain()
-      setTargetInfo()
-      setPrice()
     },[props.symbol]) 
 
 
@@ -86,16 +76,6 @@ function Verify (props) {
         return;
       }
       StockSplitsGet(props.symbol, props.rows, props.errorAdd, servList[0], true, props.logFlags, setSplitInfo)
-    }
-
-    function targetGet (symbol) {
-      const tar = getTargetPriceArray (props.symbol, setTargetInfo)
-
-      const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
-      if (row_index  === -1)
-        return;
-      setPrice (props.rows[row_index].values.price)
-      setTarget (props.rows[row_index].values.target)
     }
 
     function spikes () {
@@ -119,72 +99,7 @@ function Verify (props) {
         return array.map((item) => <li>{JSON.stringify(item)}</li>);
 
     }
-
-    function nextMonthIndex (i, month) {
-      const date = props.stockChartXValues[i];
-      if(date === undefined) {
-        var b = 1
-      }
-      const dateSplit_ = dateSplit (date);
-      var monthNum = dateSplit_[1];
-
-      for (let j = i; j < props.stockChartXValues.length; j++) {
-        const nextDate = props.stockChartXValues[j];
-        const nextDateSplit = dateSplit (nextDate);
-        const nextMonth = nextDateSplit[1];
-        if (nextMonth !== monthNum)
-          return j;
-      }
-      return -1; // error
-    }
-
-    function monthGain () {    
-
-    const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1]
-    var i = 0;
-    for (; i < props.stockChartYValues.length; ) {
-      var nextIndex = nextMonthIndex(i);
-      if (nextIndex < 0) {
-        break;
-      }
-      const date = props.stockChartXValues[i];
-      const dateSplit_ = dateSplit (date);
-      const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; 
-
-
-      if (nextIndex - i >= 3) {
-        const p = (props.stockChartYValues[i] / props.stockChartYValues[nextIndex])
-        mGain[mon] *= Number(p);
-        mGain[mon]= (Number(mGain[mon]))
-        const a = 1;
-        if (props.logFlags.includes('month')) {
-          console.log (props.stockChartXValues[nextIndex], ' ', props.stockChartXValues[i],  '  month:', mon, 'gain:', p.toFixed(2))
-        }
-      }
-      i = nextIndex; 
-    }
-    const mGainObj = {}
-    mGainObj.Jan = Number(mGain[0] + 0.0005).toFixed(2);
-    mGainObj.Feb = Number(mGain[1] + 0.0005).toFixed(2);
-    mGainObj.Mar = Number(mGain[2] + 0.0005).toFixed(2);
-    mGainObj.Apr = Number(mGain[3] + 0.0005).toFixed(2);
-    mGainObj.May = Number(mGain[4] + 0.0005).toFixed(2);
-    mGainObj.Jun = Number(mGain[5] + 0.0005).toFixed(2);
-    mGainObj.Jul = Number(mGain[6] + 0.0005).toFixed(2);
-    mGainObj.Aug = Number(mGain[7] + 0.0005).toFixed(2);
-    mGainObj.Sep = Number(mGain[8] + 0.0005).toFixed(2);
-    mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
-    mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
-    mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
-    const totalGain = mGain[0] * mGain[1] * mGain[2] * mGain[3] * mGain[4] * mGain[5]
-                    * mGain[6] * mGain[7] * mGain[8] * mGain[9] * mGain[10] * mGain[11];
-    setTotalMonGain (totalGain.toFixed(3))
-    var mGainTxt = JSON.stringify (mGainObj)
-    mGainTxt = mGainTxt.replace (/,/g, '  ')
-    mGainTxt = mGainTxt.replace (/"/g, '')
-    setMonGainText(mGainTxt)
-  }
-
+   
   // swap first, and force others columns in group to follow
   function toggleverifyColumns ()  {
     var ind = props.allColumns.findIndex((column)=> column.Header === 'alphaDate');
@@ -229,25 +144,14 @@ function Verify (props) {
         <input
             type="checkbox" checked={displayFlag}
             onChange={displayFlagChange}
-        /> Tools
+        /> Verify
       </div>
 
       {displayFlag && 
         <div> 
           <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
-          <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> 
-          &nbsp; &nbsp;
-          <button type="button" onClick={()=>targetHistAll ()}>targetHistoryAll</button> 
-          {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
-          {targetInfo && renderList(targetInfo)}
-          <br></br>           <br></br>
-
-          <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>
-          <div>{monGainTxt} </div>
-          {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
-          <br></br>            
-    
+        
           <div style={{display:'flex'}}>
             <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
             &nbsp; &nbsp; &nbsp;
