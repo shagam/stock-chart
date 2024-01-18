@@ -1193,7 +1193,10 @@ export const BasicTable = (props) => {
        
     <div id='trailer_id'>
 
-      {! isMobile && <LogFlags setLogFlags={setLogFlags} />}      
+        {chartSymbol && <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />}
+
+        {! isMobile && <LogFlags setLogFlags={setLogFlags} />}  
 
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
@@ -1202,10 +1205,8 @@ export const BasicTable = (props) => {
         logFlags = {logFlags} errorAdd={errorAdd} /> 
 
         {chartSymbol && <div>
-          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />
           <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
-          
+
           <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
             stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
           
