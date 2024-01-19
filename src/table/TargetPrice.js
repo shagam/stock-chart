@@ -77,7 +77,7 @@ async function getTargetPriceArray (symbol, setTargetInfo) {
     // return targetPriceArray;   
 }
 
-async function targetHistAll () {
+async function targetHistBigDiff () {
     const allTarget = {};
     const tagetHistory = await getDocs(targetRef);
     // gainLength = gain.docs.length;
@@ -89,16 +89,35 @@ async function targetHistAll () {
             const tar0 =  dat[0].target;
             const tar1 =  dat[dat.length - 1].target;            
 
-            if ((dat.length > 1 && bigDiff (tar0, tar1)) || dat.length > 2) {
+            if (bigDiff (tar0, tar1)) {
                 console.log (sym, dat.length)
+                for (let i = 0; i < dat.length; i++)                   
+                    delete dat[i].dateMili;  // reduce unimportant info
                 console.dir (dat)
             }
-            allTarget[sym] = dat;
         } catch (e) {console.log (sym, e.message)}
     }
+}
 
+
+async function targetHistAll () {
+    const allTarget = {};
+    const tagetHistory = await getDocs(targetRef);
+    // gainLength = gain.docs.length;
+
+    for (let i = 0; i < tagetHistory.docs.length; i++) {
+        const sym = tagetHistory.docs[i].data().symbol;
+        try {
+            const dat = JSON.parse (tagetHistory.docs[i].data().dat)
+            console.log (sym, dat.length)
+            for (let i = 0; i < dat.length; i++)                   
+                delete dat[i].dateMili;  // reduce unimportant info
+            console.dir (dat)
+        } catch (e) {console.log (sym, e.message)}
+    }
+    // allTarget[sym] = dat;
     // allTarget.sort();
 
 }
 
-export {targetPriceAdd, getTargetPriceArray, targetHistAll}
+export {targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff}
