@@ -49,7 +49,7 @@ async  function targetPriceAdd (symbol, targetRaw) {
             const tar0 =  targetPriceArray[0].target;
             const tar1 =  targetPriceArray[targetPriceArray.length - 1].target;            
             if (bigDiff (tar0, tar1)) {
-                console.log ('Ratio: ', tar0 / tar1); // show the change of last target
+                console.log ('Ratio: ', (tar0 / tar1).toFixed(2)); // show the change of last target
             }
         }
         const arrayStringify = JSON.stringify(targetPriceArray);
