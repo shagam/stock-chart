@@ -115,6 +115,7 @@ async function targetHistAll () {
             console.dir (dat)
         } catch (e) {console.log (sym, e.message)}
     }
+    console.log ('count: ', tagetHistory.docs.length);
     // allTarget[sym] = dat;
     // allTarget.sort();
 
