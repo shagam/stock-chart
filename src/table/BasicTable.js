@@ -334,7 +334,7 @@ export const BasicTable = (props) => {
                     const index = rows.findIndex((row)=> row.values.symbol === symbol);
                     rows[index].values.PE = -2  // flag non valid
                     // alert (`etf or invalid symbol (no info) symbol=${symbol} data="${dataStr}"`);
-                    errorAdd([` ${symbol} etf or invalid symbol (has no info) data="${dataStr}" PE=-2 `])
+                    // errorAdd([` ${symbol} etf or invalid symbol (has no info) data="${dataStr}" PE=-2 `])
                     return;
                   }
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
@@ -349,8 +349,8 @@ export const BasicTable = (props) => {
                   setInfoSymbol(symbol)
                   setStockInfo (JSON.stringify(data));
                   updateTableInfo (data, updateDate, updateMili);
-                  if (saveTabl) // skip save for info all
-                    saveTable(symbol);
+                  // if (saveTabl) // skip save for info all
+                  //   saveTable(symbol);
                 }
             }
         )
@@ -409,8 +409,8 @@ export const BasicTable = (props) => {
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
     firebaseGainAdd (sym, 'gain');  // save in firestore
-    if (saveTabl)
-      saveTable(sym);
+    // if (saveTabl)
+    //   saveTable(sym);
   }
 
   const updateTableInfo = (childData, updateDate, updateMili)  => {
@@ -807,6 +807,9 @@ export const BasicTable = (props) => {
               updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl);                      
             }
         )
+        handleInfoClick(sym, false);
+        if (saveTabl)
+          saveTable(sym); 
   }
 
    // get all info for targetPrice
@@ -1182,7 +1185,7 @@ export const BasicTable = (props) => {
                 })}
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-                    <button type="button" onClick={()=>handleInfoClick(row.values.symbol, true)}>info</button>     
+                    {/* <button type="button" onClick={()=>handleInfoClick(row.values.symbol, true)}>info</button>      */}
                     <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true)}>gain</button> 
                   </div>
               </tr>
