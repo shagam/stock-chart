@@ -77,11 +77,11 @@ async function getTargetPriceArray (symbol, setTargetInfo) {
     // return targetPriceArray;   
 }
 
-async function targetHistBigDiff () {
+async function targetHistBigDiff (setTargetPriceArray) {
     const allTarget = {};
     const tagetHistory = await getDocs(targetRef);
     // gainLength = gain.docs.length;
-
+    var txt = '';
     for (let i = 0; i < tagetHistory.docs.length; i++) {
         const sym = tagetHistory.docs[i].data().symbol;
         try {
@@ -94,14 +94,19 @@ async function targetHistBigDiff () {
                 for (let i = 0; i < dat.length; i++)                   
                     delete dat[i].dateMili;  // reduce unimportant info
                 console.dir (dat)
+                txt += sym + ' ' + JSON.stringify (dat) + '\n\n'
             }
         } catch (e) {console.log (sym, e.message)}
     }
+    // IBM [{"target":152.06,"date":"2024-Jan-15  11:39"},{"target":138.69,"date":"2024-Jan-17  13:42"}]
+    const txt1 = txt.replace(/{/g,'\n{');
+    setTargetPriceArray (txt1)
 }
 
 
-async function targetHistAll () {
+async function targetHistAll (setTargetPriceArray) {
     const allTarget = {};
+    var txt = '';
     const tagetHistory = await getDocs(targetRef);
     // gainLength = gain.docs.length;
 
@@ -113,12 +118,14 @@ async function targetHistAll () {
             for (let i = 0; i < dat.length; i++)                   
                 delete dat[i].dateMili;  // reduce unimportant info
             console.dir (dat)
+            txt += sym + ' ' + JSON.stringify (dat) + '\n\n'
         } catch (e) {console.log (sym, e.message)}
     }
     console.log ('count: ', tagetHistory.docs.length);
     // allTarget[sym] = dat;
     // allTarget.sort();
-
+    const txt1 = txt.replace(/{/g,'\n{');
+    setTargetPriceArray (txt1)
 }
 
 export {targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff}

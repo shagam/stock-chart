@@ -15,6 +15,7 @@ function Tools (props) {
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
+    const [targetPriceArray, setTargetPriceArray] = useState ();
 
     var totalGain;
     
@@ -158,15 +159,19 @@ function Tools (props) {
 
                 <br></br>   <br></br>  
                 <div>
-                  <button type="button" onClick={()=>targetHistAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
-                  <button type="button" onClick={()=>targetHistBigDiff ()}>targetHistBigDiff</button>
+                  <button type="button" onClick={()=>targetHistAll (setTargetPriceArray)}>targetHistoryAll</button>  &nbsp; &nbsp;
+                  <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray)}>targetHistBigDiff</button>
                 </div>
                 <br></br>           <br></br>
 
                 {props.symbol &&  <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>}
                 <div>{monGainTxt} </div>
                 {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
-                <br></br>            
+                <br></br> 
+
+                {targetPriceArray&& <textarea type='text' name='stockInfo' cols='125' rows='15' readOnly
+                  value={targetPriceArray}  >
+                </textarea>}
 
             </div>}
         </div>
