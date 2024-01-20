@@ -8,8 +8,8 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 const targetRef = collection(db, "targetPriceArray")
 
 const TARGET_CHANGE_THRESHOLD = 1.05
-function bigDiff (tar0, tar1) {
-    if (tar1 / tar0 > TARGET_CHANGE_THRESHOLD|| tar0 / tar1 > TARGET_CHANGE_THRESHOLD)
+function bigDiff (tar0, tar1, threshold) {
+    if (tar1 / tar0 > threshold|| tar0 / tar1 > threshold)
         return true;
     return false
 }
@@ -43,16 +43,24 @@ async  function targetPriceAdd (symbol, targetRaw, price) {
 
     // empty or different
 
-    if (latestIndex === -1 || targetPriceArray[latestIndex].target !== symTargetOne.target) {
-        targetPriceArray.push (symTargetOne)
-        console.log (symbol, 'add new targetPrice', targetRaw, ' size: ', targetPriceArray.length)
-        if (targetPriceArray.length > 1) {
-            const tar0 =  targetPriceArray[0].target;
+    if (latestIndex === -1 || targetPriceArray[latestIndex].target === symTargetOne.target) {
+
+        var bigDifference = true;
+        if (targetPriceArray.length > 0) {
             const tar1 =  targetPriceArray[targetPriceArray.length - 1].target;            
-            if (bigDiff (tar0, tar1)) {
-                console.log ('Ratio: ', (tar0 / tar1).toFixed(2)); // show the change of last target
+            if (! bigDiff (targetRaw, tar1, 1.03)) {
+                bigDifference = false;
+                // console.log ('Ratio: ', (tar0 / tar1).toFixed(2)); // show the change of last target
             }
         }
+
+        if (bigDifference) {
+            targetPriceArray.push (symTargetOne)
+            console.log (symbol, 'add new targetPrice', targetRaw, ' size: ', targetPriceArray.length)
+        }
+        else
+            return; // abort 
+
         const arrayStringify = JSON.stringify(targetPriceArray);
 
         if (fromFireBase.docs.length > 0) {  // entry already exist
@@ -90,7 +98,7 @@ async function targetHistBigDiff (setTargetPriceArray) {
             const tar0 =  dat[0].target;
             const tar1 =  dat[dat.length - 1].target;            
 
-            if (bigDiff (tar0, tar1)) {
+            if (bigDiff (tar0, tar1, 1.05)) {
                 console.log (sym, dat.length)
                 for (let i = 0; i < dat.length; i++)                   
                     delete dat[i].dateMili;  // reduce unimportant info
@@ -115,7 +123,7 @@ async function targetHistAll (setTargetPriceArray) {
         const sym = tagetHistory.docs[i].data().symbol;
         try {
             const dat = JSON.parse (tagetHistory.docs[i].data().dat)
-            console.log (sym, ' length: ', dat.length, ' lastTargetPrice: ', dat[dat.length - 1].target)
+            // console.log (sym, ' length: ', dat.length, ' lastTargetPrice: ', dat[dat.length - 1].target)
             for (let i = 0; i < dat.length; i++)                   
                 delete dat[i].dateMili;  // reduce unimportant info
             console.dir (dat)
