@@ -357,14 +357,6 @@ export const BasicTable = (props) => {
     
   }
 
-  // get all info for targetPrice
-  function handleInfoClickAll() {
-    rows.forEach ((row, i) => {
-      handleInfoClick (row.values.symbol, false) 
-    })
-    saveTable();
-  }
-
   const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
@@ -1120,8 +1112,6 @@ export const BasicTable = (props) => {
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
           {eliHome && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
-          {eliHome && <div> &nbsp; <button onClick={ handleInfoClickAll} > targetPriceAll </button> &nbsp; </div>}
-
         </div>
 
       {columnHideFlag && 
