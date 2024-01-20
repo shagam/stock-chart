@@ -109,7 +109,7 @@ async function targetHistAll () {
         const sym = tagetHistory.docs[i].data().symbol;
         try {
             const dat = JSON.parse (tagetHistory.docs[i].data().dat)
-            console.log (sym, dat.length)
+            console.log (sym, ' length: ', dat.length, ' lastTargetPrice: ', dat[dat.length - 1].target)
             for (let i = 0; i < dat.length; i++)                   
                 delete dat[i].dateMili;  // reduce unimportant info
             console.dir (dat)

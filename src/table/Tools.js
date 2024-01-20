@@ -116,6 +116,19 @@ function Tools (props) {
           return array.map((item) => <li>{JSON.stringify(item)}</li>);  
       }
      
+      // calc target ratio for each
+      function addRatio (arr, price) {
+        if (arr === undefined) {
+          return true;
+        }
+        var arrWithTarget = []
+        for (let i = 0; i < arr.length; i++) {
+          arrWithTarget.push ({date: arr[i].date, target: arr[i].target, tar: (arr[i].target / price).toFixed(2)})
+          // arr[i]['tar'] = (arr[i].target / price).toFixed(2);
+        }
+        return arrWithTarget;
+      }
+
 
     const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
@@ -137,17 +150,16 @@ function Tools (props) {
                 <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
+                {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
+                {price && targetInfo && renderList(addRatio(targetInfo, price))}
 
                 
                 {/* &nbsp; &nbsp; */}
 
-                <br></br>   <br></br>   <br></br>
+                <br></br>   <br></br>  
                 <div>
-                    <button type="button" onClick={()=>targetHistAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
-                    <button type="button" onClick={()=>targetHistBigDiff ()}>targetHistBigDiff</button>
-
-                    {price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
-                    {targetInfo && renderList(targetInfo)}
+                  <button type="button" onClick={()=>targetHistAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
+                  <button type="button" onClick={()=>targetHistBigDiff ()}>targetHistBigDiff</button>
                 </div>
                 <br></br>           <br></br>
 
