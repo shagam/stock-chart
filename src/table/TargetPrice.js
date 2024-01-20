@@ -14,13 +14,14 @@ function bigDiff (tar0, tar1) {
     return false
 }
 
-async  function targetPriceAdd (symbol, targetRaw) {
+async  function targetPriceAdd (symbol, targetRaw, price) {
 
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
     const fromFireBase = await getDocs (userQuery);
      
     // save target prices for symbol in array
-    const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now()};
+    const tar = price !== 0 ? targetRaw / price : -1; 
+    const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now(), tar: tar.toFixed(2)};
     var latest = 0;
     var latestIndex = -1;
 

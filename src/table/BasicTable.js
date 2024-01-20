@@ -469,7 +469,7 @@ export const BasicTable = (props) => {
 
 
     // save target prices history for a symbol in array
-    targetPriceAdd (symbol, targetRaw)
+    targetPriceAdd (symbol, targetRaw, price)
 
   }
             

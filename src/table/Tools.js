@@ -120,11 +120,14 @@ function Tools (props) {
       // calc target ratio for each
       function addRatio (arr, price) {
         if (arr === undefined) {
-          return true;
+          return arr;
         }
         var arrWithTarget = []
         for (let i = 0; i < arr.length; i++) {
-          arrWithTarget.push ({date: arr[i].date, target: arr[i].target, tar: (arr[i].target / price).toFixed(2)})
+          if (arr[i].tar)
+            arrWithTarget.push (arr[i]) 
+          else
+            arrWithTarget.push ({date: arr[i].date, target: arr[i].target, tar: (arr[i].target / price).toFixed(2)})
           // arr[i]['tar'] = (arr[i].target / price).toFixed(2);
         }
         return arrWithTarget;
