@@ -1187,7 +1187,7 @@ export const BasicTable = (props) => {
     <div id='trailer_id'>
 
         {chartSymbol && <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} />}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} errorAdd = {errorAdd}/>}
 
         {! isMobile && <LogFlags setLogFlags={setLogFlags} />}  
 

@@ -240,6 +240,7 @@ const StockChart = (props) => {
       if (logarithmic && scaleFlag) {
         setScaleFlag (false) //
         console.log ('A value below one, cannot use logarithmic && scale, so scale turned off ')
+        props.errorAdd (['A value below one, cannot use logarithmic && scale, so scale turned off '])
         // setLogarithmic (false)
       }
     }
@@ -253,7 +254,7 @@ const StockChart = (props) => {
       for (let i = 0; i < dat.length; i++) {
         scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]).toFixed(5);
         len[i] = dat[i].y.length;
-        if (scale[i] < 0) {
+        if (scale[i] < 0 && LOG_FLAG) {
           console.log (scale)
         }
       }
