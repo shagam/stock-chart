@@ -120,6 +120,7 @@ const StockChart = (props) => {
     return arrOut;
   }
 
+  var oldestValArray = {};
   function buildOneChart (stockChartXValues, stockChartYValues, symbol) {
     var yAfterLog = [];
 
@@ -160,8 +161,11 @@ const StockChart = (props) => {
         yAfterLog[i] = yAfterClip[i]
     }
 
+
     const newest = yAfterClip[0];
     const oldest = yAfterClip[yAfterClip.length - 1] 
+    oldestValArray[symbol] = oldest;
+
     const weeksDiff = yAfterClip.length
     const gainSingle = newest / oldest;
     const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
@@ -213,20 +217,30 @@ const StockChart = (props) => {
     }
 
     // find highest
-    
-    // var first = [];
+ 
     var last = [];
-    // var firstHigh = 0;
     var lastHigh = 0;
-    for (let i = 0; i < dat.length; i++) {
-      // first[i] = dat[i].y[0];
-      last[i] = dat[i].y[dat[i].y.length - 1]
-      // if (first[i] > firstHigh)
-      //   firstHigh = first[i];
-      if (last[i] > lastHigh)
+    for (let i = 0; i < dat.length; i++) { // loop on all stocks
+      last[i] = dat[i].y[dat[i].y.length - 1]  // find last index
+      if (last[i] > lastHigh) {
         lastHigh = last[i];
-      last[i] = dat[i].y[dat[i].length - 1];
+      }
+    }
 
+    // values below 1 prevents scale and logarithmic
+    const keys = Object.keys (oldestValArray)
+    var allAboveOne = true;
+    for (let i = 0; i < keys.length; i++) {
+      if (oldestValArray[keys[i]] < 1) {
+        allAboveOne = false;
+      }
+    }
+
+    if (! allAboveOne) {
+      if (logarithmic && scaleFlag) {
+        setScaleFlag (false)
+        // setLogarithmic (false)
+      }
     }
 
     if (scaleFlag) {// calc scale
@@ -236,21 +250,28 @@ const StockChart = (props) => {
       // var lenShort = 0;
 
       for (let i = 0; i < dat.length; i++) {
-        scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]).toFixed(3);
+        scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]).toFixed(5);
         len[i] = dat[i].y.length;
+        if (scale[i] < 0) {
+          console.log (scale)
+        }
       }
       if (LOG_FLAG)
-        console.log (scale, '  ', len)
+        console.log ('scaleArray: ', scale, '  ', len)
 
-      // apply scale
+      // apply scale, connect oldestedges
+      if (LOG_FLAG)
+        console.log ('before scale: ', dat)
       for (let i = 0; i < dat.length; i++) {
         if (dat[i].y.length < lenHigh)
           continue;
         for (let j = 0; j < dat[i].y.length; j++)
           dat[i].y[j] *= scale[i];
         if (LOG_FLAG)
-          console.log (dat[i].name, 'start: ' + dat[i].y[0].toFixed(3))
+          console.log ('chart headers: ', dat[i].name, 'start: ' + dat[i].y[0].toFixed(3))
       }
+      if (LOG_FLAG)
+        console.log ('after scale: ', dat)
     }
     // if (LOG_FLAG)
     //  console.log (dat)
@@ -269,8 +290,7 @@ const StockChart = (props) => {
     gainChart = singleChart;
     title = singleChart[0].nameSingle;
     if (LOG_CHART_1) {
-      console.log (title, props.stockChartXValues)
-      console.log (title, props.stockChartYValues)
+      console.log ('singleChart: ', {title: title,  x: props.stockChartXValues, y: props.stockChartYValues})
     }
   }
   if (logarithmic)  
