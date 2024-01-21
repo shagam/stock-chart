@@ -236,7 +236,7 @@ const StockChart = (props) => {
       // var lenShort = 0;
 
       for (let i = 0; i < dat.length; i++) {
-        scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]);
+        scale[i] = (lastHigh / dat[i].y[dat[i].y.length - 1]).toFixed(3);
         len[i] = dat[i].y.length;
       }
       if (LOG_FLAG)
@@ -249,7 +249,7 @@ const StockChart = (props) => {
         for (let j = 0; j < dat[i].y.length; j++)
           dat[i].y[j] *= scale[i];
         if (LOG_FLAG)
-          console.log (dat[i].name, 'start: ' + dat[i].y[0])
+          console.log (dat[i].name, 'start: ' + dat[i].y[0].toFixed(3))
       }
     }
     // if (LOG_FLAG)
@@ -269,8 +269,8 @@ const StockChart = (props) => {
     gainChart = singleChart;
     title = singleChart[0].nameSingle;
     if (LOG_CHART_1) {
-      console.log (props.stockChartXValues)
-      console.log (props.stockChartYValues)
+      console.log (title, props.stockChartXValues)
+      console.log (title, props.stockChartYValues)
     }
   }
   if (logarithmic)  
