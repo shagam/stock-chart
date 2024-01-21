@@ -91,9 +91,9 @@ const StockChart = (props) => {
 
 
   // clip arr according to date
-  function clipOldEntries (arrIn, chartIndex) {
+  function clipOldEntries (arrIn, chartIndex, symbol) {
     if (chartIndex < 0) {
-      console.log ('clipFail,', chartDateArr)
+      console.log (symbol, 'clipFail,', chartDateArr)
       return arrIn;
     }
 
@@ -107,9 +107,9 @@ const StockChart = (props) => {
   }
 
   // clip newest entries
-  function clipTrailingEntries (arrIn, endIndex) {
+  function clipTrailingEntries (arrIn, endIndex, symbol) {
     if (endIndex < 0 || endIndex >= arrIn.length) {
-      console.log ('ClipTrailFail,', endDateArr)
+      console.log (symbol, 'ClipTrailFail,', endDateArr)
       return arrIn;
     }
     var arrOut = [];
@@ -136,8 +136,8 @@ const StockChart = (props) => {
 
     const chartIndex = searchDateInArray (stockChartXValues, chartDateArr, props.StockSymbol, props.logFlags);
     if (chartIndex > 0) {
-      xAfterClip_ = clipOldEntries(stockChartXValues, chartIndex); 
-      yAfterClip_ = clipOldEntries(stockChartYValues, chartIndex);
+      xAfterClip_ = clipOldEntries(stockChartXValues, chartIndex, symbol); 
+      yAfterClip_ = clipOldEntries(stockChartYValues, chartIndex, symbol);
     }
     else { // short history
       xAfterClip_ = stockChartXValues; 
@@ -145,8 +145,8 @@ const StockChart = (props) => {
     }
     const endIndex = searchDateInArray (stockChartXValues, endDateArr, props.StockSymbol, props.logFlags);
     if (endIndex > 0) {
-      xAfterClip = clipTrailingEntries(xAfterClip_, endIndex); 
-      yAfterClip = clipTrailingEntries(yAfterClip_, endIndex);      
+      xAfterClip = clipTrailingEntries(xAfterClip_, endIndex, symbol); 
+      yAfterClip = clipTrailingEntries(yAfterClip_, endIndex, symbol);      
     }
     else {
       xAfterClip = xAfterClip_; 
