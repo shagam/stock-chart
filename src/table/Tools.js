@@ -153,26 +153,25 @@ function Tools (props) {
             {displayFlag && <div>
                 <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
+                {props.symbol &&  <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>}
+                <div>{monGainTxt} </div>
+                {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
+                <br></br>
+
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
                 {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
                 {price && targetInfo && renderList(addRatio(targetInfo, price))}
-
-                
+              
                 {/* &nbsp; &nbsp; */}
-
-                <br></br>   <br></br>  
+                <br></br>              
+    
                 <div>
                   <button type="button" onClick={()=>targetHistAll (setTargetPriceArray)}>targetHistoryAll</button>  &nbsp; &nbsp;
                   <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray)}>targetHistBigDiff</button>
                 </div>
-                <br></br>           <br></br>
+                {/* <br></br>          */}
 
-                {props.symbol &&  <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>}
-                <div>{monGainTxt} </div>
-                {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
-                <br></br> 
-
-                {targetPriceArray&& <textarea type='text' name='stockInfo' cols='125' rows='15' readOnly
+                {targetPriceArray&& <textarea type='text' name='stockInfo' cols='75' rows='10' readOnly
                   value={targetPriceArray}  >
                 </textarea>}
 
