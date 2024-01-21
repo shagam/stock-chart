@@ -21,7 +21,7 @@ async  function targetPriceAdd (symbol, targetRaw, price) {
      
     // save target prices for symbol in array
     const tar = price !== 0 ? targetRaw / price : -1; 
-    const symTargetOne =  {target: targetRaw, date: getDate(), dateMili: Date.now(), tar: tar.toFixed(2)};
+    const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, tar: tar.toFixed(2)};
     var latest = 0;
     var latestIndex = -1;
 
@@ -126,7 +126,7 @@ async function targetHistAll (setTargetPriceArray) {
             // console.log (sym, ' length: ', dat.length, ' lastTargetPrice: ', dat[dat.length - 1].target)
             for (let i = 0; i < dat.length; i++)                   
                 delete dat[i].dateMili;  // reduce unimportant info
-            console.dir (dat)
+            // console.dir (dat)
             txt += sym + ' ' + JSON.stringify (dat) + '\n\n'
         } catch (e) {console.log (sym, e.message)}
     }
