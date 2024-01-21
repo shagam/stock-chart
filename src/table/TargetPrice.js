@@ -133,7 +133,7 @@ async function targetHistAll (setTargetPriceArray) {
     console.log ('count: ', tagetHistory.docs.length);
     // allTarget[sym] = dat;
     // allTarget.sort();
-    const txt1 = txt.replace(/{/g,'\n{');
+    const txt1 = 'Count (' + tagetHistory.docs.length +')\n\n' + txt.replace(/{/g,'\n{');
     setTargetPriceArray (txt1)
 }
 
