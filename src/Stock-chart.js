@@ -238,7 +238,8 @@ const StockChart = (props) => {
 
     if (! allAboveOne) {
       if (logarithmic && scaleFlag) {
-        setScaleFlag (false)
+        setScaleFlag (false) //
+        console.log ('A value below one, cannot use logarithmic && scale, so scale turned off ')
         // setLogarithmic (false)
       }
     }
