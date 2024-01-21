@@ -175,14 +175,13 @@ const StockChart = (props) => {
     // chart of a single ticker
     const singleChart =
       {
+        name: title,
+        nameSingle: titleSingle,
         x: xAfterClip,
         y: yAfterLog,
         type: 'scatter',
         mode: 'lines+markers',
         //    marker: { color: 'green' },
-        name: title,
-        nameSingle: titleSingle
-
       }
   
     return singleChart;
@@ -269,8 +268,8 @@ const StockChart = (props) => {
           continue;
         for (let j = 0; j < dat[i].y.length; j++)
           dat[i].y[j] *= scale[i];
-        if (LOG_FLAG)
-          console.log ('chart headers: ', dat[i].name, 'start: ' + dat[i].y[0].toFixed(3))
+        // if (LOG_FLAG)
+        //   console.log ('chart headers: ', dat[i].name, 'start: ' + dat[i].y[0].toFixed(3))
       }
       if (LOG_FLAG)
         console.log ('after scale: ', dat)
