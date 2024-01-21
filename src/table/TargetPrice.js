@@ -21,7 +21,7 @@ async  function targetPriceAdd (symbol, targetRaw, price) {
      
     // save target prices for symbol in array
     const tar = price !== 0 ? targetRaw / price : -1; 
-    const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, tar: tar.toFixed(2)};
+    const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(2)};
     var latest = 0;
     var latestIndex = -1;
 
