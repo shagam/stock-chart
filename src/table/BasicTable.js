@@ -145,10 +145,16 @@ export const BasicTable = (props) => {
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
-    errors.unshift ([getDateSec(), ...err])
+    const currentTime = getDateSec();
+    // if (errors.length > 1 && err === errors[0][1] && currentTime === errors[0][0])
+    //   return
+    // else 
+    //   console.log (errors)
+
+    errors.unshift ([currentTime, ...err])
     refreshByToggleColumns()
-    navigator.vibrate(1000)
-    beep(100, 1000, 1000)
+    navigator.vibrate(500) // celular only
+    beep(100, 1000, 50) // beep(vol, freq, duration)
   }
 
   const { login, currentUser, admin } = useAuth();
