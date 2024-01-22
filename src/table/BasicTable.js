@@ -704,7 +704,7 @@ export const BasicTable = (props) => {
                 }            
               }
               if (stockChartXValuesFunction.length === 0) {
-                console.log ('stockChartXValuesFunction  empty')
+                console.log (sym, 'stockChartXValuesFunction  empty')
                 return;
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
