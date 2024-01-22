@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll, targetHistBigDiff} from './TargetPrice'
+import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll, targetHistBigDiff, targetHistBest} from './TargetPrice'
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
@@ -167,7 +167,8 @@ function Tools (props) {
     
                 <div>
                   <button type="button" onClick={()=>targetHistAll (setTargetPriceArray)}>targetHistoryAll</button>  &nbsp; &nbsp;
-                  <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray)}>targetHistBigDiff</button>
+                  <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray)}>targetHistBigDiff</button>  &nbsp; &nbsp;
+                  <button type="button" onClick={()=>targetHistBest (setTargetPriceArray)}>targetHistBest</button>               
                 </div>
                 {/* <br></br>          */}
 

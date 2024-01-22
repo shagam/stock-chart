@@ -48,7 +48,7 @@ async  function targetPriceAdd (symbol, targetRaw, price) {
         var bigDifference = true;
         if (targetPriceArray.length > 0) {
             const tar1 =  targetPriceArray[targetPriceArray.length - 1].target;            
-            if (! bigDiff (targetRaw, tar1, 1.03)) {
+            if (! bigDiff (targetRaw, tar1, 1.02)) {
                 bigDifference = false;
                 // console.log ('Ratio: ', (tar0 / tar1).toFixed(2)); // show the change of last target
             }
@@ -112,6 +112,32 @@ async function targetHistBigDiff (setTargetPriceArray) {
     setTargetPriceArray (txt1)
 }
 
+async function targetHistBest (setTargetPriceArray) {
+    const allTarget = {};
+    const tagetHistory = await getDocs(targetRef);
+    // gainLength = gain.docs.length;
+    var txt = '';
+    var count = 0;
+    for (let i = 0; i < tagetHistory.docs.length; i++) {
+        const sym = tagetHistory.docs[i].data().symbol;
+        try {
+            const dat = JSON.parse (tagetHistory.docs[i].data().dat)
+            const tar =  dat[dat.length - 1].tar;            
+
+            if (tar > 1.12) {
+                console.log (sym, dat.length)
+                for (let i = 0; i < dat.length; i++)                   
+                    delete dat[i].dateMili;  // reduce unimportant info
+                console.dir (dat)
+                txt += sym + ' ' + JSON.stringify (dat) + '\n\n';
+                count++;
+            }
+        } catch (e) {console.log (sym, e.message)}
+    }
+    // IBM [{"target":152.06,"date":"2024-Jan-15  11:39"},{"target":138.69,"date":"2024-Jan-17  13:42"}]
+    const txt1 = 'Count (' + count +')\n\n' + txt.replace(/{/g,'\n{');
+    setTargetPriceArray (txt1)
+}
 
 async function targetHistAll (setTargetPriceArray) {
     const allTarget = {};
@@ -137,4 +163,4 @@ async function targetHistAll (setTargetPriceArray) {
     setTargetPriceArray (txt1)
 }
 
-export {targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff}
+export {targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff, targetHistBest}
