@@ -88,7 +88,7 @@ async function getTargetPriceArray (symbol, setTargetInfo) {
     // return targetPriceArray;   
 }
 
-async function targetHistBigDiff (setTargetPriceArray) {
+async function targetHistBigDiff (setTargetPriceArray, logFlags) {
     const allTarget = {};
     const tagetHistory = await getDocs(targetRef);
     // gainLength = gain.docs.length;
@@ -114,7 +114,8 @@ async function targetHistBigDiff (setTargetPriceArray) {
     setTargetPriceArray (txt1)
 }
 
-async function targetHistBest (setTargetPriceArray) {
+async function targetHistBest (setTargetPriceArray, logFlags) {
+    const LOG = logFlags.includes('target')
     const allTarget = {};
     const tagetHistory = await getDocs(targetRef);
     // gainLength = gain.docs.length;
@@ -127,10 +128,10 @@ async function targetHistBest (setTargetPriceArray) {
             const tar =  dat[dat.length - 1].tar;            
 
             if (tar > 1.12) {
-                console.log (sym, dat.length)
                 for (let i = 0; i < dat.length; i++)                   
                     delete dat[i].dateMili;  // reduce unimportant info
-                console.dir (dat)
+                if (LOG)
+                    console.log (sym, dat, dat.length)
                 txt += sym + ' ' + JSON.stringify (dat) + '\n\n';
                 count++;
             }
@@ -141,7 +142,7 @@ async function targetHistBest (setTargetPriceArray) {
     setTargetPriceArray (txt1)
 }
 
-async function targetHistAll (setTargetPriceArray) {
+async function targetHistAll (setTargetPriceArray, logFlags) {
     const allTarget = {};
     var txt = '';
     const tagetHistory = await getDocs(targetRef);

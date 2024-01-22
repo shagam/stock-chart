@@ -5,6 +5,7 @@ import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll, targetH
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 
+import LogFlags from '../LogFlags'
 
 
 function Tools (props) {
@@ -17,6 +18,8 @@ function Tools (props) {
     const [target, setTarget] = useState ();
     const [targetPriceArray, setTargetPriceArray] = useState ();
 
+    const [logFlags, setLogFlags] = useState([]);
+    
     var totalGain;
     
     useEffect(() => {
@@ -166,9 +169,9 @@ function Tools (props) {
                 <br></br>              
     
                 <div>
-                  <button type="button" onClick={()=>targetHistAll (setTargetPriceArray)}>targetHistoryAll</button>  &nbsp; &nbsp;
-                  <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray)}>targetHistBigDiff</button>  &nbsp; &nbsp;
-                  <button type="button" onClick={()=>targetHistBest (setTargetPriceArray)}>targetHistBest</button>               
+                  <button type="button" onClick={()=>targetHistAll (setTargetPriceArray, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
+                  <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp;
+                  <button type="button" onClick={()=>targetHistBest (setTargetPriceArray, logFlags)}>targetHistBest</button>               
                 </div>
                 {/* <br></br>          */}
 

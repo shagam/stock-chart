@@ -11,7 +11,7 @@ const LogFlags = (props) => {
     logFlagsRaw = "[]";
    const [checked, setChecked] = useState(JSON.parse(logFlagsRaw));
    const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "firebase", "verify_1", "splits",
-    "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month"];
+    "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target"];
  
 
    // Add/Remove checked item from list
