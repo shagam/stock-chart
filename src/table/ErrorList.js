@@ -4,7 +4,7 @@ import React, {useState} from 'react'
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Container } from 'react-bootstrap'
 
-export function ErrorList (props) {
+function ErrorList (props) {
     const [visible, setVisible] = useState(false)
     const str ="<div style ={{color: 'red'}}> red </div>"
     // style={{display: 'flex'}}
@@ -43,4 +43,20 @@ export function ErrorList (props) {
 
 }
 
-export default ErrorList
+var a=new AudioContext() // browsers limit the number of concurrent audio contexts, so you better re-use'em
+
+function beep(vol, freq, duration){
+  var v=a.createOscillator()
+  var u=a.createGain()
+  v.connect(u)
+  v.frequency.value=freq
+  v.type="square"
+  u.connect(a.destination)
+  u.gain.value=vol*0.01
+  v.start(a.currentTime)
+  v.stop(a.currentTime+duration*0.001)
+}
+
+
+
+export {ErrorList, beep}

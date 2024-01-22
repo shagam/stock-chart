@@ -52,7 +52,7 @@ import MobileContext from '../contexts/MobileContext'
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
-import ErrorList from './ErrorList'
+import {ErrorList, beep} from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
 
 export const BasicTable = (props) => {
@@ -147,6 +147,8 @@ export const BasicTable = (props) => {
   function errorAdd (err) {
     errors.unshift ([getDateSec(), ...err])
     refreshByToggleColumns()
+    navigator.vibrate(1000)
+    beep(100, 1000, 1000)
   }
 
   const { login, currentUser, admin } = useAuth();
