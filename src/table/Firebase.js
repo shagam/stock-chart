@@ -346,7 +346,7 @@ const Firebase = (props) => {
         const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
         if (rowIndex !== -1 && info !== undefined) {
           const info_ = info.docs[0].data();
-          props.updateTableInfo (info_.data, info_._updateDate, info_._updateMili)
+          props.updateTableInfo (symbol, info_.data, info_._updateDate, info_._updateMili)
         }
 
         var latestIndex = 0;

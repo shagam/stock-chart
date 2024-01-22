@@ -356,7 +356,7 @@ export const BasicTable = (props) => {
                   const updateDate = getDate();
                   setInfoSymbol(symbol)
                   setStockInfo (JSON.stringify(data));
-                  updateTableInfo (data, updateDate, updateMili);
+                  updateTableInfo (symbol, data, updateDate, updateMili);
                   // if (saveTabl) // skip save for info all
                   //   saveTable(symbol);
                 }
@@ -413,13 +413,13 @@ export const BasicTable = (props) => {
     //   saveTable(sym);
   }
 
-  const updateTableInfo = (childData, updateDate, updateMili)  => {
+  const updateTableInfo = (symbol, childData, updateDate, updateMili)  => {
     if (childData === null || childData["Exchange"] == null) {
       console.log ('ChildData missing');
       return;
     }
     //console.log (JSON.stringify(childData).substring(0,100));
-    const symbol = childData["Symbol"];
+    const symbol_ = childData["Symbol"];
     const index = rows.findIndex((row)=> row.values.symbol === symbol);
 
     rows[index].values.Exchange = childData["Exchange"].substring(0,4);
