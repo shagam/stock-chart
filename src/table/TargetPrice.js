@@ -47,11 +47,13 @@ async  function targetPriceAdd (symbol, targetRaw, price) {
 
         var bigDifference = true;
         if (targetPriceArray.length > 0) {
-            const tar1 =  targetPriceArray[targetPriceArray.length - 1].target;            
-            if (! bigDiff (targetRaw, tar1, 1.02)) {
+            const target =  targetPriceArray[targetPriceArray.length - 1].target;            
+            if (! bigDiff (targetRaw, target, 1.02)) {
                 bigDifference = false;
-                // console.log ('Ratio: ', (tar0 / tar1).toFixed(2)); // show the change of last target
+                // console.log (symbol, 'newTarget/oldTarget: ', (targetRaw / target).toFixed(2)); // show the change of last target
             }
+            else
+                console.log ('oldTarget: ', target, ' newTarget: ', targetRaw, ' ratio: ', (targetRaw/target).toFixed(3))
         }
 
         if (bigDifference) {
