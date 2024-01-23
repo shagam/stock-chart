@@ -14,14 +14,15 @@ function bigDiff (tar0, tar1, threshold) {
     return false
 }
 
-async  function targetPriceAdd (symbol, targetRaw, price) {
+async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
 
+    const LOG = logFlags.includes('target')
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
     const fromFireBase = await getDocs (userQuery);
      
     // save target prices for symbol in array
     const tar = price !== 0 ? targetRaw / price : -1; 
-    const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(2)};
+    const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
     var latest = 0;
     var latestIndex = -1;
 
@@ -52,13 +53,16 @@ async  function targetPriceAdd (symbol, targetRaw, price) {
                 bigDifference = false;
                 // console.log (symbol, 'newTarget/oldTarget: ', (targetRaw / target).toFixed(2)); // show the change of last target
             }
-            else
-                console.log ('oldTarget: ', target, ' newTarget: ', targetRaw, ' ratio: ', (targetRaw/target).toFixed(3))
+            else {
+                if (LOG)
+                    console.log ('oldTarget: ', target, ' newTarget: ', targetRaw, ' ratio: ', (targetRaw/target).toFixed(3))
+            }
         }
 
         if (bigDifference) {
             targetPriceArray.push (symTargetOne)
-            console.log (symbol, 'add new targetPrice', targetRaw, ' size: ', targetPriceArray.length)
+            if (LOG)
+                console.log (symbol, 'add new targetPrice', targetRaw, ' size: ', targetPriceArray.length)
         }
         else
             return; // abort 
