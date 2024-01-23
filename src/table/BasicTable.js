@@ -450,8 +450,8 @@ export const BasicTable = (props) => {
     if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined)
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
     
-    childData.Address = '';   // Clear some data to decrese traffic
-    childData.Description = '';
+    // childData.Address = '';   // Clear some data to decrese traffic
+    // childData.Description = '';
     
     // calc Graham price
     const EPS = Number (childData["EPS"]);
@@ -465,7 +465,8 @@ export const BasicTable = (props) => {
     grahamTxt  +=  `   ( EPS=${EPS}  BookValue=${BookValue} )`
     if (LOG_FLAG)
       console.log (symbol, grahamTxt)
-    setStockInfo (JSON.stringify(childData) + "\n\n" + grahamTxt);
+    childData['graham'] = grahamTxt;
+    setStockInfo (childData);
     firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
 
 

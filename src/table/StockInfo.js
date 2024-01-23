@@ -10,7 +10,12 @@ const StockInfo = (props) => {
 
 
   useEffect(() => {
-    setInfoStr (props.stockInfo.split(",").join(',\n'));
+    var txt = ''
+    const keys = Object.keys(props.stockInfo)
+    keys.forEach (key => txt += key + ':   ' + props.stockInfo[key] +'\n')
+
+     
+    setInfoStr (txt);
   },[props.infoSymbol, props.stockInfo]) 
 
 
@@ -27,7 +32,7 @@ const StockInfo = (props) => {
       {infoFlag && infoStr &&
         <div>
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
-          <textarea type='text' name='stockInfo' cols='80' rows='20' readOnly
+          <textarea type='text' name='stockInfo' cols='100' rows='20' readOnly
           value={infoStr}  >
           </textarea>
         </div>
