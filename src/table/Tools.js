@@ -30,17 +30,17 @@ function Tools (props) {
       },[props.symbol]) 
   
   
-
-      function nextMonthIndex (i, month) {
-        const date = props.stockChartXValues[i];
+      // loop through months
+      function nextMonthIndex (i, xArray) {
+        const date = xArray[i];
         if(date === undefined) {
           var b = 1
         }
         const dateSplit_ = dateSplit (date);
         var monthNum = dateSplit_[1];
   
-        for (let j = i; j < props.stockChartXValues.length; j++) {
-          const nextDate = props.stockChartXValues[j];
+        for (let j = i; j < xArray.length; j++) {
+          const nextDate = xArray[j];
           const nextDateSplit = dateSplit (nextDate);
           const nextMonth = nextDateSplit[1];
           if (nextMonth !== monthNum)
@@ -49,28 +49,28 @@ function Tools (props) {
         return -1; // error
       }
   
-  
-      function monthGain () {    
+      // compare month gain over the history
+      function monthGain (xArray, yArray) {    
 
         const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
         var i = 0;
-        for (; i < props.stockChartYValues.length; ) {
-          var nextIndex = nextMonthIndex(i);
+        for (; i < yArray.length; ) {
+          var nextIndex = nextMonthIndex(i, xArray);
           if (nextIndex < 0) {
             break;
           }
-          const date = props.stockChartXValues[i];
+          const date = xArray[i];
           const dateSplit_ = dateSplit (date);
           const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; 
     
     
           if (nextIndex - i >= 3) {
-            const p = (props.stockChartYValues[i] / props.stockChartYValues[nextIndex])
+            const p = yArray[i] / yArray[nextIndex]
             mGain[mon] *= Number(p);
             mGain[mon]= (Number(mGain[mon]))
             const a = 1;
             if (props.logFlags.includes('month')) {
-              console.log (props.stockChartXValues[nextIndex], ' ', props.stockChartXValues[i],  '  month:', mon, 'gain:', p.toFixed(2))
+              console.log (xArray[nextIndex], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
             }
           }
           i = nextIndex; 
@@ -156,7 +156,7 @@ function Tools (props) {
             {displayFlag && <div>
                 <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
-                {props.symbol &&  <button type="button" onClick={()=>monthGain()}>monthGainCompare</button>}
+                {props.symbol &&  <button type="button" onClick={()=>monthGain(props.stockChartXValues, props.stockChartYValues)}>monthGainCompare</button>}
                 <div>{monGainTxt} </div>
                 {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
                 <br></br>
