@@ -28,6 +28,7 @@ function Tools (props) {
         setTotalMonGain()
         setTargetInfo()
         setPrice()
+        setMgainObj({})
       },[props.symbol]) 
   
   
@@ -90,10 +91,10 @@ function Tools (props) {
         mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
         mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
 
-        var mGainTxt = '';
-        const keys = Object.keys(mGainObj)
-        keys.forEach (key => mGainTxt += key + ': ' + mGainObj[key] + '   ')
-        setMonGainText(mGainTxt)
+        // var mGainTxt = '';
+        // const keys = Object.keys(mGainObj)
+        // keys.forEach (key => mGainTxt += '  ' + key + ': ' + mGainObj[key] + '     ')
+        // setMonGainText(mGainTxt)
 
         const totalGain = mGain[0] * mGain[1] * mGain[2] * mGain[3] * mGain[4] * mGain[5]
                         * mGain[6] * mGain[7] * mGain[8] * mGain[9] * mGain[10] * mGain[11];
@@ -157,7 +158,10 @@ function Tools (props) {
                 <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
                 {props.symbol &&  <button type="button" onClick={()=>monthGain(props.stockChartXValues, props.stockChartYValues)}>monthGainCompare</button>}
-                <div>{monGainTxt} </div>
+                <pre>
+                  {JSON.stringify(mGainObj, null, 2)}
+                </pre>
+
                 {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
                 <br></br>
 
