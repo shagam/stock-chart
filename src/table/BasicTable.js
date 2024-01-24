@@ -1205,7 +1205,7 @@ export const BasicTable = (props) => {
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
 
         <Tools symbol = {chartSymbol} rows = {rows}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-        logFlags = {logFlags} errorAdd={errorAdd} /> 
+        logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> 
 
         {chartSymbol && <div>
           <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />

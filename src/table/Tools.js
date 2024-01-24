@@ -102,6 +102,25 @@ function Tools (props) {
       }
     
 
+
+      function monthGainMany(gainMap) {
+        setMgainObj ({})
+        // mGainObj.jan = 1;
+        // mGainObj.Feb = 2
+        // mGainObj.Mar = 3
+        // mGainObj.Apr = 4
+        // mGainObj.May = 5
+        // mGainObj.Jun = 6
+
+        // mGainObj.Jul = 7
+        // mGainObj.Aug = 8
+        // mGainObj.Sep = 9
+        // mGainObj.Oct = 10
+        // mGainObj.Nov = 11
+        // mGainObj.Dec = 12
+
+      }  
+
     function targetGet (symbol) {
         const tar = getTargetPriceArray (props.symbol, setTargetInfo)
     
@@ -157,20 +176,27 @@ function Tools (props) {
             {displayFlag && <div>
                 <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
-                {props.symbol &&  <button type="button" onClick={()=>monthGain(props.stockChartXValues, props.stockChartYValues)}>monthGainCompare</button>}
-                <pre>
+                {props.symbol &&  <button type="button" onClick={()=>monthGain(props.stockChartXValues, props.stockChartYValues)}>monthGainCompare</button>} 
+
+                {/* {props.gainMap &&  <button type="button" onClick={()=>monthGainMany(props.gainMap)}>monthGainMany</button>} */}
+                {/* <pre>
                   {JSON.stringify(mGainObj, null, 2)}
-                </pre>
+                </pre> */}
+
+                {Object.keys(mGainObj).map((oneKey,i)=>{
+                  return (
+                      <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {oneKey}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
+                    )
+                })}
 
                 {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
-                <br></br>
+                <br></br>                 <br></br>
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
                 {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
                 {price && targetInfo && renderList(addRatio(targetInfo, price))}
-              
-                {/* &nbsp; &nbsp; */}
-                <br></br>              
+            
+                <br></br>  <br></br>            
     
                 <div>
                   <button type="button" onClick={()=>targetHistAll (setTargetPriceArray, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
