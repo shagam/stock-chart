@@ -12,6 +12,7 @@ function Tools (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
 
     const [monGainTxt, setMonGainText] = useState ();
+    const [mGainObj, setMgainObj] = useState ({});
     const [totalMonGain, setTotalMonGain] = useState ();
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
@@ -53,10 +54,10 @@ function Tools (props) {
       function monthGain (xArray, yArray) {    
 
         const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
-        var i = 0;
-        for (; i < yArray.length; ) {
+        var i = 0; // Jan
+        for (; i < yArray.length; ) { 
           var nextIndex = nextMonthIndex(i, xArray);
-          if (nextIndex < 0) {
+          if (nextIndex < 0) { // error
             break;
           }
           const date = xArray[i];
@@ -75,7 +76,7 @@ function Tools (props) {
           }
           i = nextIndex; 
         }
-        const mGainObj = {}
+
         mGainObj.Jan = Number(mGain[0] + 0.0005).toFixed(2);
         mGainObj.Feb = Number(mGain[1] + 0.0005).toFixed(2);
         mGainObj.Mar = Number(mGain[2] + 0.0005).toFixed(2);
@@ -88,16 +89,15 @@ function Tools (props) {
         mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
         mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
         mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
+
+        var mGainTxt = '';
+        const keys = Object.keys(mGainObj)
+        keys.forEach (key => mGainTxt += key + ': ' + mGainObj[key] + '   ')
+        setMonGainText(mGainTxt)
+
         const totalGain = mGain[0] * mGain[1] * mGain[2] * mGain[3] * mGain[4] * mGain[5]
                         * mGain[6] * mGain[7] * mGain[8] * mGain[9] * mGain[10] * mGain[11];
         setTotalMonGain (totalGain.toFixed(3))
-
-        var mGainTxt = JSON.stringify (mGainObj)
-
-        mGainTxt = mGainTxt.replace (/,/g, '  ')
-        mGainTxt = mGainTxt.replace (/"/g, '')
-        // mGainTxt = mGainTxt.replace(/Jul/, '  Jul')
-        setMonGainText(mGainTxt)
       }
     
 
