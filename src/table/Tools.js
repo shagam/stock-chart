@@ -18,12 +18,15 @@ function Tools (props) {
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
     const [targetPriceArray, setTargetPriceArray] = useState ();
+    const [yearGain, setYearGain] = useState ();
 
     const [logFlags, setLogFlags] = useState([]);
     
     var totalGain;
     
   const LOG = props.logFlags.includes('month')
+
+  var stockCount_ = -1
 
     useEffect(() => {
         setMonGainText()
@@ -61,16 +64,19 @@ function Tools (props) {
       const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
       const stocks = Object.keys (props.gainMap);
       setStockCount (stocks.length)
+      stockCount_ = stocks.length;
 
       for (var symm in props.gainMap) {
         const gainMapSym = props.gainMap[symm];
         const mGainForSymm = [1,1,1,1,1,1, 1,1,1,1,1,1] ;  // monthGainfor one stock
+        const mCountForSymm = [0,0,0,0,0,0, 0,0,0,0,0,0] ; // how many gains per each month
         const xArray = gainMapSym.x;
         const yArray = gainMapSym.y;
         var i = 0; // Jan
+        
         for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
           var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
-          if (weekOfNextMonth >= 0) { // success
+          if (weekOfNextMonth >= 0) { // if not end of array
 
             const date = xArray[i];
             const dateSplit_ = dateSplit (date); // [year,mon,day]
@@ -80,10 +86,9 @@ function Tools (props) {
             if (weekOfNextMonth - i >= 3) {
               const p = yArray[i] / yArray[weekOfNextMonth]
               mGainForSymm[mon] *= Number(p)
-              mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
-              mGain[mon] *= Number(p);
-              mGain[mon]= (Number(mGain[mon]))
-              const a = 1;
+              mCountForSymm[mon] ++;
+              // mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
+              // mGain[mon] = mGainForSymm[mon];
               // if (LOG)
                 console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
             }
@@ -93,24 +98,43 @@ function Tools (props) {
             // if (LOG)
               console.log (symm, mGainForSymm)
             break
-          } 
+          }
+        }
+        for (let j = 0; j < 12; j++) {
+          mGain[j] *= Math.pow ( mGainForSymm[j], 1 / mCountForSymm[j])
         }
 
+        //nnnn
     } 
     
-    // prepare for print results
-    mGainObj.Jan = Number(mGain[0] + 0.0005).toFixed(2);
-    mGainObj.Feb = Number(mGain[1] + 0.0005).toFixed(2);
-    mGainObj.Mar = Number(mGain[2] + 0.0005).toFixed(2);
-    mGainObj.Apr = Number(mGain[3] + 0.0005).toFixed(2);
-    mGainObj.May = Number(mGain[4] + 0.0005).toFixed(2);
-    mGainObj.Jun = Number(mGain[5] + 0.0005).toFixed(2);       
-    mGainObj.Jul = Number(mGain[6] + 0.0005).toFixed(2);
-    mGainObj.Aug = Number(mGain[7] + 0.0005).toFixed(2);
-    mGainObj.Sep = Number(mGain[8] + 0.0005).toFixed(2);
-    mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
-    mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
-    mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
+    // prepare for print results calc average stocks gain for 
+    var yearlyGain = 1;
+    mGainObj.Jan = Number(Math.pow(Number(mGain[0]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Jan;
+    mGainObj.Feb = Number(Math.pow(Number(mGain[1]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Feb;
+    mGainObj.Mar = Number(Math.pow(Number(mGain[2]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Mar;
+    mGainObj.Apr = Number(Math.pow(Number(mGain[3]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Apr;
+    mGainObj.May = Number(Math.pow(Number(mGain[4]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.May;
+    mGainObj.Jun = Number(Math.pow(Number(mGain[5]), 1 / stockCount_)).toFixed(3);       
+    yearlyGain*= mGainObj.Jun;
+    mGainObj.Jul = Number(Math.pow(Number(mGain[6]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Jul;
+    mGainObj.Aug = Number(Math.pow(Number(mGain[7]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Aug;
+    mGainObj.Sep = Number(Math.pow(Number(mGain[8]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Sep;
+    mGainObj.Oct = Number(Math.pow(Number(mGain[9]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Oct;
+    mGainObj.Nov = Number(Math.pow(Number(mGain[10]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Nov;
+    mGainObj.Dec = Number(Math.pow(Number(mGain[11]), 1 / stockCount_)).toFixed(3);
+    yearlyGain *= mGainObj.Dec;
+
+    setYearGain (yearlyGain)
   }
 
   
@@ -179,7 +203,7 @@ function Tools (props) {
                     )
                 })}
 
-                {stockCount && <div>stockCount: &nbsp;&nbsp; {stockCount} </div>}
+                {stockCount && <div>stockCount={stockCount} yearlyGain={yearGain.toFixed(3)} </div>}
                 <br></br>                 <br></br>
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
