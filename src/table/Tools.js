@@ -89,22 +89,26 @@ function Tools (props) {
               mCountForSymm[mon] ++;
               // mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
               // mGain[mon] = mGainForSymm[mon];
-              // if (LOG)
+              if (LOG)
                 console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
             }
             i = weekOfNextMonth;
           }
           else {
+            var OneStockYearGain = 1;
+
+            for (let i = 0; i < 12; i++) {
+              OneStockYearGain *= Math.pow(mGainForSymm[i], 1 / mCountForSymm[i]);
+              mGainForSymm[i] = Math.pow (mGainForSymm[i], 1 / mCountForSymm[i]).toFixed(3)
+            }
             // if (LOG)
-              console.log (symm, mGainForSymm)
-            break
+            console.log (symm, 'yearlyGain: ', OneStockYearGain.toFixed(2), mGainForSymm)
+            break // end of one stock
           }
         }
         for (let j = 0; j < 12; j++) {
-          mGain[j] *= Math.pow ( mGainForSymm[j], 1 / mCountForSymm[j])
+          mGain[j] *= mGainForSymm[j]
         }
-
-        //nnnn
     } 
     
     // prepare for print results calc average stocks gain for 
