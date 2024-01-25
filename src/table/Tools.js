@@ -23,6 +23,8 @@ function Tools (props) {
     
     var totalGain;
     
+  const LOG = props.logFlags.includes('month')
+
     useEffect(() => {
         setMonGainText()
         setStockCount()
@@ -41,13 +43,14 @@ function Tools (props) {
         const dateSplit_ = dateSplit (date);
         var monthNum = dateSplit_[1];
   
-        for (let j = i; j < xArray.length; j++) {
+        for (let j = i; j < xArray.length; j++) {  // i, j week number
           const nextDate = xArray[j];
           const nextDateSplit = dateSplit (nextDate);
           const nextMonth = nextDateSplit[1];
           if (nextMonth !== monthNum)
             return j;
         }
+        // console.log (monthNum)
         return -1; // error
       }
   
@@ -61,33 +64,35 @@ function Tools (props) {
 
       for (var symm in props.gainMap) {
         const gainMapSym = props.gainMap[symm];
-
+        const mGainForSymm = [1,1,1,1,1,1, 1,1,1,1,1,1] ;  // monthGainfor one stock
         const xArray = gainMapSym.x;
         const yArray = gainMapSym.y;
         var i = 0; // Jan
-        for (; i < yArray.length; ) { 
-          var nextIndex = nextMonthIndex(i, xArray);
-          if (nextIndex < 0) { // error
+        for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
+          var nextMonth = nextMonthIndex(i, xArray); // 0..11
+          if (nextMonth < 0) { // error
             break;
           }
-          const date = xArray[i];
-          const dateSplit_ = dateSplit (date); // [year,mon,day]
-          const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
-    
-    
-          if (nextIndex - i >= 3) {
-            const p = yArray[i] / yArray[nextIndex]
-            mGain[mon] *= Number(p);
-            mGain[mon]= (Number(mGain[mon]))
-            const a = 1;
-            if (props.logFlags.includes('month')) {
-              console.log (xArray[nextIndex], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
+            const date = xArray[i];
+            const dateSplit_ = dateSplit (date); // [year,mon,day]
+            const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
+      
+      
+            if (nextMonth - i >= 3) {
+              const p = yArray[i] / yArray[nextMonth]
+              mGainForSymm[mon] *= Number(p)
+              mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
+              mGain[mon] *= Number(p);
+              mGain[mon]= (Number(mGain[mon]))
+              const a = 1;
+              if (LOG) {
+                console.log (xArray[nextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
+              }
             }
-          }
-          i = nextIndex; 
+            i = nextMonth; 
         }
-
-        console.log (symm, mGain)
+        if (LOG)
+          console.log (symm, mGainForSymm)
     } 
     
     // prepare for print results
