@@ -13,7 +13,7 @@ function Tools (props) {
 
     const [monGainTxt, setMonGainText] = useState ();
     const [mGainObj, setMgainObj] = useState ({});
-    const [totalMonGain, setTotalMonGain] = useState ();
+    const [stockCount, setStockCount] = useState ();
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
@@ -25,7 +25,7 @@ function Tools (props) {
     
     useEffect(() => {
         setMonGainText()
-        setTotalMonGain()
+        setStockCount()
         setTargetInfo()
         setPrice()
         setMgainObj({})
@@ -57,6 +57,7 @@ function Tools (props) {
       
       const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
       const stocks = Object.keys (props.gainMap);
+      setStockCount (stocks.length)
 
       for (var symm in props.gainMap) {
         const gainMapSym = props.gainMap[symm];
@@ -70,8 +71,8 @@ function Tools (props) {
             break;
           }
           const date = xArray[i];
-          const dateSplit_ = dateSplit (date);
-          const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; 
+          const dateSplit_ = dateSplit (date); // [year,mon,day]
+          const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
     
     
           if (nextIndex - i >= 3) {
@@ -86,29 +87,22 @@ function Tools (props) {
           i = nextIndex; 
         }
 
-        mGainObj.Jan = Number(mGain[0] + 0.0005).toFixed(2);
-        mGainObj.Feb = Number(mGain[1] + 0.0005).toFixed(2);
-        mGainObj.Mar = Number(mGain[2] + 0.0005).toFixed(2);
-        mGainObj.Apr = Number(mGain[3] + 0.0005).toFixed(2);
-        mGainObj.May = Number(mGain[4] + 0.0005).toFixed(2);
-        mGainObj.Jun = Number(mGain[5] + 0.0005).toFixed(2);       
-        mGainObj.Jul = Number(mGain[6] + 0.0005).toFixed(2);
-        mGainObj.Aug = Number(mGain[7] + 0.0005).toFixed(2);
-        mGainObj.Sep = Number(mGain[8] + 0.0005).toFixed(2);
-        mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
-        mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
-        mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
-
-        // var mGainTxt = '';
-        // const keys = Object.keys(mGainObj)
-        // keys.forEach (key => mGainTxt += '  ' + key + ': ' + mGainObj[key] + '     ')
-        // setMonGainText(mGainTxt)
-
-        const totalGain = mGain[0] * mGain[1] * mGain[2] * mGain[3] * mGain[4] * mGain[5]
-                        * mGain[6] * mGain[7] * mGain[8] * mGain[9] * mGain[10] * mGain[11];
-        setTotalMonGain (totalGain.toFixed(3))
-
-    }    
+        console.log (symm, mGain)
+    } 
+    
+    // prepare for print results
+    mGainObj.Jan = Number(mGain[0] + 0.0005).toFixed(2);
+    mGainObj.Feb = Number(mGain[1] + 0.0005).toFixed(2);
+    mGainObj.Mar = Number(mGain[2] + 0.0005).toFixed(2);
+    mGainObj.Apr = Number(mGain[3] + 0.0005).toFixed(2);
+    mGainObj.May = Number(mGain[4] + 0.0005).toFixed(2);
+    mGainObj.Jun = Number(mGain[5] + 0.0005).toFixed(2);       
+    mGainObj.Jul = Number(mGain[6] + 0.0005).toFixed(2);
+    mGainObj.Aug = Number(mGain[7] + 0.0005).toFixed(2);
+    mGainObj.Sep = Number(mGain[8] + 0.0005).toFixed(2);
+    mGainObj.Oct = Number(mGain[9] + 0.0005).toFixed(2);
+    mGainObj.Nov = Number(mGain[10] + 0.0005).toFixed(2);
+    mGainObj.Dec = Number(mGain[11] + 0.0005).toFixed(2); 
   }
 
   
@@ -177,7 +171,7 @@ function Tools (props) {
                     )
                 })}
 
-                {totalMonGain && <div>totalGain: &nbsp;&nbsp; {totalMonGain} </div>}
+                {stockCount && <div>stockCount: &nbsp;&nbsp; {stockCount} </div>}
                 <br></br>                 <br></br>
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
