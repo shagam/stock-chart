@@ -51,10 +51,18 @@ function Tools (props) {
         return -1; // error
       }
   
-      // compare month gain over the history
-      function monthGain (xArray, yArray) {    
 
-        const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
+    // collect month gain over the history
+    function monthGain () {    
+      
+      const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
+      const stocks = Object.keys (props.gainMap);
+
+      for (var symm in props.gainMap) {
+        const gainMapSym = props.gainMap[symm];
+
+        const xArray = gainMapSym.x;
+        const yArray = gainMapSym.y;
         var i = 0; // Jan
         for (; i < yArray.length; ) { 
           var nextIndex = nextMonthIndex(i, xArray);
@@ -99,28 +107,11 @@ function Tools (props) {
         const totalGain = mGain[0] * mGain[1] * mGain[2] * mGain[3] * mGain[4] * mGain[5]
                         * mGain[6] * mGain[7] * mGain[8] * mGain[9] * mGain[10] * mGain[11];
         setTotalMonGain (totalGain.toFixed(3))
-      }
-    
 
+    }    
+  }
 
-      function monthGainMany(gainMap) {
-        setMgainObj ({})
-        // mGainObj.jan = 1;
-        // mGainObj.Feb = 2
-        // mGainObj.Mar = 3
-        // mGainObj.Apr = 4
-        // mGainObj.May = 5
-        // mGainObj.Jun = 6
-
-        // mGainObj.Jul = 7
-        // mGainObj.Aug = 8
-        // mGainObj.Sep = 9
-        // mGainObj.Oct = 10
-        // mGainObj.Nov = 11
-        // mGainObj.Dec = 12
-
-      }  
-
+  
     function targetGet (symbol) {
         const tar = getTargetPriceArray (props.symbol, setTargetInfo)
     
@@ -176,14 +167,11 @@ function Tools (props) {
             {displayFlag && <div>
                 <div  style={{color: 'magenta' }}> {props.symbol}</div>  
 
-                {props.symbol &&  <button type="button" onClick={()=>monthGain(props.stockChartXValues, props.stockChartYValues)}>monthGainCompare</button>} 
+          
+                {/* &nbsp; &nbsp; */}
+                {props.gainMap &&  <button type="button" onClick={()=>monthGain(props.gainMap)}>monthGain</button>}
 
-                {/* {props.gainMap &&  <button type="button" onClick={()=>monthGainMany(props.gainMap)}>monthGainMany</button>} */}
-                {/* <pre>
-                  {JSON.stringify(mGainObj, null, 2)}
-                </pre> */}
-
-                {Object.keys(mGainObj).map((oneKey,i)=>{
+                {mGainObj && Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
                       <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {oneKey}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
                     )
