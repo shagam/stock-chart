@@ -35,7 +35,7 @@ function Tools (props) {
   
   
       // loop through months
-      function nextMonthIndex (i, xArray) {
+      function nextMonthWeek (i, xArray) {
         const date = xArray[i];
         if(date === undefined) {
           var b = 1
@@ -69,30 +69,34 @@ function Tools (props) {
         const yArray = gainMapSym.y;
         var i = 0; // Jan
         for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
-          var nextMonth = nextMonthIndex(i, xArray); // 0..11
-          if (nextMonth < 0) { // error
-            break;
-          }
+          var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
+          if (weekOfNextMonth >= 0) { // success
+
             const date = xArray[i];
             const dateSplit_ = dateSplit (date); // [year,mon,day]
             const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
       
       
-            if (nextMonth - i >= 3) {
-              const p = yArray[i] / yArray[nextMonth]
+            if (weekOfNextMonth - i >= 3) {
+              const p = yArray[i] / yArray[weekOfNextMonth]
               mGainForSymm[mon] *= Number(p)
               mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
               mGain[mon] *= Number(p);
               mGain[mon]= (Number(mGain[mon]))
               const a = 1;
               if (LOG) {
-                console.log (xArray[nextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
+                console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
               }
             }
-            i = nextMonth; 
+            i = weekOfNextMonth;
+          }
+          else {
+              // if (LOG)
+            console.log (symm, mGainForSymm)
+            break
+          } 
         }
-        if (LOG)
-          console.log (symm, mGainForSymm)
+
     } 
     
     // prepare for print results
