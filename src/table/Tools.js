@@ -34,25 +34,25 @@ function Tools (props) {
       },[props.symbol]) 
   
   
-      // loop through months
-      function nextMonthWeek (i, xArray) {
-        const date = xArray[i];
-        if(date === undefined) {
-          var b = 1
-        }
-        const dateSplit_ = dateSplit (date);
-        var monthNum = dateSplit_[1];
-  
-        for (let j = i; j < xArray.length; j++) {  // i, j week number
-          const nextDate = xArray[j];
-          const nextDateSplit = dateSplit (nextDate);
-          const nextMonth = nextDateSplit[1];
-          if (nextMonth !== monthNum)
-            return j;
-        }
-        // console.log (monthNum)
-        return -1; // error
+    // loop through months
+    function nextMonthWeek (i, xArray) {
+      const date = xArray[i];
+      if(date === undefined) {
+        var b = 1
       }
+      const dateSplit_ = dateSplit (date);
+      var monthNum = dateSplit_[1];
+
+      for (let j = i; j < xArray.length; j++) {  // i, j week number
+        const nextDate = xArray[j];
+        const nextDateSplit = dateSplit (nextDate);
+        const nextMonth = nextDateSplit[1];
+        if (nextMonth !== monthNum)
+          return j;
+      }
+      // console.log (monthNum)
+      return -1; // error
+    }
   
 
     // collect month gain over the history
@@ -84,15 +84,14 @@ function Tools (props) {
               mGain[mon] *= Number(p);
               mGain[mon]= (Number(mGain[mon]))
               const a = 1;
-              if (LOG) {
+              // if (LOG)
                 console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
-              }
             }
             i = weekOfNextMonth;
           }
           else {
-              // if (LOG)
-            console.log (symm, mGainForSymm)
+            // if (LOG)
+              console.log (symm, mGainForSymm)
             break
           } 
         }
