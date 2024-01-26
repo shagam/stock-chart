@@ -620,6 +620,9 @@ export const BasicTable = (props) => {
                   stockChartYValuesFunction.push(yValue.toFixed(2));
                 else
                   stockChartYValuesFunction.push(yValue.toFixed(4));
+                if (isNaN (yValue)) {
+                  console.log (sym, i, yValue)
+                }
               }
               if (gainRawDividand) { // filter volume and 
                 gainArrayTxt = gainArrayTxt.replace (/,"6. volume":"\d*"/g, '')      
