@@ -239,7 +239,7 @@ function Tools (props) {
                   <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, logFlags)}>targetHistBest</button>         
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
-                  <div  style={{ maxHeight: '20vh', 'overflow-y': 'scroll'}}  > 
+                  <div  style={{ maxHeight: '20vh', 'overflowY': 'scroll'}}  > 
    
                     {targetPriceHist && Object.keys(targetPriceHist).sort().map((oneKey,i)=>{
                       return (
