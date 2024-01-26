@@ -160,40 +160,24 @@ function Tools (props) {
 
   
     function targetGet (symbol) {
-        const tar = getTargetPriceArray (props.symbol, setTargetInfo)
-    
-        const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
-        if (row_index  === -1)
-          return;
-        setPrice (props.rows[row_index].values.price)
-        setTarget (props.rows[row_index].values.target)
-      }
-    
-      function renderList(array) {
-        if (array.length < 1)
-          return;
-        if (array[0].date)
-          return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
-        else
-          return array.map((item) => <li>{JSON.stringify(item)}</li>);  
-      }
+      const tar = getTargetPriceArray (props.symbol, setTargetInfo)
+  
+      const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+      if (row_index  === -1)
+        return;
+      setPrice (props.rows[row_index].values.price)
+      setTarget (props.rows[row_index].values.target)
+    }
+  
+    function renderList(array) {
+      if (array.length < 1)
+        return;
+      if (array[0].date)
+        return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
+      else
+        return array.map((item) => <li>{JSON.stringify(item)}</li>);  
+    }
      
-      // calc target ratio for each
-      function addRatio (arr, price) {
-        if (arr === undefined) {
-          return arr;
-        }
-        var arrWithTarget = []
-        for (let i = 0; i < arr.length; i++) {
-          if (arr[i].tar)
-            arrWithTarget.push (arr[i]) 
-          else
-            arrWithTarget.push ({date: arr[i].date, target: arr[i].target, tar: (arr[i].target / price).toFixed(2)})
-          // arr[i]['tar'] = (arr[i].target / price).toFixed(2);
-        }
-        return arrWithTarget;
-      }
-
 
     const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
@@ -229,7 +213,7 @@ function Tools (props) {
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
                 {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
-                {price && targetInfo && renderList(addRatio(targetInfo, price))}
+                {price && targetInfo && renderList(targetInfo)}
             
                 <br></br>  <br></br>            
     
