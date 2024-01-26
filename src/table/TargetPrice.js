@@ -79,6 +79,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
     }
 }
 
+// get all target Price history
 async function getTargetPriceArray (symbol, setTargetInfo) {
 
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
@@ -145,16 +146,25 @@ async function targetHistBest (setTargetPriceHist, logFlags) {
 async function targetHistAll (setTargetPriceHist, logFlags) {
 
     const tagetHistory = await getDocs(targetRef);
-
+    console.log ('count=', tagetHistory.docs.length)
     var tarHist = {}
     for (let i = 0; i < tagetHistory.docs.length; i++) {
         const sym = tagetHistory.docs[i].data().symbol;
+        if (sym === 'AAPL') {
+            const b = 1
+        }
         const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
-        
+        console.log (sym, histArr.length, histArr)
         for (let j = 0; j < histArr.length; j++)  {                 
             delete histArr[j].dateMili;  // reduce unimportant info
         }
-        tarHist[sym] = histArr;
+        if (! tarHist[sym])
+            tarHist[sym] = histArr;
+        else
+            console.log (sym, 'duplicate', tarHist[sym].length, histArr.length)
+        if (histArr.length > 1) {
+            const a = 1
+        }
     }
     setTargetPriceHist(tarHist);
   }
