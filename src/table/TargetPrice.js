@@ -146,28 +146,22 @@ async function targetHistBest (setTargetPriceArray, logFlags) {
     setTargetPriceArray (txt1)
 }
 
-async function targetHistAll (setTargetPriceArray, logFlags) {
-    const allTarget = {};
-    var txt = '';
-    const tagetHistory = await getDocs(targetRef);
-    // gainLength = gain.docs.length;
+async function targetHistAll (setTargetPriceHist, logFlags) {
 
+    const tagetHistory = await getDocs(targetRef);
+
+    var tarHist = {}
     for (let i = 0; i < tagetHistory.docs.length; i++) {
         const sym = tagetHistory.docs[i].data().symbol;
-        try {
-            const dat = JSON.parse (tagetHistory.docs[i].data().dat)
-            // console.log (sym, ' length: ', dat.length, ' lastTargetPrice: ', dat[dat.length - 1].target)
-            for (let i = 0; i < dat.length; i++)                   
-                delete dat[i].dateMili;  // reduce unimportant info
-            // console.dir (dat)
-            txt += sym + ' ' + JSON.stringify (dat) + '\n\n'
-        } catch (e) {console.log (sym, e.message)}
+        const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
+        
+        for (let j = 0; j < histArr.length; j++)  {                 
+            delete histArr[j].dateMili;  // reduce unimportant info
+            const a = 1
+        }
+        tarHist[sym] = histArr;
     }
-    console.log ('count: ', tagetHistory.docs.length);
-    // allTarget[sym] = dat;
-    // allTarget.sort();
-    const txt1 = 'Count (' + tagetHistory.docs.length +')\n\n' + txt.replace(/{/g,'\n{');
-    setTargetPriceArray (txt1)
-}
+    setTargetPriceHist(tarHist);
+  }
 
 export {targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff, targetHistBest}

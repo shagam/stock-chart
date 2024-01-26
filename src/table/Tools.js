@@ -18,6 +18,7 @@ function Tools (props) {
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
     const [targetPriceArray, setTargetPriceArray] = useState ();
+    const [targetPriceHist, setTargetPriceHist] = useState ({});
     const [yearGain, setYearGain] = useState ();
 
     const [logFlags, setLogFlags] = useState([]);
@@ -236,16 +237,24 @@ function Tools (props) {
                 <br></br>  <br></br>            
     
                 <div>
-                  <button type="button" onClick={()=>targetHistAll (setTargetPriceArray, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
-                  <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp;
-                  <button type="button" onClick={()=>targetHistBest (setTargetPriceArray, logFlags)}>targetHistBest</button>               
+                  <button type="button" onClick={()=>targetHistAll (setTargetPriceHist, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
+                  {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
+                  <button type="button" onClick={()=>targetHistBest (setTargetPriceArray, logFlags)}>targetHistBest</button>         
+
+                  {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
+                  <div  style={{ maxHeight: '20vh', 'overflow-y': 'scroll'}}  > 
+   
+                    {targetPriceHist && Object.keys(targetPriceHist).sort().map((oneKey,i)=>{
+                      return (
+                          <div  style={{display:'flex', maxHeight: '80px'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '40px'}} >
+                            {oneKey}:  </div> &nbsp; &nbsp; {JSON.stringify (targetPriceHist[oneKey], null, 2)}
+                          </div>
+                        )
+                    })}
+                  </div>
+      
                 </div>
                 {/* <br></br>          */}
-
-                {targetPriceArray&& <textarea type='text' name='stockInfo' cols='75' rows='10' readOnly
-                  value={targetPriceArray}  >
-                </textarea>}
-
             </div>}
         </div>
     )
