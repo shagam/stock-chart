@@ -239,12 +239,13 @@ function Tools (props) {
                   <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, logFlags)}>targetHistBest</button>         
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
+
                   <div  style={{ maxHeight: '20vh', 'overflowY': 'scroll'}}  > 
    
                     {targetPriceHist && Object.keys(targetPriceHist).sort().map((oneKey,i)=>{
                       return (
-                          <div  style={{display:'flex', maxHeight: '80px'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '40px'}} >
-                            {oneKey}:  </div> &nbsp; &nbsp; {JSON.stringify (targetPriceHist[oneKey], null, 2)}
+                          <div  style={{maxHeight: '80px', 'margin-top': '15px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
+                            {oneKey}:  </div>  {targetPriceHist[oneKey].map((item) => <li>{JSON.stringify(item)}</li>)} 
                           </div>
                         )
                     })}
