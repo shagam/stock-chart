@@ -1207,8 +1207,7 @@ export const BasicTable = (props) => {
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
 
-        <Tools symbol = {chartSymbol} rows = {rows}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-        logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> 
+        <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> 
 
         {chartSymbol && <div>
           <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
