@@ -85,20 +85,33 @@ function Tools (props) {
       
             if (weekOfNextMonth - i >= 3) {
               const p = yArray[i] / yArray[weekOfNextMonth]
+              if (yArray[weekOfNextMonth] === 0)
+                console.log (symm, weekOfNextMonth, yArray[weekOfNextMonth])
               mGainForSymm[mon] *= Number(p)
+              if (isNaN(mGainForSymm[mon])) {
+                console.log (symm, NaN, yArray[weekOfNextMonth])
+                const a = -1;
+              }
               mCountForSymm[mon] ++;
               // mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
               // mGain[mon] = mGainForSymm[mon];
               if (LOG)
                 console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
             }
+            else
+              console.log (symm, 'weekOfNextMonth=', weekOfNextMonth, 'i=', i)
             i = weekOfNextMonth;
           }
           else {
             var OneStockYearGain = 1;
 
+            // no,alize values average
             for (let i = 0; i < 12; i++) {
-              OneStockYearGain *= Math.pow(mGainForSymm[i], 1 / mCountForSymm[i]);
+              if (mCountForSymm[i] === 0) {
+                console.log (symm + ' devide by zero ' + ' month=' + i)
+              }
+              else
+                OneStockYearGain *= Math.pow(mGainForSymm[i], 1 / mCountForSymm[i]);
               mGainForSymm[i] = Math.pow (mGainForSymm[i], 1 / mCountForSymm[i]).toFixed(3)
             }
             // if (LOG)
@@ -114,9 +127,15 @@ function Tools (props) {
     // prepare for print results calc average stocks gain for 
     var yearlyGain = 1;
     mGainObj.Jan = Number(Math.pow(Number(mGain[0]), 1 / stockCount_)).toFixed(3);
-    yearlyGain *= mGainObj.Jan;
+    if (isNaN(mGainObj.Jan)) // debug error
+      console.log (symm, NaN)
+    else
+      yearlyGain *= mGainObj.Jan;
     mGainObj.Feb = Number(Math.pow(Number(mGain[1]), 1 / stockCount_)).toFixed(3);
-    yearlyGain *= mGainObj.Feb;
+    if (isNaN(mGainObj.Jan)) // debug error
+      console.log (symm, NaN)
+    else
+      yearlyGain *= mGainObj.Feb;
     mGainObj.Mar = Number(Math.pow(Number(mGain[2]), 1 / stockCount_)).toFixed(3);
     yearlyGain *= mGainObj.Mar;
     mGainObj.Apr = Number(Math.pow(Number(mGain[3]), 1 / stockCount_)).toFixed(3);
