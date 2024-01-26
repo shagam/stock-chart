@@ -118,32 +118,28 @@ async function targetHistBigDiff (setTargetPriceArray, logFlags) {
     setTargetPriceArray (txt1)
 }
 
-async function targetHistBest (setTargetPriceArray, logFlags) {
+async function targetHistBest (setTargetPriceHist, logFlags) {
     const LOG = logFlags.includes('target')
-    const allTarget = {};
+
     const tagetHistory = await getDocs(targetRef);
-    // gainLength = gain.docs.length;
-    var txt = '';
-    var count = 0;
+
+    var tarHist = {}
     for (let i = 0; i < tagetHistory.docs.length; i++) {
         const sym = tagetHistory.docs[i].data().symbol;
         try {
-            const dat = JSON.parse (tagetHistory.docs[i].data().dat)
-            const tar =  dat[dat.length - 1].tar;            
+            const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
+            const tar =  histArr[histArr.length - 1].tar;            
 
             if (tar > 1.12) {
-                for (let i = 0; i < dat.length; i++)                   
-                    delete dat[i].dateMili;  // reduce unimportant info
-                if (LOG)
-                    console.log (sym, dat, dat.length)
-                txt += sym + ' ' + JSON.stringify (dat) + '\n\n';
-                count++;
+                for (let i = 0; i < histArr.length; i++)                   
+                    delete histArr[i].dateMili;  // reduce unimportant info
+                tarHist[sym] = histArr;
             }
         } catch (e) {console.log (sym, e.message)}
     }
     // IBM [{"target":152.06,"date":"2024-Jan-15  11:39"},{"target":138.69,"date":"2024-Jan-17  13:42"}]
-    const txt1 = 'Count (' + count +')\n\n' + txt.replace(/{/g,'\n{');
-    setTargetPriceArray (txt1)
+
+    setTargetPriceHist(tarHist);
 }
 
 async function targetHistAll (setTargetPriceHist, logFlags) {
@@ -157,7 +153,6 @@ async function targetHistAll (setTargetPriceHist, logFlags) {
         
         for (let j = 0; j < histArr.length; j++)  {                 
             delete histArr[j].dateMili;  // reduce unimportant info
-            const a = 1
         }
         tarHist[sym] = histArr;
     }

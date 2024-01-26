@@ -11,13 +11,11 @@ import LogFlags from '../LogFlags'
 function Tools (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
 
-    const [monGainTxt, setMonGainText] = useState ();
     const [mGainObj, setMgainObj] = useState ({});
     const [stockCount, setStockCount] = useState ();
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
-    const [targetPriceArray, setTargetPriceArray] = useState ();
     const [targetPriceHist, setTargetPriceHist] = useState ({});
     const [yearGain, setYearGain] = useState ();
 
@@ -30,7 +28,6 @@ function Tools (props) {
   var stockCount_ = -1
 
     useEffect(() => {
-        setMonGainText()
         setStockCount()
         setTargetInfo()
         setPrice()
@@ -219,9 +216,9 @@ function Tools (props) {
 
           
                 {/* &nbsp; &nbsp; */}
-                {props.gainMap &&  <button type="button" onClick={()=>monthGain(props.gainMap)}>monthGain</button>}
+                {<button type="button" onClick={()=>monthGain(props.gainMap)}>monthGain</button>}
 
-                {mGainObj && Object.keys(mGainObj).map((oneKey,i)=>{
+                { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
                       <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {oneKey}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
                     )
@@ -239,7 +236,7 @@ function Tools (props) {
                 <div>
                   <button type="button" onClick={()=>targetHistAll (setTargetPriceHist, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
                   {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
-                  <button type="button" onClick={()=>targetHistBest (setTargetPriceArray, logFlags)}>targetHistBest</button>         
+                  <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, logFlags)}>targetHistBest</button>         
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
                   <div  style={{ maxHeight: '20vh', 'overflow-y': 'scroll'}}  > 
