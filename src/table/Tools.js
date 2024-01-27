@@ -224,11 +224,11 @@ function Tools (props) {
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
 
-                  <div  style={{ maxHeight: '20vh', 'overflowY': 'scroll'}}  > 
+                  <div  style={{ maxHeight: '25vh', 'overflowY': 'scroll'}}  > 
    
                     {targetPriceHist && Object.keys(targetPriceHist).sort().map((oneKey,i)=>{
                       return (
-                          <div  style={{maxHeight: '80px', 'margin-top': '15px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
+                          <div  style={{maxHeight: '80px', marginTop: '15px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
                             {oneKey}:  </div>  {targetPriceHist[oneKey].map((item) => <li>{JSON.stringify(item)}</li>)} 
                           </div>
                         )
