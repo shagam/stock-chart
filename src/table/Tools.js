@@ -209,13 +209,13 @@ function Tools (props) {
                 })}
 
                 {stockCount && <div>stockCount={stockCount} yearlyGain={yearGain.toFixed(3)} </div>}
-                <br></br>                 <br></br>
+                <br></br>           
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
                 {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
                 {price && targetInfo && renderList(targetInfo)}
             
-                <br></br>  <br></br>            
+                <br></br>           
     
                 <div>
                   <button type="button" onClick={()=>targetHistAll (setTargetPriceHist, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
@@ -224,11 +224,11 @@ function Tools (props) {
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
 
-                  <div  style={{ maxHeight: '25vh', 'overflowY': 'scroll'}}  > 
+                  <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
    
                     {targetPriceHist && Object.keys(targetPriceHist).sort().map((oneKey,i)=>{
                       return (
-                          <div  style={{maxHeight: '80px', marginTop: '15px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
+                          <div  style={{maxHeight: '80px', marginTop: '5px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
                             {oneKey}:  </div>  {targetPriceHist[oneKey].map((item) => <li>{JSON.stringify(item)}</li>)} 
                           </div>
                         )
