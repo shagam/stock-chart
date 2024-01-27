@@ -226,10 +226,10 @@ function Tools (props) {
 
                   <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
    
-                    {targetPriceHist && Object.keys(targetPriceHist).sort().map((oneKey,i)=>{
+                    {targetPriceHist && Object.keys(targetPriceHist).sort().map((sym,i)=>{
                       return (
-                          <div  style={{maxHeight: '80px', marginTop: '5px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
-                            {oneKey}:  </div>  {targetPriceHist[oneKey].map((item) => <li>{JSON.stringify(item)}</li>)} 
+                          <div style={{maxHeight: '80px', width: '90vw', marginTop: '5px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
+                            {sym}:  </div>  {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)}</li>)} 
                           </div>
                         )
                     })}
