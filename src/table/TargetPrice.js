@@ -16,70 +16,82 @@ function bigDiff (tar0, tar1, threshold) {
 
 async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
 
-    const LOG = logFlags.includes('target')
+    const LOG = logFlags.includes('target') || true
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
     const fromFireBase = await getDocs (userQuery);
      
     // save target prices for symbol in array
     const tar = price !== 0 ? targetRaw / price : -1; 
     const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
-    var latest = 0;
-    var latestIndex = -1;
 
-    var targetPriceArray = fromFireBase.docs.length > 0? JSON.parse(fromFireBase.docs[0].data().dat) : [];
-    
-    // avoid too many
-    if (targetPriceArray.length > 20)  {
-        targetPriceArray.shift() // remove oldest    
-    }
+ // choose earliest, in case of more than one
+    var targetPriceArrayForSym = [];
+    var earliestIndx = -1;
+    var earliest = Date.now()
+    var target = -1;
 
-    // avoid duplicates
-    for (let i = 0; i < targetPriceArray.length; i++) {
-        const entry = targetPriceArray[i]
-      if (entry.dateMili > latest) {
-        latest = entry.dateMili;
-        latestIndex = i;
-      }
-    }
+    var bigDifference = true;
+    if (fromFireBase.docs.length > 0) {
+        for (let i = 0; i < fromFireBase.docs.length; i++) {
+            targetPriceArrayForSym = JSON.parse(fromFireBase.docs[i].data().dat);
+            if (targetPriceArrayForSym[0].dateMili < earliest) {
+                earliest = targetPriceArrayForSym[0].dateMili;   // 0 is oldest
+                earliestIndx = i
+            }
+        }
+        targetPriceArrayForSym = JSON.parse(fromFireBase.docs[earliestIndx].data().dat); // indx of earliest
 
-    // empty or different
+        // avoid too many
+        while (targetPriceArrayForSym.length > 20)  {
+            targetPriceArrayForSym.shift() // remove oldest    
+        }
 
-    if (latestIndex === -1 || targetPriceArray[latestIndex].target === symTargetOne.target) {
+        // delete all previous entries but the earliest
+        if (fromFireBase.docs.length > 1) {
+            const debug = 1;
+        }else {
+            const debug = 0
+        }
 
-        var bigDifference = true;
-        if (targetPriceArray.length > 0) {
-            const target =  targetPriceArray[targetPriceArray.length - 1].target;            
+        // allow new record only if none or significant dufferent
+        if (targetPriceArrayForSym.length > 0) {
+            target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target;            
             if (! bigDiff (targetRaw, target, 1.02)) {
                 bigDifference = false;
-                // console.log (symbol, 'newTarget/oldTarget: ', (targetRaw / target).toFixed(2)); // show the change of last target
-            }
-            else {
                 if (LOG)
-                    console.log ('oldTarget: ', target, ' newTarget: ', targetRaw, ' ratio: ', (targetRaw/target).toFixed(3))
+                    console.log (symbol, 'targetPrice skip add small diff: ', (targetRaw / target).toFixed(3)); // show the change of last target
             }
         }
+    }
+    else
+        if (LOG)
+            console.log (symbol, 'targetPrice new')
 
-        if (bigDifference) {
-            targetPriceArray.push (symTargetOne)
-            if (LOG)
-                console.log (symbol, 'add new targetPrice', targetRaw, ' size: ', targetPriceArray.length)
-        }
-        else
-            return; // abort 
 
-        const arrayStringify = JSON.stringify(targetPriceArray);
+    if (bigDifference) {
+        // const target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; 
+        targetPriceArrayForSym.push (symTargetOne)
+        const arrayStringify = JSON.stringify(targetPriceArrayForSym);
+        await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
 
-        if (fromFireBase.docs.length > 0) {  // entry already exist
-            var targetDoc = doc(db, "targetPriceArray", fromFireBase.docs[0].id);
-            await updateDoc (targetDoc, {symbol: symbol, dat: arrayStringify})
-        }
-        else {
-            await addDoc (targetRef, {symbol: symbol, dat: arrayStringify})      
-        }
+        if (LOG) {
+            console.log (symbol, 'targetPrice add', 'target: ',  targetRaw, (targetRaw / target).toFixed(3), arrayStringify, ' size: ', targetPriceArrayForSym.length)  
+        }   
+    }
+
+    // delete all previous entries
+    for (let i = 0; i < fromFireBase.docs.length; i++) {
+        if (! bigDifference && i === earliestIndx)
+        continue       
+        var tarDoc_ = doc(db, "targetPriceArray", fromFireBase.docs[i].id);
+        if (LOG)
+            console.log (symbol, 'targetPrice, delete duplicate arrays', fromFireBase.docs[i].data())
+        await deleteDoc (tarDoc_);    
     }
 }
 
-// get all target Price history
+
+// get all target Price history for one symbol
 async function getTargetPriceArray (symbol, setTargetInfo) {
 
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
