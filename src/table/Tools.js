@@ -6,13 +6,12 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 
 import LogFlags from '../LogFlags'
-
+// import {monthGain} from './MonthGain'
 
 function Tools (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
 
     const [mGainObj, setMgainObj] = useState ({});
-    const [stockCount, setStockCount] = useState ();
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
@@ -28,7 +27,6 @@ function Tools (props) {
   var stockCount_ = -1
 
     useEffect(() => {
-        setStockCount()
         setTargetInfo()
         setPrice()
         setMgainObj({})
@@ -57,11 +55,11 @@ function Tools (props) {
   
 
     // collect month gain over the history
-    function monthGain () {    
+    function monthGain (gainMap, mGainObj, setMgainObj, setYearGain, logFlags) {    
       
       const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
       const stocks = Object.keys (props.gainMap);
-      setStockCount (stocks.length)
+
       stockCount_ = stocks.length;
 
       for (var symm in props.gainMap) {
@@ -200,7 +198,7 @@ function Tools (props) {
 
           
                 {/* &nbsp; &nbsp; */}
-                {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap)}>monthGain</button>}
+                {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags)}>monthGain</button>}
 
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
@@ -208,7 +206,7 @@ function Tools (props) {
                     )
                 })}
 
-                {stockCount && <div>stockCount={stockCount} yearlyGain={yearGain.toFixed(3)} </div>}
+                {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(mGainObj).length} yearlyGain={yearGain.toFixed(3)} </div>}
                 <br></br>           
 
                 {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
