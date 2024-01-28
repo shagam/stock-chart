@@ -200,7 +200,7 @@ function Tools (props) {
 
           
                 {/* &nbsp; &nbsp; */}
-                {<button type="button" onClick={()=>monthGain(props.gainMap)}>monthGain</button>}
+                {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap)}>monthGain</button>}
 
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
