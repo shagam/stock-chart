@@ -28,7 +28,11 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   // collect month gain over the history
   function monthGain (gainMap, mGainObj, setMgainObj, setYearGain, logFlags) {    
 
-
+    // const n = 1.05;
+    // const l = Math.log(n) // natural log
+    // const r = Math.exp(l) 
+    // console.log (n, l, r)
+    // const LOG = logFlags.includes('month')
 
     const LOG = logFlags.includes('month')
 
@@ -40,10 +44,12 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
     for (var symm in gainMap) {
       const gainMapSym = gainMap[symm];
       const mGainForSymm = [1,1,1,1,1,1, 1,1,1,1,1,1] ;  // monthGainfor one stock
+      const mGainForSymmShift = [] ;  // monthGainfor one stock
       const mCountForSymm = [0,0,0,0,0,0, 0,0,0,0,0,0] ; // how many gains per each month
+      var oneStockYearGain = 1
       const xArray = gainMapSym.x;
       const yArray = gainMapSym.y;
-      var i = 0; // Jan
+      var i = 0; // Jan Changed inside loop
       
       for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
         var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
@@ -66,67 +72,72 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
             mCountForSymm[mon] ++;
             // mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
             // mGain[mon] = mGainForSymm[mon];
-            if (LOG)
-              console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
+            // if (LOG)
+            //   console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
           }
           else
             console.log (symm, 'weekOfNextMonth=', weekOfNextMonth, 'i=', i)
           i = weekOfNextMonth;
         }
         else {
-          var OneStockYearGain = 1;
-
-          // no,alize values average
+          // noralize values average
           for (let i = 0; i < 12; i++) {
-            if (mCountForSymm[i] === 0) {
-              console.log (symm + ' devide by zero ' + ' month=' + i)
-            }
-            else
-              OneStockYearGain *= Math.pow(mGainForSymm[i], 1 / mCountForSymm[i]);
-            mGainForSymm[i] = Math.pow (mGainForSymm[i], 1 / mCountForSymm[i]).toFixed(3)
+            const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i]).toFixed(3))
+            mGainForSymmShift[i] = gainTemp;
+            oneStockYearGain *= gainTemp;
           }
-          // if (LOG)
-          console.log (symm, 'yearlyGain: ', OneStockYearGain.toFixed(2), mGainForSymm)
+          if (LOG)
+            console.log (symm, 'yearlyGainForSym: ', oneStockYearGain.toFixed(3), mGainForSymmShift)
           break // end of one stock
         }
       }
+
+      // add symbol to other
       for (let j = 0; j < 12; j++) {
-        mGain[j] *= mGainForSymm[j]
+        mGain[j] *= mGainForSymmShift[j]
       }
-  } 
-  
-  // prepare for print results calc average stocks gain for 
-  var yearlyGain = 1;
-  mGainObj.Jan = Number(Math.pow(Number(mGain[0]), 1 / stockCount_)).toFixed(3);
-  if (isNaN(mGainObj.Jan)) // debug error
-    console.log (symm, NaN)
-  else
-    yearlyGain *= mGainObj.Jan;
-  mGainObj.Feb = Number(Math.pow(Number(mGain[1]), 1 / stockCount_)).toFixed(3);
-  if (isNaN(mGainObj.Jan)) // debug error
-    console.log (symm, NaN)
-  else
-    yearlyGain *= mGainObj.Feb;
-  mGainObj.Mar = Number(Math.pow(Number(mGain[2]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Mar;
-  mGainObj.Apr = Number(Math.pow(Number(mGain[3]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Apr;
-  mGainObj.May = Number(Math.pow(Number(mGain[4]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.May;
-  mGainObj.Jun = Number(Math.pow(Number(mGain[5]), 1 / stockCount_)).toFixed(3);       
-  yearlyGain*= mGainObj.Jun;
-  mGainObj.Jul = Number(Math.pow(Number(mGain[6]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Jul;
-  mGainObj.Aug = Number(Math.pow(Number(mGain[7]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Aug;
-  mGainObj.Sep = Number(Math.pow(Number(mGain[8]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Sep;
-  mGainObj.Oct = Number(Math.pow(Number(mGain[9]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Oct;
-  mGainObj.Nov = Number(Math.pow(Number(mGain[10]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Nov;
-  mGainObj.Dec = Number(Math.pow(Number(mGain[11]), 1 / stockCount_)).toFixed(3);
-  yearlyGain *= mGainObj.Dec;
+    } // end one symm
+    
+    // prepare for print results calc average stocks gain for 
+    var yearlyGain = 1;
+
+    // calc average
+    var monthGain = []
+    for (let i = 0; i < 12; i++)
+        monthGain[i] = Number(Math.pow(Number(mGain[i]), 1 / stockCount_).toFixed(3))
+    if (LOG)
+        console.log('agregate gainShiftBefore', monthGain)
+
+    // shift gain from next month
+    var monthGainShift = []
+    for (let i = 0; i < 12; i++) {
+        const nextMonth = (i + 1) % 12
+        monthGainShift[i] = Number(Math.exp((Math.log (monthGain[i]) * 0.9) + Math.log (monthGain[nextMonth]) * 0.1).toFixed(3))
+        yearlyGain *= monthGainShift[i];
+    }
+    if (LOG)
+        console.log('agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift)
+
+
+  mGainObj.Jan = monthGainShift[0]
+  mGainObj.Feb = monthGainShift[1]
+  mGainObj.Mar = monthGainShift[2]
+  mGainObj.Apr = monthGainShift[3]
+  mGainObj.May = monthGainShift[4]
+  mGainObj.Jun = monthGainShift[5]     
+  mGainObj.Jul = monthGainShift[6]
+  mGainObj.Aug = monthGainShift[7]
+  mGainObj.Sep = monthGainShift[8]
+  mGainObj.Oct = monthGainShift[9]
+  mGainObj.Nov = monthGainShift[10]
+  mGainObj.Dec = monthGainShift[11]
+
+
+// compensate for month shift
+
+
+
+
 
   setYearGain (yearlyGain)
 }

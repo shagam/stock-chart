@@ -17,6 +17,7 @@ function Tools (props) {
     const [target, setTarget] = useState ();
     const [targetPriceHist, setTargetPriceHist] = useState ({});
     const [yearGain, setYearGain] = useState ();
+    const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
 
     // const [logFlags, setLogFlags] = useState([]);
     
@@ -77,7 +78,7 @@ function Tools (props) {
 
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
-                      <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {oneKey}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
+                      <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
                     )
                 })}
 
