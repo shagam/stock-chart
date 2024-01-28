@@ -156,7 +156,7 @@ async function targetHistBest (setTargetPriceHist, logFlags) {
 }
 
 async function targetHistAll (setTargetPriceHist, logFlags) {
-
+    const LOG = logFlags.includes('target')
     const tagetHistory = await getDocs(targetRef);
     console.log ('count=', tagetHistory.docs.length)
     var tarHist = {}
@@ -166,6 +166,7 @@ async function targetHistAll (setTargetPriceHist, logFlags) {
             const b = 1
         }
         const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
+        if (LOG)
         console.log (sym, histArr.length, histArr)
         for (let j = 0; j < histArr.length; j++)  {                 
             delete histArr[j].dateMili;  // reduce unimportant info
@@ -173,6 +174,7 @@ async function targetHistAll (setTargetPriceHist, logFlags) {
         if (! tarHist[sym])
             tarHist[sym] = histArr;
         else
+            if (LOG)
             console.log (sym, 'duplicate', tarHist[sym].length, histArr.length)
         if (histArr.length > 1) {
             const a = 1
