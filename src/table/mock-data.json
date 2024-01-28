@@ -1,16 +1,16 @@
 
 [
     {
-        "symbol": "TSLA",
-        "sym": "TSLA" 
+        "symbol": "AAPL",
+        "sym": "AAPL" 
     },   
     {
         "symbol": "NVDA",
         "sym": "NVDA" 
     },   
     {
-        "symbol": "DIA",
-        "sym": "DIA"          
+        "symbol": "AMD",
+        "sym": "AMD"          
     },
     {
         "symbol": "QQQ",
