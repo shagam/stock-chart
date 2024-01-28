@@ -1204,11 +1204,11 @@ export const BasicTable = (props) => {
 
         {! isMobile && <LogFlags setLogFlags={setLogFlags} />}  
 
-        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
-         admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
-
         <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> 
 
+        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
+         admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
+ 
         {chartSymbol && <div>
           <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
 
