@@ -91,9 +91,9 @@ function Tools (props) {
                 <br></br>           
     
                 <div>
-                  <button type="button" onClick={()=>targetHistAll (setTargetPriceHist, logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
+                  <button type="button" onClick={()=>targetHistAll (setTargetPriceHist, props.logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
                   {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
-                  <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, logFlags)}>targetHistBest</button>         
+                  <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, props.logFlags)}>targetHistBest</button>         
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
 
