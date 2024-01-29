@@ -30,6 +30,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
     var earliest = Date.now()
     var target = -1;
 
+    // find earliest collection (if more than one)
     var bigDifference = true;
     if (fromFireBase.docs.length > 0) {
         for (let i = 0; i < fromFireBase.docs.length; i++) {
@@ -55,7 +56,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
 
         // allow new record only if none or significant dufferent
         if (targetPriceArrayForSym.length > 0) {
-            target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target;            
+            target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; // compare new target with last entry of collection           
             if (! bigDiff (targetRaw, target, 1.02)) {
                 bigDifference = false;
                 if (LOG)
@@ -79,7 +80,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
         }   
     }
 
-    // delete all previous entries
+    // delete all extra collection except earliest
     for (let i = 0; i < fromFireBase.docs.length; i++) {
         if (! bigDifference && i === earliestIndx)
         continue       
@@ -105,6 +106,7 @@ async function getTargetPriceArray (symbol, setTargetInfo) {
     // return targetPriceArray;   
 }
 
+// obsolete
 async function targetHistBigDiff (setTargetPriceArray, logFlags) {
     const allTarget = {};
     const tagetHistory = await getDocs(targetRef);
@@ -131,6 +133,7 @@ async function targetHistBigDiff (setTargetPriceArray, logFlags) {
     setTargetPriceArray (txt1)
 }
 
+// hiest target gain
 async function targetHistBest (setTargetPriceHist, logFlags) {
     const LOG = logFlags.includes('target')
 
