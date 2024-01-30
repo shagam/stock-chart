@@ -102,8 +102,11 @@ function Tools (props) {
    
                     {targetPriceHist && Object.keys(targetPriceHist).sort().map((sym,i)=>{
                       return (
-                          <div style={{maxHeight: '80px', width: '90vw', marginTop: '5px'}} key={i}>  <div style={{'color': 'red', width: '40px'}} >
-                            {sym}:  </div>  {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)}</li>)} 
+                          <div style={{width: '90vw'}} key={i}>
+                            <div style={{'color': 'red', width: '40px'}} > {sym}:  </div>
+                              <div>
+                                {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
+                              </div>
                           </div>
                         )
                     })}
