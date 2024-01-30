@@ -104,16 +104,14 @@ function Tools (props) {
                       return (
                           <div style={{width: '90vw'}} key={i}>
                             <div style={{'color': 'red', width: '40px'}} > {sym}:  </div>
-                              <div>
-                                {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
-                              </div>
+                            {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
                           </div>
                         )
                     })}
                   </div>
       
                 </div>
-                {/* <br></br>          */}
+                <br></br>         
             </div>}
         </div>
     )
