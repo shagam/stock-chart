@@ -32,9 +32,21 @@ const StockInfo = (props) => {
       {infoFlag && infoStr &&
         <div>
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
-          <textarea type='text' name='stockInfo' cols='100' rows='20' readOnly
-          value={infoStr}  >
-          </textarea>
+        
+          <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
+
+          {props.stockInfo && Object.keys(props.stockInfo).map((infoName,i)=>{
+            return (
+                <div style={{display: 'flex'}} key={i}>
+                  <div style={{'color': 'ForestGreen', minWidth: '20vw'}} > {infoName}: &nbsp;&nbsp; </div>
+                  <div > {props.stockInfo[infoName]} </div> 
+                </div>
+              )
+          })}
+                  </div>
+
+
+
         </div>
       }
       </div>
