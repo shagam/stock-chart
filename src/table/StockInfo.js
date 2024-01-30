@@ -6,17 +6,6 @@ const StockInfo = (props) => {
 
   const infoFlagChange = () => {setInfoFlag (! infoFlag)}
 
-  const [infoStr, setInfoStr] = useState()
-
-
-  useEffect(() => {
-    var txt = ''
-    const keys = Object.keys(props.stockInfo)
-    keys.forEach (key => txt += key + ':   ' + props.stockInfo[key] +'\n')
-
-     
-    setInfoStr (txt);
-  },[props.infoSymbol, props.stockInfo]) 
 
 
   return (
@@ -29,7 +18,7 @@ const StockInfo = (props) => {
       </div>
       
       <div id="textarea_id"> 
-      {infoFlag && infoStr &&
+      {infoFlag && props.stockInfo &&
         <div>
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
         
@@ -43,9 +32,7 @@ const StockInfo = (props) => {
                 </div>
               )
           })}
-                  </div>
-
-
+          </div>
 
         </div>
       }
