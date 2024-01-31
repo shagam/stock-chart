@@ -54,16 +54,15 @@ const LogFlags = (props) => {
 
 
    return (
-     <div className="app" style={{ border: '2px solid magenta', padding: '0px'}}>
+     <div style={{ border: '2px solid magenta', padding: '0px'}}>
       <div>
         <input  type="checkbox" checked={showFlags}  onChange={() => {showToggle()}} /> &nbsp; Console Log flags
       </div>
 
-       <div className="checkList">
-
-         <div className="list-container"  style={{display:'flex'}}>
+       <div>
+         <div style={{display:'flex'}}>
            {showFlags && checkList.map((item, index) => (
-             <div key={index}>
+             <div style={{display:'flex'}} key={index}>
                <input value={item} type="checkbox" checked={checked.includes(item)} onChange={handleCheck} />
                <span>&nbsp;{item}&nbsp;&nbsp;</span>
              </div>
