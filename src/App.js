@@ -47,24 +47,23 @@ function App() {
         <div>
           <input type="checkbox" checked={aboutFlag} onChange={() => {setAboutFlag (! aboutFlag)}} /> About
           {aboutFlag && <div>
-
+            
+            <hr/> 
+            <a href="https://youtu.be/y3CBXkZzSNs" >English tutorial</a>  &nbsp; &nbsp; 
+            <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
+            {/* <a href="https://stocks-compare.netlify.app" >Link to Stocks analyse and compare</a>  */}
 
             <h5> Analyse and compares stocks / ETF, in the US stock market,</h5> 
-            <h5  style={{color:'red'}}> for long term investors.  </h5>
-            <h5> Main unique features. Augment the traditional stock market tools. </h5>
+            {/* <h5  style={{color:'red'}}> for long term investors.  </h5> */}
+            <h5> Augment the traditional stock market tools. </h5>
 
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}> AlphVatage.co </h6> <h6> &nbsp; Analysis based on Historical stock prices, recievd from AlphVantage.co</h6>
+              <h6 style={{color:'red'}}> AlphVatage.co </h6> <h6> &nbsp; Analysis based on Historical stock prices</h6>
             </div>
             
             <div style={{display:'flex'}}>
               <h6 style={{color:'red'}}> Free sharing </h6> <h6>&nbsp; Pease share with anyone interested </h6>
             </div>
-
-            <hr/> 
-            <a href="https://youtu.be/y3CBXkZzSNs" >English tutorial</a>  &nbsp; &nbsp; 
-            <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
-            {/* <a href="https://stocks-compare.netlify.app" >Link to Stocks analyse and compare</a>  */}
 
             <hr/> 
   
@@ -73,10 +72,10 @@ function App() {
             </div>
 
             <h6>  &nbsp; &nbsp; Hi-Tech NASDAQ ETF (QQQ) has an average annual gain of 15%. </h6>
-            <h6>   &nbsp; &nbsp; Behemoth S&P BRK-A, DIA  have an average annual gain of about 10%. </h6>
+            <h6>   &nbsp; &nbsp; Behemoth S&P DIA  have an average annual gain of about 10%. </h6>
             
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}>  Drop recovery analysis </h6> <h6> &nbsp; - calculate the drop and recovery time. </h6>
+              <h6 style={{color:'red'}}>  Drop recovery analysis </h6> <h6> &nbsp; - calculate the drop level, and recovery period. </h6>
             </div>
 
             <div style={{display:'flex'}} >
@@ -105,7 +104,7 @@ function App() {
             </div>
 
             <div style={{display:'flex'}} >
-              <h6 style={{color:'red'}}>Get stocks preformed better than QQQ </h6> <h6> &nbsp; Year, 2Year, 5Year, 10Year (from select list)</h6>
+              <h6 style={{color:'red'}}>Stocks preformed better than QQQ </h6> <h6> &nbsp; Year, 2Year, 5Year, 10Year (from select list)</h6>
             </div>
 
             <div style={{display:'flex'}} >
@@ -117,14 +116,22 @@ function App() {
             </div>
 
             <div style={{display:'flex'}} >
-              <h6> I base my selection on 2 factors: &nbsp; </h6><h6 style={{color:'red'}}>Long Term gain (The past),
-              </h6><h6> &nbsp; and on  &nbsp;</h6><h6 style={{color:'red'}}> analist target, prediction. (Near future) </h6>
+              <h6 style={{color:'red'}}>Monthly gain </h6> <h6> &nbsp; November has the best gain </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6 style={{color:'red'}}>Analyst target price </h6> <h6> &nbsp; Just started collecting, results analysis mot yet.  </h6>
+            </div>
+
+            <div style={{display:'flex'}} >
+              <h6> I base my selection on 2 factors: &nbsp; </h6><h6 style={{color:'red'}}>Long Term gain,
+              </h6><h6> &nbsp; and on  &nbsp;</h6><h6 style={{color:'red'}}> analist target price, prediction.  </h6>
             </div>
             <h6> Wisdom of the crowd </h6>
             <hr/> 
-            <h6>       Open source -  github.com/shagam/stock-chart </h6>
+            <h6>Source -  github.com/shagam/stock-chart </h6>
 
-            <h6>      Written in ReactJS, on top of JavaScript.</h6> 
+            <h6>Written in ReactJS, on top of JavaScript.</h6> 
             <hr/> 
          </div>
           }
