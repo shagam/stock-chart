@@ -106,7 +106,7 @@ function Tools (props) {
                       return (
                           <div style={{width: '90vw'}} key={i}>
                             <div  style={{display: 'flex'}} >
-                              <div style={{color: 'red', width: '50px'}} > {sym} </div>  
+                              <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
                               <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
                             </div> 
                             {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
