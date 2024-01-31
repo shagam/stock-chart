@@ -96,15 +96,19 @@ function Tools (props) {
                   {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
                   <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, props.logFlags)}>targetHistBest</button>         
 
-                  {targetPriceHist && Object.keys(targetPriceHist).length > 0 && <div>count={Object.keys(targetPriceHist).length} </div>}
+                  {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
+                   <div>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; sym &nbsp; (targetNew &nbsp;/ targetOld) </div>}
 
                   <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
    
                     {targetPriceHist && Object.keys(targetPriceHist).sort().map((sym,i)=>{
                       return (
                           <div style={{width: '90vw'}} key={i}>
-                            <div style={{'color': 'red', width: '40px'}} > {sym}:  </div>
-                            {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
+                            <div  style={{display: 'flex'}} >
+                              <div style={{'color': 'red', width: '50px'}} > {sym} </div>  &nbsp; &nbsp;
+                                {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)}
+                              </div>
+                              {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
                           </div>
                         )
                     })}
