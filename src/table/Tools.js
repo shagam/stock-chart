@@ -25,24 +25,27 @@ function Tools (props) {
     
   const LOG = props.logFlags.includes('month')
 
+  // clear vars when symbol change
     useEffect(() => {
         setTargetInfo()
         setPrice()
         setMgainObj({})
+        setTargetPriceHist()
       },[props.symbol]) 
   
   
   
-    function targetGet (symbol) {
+    function targetGetOne (symbol) {
       const tar = getTargetPriceArray (props.symbol, setTargetInfo)
   
       const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
       if (row_index  === -1)
         return;
-      setPrice (props.rows[row_index].values.price)
-      setTarget (props.rows[row_index].values.target)
+      setPrice (props.rows[row_index].values.price) // for display
+      setTarget (props.rows[row_index].values.target) // for display
     }
   
+    // show as vertical list of array items
     function renderList(array) {
       if (array.length < 1)
         return;
@@ -52,8 +55,6 @@ function Tools (props) {
         return array.map((item) => <li>{JSON.stringify(item)}</li>);  
     }
      
-
-    const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
     const style = {
         // background: 'blue',
@@ -66,7 +67,7 @@ function Tools (props) {
     return (
         <div style = {style} >
             <div>
-                <input  type="checkbox" checked={displayFlag} onChange={displayFlagChange}/> Tools
+                <input  type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag ( !displayFlag)}}/> Tools
             </div>
 
             {displayFlag && <div>
@@ -85,7 +86,7 @@ function Tools (props) {
                 {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
                 <br></br>           
 
-                {props.symbol && <button type="button" onClick={()=>targetGet ()}>targetHistoryOne </button> }
+                {props.symbol && <button type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> }
                 {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
                 {price && targetInfo && renderList(targetInfo)}
             
@@ -97,7 +98,7 @@ function Tools (props) {
                   <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, props.logFlags)}>targetHistBest</button>         
 
                   {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
-                   <div>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; sym &nbsp; (targetNew &nbsp;/ targetOld) </div>}
+                   <div  style={{display: 'flex'}}>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; &nbsp; <div style={{color: 'lightGreen'}}>(targetNew &nbsp;/ targetOld)</div> </div>}
 
                   <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
    
