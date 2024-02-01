@@ -44,9 +44,9 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
 
         // avoid too many
         if (targetPriceArrayForSym.length > 40)  {
-            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym,length/4), 1) // remove oldest    
-            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym,length/4*2), 1) // remove oldest    
-            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym,length/4*3), 1) // remove oldest    
+            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym.length/4), 1) // remove oldest    
+            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym.length/4*2), 1) // remove oldest    
+            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym.length/4*3), 1) // remove oldest    
         }
 
         // delete all previous entries but the earliest
