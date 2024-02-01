@@ -43,8 +43,10 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
         targetPriceArrayForSym = JSON.parse(fromFireBase.docs[earliestIndx].data().dat); // indx of earliest
 
         // avoid too many
-        while (targetPriceArrayForSym.length > 20)  {
-            targetPriceArrayForSym.shift() // remove oldest    
+        if (targetPriceArrayForSym.length > 40)  {
+            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym,length/4), 1) // remove oldest    
+            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym,length/4*2), 1) // remove oldest    
+            targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym,length/4*3), 1) // remove oldest    
         }
 
         // delete all previous entries but the earliest
