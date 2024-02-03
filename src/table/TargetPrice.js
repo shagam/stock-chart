@@ -16,12 +16,16 @@ function bigDiff (tar0, tar1, threshold) {
 
 async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
 
-    const LOG = logFlags.includes('target') || true
+    if (price === 0) {
+        console.log (symbol, 'price === 0', price)
+        return; // do not add tar record
+    }
+    const LOG = logFlags.includes('target')
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
     const fromFireBase = await getDocs (userQuery);
      
     // save target prices for symbol in array
-    const tar = price !== 0 ? targetRaw / price : -1; 
+    const tar = targetRaw / price; 
     const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
 
  // choose earliest, in case of more than one
@@ -73,6 +77,14 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
 
     if (bigDifference) {
         // const target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; 
+        // remove bad records
+        for (let i = 0; i < targetPriceArrayForSym.length; i++) {
+            if (targetPriceArrayForSym[i].price === undefined) {
+                console.log (symbol, 'bad record', targetPriceArrayForSym[i])
+                targetPriceArrayForSym = targetPriceArrayForSym.splice(i,1); // remove bad 
+            }
+        }
+        
         targetPriceArrayForSym.push (symTargetOne)
         const arrayStringify = JSON.stringify(targetPriceArrayForSym);
         await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
