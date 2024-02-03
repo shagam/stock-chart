@@ -410,8 +410,8 @@ export const BasicTable = (props) => {
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
     firebaseGainAdd (sym, 'gain');  // save in firestore
-    // if (saveTabl)
-    //   saveTable(sym);
+    if (saveTabl)
+      saveTable(sym);
   }
 
   const updateTableInfo = (symbol, childData, updateDate, updateMili)  => {
@@ -532,6 +532,8 @@ export const BasicTable = (props) => {
   const handleGainClick = (sym, saveTabl) => {
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
+    handleInfoClick(sym, saveTabl);
+
     if (LOG_FLAG)
       console.log(sym, 'gain/chart (symbol)'); 
     if (sym === '' || sym === undefined) {
@@ -540,6 +542,14 @@ export const BasicTable = (props) => {
     }
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+    // const oneDayMili = 1000 * 3600 + 24;
+    // var diff = Date.now() - rows[row_index].values.gain_mili;
+    // if (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili) {
+    //   let date = new Date(rows[row_index].values.gain_mili);
+    //   if (LOG_FLAG)
+    //     console.log (sym, 'Abort gain update, missing gain. diff:', diff / 1000, date.toString())
+    //   return; // write only if fresh gain info
+    // }
 
     const ind = allColumns.findIndex((column)=> column.Header === 'splits_list');
     if (allColumns[ind].isVisible || ! isAdjusted ())  // high limit no need for compensation
@@ -812,9 +822,9 @@ export const BasicTable = (props) => {
               updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl);                      
             }
         )
-        handleInfoClick(sym, false);
-        if (saveTabl)
-          saveTable(sym); 
+        // handleInfoClick(sym, false);
+        // if (saveTabl)
+        //   saveTable(sym); 
   }
 
    // get all info for targetPrice
