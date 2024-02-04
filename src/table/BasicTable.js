@@ -254,10 +254,13 @@ export const BasicTable = (props) => {
     // delete old entries
     // if (LOG_FIREBASE && gain.docs.length > 0)
     //   console.log (symbol, 'delete old entries:', gain.docs.length)  
+    if (gain && gain.docs && gain.docs.length > 1)
+      console.log (symbol, 'del duplicate gain entries', gain.docs.length) 
     for (let i = 0; i < gain.docs.length; i++) {
       //const id = gain.docs[i].id;
       var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
-      await deleteDoc (gainDoc);    
+      await deleteDoc (gainDoc);   
+
     }           
   }
 
