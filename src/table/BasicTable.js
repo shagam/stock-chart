@@ -391,6 +391,9 @@ export const BasicTable = (props) => {
     rows[row_index].values.sym = sym; // added field
     rows[row_index].values.splits_list = splits;
     // console.log (splits)
+
+    targetPriceAdd (sym, rows[row_index].values.targetRaw, price, logFlags, 'gain') 
+
     try {
     if (splits) {
       if (splits.startsWith('u')) {
@@ -443,6 +446,7 @@ export const BasicTable = (props) => {
     rows[index].values.Cap = Number (childData["MarketCapitalization"] / 1000 / 1000 / 1000).toFixed(2);
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
     //Sector         
+    targetPriceAdd (symbol, targetRaw, rows[index].values.price, logFlags, 'info') 
 
     rows[index].values.info_mili = updateMili;
     rows[index].values.info_date = updateDate;
@@ -471,7 +475,7 @@ export const BasicTable = (props) => {
 
 
     // save target prices history for a symbol in array
-    targetPriceAdd (symbol, targetRaw, price,logFlags)
+    // targetPriceAdd (symbol, targetRaw, price,logFlags)
 
   }
             
@@ -824,7 +828,7 @@ export const BasicTable = (props) => {
         )
         // handleInfoClick(sym, false);
         // if (saveTabl)
-        //   saveTable(sym); 
+        //   saveTable(sym);
   }
 
    // get all info for targetPrice

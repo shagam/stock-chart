@@ -14,13 +14,14 @@ function bigDiff (tar0, tar1, threshold) {
     return false
 }
 
-async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
-
-    if (price === 0) {
-        console.log (symbol, 'price === 0', price)
+async  function targetPriceAdd (symbol, targetRaw, price, logFlags, src) {
+    const LOG = logFlags.includes('target') || true
+    if (price === 0 || targetRaw === undefined) {
+        if (LOG)
+            console.log (symbol, 'targetPrice abort price=', price,  'targetRaw=', targetRaw, ' src=', src)
         return; // do not add tar record
     }
-    const LOG = logFlags.includes('target')
+
     var userQuery = query (targetRef, where ('symbol', '==', symbol));
     const fromFireBase = await getDocs (userQuery);
      
@@ -63,10 +64,11 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
         // allow new record only if none or significant dufferent
         if (targetPriceArrayForSym.length > 0) {
             target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; // compare new target with last entry of collection           
-            if (! bigDiff (targetRaw, target, 1.02)) {
+            const priceLast =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].price; 
+            if (! bigDiff (targetRaw, target, 1.02) || bigDiff (price, priceLast, 1.04)) {
                 bigDifference = false;
                 if (LOG)
-                    console.log (symbol, 'targetPrice skip add small diff: ', (targetRaw / target).toFixed(3)); // show the change of last target
+                    console.log (symbol, 'targetPrice abort, small diff=', (targetRaw / target).toFixed(3),  'price=', price, 'targetRaw=', targetRaw, 'src=', src); // show the change of last target
             }
         }
     }
@@ -90,7 +92,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags) {
         await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
 
         if (LOG) {
-            console.log (symbol, 'targetPrice add', 'target: ',  targetRaw, (targetRaw / target).toFixed(3), arrayStringify, ' size: ', targetPriceArrayForSym.length)  
+            console.log (symbol, 'targetPrice add', 'target=',  targetRaw, (targetRaw / target).toFixed(3), arrayStringify, ' size=', targetPriceArrayForSym.length, 'src=', src)  
         }   
     }
 
@@ -121,30 +123,32 @@ async function getTargetPriceArray (symbol, setTargetInfo) {
 }
 
 // obsolete
-async function targetHistBigDiff (setTargetPriceArray, logFlags) {
-    const allTarget = {};
+async function targetHistBigDiff (setTargetPriceHist, logFlags) {
+    const LOG = logFlags.includes('target')
+
     const tagetHistory = await getDocs(targetRef);
-    // gainLength = gain.docs.length;
-    var txt = '';
+    var tarHist = {}
     for (let i = 0; i < tagetHistory.docs.length; i++) {
         const sym = tagetHistory.docs[i].data().symbol;
         try {
-            const dat = JSON.parse (tagetHistory.docs[i].data().dat)
-            const tar0 =  dat[0].target;
-            const tar1 =  dat[dat.length - 1].target;            
+            const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
+            const tar0 =  histArr[0].target;
+            const tar1 =  histArr[histArr.length - 1].target;            
 
             if (bigDiff (tar0, tar1, 1.05)) {
-                console.log (sym, dat.length)
-                for (let i = 0; i < dat.length; i++)                   
-                    delete dat[i].dateMili;  // reduce unimportant info
-                console.dir (dat)
-                txt += sym + ' ' + JSON.stringify (dat) + '\n\n'
+                if (LOG)
+                    console.log (sym, histArr.length)
+                for (let i = 0; i < histArr.length; i++)                   
+                    delete histArr[i].dateMili;  // reduce unimportant info
+                if (LOG)
+                    console.dir (histArr)
+                tarHist[sym] = histArr;
+
             }
         } catch (e) {console.log (sym, e.message)}
     }
-    // IBM [{"target":152.06,"date":"2024-Jan-15  11:39"},{"target":138.69,"date":"2024-Jan-17  13:42"}]
-    const txt1 = txt.replace(/{/g,'\n{');
-    setTargetPriceArray (txt1)
+
+    setTargetPriceHist(tarHist);
 }
 
 // hiest target gain
@@ -175,7 +179,8 @@ async function targetHistBest (setTargetPriceHist, logFlags) {
 async function targetHistAll (setTargetPriceHist, logFlags) {
     const LOG = logFlags.includes('target')
     const tagetHistory = await getDocs(targetRef);
-    console.log ('count=', tagetHistory.docs.length)
+    if (LOG)
+        console.log ('count=', tagetHistory.docs.length)
     var tarHist = {}
     for (let i = 0; i < tagetHistory.docs.length; i++) {
         const sym = tagetHistory.docs[i].data().symbol;
@@ -184,7 +189,7 @@ async function targetHistAll (setTargetPriceHist, logFlags) {
         }
         const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
         if (LOG)
-        console.log (sym, histArr.length, histArr)
+            console.log (sym, histArr.length, histArr)
         for (let j = 0; j < histArr.length; j++)  {                 
             delete histArr[j].dateMili;  // reduce unimportant info
         }
@@ -192,7 +197,7 @@ async function targetHistAll (setTargetPriceHist, logFlags) {
             tarHist[sym] = histArr;
         else
             if (LOG)
-            console.log (sym, 'duplicate', tarHist[sym].length, histArr.length)
+                console.log (sym, 'duplicate', tarHist[sym].length, histArr.length)
         if (histArr.length > 1) {
             const a = 1
         }
