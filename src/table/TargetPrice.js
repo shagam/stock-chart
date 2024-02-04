@@ -15,7 +15,7 @@ function bigDiff (tar0, tar1, threshold) {
 }
 
 async  function targetPriceAdd (symbol, targetRaw, price, logFlags, src) {
-    const LOG = logFlags.includes('target') || true
+    const LOG = logFlags.includes('target')
     if (price === 0 || targetRaw === undefined) {
         if (LOG)
             console.log (symbol, 'targetPrice abort price=', price,  'targetRaw=', targetRaw, ' src=', src)
