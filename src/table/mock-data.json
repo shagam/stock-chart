@@ -1,18 +1,6 @@
 
 [
     {
-        "symbol": "AAPL",
-        "sym": "AAPL" 
-    },   
-    {
-        "symbol": "NVDA",
-        "sym": "NVDA" 
-    },   
-    {
-        "symbol": "MRNA",
-        "sym": "MRNA"          
-    },
-    {
         "symbol": "QQQ",
         "sym": "QQQ"
     },
