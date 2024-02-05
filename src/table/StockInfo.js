@@ -32,6 +32,7 @@ const StockInfo = (props) => {
                 </div>
               )
           })}
+          <br></br>
           </div>
 
         </div>
