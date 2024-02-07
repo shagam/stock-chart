@@ -1063,6 +1063,10 @@ export const BasicTable = (props) => {
     return 'black'
   }
   
+  function reloadPage() {
+    window.location.reload(false);
+  }
+
   function getColor(val, column, sym) {
     if (val === undefined || val === -1 || val === '-1.00')
       return 'Black'
@@ -1142,6 +1146,7 @@ export const BasicTable = (props) => {
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
           {eliHome && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
+          &nbsp; <button onClick={reloadPage} > reloadPage </button>         
         </div>
 
       {columnHideFlag && 
