@@ -337,6 +337,7 @@ const Firebase = (props) => {
     } 
   
     props.saveTable('all');
+    window.location.reload();
   }
 
   // get one symbol INFO from firebase  and clean duplicates
