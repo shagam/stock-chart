@@ -266,13 +266,14 @@ const Firebase = (props) => {
   }
 
    // get one symbol GAIN from firebase  and clean duplicates
-   const firebaseGainGetOne = async (symbol, saveTable) => {
-    try {
+   const firebaseGainAll = async () => {
+    for (let row_index = 0; row_index < props.rows.length; row_index++) {
+      try {
+      const symbol = props.rows[row_index].values.symbol;
       // get one symbol gain from firebase
       var userQuery = query (props.gainRef, where('__symbol', '==', symbol));
       const gain = await getDocs(userQuery);
-
-      const row_index = props.rows.findIndex((row)=> row.values.symbol === symbol);            
+           
       if (row_index !== -1 && gain !== undefined && gain.docs.length > 0) {
         const gain_ = gain.docs[0].data()
 
@@ -332,14 +333,16 @@ const Firebase = (props) => {
           }               
         }
       }
-      if (saveTable) // save table and refresh only on last one
-        props.saveTable('all');
-    } catch(e) {console.log (e)}
+    }catch (e) {console.log (e)}
+    } 
+  
+    props.saveTable('all');
   }
 
   // get one symbol INFO from firebase  and clean duplicates
-  const firebaseInfoGetOne = async (symbol) => {
-    try {
+  const firebaseInfoAll = async () => {
+    for (let row_index = 0; row_index < props.rows.length; row_index++) {
+      const symbol = props.rows[row_index].values.symbol;
       var userQuery = query (props.infoRef, where('__symbol', '==', symbol));
       const info = await getDocs(userQuery);
       if (info.docs.length > 0) {
@@ -370,41 +373,8 @@ const Firebase = (props) => {
           }
         }
        }
-    } catch(e) {console.log (e); alert (e)}
-  }
-
-
-
-  const firebaseGetAndFill = () => {
-    // allow reads once a minute
-
-    // if (Date.now() - firebaseFillMili < 1000*60)
-    //   return;
-    // setFirebaseFillMili(Date.now());
-
-    // turn on columns so used can decide if up to date
-    try {
-    // var ind = props.allColumns.findIndex((column)=> column.Header === 'info_date');
-    // props.allColumns[ind].toggleHidden();
-    var ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
-    // props.allColumns[ind].toggleHidden();
-
-    // fill missing data get from firebase 
-    for (let i = 0; i < props.rows.length; i++) {
-      const saveTableFlag = i === props.rows.length - 1; // save table and refresh only on last one
-      if (props.rows[i].values.info_date === undefined)  // only getif empty
-        firebaseInfoGetOne((props.rows[i].values.symbol));
-      if (props.rows[i].values.gain_date === undefined) // only getif empty
-        firebaseGainGetOne((props.rows[i].values.symbol), saveTableFlag);
-    }
-    props.refreshCallBack()
-    console.log ('gain, info inserted in table')
-    // setTimeout(function() {
-    //   props.saveTable('any');    
-    // }, 500);
-    } catch (e) { console.log (e)}
-    // setTimeout(() => props.saveTable('all'), 700);
-    // props.saveTable('all');
+    } 
+    props.saveTable('all');
   }
 
   const firebaseStatistics  = async () => {
@@ -534,8 +504,10 @@ const Firebase = (props) => {
 
       {displayFlag && 
       <div> &nbsp;
-        <button type="button" onClick={()=>firebaseGetAndFill()} >Fill_gain_info </button> &nbsp;
+        <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;
+        <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
         <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button> &nbsp;
+
         <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
         
         <hr/>
