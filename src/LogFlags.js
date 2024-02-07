@@ -56,7 +56,7 @@ const LogFlags = (props) => {
    return (
      <div style={{ border: '2px solid magenta', padding: '0px'}}>
       <div>
-        <input  type="checkbox" checked={showFlags}  onChange={() => {showToggle()}} /> &nbsp; Console Log flags
+        <input  type="checkbox" checked={showFlags}  onChange={() => {showToggle()}} />  Console Log flags
       </div>
 
        <div>
