@@ -19,9 +19,11 @@ import Login from './auth/Login';
 import ForgotPassword from './auth/ForgotPassword';
 import UpdateProfile from './auth/UpdateProfile';
 import CookieConsent from "react-cookie-consent"
+// import Contact from './auth/Contact'
+
 import {getDateSec} from './table/Date'
 import About from './About'
-
+import Tutorials from './Tutorials'
 
 function App() {
   const [count, setCount] = useState (0);
@@ -37,6 +39,7 @@ function App() {
 
   //  Firebase: Error (auth/account-exists-with-different-credential).
   // ngrok http 3000
+  // <Route path="/contact" element={<Contact  />}/>
 
   return (
     <div className="App-continer">
@@ -45,7 +48,11 @@ function App() {
         <div> 
         <h2  style={{color:'green'}}> Stocks analyse & compare</h2> 
         <AuthProvider>
-            <About/>
+
+            <div style={{display:'flex'}}>
+              <About/>  &nbsp;   &nbsp; 
+              <Tutorials/>
+            </div>
                    {/* <hr/>  */}
             <Router>
               <Routes>
@@ -56,6 +63,7 @@ function App() {
                 <Route path="/login" element={<Login/> }/>
                 <Route path="/forgotPassword" element={<ForgotPassword />}/>
                 <Route path="/update-profile" element={<UpdateProfile  />}/>
+
               </Routes>
             </Router>
 
