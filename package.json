@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "https://www.stocksplithistory.com",
   "dependencies": {
+    "@emailjs/browser": "^4.1.0",
     "@material-ui/core": "^4.12.3",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
