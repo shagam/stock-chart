@@ -29,7 +29,7 @@ export default function ContactUs (props)  {
     // } 
 
       console.log (form.current)
-      emailjs.sendForm('service_hckn29m', 'template_g6rsdnw', form.current, 'HNB274P5Zug2myTir')
+      emailjs.sendForm('service_hckn29m', 'template_g6rsdnw', form.current, 'cWaOkZhGCDz_uQceT')
         .then((result) => {
             console.log(result.text);
         }, (error) => {
