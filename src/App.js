@@ -24,6 +24,7 @@ import CookieConsent from "react-cookie-consent"
 import {getDateSec} from './table/Date'
 import About from './About'
 import Tutorials from './Tutorials'
+import LogFlags from './LogFlags'
 
 function App() {
   const [count, setCount] = useState (0);
@@ -66,6 +67,7 @@ function App() {
 
                 <Route path="/tutorials" element={<Tutorials  />}/>
                 <Route path="/about" element={<About  />}/>
+                <Route path="/logFlags" element={<LogFlags  />}/>
 
               </Routes>
             </Router>

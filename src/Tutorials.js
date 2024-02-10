@@ -13,7 +13,7 @@ function Tutorials () {
                 <Link to="/" > Home </Link>
             </div>
             <hr/> 
-            <h4>Tutorials</h4>
+            <h4 style={{color:'Green'}}>Tutorials</h4>
 
             <hr/> 
             <a href="https://youtu.be/y3CBXkZzSNs" >English tutorial</a>  &nbsp; &nbsp; 

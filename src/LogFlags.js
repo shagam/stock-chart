@@ -1,4 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
 // import "./logFlagaStyles.css";
 // https://contactmentor.com/checkbox-list-react-js-example/
 
@@ -54,14 +56,20 @@ const LogFlags = (props) => {
 
 
    return (
-     <div style={{ border: '2px solid magenta', padding: '0px'}}>
-      <div>
-        <input  type="checkbox" checked={showFlags}  onChange={() => {showToggle()}} />  Console Log flags
-      </div>
+     <div>
+      <hb/>
 
-       <div>
+      <div className='w-100 text-left mt-2'>
+        <Link to="/" > Home </Link>
+      </div>
+      <hr/>
+      <h4 style={{color:'blue'}}>Console-Log-Flags</h4>
+
+      <hr/>
+      <div>
+        
          <div style={{display:'flex'}}>
-           {showFlags && checkList.map((item, index) => (
+           {checkList.map((item, index) => (
              <div style={{display:'flex'}} key={index}>
                <input value={item} type="checkbox" checked={checked.includes(item)} onChange={handleCheck} />
                <span>&nbsp;{item}&nbsp;&nbsp;</span>

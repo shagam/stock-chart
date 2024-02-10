@@ -13,7 +13,9 @@ return (
     <div>
     
     <hr/> 
-      <h5> Analyse and compare stocks / ETF, in the US stock market,</h5> 
+    <h4 style={{color:'Green'}}>About  </h4>
+    <hr/> 
+    <h5> Analyse and compare stocks / ETF, in the US stock market,</h5> 
     {/* <h5  style={{color:'red'}}> for long term investors.  </h5> */}
 
 
@@ -94,7 +96,7 @@ return (
     <h6>Written in ReactJS, on top of JavaScript.</h6> 
     <hr/> 
     </div>
-    }
+
     </div>   
 )}
 

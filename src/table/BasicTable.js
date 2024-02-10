@@ -1114,7 +1114,8 @@ export const BasicTable = (props) => {
   return (
     <>
         <Link to="/tutorials">tutorials</Link> &nbsp; &nbsp;
-        <Link to="/about">about</Link>
+        <Link to="/about">about</Link> &nbsp; &nbsp;
+        {! isMobile && <Link to="/logFlags">console-log-flags</Link>}
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
@@ -1227,7 +1228,7 @@ export const BasicTable = (props) => {
         {chartSymbol && <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} errorAdd = {errorAdd}/>}
 
-        {! isMobile && <LogFlags setLogFlags={setLogFlags} />}  
+        {/* {! isMobile && <LogFlags setLogFlags={setLogFlags} />}   */}
 
         <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> 
 
