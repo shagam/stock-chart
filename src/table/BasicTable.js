@@ -1116,7 +1116,7 @@ export const BasicTable = (props) => {
         <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
         <Link to="/about">About</Link> &nbsp; &nbsp;
         <Link to="/manual">Manual</Link> &nbsp; &nbsp;
-        {! isMobile && <Link to="/logFlags">console-log-flags</Link>}
+        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
