@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function About () {
 
-    const [aboutFlag, setAboutFlag] = useState(false);
+    // const [aboutFlag, setAboutFlag] = useState(false);
 
 return (
 <div>

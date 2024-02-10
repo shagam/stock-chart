@@ -1113,9 +1113,11 @@ export const BasicTable = (props) => {
 
   return (
     <>
-        <Link to="/tutorials">tutorials</Link> &nbsp; &nbsp;
-        <Link to="/about">about</Link> &nbsp; &nbsp;
+        <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
+        <Link to="/about">About</Link> &nbsp; &nbsp;
+        <Link to="/manual">Manual</Link> &nbsp; &nbsp;
         {! isMobile && <Link to="/logFlags">console-log-flags</Link>}
+
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
@@ -1257,7 +1259,6 @@ export const BasicTable = (props) => {
         {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
         <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
-        <Manual />
         <hr/>
     </div> 
     </>

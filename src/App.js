@@ -25,6 +25,8 @@ import {getDateSec} from './table/Date'
 import About from './About'
 import Tutorials from './Tutorials'
 import LogFlags from './LogFlags'
+import Manual from './manual/Manual'
+
 
 function App() {
   const [count, setCount] = useState (0);
@@ -68,6 +70,7 @@ function App() {
                 <Route path="/tutorials" element={<Tutorials  />}/>
                 <Route path="/about" element={<About  />}/>
                 <Route path="/logFlags" element={<LogFlags  />}/>
+                <Route path="/manual" element={<Manual  />}/>
 
               </Routes>
             </Router>

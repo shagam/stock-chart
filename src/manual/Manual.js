@@ -1,5 +1,7 @@
 
 import React, {useState, useEffect, useMemo} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
 import txt from './Manual.txt'
 import './Manual.css'
 
@@ -28,21 +30,22 @@ const Manual = (props) => {
   // onLoadError {console.error}
 try {
   return <div className='upload-expense'>
-    <div>
-          <input
-            type="checkbox" checked={ManualFlag}
-            onChange={usageHelpChange}
-          /> manual
-    </div>
     <div className='txt'>
-      {ManualFlag &&
-        <div className='text'> 
-          <div id = "pdf_id">       
-              <object data={pdfCache} type="application/pdf"
-              width="1000" height="700" border='3' standby="Loading" >  </object>    
-           </div>
-        </div>
-      }
+    <hr/> 
+      <h4 style={{color:'Green'}}>Manual</h4>
+
+      <div>
+          <Link to="/" > Home </Link>
+      </div>
+      <hr/> 
+     
+      <div className='text'> 
+        <div id = "pdf_id">       
+            <object data={pdfCache} type="application/pdf"
+            width="1000" height="700" border='3' standby="Loading" >  </object>    
+          </div>
+      </div>
+      
     </div>
   </div>;
 } catch (e) {console.log (e)}
