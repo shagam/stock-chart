@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom'
 
 function About () {
 
@@ -6,15 +7,13 @@ function About () {
 
 return (
 <div>
-    <input type="checkbox" checked={aboutFlag} onChange={() => {setAboutFlag (! aboutFlag)}} /> About
-    {aboutFlag && <div>
+    <div>
+        <Link to="/" > Home </Link>
+    </div>
+    <div>
     
     <hr/> 
-    {/* <a href="https://youtu.be/y3CBXkZzSNs" >English tutorial</a>  &nbsp; &nbsp;  */}
-    {/* <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp;  */}
-    {/* <a href="https://stocks-compare.netlify.app" >Link to Stocks analyse and compare</a>  */}
-
-    <h5> Analyse and compare stocks / ETF, in the US stock market,</h5> 
+      <h5> Analyse and compare stocks / ETF, in the US stock market,</h5> 
     {/* <h5  style={{color:'red'}}> for long term investors.  </h5> */}
 
 

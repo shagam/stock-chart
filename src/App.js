@@ -50,8 +50,8 @@ function App() {
         <AuthProvider>
 
             <div style={{display:'flex'}}>
-              <About/>  &nbsp;   &nbsp; 
-              <Tutorials/>
+              {/* <About/>  &nbsp;   &nbsp; 
+              <Tutorials/> */}
             </div>
                    {/* <hr/>  */}
             <Router>
@@ -64,10 +64,15 @@ function App() {
                 <Route path="/forgotPassword" element={<ForgotPassword />}/>
                 <Route path="/update-profile" element={<UpdateProfile  />}/>
 
+                <Route path="/tutorials" element={<Tutorials  />}/>
+                <Route path="/about" element={<About  />}/>
+
               </Routes>
             </Router>
 
+
           </AuthProvider>
+
           {/* <div>{count}</div> */}
         </div>
       </Container>

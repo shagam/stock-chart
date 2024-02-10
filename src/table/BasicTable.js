@@ -1113,12 +1113,15 @@ export const BasicTable = (props) => {
 
   return (
     <>
+        <Link to="/tutorials">tutorials</Link> &nbsp; &nbsp;
+        <Link to="/about">about</Link>
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
           {/* <div> <Link to="/dashboard" > Login Dashboard </Link>  </div>  */}
         </div>
         {errors.length > 0 && <ErrorList errorList={errors}/> }
+
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
