@@ -36,15 +36,6 @@ import {format} from "date-fns"
 
 
 import {db} from '../firebaseConfig'
-import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
-
-// const {collection}  = lazy(() => import ("firebase/firestore"))
-// const getDocs = lazy(() => import ("firebase/firestore"))
-// const addDoc  = lazy(() => import ("firebase/firestore"))
-// const doc = lazy(() => import ("firebase/firestore"))
-// const deleteDoc = lazy(() => import ("firebase/firestore"))
-// const query  = lazy(() => import ("firebase/firestore"))
-// const where = lazy(() => import ("firebase/firestore"))
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -67,6 +58,15 @@ import CookieConsent from 'react-cookie-consent'
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 
+import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+// const collection = lazy(() => import('firebase/firestore').then((module) => ({default: module.collection})))
+// const getDocs= lazy(() => import('firebase/firestore').then((module) => ({default: module.getDocs})))
+// const addDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.addDoc})))
+// const doc = lazy(() => import('firebase/firestore').then((module) => ({default: module.doc})))
+// const deleteDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.deleteDoc})))
+// const query = lazy(() => import('firebase/firestore').then((module) => ({default: module.query})))
+// const where = lazy(() => import('firebase/firestore').then((module) => ({default: module.where})))
+
 // +
 // in comboModule.js:
 // export A from '../test/A'
@@ -86,7 +86,7 @@ const StockChart = lazy(() => import ('../Stock-chart'));
 const Firebase  = lazy(() => import ( './Firebase'));
 
 
-export const BasicTable = (props) => {
+const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
@@ -1297,3 +1297,5 @@ export const BasicTable = (props) => {
     </Suspense>
   )
 }
+
+export default BasicTable

@@ -1,7 +1,7 @@
 import React, {useState, Suspense, lazy} from 'react';
 import './App.css';
 // import StockTable from './Stock-table';
-import {BasicTable} from './table/BasicTable' 
+
 import { auth } from './firebaseConfig'
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from 'firebase/auth'
 // import { logout} from './contexts/AuthContext'
@@ -17,6 +17,9 @@ import LogFlags from './LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'
 // import Contact from './auth/Contact'
+
+// import {BasicTable} from './table/BasicTable' 
+const BasicTable  = lazy(() => import ( './table/BasicTable'));
 
 const Signup = lazy(() => import ('./auth/Signup'));
 const Dashboard = lazy(() => import ('./auth/Dashboard'));
