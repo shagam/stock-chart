@@ -500,14 +500,14 @@ const Firebase = (props) => {
         <input
           type="checkbox" checked={displayFlag}
           onChange={() => {setDisplayFlag (! displayFlag)}}
-        /> Firebase
+        /> Common-back-end
       </div>
 
       {displayFlag && 
       <div> &nbsp;
         <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;
         <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
-        <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compared-QQQ </button> &nbsp;
+        <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
 
         <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
         
