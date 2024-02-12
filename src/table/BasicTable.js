@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
-import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
+// import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
 //import{ Styles } from './TableStyles'
@@ -39,6 +39,15 @@ import {format} from "date-fns"
 
 import {db} from '../firebaseConfig'
 import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+
+// const {collection}  = lazy(() => import ("firebase/firestore"))
+// const getDocs = lazy(() => import ("firebase/firestore"))
+// const addDoc  = lazy(() => import ("firebase/firestore"))
+// const doc = lazy(() => import ("firebase/firestore"))
+// const deleteDoc = lazy(() => import ("firebase/firestore"))
+// const query  = lazy(() => import ("firebase/firestore"))
+// const where = lazy(() => import ("firebase/firestore"))
+
 import { Link, useNavigate } from 'react-router-dom'
 
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
@@ -55,6 +64,19 @@ import { ServerSelect } from './ServerSelect'
 import {ErrorList, beep, beep2} from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
 
+
+
+
+import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
+
+// +
+// in comboModule.js:
+// export A from '../test/A'
+// export B from '../test/B'
+
+// in the code that needs lazy modules
+// const A = lazy(() => import('./comboModule').then((module) => ({default: module.A})))
+// const B = lazy(() => import('./comboModule').then((module) => ({default: module.B})))
 
 const StockChart = lazy(() => import ('../Stock-chart'));
 const Firebase  = lazy(() => import ( './Firebase'));
