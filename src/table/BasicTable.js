@@ -80,7 +80,7 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
 
 //  import {marketwatchGainValidate} from './GainValidateMarketwatch'
- const marketwatchGainValidate = lazy(() => import('./GainValidateMarketwatch').then((module) => ({default: module.marketwatchGainValidate})))
+const marketwatchGainValidate = lazy(() => import('./GainValidateMarketwatch').then((module) => ({default: module.marketwatchGainValidate})))
 
 const StockChart = lazy(() => import ('../Stock-chart'));
 const Firebase  = lazy(() => import ( './Firebase'));

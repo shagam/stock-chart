@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import Plot from 'react-plotly.js';
+import React, {useState, Suspense, lazy} from 'react';
+
 import {format} from "date-fns"
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,6 +9,9 @@ import "./StockChart.css";
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './table/Date';
 import { keys } from '@material-ui/core/styles/createBreakpoints';
+
+// import Plot from 'react-plotly.js';
+const Plot = lazy(() => import('react-plotly.js').then((module) => ({default: module.Plot})))
 
 
 const StockChart = (props) => { 
