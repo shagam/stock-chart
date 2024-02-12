@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useEffect} from 'react'
+import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -9,7 +9,7 @@ import GAIN_VALIDATION from './GainValidate.json'
 import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
-import StockChart from '../Stock-chart'
+
 // import Splits from '../splits/Splits'
 import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
@@ -21,7 +21,7 @@ import StockInfo from './StockInfo'
 import StockGain from './StockGain'
 import GainValidate from './GainValidate'
 import Manual from '../manual/Manual'
-import Firebase from './Firebase'
+
 import Config from './Config'
 import LogFlags from '../LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
@@ -54,6 +54,11 @@ import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
 import {ErrorList, beep, beep2} from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
+
+
+const StockChart = lazy(() => import ('../Stock-chart'));
+const Firebase  = lazy(() => import ( './Firebase'));
+
 
 export const BasicTable = (props) => {
 
@@ -1112,6 +1117,7 @@ export const BasicTable = (props) => {
   }
 
   return (
+    <Suspense fallback={<div>LOADING</div>}>
     <>
         <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
         <Link to="/about">About</Link> &nbsp; &nbsp;
@@ -1262,5 +1268,6 @@ export const BasicTable = (props) => {
         <hr/>
     </div> 
     </>
+    </Suspense>
   )
 }
