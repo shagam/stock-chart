@@ -46,7 +46,7 @@ function App() {
   // <Route path="/contact" element={<Contact  />}/>
 
   return (
-    <Suspense fallback={<div>LOADING</div>}>
+    <Suspense fallback={<div>Loading ... (from App) </div>}>
     <div className="App-continer">
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >

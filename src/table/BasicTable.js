@@ -1143,7 +1143,7 @@ const BasicTable = (props) => {
   }
 
   return (
-    <Suspense fallback={<div>LOADING</div>}>
+    <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
         <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
         <Link to="/about">About</Link> &nbsp; &nbsp;
@@ -1283,7 +1283,7 @@ const BasicTable = (props) => {
 
           {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
-          {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
+          {<MarketStackApi symbol={chartSymbol} admin = {admin} />}
 
           <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
         </div>}
