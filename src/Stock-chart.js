@@ -10,8 +10,8 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './table/Date';
 import { keys } from '@material-ui/core/styles/createBreakpoints';
 
-// import Plot from 'react-plotly.js';
-const Plot = lazy(() => import('react-plotly.js').then((module) => ({default: module.Plot})))
+import Plot from 'react-plotly.js';
+// const Plot = lazy(() => import('react-plotly.js').then((module) => ({default: module.Plot})))
 
 
 const StockChart = (props) => { 
