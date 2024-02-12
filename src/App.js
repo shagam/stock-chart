@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Suspense, lazy} from 'react';
 import './App.css';
 // import StockTable from './Stock-table';
 import {BasicTable} from './table/BasicTable' 
@@ -11,21 +11,19 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Link, useNavigate } from 'react-router-dom'
 import { Card, Button, Alert } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
-
-
-import Signup from './auth/Signup';
-import Dashboard from './auth/Dashboard'
-import Login from './auth/Login';
-import ForgotPassword from './auth/ForgotPassword';
-import UpdateProfile from './auth/UpdateProfile';
-import CookieConsent from "react-cookie-consent"
-// import Contact from './auth/Contact'
-
 import {getDateSec} from './table/Date'
+import CookieConsent from "react-cookie-consent"
+import LogFlags from './LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'
-import LogFlags from './LogFlags'
-import Manual from './manual/Manual'
+// import Contact from './auth/Contact'
+
+const Signup = lazy(() => import ('./auth/Signup'));
+const Dashboard = lazy(() => import ('./auth/Dashboard'));
+const Login = lazy(() => import ('./auth/Login'));
+const ForgotPassword  = lazy(() => import ('./auth/ForgotPassword'));
+const UpdateProfile = lazy(() => import ('./auth/UpdateProfile'));
+const Manual = lazy(() => import ('./manual/Manual'))
 
 
 function App() {
@@ -45,6 +43,7 @@ function App() {
   // <Route path="/contact" element={<Contact  />}/>
 
   return (
+    <Suspense fallback={<div>LOADING</div>}>
     <div className="App-continer">
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
@@ -83,8 +82,8 @@ function App() {
         </div>
       </Container>
       <label count = {count} />
-
     </div>
+  </Suspense>
 
 );
 }
