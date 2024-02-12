@@ -509,7 +509,7 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
         <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
 
-        <button type="button" onClick={()=>firebaseStatistics ()}>firebase-lists</button>
+        <button type="button" onClick={()=>firebaseStatistics ()}>BackEnd-lists</button>
         
         <hr/>
         <div>&nbsp;
