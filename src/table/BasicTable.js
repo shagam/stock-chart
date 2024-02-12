@@ -14,8 +14,6 @@ import CheckBox from './CheckBox'
 import MarketStackApi from './MarketStackApi'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {Peak2PeakGui} from './Peak2Peak'
-import {marketwatchGainValidate} from './GainValidateMarketwatch'
-import {polygon} from './Polygon'
 import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
 import StockGain from './StockGain'
@@ -77,6 +75,12 @@ import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useF
 // in the code that needs lazy modules
 // const A = lazy(() => import('./comboModule').then((module) => ({default: module.A})))
 // const B = lazy(() => import('./comboModule').then((module) => ({default: module.B})))
+
+// import {polygon} from './Polygon'
+const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
+
+//  import {marketwatchGainValidate} from './GainValidateMarketwatch'
+ const marketwatchGainValidate = lazy(() => import('./GainValidateMarketwatch').then((module) => ({default: module.marketwatchGainValidate})))
 
 const StockChart = lazy(() => import ('../Stock-chart'));
 const Firebase  = lazy(() => import ( './Firebase'));
