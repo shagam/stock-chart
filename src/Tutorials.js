@@ -23,7 +23,6 @@ function Tutorials () {
                 <div><a href="https://youtu.be/y3CBXkZzSNs" >Peak2Peak  </a>  &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;          long term yearly gain </div>
                 <div><a href="https://youtu.be/y3CBXkZzSNs" >Drop recovery</a>  &nbsp; Analyse drops of 2008, 2021, 2022</div>
 
-                <div><a href="https://youtu.be/y3CBXkZzSNs" >Month gain</a>  &nbsp; &nbsp;  &nbsp; Months with highest gain </div> 
 
                 <div><a href="https://youtu.be/y3CBXkZzSNs" >Table</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare many </div> 
                 <div><a href="https://youtu.be/y3CBXkZzSNs" >Chart</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare few </div> 
