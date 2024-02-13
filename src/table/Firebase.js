@@ -500,7 +500,7 @@ const Firebase = (props) => {
         <input
           type="checkbox" checked={displayFlag}
           onChange={() => {setDisplayFlag (! displayFlag)}}
-        /> Common-back-end
+        /> Back-end
       </div>
 
       {displayFlag && 
