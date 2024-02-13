@@ -11,7 +11,7 @@ import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
 
 // import Splits from '../splits/Splits'
-import MarketStackApi from './MarketStackApi'
+
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {Peak2PeakGui} from './Peak2Peak'
 import GetInt from '../utils/GetInt'
@@ -84,7 +84,7 @@ const marketwatchGainValidate = lazy(() => import('./GainValidateMarketwatch').t
 
 const StockChart = lazy(() => import ('../Stock-chart'));
 const Firebase  = lazy(() => import ( './Firebase'));
-
+const MarketStackApi = lazy(() => import ('./MarketStackApi'))
 
 const BasicTable = (props) => {
 
@@ -1283,7 +1283,7 @@ const BasicTable = (props) => {
 
           {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
-          {<MarketStackApi symbol={chartSymbol} admin = {admin} />}
+          {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
 
           <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
         </div>}
