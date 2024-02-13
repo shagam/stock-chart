@@ -28,6 +28,11 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, src) {
     // save target prices for symbol in array
     const tar = targetRaw / price; 
     const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
+    if (tar === NaN) {
+        console.log (symbol, 'faile to calc tar', symTargetOne)
+        return;  // do not add bad records
+    }
+
 
  // choose earliest, in case of more than one
     var targetPriceArrayForSym = [];
