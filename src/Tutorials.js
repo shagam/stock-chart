@@ -17,30 +17,48 @@ function Tutorials () {
 
             <hr/>
             <div style={{display: 'grid'}}>
-                <div><a href="https://youtu.be/nywx9EncRo0" >Quick PortFolio Check</a>  &nbsp;  Compare Stocks & ETF </div>
-                <div><a href="https://youtu.be/XHf5oYnegdQ" >Common backend</a>  &nbsp; &nbsp;           Get best stocks </div>
+                <table>
+                    <tr>
+                        <td><a href="https://youtu.be/nywx9EncRo0" >Quick PortFolio Check</a></td> <td> Compare Stocks & ETF</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/LwBOtJOIxco" >Peak2Peak  </a></td> <td>  long term yearly gain </td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/MsJtdrBnLB8" >Drop recovery</a></td> <td> Analyse drops of 2008, 2021, 2022 </td> 
+                    </tr>
 
-                <div><a href="https://youtu.be/LwBOtJOIxco" >Peak2Peak  </a>  &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;          long term yearly gain </div>
-                <div><a href="https://youtu.be/MsJtdrBnLB8" >Drop recovery</a>  &nbsp; Analyse drops of 2008, 2021, 2022</div>
+                    {/* <div><a href="https://youtu.be/y3CBXkZzSNs" >Table</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare many </div>  */}
 
+                    <tr>
+                        <td><a href="https://youtu.be/2uUit4pmY7o" >Chart mechanizm</a></td> <td> Compare few stocks </td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/0sZ0QK1nwHo" >Month gain</a> </td> <td>Months with highest gain</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/IElQqHTVPnE" >Analyst-target-price</a> </td> <td>History of target-price</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/n_NXoU5ce-A" >Raw data</a>  </td> <td>Show raw data, as received</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/cVxKLW3pPB0" >Persistance</a>  </td> <td>Stock info saved in localStorage</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/IR3TBJlqM_g" >Verify</a>  </td> <td> Compare with MarketWatch historical price</td> 
+                    </tr>
 
-                {/* <div><a href="https://youtu.be/y3CBXkZzSNs" >Table</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare many </div>  */}
-                <div><a href="https://youtu.be/2uUit4pmY7o" >Chart</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare few </div> 
+                    <hr/>
+                    <tr>
+                        <td><a href="https://stocks-compare.netlify.app" >Protfolio Stocks compare</a>  </td> <td> Link to the tool</td> 
+                    </tr>
+                </table>
 
-                <div><a href="https://youtu.be/0sZ0QK1nwHo" >Month gain</a>  &nbsp; &nbsp;  &nbsp; Months with highest gain </div> 
-                <div><a href="https://youtu.be/IElQqHTVPnE" >Analyst-target-price</a>  &nbsp; &nbsp;   History of target-price</div>
-
-
-                <div><a href="https://youtu.be/n_NXoU5ce-A" >Raw data</a>  &nbsp; &nbsp;  &nbsp; &nbsp;Show raw data, as received </div>
-                <div><a href="https://youtu.be/cVxKLW3pPB0" >Persistance</a>  &nbsp; &nbsp; Stock info saved in localStorage </div>
-                <div><a href="https://youtu.be/IR3TBJlqM_g" >Verify-1</a>  &nbsp; &nbsp;  &nbsp;  &nbsp; &nbsp; Compare with MarketWatch historical price</div> 
-
-                <hr/>
                 {/* <a href="https://youtu.be/y3CBXkZzSNs" >English tutorial</a>  &nbsp; &nbsp;  */}
-                <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp; 
+                {/* <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp;  */}
                 
                 <hr/>
-                <div>Link to the tool: <a href="https://stocks-compare.netlify.app" >Stocks Protfolio, Analyze & compare</a> </div> 
 
             </div>
             <hr/> 
