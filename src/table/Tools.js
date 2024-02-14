@@ -123,4 +123,4 @@ function Tools (props) {
 
 }
 
-export {Tools}
+export default Tools

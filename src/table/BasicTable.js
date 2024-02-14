@@ -26,7 +26,7 @@ import peak2PeakCalc from './Peak2PeakCalc'
 
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
-import {Tools} from './Tools'
+
 
 
 import {nanoid} from 'nanoid';
@@ -66,6 +66,8 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 // const deleteDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.deleteDoc})))
 // const query = lazy(() => import('firebase/firestore').then((module) => ({default: module.query})))
 // const where = lazy(() => import('firebase/firestore').then((module) => ({default: module.where})))
+
+const Tools = lazy(() => import ('./Tools'))
 
 const Config = lazy(() => import ('./Config'))
 
