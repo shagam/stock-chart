@@ -24,7 +24,7 @@ function Tutorials () {
                 <div><a href="https://youtu.be/MsJtdrBnLB8" >Drop recovery</a>  &nbsp; Analyse drops of 2008, 2021, 2022</div>
 
 
-                {/* <div><a href="https://youtu.be/y3CBXkZzSNs" >Table</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare many </div>  */}
+                <div><a href="https://youtu.be/y3CBXkZzSNs" >Table</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare many </div> 
                 <div><a href="https://youtu.be/2uUit4pmY7o" >Chart</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare few </div> 
 
                 <div><a href="https://youtu.be/0sZ0QK1nwHo" >Month gain</a>  &nbsp; &nbsp;  &nbsp; Months with highest gain </div> 
