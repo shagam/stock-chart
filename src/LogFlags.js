@@ -57,7 +57,7 @@ const LogFlags = (props) => {
 
    return (
      <div>
-      <hb/>
+      <hr/>
 
       <div className='w-100 text-left mt-2'>
         <Link to="/" > Home </Link>
