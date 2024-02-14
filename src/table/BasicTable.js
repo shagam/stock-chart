@@ -20,10 +20,10 @@ import StockGain from './StockGain'
 import GainValidate from './GainValidate'
 import Manual from '../manual/Manual'
 
-import Config from './Config'
+
 import LogFlags from '../LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
-import Verify from './Verify'
+
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
 import {Tools} from './Tools'
@@ -66,6 +66,10 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 // const deleteDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.deleteDoc})))
 // const query = lazy(() => import('firebase/firestore').then((module) => ({default: module.query})))
 // const where = lazy(() => import('firebase/firestore').then((module) => ({default: module.where})))
+
+const Config = lazy(() => import ('./Config'))
+
+const Verify = lazy(() => import ('./Verify'))
 
 // +
 // in comboModule.js:
