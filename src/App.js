@@ -52,7 +52,7 @@ function App() {
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
-        <h2  style={{color:'green'}}> Stocks analyse & compare (portfolio-ck) </h2> 
+        <h2  style={{color:'green'}}> Stocks analyse & compare (portfolio-chk) </h2> 
         <AuthProvider>
 
             <div style={{display:'flex'}}>
