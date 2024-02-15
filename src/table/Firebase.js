@@ -441,21 +441,21 @@ const Firebase = (props) => {
       // }
       // if (QQQDat.mon6 * ratio <= symDat.mon6)
       //   continue;
-      if (QQQDat.year * ratio <= symDat.year)
+      if (! QQQDat.year || QQQDat.year * ratio <= symDat.year)
         continue;
-      if (QQQDat.year2  * ratio <= symDat.year2)
+      if (! QQQDat.year2 || QQQDat.year2  * ratio <= symDat.year2)
         continue;
-      if (QQQDat.year5  * ratio <= symDat.year5)
+      if (! QQQDat.year5 || QQQDat.year5  * ratio <= symDat.year5)
         continue;
       if (symDat.year10 === undefined) {
         continue;
       }
-      if (QQQDat.year10  * ratio <= symDat.year10)
+      if (! QQQDat.year10 || QQQDat.year10  * ratio <= symDat.year10)
         continue;
       if (symDat.year20 === undefined) {
         continue;
       }
-      if (QQQDat.year20  * ratio <= symDat.year20)
+      if (! QQQDat.year20 || QQQDat.year20  * ratio <= symDat.year20)
         continue;
       
       allGain.push (sym);
