@@ -73,7 +73,7 @@ export default function Dashboard (props) {
           <h2 className='text-left mb-4'> Dashboard </h2>
           {error && <Alert variant="danger"> {error} </Alert>}
           
-          <div className='btn btn-primery w-100 mt-3'>  <Link to="/" variant="primeray" >   Stock-Table </Link></div> 
+          <div >  <Link to="/" variant="primeray" >   Home </Link></div> 
 
         <hr/> 
         
