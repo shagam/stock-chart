@@ -463,7 +463,7 @@ const Firebase = (props) => {
         // del gain
         var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
         await deleteDoc (gainDoc);
-        console.log ('del firebase gain', sym)
+        console.log (sym, 'del firebase gain')
       }
     }
     allGain.sort();
@@ -482,7 +482,7 @@ const Firebase = (props) => {
         if (allGain.includes (sym)) {
           var infoDoc = doc(db, "stock-info", info.docs[i].id);
           await deleteDoc (infoDoc);
-          console.log ('del firebase info', sym)
+          console.log (sym, 'del firebase info')
         }  
       }
     }
