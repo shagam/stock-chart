@@ -1,4 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react'
+
+import { Link, useNavigate } from 'react-router-dom'
 import {collection, getDocs, addDoc,  doc, deleteDoc, updateDoc, query, where} from "firebase/firestore";
 import {db} from '../firebaseConfig'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -158,7 +160,7 @@ async function targetHistBigDiff (setTargetPriceHist, logFlags) {
 
 // hiest target gain
 async function targetHistBest (setTargetPriceHist, logFlags) {
-    const LOG = logFlags.includes('target')
+    const LOG = false; //logFlags.includes('target')
 
     const tagetHistory = await getDocs(targetRef);
 
@@ -182,7 +184,7 @@ async function targetHistBest (setTargetPriceHist, logFlags) {
 }
 
 async function targetHistAll (setTargetPriceHist, logFlags) {
-    const LOG = logFlags.includes('target')
+    const LOG = false; //logFlags.includes('target')
     const tagetHistory = await getDocs(targetRef);
     if (LOG)
         console.log ('count=', tagetHistory.docs.length)
@@ -210,4 +212,48 @@ async function targetHistAll (setTargetPriceHist, logFlags) {
     setTargetPriceHist(tarHist);
   }
 
-export {targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff, targetHistBest}
+function TargetPrice () {
+    const [targetPriceHist, setTargetPriceHist] = useState ({});
+
+    return (
+
+        <div>
+        <div className='w-100 text-left mt-2'>
+            <Link to="/" > Home </Link>
+        </div>
+        <br></br>
+        {/* <hr/>  */}
+        <h4 style={{color:'Green'}}>TargetPriceHistory</h4>
+        {/* <hb/> */}
+
+        <hr/>  
+
+        <button type="button" onClick={()=>targetHistAll (setTargetPriceHist)}>targetHistoryAll</button>  &nbsp; &nbsp;
+        {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
+        <button type="button" onClick={()=>targetHistBest (setTargetPriceHist)}>targetHistBest</button>         
+
+        {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
+         <div  style={{display: 'flex'}}>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; &nbsp; <div style={{color: 'lightGreen'}}>(targetNew &nbsp;/ targetOld)</div> </div>}
+
+        <div  style={{ maxHeight: '65vh', 'overflowY': 'scroll'}}  > 
+
+          {targetPriceHist && Object.keys(targetPriceHist).sort().map((sym,i)=>{
+            return (
+                <div style={{width: '90vw'}} key={i}>
+                  <div  style={{display: 'flex'}} >
+                    <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
+                    <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
+                  </div> 
+                  {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
+                </div>
+              )
+          })}
+        </div>
+        <br></br>
+        <hr/>  
+      </div>
+
+    )
+}
+
+export {TargetPrice, targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff, targetHistBest}

@@ -1154,6 +1154,7 @@ const BasicTable = (props) => {
         <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
         <Link to="/about">About</Link> &nbsp; &nbsp;
         <Link to="/manual">Manual</Link> &nbsp; &nbsp;
+        <Link to="/targetPrice">Target-price-history</Link> &nbsp; &nbsp;
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}
 
         <div className='w-100 text-left mt-2 d-flex '>   
@@ -1270,7 +1271,7 @@ const BasicTable = (props) => {
 
         {/* {! isMobile && <LogFlags setLogFlags={setLogFlags} />}   */}
 
-        <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> 
+        {chartSymbol && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
 
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />

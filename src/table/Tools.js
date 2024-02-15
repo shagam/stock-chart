@@ -15,7 +15,7 @@ function Tools (props) {
     const [targetInfo, setTargetInfo] = useState ();
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
-    const [targetPriceHist, setTargetPriceHist] = useState ({});
+
     const [yearGain, setYearGain] = useState ();
     const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
 
@@ -30,7 +30,7 @@ function Tools (props) {
         setTargetInfo()
         setPrice()
         setMgainObj({})
-        setTargetPriceHist()
+        // setTargetPriceHist()
       },[props.symbol]) 
   
   
@@ -92,31 +92,7 @@ function Tools (props) {
             
                 <br></br>           
     
-                <div>
-                  <button type="button" onClick={()=>targetHistAll (setTargetPriceHist, props.logFlags)}>targetHistoryAll</button>  &nbsp; &nbsp;
-                  {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
-                  <button type="button" onClick={()=>targetHistBest (setTargetPriceHist, props.logFlags)}>targetHistBest</button>         
-
-                  {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
-                   <div  style={{display: 'flex'}}>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; &nbsp; <div style={{color: 'lightGreen'}}>(targetNew &nbsp;/ targetOld)</div> </div>}
-
-                  <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
-   
-                    {targetPriceHist && Object.keys(targetPriceHist).sort().map((sym,i)=>{
-                      return (
-                          <div style={{width: '90vw'}} key={i}>
-                            <div  style={{display: 'flex'}} >
-                              <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
-                              <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
-                            </div> 
-                            {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
-                          </div>
-                        )
-                    })}
-                  </div>
-      
-                </div>
-                <br></br>         
+                      <br></br>         
             </div>}
         </div>
     )

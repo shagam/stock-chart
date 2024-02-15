@@ -16,6 +16,7 @@ import CookieConsent from "react-cookie-consent"
 import LogFlags from './LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'
+import {TargetPrice} from './table/TargetPrice'
 // import Contact from './auth/Contact'
 
 // import {BasicTable} from './table/BasicTable' 
@@ -72,6 +73,7 @@ function App() {
                 <Route path="/tutorials" element={<Tutorials  />}/>
                 <Route path="/about" element={<About  />}/>
                 <Route path="/logFlags" element={<LogFlags  />}/>
+                <Route path="/targetPrice" element={<TargetPrice  />}/>
                 <Route path="/manual" element={<Manual  />}/>
                 {/* <Route path="/contact" element={<Contact  />}/> */}
 
