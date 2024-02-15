@@ -537,7 +537,8 @@ const Firebase = (props) => {
         <hr/>
         <div>&nbsp;
           <button type="button" onClick={()=>worst(false)}>Show worse than QQQ</button>
-          &nbsp;<button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>
+          &nbsp;
+          {props.eliHome && <button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>}
         </div>
 
         </div>
