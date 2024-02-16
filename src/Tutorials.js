@@ -29,10 +29,10 @@ function Tutorials () {
                     </tr>
                     
                     <tr>
-                        <td><a href="https://youtu.be/_iDuaiZP7hg">Table mechanizm</a></td><td>Compare many stocks & ETF</td> 
+                        <td><a href="https://youtu.be/_iDuaiZP7hg">Table mechanism</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/2uUit4pmY7o">Chart mechanizm</a></td><td>Compare a few stocks</td> 
+                        <td><a href="https://youtu.be/2uUit4pmY7o">Chart mechanism</a></td><td>Compare a few stocks</td> 
                     </tr>
                     <tr>
 
@@ -51,7 +51,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare with MarketWatch historical price</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://stocks-compare.netlify.app">Protfolio Stocks compare</a></td><td>Link to the tool</td> 
+                        <td><a href="https://stocks-compare.netlify.app">Portfolio Stocks compare</a></td><td>Link to the tool</td> 
                     </tr>
                 </tbody>
             </table>
