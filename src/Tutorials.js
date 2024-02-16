@@ -27,13 +27,15 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/MsJtdrBnLB8">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
                     </tr>
-
-                    {/* <div><a href="https://youtu.be/y3CBXkZzSNs">Table</a>  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;   Compare many </div>  */}
-
+                    
                     <tr>
-                        <td><a href="https://youtu.be/2uUit4pmY7o">Chart mechanizm</a></td><td>Compare few stocks</td> 
+                        <td><a href="https://youtu.be/_iDuaiZP7hg">Table mechanizm</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
                     <tr>
+                        <td><a href="https://youtu.be/2uUit4pmY7o">Chart mechanizm</a></td><td>Compare a few stocks</td> 
+                    </tr>
+                    <tr>
+
                         <td><a href="https://youtu.be/0sZ0QK1nwHo">Month gain</a></td><td>Months with highest gain</td> 
                     </tr>
                     <tr>
