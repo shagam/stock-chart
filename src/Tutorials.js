@@ -22,7 +22,8 @@ function Tutorials () {
                         <td><a href="https://youtu.be/nywx9EncRo0">Quick PortFolio Check</a></td><td>Compare Stocks & ETF</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/XHf5oYnegdQ">Common DataBase  </a></td><td>Get best stocks: 1Yr, 2Yr, 5Yr, 10Yr</td> 
+                        <td><a href="https://youtu.be/XHf5oYnegdQ">Common DataBase  </a></td><td>
+                             stocks better than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>
 
                     <tr>
@@ -54,22 +55,21 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare with MarketWatch historical price</td> 
                     </tr>
+
                     <span>&nbsp;</span>
                     <tr style={{}}>
                         <td><a href="https://youtu.be/Rv5a0tkMISE">Hebrew tutorial</a></td><td></td> 
+                    
                     </tr>
                     <span>&nbsp;</span>
                     <tr>
                         <td><a href="https://stocks-compare.netlify.app">Portfolio Stocks compare</a></td><td>Link for the tool</td> 
                     </tr>
 
-
-
                 </tbody>
             </table>
 
             {/* <a href="https://youtu.be/y3CBXkZzSNs" >English tutorial</a>  &nbsp; &nbsp;  */}
-            {/* <a href="https://youtu.be/Rv5a0tkMISE" >Hebrew tutorial</a> &nbsp; &nbsp;  */}         
 
         </div>
         <hr/> 
