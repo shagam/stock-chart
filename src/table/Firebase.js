@@ -16,19 +16,41 @@ const Firebase = (props) => {
 
   const LOG_FLAG = false;
 
-  
-  function addSym (sym, fireGain) {
-    const sym_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
-    if (sym_index === -1) 
-      return;
+  function magnificent7 () {
+    const list = ['MSFT','AAPL','AMZN','NVDA','AVGO','META','GOOG','TSLA']
+    for (const sym of list) {
+      const newStock = addSymOne (sym)
+      props.rows.push (newStock);
+    }
+    props.saveTable('any');  
+    window.location.reload();
+  }
+
+
+  function addSymOne (sym) {
+    const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
+    if (sym_index !== -1) 
+      return; // skip if already in table
     var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
     props.prepareRow(newStock);
-
     newStock.id = nanoid();
     newStock.values.symbol = sym;
     newStock.original.symbol = sym;
     newStock.cells = null;
     newStock.allCells = [];
+    
+    // newStock.values.gain_date = fireGain._updateDate;
+    // newStock.values.gain_mili = fireGain._updateMili;
+    props.prepareRow(newStock);
+    return (newStock)
+  }
+
+  function addSym (sym, fireGain) {
+
+    const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
+    if (sym_index !== -1) 
+      return; // skip if already in table
+    const newStock = addSymOne (sym)
     
     newStock.values.gain_date = fireGain._updateDate;
     newStock.values.gain_mili = fireGain._updateMili;
@@ -536,6 +558,7 @@ const Firebase = (props) => {
         {/* // show/remove from FireBase all stocks worse than QQQ */}
         <hr/>
         <div>&nbsp;
+          <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button>
           <button type="button" onClick={()=>worst(false)}>Show worse than QQQ</button>
           &nbsp;
           {props.eliHome && <button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>}
