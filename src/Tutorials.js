@@ -30,14 +30,14 @@ function Tutorials () {
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak  </a></td><td>long term yearly gain </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/MsJtdrBnLB8">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
+                        <td><a href="https://youtu.be/4cRZHdNJ-xo">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
                     </tr>
                     
                     <tr>
-                        <td><a href="https://youtu.be/_iDuaiZP7hg">Table mechanism</a></td><td>Compare many stocks & ETF</td> 
+                        <td><a href="https://youtu.be/faEcqp7PIfw">Table view</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/2uUit4pmY7o">Chart mechanism</a></td><td>Compare a few stocks</td> 
+                        <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart view</a></td><td>Compare a few stocks</td> 
                     </tr>
                     <tr>
 
