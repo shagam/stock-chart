@@ -1009,10 +1009,15 @@ const BasicTable = (props) => {
         stocks.push(data[i]);
       }
     } else {
-    for (let i = 0; i < rows.length; i++) {
-      rows[i].values.sym = rows[i].values.symbol;  //align added field sym
-      stocks.push(rows[i].values);
-    }
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i] && rows[i].values) {
+          rows[i].values.sym = rows[i].values.symbol;  //align added field sym
+          stocks.push(rows[i].values); // collect values to be saved in localStorage
+        }
+        else {
+          console.log (sym, 'missing values', )
+        }
+      }
     }
     const stocksStr = JSON.stringify(stocks);
     if (stocks.length > 0) {
