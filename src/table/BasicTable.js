@@ -1160,7 +1160,7 @@ const BasicTable = (props) => {
     <>
         <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
         <Link to="/about">About</Link> &nbsp; &nbsp;
-        <Link to="/manual">Manual</Link> &nbsp; &nbsp;
+        {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
         <Link to="/targetPrice">Target-price-history</Link> &nbsp; &nbsp;
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}
 
