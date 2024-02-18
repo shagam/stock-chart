@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 function About () {
 
     // const [aboutFlag, setAboutFlag] = useState(false);
-
+const  col='#765739'// 'magenta
 return (
 <div>
     <div>
@@ -19,71 +19,65 @@ return (
     {/* <h5  style={{color:'red'}}> for long term investors.  </h5> */}
 
 
-      <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> Long term yearly growth </h6> <h6> &nbsp; - (peak2Peak) from the peak before the 2008 deep, to the peak before 2022 deep  . </h6>
-    </div>
+    <table>
+        <tbody>
+            <tr>
+                <td style={{color:'magenta'}}>  Long term<br></br> yearly growth </td><td>from the peak before the 2008 deep, to the peak before 2022 deep. (peak2Peak)  </td> 
+            </tr>
+            <tr>
+                <td>  </td><td style={{display:'flex'}}> Hi-Tech NASDAQ ETF - QQQ average annual gain <div style={{color:'red'}}>&nbsp; 15%</div></td> 
+            </tr>
+            <tr>
+                <td>  </td><td  style={{display:'flex'}}> S&P 500 - average annual gain, about <div style={{color:'red'}}>&nbsp; 11%</div>.</td> 
+            </tr>
 
-    <h6>  &nbsp; &nbsp; Hi-Tech NASDAQ ETF (QQQ) - average annual gain of 15%. </h6>
-    <h6>   &nbsp; &nbsp; S&P 500 - average annual gain of about 10%. </h6>
-    
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>  Drop recovery analysis </h6> <h6> &nbsp; - calculate the drop level, and recovery period. </h6>
-    </div>
 
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>  </h6> <h6> &nbsp; &nbsp; 2008  QQQ  drops 53%, recovered within 3 years. </h6>
-        <h6>,   2022  QQQ  Drops 36%,  almost recovered within 2 years   . </h6>
-    </div>
+            <tr>
+                <td style={{color:'magenta'}}>Drop recovery </td><td>calculate the drop level, and recovery period. 2008, 2021,2022</td> 
+            </tr>
+            
+            <tr>
+                <td style={{color:'magenta'}}>Table  </td><td>Compares a many stocks </td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>Chart </td><td>Compares a few stocks </td> 
+            </tr>
+            
+            <tr>
+                <td style={{color:'magenta'}}>  Common database  </td><td> Get Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year <br></br> (from select list) </td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>  Monthly gain   </td><td>  November has the best gain </td> 
+            </tr>
+            
+            <tr>
+                <td style={{color:'magenta'}}>Analyst target price</td><td>Not sure, Just started collecting results</td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>Historical stock prices</td><td>Recieved from AlphVatage.co</td> 
+            </tr>
+            
+            <tr>
+                <td style={{color:'magenta'}}>Free sharing</td><td>Pease share with anyone interested</td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>Public source code</td><td>github.com/shagam</td> 
+            </tr>
+            <tr>
+                {/* <td style={{color:'magenta'}}>No garentee </td><td></td>  */}
+            </tr>
 
-    {/* <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>volatility </h6> <h6> &nbsp; During deep periods, Hi-Tech drop 50% more than S&P. However Hi-Tech grows more during bear market.  </h6>
-    </div> */}
 
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> Chart </h6> <h6> &nbsp; Compares a few stocks, yearly_gain, zoom, date range, logarithmic. </h6>
-    </div>
+        </tbody>
+    </table>
 
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> Table </h6> <h6> &nbsp; Compare many stocks, yearly_gain, column sort, column-hide, filter, basic stock info . </h6>
-    </div>
+  
 
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> Get best </h6> <h6> &nbsp; Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year (from select list)</h6>
-    </div>
-
-    {/* <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>Price / high </h6> <h6> &nbsp; Compare today price with high before deep. (How far from recovery) </h6>
-    </div> */}
-
-    {/* <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>Data sharing </h6> <h6> &nbsp; Through a common Firebase </h6>
-    </div> */}
-
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>Monthly gain </h6> <h6> &nbsp; November has the best gain </h6>
-    </div>
-
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>Analyst target price </h6> <h6> &nbsp; Just started collecting results.  </h6>
-    </div>
-
-    {/* <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> Target price </h6> <h6> &nbsp; - based an many analysts prediction. Value above 1 means stock price expcted to rise. </h6>
-    </div> */}
-
-    <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> AlphVatage.co </h6> <h6> &nbsp; Analysis based on Historical stock prices</h6>
-    </div>
-    
-    <div style={{display:'flex'}}>
-        <h6 style={{color:'red'}}> Free sharing </h6> <h6>&nbsp; Pease share with anyone interested </h6>
-    </div>
-
-    <hr/> 
+     <hr/> 
 
     {/* <h6> Wisdom of the crowd </h6> */}
     {/* <hr/>  */}
-    <h6>Source -  github.com/shagam/stock-chart </h6>
+    {/* <h6>Source -  github.com/shagam/stock-chart </h6> */}
 
     {/* <h6>Written in ReactJS, on top of JavaScript.</h6>  */}
     <hr/> 
