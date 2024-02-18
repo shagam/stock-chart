@@ -1188,16 +1188,13 @@ const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
-          {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;</div>  }
+          {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;&nbsp; </div>  }
 
-          &nbsp;       
-   
-                  
-          <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
+          {eliHome && <div> <button onClick={gainAll} > gainAll </button> </div>}
+          &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
+          &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
-          {eliHome && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
-          &nbsp; <button onClick={reloadPage} > reloadPage </button>         
-        </div>
+         </div>
 
       {columnHideFlag && 
         <div id="columnToggle">
@@ -1220,7 +1217,7 @@ const BasicTable = (props) => {
           &nbsp;&nbsp;
 
         <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
-          <input style={{width:'150px'}}
+          <input style={{width:'145px'}}
             type="text"
             name="symbol"
             required="required"
