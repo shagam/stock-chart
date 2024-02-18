@@ -18,7 +18,7 @@ import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
 import StockGain from './StockGain'
 import GainValidate from './GainValidate'
-import Manual from '../manual/Manual'
+
 
 
 import LogFlags from '../LogFlags'
@@ -66,6 +66,8 @@ import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "fireba
 // const deleteDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.deleteDoc})))
 // const query = lazy(() => import('firebase/firestore').then((module) => ({default: module.query})))
 // const where = lazy(() => import('firebase/firestore').then((module) => ({default: module.where})))
+
+const Manual = lazy(() => import ('../manual/Manual'))
 
 const Tools = lazy(() => import ('./Tools'))
 
