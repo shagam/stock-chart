@@ -27,7 +27,7 @@ function Tutorials () {
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak  </a></td><td>long term yearly gain </td> 
+                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>long term yearly gain </td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/4cRZHdNJ-xo">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
@@ -40,7 +40,6 @@ function Tutorials () {
                         <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart view</a></td><td>Compare a few stocks</td> 
                     </tr>
                     <tr>
-
                         <td><a href="https://youtu.be/0sZ0QK1nwHo">Month gain</a></td><td>Months with highest gain</td> 
                     </tr>
                     <tr>
@@ -55,13 +54,15 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare with MarketWatch historical price</td> 
                     </tr>
-
-                    <span>&nbsp;</span>
-                    <tr style={{}}>
-                        <td><a href="https://youtu.be/Rv5a0tkMISE">Hebrew tutorial</a></td><td></td> 
-                    
+                    <tr>
+                       <div>&nbsp;</div>
                     </tr>
-                    <span>&nbsp;</span>
+                    <tr>
+                        <td><a href="https://youtu.be/Rv5a0tkMISE">Hebrew tutorial</a></td><td></td>        
+                    </tr>
+                    <tr>
+                       <div>&nbsp;</div>
+                    </tr>                    
                     <tr>
                         <td><a href="https://stocks-compare.netlify.app">Portfolio Stocks compare</a></td><td>Link for the tool</td> 
                     </tr>
