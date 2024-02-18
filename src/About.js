@@ -20,7 +20,7 @@ return (
 
 
       <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}> Long term yearly growth (peak2Peak) </h6> <h6> &nbsp; - from the peak before the 2008 deep, to the peak before 2022 deep  . </h6>
+        <h6 style={{color:'red'}}> Long term yearly growth </h6> <h6> &nbsp; - (peak2Peak) from the peak before the 2008 deep, to the peak before 2022 deep  . </h6>
     </div>
 
     <h6>  &nbsp; &nbsp; Hi-Tech NASDAQ ETF (QQQ) - average annual gain of 15%. </h6>
@@ -48,7 +48,7 @@ return (
     </div>
 
     <div style={{display:'flex'}} >
-        <h6 style={{color:'red'}}>Stocks preformed better than QQQ </h6> <h6> &nbsp; Year, 2Year, 5Year, 10Year (from select list)</h6>
+        <h6 style={{color:'red'}}> Get best </h6> <h6> &nbsp; Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year (from select list)</h6>
     </div>
 
     {/* <div style={{display:'flex'}} >
