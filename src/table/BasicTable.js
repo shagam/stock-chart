@@ -1217,7 +1217,7 @@ const BasicTable = (props) => {
        
       <div id="add_stock_id">
         <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
-          <input
+          <input style={{width:'150px'}}
             type="text"
             name="symbol"
             required="required"
