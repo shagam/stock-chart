@@ -17,9 +17,15 @@ function Tutorials () {
         {/* <hr/> */}
         <div >
             <table>
-                <tbody>
+                <tbody>              
                     <tr>
-                        <td><a href="https://youtu.be/AMrNSLRRuxY">Quick PortFolio Check</a></td><td>Compare Stocks & ETF</td> 
+                        <td><a href="https://youtube.com/playlist?list=PLBwPhbE_paAyMgNmnnkCjUYloLcAIy6ks&feature=shared">Tutorial Playlist</a></td><td>Serialized tutorials</td> 
+                    </tr>
+                    <tr>
+                       <div>&nbsp;</div>
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/AMrNSLRRuxY">PortFolio Check</a></td><td>Compare Stocks & ETF</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/_ONG8fc7kdM">Common DataBase  </a></td><td>
