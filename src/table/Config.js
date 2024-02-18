@@ -42,9 +42,8 @@ const  Config = (props) => {
 
       { configFlag &&
         <div id = "config_id">
-          <div>  &nbsp; <Link to="/dashboard" > Login Dashboard </Link>  </div> 
-          <hr/>
-          <div  style={{display:'flex'}}>
+          <div>  &nbsp; <Link to="/dashboard" > Login Dashboard </Link>  </div>
+          <div  style={{display:'flex', paddingTop: '5px'}}>
              <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
             <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
             {/* <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div> */}
@@ -52,16 +51,15 @@ const  Config = (props) => {
             <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable &nbsp;   </button>
           </div>
  
-          <hr/>
-
-          <div  style={{display:'flex'}}>            
+          {/* <div> &nbsp; </div>  */}
+          {/* <hr/> */}
+          <div  style={{display:'flex', paddingTop: '5px'}}>            
             <div style={{display:'flex'}}> &nbsp; &nbsp; <input  type="checkbox" checked={props.smoothSpikes} 
               onChange={() => props.setSmoothSpikes(! props.smoothSpikes)} />  &nbsp;smoothSpikes  &nbsp;  </div>
             
             <div style={{display:'flex'}}>  &nbsp; <input  type="checkbox" checked={props.openMarketFlag}
               onChange={() => props.setOpenMaretFlag(! props.openMarketFlag,)} />  &nbsp;OpenMarket </div>
           </div>
-          <hr/>
           
           <AlphaVantage alphaCallBack={props.alphaCallBack} />
           <div> </div>
