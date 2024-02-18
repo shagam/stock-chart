@@ -1192,9 +1192,7 @@ const BasicTable = (props) => {
 
           &nbsp;       
    
-          <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
-          &nbsp;&nbsp;
-           
+                  
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
           {eliHome && <div> &nbsp; <button onClick={gainAll} > gainAll </button> &nbsp; </div>}
@@ -1217,7 +1215,10 @@ const BasicTable = (props) => {
         </div>
       }
        
-      <div id="add_stock_id">
+      <div style={{display:'flex'}} id="add_stock_id">
+        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
+          &nbsp;&nbsp;
+
         <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
           <input style={{width:'150px'}}
             type="text"
@@ -1230,7 +1231,7 @@ const BasicTable = (props) => {
         </form>
       </div>
 
-      <table id="stockTable" {...getTableProps()}>
+      <table style={{marginTop: '4px'}} id="stockTable" {...getTableProps()}>
       <thead>
         {headerGroups.map ((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
