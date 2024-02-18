@@ -22,7 +22,7 @@ return (
     <table>
         <tbody>
             <tr>
-                <td style={{color:'magenta'}}>  Long term<br></br> yearly growth </td><td>from the peak before the 2008 deep, to the peak before 2022 deep. (peak2Peak)  </td> 
+                <td style={{color:'magenta'}}>  Long term<br></br> yearly growth </td><td>From the peak before the 2008 drop, to the peak before 2022 drop. (peak2Peak)  </td> 
             </tr>
             <tr>
                 <td>  </td><td style={{display:'flex'}}> Hi-Tech NASDAQ ETF - QQQ average annual gain <div style={{color:'red'}}>&nbsp; 15%</div></td> 
@@ -33,11 +33,13 @@ return (
 
 
             <tr>
-                <td style={{color:'magenta'}}>Drop recovery </td><td>calculate the drop level, and recovery period. 2008, 2021,2022</td> 
+                <td style={{color:'magenta'}}>Drop recovery </td><td>Drop level, and recovery period. 
+                    <br></br>2008 dropped to 0.47, recovered after 3 Yr,
+                    <br></br>2022 dropped to 0.63, recovered after 2 Yr</td> 
             </tr>
             
             <tr>
-                <td style={{color:'magenta'}}>Table  </td><td>Compares a many stocks </td> 
+                <td style={{color:'magenta'}}>Table  </td><td>Compares many stocks </td> 
             </tr>
             <tr>
                 <td style={{color:'magenta'}}>Chart </td><td>Compares a few stocks </td> 
@@ -57,7 +59,7 @@ return (
                 <td style={{color:'magenta'}}>Historical stock prices</td><td>Recieved from AlphVatage.co</td> 
             </tr>
             <tr>
-                <td style={{color:'magenta'}}>Verify</td><td>Compare with MarketWatch</td> 
+                <td style={{color:'magenta'}}>Verify</td><td>Compares with MarketWatch</td> 
             </tr>
             
             <tr>
