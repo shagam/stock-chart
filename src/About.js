@@ -44,10 +44,10 @@ return (
             </tr>
             
             <tr>
-                <td style={{color:'magenta'}}>  Common database  </td><td> Get Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year <br></br> (from select list) </td> 
+                <td style={{color:'magenta'}}>Common database</td><td> Get Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year <br></br> (from select list) </td> 
             </tr>
             <tr>
-                <td style={{color:'magenta'}}>  Monthly gain   </td><td>  November has the best gain </td> 
+                <td style={{color:'magenta'}}>Monthly gain</td><td>  November has the best gain </td> 
             </tr>
             
             <tr>
@@ -55,6 +55,9 @@ return (
             </tr>
             <tr>
                 <td style={{color:'magenta'}}>Historical stock prices</td><td>Recieved from AlphVatage.co</td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>Verify</td><td>Compare with MarketWatch</td> 
             </tr>
             
             <tr>
@@ -64,7 +67,7 @@ return (
                 <td style={{color:'magenta'}}>Public source code</td><td>github.com/shagam</td> 
             </tr>
             <tr>
-                {/* <td style={{color:'magenta'}}>No garentee </td><td></td>  */}
+                <td style={{color:'magenta'}}>No garentee </td><td>Please compare with other sites</td> 
             </tr>
 
 
