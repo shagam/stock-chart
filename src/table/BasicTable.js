@@ -154,6 +154,7 @@ const BasicTable = (props) => {
 
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   // const [searchDeepDate, setSearchDeepDate] = useState()
+  const [analyzeShow, setAnalyzeShow] = useState(false);
 
   const [deepStartDate, setDropStartDate] = useState(new Date(2021, 9, 1)); // 2021 oct 1   Mon 0-11
   
@@ -1277,34 +1278,39 @@ const BasicTable = (props) => {
 
         {/* {! isMobile && <LogFlags setLogFlags={setLogFlags} />}   */}
 
-        {chartSymbol && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
-
+       
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain} updateTableInfo  = {updateTableInfo} allColumns={allColumns} />
  
-        {chartSymbol && <div>
-          <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
-
-          <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
-            stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
-          
-          <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-            stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
-            firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
-            {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}
-    
-
-          {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
-
-          {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
-
-          <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
-        </div>}
-
-        {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
         <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
-        <hr/>
+
+        {chartSymbol && <div>
+          <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze-Stock 
+
+          {analyzeShow && <div>
+            <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
+
+            <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
+              stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
+            
+            <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+              stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
+              firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
+              {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}     
+
+            {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
+
+            {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
+
+            <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
+
+            {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
+            
+            {chartSymbol && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
+          </div>}
+        </div>}
+         <hr/>
     </div> 
     </>
     </Suspense>
