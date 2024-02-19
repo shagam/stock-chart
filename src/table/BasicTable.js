@@ -1195,6 +1195,23 @@ const BasicTable = (props) => {
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
          </div>
+     
+
+      <div style={{display:'flex'}} id="add_stock_id">
+        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
+          &nbsp;&nbsp;
+
+        <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
+          <input style={{width:'145px'}}
+            type="text"
+            name="symbol"
+            required="required"
+            placeholder="Add stock symbol ..."
+            onChange={handleAddFormChange}
+          />
+          <button type="submit"> Add  ({rows.length})  </button>
+        </form>
+      </div>
 
       {columnHideFlag && 
         <div id="columnToggle">
@@ -1211,22 +1228,6 @@ const BasicTable = (props) => {
           {hiddenColumnsSave()}
         </div>
       }
-       
-      <div style={{display:'flex'}} id="add_stock_id">
-        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
-          &nbsp;&nbsp;
-
-        <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
-          <input style={{width:'145px'}}
-            type="text"
-            name="symbol"
-            required="required"
-            placeholder="Add stock symbol ..."
-            onChange={handleAddFormChange}
-          />
-          <button type="submit"> Add  ({rows.length})  </button>
-        </form>
-      </div>
 
       <table style={{marginTop: '4px'}} id="stockTable" {...getTableProps()}>
       <thead>
