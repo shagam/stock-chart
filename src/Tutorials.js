@@ -14,16 +14,15 @@ function Tutorials () {
         <hr/> 
         <h4 style={{color:'Green'}}>Tutorials</h4>
 
+        <div className='w-100 text-left mt-2' style={{color:'magenta'}}>
+           <h5> &nbsp; Start with The first tutorial. (lasts 2.5 minutes.) </h5>
+           <h5> &nbsp; Most other tutorials lasts around one minute </h5>
+        </div>         
+
         {/* <hr/> */}
         <div >
             <table>
                 <tbody>              
-                    <tr>
-                        <td><a href="https://youtube.com/playlist?list=PLBwPhbE_paAyMgNmnnkCjUYloLcAIy6ks&feature=shared">Tutorial Playlist</a></td><td>Serialized tutorials</td> 
-                    </tr>
-                    <tr>
-                       <div>&nbsp;</div>
-                    </tr>
                     <tr>
                         <td><a href="https://youtu.be/AMrNSLRRuxY">PortFolio Check</a></td><td>Compare Stocks & ETF</td> 
                     </tr>
@@ -60,12 +59,21 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare with MarketWatch historical price</td> 
                     </tr>
+                    
+                    <tr>
+                       <div>&nbsp;</div>
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtube.com/playlist?list=PLBwPhbE_paAyMgNmnnkCjUYloLcAIy6ks&feature=shared">Tutorial Playlist</a></td><td>Serialized tutorials</td> 
+                    </tr>
+
                     <tr>
                        <div>&nbsp;</div>
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/Rv5a0tkMISE">Hebrew tutorial</a></td><td></td>        
                     </tr>
+
                     <tr>
                        <div>&nbsp;</div>
                     </tr>                    
