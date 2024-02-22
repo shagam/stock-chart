@@ -24,14 +24,23 @@ const StockInfo = (props) => {
         
           <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
 
-          {props.stockInfo && Object.keys(props.stockInfo).map((infoName,i)=>{
-            return (
-                <div style={{display: 'flex'}} key={i}>
-                  <div style={{'color': 'ForestGreen', minWidth: '20vw'}} > {infoName}: &nbsp;&nbsp; </div>
-                  <div > {props.stockInfo[infoName]} </div> 
-                </div>
-              )
-          })}
+          <table>
+            <tbody> 
+              {props.stockInfo && 
+                Object.keys(props.stockInfo).map((infoName,i)=>{
+                  return (
+                    <div  key={i}>
+                      <tr>
+                        <td style={{'color': 'ForestGreen', minWidth: '14rem'}} > {infoName}: &nbsp;&nbsp; </td>
+                        <td > {props.stockInfo[infoName]} </td> 
+                      </tr>
+                    </div>
+                  )
+                })
+              }
+            </tbody>  
+          </table>
+
           <br></br>
           </div>
 
