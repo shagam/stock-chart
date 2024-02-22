@@ -31,8 +31,8 @@ const StockInfo = (props) => {
                   return (
                     <div  key={i}>
                       <tr>
-                        <td style={{'color': 'ForestGreen', minWidth: '14rem'}} > {infoName}: &nbsp;&nbsp; </td>
-                        <td > {props.stockInfo[infoName]} </td> 
+                        <td style={{'color': 'ForestGreen', minWidth: '14rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
+                        <td style={{ border: `none`}} > {props.stockInfo[infoName]} </td> 
                       </tr>
                     </div>
                   )
