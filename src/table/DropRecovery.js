@@ -288,7 +288,7 @@ const DropRecoveryButtons = (props) => {
    
 
           <br></br>  
-          {props.StockSymbol && row_index>0 && 
+          {props.StockSymbol && row_index >= 0 && 
             <div style={{display:'flex'}} >
              &nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
               <div style={{ color: 'green'}}>
