@@ -1165,7 +1165,7 @@ const BasicTable = (props) => {
         <Link to="/about">About</Link> &nbsp; &nbsp;
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
         <Link to="/targetPrice">Target-price-history</Link> &nbsp; &nbsp;
-        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}
+        {/* {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} */}
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
@@ -1278,7 +1278,7 @@ const BasicTable = (props) => {
         {chartSymbol && <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} errorAdd = {errorAdd}/>}
 
-        {/* {! isMobile && <LogFlags setLogFlags={setLogFlags} />}   */}
+        {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} />}  
 
        
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
