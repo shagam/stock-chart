@@ -1115,6 +1115,8 @@ const BasicTable = (props) => {
   function getColor(val, column, sym) {
     if (val === undefined || val === -1 || val === '-1.00')
       return 'Black'
+    if (column.id === 'symbol' || column.id === 'sym') 
+        return 'magenta';
     if (column.id === 'verify_1') {
       if (val > 1.2 || val < 0.8)  // inconsistant data
         return 'rgb(250,10,0)' // red '#ff0000'
