@@ -10,7 +10,7 @@ const StockInfo = (props) => {
 
   return (
     <div>
-      <div>
+      <div>  &nbsp; &nbsp; &nbsp;
         <input
           type="checkbox" checked={infoFlag}
           onChange={infoFlagChange}

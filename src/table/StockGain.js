@@ -8,7 +8,7 @@ const StockInfo = (props) => {
 
   return (
     <div>
-      <div style={{display:'flex'}}>
+      <div style={{display:'flex'}}>  &nbsp; &nbsp;  &nbsp;
         <input
           type="checkbox" checked={gainFlag}
           onChange={gainFlagChange}

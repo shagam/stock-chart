@@ -140,7 +140,7 @@ function Verify (props) {
 
   return (
     <div style = {style} id='verify_id' >
-      <div>
+      <div>  &nbsp; &nbsp; &nbsp;
         <input
             type="checkbox" checked={displayFlag}
             onChange={displayFlagChange}

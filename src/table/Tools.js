@@ -66,7 +66,7 @@ function Tools (props) {
 
     return (
         <div style = {style} >
-            <div>
+            <div>  &nbsp; &nbsp;  &nbsp;
                 <input  type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag ( !displayFlag)}}/> Tools
             </div>
 

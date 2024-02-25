@@ -257,8 +257,8 @@ const DropRecoveryButtons = (props) => {
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
   return (
-    <div style = {style} id='deepRecovery_id' >
-      <div>
+    <div style = {style} id='deepRecovery_id' > 
+      <div> &nbsp; &nbsp; &nbsp;
             <input
               type="checkbox" checked={displayFlag}
               onChange={displayFlagChange}

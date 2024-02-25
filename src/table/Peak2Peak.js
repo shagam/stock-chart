@@ -53,7 +53,7 @@ const Peak2PeakGui = (props) => {
 
   return (
     <div style = {style} id='deepRecovery_id' >
-      <div>
+      <div> &nbsp; &nbsp; &nbsp;
         <input
             type="checkbox" checked={displayFlag}
             onChange={displayFlagChange}
