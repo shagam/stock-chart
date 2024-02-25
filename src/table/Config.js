@@ -38,7 +38,7 @@ const  Config = (props) => {
       <input
         type="checkbox" checked={configFlag}
         onChange={ configFlagChange }
-      /> config 
+      /> Config 
 
       { configFlag &&
         <div id = "config_id">

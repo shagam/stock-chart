@@ -326,7 +326,7 @@ const StockChart = (props) => {
           <input
             type="checkbox" checked={chartFlag}
             onChange={ chartFlagChange}
-          /> chart
+          /> Chart
       </div>
 
       {chartFlag && <div>

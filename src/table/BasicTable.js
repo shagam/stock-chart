@@ -1288,7 +1288,7 @@ const BasicTable = (props) => {
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
 
         {chartSymbol && <div>
-          <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze-Stock 
+          <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze 
 
           {analyzeShow && <div>
             <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />

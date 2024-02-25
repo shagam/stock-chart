@@ -35,7 +35,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>long term yearly gain </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/4cRZHdNJ-xo">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
+                        <td><a href="https://youtu.be/nDfYjmom24A">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
                     </tr>
                     
                     <tr>
