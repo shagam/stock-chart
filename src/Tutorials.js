@@ -28,14 +28,14 @@ function Tutorials () {
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/_ONG8fc7kdM">Common DataBase  </a></td><td>
-                             stocks better than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
+                             stocks that gains more than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>long term yearly gain </td> 
+                        <td><a href="https://youtu.be/nDfYjmom24A">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/nDfYjmom24A">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
+                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>Long term yearly gain </td> 
                     </tr>
                     
                     <tr>
