@@ -174,30 +174,20 @@ const DropRecoveryButtons = (props) => {
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
    // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
-   const [displayFlag, setDisplayFlag] = useState (false); 
    //  2007, 11, 1  2008 deep
- 
-  const [showResults, setShowResults] = useState()
-  
-  React.useEffect (() => {
-    setShowResults(true)
-  }, [props.StockSymbol])
-  
 
   function swap_period_2008() {
-    setShowResults(false);
+
     props.setDropStartDate (new Date(2007, 9, 15)); // 2007 Oct 15
       // setEndDate (new Date(2009, 1, 1));
   }
 
   function swap_period_2020() {
-    setShowResults(false);
     props.setDropStartDate (new Date(2020, 1, 5));  // 2020 Feb 5
     // setEndDate (new Date(2020, 4, 15));
   }
 
   function swap_period_2022() {
-    setShowResults(false);
     props.setDropStartDate (new Date(2021, 11, 1));  // 2021 dec 1 
     // setEndDate (new Date(2020, 4, 15));
   }
@@ -260,7 +250,33 @@ const DropRecoveryButtons = (props) => {
 
    // style={{display:'flex'}}
 
-  const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
+
+  function closeDates(deepDate, startDate) {
+    // console.log ('deepDate', deepDate, 'startDate', startDate)
+    const deepDateSplit = dateSplit (deepDate)
+    const dateDeep = new Date(deepDateSplit[0], deepDateSplit[1], deepDateSplit[2])
+    const deepDateMili = dateDeep.getTime()
+
+
+    const startYear = startDate.getFullYear();
+    const startMon = startDate.getMonth();
+    const startDay = startDate.getDate();
+    const date = new Date (startYear, startMon, startDay); // mon 0..11
+    // console.log (date)
+    const startMili = date.getTime();
+
+    const sixMonthsMili = 1000 * 60 * 60 * 24 * 30 * 14;
+
+    const absDiff = Math.abs (startMili - deepDateMili);
+    if (absDiff < sixMonthsMili) {
+      console.log ("close dates")
+      return true;
+    }
+    else {
+      // console.log ("remote dates")
+      return false;
+    }
+  }
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
@@ -291,15 +307,14 @@ const DropRecoveryButtons = (props) => {
    
 
           <br></br>  
-          {props.StockSymbol && row_index >= 0 && showResults &&
+          {props.StockSymbol && row_index >= 0 && closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && 
             <div style={{display:'flex'}} >
               &nbsp;  deepDate: <div style={{ color: 'green'}}>  &nbsp; {props.rows[row_index].values.deepDate} </div>
               &nbsp;&nbsp;&nbsp;&nbsp; deep:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.deep}</div>
               &nbsp;&nbsp;&nbsp;&nbsp; recoverWeek:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.recoverWeek} </div>
-
             </div>
           }
-          {! showResults && <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
+          {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
           
         </div>
 
