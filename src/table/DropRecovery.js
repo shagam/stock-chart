@@ -1,4 +1,4 @@
-import React, {useState, } from 'react'
+import React, {useState, useEffect} from 'react'
 // import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -161,6 +161,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
   }
 
 
+
+// visible part
 const DropRecoveryButtons = (props) => {
   // props.StockSymbol
   // props.rows
@@ -175,17 +177,27 @@ const DropRecoveryButtons = (props) => {
    const [displayFlag, setDisplayFlag] = useState (false); 
    //  2007, 11, 1  2008 deep
  
+  const [showResults, setShowResults] = useState()
+  
+  React.useEffect (() => {
+    setShowResults(true)
+  }, [props.StockSymbol])
+  
+
   function swap_period_2008() {
+    setShowResults(false);
     props.setDropStartDate (new Date(2007, 9, 15)); // 2007 Oct 15
       // setEndDate (new Date(2009, 1, 1));
   }
 
   function swap_period_2020() {
+    setShowResults(false);
     props.setDropStartDate (new Date(2020, 1, 5));  // 2020 Feb 5
     // setEndDate (new Date(2020, 4, 15));
   }
 
   function swap_period_2022() {
+    setShowResults(false);
     props.setDropStartDate (new Date(2021, 11, 1));  // 2021 dec 1 
     // setEndDate (new Date(2020, 4, 15));
   }
@@ -288,7 +300,7 @@ const DropRecoveryButtons = (props) => {
    
 
           <br></br>  
-          {props.StockSymbol && row_index >= 0 && 
+          {props.StockSymbol && row_index >= 0 && showResults &&
             <div style={{display:'flex'}} >
              &nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
               <div style={{ color: 'green'}}>
@@ -297,6 +309,7 @@ const DropRecoveryButtons = (props) => {
               </div>
             </div>
           }
+          {! showResults && <p5 style={{color:'red'}}>Press Gain for a stock </p5>}
           
         </div>
       }
