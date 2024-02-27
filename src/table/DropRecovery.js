@@ -258,27 +258,18 @@ const DropRecoveryButtons = (props) => {
   //     //paddingTop: "100px",
   // }
 
-  const style = {
-    // background: 'blue',
-    // color: 'red',
-    // fontSize: 200,
-    border: '2px solid magenta'
-  };
-  // style={{display:'flex'}}
+   // style={{display:'flex'}}
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
   return (
-    <div style = {style} id='deepRecovery_id' > 
-      <div> &nbsp; &nbsp; &nbsp;
-            <input
-              type="checkbox" checked={displayFlag}
-              onChange={displayFlagChange}
-            /> Drop-Recovery
-      </div>
-      {displayFlag && 
+    <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
         <div>
-          <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>
+          <div style = {{display: 'flex'}}>
+            <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>  &nbsp; &nbsp;
+            <h6 style={{color: 'blue'}}> DropRecovery  </h6>
+          </div>
+        
           {/* <button type="button" onClick={()=>searchDeepValue()}>Drop_recovery    </button>     */}
 
 
@@ -311,7 +302,7 @@ const DropRecoveryButtons = (props) => {
           {! showResults && <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
           
         </div>
-      }
+
     </div>
   )
 }

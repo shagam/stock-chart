@@ -139,19 +139,13 @@ function Verify (props) {
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
   return (
-    <div style = {style} id='verify_id' >
-      <div>  &nbsp; &nbsp; &nbsp;
-        <input
-            type="checkbox" checked={displayFlag}
-            onChange={displayFlagChange}
-        /> Verify
-      </div>
+        <div style={{ border: '2px solid blue'}}> 
 
-      {displayFlag && 
-        <div> 
-          <div  style={{color: 'magenta' }}> {props.symbol}</div>  
-
-        
+          <div style = {{display: 'flex'}}>
+            <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+            <h6 style={{color: 'blue'}}> Verify &nbsp;  </h6>
+          </div>
+ 
           <div style={{display:'flex'}}>
             <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
             &nbsp; &nbsp; &nbsp;
@@ -177,8 +171,6 @@ function Verify (props) {
           <br></br>           <br></br>
  
         </div>
-      }
-    </div>
   )
 }
 

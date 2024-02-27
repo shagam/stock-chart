@@ -1159,6 +1159,23 @@ const BasicTable = (props) => {
     return col;
   }
 
+  const toolEnum = {
+    None: 'None',
+    DropRecovery: 'DropRecovery',
+    peak2Peak: 'peak2Peak',
+    Verify: 'Verify',
+    StockGainRaw: 'StockGainRaw',
+    StockInfoRaw: 'StockInfoRaw', 
+    Tools: 'Tools'
+  };
+  // marginLeft: '3px', marginRight: '3px', 
+  const [analyzeTool, setAnalyzeTool] = useState()
+  const onOptionChange = e => {
+    const tool = e.target.value;
+    setAnalyzeTool(tool)
+    // console.log(tool)
+  }
+
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
@@ -1289,28 +1306,37 @@ const BasicTable = (props) => {
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
 
         {chartSymbol && <div>
-          <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze 
+          {/* <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze  */}
+          <div> &nbsp;</div>
+          {<div> Alalyze: &nbsp;
+            <div style={{display:'flex'}}> 
+              <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> dropRecovery          
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> peak2peak
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='verify' id='2' checked={analyzeTool==='verify'} onChange={onOptionChange}/> verify       
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> gainRaw      
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='4' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools
+            </div>
 
-          {analyzeShow && <div>
-            <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />
+            {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />}
+            {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
+                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />}
 
-            <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
-              stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />
-            
-            <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-              stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
-              firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/>
-              {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}     
+            {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+                stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
+                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/> }
+            {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
+
+            {analyzeTool ==='stockInfo' && stockInfo && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
+         
+            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
+
+            {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}     
 
             {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
 
             {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} />}
 
-            <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />
-
-            {infoSymbol && <StockInfo stockInfo = {stockInfo} infoSymbol={infoSymbol} />}
-            
-            {chartSymbol && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
           </div>}
         </div>}
          <hr/>

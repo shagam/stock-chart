@@ -9,19 +9,15 @@ const StockInfo = (props) => {
 
 
   return (
-    <div>
-      <div>  &nbsp; &nbsp; &nbsp;
-        <input
-          type="checkbox" checked={infoFlag}
-          onChange={infoFlagChange}
-        /> StockInfoRaw
-      </div>
-      
+    <div style = {{ border: '2px solid blue'}} >
       <div id="textarea_id"> 
-      {infoFlag && props.stockInfo &&
+      { props.stockInfo &&
         <div>
-          <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
-        
+          <div style = {{display: 'flex'}}>
+            <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp; 
+            <h6 style={{color: 'blue'}}> StockInfoRaw  </h6>
+          </div>
+
           <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
 
           <table>
@@ -29,12 +25,10 @@ const StockInfo = (props) => {
               {props.stockInfo && 
                 Object.keys(props.stockInfo).map((infoName,i)=>{
                   return (
-                    <div  key={i}>
-                      <tr>
+                      <tr  key={i}>
                         <td style={{'color': 'ForestGreen', minWidth: '14rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
                         <td style={{ border: `none`}} > {props.stockInfo[infoName]} </td> 
                       </tr>
-                    </div>
                   )
                 })
               }

@@ -7,22 +7,22 @@ const StockInfo = (props) => {
   const gainFlagChange = () => {setGainFlag (! gainFlag)}
 
   return (
-    <div>
-      <div style={{display:'flex'}}>  &nbsp; &nbsp;  &nbsp;
-        <input
-          type="checkbox" checked={gainFlag}
-          onChange={gainFlagChange}
-        /> &nbsp;StockGainRaw
+    <div style={{border:'2px solid blue'}}>
+      <div> 
+       
+        <div style = {{display: 'flex'}}>
+          <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp;
+          <h6  style={{color: 'blue' }}> StockInfoRaw </h6>
+        </div>
 
-        {gainFlag && <div>  &nbsp; &nbsp; <input  type="checkbox" checked={props.gainRawDividand} 
+        <div>  &nbsp; <input  type="checkbox" checked={props.gainRawDividand} 
           onChange={() => props.setGainRawDividand(! props.gainRawDividand)} />
-            &nbsp; filterVolume (Require pressing gain button) </div> }
+            &nbsp; filterVolume (Require pressing gain button) </div>
       </div>
       
       <div id="textarea_id"> 
-      {gainFlag && props.stockGain &&
+      {props.stockGain &&
         <div>
-          <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div>
           <textarea type='text' name='stockInfo' cols={props.gainRawDividand ? 125 : 180} rows='15' readOnly
             value={props.stockGain}  >
           </textarea>

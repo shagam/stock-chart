@@ -34,7 +34,7 @@ const  Config = (props) => {
   };
   //   
   return (
-    <div style = {style}>
+    <div style = {{border: '2px solid maroon'}}>
       <input
         type="checkbox" checked={configFlag}
         onChange={ configFlagChange }

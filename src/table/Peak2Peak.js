@@ -41,29 +41,19 @@ const Peak2PeakGui = (props) => {
       setCalcInfo();
     },[props.symbol]) 
    
-  const style = {
-    // background: 'blue',
-    // color: 'red',
-    // fontSize: 200,
-    border: '2px solid green'
-  };
   // style={{display:'flex'}}
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
   return (
-    <div style = {style} id='deepRecovery_id' >
-      <div> &nbsp; &nbsp; &nbsp;
-        <input
-            type="checkbox" checked={displayFlag}
-            onChange={displayFlagChange}
-        /> Peak2Peak (Long term gain)
-      </div>
+    <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
+          <div> 
 
-      {displayFlag && 
-        <div> 
-            {props.symbol && <div  style={{color: 'magenta' }}> {props.symbol} </div>}
-            
+            <div style = {{display: 'flex'}}>
+              <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+              <h6 style={{color: 'blue'}}> Peak2Peak (long term gain) &nbsp;  </h6>
+            </div>
+
             <div  style={{display:'flex' }}> 
             <div style={{ color: 'black'}}  >Start_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
@@ -84,7 +74,7 @@ const Peak2PeakGui = (props) => {
            {calcResults && <div   style={{ color: 'green'}} >  <hr/> &nbsp; {calcResults}  </div>}
            {calcInfo &&  <div style={{ color: 'black'}} > &nbsp; {calcInfo} </div>}
         </div>
-      }
+
     </div>
   )
 }

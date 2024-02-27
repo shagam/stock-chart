@@ -55,24 +55,15 @@ function Tools (props) {
         return array.map((item) => <li>{JSON.stringify(item)}</li>);  
     }
      
-
-    const style = {
-        // background: 'blue',
-        // color: 'red',
-        // fontSize: 200,
-        border: '2px solid blue'
-      };
     
-
     return (
-        <div style = {style} >
-            <div>  &nbsp; &nbsp;  &nbsp;
-                <input  type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag ( !displayFlag)}}/> Tools
-            </div>
-
-            {displayFlag && <div>
-                <div  style={{color: 'magenta' }}> {props.symbol}</div>  
-
+        <div style = {{border: '2px solid blue'}} >
+       
+              <div>
+                <div style = {{display: 'flex'}}>
+                  <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
+                  <h6 style={{color: 'blue'}}> Tools </h6>
+                </div>
           
                 {/* &nbsp; &nbsp; */}
                 {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags)}>monthGain</button>}
@@ -92,8 +83,8 @@ function Tools (props) {
             
                 <br></br>           
     
-                      <br></br>         
-            </div>}
+              <br></br>         
+            </div>
         </div>
     )
 
