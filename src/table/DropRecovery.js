@@ -302,14 +302,13 @@ const DropRecoveryButtons = (props) => {
           <br></br>  
           {props.StockSymbol && row_index >= 0 && showResults &&
             <div style={{display:'flex'}} >
-             &nbsp;  deepDate:  {props.rows[row_index].values.deepDate} 
-              <div style={{ color: 'green'}}>
-                &nbsp;&nbsp; deep:  {props.rows[row_index].values.deep}
-                &nbsp;&nbsp; recoverWeek:  {props.rows[row_index].values.recoverWeek} 
-              </div>
+              &nbsp;  deepDate: <div style={{ color: 'green'}}>  &nbsp; {props.rows[row_index].values.deepDate} </div>
+              &nbsp;&nbsp;&nbsp;&nbsp; deep:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.deep}</div>
+              &nbsp;&nbsp;&nbsp;&nbsp; recoverWeek:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.recoverWeek} </div>
+
             </div>
           }
-          {! showResults && <p5 style={{color:'red'}}>Press Gain for a stock </p5>}
+          {! showResults && <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
           
         </div>
       }
