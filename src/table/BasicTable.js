@@ -23,7 +23,7 @@ import GainValidate from './GainValidate'
 
 import LogFlags from '../LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
-
+import searchURL from '../utils/SearchURL'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
 
@@ -872,6 +872,7 @@ const BasicTable = (props) => {
         // handleInfoClick(sym, false);
         // if (saveTabl)
         //   saveTable(sym);
+      searchURL (logFlags)
   }
 
    // get all info for targetPrice
