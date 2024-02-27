@@ -15,7 +15,7 @@ const StockInfo = (props) => {
         <div>
           <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp; 
-            <h6 style={{color: 'blue'}}> StockInfoRaw  </h6>
+            <h6 style={{color: 'blue'}}> InfoRaw  </h6>
           </div>
 
           <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 

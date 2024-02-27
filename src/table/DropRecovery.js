@@ -313,7 +313,7 @@ const DropRecoveryButtons = (props) => {
             </div>
           }
           {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && 
-            <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
+            <h5 style={{color:'red'}}>Date mismatch, Press Gain for a stock </h5>}
           
         </div>
 
