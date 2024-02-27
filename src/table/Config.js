@@ -25,7 +25,7 @@ const  Config = (props) => {
     localStorage.removeItem('columnsHidden')
     reloadPage()
   }
-
+  
   const style = {
     // background: 'blue',
     // color: 'red',
@@ -62,8 +62,8 @@ const  Config = (props) => {
           </div>
           
           <AlphaVantage alphaCallBack={props.alphaCallBack} />
-          <div> </div>
-
+          <div>&nbsp; </div>
+          <div>Url: {window.location.href} </div>
         </div>
       }
 
