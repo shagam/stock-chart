@@ -178,7 +178,7 @@ const DropRecoveryButtons = (props) => {
 
   function swap_period_2008() {
 
-    props.setDropStartDate (new Date(2007, 9, 15)); // 2007 Oct 15
+    props.setDropStartDate (new Date(2008, 9, 15)); // 2007 Oct 15  
       // setEndDate (new Date(2009, 1, 1));
   }
 
@@ -188,7 +188,7 @@ const DropRecoveryButtons = (props) => {
   }
 
   function swap_period_2022() {
-    props.setDropStartDate (new Date(2021, 11, 1));  // 2021 dec 1 
+    props.setDropStartDate (new Date(2022, 8, 1));  // 2022 sep 1 
     // setEndDate (new Date(2020, 4, 15));
   }
   
@@ -252,7 +252,7 @@ const DropRecoveryButtons = (props) => {
 
 
   function closeDates(deepDate, startDate) {
-    // console.log ('deepDate', deepDate, 'startDate', startDate)
+
     const deepDateSplit = dateSplit (deepDate)
     const dateDeep = new Date(deepDateSplit[0], deepDateSplit[1], deepDateSplit[2])
     const deepDateMili = dateDeep.getTime()
@@ -265,15 +265,13 @@ const DropRecoveryButtons = (props) => {
     // console.log (date)
     const startMili = date.getTime();
 
-    const sixMonthsMili = 1000 * 60 * 60 * 24 * 30 * 14;
+    const sixMonthsMili = 1000 * 60 * 60 * 24 * 30 * 16;
 
     const absDiff = Math.abs (startMili - deepDateMili);
-    if (absDiff < sixMonthsMili) {
-      console.log ("close dates")
+    if (absDiff < sixMonthsMili)
       return true;
-    }
     else {
-      // console.log ("remote dates")
+      console.log ('big date diff', 'deepDate', deepDate, 'startDate', startDate)
       return false;
     }
   }
@@ -314,7 +312,8 @@ const DropRecoveryButtons = (props) => {
               &nbsp;&nbsp;&nbsp;&nbsp; recoverWeek:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.recoverWeek} </div>
             </div>
           }
-          {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
+          {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && 
+            <h5 style={{color:'red'}}>Press Gain for a stock </h5>}
           
         </div>
 

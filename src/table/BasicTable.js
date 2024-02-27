@@ -156,7 +156,7 @@ const BasicTable = (props) => {
   // const [searchDeepDate, setSearchDeepDate] = useState()
   const [analyzeShow, setAnalyzeShow] = useState(false);
 
-  const [deepStartDate, setDropStartDate] = useState(new Date(2021, 9, 1)); // 2021 oct 1   Mon 0-11
+  const [deepStartDate, setDropStartDate] = useState(new Date(2022, 8, 1)); // 2021 sep 1   Mon 0-11
   
   const useData = false;
 
