@@ -150,26 +150,27 @@ function Verify (props) {
             <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' pattern="[-]?[0-9]+"/>
             &nbsp; &nbsp; &nbsp;
             <button type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
-            {/* &nbsp; &nbsp; */}
           </div>   
-          <br></br>
-
+          {/* <br></br> */}
+          <div>&nbsp;</div>  
+          
           <button type="button" onClick={()=>verify (false)}>verify &nbsp;(MarketWatch)   </button>
-          <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)} &nbsp;  </div>
-          <br></br>
+          <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>
+          <div>&nbsp;</div>   
+
     
           <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
-          <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)} &nbsp;  </div>
-          <br></br>
+          <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)}  </div>
+          <div>&nbsp;</div>  
   
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(JSON.parse(splitInfo))}
-          <br></br>           <br></br>
+          <div>&nbsp;</div>        
           
           <button type="button" onClick={()=>spikes ()}>Spikes  </button>  
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
-          <br></br>           <br></br>
- 
+          {/* <br></br> */}
+          <div>&nbsp;</div>
         </div>
   )
 }
