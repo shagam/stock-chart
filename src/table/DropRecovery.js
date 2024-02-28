@@ -305,7 +305,7 @@ const DropRecoveryButtons = (props) => {
    
 
           <br></br>  
-          {props.StockSymbol && row_index >= 0 && closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && 
+          {props.StockSymbol && row_index >= 0 &&
             <div style={{display:'flex'}} >
               &nbsp;  deepDate: <div style={{ color: 'green'}}>  &nbsp; {props.rows[row_index].values.deepDate} </div>
               &nbsp;&nbsp;&nbsp;&nbsp; deep:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.deep}</div>
