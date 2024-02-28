@@ -11,6 +11,9 @@ const StockInfo = (props) => {
   return (
     <div style = {{ border: '2px solid blue'}} >
       <div id="textarea_id"> 
+      {/* {! props.stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
+      {props.chartSymbol !== props.infoSymbol && <h6 style={{color: 'red'}}> No info or symbol misMatch (An ETF or data for a previous symbol)  </h6>}
+
       { props.stockInfo &&
         <div>
           <div style = {{display: 'flex'}}>
