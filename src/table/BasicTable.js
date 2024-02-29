@@ -786,8 +786,8 @@ const BasicTable = (props) => {
               else
                 GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
               }
-                peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-                  weekly, logFlags, true, new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, null) //setCalcResults, setCalcInfo
+                // peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
+                //   weekly, logFlags, true, new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null) //setCalcResults, setCalcInfo
 
               const updateMili = Date.now();
               const updateDate = getDate();

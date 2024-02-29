@@ -32,6 +32,7 @@ const Peak2PeakGui = (props) => {
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [calcResults, setCalcResults] = useState ();
     const [calcInfo, setCalcInfo] = useState ();
+    const [results, setResults] = useState ();
     const [searchPeak, setSearchPeak] = useState (true);
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
@@ -44,6 +45,20 @@ const Peak2PeakGui = (props) => {
   // style={{display:'flex'}}
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
+  
+  // const textResults = 'yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(2) + '%'
+  // const textInfo =  `(gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
+  // const results = {
+  //   yearlyGain: yearlyGain,
+  //   yearlyGainPercent: ((yearlyGain - 1) * 100).toFixed(2),
+  //   gain: gain,
+  //   yearsDiff: yearsDiff,
+  //   from: stockChartXValues[indexFirst],
+  //   to: stockChartXValues[indexEnd],
+  //   fromValue: stockChartYValues[indexFirst],
+  //   toValue: stockChartYValues[indexEnd],
+  // }
+
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
@@ -68,11 +83,14 @@ const Peak2PeakGui = (props) => {
             <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
             <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setCalcResults, setCalcInfo)}>Calc peak2peak gain </button>           
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setResults)}>Calc peak2peak gain </button>           
            </div>
            
-           {calcResults && <div   style={{ color: 'green'}} >  <hr/> &nbsp; {calcResults}  </div>}
-           {calcInfo &&  <div style={{ color: 'black'}} > &nbsp; {calcInfo} </div>}
+           {results && <div>
+             <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>
+             <div> gain= {results.gain} yearsDiff={results.yearsDiff}   from={results.from} ({results.fromValue})  to {results.to} ({results.toValue}) </div>
+           </div>}
+
         </div>
 
     </div>
