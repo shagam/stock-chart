@@ -30,35 +30,50 @@ const Peak2PeakGui = (props) => {
     const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
 
     const [displayFlag, setDisplayFlag] = useState (false); 
-    const [calcResults, setCalcResults] = useState ();
-    const [calcInfo, setCalcInfo] = useState ();
+    // const [calcResults, setCalcResults] = useState ();
+    // const [calcInfo, setCalcInfo] = useState ();
     const [results, setResults] = useState ();
     const [searchPeak, setSearchPeak] = useState (true);
+    const [bubbleBaseline, setBubbleBaseline] = useState (false);
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
     useEffect(() => {
-      setCalcResults();
-      setCalcInfo();
+      setResults();
     },[props.symbol]) 
    
   // style={{display:'flex'}}
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
   
-  // const textResults = 'yearlyGain=' + yearlyGain + ' \xa0\xa0' + ((yearlyGain - 1) * 100).toFixed(2) + '%'
-  // const textInfo =  `(gain= ${gain}  \xa0  years= ${yearsDiff} \xa0 from= ${stockChartXValues[indexFirst]} \xa0 to= ${stockChartXValues[indexEnd]}  )`;
-  // const results = {
-  //   yearlyGain: yearlyGain,
-  //   yearlyGainPercent: ((yearlyGain - 1) * 100).toFixed(2),
-  //   gain: gain,
-  //   yearsDiff: yearsDiff,
-  //   from: stockChartXValues[indexFirst],
-  //   to: stockChartXValues[indexEnd],
-  //   fromValue: stockChartYValues[indexFirst],
-  //   toValue: stockChartYValues[indexEnd],
-  // }
+  // results['indexFirst'] = indexFirst;
+  // results['indxEnd'] = indexEnd;
+  // results['yearlyGain'] = yearlyGain;
+  // results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
+  // results['weeklyGain'] = weeklyGain;
+  // results['gain'] = gain;
+  // results['yearsDiff'] = yearsDiff;
+  // results['from'] = stockChartXValues[indexFirst];
+  // results['to'] = stockChartXValues[indexEnd];
+  // results['fromValue'] = stockChartYValues[indexFirst];
+  // results['toValue'] = stockChartYValues[indexEnd];
 
+  // temp save bubble crash baseline
+  function calcBaseLine (XValues, YValues) {
+    var xBaseLine = [];
+    var yBaseLine = [];
+    yBaseLine[0] = YValues[results.indexFirst]
+    xBaseLine[0] = XValues[results.indexFirst]
+    const loopCount = results.indexFirst - results.indxEnd;
+    for (let i = 1; i < loopCount; i ++) {
+      xBaseLine[i] = XValues[results.indexFirst + i]
+      yBaseLine[i] = yBaseLine[i-1] * results.weeklyGain
+    }
+    // console.log (yBaseLine[results.indxEnd -1], xBaseLine[results.indxEnd -1] )
+    console.log (xBaseLine[loopCount - 1], XValues[results.indxEnd - 1])
+    console.log (yBaseLine[loopCount - 1], YValues[results.indxEnd - 1])
+    console.log (XValues, YValues, xBaseLine, yBaseLine);
+  }
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
@@ -80,15 +95,18 @@ const Peak2PeakGui = (props) => {
            </div>
            
            <div> &nbsp; 
-            <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
+              <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
-            <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setResults)}>Calc peak2peak gain </button>           
+              <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setResults)}>Calc peak2peak gain </button> &nbsp;
+
+              {results && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
+
            </div>
            
            {results && <div>
              <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>
-             <div> gain= {results.gain} yearsDiff={results.yearsDiff}   from={results.from} ({results.fromValue})  to {results.to} ({results.toValue}) </div>
+             <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div>
            </div>}
 
         </div>
