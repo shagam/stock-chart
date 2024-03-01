@@ -100,6 +100,7 @@ const BasicTable = (props) => {
   const [chartSymbol, setChartSymbol] = useState("");
   const [infoSymbol, setInfoSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
+  const [bubbleLine, setBubbleLine] = useState();
 
   const servList = ['dinagold.org', '62.90.44.227', 'localhost', ];
   const [ssl, setSsl] = useState(true)
@@ -558,11 +559,11 @@ const BasicTable = (props) => {
     periodTag = "Time Series (Daily)"
 
   function getYValue (chartData, key, openMarketFlag) {
-    const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']).toFixed(3))
-    const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']).toFixed(3))
+    const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']))
+    const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']))
     var yValue;
     if (isAdjusted()) {
-      const adjustedCloseValue = Number (Number (chartData[`${periodTag}`][key]['5. adjusted close']).toFixed(3))
+      const adjustedCloseValue = Number (Number (chartData[`${periodTag}`][key]['5. adjusted close']))
       if (openMarketFlag)
         yValue = adjustedCloseValue / closeVal * openVal;
       else
@@ -674,9 +675,9 @@ const BasicTable = (props) => {
                 const yValue = Number(getYValue (chartData, key, openMarketFlag))
 
                 if (yValue > 0.1)
-                  stockChartYValuesFunction.push(yValue.toFixed(2));
+                  stockChartYValuesFunction.push(yValue);
                 else
-                  stockChartYValuesFunction.push(yValue.toFixed(4));
+                  stockChartYValuesFunction.push(yValue);
                 if (isNaN (yValue)) {
                   console.log (sym, i, yValue)
                 }
@@ -1293,8 +1294,9 @@ const BasicTable = (props) => {
        
     <div id='trailer_id'>
 
-        {chartSymbol && <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} errorAdd = {errorAdd}/>}
+        {chartSymbol && stockChartXValues.length > 0 && 
+         <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine}/>}
 
         {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} />}  
 
@@ -1320,7 +1322,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />}
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
-                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} />}
+                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}

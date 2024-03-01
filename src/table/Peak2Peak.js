@@ -47,7 +47,7 @@ const Peak2PeakGui = (props) => {
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
   
   // results['indexFirst'] = indexFirst;
-  // results['indxEnd'] = indexEnd;
+  // results['indexEnd'] = indexEnd;
   // results['yearlyGain'] = yearlyGain;
   // results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
   // results['weeklyGain'] = weeklyGain;
@@ -60,19 +60,20 @@ const Peak2PeakGui = (props) => {
 
   // temp save bubble crash baseline
   function calcBaseLine (XValues, YValues) {
-    var xBaseLine = [];
-    var yBaseLine = [];
-    yBaseLine[0] = YValues[results.indexFirst]
-    xBaseLine[0] = XValues[results.indexFirst]
-    const loopCount = results.indexFirst - results.indxEnd;
-    for (let i = 1; i < loopCount; i ++) {
-      xBaseLine[i] = XValues[results.indexFirst + i]
-      yBaseLine[i] = yBaseLine[i-1] * results.weeklyGain
+    var xBubbleLine = [];
+    var yBubbleLine = [];
+    yBubbleLine[0] = YValues[results.indexFirst]
+    xBubbleLine[0] = XValues[results.indexFirst]
+    const loopCount = results.indexFirst - results.indexEnd;
+    for (let i = 1; i < results.indexFirst; i ++) {
+      xBubbleLine[i] = XValues[results.indexFirst - i]
+      yBubbleLine[i] = yBubbleLine[i-1] * results.weeklyGain // calc fro previos
     }
     // console.log (yBaseLine[results.indxEnd -1], xBaseLine[results.indxEnd -1] )
-    console.log (xBaseLine[loopCount - 1], XValues[results.indxEnd - 1])
-    console.log (yBaseLine[loopCount - 1], YValues[results.indxEnd - 1])
-    console.log (XValues, YValues, xBaseLine, yBaseLine);
+    console.log ('xVal', XValues[results.indexEnd - 1], xBubbleLine[loopCount - 1])
+    console.log ('yVal', YValues[results.indexEnd - 1], yBubbleLine[loopCount - 1])
+    // console.log (XValues, YValues, xBaseLine, yBaseLine);
+    props.setBubbleLine ({x: xBubbleLine, y: yBubbleLine})
   }
 
   return (

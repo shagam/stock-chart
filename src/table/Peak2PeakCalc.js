@@ -87,17 +87,17 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
       const weeksDiff = indexFirst - indexEnd
       const yearsDiff = Number (weeksDiff/52).toFixed (2)
-      const gain = Number (stockChartYValues[indexEnd] / stockChartYValues[indexFirst]).toFixed (3)
+      const gain = Number (stockChartYValues[indexEnd] / stockChartYValues[indexFirst])
 
       const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-      const weeklyGain = Number (gain ** (1 / weeksDiff)).toFixed(3)
+      const weeklyGain = Number (gain ** (1 / weeksDiff))
            
       results['indexFirst'] = indexFirst;
-      results['indxEnd'] = indexEnd;
+      results['indexEnd'] = indexEnd;
       results['yearlyGain'] = yearlyGain;
       results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
       results['weeklyGain'] = weeklyGain;
-      results['gain'] = gain;
+      results['gain'] = gain.toFixed(3);
       results['yearsDiff'] = yearsDiff;
       results['from'] = stockChartXValues[indexFirst];
       results['to'] = stockChartXValues[indexEnd];
