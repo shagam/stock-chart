@@ -27,7 +27,7 @@ const Peak2PeakGui = (props) => {
   // weekly
 
     const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
-    const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
+    const [endDate, setEndDate] =   useState(new Date(2021, 10, 1)); // 2021 dec 1
 
     const [displayFlag, setDisplayFlag] = useState (false); 
     // const [calcResults, setCalcResults] = useState ();
@@ -103,7 +103,7 @@ const Peak2PeakGui = (props) => {
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults)}>Calc peak2peak gain </button> &nbsp;
 
               {results && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
-
+              {bubbleBaseline && <div style={{ color: 'red'}} >bubbleBaseline calculated </div> && console.log('bubble')}
            </div>
            
            {results && <div>
