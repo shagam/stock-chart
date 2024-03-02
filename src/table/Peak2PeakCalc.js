@@ -7,7 +7,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
     const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
     var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
     if(LOG_FLAG)
-      console.log ( symbol, 'P2P quasyTop ', initDate, ' index=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex])
+      console.log ( symbol, 'P2P quasyTop begin search', initDate, ' index=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex])
     const range = 35;
 
     var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
@@ -20,17 +20,18 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
     for (let i = startIndex; i < endIndex; i++) { 
       if (LOG_FLAG && i === startIndex)
-        console.log ('index=', i, 'first', stockChartXValues[startIndex])// end of loop
+        console.log ('index=', i, 'first', stockChartXValues[startIndex])
       const price = Number(stockChartYValues[i]);
       if (highPrice < price) {  // at least weeks to recover
         highPrice  = price;
         priceIndex = i;
         if (LOG_FLAG)
-          console.log ('index=', i, 'price=', price, stockChartXValues[i])
+          console.log ('index=', i, 'date=', stockChartXValues[i], 'price=', price)
       }
       if (LOG_FLAG && i === endIndex - 1)
-        console.log ('index=', i, 'last', stockChartXValues[endIndex])// end of loop
+        console.log ('index=', i, 'last', stockChartXValues[endIndex], stockChartYValues[endIndex])// end of loop
     }
+    console.log ('Found top  index=', priceIndex, 'last', stockChartXValues[priceIndex], stockChartYValues[priceIndex])
     return priceIndex;
 
   }
@@ -72,18 +73,19 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         if (searchPeak)
           startDateArray = lastDateSplit;
         else {
-            results['err'] = symbol + ' peak2Peak, search peak fail; date beyond range ' + startDateArray + '  ' + lastDateSplit;
+          const err =  ' peak2Peak, date beyond range; ';
+          results['err'] = symbol + err  + ' ' + startDateArray + '  ' + lastDateSplit;
 
-            if (errorAdd)
-              errorAdd(results['err'])
-            console.log ('%c' + results['err'], 'color: red')
+          if (errorAdd)
+            errorAdd([symbol, err, 'searchFor=', startDateArray, 'symStarts=', lastDateSplit])
+          console.log ('%c' + results['err'], 'color: red')
           return;            
         }
 
       }
       const endDateArray =[endYear, endMon, endDay]
-      const indexFirst = quasiTop (symbol, startDateArray, stockChartXValues, stockChartYValues, logFlags)
-      const indexEnd = quasiTop (symbol, endDateArray, stockChartXValues, stockChartYValues, logFlags)
+      const indexFirst = quasiTop (symbol, startDateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const indexEnd = quasiTop (symbol, endDateArray, stockChartXValues, stockChartYValues, logFlags, true)
 
       const weeksDiff = indexFirst - indexEnd
       const yearsDiff = Number (weeksDiff/52).toFixed (2)

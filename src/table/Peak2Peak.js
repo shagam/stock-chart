@@ -60,14 +60,15 @@ const Peak2PeakGui = (props) => {
 
   // temp save bubble crash baseline
   function calcBaseLine (XValues, YValues) {
+    const loopCount = results.indexFirst - results.indexEnd;
     var xBubbleLine = [];
     var yBubbleLine = [];
-    yBubbleLine[0] = YValues[results.indexFirst]
-    xBubbleLine[0] = XValues[results.indexFirst]
-    const loopCount = results.indexFirst - results.indexEnd;
+    yBubbleLine[results.indexFirst] = YValues[results.indexFirst]
+    xBubbleLine[results.indexFirst] = XValues[results.indexFirst]
+
     for (let i = 1; i < results.indexFirst; i ++) {
-      xBubbleLine[i] = XValues[results.indexFirst - i]
-      yBubbleLine[i] = yBubbleLine[i-1] * results.weeklyGain // calc fro previos
+      xBubbleLine[results.indexFirst - i] = XValues[results.indexFirst - i]
+      yBubbleLine[results.indexFirst - i] = yBubbleLine[ results.indexFirst - i + 1] * results.weeklyGain // calc fro previos
     }
     // console.log (yBaseLine[results.indxEnd -1], xBaseLine[results.indxEnd -1] )
     console.log ('xVal', XValues[results.indexEnd - 1], xBubbleLine[loopCount - 1])
@@ -99,7 +100,7 @@ const Peak2PeakGui = (props) => {
               <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
               <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, null, setResults)}>Calc peak2peak gain </button> &nbsp;
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults)}>Calc peak2peak gain </button> &nbsp;
 
               {results && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
 
