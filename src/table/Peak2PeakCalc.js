@@ -10,7 +10,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       console.log ( symbol, 'P2P quasyTop begin search', initDate, ' index=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex])
     const range = 35;
 
-    var startIndex = dateIndex - range > 0 ? dateIndex -= range : 0
+    var startIndex = dateIndex - range > 0 ? dateIndex - range : 0
     var priceIndex = startIndex;
     var endIndex = dateIndex + range < stockChartYValues.length ? dateIndex + range : dateIndex;
     var highPrice = stockChartYValues[startIndex];
