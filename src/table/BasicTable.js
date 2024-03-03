@@ -275,6 +275,9 @@ const BasicTable = (props) => {
       if (rows[row_index].values.verify_1 === undefined)
       rows[row_index].values.verify_1 = -1;
     rows[row_index].values.gain_date = getDate();
+    console.log(rows[row_index].values.peak2Peak)
+    if (! rows[row_index].values.peak2Peak)
+      rows[row_index].values.peak2Peak = -1;
     // add new entry
     try {
     await addDoc (gainRef, {__symbol: rows[row_index].values.symbol,
@@ -1322,7 +1325,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />}
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
-                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd}/>}
+                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}

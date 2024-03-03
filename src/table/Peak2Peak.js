@@ -27,14 +27,14 @@ const Peak2PeakGui = (props) => {
   // weekly
 
     const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
-    const [endDate, setEndDate] =   useState(new Date(2021, 10, 1)); // 2021 dec 1
+    const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
 
     const [displayFlag, setDisplayFlag] = useState (false); 
     // const [calcResults, setCalcResults] = useState ();
     // const [calcInfo, setCalcInfo] = useState ();
     const [results, setResults] = useState ();
     const [searchPeak, setSearchPeak] = useState (true);
-    const [bubbleBaseline, setBubbleBaseline] = useState (false);
+    const [bubbleLineFlag, setBubbleLineFlag] = useState (false); // show that bubleLine calculated
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
@@ -75,6 +75,7 @@ const Peak2PeakGui = (props) => {
     console.log ('yVal', YValues[results.indexEnd - 1], yBubbleLine[loopCount - 1])
     // console.log (XValues, YValues, xBaseLine, yBaseLine);
     props.setBubbleLine ({x: xBubbleLine, y: yBubbleLine})
+    setBubbleLineFlag(true)
   }
 
   return (
@@ -100,10 +101,10 @@ const Peak2PeakGui = (props) => {
               <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
               <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults)}>Calc peak2peak gain </button> &nbsp;
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp;
 
               {results && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
-              {bubbleBaseline && <div style={{ color: 'red'}} >bubbleBaseline calculated </div> && console.log('bubble')}
+              {bubbleLineFlag && <div style={{color: 'magenta'}} >bubbleLine </div>}
            </div>
            
            {results && <div>
