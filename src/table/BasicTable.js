@@ -18,7 +18,7 @@ import GetInt from '../utils/GetInt'
 import StockInfo from './StockInfo'
 import StockGain from './StockGain'
 import GainValidate from './GainValidate'
-
+import {Holdings} from './Holdings'
 
 
 import LogFlags from '../LogFlags'
@@ -275,7 +275,7 @@ const BasicTable = (props) => {
       if (rows[row_index].values.verify_1 === undefined)
       rows[row_index].values.verify_1 = -1;
     rows[row_index].values.gain_date = getDate();
-    console.log(rows[row_index].values.peak2Peak)
+    // console.log(rows[row_index].values.peak2Peak)
     if (! rows[row_index].values.peak2Peak)
       rows[row_index].values.peak2Peak = -1;
     // add new entry
@@ -1166,6 +1166,7 @@ const BasicTable = (props) => {
   const toolEnum = {
     None: 'None',
     DropRecovery: 'DropRecovery',
+    Holdings: 'Holdings',
     peak2Peak: 'peak2Peak',
     Verify: 'Verify',
     StockGainRaw: 'StockGainRaw',
@@ -1317,6 +1318,7 @@ const BasicTable = (props) => {
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> dropRecovery          
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> peak2peak
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='holdings' id='5' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> holdings
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='verify' id='2' checked={analyzeTool==='verify'} onChange={onOptionChange}/> verify       
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> gainRaw      
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw
@@ -1326,6 +1328,8 @@ const BasicTable = (props) => {
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />}
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
                 stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
+
+            {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} logFlags={logFlags} corsServer={'dinagold.org'}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
