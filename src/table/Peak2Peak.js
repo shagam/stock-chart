@@ -40,6 +40,7 @@ const Peak2PeakGui = (props) => {
 
     useEffect(() => {
       setResults();
+      setBubbleLineFlag(false)
     },[props.symbol]) 
    
   // style={{display:'flex'}}
