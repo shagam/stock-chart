@@ -136,7 +136,7 @@ function Verify (props) {
   };
   // style={{display:'flex'}}
 
-  const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
+
 
   return (
         <div style={{ border: '2px solid blue'}}> 
