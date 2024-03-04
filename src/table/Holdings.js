@@ -31,9 +31,15 @@ function Holdings (props) {
       if (result.status !== 200)
         return;
 
-      if (result.status.startsWith('err'))
-        setErr(result.status)
-      console.log (result.data)
+      // if (result.status.startsWith('err'))
+      //   setErr(result.status)
+      console.log (result.data, result.data.length)
+      for (let i = 0; i < result.data.length; i++)
+        console.log(i, result.data[i])
+      // const arr = JSON.parse(result.data)
+
+      // console.log(arr)
+      setErr(JSON.stringify(result.data))
 
       // for (var i = 0; i < result.data.length; i++) {
       //   console.log (result.data[i])
@@ -51,7 +57,7 @@ function Holdings (props) {
     } )
     .catch ((err) => {
       setErr(err.message + ' only for ETF')
-      console.log(err.message)
+      // console.log(err.message)
     })
   }
 
