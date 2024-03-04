@@ -52,7 +52,8 @@ const StockChart = (props) => {
     delete props.gainMap.bubbleLine
   }
 
-  console.log (Object.keys (props.gainMap))
+  if(LOG_FLAG)
+    console.log (Object.keys (props.gainMap))
 
   const isEmpty = (str) => {
     if (str == null)
