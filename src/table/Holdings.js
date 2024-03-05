@@ -3,6 +3,7 @@ import axios from 'axios'
 import cors from 'cors'
 import {nanoid} from 'nanoid';
 
+
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
 // https://stockanalysis.com/etf/ivv/holdings/
@@ -87,6 +88,8 @@ function Holdings (props) {
         }
       } // end of add
       props.saveTable()
+
+
       if (insert)
         window.location.reload(); 
       // const arr = JSON.parse(result.data)
@@ -133,7 +136,7 @@ function Holdings (props) {
         </div> 
       }
 
-      {arr && arr[0].sym !== arr[0].nam && <div>Corporate name may be off row, because regex fail to match '&'</div>}
+      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}
       {arr && Array.isArray(arr) &&  renderList(arr)}
       {err && <div style={{color:'red'}}> {err} </div>} 
       <div>&nbsp;</div>  
