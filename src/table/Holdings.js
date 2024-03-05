@@ -43,9 +43,9 @@ function Holdings (props) {
   }
 
 
-  function getHoldings (insert) {
+  function getHoldings (insert, logOnly) {
     if (props.rows[row_index].values.PE !== -2) {
-      const er = 'Not an ETF, Holdings only for ETF';
+      const er = 'Server connection fail';
       console.log (er)
       setErr (er)
       return;
@@ -66,25 +66,29 @@ function Holdings (props) {
       // if (result.data.startsWith('err'))
       // setErr(result.status)
       console.log (props.chartSymbol, result.data, result.data.length)
+      if (logOnly)
+        return;
 
-      for (let i = 0; i < result.data.length; i++) {
+      for (let i = 1; i < result.data.length; i++) {
         if (insert) { // insert in table
           const sym = result.data[i].sym;
           console.log(sym)
           const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
           if (r_index !== -1) { 
-            props.rows[i].values.percent = result.data[i].perc; // symm exist,so put in only percetage
+            props.rows[r_index].values.percent = result.data[i].perc; // symm exist,so put in only percetage
           }
           else {
             // add a new sym
             const newStock = addSymOne (sym)
             console.log ('added', newStock)
-            props.prepareRow(newStock);
+            newStock.values.percent = result.data[i].perc
             props.rows.push (newStock);
           }  
         }
       } // end of add
-      window.location.reload(); 
+      props.saveTable()
+      if (insert)
+        window.location.reload(); 
       // const arr = JSON.parse(result.data)
 
       if (! insert) {
@@ -123,8 +127,9 @@ function Holdings (props) {
       
       {props.chartSymbol &&
        <div stype={{display: 'flex'}}>
-          <button type="button" onClick={()=>getHoldings (false)}>Holdings-display  </button> &nbsp;
-          <button type="button" onClick={()=>getHoldings (true)}>Holdings-insert-in-table  </button>
+          <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp;
+          <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
+          <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button>
         </div> 
       }
 

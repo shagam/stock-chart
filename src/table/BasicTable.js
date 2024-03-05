@@ -1313,8 +1313,8 @@ const BasicTable = (props) => {
 
         {chartSymbol && <div>
           {/* <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze  */}
-          <div> &nbsp;</div>
-          {<div> Analyze: &nbsp;
+          <div style={{color:'blue'}}>Analyze stock (Choose one):</div>
+          {<div>
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> dropRecovery          
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> peak2peak
@@ -1329,7 +1329,8 @@ const BasicTable = (props) => {
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
                 stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
-            {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} logFlags={logFlags} corsServer={'dinagold.org'}/>}
+            {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
+             logFlags={logFlags} corsServer={'dinagold.org'} prepareRow={prepareRow} saveTable={saveTable}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
