@@ -57,26 +57,34 @@ function Holdings (props) {
     axios.get (corsUrl)
     // getDate()
     .then ((result) => {
-      if (result.status !== 200)
+      if (result.status !== 200) {
+        console.log (props.chartSymbol, 'status=', result)
         return;
+      }
+
 
       // if (result.data.startsWith('err'))
-      //   setErr(result.status)
-      console.log (result.data, result.data.length)
+      // setErr(result.status)
+      console.log (props.chartSymbol, result.data, result.data.length)
+
       for (let i = 0; i < result.data.length; i++) {
-        if (insert) {
-          // const sym = result.data[i].sym;
-          // const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
-          // if (r_index !== -1) { 
-          //   props.rows[i].values.percent = result.data[i].perc; // put in only percetage
-          // }
-          // else {
-          //   // insert in table
-          //   // const newStock = addSymOne (sym)
-          // } 
-          // window.location.reload();    
+        if (insert) { // insert in table
+          const sym = result.data[i].sym;
+          console.log(sym)
+          const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
+          if (r_index !== -1) { 
+            props.rows[i].values.percent = result.data[i].perc; // symm exist,so put in only percetage
+          }
+          else {
+            // add a new sym
+            const newStock = addSymOne (sym)
+            console.log ('added', newStock)
+            props.prepareRow(newStock);
+            props.rows.push (newStock);
+          }  
         }
-      }
+      } // end of add
+      window.location.reload(); 
       // const arr = JSON.parse(result.data)
 
       if (! insert) {
