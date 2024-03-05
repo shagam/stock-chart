@@ -6,6 +6,12 @@ export const COLUMNS = [
     sticky: 'left'
   },
   {
+    Header: '%',
+    Footer: '%',    
+    accessor: 'percent',
+    sticky: 'left'
+  },
+  {
     Header: 'Exch',
     Footer: 'Exch',    
     accessor: 'Exchange'
@@ -208,6 +214,13 @@ export const GROUPED_COLUMNS = [
         accessor: 'symbol',
         sticky: 'left'
       },
+      {
+        Header: '%',
+        Footer: '%',    
+        accessor: 'percent',
+        sticky: 'left'
+      },
+    
     ],
   },
   {
