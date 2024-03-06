@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {nanoid} from 'nanoid';
-
+import {holdingsAddDoc,  holdingsGet} from './Firestore'
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
@@ -45,12 +45,12 @@ function Holdings (props) {
 
 
   function getHoldings (insert, logOnly) {
-    if (props.rows[row_index].values.PE !== -2) {
-      const er = 'Server connection fail';
-      console.log (er)
-      setErr (er)
-      return;
-    }  
+    // if (props.rows[row_index].values.PE !== -2) {
+    //   const er = 'Server connection fail';
+    //   console.log (er)
+    //   setErr (er)
+    //   return;
+    // }  
 
     var corsUrl = "https://";
     corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
@@ -63,12 +63,19 @@ function Holdings (props) {
         return;
       }
 
+      // Check for err
+      if (result.data.includes('failed')) {
+        setErr(result.data)
+        return;
+      }
 
-      // if (result.data.startsWith('err'))
-      // setErr(result.status)
       console.log (props.chartSymbol, result.data, result.data.length)
       if (logOnly)
         return;
+
+      // send to common database
+      // const arr = result.data.shift()
+      holdingsAddDoc(props.chartSymbol, JSON.stringify(result.data));
 
       for (let i = 1; i < result.data.length; i++) {
         if (insert) { // insert in table
