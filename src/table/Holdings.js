@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {nanoid} from 'nanoid';
-import {holdingsAddDoc,  holdingsGet} from './Firestore'
+import {holdingsAddDoc, holdingsGet, holdingsGetList} from './Firestore'
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
@@ -105,18 +105,18 @@ function Holdings (props) {
         // setErr(JSON.stringify(result.data))
         setArr(result.data)
       }
-
-      // if (rows[row_index].values.splits_list !== undefined) {
-      //   // console.log ('old split: ', rows[row_index].values.splits)
-
-      // }
-
     } )
     .catch ((err) => {
       setErr(err.message + ' only for ETF')
       // console.log(err.message)
     })
   }
+
+  function getList () {
+    const list = holdingsGetList(setErr, setArr);
+
+  }
+
 
   function renderList(array) {
     if (array.length < 1)
@@ -135,12 +135,18 @@ function Holdings (props) {
 
       <br></br>
       
-      {props.chartSymbol &&
-       <div stype={{display: 'flex'}}>
-          <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp;
-          <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-          <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button>
-        </div> 
+      {props.chartSymbol && <div>
+        <div stype={{display: 'flex'}}>
+            <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp;
+            <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
+            <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp;      
+          </div> 
+          <div>&nbsp; </div>
+          <div stype={{display: 'flex'}}>
+            <button type="button" onClick={()=>getList ()}>dataBaseList  </button> &nbsp;
+            <button type="button" onClick={()=>holdingsGet (props.chartSymbol, setArr)}>dataBaseGet  </button>        
+          </div>
+        </div>
       }
 
       {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}
