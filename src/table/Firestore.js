@@ -69,7 +69,7 @@ async function holdingsInsert (sym, rows) {
         const sym1 = arr[i].sym
         const row_index = rows.findIndex((row)=> row.values.symbol === sym1);
         if (row_index === -1) {
-            alert ('stock missing: ' + props.chartSymbol)
+            alert ('stock missing: ' + rows[i].values.symbol)
         }
 
         
