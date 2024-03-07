@@ -31,12 +31,17 @@ async function holdingsAddDoc (sym, value) {
     await addDoc (holdingsRef, {key: sym, val: value, _updateDate: updateDate, _updateMili: updateMili,})
 }
 
-async function holdingsGet (sym, setArr) {
+async function holdingsGet (sym, setDat, setArr) {
     try {
         var userQuery = query (holdingsRef, where ('key', '==', sym));
-        const holdingsArray = await getDocs (userQuery);
-        console.log (holdingsArray.docs[0].data().val)
-        setArr (JSON.parse(holdingsArray.docs[0].data().val))
+        const holdingsRaw = await getDocs (userQuery);
+        const holdingsFromFireBase = holdingsRaw.docs[0].data();
+        console.log (holdingsFromFireBase.key, holdingsFromFireBase._updateMili,
+             holdingsFromFireBase._updateDate)
+        console.log (holdingsFromFireBase)
+        // const list = JSON.parse(holdingsFromFireBase)
+        setDat (holdingsFromFireBase)
+        setArr (JSON.parse(holdingsFromFireBase.val))
 
     } catch (e) {
         console.log(e.message)

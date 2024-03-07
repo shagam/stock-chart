@@ -12,10 +12,12 @@ import {holdingsAddDoc, holdingsGet, holdingsGetList, holdingsInsert} from './Fi
 function Holdings (props) {
   const [err, setErr] = useState();
   const [arr, setArr] = useState();
+  const [dat, setDat] = useState();
 
   React.useEffect (() => {
     setErr();
     setArr();
+    setDat();
   }, [props.chartSymbol])
 
 
@@ -104,6 +106,7 @@ function Holdings (props) {
       if (! insert) {
         // setErr(JSON.stringify(result.data))
         setArr(result.data)
+        // setDat(result.data)
       }
     } )
     .catch ((err) => {
@@ -144,15 +147,15 @@ function Holdings (props) {
           <div>&nbsp; </div>
           <div stype={{display: 'flex'}}>
             <button type="button" onClick={()=>getList ()}>dataBaseList  </button> &nbsp;
-            <button type="button" onClick={()=>holdingsGet (props.chartSymbol, setArr)}>dataBaseGet  </button> 
+            <button type="button" onClick={()=>holdingsGet (props.chartSymbol, setDat, setArr)}>dataBaseGet  </button> 
             {/* {props.eliHome && <button type="button" onClick={()=>holdingsInsert (props.chartSymbol, props.rows)}>dataBaseInsert  </button>} */}
           </div>
         </div>
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
-      
-      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}
+      {dat && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
+      {dat && <div>sym={dat.key} &nbsp; date={dat._updateDate} </div>}
       {arr && Array.isArray(arr) &&  renderList(arr)}
       <div>&nbsp;</div>  
     </div>
