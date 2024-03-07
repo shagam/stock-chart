@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {nanoid} from 'nanoid';
-import {holdingsAddDoc, holdingsGet, holdingsGetList, holdingsInsert} from './Firestore'
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
@@ -65,33 +64,32 @@ function Holdings (props) {
         return;
       }
 
-      // Check for err
-      if (result.data.includes('failed')) {
-        setErr(result.data)
-        return;
-      }
+      console.log (props.chartSymbol, result.data)
 
-      console.log (props.chartSymbol, result.data, result.data.length)
+      // Check for err
+      // if (result.data.includes('failed')) {
+      //   setErr(result.data)
+      //   console.log (result.data)
+      //   return;
+      // }
+
+
       if (logOnly)
         return;
 
-      // send to common database
-      // const arr = result.data.shift()
-      holdingsAddDoc(props.chartSymbol, JSON.stringify(result.data));
-
-      for (let i = 1; i < result.data.length; i++) {
+      for (let i = 1; i < result.data.holdArr.length; i++) {
         if (insert) { // insert in table
-          const sym = result.data[i].sym;
+          const sym = result.data.holdArr[i].sym;
           console.log(sym)
           const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
           if (r_index !== -1) { 
-            props.rows[r_index].values.percent = result.data[i].perc; // symm exist,so put in only percetage
+            props.rows[r_index].values.percent = result.data.holdArr[i].perc; // symm exist,so put in only percetage
           }
           else {
             // add a new sym
             const newStock = addSymOne (sym)
             console.log ('added', newStock)
-            newStock.values.percent = result.data[i].perc
+            newStock.values.percent = result.data.holdArr[i].perc
             props.rows.push (newStock);
           }  
         }
@@ -105,21 +103,15 @@ function Holdings (props) {
 
       if (! insert) {
         // setErr(JSON.stringify(result.data))
-        setArr(result.data)
-        // setDat(result.data)
+        setArr(result.data.holdArr)
+        setDat(result.data)
       }
     } )
     .catch ((err) => {
-      setErr(err.message + ' only for ETF')
+      setErr(err.message)
       // console.log(err.message)
     })
   }
-
-  function getList () {
-    const list = holdingsGetList(setErr, setArr);
-
-  }
-
 
   function renderList(array) {
     if (array.length < 1)
@@ -139,23 +131,18 @@ function Holdings (props) {
       <br></br>
       
       {props.chartSymbol && <div>
-        <div stype={{display: 'flex'}}>
-            <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp;
-            <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-            <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp;      
+          <div stype={{display: 'flex'}}>
+              <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp;
+              <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
+              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp;      
           </div> 
           <div>&nbsp; </div>
-          <div stype={{display: 'flex'}}>
-            <button type="button" onClick={()=>getList ()}>dataBaseList  </button> &nbsp;
-            <button type="button" onClick={()=>holdingsGet (props.chartSymbol, setDat, setArr)}>dataBaseGet  </button> 
-            {/* {props.eliHome && <button type="button" onClick={()=>holdingsInsert (props.chartSymbol, props.rows)}>dataBaseInsert  </button>} */}
-          </div>
         </div>
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
       {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
-      {dat && <div>From database &nbsp; &nbsp; sym={dat.key} &nbsp; date={dat._updateDate} </div>}
+      {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
       {arr && Array.isArray(arr) &&  renderList(arr)}
       <div>&nbsp;</div>  
     </div>
