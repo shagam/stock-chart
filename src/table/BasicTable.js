@@ -1331,7 +1331,7 @@ const BasicTable = (props) => {
                 stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
             {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={logFlags} corsServer={'dinagold.org'} prepareRow={prepareRow} saveTable={saveTable}/>}
+             logFlags={logFlags} corsServer={'dinagold.org'} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}

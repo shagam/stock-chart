@@ -58,10 +58,23 @@ async function holdingsGetList (setErr, setArr) {
     }
     setErr(JSON.stringify(holdingAr))
     // setArr(holdingAr)
+}
 
+async function holdingsInsert (sym, rows) {
+    var userQuery = query (holdingsRef, where ('key', '==', sym));
+    const holdingsArray = await getDocs (userQuery);
+    console.log (holdingsArray.docs[0].data().val)
+    const arr = JSON.parse (holdingsArray.docs[0].data().val)
+    for (let i = 0; i < arr.length; i++) { 
+        const sym1 = arr[i].sym
+        const row_index = rows.findIndex((row)=> row.values.symbol === sym1);
+        if (row_index === -1) {
+            alert ('stock missing: ' + props.chartSymbol)
+        }
+
+        
+    }
 }
 
 
-
-
-export {holdingsAddDoc,  holdingsGet, holdingsGetList }
+export {holdingsAddDoc,  holdingsGet, holdingsGetList, holdingsInsert }

@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {nanoid} from 'nanoid';
-import {holdingsAddDoc, holdingsGet, holdingsGetList} from './Firestore'
+import {holdingsAddDoc, holdingsGet, holdingsGetList, holdingsInsert} from './Firestore'
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
@@ -144,14 +144,16 @@ function Holdings (props) {
           <div>&nbsp; </div>
           <div stype={{display: 'flex'}}>
             <button type="button" onClick={()=>getList ()}>dataBaseList  </button> &nbsp;
-            <button type="button" onClick={()=>holdingsGet (props.chartSymbol, setArr)}>dataBaseGet  </button>        
+            <button type="button" onClick={()=>holdingsGet (props.chartSymbol, setArr)}>dataBaseGet  </button> 
+            {/* {props.eliHome && <button type="button" onClick={()=>holdingsInsert (props.chartSymbol, props.rows)}>dataBaseInsert  </button>} */}
           </div>
         </div>
       }
 
+      {err && <div style={{color:'red'}}> {err} </div>} 
+      
       {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}
       {arr && Array.isArray(arr) &&  renderList(arr)}
-      {err && <div style={{color:'red'}}> {err} </div>} 
       <div>&nbsp;</div>  
     </div>
     )
