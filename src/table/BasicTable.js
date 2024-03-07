@@ -1315,8 +1315,8 @@ const BasicTable = (props) => {
         {chartSymbol && <div>
           {/* <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze  */}
           <div style={{display: 'flex'}}> 
-            <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; 
-            <div style={{color:'blue'}}> Analyze stock (Choose one):</div>
+            <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; Analyze &nbsp;
+            <div style={{color: 'blue'}}> (Choose):</div>
           </div>
           {<div>
             <div style={{display:'flex'}}>
