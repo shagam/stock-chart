@@ -154,8 +154,8 @@ function Holdings (props) {
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
-      {dat && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
-      {dat && <div>sym={dat.key} &nbsp; date={dat._updateDate} </div>}
+      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
+      {dat && <div>From database &nbsp; &nbsp; sym={dat.key} &nbsp; date={dat._updateDate} </div>}
       {arr && Array.isArray(arr) &&  renderList(arr)}
       <div>&nbsp;</div>  
     </div>

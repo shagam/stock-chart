@@ -36,10 +36,10 @@ async function holdingsGet (sym, setDat, setArr) {
         var userQuery = query (holdingsRef, where ('key', '==', sym));
         const holdingsRaw = await getDocs (userQuery);
         const holdingsFromFireBase = holdingsRaw.docs[0].data();
-        console.log (holdingsFromFireBase.key, holdingsFromFireBase._updateMili,
+        console.log ('From firebase:', holdingsFromFireBase.key, holdingsFromFireBase._updateMili,
              holdingsFromFireBase._updateDate)
-        console.log (holdingsFromFireBase)
-        // const list = JSON.parse(holdingsFromFireBase)
+        console.log ('From firebase:', holdingsFromFireBase)
+
         setDat (holdingsFromFireBase)
         setArr (JSON.parse(holdingsFromFireBase.val))
 
