@@ -1314,7 +1314,10 @@ const BasicTable = (props) => {
 
         {chartSymbol && <div>
           {/* <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze  */}
-          <div style={{color:'blue'}}>Analyze stock (Choose one):</div>
+          <div style={{display: 'flex'}}> 
+            <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; 
+            <div style={{color:'blue'}}> Analyze stock (Choose one):</div>
+          </div>
           {<div>
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> dropRecovery          
