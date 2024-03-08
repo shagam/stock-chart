@@ -76,7 +76,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   else
     corsUrl += corsServer + ":5000/priceNasdaq?stock=" + sym
 
-  // var corsUrl = "http://62.90.44.227:5000/price?stock=" + sym
+  // var corsUrl = "http://62.0.92.49:5000/price?stock=" + sym
     //corsUrl = "http://localhost:5000/price?stock=" + sym
     corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
     // console.log (getDate(), corsUrl)

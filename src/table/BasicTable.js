@@ -102,7 +102,7 @@ const BasicTable = (props) => {
   const [gainMap, setGainMap] = useState([]);
   const [bubbleLine, setBubbleLine] = useState();
 
-  const servList = ['dinagold.org', '62.90.44.227', 'localhost', ];
+  const servList = ['dinagold.org', '62.0.92.49', 'localhost', ];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
 
