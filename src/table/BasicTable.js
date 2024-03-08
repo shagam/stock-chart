@@ -102,7 +102,7 @@ const BasicTable = (props) => {
   const [gainMap, setGainMap] = useState([]);
   const [bubbleLine, setBubbleLine] = useState();
 
-  const servList = ['dinagold.org', '62.0.92.49', 'localhost', ];
+  const servList = ['dinagold.org', '62.0.92.49', 'localhost','10.100.102.4'];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
 
@@ -1333,8 +1333,8 @@ const BasicTable = (props) => {
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
                 stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
-            {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={logFlags} corsServer={'dinagold.org'} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome}/>}
+             {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
+             logFlags={logFlags} corsServer={servSelect} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
