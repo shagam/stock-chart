@@ -80,7 +80,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         setLocalIP(res.data);
-        setEliHome (res.data.IPv4 === '62.90.44.227');
+        setEliHome (res.data.IPv4 === '62.0.92.49');
         setLocalIPv4 (res.data.IPv4);
 
       }
