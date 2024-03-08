@@ -52,6 +52,7 @@ function Holdings (props) {
     //   setErr (er)
     //   return;
     // }  
+    const FAIL = 'Request failed with status code 404'
 
     var corsUrl = "https://";
     corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
@@ -64,16 +65,15 @@ function Holdings (props) {
         return;
       }
 
-      console.log (props.chartSymbol, result.data)
+      console.log (props.chartSymbol, JSON.stringify(result.data))
 
-      // Check for err
-      // if (result.data.includes('failed')) {
-      //   setErr(result.data)
-      //   console.log (result.data)
-      //   return;
-      // }
-
-
+    // Check for err
+      if (result.data.holdArr === 'Request failed with status code 404') {
+        setErr(result.data.holdArr + ", May be not an ETF")
+        // console.log (result.data)
+        return;
+      }
+      
       if (logOnly)
         return;
 
@@ -132,7 +132,7 @@ function Holdings (props) {
       
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
-              <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp;
+              {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
               <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp;      
           </div> 
