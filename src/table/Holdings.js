@@ -71,6 +71,7 @@ function Holdings (props) {
       if (result.data.holdArr === 'Request failed with status code 404') {
         setErr(result.data.holdArr + ", May be not an ETF")
         // console.log (result.data)
+        props.errorAdd ([props.chartSymbol,result.data.holdArr + ", May be not an ETF"])
         return;
       }
       
