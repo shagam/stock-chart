@@ -89,8 +89,10 @@ function Holdings (props) {
       if (logOnly)
         return;
       holdingsObj[props.chartSymbol] = result.data;
-      etfArr.push (result.data.sym)
-      console.log (Object.keys(holdingsObj))
+
+      if (! etfArr.includes(result.data.sym))
+        etfArr.push (result.data.sym)
+      console.log (Object.keys(holdingsObj), JSON.stringify(etfArr))
 
       for (let i = 1; i < result.data.holdArr.length; i++) {
         if (insert) { // insert in table
@@ -188,9 +190,6 @@ function Holdings (props) {
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
-      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
-      {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
-      {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)}
 
       {<div>
       {props.eliHome && <table>
@@ -245,9 +244,13 @@ function Holdings (props) {
         </table>
       </div>
       } */}
+      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
+      {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
+     {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)}
       <div>&nbsp;</div>  
     </div>
     )
+
 }
 
 export {Holdings} 
