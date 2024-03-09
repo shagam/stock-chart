@@ -195,15 +195,15 @@ function Holdings (props) {
       {props.eliHome && 
       <table>
         <thead>
-          {etfArr && etfArr.length > 0 && etfArr.map((e) => {
-            return (
-            <tr>
-              <th>
-                {e}
-              </th>
-            </tr>            
-            )
-          })}         
+          <tr>
+            {etfArr && etfArr.length > 0 && etfArr.map((e) => {
+              return (
+                <th scope="col">
+                  {e}
+                </th>      
+              )
+            })}         
+          </tr>   
         </thead>
 
         <tbody>             
