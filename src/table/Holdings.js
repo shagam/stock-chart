@@ -13,6 +13,7 @@ function Holdings (props) {
   const [arr, setArr] = useState();
   const [dat, setDat] = useState();
   const [etfArr, setEtfArr] = useState([])
+  const [etfArr_, setEtfArr_] = useState([])
   const [holdingsObj, setHoldingsArray] = useState({})
   const [heldObj, setHeldObj] = useState({})
   const [heldMasterObj, setHeldMasterObj] = useState({})
@@ -90,8 +91,13 @@ function Holdings (props) {
         return;
       holdingsObj[props.chartSymbol] = result.data;
 
-      if (! etfArr.includes(result.data.sym))
+      if (! etfArr.includes(result.data.sym)) {
         etfArr.push (result.data.sym)
+        setEtfArr_(etfArr)
+        if (etfArr_[0] !== '')
+          etfArr_.unshift('')
+      }
+
       console.log (Object.keys(holdingsObj), JSON.stringify(etfArr))
 
       for (let i = 1; i < result.data.holdArr.length; i++) {
@@ -134,7 +140,6 @@ function Holdings (props) {
   function ETFCompare () {
     const hold = {}
     console.log (holdingsObj)
-
     etfArr.forEach((etf) => {
       console.log ('holdArr=', holdingsObj[etf].holdArr)
       const holdArr = holdingsObj[etf].holdArr
@@ -150,9 +155,7 @@ function Holdings (props) {
       holdingsObj[etf].holdArr.forEach((sym2Percent) => {
         hold[sym2Percent.sym] = sym2Percent.perc;
       })
-      holdingsObj[etf]['hold'] = hold;  
-      
-
+      holdingsObj[etf]['hold'] = hold;
     })
   }
 
@@ -196,7 +199,7 @@ function Holdings (props) {
       <table>
         <thead>
           <tr>
-            {etfArr && etfArr.length > 0 && etfArr.map((e) => {
+            {etfArr_ && etfArr_.length > 1 && etfArr_.map((e) => {
               return (
                 <th scope="col">
                   {e}
