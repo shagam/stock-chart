@@ -1333,7 +1333,7 @@ const BasicTable = (props) => {
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
                 stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
-             {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
+             {eliHome && analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={logFlags} corsServer={servSelect} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
