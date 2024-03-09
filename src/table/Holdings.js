@@ -190,7 +190,7 @@ function Holdings (props) {
       {err && <div style={{color:'red'}}> {err} </div>} 
       {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
       {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
-      {/* {arr && Array.isArray(arr) &&  renderList(arr)} */}
+      {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)}
 
       {<div>
       <table>
