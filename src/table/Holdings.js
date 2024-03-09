@@ -193,7 +193,7 @@ function Holdings (props) {
       {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)}
 
       {<div>
-      <table>
+      {props.eliHome && <table>
         <theader>
           {etfArr && etfArr.length > 0 && etfArr.map((e) => {
             return (
@@ -224,6 +224,7 @@ function Holdings (props) {
           })}
         </tbody>  
       </table>
+      }
       </div> }
 
       {/* {holdingsArray && 
