@@ -192,19 +192,20 @@ function Holdings (props) {
       {err && <div style={{color:'red'}}> {err} </div>} 
 
       {<div>
-      {props.eliHome && <table>
-        <theader>
+      {props.eliHome && 
+      <table>
+        <thead>
           {etfArr && etfArr.length > 0 && etfArr.map((e) => {
             return (
             <tr>
               <th>
                 {e}
               </th>
-            </tr>
+            </tr>            
             )
-          })}
-          
-        </theader>
+          })}         
+        </thead>
+
         <tbody>             
           {Object.keys(tstObj).map((s) =>{
             return (
