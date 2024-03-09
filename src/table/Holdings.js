@@ -12,6 +12,17 @@ function Holdings (props) {
   const [err, setErr] = useState();
   const [arr, setArr] = useState();
   const [dat, setDat] = useState();
+  const [etfArr, setEtfArr] = useState([])
+  const [holdingsObj, setHoldingsArray] = useState({})
+  const [heldObj, setHeldObj] = useState({})
+  const [heldMasterObj, setHeldMasterObj] = useState({})
+  const [tstObj, setTstObj] = useState ({
+    'ANZN':{'QQQ': 12, 'SCHG': 5, 'IVV': 5},
+    'AMD':{'QQQ': 10, 'SCHG': 3, 'IVV': 5},
+    'IBM':{'QQQ': 10, 'SCHG': 3, 'IVV': 5}})
+
+
+  const [tbl, setTbl] = useState (true)
 
   React.useEffect (() => {
     setErr();
@@ -77,6 +88,9 @@ function Holdings (props) {
       
       if (logOnly)
         return;
+      holdingsObj[props.chartSymbol] = result.data;
+      etfArr.push (result.data.sym)
+      console.log (Object.keys(holdingsObj))
 
       for (let i = 1; i < result.data.holdArr.length; i++) {
         if (insert) { // insert in table
@@ -95,7 +109,8 @@ function Holdings (props) {
           }  
         }
       } // end of add
-      props.saveTable()
+      if (insert)
+        props.saveTable()
 
 
       if (insert)
@@ -109,10 +124,36 @@ function Holdings (props) {
       }
     } )
     .catch ((err) => {
-      setErr(err.message)
+      setErr(err.message + ' ' + corsUrl)
       // console.log(err.message)
     })
   }
+
+  function ETFCompare () {
+    const hold = {}
+    console.log (holdingsObj)
+
+    etfArr.forEach((etf) => {
+      console.log ('holdArr=', holdingsObj[etf].holdArr)
+      const holdArr = holdingsObj[etf].holdArr
+      for (let i = 1; i < holdArr.length; i++) {
+        const symm = holdArr[i].sym;
+        if (heldMasterObj[symm] === undefined)
+          heldMasterObj[symm] = holdArr[i].sym;
+        if (heldObj[symm] === undefined)
+          heldObj[symm] = holdArr[i].perc;
+      }
+      console.log('heldObj=', heldObj)
+      console.log ('heldMasterObj=', heldMasterObj)
+      holdingsObj[etf].holdArr.forEach((sym2Percent) => {
+        hold[sym2Percent.sym] = sym2Percent.perc;
+      })
+      holdingsObj[etf]['hold'] = hold;  
+      
+
+    })
+  }
+
 
   function renderList(array) {
     if (array.length < 1)
@@ -120,6 +161,10 @@ function Holdings (props) {
       return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
   }
 
+  // const [tstObj, setTstObj] = useState ({
+  //   'ANZN':{'QQQ': 12, 'SCHG': 5, 'IVV': 5},
+  //   'AMD':{'QQQ': 10, 'SCHG': 3, 'IVV': 5},
+  //   'IBM':{'QQQ': 10, 'SCHG': 3, 'IVV': 5}})
 
   return (
     <div style={{ border: '2px solid blue'}}> 
@@ -135,7 +180,8 @@ function Holdings (props) {
           <div stype={{display: 'flex'}}>
               {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp;      
+              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp; 
+              <button type="button" onClick={()=>ETFCompare ()}>Compare  </button> &nbsp;      
           </div> 
           <div>&nbsp; </div>
         </div>
@@ -144,7 +190,60 @@ function Holdings (props) {
       {err && <div style={{color:'red'}}> {err} </div>} 
       {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
       {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
-      {arr && Array.isArray(arr) &&  renderList(arr)}
+      {/* {arr && Array.isArray(arr) &&  renderList(arr)} */}
+
+      {<div>
+      <table>
+        <theader>
+          {etfArr && etfArr.length > 0 && etfArr.map((e) => {
+            return (
+            <tr>
+              <th>
+                {e}
+              </th>
+            </tr>
+            )
+          })}
+          
+        </theader>
+        <tbody>             
+          {Object.keys(tstObj).map((s) =>{
+            return (
+            <tr>
+              <td>{s}</td>
+                {Object.keys(tstObj[s]).map((k)=>{
+                  return (
+                    <td>
+                      {JSON.stringify(tstObj[s][k])}
+                    </td>
+                  )
+                })
+              }
+            </tr>
+            )
+          })}
+        </tbody>  
+      </table>
+      </div> }
+
+      {/* {holdingsArray && 
+      <div>
+        <table>
+          <tbody> 
+           {
+                Object.keys(holdingsArray).map((symm,i)=>{
+                  return (
+                      <tr  key={i}>
+                        <td> {holdingsArray[symm].holdArr[1].sym} </td>
+                        <td> {holdingsArray[symm].holdArr[1].perc} </td> 
+                      </tr>
+                  )
+                })
+              }
+          </tbody>  
+        </table>
+      </div>
+      } */}
       <div>&nbsp;</div>  
     </div>
     )
