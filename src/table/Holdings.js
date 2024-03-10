@@ -31,6 +31,12 @@ function Holdings (props) {
     setDat();
   }, [props.chartSymbol])
 
+  function clearPercentColumn () {
+    for (let i = 0; i < props.wows.length; i++)
+      props.rows[i].values.percent = '';
+    // props.saveTable()
+  }
+
 
   const row_index = props.rows.findIndex((row)=> row.values.symbol === props.chartSymbol);
   if (row_index === -1) {
@@ -56,6 +62,15 @@ function Holdings (props) {
     return (newStock)
   }
 
+  function togglePercent () {
+    var ind = props.allColumns.findIndex((column)=> column.Header === '%');
+    if (ind === -1) {
+      console.log ('column percent invalid')
+      alert ('column percent invalid')
+      return
+    }
+    props.allColumns[ind].toggleHidden();
+  }
 
   function getHoldings (insert, logOnly) {
     // if (props.rows[row_index].values.PE !== -2) {
@@ -65,7 +80,9 @@ function Holdings (props) {
     //   return;
     // }  
     const FAIL = 'Request failed with status code 404'
-
+    if (insert) {
+      clearPercentColumn();     
+    }
     var corsUrl = "https://";
     corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
 
@@ -190,9 +207,8 @@ function Holdings (props) {
               {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
               <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table &nbsp; {etfArr[etfArr.length-1]} </button>
-
-              {/* <button type="button" onClick={()=>ETFCompare ()}>Compare  </button> &nbsp;       */}
+              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table &nbsp; {etfArr[etfArr.length-1]} </button>  &nbsp;
+              <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button> &nbsp;      
           </div> 
           <div>&nbsp; </div>
         </div>
