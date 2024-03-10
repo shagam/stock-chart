@@ -72,7 +72,36 @@ function Holdings (props) {
     props.allColumns[ind].toggleHidden();
   }
 
-  function getHoldings (insert, logOnly) {
+  function holdingsInsertInTable () {    
+    if (holdingsRawObj[props.chartSymbol] === undefined) {
+      props.errorAdd ([props.chartSymbol,' need to <fetch> '])
+      console.log (props.chartSymbol + ' need to <fetch>')
+      return;
+    }
+    const holdArr = holdingsRawObj[props.chartSymbol].holdArr;
+    const len = holdArr.length < Number(count)+1 ? holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
+
+    for (let i = 1; i < len; i++) {
+        const sym = holdArr[i].sym;
+        console.log(sym)
+        const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
+        if (r_index !== -1) { // alread in table: just add %
+          props.rows[r_index].values.percent = holdArr[i].perc; // symm exist,so put in only percetage
+        }
+        else {
+          // add a new sym
+          const newStock = addSymOne (sym)
+          console.log ('added', newStock)
+          newStock.values.percent = holdArr[i].perc
+          props.rows.push (newStock);
+        }  
+    } // end of add
+
+    props.saveTable()
+    window.location.reload(); 
+  }
+
+  function getHoldings (insert) {
     // if (props.rows[row_index].values.PE !== -2) {
     //   const er = 'Server connection fail';
     //   console.log (er)
@@ -103,18 +132,11 @@ function Holdings (props) {
         props.errorAdd ([props.chartSymbol,result.data.holdArr + ", May be not an ETF"])
         return;
       }
-      
-      if (logOnly)
-        return;
     
       const etf = result.data.sym;
       if (! etfArr.includes(etf)) {
         etfArr.push (etf)
         etfArr_.push (etf)
-      }
-      else {
-        console.log (etf, 'dulicate')
-        return;
       }
       
       if (holdingsRawObj[props.chartSymbol] === undefined)
@@ -157,36 +179,10 @@ function Holdings (props) {
       if (LOG)
       console.log (Object.keys(holdingsRawObj))
 
-      for (let i = 1; i < len; i++) {
-        if (insert) { // insert in table
-          const sym = result.data.holdArr[i].sym;
-          console.log(sym)
-          const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
-          if (r_index !== -1) { 
-            props.rows[r_index].values.percent = result.data.holdArr[i].perc; // symm exist,so put in only percetage
-          }
-          else {
-            // add a new sym
-            const newStock = addSymOne (sym)
-            console.log ('added', newStock)
-            newStock.values.percent = result.data.holdArr[i].perc
-            props.rows.push (newStock);
-          }  
-        }
-      } // end of add
-      if (insert)
-        props.saveTable()
+      // setErr(JSON.stringify(result.data))
+      setArr(result.data.holdArr)
+      setDat(result.data)
 
-
-      if (insert)
-        window.location.reload(); 
-      // const arr = JSON.parse(result.data)
-
-      if (! insert) {
-        // setErr(JSON.stringify(result.data))
-        setArr(result.data.holdArr)
-        setDat(result.data)
-      }
     } )
     .catch ((err) => {
       setErr(err.message + ' ' + corsUrl)
@@ -216,8 +212,9 @@ function Holdings (props) {
           <div stype={{display: 'flex'}}>
               {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
-              <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table &nbsp; {etfArr[etfArr.length-1]} </button>  &nbsp;
+              <button type="button" onClick={()=>getHoldings (false)}>fetch  </button> &nbsp;
+              {/* <button type="button" onClick={()=>getHoldings (true)}>insert-in-table &nbsp; {props.chartSymbol} </button>  &nbsp; */}
+              <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button>  &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button> &nbsp;      
           </div> 
           <div>&nbsp; </div>
