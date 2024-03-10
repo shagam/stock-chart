@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import cors from 'cors'
+// import cors from 'cors'
 import {nanoid} from 'nanoid';
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
@@ -20,6 +20,8 @@ function Holdings (props) {
   const [warn, setWarn] = useState([])
 
   const [tbl, setTbl] = useState (true)
+
+  const LOG = props.logFlags.includes('holdings')
 
   React.useEffect (() => {
     setErr();
@@ -72,8 +74,8 @@ function Holdings (props) {
         console.log (props.chartSymbol, 'status=', result)
         return;
       }
-
-      console.log (props.chartSymbol, JSON.stringify(result.data))
+      if (LOG)
+        console.log (props.chartSymbol, JSON.stringify(result.data))
 
     // Check for err
       if (result.data.holdArr === 'Request failed with status code 404') {
@@ -108,7 +110,8 @@ function Holdings (props) {
         warnObj['warn'] = 'Last percentage off by ' +
        (holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym) + ' row'
       warn.push (warnObj)
-      console.log ('warn:', warn)
+      if (LOG)
+        console.log ('warn:', warn)
 
       // fill missing values with 0
       Object.keys(heldMasterObj).forEach((symm) => {
@@ -119,8 +122,9 @@ function Holdings (props) {
       })
 
       // console.log (JSON.stringify(etfArr));
+      if (LOG)
       console.log (heldMasterObj)
-
+      if (LOG)
       console.log (Object.keys(holdingsRawObj))
 
       for (let i = 1; i < result.data.holdArr.length; i++) {
@@ -190,9 +194,6 @@ function Holdings (props) {
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
-      {/* {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}       */}
-      {/* {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>} */}
-      {/* <div>{JSON.stringify (warn)} </div> */}
       {Object.keys(warn).length > 0 && Object.keys(warn).map((w)=>{
         return(
         <div style={{display: 'flex'}}>
@@ -237,7 +238,6 @@ function Holdings (props) {
       }
       </div> }
 
-      {/* {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)} */}
       <div>&nbsp;</div>  
     </div>
     )
