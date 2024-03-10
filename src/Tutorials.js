@@ -37,12 +37,22 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>Long term yearly gain </td> 
                     </tr>
-                    
+                    <tr>
+                        <td><a href="https://youtu.be/6LqJcFkkHx8">Market Bubble </a></td><td>Stock market bubble & crash prediction </td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/nWgoumPzsRs">ETF Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
+                    </tr>
+                                       
                     <tr>
                         <td><a href="https://youtu.be/faEcqp7PIfw">Table view</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart view</a></td><td>Compare a few stocks</td> 
+                    </tr>
+
+                    <tr>
+                        <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare historical price with MarketWatch</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/0sZ0QK1nwHo">Month gain</a></td><td>Months with highest gain</td> 
@@ -56,10 +66,7 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/cVxKLW3pPB0">Persistance</a></td><td>Stock info saved in localStorage</td> 
                     </tr>
-                    <tr>
-                        <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare with MarketWatch historical price</td> 
-                    </tr>
-                    
+                            
                     <tr>
                        <div>&nbsp;</div>
                     </tr>
