@@ -17,6 +17,7 @@ function Holdings (props) {
   const [etfArr_, setEtfArr_] = useState([''])  // for table header
   const [holdingsRawObj, setHoldingsArray] = useState({}) // Raw received data
   const [heldMasterObj, setHeldMasterObj] = useState({})
+  const [warn, setWarn] = useState([])
 
   const [tbl, setTbl] = useState (true)
 
@@ -101,6 +102,14 @@ function Holdings (props) {
         heldMasterObj[symm][etf] =  holdArr[i].perc
       }
 
+      // build a warningObj
+      const warnObj = {sym: etf, update: result.data.updateDate};
+      if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc)
+        warnObj['warn'] = 'Last percentage off by ' +
+       (holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym) + ' row'
+      warn.push (warnObj)
+      console.log ('warn:', warn)
+
       // fill missing values with 0
       Object.keys(heldMasterObj).forEach((symm) => {
         etfArr.forEach((etf) => {
@@ -109,7 +118,7 @@ function Holdings (props) {
         })
       })
 
-      console.log (JSON.stringify(etfArr));
+      // console.log (JSON.stringify(etfArr));
       console.log (heldMasterObj)
 
       console.log (Object.keys(holdingsRawObj))
@@ -158,10 +167,6 @@ function Holdings (props) {
       return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
   }
 
-  // const [tstObj, setTstObj] = useState ({
-  //   'ANZN':{'QQQ': 12, 'SCHG': 5, 'IVV': 5},
-  //   'AMD':{'QQQ': 10, 'SCHG': 3, 'IVV': 5},
-  //   'IBM':{'QQQ': 10, 'SCHG': 3, 'IVV': 5}})
 
   return (
     <div style={{ border: '2px solid blue'}}> 
@@ -177,7 +182,7 @@ function Holdings (props) {
           <div stype={{display: 'flex'}}>
               {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp; 
+              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table &nbsp; {etfArr[etfArr.length-1]} </button> &nbsp; 
               {/* <button type="button" onClick={()=>ETFCompare ()}>Compare  </button> &nbsp;       */}
           </div> 
           <div>&nbsp; </div>
@@ -185,8 +190,16 @@ function Holdings (props) {
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
-      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
-      {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
+      {/* {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}       */}
+      {/* {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>} */}
+      {/* <div>{JSON.stringify (warn)} </div> */}
+      {Object.keys(warn).length > 0 && Object.keys(warn).map((w)=>{
+        return(
+        <div style={{display: 'flex'}}>
+          {warn[w].sym} &nbsp;&nbsp;  ({warn[w].update}) &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
+        </div>
+        )
+      })}
 
       {<div>
       {props.eliHome && 
