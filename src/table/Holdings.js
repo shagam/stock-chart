@@ -32,7 +32,7 @@ function Holdings (props) {
   }, [props.chartSymbol])
 
   function clearPercentColumn () {
-    for (let i = 0; i < props.wows.length; i++)
+    for (let i = 0; i < props.rows.length; i++)
       props.rows[i].values.percent = '';
     // props.saveTable()
   }
@@ -106,12 +106,22 @@ function Holdings (props) {
       
       if (logOnly)
         return;
-      holdingsRawObj[props.chartSymbol] = result.data;
-
+    
       const etf = result.data.sym;
       if (! etfArr.includes(etf)) {
         etfArr.push (etf)
         etfArr_.push (etf)
+      }
+      else {
+        console.log (etf, 'dulicate')
+        return;
+      }
+      
+      if (holdingsRawObj[props.chartSymbol] === undefined)
+        holdingsRawObj[props.chartSymbol] = result.data;
+      else {
+        console.log (etf, 'dulicate')
+        return;        
       }
 
       const holdArr = result.data.holdArr;
