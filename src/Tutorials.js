@@ -38,7 +38,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>Long term yearly gain </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/6LqJcFkkHx8">Market Bubble </a></td><td>Stock market bubble & crash prediction </td> 
+                        <td><a href="https://youtu.be/-K2cdzIoJeQ">Market Bubble </a></td><td>Stock market bubble & crash prediction </td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/nWgoumPzsRs">ETF Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
