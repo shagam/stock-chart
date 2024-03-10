@@ -3,6 +3,8 @@ import axios from 'axios'
 // import cors from 'cors'
 import {nanoid} from 'nanoid';
 
+import GetInt from '../utils/GetInt'
+
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
 // https://stockanalysis.com/etf/ivv/holdings/
@@ -19,7 +21,7 @@ function Holdings (props) {
   const [heldMasterObj, setHeldMasterObj] = useState({})
   const [warn, setWarn] = useState([])
 
-  const [tbl, setTbl] = useState (true)
+  const [count, setCount] =useState(17)
 
   const LOG = props.logFlags.includes('holdings')
 
@@ -96,7 +98,8 @@ function Holdings (props) {
       }
 
       const holdArr = result.data.holdArr;
-      for (let i = 1; i < result.data.holdArr.length; i++) {
+      const len = result.data.holdArr.length < count+1 ? result.data.holdArr.length : count+1; // limit size.  (first is verification counters)
+      for (let i = 1; i < len; i++) {
         const symm = result.data.holdArr[i].sym;
         if (heldMasterObj[symm] === undefined)
         heldMasterObj[symm] = {};
@@ -127,7 +130,7 @@ function Holdings (props) {
       if (LOG)
       console.log (Object.keys(holdingsRawObj))
 
-      for (let i = 1; i < result.data.holdArr.length; i++) {
+      for (let i = 1; i < len; i++) {
         if (insert) { // insert in table
           const sym = result.data.holdArr[i].sym;
           console.log(sym)
@@ -185,8 +188,10 @@ function Holdings (props) {
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
               {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
+              <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
               <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
-              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table &nbsp; {etfArr[etfArr.length-1]} </button> &nbsp; 
+              <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table &nbsp; {etfArr[etfArr.length-1]} </button>
+
               {/* <button type="button" onClick={()=>ETFCompare ()}>Compare  </button> &nbsp;       */}
           </div> 
           <div>&nbsp; </div>
