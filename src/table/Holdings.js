@@ -14,16 +14,9 @@ function Holdings (props) {
   const [dat, setDat] = useState();
 
   const [etfArr, setEtfArr] = useState([])
-  const [etfArr_, setEtfArr_] = useState([])
-  const [holdingsObj, setHoldingsArray] = useState({})
-
-  const [heldObj, setHeldObj] = useState({})
+  const [etfArr_, setEtfArr_] = useState([''])  // for table header
+  const [holdingsRawObj, setHoldingsArray] = useState({}) // Raw received data
   const [heldMasterObj, setHeldMasterObj] = useState({})
-  const [tstObj, setTstObj] = useState ({
-    'ANZN':{'QQQ': 12, 'SCHG': 5, 'IVV': 5},
-    'AMD':{'QQQ': 10, 'SCHG': 3, 'IVV': 5},
-    'IBM':{'QQQ': 10, 'SCHG': 3, 'IVV': 5}})
-
 
   const [tbl, setTbl] = useState (true)
 
@@ -91,15 +84,14 @@ function Holdings (props) {
       
       if (logOnly)
         return;
-      holdingsObj[props.chartSymbol] = result.data;
+      holdingsRawObj[props.chartSymbol] = result.data;
 
-      if (! etfArr.includes(result.data.sym)) {
-        etfArr.push (result.data.sym)
-        setEtfArr_(etfArr)
-        if (etfArr_[0] !== '')
-          etfArr_.unshift('')
-      }
       const etf = result.data.sym;
+      if (! etfArr.includes(etf)) {
+        etfArr.push (etf)
+        etfArr_.push (etf)
+      }
+
       const holdArr = result.data.holdArr;
       for (let i = 1; i < result.data.holdArr.length; i++) {
         const symm = result.data.holdArr[i].sym;
@@ -108,10 +100,19 @@ function Holdings (props) {
         // const obj = {etf: {symm: holdArr[i].perc}}
         heldMasterObj[symm][etf] =  holdArr[i].perc
       }
+
+      // fill missing values with 0
+      Object.keys(heldMasterObj).forEach((symm) => {
+        etfArr.forEach((etf) => {
+          if (heldMasterObj[symm][etf] === undefined)
+            heldMasterObj[symm][etf] = 0
+        })
+      })
+
       console.log (JSON.stringify(etfArr));
       console.log (heldMasterObj)
 
-      console.log (Object.keys(holdingsObj))
+      console.log (Object.keys(holdingsRawObj))
 
       for (let i = 1; i < result.data.holdArr.length; i++) {
         if (insert) { // insert in table
@@ -150,28 +151,7 @@ function Holdings (props) {
     })
   }
 
-  function ETFCompare () {
-    // const hold = {}
-    // console.log (holdingsObj)
-    // etfArr.forEach((etf) => {
-    //   const holdArr = holdingsObj[etf].holdArr
-    //   console.log ('holdArr=', holdArr)
-
-    //   for (let i = 1; i < holdArr.length; i++) {
-    //     const symm = holdArr[i].sym;
-    //     // if (heldMasterObj[etf] === undefined)
-    //       heldMasterObj[symm] = {etf: {symm: holdArr[i].perc}}
-    //   }
-
-    //   console.log ('heldMasterObj=', heldMasterObj)
-    //   // holdingsObj[etf].holdArr.forEach((sym2Percent) => {
-    //   //   hold[sym2Percent.sym] = sym2Percent.perc;
-    //   // })
-    //   // holdingsObj[etf]['hold'] = hold;
-    // })
-  }
-
-
+  // display list (of holdings)
   function renderList(array) {
     if (array.length < 1)
       return;
@@ -188,7 +168,7 @@ function Holdings (props) {
 
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div> &nbsp; &nbsp;
-        <h6 style={{color: 'blue'}}> Holdings &nbsp;  </h6>
+        <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
       </div>
 
       <br></br>
@@ -205,6 +185,8 @@ function Holdings (props) {
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
+      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
+      {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
 
       {<div>
       {props.eliHome && 
@@ -222,14 +204,14 @@ function Holdings (props) {
         </thead>
 
         <tbody>             
-          {Object.keys(tstObj).map((s) =>{
+          {Object.keys(heldMasterObj).map((s) =>{
             return (
             <tr>
-              <td>{s}</td>
-                {Object.keys(tstObj[s]).map((k)=>{
+              <td style={{width: '8px'}}>{s}</td>
+                {etfArr.map((k)=>{
                   return (
-                    <td>
-                      {JSON.stringify(tstObj[s][k])}
+                    <td style={{width: '8px'}}>
+                      {heldMasterObj[s][k]}
                     </td>
                   )
                 })
@@ -242,27 +224,7 @@ function Holdings (props) {
       }
       </div> }
 
-      {/* {holdingsArray && 
-      <div>
-        <table>
-          <tbody> 
-           {
-                Object.keys(holdingsArray).map((symm,i)=>{
-                  return (
-                      <tr  key={i}>
-                        <td> {holdingsArray[symm].holdArr[1].sym} </td>
-                        <td> {holdingsArray[symm].holdArr[1].perc} </td> 
-                      </tr>
-                  )
-                })
-              }
-          </tbody>  
-        </table>
-      </div>
-      } */}
-      {arr && arr[0].sym !== arr[0].perc && <div>percentage may be off row</div>}      
-      {dat && <div> &nbsp; sym={dat.sym} &nbsp; date={dat.updateDate} </div>}
-     {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)}
+      {/* {arr && props.eliHome && Array.isArray(arr) &&  renderList(arr)} */}
       <div>&nbsp;</div>  
     </div>
     )
