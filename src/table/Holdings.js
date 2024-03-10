@@ -12,9 +12,11 @@ function Holdings (props) {
   const [err, setErr] = useState();
   const [arr, setArr] = useState();
   const [dat, setDat] = useState();
+
   const [etfArr, setEtfArr] = useState([])
   const [etfArr_, setEtfArr_] = useState([])
   const [holdingsObj, setHoldingsArray] = useState({})
+
   const [heldObj, setHeldObj] = useState({})
   const [heldMasterObj, setHeldMasterObj] = useState({})
   const [tstObj, setTstObj] = useState ({
@@ -97,8 +99,19 @@ function Holdings (props) {
         if (etfArr_[0] !== '')
           etfArr_.unshift('')
       }
+      const etf = result.data.sym;
+      const holdArr = result.data.holdArr;
+      for (let i = 1; i < result.data.holdArr.length; i++) {
+        const symm = result.data.holdArr[i].sym;
+        if (heldMasterObj[symm] === undefined)
+        heldMasterObj[symm] = {};
+        // const obj = {etf: {symm: holdArr[i].perc}}
+        heldMasterObj[symm][etf] =  holdArr[i].perc
+      }
+      console.log (JSON.stringify(etfArr));
+      console.log (heldMasterObj)
 
-      console.log (Object.keys(holdingsObj), JSON.stringify(etfArr))
+      console.log (Object.keys(holdingsObj))
 
       for (let i = 1; i < result.data.holdArr.length; i++) {
         if (insert) { // insert in table
@@ -138,25 +151,24 @@ function Holdings (props) {
   }
 
   function ETFCompare () {
-    const hold = {}
-    console.log (holdingsObj)
-    etfArr.forEach((etf) => {
-      console.log ('holdArr=', holdingsObj[etf].holdArr)
-      const holdArr = holdingsObj[etf].holdArr
-      for (let i = 1; i < holdArr.length; i++) {
-        const symm = holdArr[i].sym;
-        if (heldMasterObj[symm] === undefined)
-          heldMasterObj[symm] = holdArr[i].sym;
-        if (heldObj[symm] === undefined)
-          heldObj[symm] = holdArr[i].perc;
-      }
-      console.log('heldObj=', heldObj)
-      console.log ('heldMasterObj=', heldMasterObj)
-      holdingsObj[etf].holdArr.forEach((sym2Percent) => {
-        hold[sym2Percent.sym] = sym2Percent.perc;
-      })
-      holdingsObj[etf]['hold'] = hold;
-    })
+    // const hold = {}
+    // console.log (holdingsObj)
+    // etfArr.forEach((etf) => {
+    //   const holdArr = holdingsObj[etf].holdArr
+    //   console.log ('holdArr=', holdArr)
+
+    //   for (let i = 1; i < holdArr.length; i++) {
+    //     const symm = holdArr[i].sym;
+    //     // if (heldMasterObj[etf] === undefined)
+    //       heldMasterObj[symm] = {etf: {symm: holdArr[i].perc}}
+    //   }
+
+    //   console.log ('heldMasterObj=', heldMasterObj)
+    //   // holdingsObj[etf].holdArr.forEach((sym2Percent) => {
+    //   //   hold[sym2Percent.sym] = sym2Percent.perc;
+    //   // })
+    //   // holdingsObj[etf]['hold'] = hold;
+    // })
   }
 
 
@@ -186,7 +198,7 @@ function Holdings (props) {
               {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <button type="button" onClick={()=>getHoldings (false, false)}>display  </button> &nbsp;
               <button type="button" onClick={()=>getHoldings (true, false)}>insert-in-table  </button> &nbsp; 
-              <button type="button" onClick={()=>ETFCompare ()}>Compare  </button> &nbsp;      
+              {/* <button type="button" onClick={()=>ETFCompare ()}>Compare  </button> &nbsp;       */}
           </div> 
           <div>&nbsp; </div>
         </div>
