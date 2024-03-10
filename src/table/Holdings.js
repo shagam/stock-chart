@@ -98,7 +98,7 @@ function Holdings (props) {
       }
 
       const holdArr = result.data.holdArr;
-      const len = result.data.holdArr.length < count+1 ? result.data.holdArr.length : count+1; // limit size.  (first is verification counters)
+      const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
       for (let i = 1; i < len; i++) {
         const symm = result.data.holdArr[i].sym;
         if (heldMasterObj[symm] === undefined)
@@ -229,7 +229,7 @@ function Holdings (props) {
               <td style={{width: '8px'}}>{s}</td>
                 {etfArr.map((k)=>{
                   return (
-                    <td style={{width: '8px'}}>
+                    <td>
                       {heldMasterObj[s][k]}
                     </td>
                   )
