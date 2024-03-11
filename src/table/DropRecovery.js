@@ -160,7 +160,18 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     // fill columns in stock table
     // if (recoverPeriod === undefined)
     //   alert (StockSymbol + ' recoverWeek undef')
-    deepCallBack (StockSymbol, deep, deepIndex, recoverPeriod, deepDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
+    // deepCallBack (StockSymbol, deep, deepIndex, recoverPeriod, deepDate, priceDivHigh); //format(startDate, "yyyy-MMM-dd"));
+    const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);  
+    if (index === -1) {
+      alert ('crash recovery symbol not found deep ' + StockSymbol);
+      return;
+    } 
+
+    // rows[index].values.deep = Number(deep);
+    // rows[index].values.recoverWeek = Number(recoverPeriod);
+    // rows[index].values.deepDate = deepDate;
+    // rows[index].values.priceDivHigh = Number(priceDivHigh);
+    // rows[index].values.deepUpdateMili = Date.now();
   }
 
 
