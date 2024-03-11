@@ -18,7 +18,7 @@ const StockChart = (props) => {
   const [chartFlag, setChartFlag] = useState(false); // hide / show page
   const [multi, setMulti] = useState(true);
   const [logarithmic, setLogarithmic] = useState(false);
-  const [scaleFlag, setScaleFlag] = useState(props.gainMap['bubbleLine']);
+  const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
 
   const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
   const [endDate, setEndDate] = useState (new Date())
@@ -52,8 +52,11 @@ const StockChart = (props) => {
     delete props.gainMap.bubbleLine
   }
 
-  if(LOG_FLAG)
-    console.log (Object.keys (props.gainMap))
+  // if(props.gainMap['bubbleLine'])
+  //   setScaleFlag(false)
+
+  // if(LOG_FLAG)
+    console.log (scaleFlag, logarithmic, Object.keys (props.gainMap))
 
   const isEmpty = (str) => {
     if (str == null)
@@ -258,7 +261,7 @@ const StockChart = (props) => {
       }
     }
 
-    if (scaleFlag) {// calc scale
+    if (scaleFlag && ! props.gainMap['bubbleLine']) {// calc scale override when bubbleLine
       var scale = [];
       var len = [];
       var lenHigh = 0;
