@@ -31,6 +31,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       if (LOG_FLAG && i === endIndex - 1)
         console.log ('index=', i, 'last', stockChartXValues[endIndex], stockChartYValues[endIndex])// end of loop
     }
+    if (LOG_FLAG)
     console.log ('Found top  index=', priceIndex, 'last', stockChartXValues[priceIndex], stockChartYValues[priceIndex])
     return priceIndex;
 

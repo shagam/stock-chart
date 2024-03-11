@@ -55,7 +55,7 @@ const StockChart = (props) => {
   // if(props.gainMap['bubbleLine'])
   //   setScaleFlag(false)
 
-  // if(LOG_FLAG)
+  if(LOG_FLAG)
     console.log (scaleFlag, logarithmic, Object.keys (props.gainMap))
 
   const isEmpty = (str) => {
