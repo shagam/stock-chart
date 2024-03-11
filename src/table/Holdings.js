@@ -235,9 +235,9 @@ function Holdings (props) {
       <table>
         <thead>
           <tr>
-            {etfArr_ && etfArr_.length > 1 && etfArr_.map((e) => {
+            {etfArr_ && etfArr_.length > 1 && etfArr_.map((e, index) => {
               return (
-                <th scope="col">
+                <th key={index} scope="col">
                   {e}
                 </th>      
               )
