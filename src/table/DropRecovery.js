@@ -10,7 +10,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 
 
-function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly, gainObj) {
+function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly, gainObj, errorAdd) {
 
     const LOG_FLAG = logFlags && logFlags.includes('drop');
 
@@ -57,10 +57,11 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     var deep = -1;
 
     // search for deepPrice after start date
-    const deep_ = () => {
+    const deep_ = (errorAdd) => {
       // deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
       if (startBeforeDropIndex === -1) {
         console.log (StockSymbol, 'DropRecovery: Fail to calc deep date')
+        // errorAdd([StockSymbol,'DropRecovery: Fail to calc deep date'])
         return;
       }
       const startBeforeDropValue = gainLow(startBeforeDropIndex) // gainObj[stockChartXValues[startBeforeDropIndex]]['3. low']
@@ -84,14 +85,15 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     const recoverFactor = 0.97; // recover criteria when close enough
     // search for higest befor deep
-    const highistBeforeDeep = () => {
+    const highistBeforeDeep = (errorAdd) => {
       if (startBeforeDropIndex < 0 || deepIndex < 0) {
         console.log (StockSymbol, 'DroRecovery: Fail to calc highistBeforeDeep ')
+        // errorAdd([StockSymbol,'DroRecovery: Fail to calc highistBeforeDeep '])
         return;
       }
       for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
         const price = gainHigh(i)
-        if (highPriceBeforeDeep * recoverFactor < price) {  // at least weeks to recover
+        if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
           highPriceDateBeforeDeep = stockChartXValues[i]
           highPriceBeforeDeepIndex = i;
@@ -103,7 +105,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     // check for recovery price after deep
     var recoverDate = ''
 
-    const recoveryWeeks = () => {
+    const recoveryWeeks = (errorAdd) => {
       for (let i = deepIndex; i >= 0; i--) {      
         const price = gainHigh(i)
         // console.log (price)
@@ -124,6 +126,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
       if (index === -1) {
         alert (`crash recovery symbol not found recoveryWeeks (${StockSymbol})`);
+        // errorAdd([StockSymbol,'crash recovery symbol not found recoveryWeeks'])
         return;
       } 
       // if (rows[index].values.deep === deep)
@@ -144,12 +147,12 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const startDaysSince1970 = daysFrom1970 (startDateSplit);
     // if (Math.abs (daysFrom1970 (todayDateSplit) - daysFrom1970(startDateSplit)) > 250) {  // more than 6 months
     // deep-recovery
-    deep_();
+    deep_(errorAdd);
     if (startBeforeDropIndex === -1) { // start date out of range
       return;
     }
-    highistBeforeDeep();
-    recoveryWeeks();
+    highistBeforeDeep(errorAdd);
+    recoveryWeeks(errorAdd);
     const lastPriceHigh = gainHigh(0);
     const priceDivHigh = Number(lastPriceHigh / highPriceBeforeDeep).toFixed(3);
     if (LOG_FLAG)
@@ -188,7 +191,7 @@ const DropRecoveryButtons = (props) => {
   }
 
   function swap_period_2022() {
-    props.setDropStartDate (new Date(2022, 8, 1));  // 2022 sep 1 
+    props.setDropStartDate (new Date(2021, 8, 1));  // 2022 sep 1 
     // setEndDate (new Date(2020, 4, 15));
   }
   
@@ -251,7 +254,7 @@ const DropRecoveryButtons = (props) => {
    // style={{display:'flex'}}
 
 
-  function closeDates(deepDate, startDate) {
+  function closeDates(deepDate, startDate, errorAdd) {
 
     const deepDateSplit = dateSplit (deepDate)
     const dateDeep = new Date(deepDateSplit[0], deepDateSplit[1], deepDateSplit[2])
@@ -272,6 +275,7 @@ const DropRecoveryButtons = (props) => {
       return true;
     else {
       console.log ('big date diff', 'deepDate', deepDate, 'startDate', startDate)
+      // errorAdd ([props.StockSymbol, 'big date diff, deepDate' + deepDate + 'startDate'+ startDate])
       return false;
     }
   }
@@ -312,7 +316,7 @@ const DropRecoveryButtons = (props) => {
               &nbsp;&nbsp;&nbsp;&nbsp; recoverWeek:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.recoverWeek} </div>
             </div>
           }
-          {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate) && 
+          {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate,props.errorAdd) && 
             <h5 style={{color:'red'}}>Date mismatch, Press Gain for a stock </h5>}
           
         </div>

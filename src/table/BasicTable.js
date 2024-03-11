@@ -160,7 +160,7 @@ const BasicTable = (props) => {
   // const [searchDeepDate, setSearchDeepDate] = useState()
   const [analyzeShow, setAnalyzeShow] = useState(false);
 
-  const [deepStartDate, setDropStartDate] = useState(new Date(2022, 8, 1)); // 2021 sep 1   Mon 0-11
+  const [deepStartDate, setDropStartDate] = useState(new Date(2021, 8, 1)); // 2021 sep 1   Mon 0-11
   
   const useData = false;
 
@@ -873,7 +873,7 @@ const BasicTable = (props) => {
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray); 
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, props.logFlags, weekly, chartData[`${periodTag}`])
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, props.logFlags, weekly, chartData[`${periodTag}`], errorAdd)
               updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl);                      
             }
         )
@@ -1332,7 +1332,9 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools
             </div>
 
-            {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />}
+            {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
+             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  errorAdd={errorAdd}/>}
+
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
