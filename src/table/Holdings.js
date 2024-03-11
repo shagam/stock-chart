@@ -210,12 +210,10 @@ function Holdings (props) {
       
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
-              {/* <button type="button" onClick={()=>getHoldings (false, true)}>console.log  </button> &nbsp; */}
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
-              <button type="button" onClick={()=>getHoldings (false)}>fetch  </button> &nbsp;
-              {/* <button type="button" onClick={()=>getHoldings (true)}>insert-in-table &nbsp; {props.chartSymbol} </button>  &nbsp; */}
-              <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button>  &nbsp;
-              <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button> &nbsp;      
+              <button type="button" onClick={()=>getHoldings (false)}>fetch  </button> &nbsp;              
+              {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
+              <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
           </div> 
           <div>&nbsp; </div>
         </div>
