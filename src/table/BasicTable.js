@@ -115,13 +115,16 @@ const BasicTable = (props) => {
   const [gainData, setGainData] = useState();
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   
-  const [logFlags, setLogFlags] = useState([]);
-  const LOG_FLAG = logFlags && logFlags.includes('aux');
-  const LOG_API = logFlags && logFlags.includes('api');
-  const LOG_SPLITS = logFlags && logFlags.includes('splits');
-  const LOG_FIREBASE = logFlags && logFlags.includes('firebase');
-  const LOG_alpha = logFlags && logFlags.includes('alpha');
-  const LOG_DROP = logFlags && logFlags.includes('drop_');
+//   const [logFlags, setLogFlags] = useState([]);
+//   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
+// "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target"];
+
+  const LOG_FLAG = props.logFlags && props.logFlags.includes('aux');
+  const LOG_API = props.logFlags && props.logFlags.includes('api');
+  const LOG_SPLITS = props.logFlags && props.logFlags.includes('splits');
+  const LOG_FIREBASE = props.logFlags && props.logFlags.includes('firebase');
+  const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
+  const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
@@ -222,7 +225,7 @@ const BasicTable = (props) => {
       }
     }
     localStorage.setItem ('columnsHidden', JSON.stringify(hiddenArray))
-    if (logFlags && logFlags.includes('hiddenCols'))
+    if (props.logFlags && props.logFlags.includes('hiddenCols'))
       console.log ('hiddenColumnsSave', JSON.stringify(hiddenArray))
   }
 
@@ -439,7 +442,7 @@ const BasicTable = (props) => {
     rows[row_index].values.splits_list = splits;
     // console.log (splits)
 
-    targetPriceAdd (sym, rows[row_index].values.targetRaw, price, logFlags, 'gain') 
+    targetPriceAdd (sym, rows[row_index].values.targetRaw, price, props.logFlags, 'gain') 
 
     try {
     if (splits) {
@@ -493,7 +496,7 @@ const BasicTable = (props) => {
     rows[index].values.Cap = Number (childData["MarketCapitalization"] / 1000 / 1000 / 1000).toFixed(2);
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
     //Sector         
-    targetPriceAdd (symbol, targetRaw, rows[index].values.price, logFlags, 'info') 
+    targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, 'info') 
 
     rows[index].values.info_mili = updateMili;
     rows[index].values.info_date = updateDate;
@@ -604,7 +607,7 @@ const BasicTable = (props) => {
 
     const ind = allColumns.findIndex((column)=> column.Header === 'splits_list');
     if (allColumns[ind].isVisible || ! isAdjusted ())  // high limit no need for compensation
-      StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, logFlags, null) // no need for return value
+      StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, props.logFlags, null) // no need for return value
 
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  
@@ -692,7 +695,7 @@ const BasicTable = (props) => {
               setGainData(gainArrayTxt)
 
               if (smoothSpikes)
-                spikesSmooth (sym, stockChartXValuesFunction, stockChartYValuesFunction, logFlags)
+                spikesSmooth (sym, stockChartXValuesFunction, stockChartYValuesFunction, props.logFlags)
 
 
               // collect compensation vars
@@ -707,7 +710,7 @@ const BasicTable = (props) => {
                   const splitDate = dateSplit (splitArrayList[splitNum].date);
                   if (splitArrayList[splitNum].date == null)
                     alert (sym, 'wrong split info', splitNum)
-                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym, logFlags)
+                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym, props.logFlags)
                   if (chartIndex < 1) {// error not fount
                     if (LOG_SPLITS)
                       console.log (sym, "Split drop/jump date not found", splitNum, JSON.stringify (splitArrayList[splitNum]), chartIndex)
@@ -778,7 +781,7 @@ const BasicTable = (props) => {
 
               gainMap[sym]  = {'x': stockChartXValuesFunction, 'y': stockChartYValuesFunction}
           
-              if (logFlags.includes('xyValue')) {
+              if (props.logFlags.includes('xyValue')) {
                 console.log (stockChartXValuesFunction)
                 console.log (stockChartYValuesFunction)
                 console.log (chartData)
@@ -786,13 +789,13 @@ const BasicTable = (props) => {
               const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
               if (allColumns[ind].isVisible || ! isAdjusted) {           
               if (marketwatch)
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd, null);
+                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, props.logFlags, errorAdd, null);
               else
-                GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, logFlags) // static table
+                GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.logFlags) // static table
               }
     
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-                  weekly, logFlags, true,  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, saveTable)  //setCalcResults, setCalcInfo
+                  weekly, props.logFlags, true,  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, saveTable)  //setCalcResults, setCalcInfo
 
               const updateMili = Date.now();
               const updateDate = getDate();
@@ -825,42 +828,42 @@ const BasicTable = (props) => {
               }
               else {
                 var dateBackSplit = daysBack (todaySplit, 7);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex === undefined)
                   return
               
                 dateBackSplit = monthsBack (todaySplit, 3, sym);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined)
                   mon3 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
           
                 dateBackSplit = monthsBack (todaySplit, 6, sym);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined)
                   mon6 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
                 dateBackSplit = monthsBack (todaySplit, 12, sym);
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined)
                   year = (stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2);
 
                 dateBackSplit = monthsBack (todaySplit, 24, sym); 
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined)
                   year2 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
                 dateBackSplit = monthsBack (todaySplit, 60, sym); // 5 years
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined)
                   year5 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
                 dateBackSplit = monthsBack (todaySplit, 120, sym); // 10 years
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined) 
                   year10 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));            
 
                 dateBackSplit = monthsBack (todaySplit, 240, sym); // 20 years
-                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, props.logFlags)
                 if (chartIndex !== undefined)
                   year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));         
               }
@@ -870,14 +873,14 @@ const BasicTable = (props) => {
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray); 
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`])
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, props.logFlags, weekly, chartData[`${periodTag}`])
               updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl);                      
             }
         )
         // handleInfoClick(sym, false);
         // if (saveTabl)
         //   saveTable(sym);
-      searchURL (logFlags)
+      searchURL (props.logFlags)
   }
 
    // get all info for targetPrice
@@ -1189,7 +1192,7 @@ const BasicTable = (props) => {
         <Link to="/about">About</Link> &nbsp; &nbsp;
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
         <Link to="/targetPrice">Target-price-history</Link> &nbsp; &nbsp;
-        {/* {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} */}
+        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
@@ -1301,9 +1304,9 @@ const BasicTable = (props) => {
 
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine}/>}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine}/>}
 
-        {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} />}  
+        {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
        
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
@@ -1331,20 +1334,20 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns} deepStartDate={deepStartDate} setDropStartDate={setDropStartDate} />}
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues}
-                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
+                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={logFlags} corsServer={servSelect} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
+             logFlags={props.logFlags} corsServer={servSelect} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
-                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {logFlags} errorAdd={errorAdd}/> }
+                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} errorAdd={errorAdd}/> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
-            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
+            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
 
             {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}     
 

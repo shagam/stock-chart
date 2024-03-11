@@ -12,9 +12,7 @@ const LogFlags = (props) => {
    if (! logFlagsRaw)
     logFlagsRaw = "[]";
    const [checked, setChecked] = useState(JSON.parse(logFlagsRaw));
-   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
-    "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target"];
- 
+   
 
    // Add/Remove checked item from list
    const handleCheck = (event) => {
@@ -43,12 +41,6 @@ const LogFlags = (props) => {
    var isChecked = (item) =>
      checked.includes(item) ? "checked-item" : "not-checked-item";
  
-    // var checkedItems_ = ''
-    // checkList.forEach (function (item) { 
-    //   if (checked.includes(item)) {
-    //     checkedItems_ === '' ? checkedItems_ += item : checkedItems_ += ", " + item
-    //   }
-    // })  
     function showToggle () {
       setShowFlafs(!showFlags)
       props.setLogFlags(checked)
@@ -56,13 +48,18 @@ const LogFlags = (props) => {
 
     return (
       <div style={{ border: '2px solid magenta', padding: '0px'}}>
-       <div>
-         <input  type="checkbox" checked={showFlags}  onChange={() => {showToggle()}} />  Console Log flags
-       </div>
- 
+        <hr/> 
+        <div>
+            <Link to="/" > Home </Link>
+        </div>
+
+        <hr/> 
+        <h4 style={{color:'Green'}}>Console.log flags  </h4>
+        <hr/> 
+        
         <div>
           <div style={{display:'flex'}}>
-            {showFlags && checkList.map((item, index) => (
+            {props.checkList.map((item, index) => (
               <div style={{display:'flex'}} key={index}>
                 <input value={item} type="checkbox" checked={checked.includes(item)} onChange={handleCheck} />
                 <span>&nbsp;{item}&nbsp;&nbsp;</span>

@@ -30,8 +30,15 @@ const UpdateProfile = lazy(() => import ('./auth/UpdateProfile'));
 const Manual = lazy(() => import ('./manual/Manual'))
 
 
+
+const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
+"xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target"];
+
+
 function App() {
   const [count, setCount] = useState (0);
+  const [logFlags, setLogFlags] = useState([]);
+
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
   const nowStr = getDateSec()
@@ -62,7 +69,7 @@ function App() {
                    {/* <hr/>  */}
             <Router>
               <Routes>
-                <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} />}/>
+                <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} logFlags={logFlags} />}/>
                 <Route path ="/dashBoard"  element={<Dashboard />}/>
                       {/* <Route path="/" element={<Dashboard/>}   /> */}
                 <Route path="/signup" element={<Signup/> } />
@@ -72,7 +79,7 @@ function App() {
 
                 <Route path="/tutorials" element={<Tutorials  />}/>
                 <Route path="/about" element={<About  />}/>
-                <Route path="/logFlags" element={<LogFlags  />}/>
+                <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/targetPrice" element={<TargetPrice  />}/>
                 <Route path="/manual" element={<Manual  />}/>
                 {/* <Route path="/contact" element={<Contact  />}/> */}
