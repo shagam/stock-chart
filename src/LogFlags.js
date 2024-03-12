@@ -6,7 +6,26 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const LogFlags = (props) => {
 
-  const [showFlags, setShowFlafs] = useState(false)
+  const flags0 = []
+  const flags1 = []
+  const flags2 = []
+
+  var cnt = 0;
+  // React.useEffect (() => {
+ 
+  // }, [props.checkList])
+
+  props.checkList.forEach((f) => {
+    if (cnt < 6)
+      flags0.push(f)
+    else if (cnt < 12)
+      flags1.push(f)
+    else
+      flags2.push(f)
+    cnt++;
+  })
+
+
    // State with list of all checked item
    var logFlagsRaw = localStorage.getItem('logFlags')
    if (! logFlagsRaw)
@@ -41,11 +60,6 @@ const LogFlags = (props) => {
    var isChecked = (item) =>
      checked.includes(item) ? "checked-item" : "not-checked-item";
  
-    function showToggle () {
-      setShowFlafs(!showFlags)
-      props.setLogFlags(checked)
-    }
-
     return (
       <div style={{ border: '2px solid magenta', padding: '0px'}}>
         <hr/> 
@@ -59,13 +73,32 @@ const LogFlags = (props) => {
         
         <div>
           <div style={{display:'flex'}}>
-            {props.checkList.map((item, index) => (
+            {flags0.map((item, index) => (
               <div style={{display:'flex'}} key={index}>
                 <input value={item} type="checkbox" checked={checked.includes(item)} onChange={handleCheck} />
                 <span>&nbsp;{item}&nbsp;&nbsp;</span>
               </div>
             ))}
           </div>
+          <br></br>
+          <div style={{display:'flex'}}>
+            {flags1.map((item, index) => (
+              <div style={{display:'flex'}} key={index}>
+                <input value={item} type="checkbox" checked={checked.includes(item)} onChange={handleCheck} />
+                <span>&nbsp;{item}&nbsp;&nbsp;</span>
+              </div>
+            ))}
+          </div>
+          <br></br>
+          <div style={{display:'flex'}}>
+            {flags2.map((item, index) => (
+              <div style={{display:'flex'}} key={index}>
+                <input value={item} type="checkbox" checked={checked.includes(item)} onChange={handleCheck} />
+                <span>&nbsp;{item}&nbsp;&nbsp;</span>
+              </div>
+            ))}
+          </div>
+          <br></br>
           {/* <div className="title"> {checkedItems}</div> */}
         </div>
       </div>
