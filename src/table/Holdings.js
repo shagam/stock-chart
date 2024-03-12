@@ -105,7 +105,7 @@ function Holdings (props) {
     // window.location.reload(); 
   }
 
-  function getHoldings () {
+  function fetchHoldings () {
     // if (props.rows[row_index].values.PE !== -2) {
     //   const er = 'Server connection fail';
     //   console.log (er)
@@ -151,6 +151,7 @@ function Holdings (props) {
       const holdArr = result.data.holdArr;
       const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
       var cnt = 0;
+      var percentSum = 0;
       for (let i = 1; i < len; i++) {
         cnt ++;
         const symm = result.data.holdArr[i].sym;
@@ -158,12 +159,13 @@ function Holdings (props) {
         heldMasterObj[symm] = {};
         // const obj = {etf: {symm: holdArr[i].perc}}
         heldMasterObj[symm][etf] =  holdArr[i].perc
+        percentSum += Number(holdArr[i].perc);
       }
 
       // build a warningObj
-      const warnObj = {sym: etf, cnt: cnt, update: result.data.updateDate};
+      const warnObj = {sym: etf, cnt: cnt, update: result.data.updateDate, percentSum: percentSum.toFixed(2)};
       if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc)
-        warnObj['warn'] = 'Last percentage off by ' +
+        warnObj['warn'] = 'Last percentage off by '
        (holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym) + ' row'
       warn.push (warnObj)
       if (LOG)
@@ -215,7 +217,7 @@ function Holdings (props) {
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
-              <button type="button" onClick={()=>getHoldings ()}>fetch  </button> &nbsp;              
+              <button type="button" onClick={()=>fetchHoldings ()}>fetch  </button> &nbsp;              
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
           </div> 
@@ -227,7 +229,8 @@ function Holdings (props) {
       {Object.keys(warn).length > 0 && Object.keys(warn).map((w)=>{
         return(
         <div style={{display: 'flex'}}>
-          {warn[w].sym} &nbsp;&nbsp; ({warn[w].cnt}) &nbsp;&nbsp; {warn[w].update} &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
+          {warn[w].sym} &nbsp;&nbsp; ({warn[w].cnt}) &nbsp;&nbsp; {warn[w].update} &nbsp; &nbsp; total={warn[w].percentSum}%
+          &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
         </div>
         )
       })}
