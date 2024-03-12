@@ -86,7 +86,8 @@ function Holdings (props) {
 
     for (let i = 1; i < len; i++) {
         const sym = holdArr[i].sym;
-        console.log(sym)
+        // if (LOG)
+        //   console.log(sym)
         const r_index = props.rows.findIndex((row)=> row.values.symbol === sym);
         if (r_index !== -1) { // alread in table: just add %
           props.rows[r_index].values.percent = holdArr[i].perc; // symm exist,so put in only percetage
