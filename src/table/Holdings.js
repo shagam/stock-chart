@@ -21,7 +21,7 @@ function Holdings (props) {
   const [heldMasterObj, setHeldMasterObj] = useState({})
   const [warn, setWarn] = useState([])
 
-  const [count, setCount] =useState(17)
+  const [count, setCount] =useState(30)
 
   const LOG = props.logFlags.includes('holdings')
 
@@ -78,6 +78,9 @@ function Holdings (props) {
       console.log (props.chartSymbol + ' need to <fetch>')
       return;
     }
+
+    clearPercentColumn();     
+    
     const holdArr = holdingsRawObj[props.chartSymbol].holdArr;
     const len = holdArr.length < Number(count)+1 ? holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
 
@@ -91,17 +94,18 @@ function Holdings (props) {
         else {
           // add a new sym
           const newStock = addSymOne (sym)
-          console.log ('added', newStock)
+          if (LOG)
+            console.log ('added', newStock)
           newStock.values.percent = holdArr[i].perc
           props.rows.push (newStock);
         }  
     } // end of add
 
     props.saveTable()
-    window.location.reload(); 
+    // window.location.reload(); 
   }
 
-  function getHoldings (insert) {
+  function getHoldings () {
     // if (props.rows[row_index].values.PE !== -2) {
     //   const er = 'Server connection fail';
     //   console.log (er)
@@ -109,9 +113,7 @@ function Holdings (props) {
     //   return;
     // }  
     const FAIL = 'Request failed with status code 404'
-    if (insert) {
-      clearPercentColumn();     
-    }
+
     var corsUrl = "https://";
     corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
 
@@ -148,7 +150,9 @@ function Holdings (props) {
 
       const holdArr = result.data.holdArr;
       const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
+      var cnt = 0;
       for (let i = 1; i < len; i++) {
+        cnt ++;
         const symm = result.data.holdArr[i].sym;
         if (heldMasterObj[symm] === undefined)
         heldMasterObj[symm] = {};
@@ -157,7 +161,7 @@ function Holdings (props) {
       }
 
       // build a warningObj
-      const warnObj = {sym: etf, update: result.data.updateDate};
+      const warnObj = {sym: etf, cnt: cnt, update: result.data.updateDate};
       if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc)
         warnObj['warn'] = 'Last percentage off by ' +
        (holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym) + ' row'
@@ -211,7 +215,7 @@ function Holdings (props) {
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
-              <button type="button" onClick={()=>getHoldings (false)}>fetch  </button> &nbsp;              
+              <button type="button" onClick={()=>getHoldings ()}>fetch  </button> &nbsp;              
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
           </div> 
@@ -223,7 +227,7 @@ function Holdings (props) {
       {Object.keys(warn).length > 0 && Object.keys(warn).map((w)=>{
         return(
         <div style={{display: 'flex'}}>
-          {warn[w].sym} &nbsp;&nbsp;  ({warn[w].update}) &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
+          {warn[w].sym} &nbsp;&nbsp; ({warn[w].cnt}) &nbsp;&nbsp; {warn[w].update} &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
         </div>
         )
       })}
@@ -244,9 +248,9 @@ function Holdings (props) {
         </thead>
 
         <tbody>             
-          {Object.keys(heldMasterObj).map((s) =>{
+          {Object.keys(heldMasterObj).map((s, indx) =>{
             return (
-            <tr>
+            <tr key={indx}>
               <td style={{width: '8px'}}>{s}</td>
                 {etfArr.map((k)=>{
                   return (
