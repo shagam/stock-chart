@@ -168,9 +168,11 @@ function Holdings (props) {
 
       // build a warningObj
       const warnObj = {sym: etf, cnt: cnt, update: result.data.updateDate, percentSum: percentSum.toFixed(2)};
-      if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc)
-        warnObj['warn'] = 'Last percentage off by '
-       (holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym) + ' row'
+      if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc) {
+        const c = holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym;
+        const txt = 'Last percentage off by ' + c + ' row  '
+          warnObj['warn'] = txt;
+        }
       warn.push (warnObj)
       if (LOG)
         console.log ('warn:', warn)
@@ -222,7 +224,7 @@ function Holdings (props) {
           <div stype={{display: 'flex'}}>
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
               <button type="button" onClick={()=>fetchHoldings (false)}>fetch50  </button> &nbsp; 
-              <button type="button" onClick={()=>fetchHoldings (true)}>fetch20  </button> &nbsp;   
+              {props.eliHome && <button type="button" onClick={()=>fetchHoldings (true)}>fetch20  </button>} &nbsp;
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
           </div> 
@@ -234,14 +236,13 @@ function Holdings (props) {
       {Object.keys(warn).length > 0 && Object.keys(warn).map((w)=>{
         return(
         <div style={{display: 'flex'}}>
-          {warn[w].sym} &nbsp;&nbsp; ({warn[w].cnt}) &nbsp;&nbsp; {warn[w].update} &nbsp; &nbsp; total={warn[w].percentSum}%
+          {warn[w].sym} &nbsp;({warn[w].cnt}) &nbsp;&nbsp; {warn[w].update} &nbsp; total={warn[w].percentSum}%
           &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
         </div>
         )
       })}
 
       {<div>
-      {props.eliHome && 
       <table>
         <thead>
           <tr>
@@ -273,7 +274,7 @@ function Holdings (props) {
           })}
         </tbody>  
       </table>
-      }
+
       </div> }
 
       <div>&nbsp;</div>  
