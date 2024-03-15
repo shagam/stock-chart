@@ -106,7 +106,7 @@ function Holdings (props) {
     // window.location.reload(); 
   }
 
-  function fetchHoldings () {
+  function fetchHoldings (sch) {
     // if (props.rows[row_index].values.PE !== -2) {
     //   const er = 'Server connection fail';
     //   console.log (er)
@@ -116,7 +116,10 @@ function Holdings (props) {
     const FAIL = 'Request failed with status code 404'
 
     var corsUrl = "https://";
-    corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
+    if (!sch)
+      corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
+    else
+      corsUrl += props.corsServer + ":5000/holdingsSch?stock=" + props.chartSymbol;
 
     axios.get (corsUrl)
     // getDate()
@@ -218,7 +221,8 @@ function Holdings (props) {
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
-              <button type="button" onClick={()=>fetchHoldings ()}>fetch  </button> &nbsp;              
+              <button type="button" onClick={()=>fetchHoldings (false)}>fetch50  </button> &nbsp; 
+              <button type="button" onClick={()=>fetchHoldings (true)}>fetch20  </button> &nbsp;   
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
           </div> 
