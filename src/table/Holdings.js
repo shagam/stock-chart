@@ -21,7 +21,7 @@ function Holdings (props) {
   const [heldMasterObj, setHeldMasterObj] = useState({})
   const [warn, setWarn] = useState([])
 
-  const [count, setCount] =useState(30)
+  const [count, setCount] =useState(25)
 
   const LOG = props.logFlags.includes('holdings')
 
