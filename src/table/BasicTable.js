@@ -102,7 +102,7 @@ const BasicTable = (props) => {
   const [gainMap, setGainMap] = useState([]);
   const [bubbleLine, setBubbleLine] = useState();
 
-  const servList = ['dinagold.org', '62.0.92.49', 'localhost','10.100.102.4'];
+  const servList = [process.env.REACT_APP_LOCAL_SERV_IP, process.env.REACT_APP_AWS_IP, 'localhost','10.100.102.4'];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
 
@@ -128,7 +128,7 @@ const BasicTable = (props) => {
 
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
-  const HIGH_LIMIT_KEY = '71CKKX7NZI1G1FRK'
+  const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
   var aleph = localStorage.getItem('alphaVantage');
   const [API_KEY, setAPI_KEY] = useState(aleph);
@@ -1210,7 +1210,7 @@ const BasicTable = (props) => {
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
-          {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList} defaultValue={servList[0]}/> </div>}
+          {eliHome && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList} defaultValue={servList[0]}/> </div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHightList[3]}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}

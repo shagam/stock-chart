@@ -197,7 +197,7 @@ function Holdings (props) {
 
     } )
     .catch ((err) => {
-      setErr(err.message + ' ' + corsUrl)
+      setErr(err.message)
       // console.log(err.message)
     })
   }

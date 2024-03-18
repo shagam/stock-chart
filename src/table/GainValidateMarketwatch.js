@@ -167,7 +167,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     })
     .catch ((err) => {
       console.log(err, corsUrl)
-      setError([err.message, corsUrl])
+      setError([err.message])
     })
 
     refreshCallBack();
