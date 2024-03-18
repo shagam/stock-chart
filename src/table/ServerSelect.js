@@ -24,8 +24,8 @@ export const ServerSelect = (props) => {
     {props.title} &nbsp;
 
     <select   value={serv}  onChange={(e) =>setServ (e.target.value)} >
-      {props.options.map((s) => (
-          <option key={s} value={s} > {s} &nbsp; </option> 
+      {props.options.map((s, i) => (
+          <option key={i} value={s} > {s} &nbsp; </option> 
       ))}  
     </select>
 
