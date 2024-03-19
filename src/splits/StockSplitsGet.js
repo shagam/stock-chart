@@ -15,7 +15,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags, setSplitInfo) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = logFlags.includes('splits'); 
@@ -26,11 +26,11 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, ssl, logFlags, s
       // if (corsServer === 'serv.dinagold.org')
       if (ssl) {
         corsUrl = "https://";
-        corsUrl += corsServer+ ":5000/splits?stock=" + sym;
+        corsUrl += corsServer+ ":" + PORT + "/splits?stock=" + sym;
       }
       else {
         corsUrl = "http://"
-        corsUrl += corsServer+ ":5000/splits?stock=" + sym;
+        corsUrl += corsServer+ ":" + PORT + "/splits?stock=" + sym;
       }
       if (LOG)
         console.log (sym, corsUrl)

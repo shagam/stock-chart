@@ -50,10 +50,10 @@ function Verify (props) {
       }
       if (! nasdaq)
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
       else
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, true, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, true, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
     }
 
     function verifyTest () {
@@ -73,7 +73,7 @@ function Verify (props) {
         alert ("Missing symbol, press gain for a symbol")
         return;
       }
-      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect, true, props.logFlags, setSplitInfo)
+      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect, props.PORT, true, props.logFlags, setSplitInfo)
     }
 
     function spikes () {

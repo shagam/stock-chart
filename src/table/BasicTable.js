@@ -126,6 +126,7 @@ const BasicTable = (props) => {
   const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
   const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
+  const PORT = 5000;
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
   const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
@@ -1339,11 +1340,11 @@ const BasicTable = (props) => {
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={weekly} setBubbleLine={setBubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={props.logFlags} corsServer={servSelect} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
+             logFlags={props.logFlags} corsServer={servSelect}  PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
-                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} servSelect={servSelect} errorAdd={errorAdd}/> }
+                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} servSelect={servSelect} PORT={PORT} errorAdd={errorAdd}/> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
 

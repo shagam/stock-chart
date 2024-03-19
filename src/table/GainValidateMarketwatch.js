@@ -26,7 +26,7 @@ import {format} from "date-fns"
   }
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, ssl, logFlags, setError, setText, nasdaq) {
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, PORT, ssl, logFlags, setError, setText, nasdaq) {
  
   const LOG = logFlags.includes("verify_1");
   // setError();
@@ -72,9 +72,9 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     corsUrl = "http://"; 
 
   if (! nasdaq)
-    corsUrl += corsServer + ":5000/price?stock=" + sym
+    corsUrl += corsServer + ":" + PORT + "/price?stock=" + sym
   else
-    corsUrl += corsServer + ":5000/priceNasdaq?stock=" + sym
+    corsUrl += corsServer + ":" + PORT + "/priceNasdaq?stock=" + sym
 
   // var corsUrl = "http://62.0.92.49:5000/price?stock=" + sym
     //corsUrl = "http://localhost:5000/price?stock=" + sym

@@ -117,9 +117,9 @@ function Holdings (props) {
 
     var corsUrl = "https://";
     if (!sch)
-      corsUrl += props.corsServer + ":5000/holdings?stock=" + props.chartSymbol;
+      corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + props.chartSymbol;
     else
-      corsUrl += props.corsServer + ":5000/holdingsSch?stock=" + props.chartSymbol;
+      corsUrl += props.corsServer + ":" + props.port + "/holdingsSch?stock=" + props.chartSymbol;
 
     axios.get (corsUrl)
     // getDate()
