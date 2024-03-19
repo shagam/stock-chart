@@ -32,8 +32,6 @@ function Verify (props) {
     const [splitInfo, setSplitInfo] = useState ();
     const [spikeInfo, setSpikesInfo] = useState ([]);
 
-    const servList = ['dinagold.org', '84.95.84.236', 'localhost', ];
-
     function verify (nasdaq) {
       const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
       if (row_index  === -1)
@@ -52,10 +50,10 @@ function Verify (props) {
       }
       if (! nasdaq)
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
       else
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, servList[0], true, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, true, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
     }
 
     function verifyTest () {
@@ -75,7 +73,7 @@ function Verify (props) {
         alert ("Missing symbol, press gain for a symbol")
         return;
       }
-      StockSplitsGet(props.symbol, props.rows, props.errorAdd, servList[0], true, props.logFlags, setSplitInfo)
+      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect, true, props.logFlags, setSplitInfo)
     }
 
     function spikes () {

@@ -1210,8 +1210,8 @@ const BasicTable = (props) => {
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
-          {eliHome && <div style={{display:'flex'}}> <ServerSelect setServ={setSer} title='server' options={servList} defaultValue={servList[0]}/> </div>}
-          {admin && <div style={{display:'flex'}}> <ServerSelect setServ={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHightList[3]}/> </div>}
+          {eliHome && <div style={{display:'flex'}}> <ServerSelect serv={servSelect} setServSelect={setServSelect} title='server' options={servList} defaultValue={servSelect}/> </div>}
+          {eliHome && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
         </div>
@@ -1343,7 +1343,7 @@ const BasicTable = (props) => {
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
                 stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
-                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} errorAdd={errorAdd}/> }
+                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} servSelect={servSelect} errorAdd={errorAdd}/> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
 

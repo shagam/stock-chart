@@ -8,22 +8,17 @@ export const ServerSelect = (props) => {
   // props.title
   // props.options
 
-  const [serv, setServ] = useState (props.defaultValue)
+
 
   const LOG = false;
 
-  function exec (s) {
-    setServ (s);
-    props.setServ (s);
-    if (LOG)
-      console.log('server:', s)
-  }
 
   return (
     <div style={{display: 'flex'}}>
     {props.title} &nbsp;
 
-    <select   value={serv}  onChange={(e) =>setServ (e.target.value)} >
+    <select   value={props.servSelect}  onChange={(e) =>{
+      props.setServSelect (e.target.value)}} >
       {props.options.map((s, i) => (
           <option key={i} value={s} > {s} &nbsp; </option> 
       ))}  
