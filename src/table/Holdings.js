@@ -193,8 +193,12 @@ function Holdings (props) {
           })
         })
       }
-      else
-        setErr (etf + ' holding mismatch,   symCount=' + holdArr[0].sym + ' percentageCount=' + holdArr[0].perc)
+      else {
+        const warnObj = {sym: etf, update: result.data.updateDate};
+        warnObj['warn'] = ' holding mismatch,   symCount=' + holdArr[0].sym + ' percentageCount=' + holdArr[0].perc; 
+        warnObj['percentSum'] = 0; 
+        warn[etf] = warnObj
+      }
 
       // console.log (JSON.stringify(etfArr));
       if (LOG)
@@ -253,8 +257,8 @@ function Holdings (props) {
         )
       })}
       
-      {props.eliHome && <div> {urlLast} </div>}
-      {props.eliHome && <div> {urlCors} </div>}
+      {LOG && props.eliHome && <div> {urlLast} </div>}
+      {LOG && props.eliHome && <div> {urlCors} </div>}
 
       {<div>
       <table>
