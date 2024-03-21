@@ -19,7 +19,7 @@ function Holdings (props) {
   const [etfArr_, setEtfArr_] = useState([''])  // for table header
   const [holdingsRawObj, setHoldingsArray] = useState({}) // Raw received data
   const [heldMasterObj, setHeldMasterObj] = useState({})
-  const [warn, setWarn] = useState([])
+  const [warn, setWarn] = useState({})
 
   const [count, setCount] =useState(25)
   const [urlLast, setUrlLast] = useState();
@@ -123,7 +123,7 @@ function Holdings (props) {
       setUrlCors('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/')
     }
     else {
-      corsUrl += props.corsServer + ":" + props.port + "/holdingsSch?stock=" + props.chartSymbol;
+      corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
       setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
     } 
     setUrlLast(corsUrl)
@@ -181,7 +181,7 @@ function Holdings (props) {
           const txt = 'Last percentage off by ' + c + ' row  '
             warnObj['warn'] = txt;
           }
-        warn.push (warnObj)
+        warn[etf] = warnObj
         if (LOG)
           console.log ('warn:', warn)
 
