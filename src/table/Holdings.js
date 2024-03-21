@@ -147,7 +147,7 @@ function Holdings (props) {
     
       const etf = result.data.sym;
       const holdArr = result.data.holdArr;
-      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < 2) {
+      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < 3) {
 
         if (! etfArr.includes(etf)) {
           etfArr.push (etf)
