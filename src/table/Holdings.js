@@ -22,6 +22,8 @@ function Holdings (props) {
   const [warn, setWarn] = useState([])
 
   const [count, setCount] =useState(25)
+  const [urlLast, setUrlLast] = useState();
+  const [urlCors, setUrlCors] = useState();
 
   const LOG = props.logFlags.includes('holdings')
 
@@ -116,11 +118,15 @@ function Holdings (props) {
     const FAIL = 'Request failed with status code 404'
 
     var corsUrl = "https://";
-    if (!sch)
+    if (!sch) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + props.chartSymbol;
-    else
+      setUrlCors('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/')
+    }
+    else {
       corsUrl += props.corsServer + ":" + props.port + "/holdingsSch?stock=" + props.chartSymbol;
-
+      setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
+    } 
+    setUrlLast(corsUrl)
     axios.get (corsUrl)
     // getDate()
     .then ((result) => {
@@ -140,50 +146,55 @@ function Holdings (props) {
       }
     
       const etf = result.data.sym;
-      if (! etfArr.includes(etf)) {
-        etfArr.push (etf)
-        etfArr_.push (etf)
-      }
-      
-      if (holdingsRawObj[props.chartSymbol] === undefined)
-        holdingsRawObj[props.chartSymbol] = result.data;
-      else {
-        console.log (etf, 'dulicate')
-        return;        
-      }
-
       const holdArr = result.data.holdArr;
-      const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
-      var cnt = 0;
-      var percentSum = 0;
-      for (let i = 1; i < len; i++) {
-        cnt ++;
-        const symm = result.data.holdArr[i].sym;
-        if (heldMasterObj[symm] === undefined)
-        heldMasterObj[symm] = {};
-        // const obj = {etf: {symm: holdArr[i].perc}}
-        heldMasterObj[symm][etf] =  holdArr[i].perc
-        percentSum += Number(holdArr[i].perc);
-      }
+      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < 2) {
 
-      // build a warningObj
-      const warnObj = {sym: etf, cnt: cnt, update: result.data.updateDate, percentSum: percentSum.toFixed(2)};
-      if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc) {
-        const c = holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym;
-        const txt = 'Last percentage off by ' + c + ' row  '
-          warnObj['warn'] = txt;
+        if (! etfArr.includes(etf)) {
+          etfArr.push (etf)
+          etfArr_.push (etf)
         }
-      warn.push (warnObj)
-      if (LOG)
-        console.log ('warn:', warn)
+        
+        if (holdingsRawObj[props.chartSymbol] === undefined)
+          holdingsRawObj[props.chartSymbol] = result.data;
+        else {
+          console.log (etf, 'dulicate')
+          // return;        
+        }
 
-      // fill missing values with 0
-      Object.keys(heldMasterObj).forEach((symm) => {
-        etfArr.forEach((etf) => {
-          if (heldMasterObj[symm][etf] === undefined)
-            heldMasterObj[symm][etf] = 0
+        const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
+        var cnt = 0;
+        var percentSum = 0;
+        for (let i = 1; i < len; i++) {
+          cnt ++;
+          const symm = result.data.holdArr[i].sym;
+          if (heldMasterObj[symm] === undefined)
+          heldMasterObj[symm] = {};
+          // const obj = {etf: {symm: holdArr[i].perc}}
+          heldMasterObj[symm][etf] =  holdArr[i].perc
+          percentSum += Number(holdArr[i].perc);
+        }
+
+        // build a warningObj
+        const warnObj = {sym: etf, cnt: cnt, update: result.data.updateDate, percentSum: percentSum.toFixed(2)};
+        if (holdingsRawObj[etf].holdArr[0].sym !== holdingsRawObj[etf].holdArr[0].perc) {
+          const c = holdingsRawObj[etf].holdArr[0].perc - holdingsRawObj[etf].holdArr[0].sym;
+          const txt = 'Last percentage off by ' + c + ' row  '
+            warnObj['warn'] = txt;
+          }
+        warn.push (warnObj)
+        if (LOG)
+          console.log ('warn:', warn)
+
+        // fill missing values with 0
+        Object.keys(heldMasterObj).forEach((symm) => {
+          etfArr.forEach((etf) => {
+            if (heldMasterObj[symm][etf] === undefined)
+              heldMasterObj[symm][etf] = 0
+          })
         })
-      })
+      }
+      else
+        setErr (etf + ' holding mismatch,   symCount=' + holdArr[0].sym + ' percentageCount=' + holdArr[0].perc)
 
       // console.log (JSON.stringify(etfArr));
       if (LOG)
@@ -194,7 +205,7 @@ function Holdings (props) {
       // setErr(JSON.stringify(result.data))
       setArr(result.data.holdArr)
       setDat(result.data)
-
+         
     } )
     .catch ((err) => {
       setErr(err.message)
@@ -241,6 +252,9 @@ function Holdings (props) {
         </div>
         )
       })}
+      
+      {props.eliHome && <div> {urlLast} </div>}
+      {props.eliHome && <div> {urlCors} </div>}
 
       {<div>
       <table>
