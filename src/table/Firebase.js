@@ -95,7 +95,7 @@ const Firebase = (props) => {
     // props.saveTable('any');  
   }
 
-  async function peak2PeakBest () {
+  async function peak2PeakBest (fill) {
     const QQQ_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ'); 
     if (QQQ_index === -1) {
       alert ('QQQ missing in table');
@@ -105,8 +105,9 @@ const Firebase = (props) => {
       alert ('need to get QQQ gain by pressing <gain> ');
       return; // cannot compare with QQQ
     }
+    const stockGain = props.rows[QQQ_index].values.peak2Peak * 1.3;
     var userQuery = query (props.gainRef, where(
-      'peak2Peak', '>', (props.rows[QQQ_index].values.peak2Peak) ));
+      'peak2Peak', '>', '' + stockGain ));
 
       const gain = await getDocs(userQuery);
       if (LOG_FLAG)
@@ -162,22 +163,28 @@ const Firebase = (props) => {
       if (LOG_FLAG)
       console.log (props.rows[QQQ_index].values.mon6) 
       
-      var userQuery = query (props.gainRef, where(
-       'year', '>', props.rows[QQQ_index].values.year ));
+      const FACTOR = 1.3;
+      var userQuery;
+      
+        if (periodYears === 1) {
+          const gain = props.rows[QQQ_index].values.year * FACTOR;
+          userQuery = query (props.gainRef, where('year', '>', ''+ gain));
+        }
 
+        if (periodYears === 2) {
+          const gain = props.rows[QQQ_index].values.year2 * FACTOR
+          userQuery = query (props.gainRef, where('year2', '>', ''+ gain));
+        }
 
-      if (periodYears === 2)
-        userQuery = query (props.gainRef, where(
-        'year2', '>', props.rows[QQQ_index].values.year2 ));
+        if (periodYears === 5) {
+          const gain = props.rows[QQQ_index].values.year5 * FACTOR
+          userQuery = query (props.gainRef, where('year5', '>', ''+ gain));
+        }
 
-        if (periodYears === 5)
-        userQuery = query (props.gainRef, where(
-        'year5', '>', props.rows[QQQ_index].values.year5 ));
-
-        if (periodYears === 10)
-        userQuery = query (props.gainRef, where(
-        'year10', '>', props.rows[QQQ_index].values.year10 ));        
-
+        if (periodYears === 10) {
+          const gain = props.rows[QQQ_index].values.year10 * FACTOR
+          userQuery = query (props.gainRef, where('year10', '>', ''+ gain));        
+        }
         // || 'mon6', '>', props.rows[QQQ_index].values.mon6 
         // || 'year2', '>', 10//props.rows[QQQ_index].values.year2
         // || 'year5', '>', 10000//props.rows[QQQ_index].values.year5
@@ -256,9 +263,9 @@ const Firebase = (props) => {
             })
 
             // display alert and list on console.
-            const textForAlert = `symbols in firebase compared with QQQ (${len} symbols, yearPeriod: ${periodYears}): \n `
+            const textForAlert = `${len} symbols in commonDatabase with gain ${FACTOR} times QQQ, during ${periodYears} years: \n `
             console.log (textForAlert + Object.keys(found_stocks_array))
-            alert (`${textForAlert} with gain compared to qqq\n ${str} `)
+            alert (`${textForAlert} \n ${str} `)
           }
       }
       else {
@@ -531,7 +538,7 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
         <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
 
-        <button type="button" onClick={()=>firebaseStatistics ()}>BackEnd-lists</button>
+        <button type="button" onClick={()=>firebaseStatistics (true)}>BackEnd-lists</button>
         <div> &nbsp; </div> 
         {/* <hr/> */}
         <div>&nbsp;
