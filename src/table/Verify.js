@@ -40,7 +40,7 @@ function Verify (props) {
         return;
       if  (nasdaq && props.rows[row_index].values.Exchange !== 'NASD') {
         console.log (props.symbol, props.rows[row_index].values.Exchange)
-        props.errorAdd (['Allowed Only for NASDAQ (press <info> for a stock to see Exchange)'])
+        props.errorAdd ([props.symbol, 'Allowed Only for NASDAQ (press <info> for a stock to see Exchange)'])
         return;
       }
 

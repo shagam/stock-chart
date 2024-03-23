@@ -86,6 +86,10 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     .then ((result) => {
       if (LOG && result.data)
       console.log (sym, JSON.stringify(result.data))
+      if (result.data.err === "No data") {
+        setError([sym, 'verify marketwatch', result.data.err])
+        return;
+      }
       // console.log ("Price Compare", getDate(), year, mon, day,
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym);
