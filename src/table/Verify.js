@@ -60,12 +60,12 @@ function Verify (props) {
         setUrl ("https://bigcharts.marketwatch.com/historical/default.asp?symb=" + props.symbol + '&closeDate=' + '5/25/2010')
         setCorsUrl ('https://' + props.servSelect + ":" + props.PORT + "/price?stock=" + props.symbol + "&year=2010&mon=5&day=25")
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, true, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
         }
       else {
         setCorsUrl  ('https://' + props.servSelect + ":" + props.PORT + "/priceNasdaq?stock=" + props.symbol)
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, true, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
         }
     }
 
@@ -91,7 +91,7 @@ function Verify (props) {
       setCorsUrl ("https://" + props.servSelect + ":" + props.PORT + "/splits?stock=" + props.symbol)
       setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
 
-      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect, props.PORT, true, props.logFlags, setSplitInfo)
+      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, setSplitInfo)
     }
 
     function spikes () {

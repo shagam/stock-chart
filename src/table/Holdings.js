@@ -117,7 +117,12 @@ function Holdings (props) {
     // }  
     const FAIL = 'Request failed with status code 404'
 
-    var corsUrl = "https://";
+    var corsUrl;
+    if (props.ssl)
+      corsUrl = "https://";
+    else
+      corsUrl = "http://";
+    
     if (!sch) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + props.chartSymbol;
       setUrlCors('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/')
