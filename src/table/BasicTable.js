@@ -52,8 +52,7 @@ import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
 import {ErrorList, beep, beep2} from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
-
-
+import {GainWrite}  from './Gain'
 
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
@@ -269,6 +268,7 @@ const BasicTable = (props) => {
       return; // write only if fresh deep info     
     }
 
+    GainWrite (symbol, rows, errorAdd, servSelect, PORT, ssl, props.logFlags)
 
     // read old entries, to avoid duplicates
     var userQuery = query (gainRef, where('__symbol', '==', symbol));
