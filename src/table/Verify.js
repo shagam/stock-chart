@@ -29,7 +29,7 @@ function Verify (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
     const [verifyTxt, setVerifyText] = useState ({});
     const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
-    const [splitInfo, setSplitInfo] = useState ();
+    const [splitInfo, setSplitInfo] = useState ([]);
     const [spikeInfo, setSpikesInfo] = useState ([]);
     const [corsUrl, setCorsUrl] = useState ();
     const [url, setUrl] = useState ();
@@ -91,7 +91,10 @@ function Verify (props) {
       setCorsUrl ("https://" + props.servSelect + ":" + props.PORT + "/splits?stock=" + props.symbol)
       setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
 
-      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, setSplitInfo)
+      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect,
+         props.PORT, props.ssl, props.logFlags, setSplitInfo)
+         if (LOG_FLAG)
+          console.log (splitInfo)
     }
 
     function spikes () {
@@ -107,8 +110,8 @@ function Verify (props) {
     }
 
     function renderList(array) {
-      if (array.length < 1)
-        return;
+      if (array.length === 0)
+        return <div>[]</div>
       if (array[0].date)
         return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
       else
@@ -179,7 +182,7 @@ function Verify (props) {
           <br></br>  
   
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
-          {splitInfo && renderList(JSON.parse(splitInfo))}
+          {splitInfo && renderList(splitInfo)}
           <div>&nbsp;</div>          
           
           <button type="button" onClick={()=>spikes ()}>Spikes  </button>  

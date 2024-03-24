@@ -51,6 +51,10 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
           console.dir (sym, "splits from server", splits)
           // console.log ('last web split: ', splits[splits.length - 1]);
         }
+        if (splits === '') { // no splits
+          setSplitInfo([])
+          return;
+        }
 
         const row_index = rows.findIndex((row)=> row.values.symbol === sym);
         if (row_index === -1) {
@@ -86,9 +90,10 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
           rows[row_index].values.splits = splitArray.length;
           rows[row_index].values.splitsUpdateMili = Date.now();
           if (setSplitInfo)
-            setSplitInfo(stringify)
+            setSplitInfo(splitArray)
         }
         else {
+          // setSplitInfo([])
           if (LOG)
           console.log (sym, "delete obsolete splits")
           rows[row_index].values.splits_list = '';
