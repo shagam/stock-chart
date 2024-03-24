@@ -103,7 +103,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
 
       })
       .catch ((err) => {
-        setError([err.message])
+        setError([sym, err.message, corsUrl])
         console.log(err, corsUrl)
       })
     
