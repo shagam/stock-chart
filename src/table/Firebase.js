@@ -154,12 +154,11 @@ const Firebase = (props) => {
       window.location.reload();
   }
 
-  function backEndGetBest () {
+  function backEndGetBest (insert) {
 
     const filteredGain = GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-       props.logFlags, period, factor, setResults)
+      props.logFlags, period, factor, setResults, insert)
 
-    // console.log (filteredGain)
   }
 
 
@@ -579,7 +578,8 @@ const Firebase = (props) => {
           <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ  </button> &nbsp;
           
         </div>
-          <button type="button" onClick={()=>backEndGetBest()}>Show-stocks-compared-to-QQQ </button> &nbsp;
+          <button type="button" onClick={()=>backEndGetBest(false)}>Show-stocks-compared-to-QQQ </button> &nbsp;
+          <button type="button" onClick={()=>backEndGetBest(true)}>Insert-stocks-compared-to-QQQ </button> &nbsp;
         <div>
 
         {/* // show/remove from FireBase all stocks worse than QQQ */}

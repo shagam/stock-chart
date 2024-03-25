@@ -3,8 +3,8 @@ import axios from 'axios'
 import cors from 'cors'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
-
-
+// import {addSymOne}  from './Firebase';
+import {ErrorList, beep, beep2} from './ErrorList'
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
 
@@ -48,7 +48,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     })     
 }
 
-function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults) {
+function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
 
     const LOG = logFlags.includes('gain'); 
     if (LOG)
@@ -102,8 +102,21 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
         // if (LOG)
         console.log (symbols)
         setResults(symbols)
+        beep2();
+        if (insert) { // inser in table
+            Object.keys(result.data).forEach((sym) => {
+                const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+                if (row_index === -1) {// not in table
+                    const r = result.data[sym]
+                    // const newStock = {values: r}
+                    console.log (sym, 'isert')
+                    // rows.values.push(r)
+                }
+                else
+                    console.log (sym, 'alreadyInTable:')
+            })
+        }
 
-        return result.data;
     }).catch ((err) => {
         setError(['gainFilter ', err.message, corsUrl])
         console.log(getDate(), err, corsUrl)
