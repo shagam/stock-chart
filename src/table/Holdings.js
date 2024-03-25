@@ -242,7 +242,7 @@ function Holdings (props) {
       
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
-              <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' pattern="[0-9]+"/> 
+              <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
               <button type="button" onClick={()=>fetchHoldings (false)}>fetch50  </button> &nbsp; 
               {props.eliHome && <button type="button" onClick={()=>fetchHoldings (true)}>fetch20  </button>} &nbsp;
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;

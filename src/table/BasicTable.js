@@ -14,7 +14,7 @@ import CheckBox from './CheckBox'
 
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import {Peak2PeakGui} from './Peak2Peak'
-import GetInt from '../utils/GetInt'
+
 import StockInfo from './StockInfo'
 import StockGain from './StockGain'
 import GainValidate from './GainValidate'

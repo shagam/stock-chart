@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import GetInt from '../utils/GetInt'
+
 import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
 

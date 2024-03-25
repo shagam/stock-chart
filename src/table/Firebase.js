@@ -5,6 +5,7 @@ import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
 import {GainFilter} from './Gain'
+import {GetNumber} from '../utils/GetNumber'
 // import Ip from './Ip'
 // import "./Firebase.css"
 
@@ -14,7 +15,7 @@ const Firebase = (props) => {
   const [stocksGainAll, setStocksGainAll] = useState([]);
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
   const [displayFlag, setDisplayFlag] = useState(false);
-  const [factor, setCount] = useState(1.25);
+  const [factor, setFactor] = useState(1.25);
 
   const [period, setPeriod] = useState(1)
   const onOptionChange = e => {
@@ -557,7 +558,7 @@ const Firebase = (props) => {
         <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
         <button type="button" onClick={()=>firebaseStatistics (true)}>BackEnd-lists</button>
 
-        {/* <GetInt init={factor} callBack={setCount} title='Factor &nbsp;' pattern="[0-9\.]+"/>  */}
+    
         <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
  
         <div> &nbsp; </div> 
@@ -569,7 +570,7 @@ const Firebase = (props) => {
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='5' id='5' checked={period===5} onChange={onOptionChange}/> 5_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='2' checked={period===10} onChange={onOptionChange}/> 10_years
         </div>
-
+        <GetInt title='factor' placeHolder={factor} init={factor} value={factor} pattern={undefined} type='Real' callBack={setFactor}/>
  
         <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
