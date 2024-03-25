@@ -5,7 +5,7 @@ import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
 import {GainFilter} from './Gain'
-import {GetNumber} from '../utils/GetNumber'
+
 // import Ip from './Ip'
 // import "./Firebase.css"
 
@@ -15,8 +15,8 @@ const Firebase = (props) => {
   const [stocksGainAll, setStocksGainAll] = useState([]);
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
   const [displayFlag, setDisplayFlag] = useState(false);
+  const [results, setResults] = useState()
   const [factor, setFactor] = useState(1.25);
-
   const [period, setPeriod] = useState(1)
   const onOptionChange = e => {
     const t = e.target.value;
@@ -156,7 +156,9 @@ const Firebase = (props) => {
 
   function backEndGetBest () {
 
-    const filteredGain = GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl, props.logFlags, period, factor)
+    const filteredGain = GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+       props.logFlags, period, factor, setResults)
+
     // console.log (filteredGain)
   }
 
@@ -596,6 +598,7 @@ const Firebase = (props) => {
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
           </div>
         }
+        {results && <div> <hr/>filteredSymbols: {JSON.stringify(results)} <hr/> </div>}
       </div>
     }
       {/* <div  style =  {{ border: '2px solid green', display:'flex'}} > 

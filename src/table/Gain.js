@@ -48,7 +48,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     })     
 }
 
-function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, factor) {
+function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults) {
 
     const LOG = logFlags.includes('gain'); 
     if (LOG)
@@ -98,9 +98,10 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
     .then ((result) => {
         if (result.status !== 200)
             return;
+        const symbols = Object.keys(result.data)
         // if (LOG)
-            console.log (result.data)
-
+        console.log (symbols)
+        setResults(symbols)
 
         return result.data;
     }).catch ((err) => {
