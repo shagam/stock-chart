@@ -4,6 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
+import {GainFilter} from './Gain'
 // import Ip from './Ip'
 // import "./Firebase.css"
 
@@ -13,7 +14,7 @@ const Firebase = (props) => {
   const [stocksGainAll, setStocksGainAll] = useState([]);
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
   const [displayFlag, setDisplayFlag] = useState(false);
-  const [factor, setCount] = useState(1.3);
+  const [factor, setCount] = useState(1.25);
 
   const [period, setPeriod] = useState(1)
   const onOptionChange = e => {
@@ -151,6 +152,15 @@ const Firebase = (props) => {
       props.saveTable('all');
       window.location.reload();
   }
+
+  function backEndGetBest () {
+
+    const filteredGain = GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl, props.logFlags, period, factor)
+    // console.log (filteredGain)
+  }
+
+
+
 
 
   // get all stocks better than QQQ
@@ -562,10 +572,13 @@ const Firebase = (props) => {
 
  
         <div>&nbsp;
-          <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ </button> &nbsp;
-          <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ </button>
+          <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
+          <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ  </button> &nbsp;
+          
         </div>
  
+          <button type="button" onClick={()=>backEndGetBest()}>Show-stocks-compared-to-QQQ </button> &nbsp;
+
         {/* <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>show-stocks-compared-to-QQQ-2y </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>

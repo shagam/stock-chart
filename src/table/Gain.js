@@ -10,7 +10,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
 
     const LOG = logFlags.includes('gain'); 
     if (LOG)
-      console.log (sym, getDate(), 'req params ', rows.length)
+      console.log (sym, getDate(), 'gainWrite, req params ', rows.length)
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
     if (row_index === -1) {
@@ -25,12 +25,11 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
       corsUrl = "https://";
     else 
         corsUrl = "http://"   
-    corsUrl += corsServer+ ":" + PORT + "/gain?stock=" + sym + '&cmd=w&dat=' + JSON.stringify(dat);
+    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&dat=' + JSON.stringify(dat);
     
 
-    // if (LOG)
-      console.log (sym, corsUrl)
-    // corsUrl = "https://dinagold.org:5000/gain?stock=" + sym + '?cmd=w dat' + dat ;
+    if (LOG)
+      console.log (sym, 'gainWrite', corsUrl)
 
 
     axios.get (corsUrl)
@@ -38,14 +37,73 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     .then ((result) => {
       if (result.status !== 200)
         return;
-      console.log (sym, result.data)
-     
+        if (LOG)
+            console.log (sym, result.data)
     })
     .catch ((err) => {
-      setError([sym, err.message, corsUrl])
-      console.log(err, corsUrl)
-    }) 
-      
+      setError([sym, 'gainWrite', err.message, corsUrl])
+      console.log(getDate(), 'gainWrite', err, corsUrl)
+    })     
 }
 
-export  {GainWrite}
+function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, factor) {
+
+    const LOG = logFlags.includes('gain'); 
+    if (LOG)
+      console.log (getDate(), ' gainFilter req params ', rows.length)
+
+      const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
+      if (row_index === -1) {
+          alert ('stock missing: QQQ')
+          return;
+      }
+
+    var qqqValue;
+    switch (period){
+        case 1:
+            qqqValue = rows[row_index].values.year;
+            break;
+        case 2:
+            qqqValue = rows[row_index].values.year2;
+            break;
+        case 5:
+            qqqValue = rows[row_index].values.year5;
+            break;
+        case 10:
+            qqqValue = rows[row_index].values.year10;
+            break;
+        default: {
+            setError(['gainFilter ', 'invalidPeriod'])
+            console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
+        }                      
+    }         
+
+
+    var corsUrl;
+    // if (corsServer === 'serv.dinagold.org')
+    if (ssl)
+    corsUrl = "https://";
+    else 
+        corsUrl = "http://"   
+    corsUrl += corsServer+ ":" + PORT + '/gain?cmd=f&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
+    
+
+    if (LOG)
+    console.log (getDate(), 'gainFilter', corsUrl)
+
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+        if (result.status !== 200)
+            return;
+        // if (LOG)
+            console.log (result.data)
+
+
+        return result.data;
+    }).catch ((err) => {
+        setError(['gainFilter ', err.message, corsUrl])
+        console.log(getDate(), err, corsUrl)
+    })
+}
+export  {GainWrite, GainFilter}
