@@ -32,7 +32,7 @@ const Manual = lazy(() => import ('./manual/Manual'))
 
 
 const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
-"xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target"];
+"xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target","gain","backEnd"];
 
 
 function App() {

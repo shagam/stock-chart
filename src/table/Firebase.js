@@ -14,7 +14,16 @@ const Firebase = (props) => {
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
   const [displayFlag, setDisplayFlag] = useState(false);
   const [factor, setCount] = useState(1.3);
-  const LOG_FLAG = false;
+
+  const [period, setPeriod] = useState(1)
+  const onOptionChange = e => {
+    const t = e.target.value;
+    setPeriod(Number(t))
+    // console.log(tool)
+  }
+
+
+  const LOG_FLAG = props.logFlags.includes('backEnd');
 
   function magnificent7 () {
     const list = ['MSFT','AAPL','AMZN','NVDA','AVGO','META','GOOG','TSLA']
@@ -543,12 +552,21 @@ const Firebase = (props) => {
  
         <div> &nbsp; </div> 
         {/* <hr/> */}
-        <div>&nbsp;
-          <button type="button" onClick={()=>firebaseGainGetBest(false, 1)}>show-stocks-compared-to-QQQ-1y </button> &nbsp;
-          <button type="button" onClick={()=>firebaseGainGetBest(true, 1)}>Fill-stocks-compared-to-QQQ-1y </button>
+        <div style={{display:'flex'}}>
+          Period: &nbsp;&nbsp;
+          <input style={{marginLeft: '0px'}}  type="radio" name="years" value='1' id='1' checked={period===1} onChange={onOptionChange}/> 1_year
+          <input style={{marginLeft: '5px'}}  type="radio" name="years" value='2' id='2' checked={period===2} onChange={onOptionChange}/> 2_years
+          <input style={{marginLeft: '5px'}}  type="radio" name="years" value='5' id='5' checked={period===5} onChange={onOptionChange}/> 5_years
+          <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='2' checked={period===10} onChange={onOptionChange}/> 10_years
         </div>
+
  
         <div>&nbsp;
+          <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ </button> &nbsp;
+          <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ </button>
+        </div>
+ 
+        {/* <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 2)}>show-stocks-compared-to-QQQ-2y </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, 2)}>Fill-stocks-compared-to-QQQ-2y </button>
         </div>
@@ -561,7 +579,7 @@ const Firebase = (props) => {
         <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, 10)}>show-stocks-compared-to-QQQ-10y </button>  &nbsp;      
           <button type="button" onClick={()=>firebaseGainGetBest(true, 10)}>Fill-stocks-compared-to-QQQ-10y </button> 
-        </div>
+        </div> */}
         <div>
 
         {/* // show/remove from FireBase all stocks worse than QQQ */}
