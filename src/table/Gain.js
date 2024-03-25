@@ -18,13 +18,14 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
         return;
     }
     const dat = rows[row_index].values;
-
+    dat.Industry = dat.Industry.replace('&', '-') // & cause problem for write at corsServer
     var corsUrl;
     // if (corsServer === 'serv.dinagold.org')
     if (ssl)
       corsUrl = "https://";
     else 
-        corsUrl = "http://"   
+        corsUrl = "http://"
+ 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&dat=' + JSON.stringify(dat);
     
 
