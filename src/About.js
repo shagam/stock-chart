@@ -22,7 +22,7 @@ return (
     <table>
         <tbody>
             <tr>
-                <td style={{color:'magenta'}}>  Long term<br></br> yearly growth </td><td>From the peak before the 2008 drop, to the peak before 2022 drop. (peak2Peak)  </td> 
+                <td style={{color:'magenta'}}>  Long term<br></br> yearly growth </td><td>Peak before 2008 drop, to the peak before 2022 drop. (peak2Peak)  </td> 
             </tr>
             <tr>
                 <td>  </td><td style={{display:'flex'}}> Hi-Tech NASDAQ ETF - QQQ average annual gain <div style={{color:'red'}}>&nbsp; 15%</div></td> 
@@ -37,7 +37,20 @@ return (
                     <br></br>2008 dropped to 0.47, recovered after 3 Yr,
                     <br></br>2022 dropped to 0.63, recovered after 2 Yr</td> 
             </tr>
-            
+
+
+            <tr>
+                <td style={{color:'magenta'}}>Bubble line</td><td> Hint for next bubble <br></br> (from select list) </td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>ETF holdings  </td><td>Choose only the best stocks </td> 
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>Common database</td><td> Get Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year <br></br> (from select list) </td> 
+            </tr>
             <tr>
                 <td style={{color:'magenta'}}>Table  </td><td>Compares many stocks </td> 
             </tr>
@@ -45,9 +58,6 @@ return (
                 <td style={{color:'magenta'}}>Chart </td><td>Compares a few stocks </td> 
             </tr>
             
-            <tr>
-                <td style={{color:'magenta'}}>Common database</td><td> Get Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year <br></br> (from select list) </td> 
-            </tr>
             <tr>
                 <td style={{color:'magenta'}}>Monthly gain</td><td>  November has the best gain </td> 
             </tr>
