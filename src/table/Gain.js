@@ -138,14 +138,47 @@ function GainFilterLocal (rows, setError, corsServer, PORT, ssl, logFlags, perio
     .then ((result) => {
         if (result.status !== 200)
             return;
-
-
-
-            
+        const dat = result.data
+        if (! dat['QQQ']) {
+            setError('missing QQQ')            
+        }
+        const res = {};
+        var ratio;
+        const resArray = [];
+        const keys = Object.keys(dat);
+        keys.forEach((sym) => {
+            switch (period){
+                case 1:                   
+                    if (dat[sym].year > dat['QQQ'].year * factor)
+                    ratio = (dat[sym].year / dat['QQQ'].year).toFixed(2)
+                    break;
+                case 2:
+                    if (dat[sym].year2 > dat['QQQ'].year2 * factor)
+                    res[sym] = (dat[sym].year2 / dat['QQQ'].year2).toFixed(2)
+                    break;
+                case 5:
+                    if (dat[sym].year5 > dat['QQQ'].year5 * factor)
+                    res[sym] = (dat[sym].year5 / dat['QQQ'].year5).toFixed(2)
+                    break;
+                case 10:
+                    if (dat[sym].year10 > dat['QQQ'].year10 * factor)
+                    res[sym] = (dat[sym].year10 / dat['QQQ'].year10).toFixed(2)
+                    break;
+                default: {
+                    setError(['gainFilter ', 'invalidPeriod'])
+                    console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
+                }
+            }
+            if (ratio)
+                resArray.push(sym + ': ' + ratio + ', ')
+            ratio = undefined;
+        })
+               
         const symbols = Object.keys(result.data)
         // if (LOG)
-        console.log (symbols)
-        setResults(symbols)
+        console.log (Object.keys(res).length, res)
+        console.log (resArray)
+        setResults(resArray)
         beep2();
    
     }).catch ((err) => {
