@@ -123,7 +123,8 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
     })
 }
 
-function GainFilterLocal (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
+// fetch all filter on front end
+function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
 
     const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
   
@@ -196,5 +197,39 @@ function GainFilterLocal (rows, setError, corsServer, PORT, ssl, logFlags, perio
     })   
 }
 
+// filter on backend best for year or 2 years or 5 years or 10 years
+function GainFilter_1_2_5_10 (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
 
-export  {GainWrite, GainFilter, GainFilterLocal}
+    var corsUrl;
+    if (ssl)
+    corsUrl = "https://";
+    else 
+        corsUrl = "http://"   
+    corsUrl += corsServer+ ":" + PORT + '/gain?cmd=b' + '&factor=' + factor 
+    setResults(['Request sent'])
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+        if (result.status !== 200)
+            return;
+        const dat = result.data
+
+        var ratio;
+        const resArray = [];
+        const keys = Object.keys(dat);
+        keys.forEach((sym) => {
+            resArray.push (sym)
+        })
+               
+        const symbols = Object.keys(result.data)
+        // if (LOG)
+        console.log (resArray.length, resArray)
+        setResults(resArray)
+        beep2();
+   
+    }).catch ((err) => {
+        setError(['gainFilterLocal ', err.message, corsUrl])
+        console.log(getDate(), err, corsUrl)
+    })   
+}
+export  {GainWrite, GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10}

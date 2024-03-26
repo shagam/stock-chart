@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
-import {GainFilter, GainFilterLocal} from './Gain'
+import {GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10} from './Gain'
 
 // import Ip from './Ip'
 // import "./Firebase.css"
@@ -154,21 +154,26 @@ const Firebase = (props) => {
       window.location.reload();
   }
 
+  // filter on backRnd
   function backEndGetBest (insert) {
-
-    const filteredGain = GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+    GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
       props.logFlags, period, factor, setResults, insert)
 
   }
 
+  // fetch all and filter locally
   function backEndGetBestLocal (insert) {
-
-    const filteredGain = GainFilterLocal (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+    GainFilterFrontEnd (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
       props.logFlags, period, factor, setResults, insert)
 
   }
 
+  // get best year || 2 year || 5 year || 10 year
+  function backEndFilterBackend (insert) {
+    GainFilter_1_2_5_10 (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+      props.logFlags, period, factor, setResults, insert)
 
+  }
 
 
 
@@ -586,6 +591,7 @@ const Firebase = (props) => {
           <button type="button" onClick={()=>backEndGetBest(false)}>Show-stocks-compared-to-QQQ </button> &nbsp;
           <button type="button" onClick={()=>backEndGetBest(true)}>Insert-stocks-compared-to-QQQ </button> &nbsp;
           <button type="button" onClick={()=>backEndGetBestLocal()}>Show-stocks-compared-to-QQQ-local </button> &nbsp;
+          <button type="button" onClick={()=>backEndFilterBackend()}>ShowBest_1_2_5_10 </button> &nbsp;
         </div>}
 
         <div>
