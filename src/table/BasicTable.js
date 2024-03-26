@@ -1303,7 +1303,10 @@ const BasicTable = (props) => {
     </table>
        
     <div id='trailer_id'>
-
+        {eliHome && <div style={{display: 'flex'}}>
+          <h4 style={{'color':'blue'}}> Best stocks/ETF</h4>
+          <h4 style={{'color':'green'}}>&nbsp;&nbsp;(stocks-compare.netlify.app)</h4>
+        </div>}
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine}/>}
