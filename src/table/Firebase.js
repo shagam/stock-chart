@@ -274,26 +274,21 @@ const Firebase = (props) => {
       // disply list
       if (! add_flag) {
           const len = Object.keys (found_stocks_array).length;
+          var resArray = []
           if (len === 0)
             alert (`no symbols found in firebase that compare with QQQ , except symbols in table`)
           else {
-            //*  build string list for display
-            var str = "";
-            var i = 0;
-            Object.keys(found_stocks_array).forEach(function (key) {
-              if (i % 5 === 0)
-                str += "\n"
-              str += key + ': ';
-              str += found_stocks_array[key] + "    ";
-              i++;
 
+            Object.keys(found_stocks_array).forEach(function (key) {
+              resArray.push(key + ': ' + found_stocks_array[key])
             })
 
             // display alert and list on console.
             const textForAlert = `${len} symbols in commonDatabase with gain ${factor} times QQQ, during ${periodYears} years: \n `
             console.log (textForAlert + Object.keys(found_stocks_array))
-            alert (`${textForAlert} \n ${str} `)
+            // alert (`${textForAlert} \n ${str} `)
             // setResults(textForAlert + '\n' +str)
+            setResults(resArray);
           }
       }
       else {
