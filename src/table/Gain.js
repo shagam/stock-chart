@@ -133,6 +133,7 @@ function GainFilterLocal (rows, setError, corsServer, PORT, ssl, logFlags, perio
     else 
         corsUrl = "http://"   
     corsUrl += corsServer+ ":" + PORT + '/gain?cmd=a'
+    setResults(['Request sent'])
     axios.get (corsUrl)
     // getDate()
     .then ((result) => {
@@ -147,31 +148,39 @@ function GainFilterLocal (rows, setError, corsServer, PORT, ssl, logFlags, perio
         const resArray = [];
         const keys = Object.keys(dat);
         keys.forEach((sym) => {
+            var symVal
+            var qqqVal 
+            var qqqValFactor 
             switch (period){
                 case 1:                   
-                    if (dat[sym].year > dat['QQQ'].year * factor)
-                    ratio = (dat[sym].year / dat['QQQ'].year).toFixed(2)
+                    symVal = Number(dat[sym].year);
+                    qqqVal = Number(dat['QQQ'].year);
+                    qqqValFactor = Number(dat['QQQ'].year * factor);
                     break;
                 case 2:
-                    if (dat[sym].year2 > dat['QQQ'].year2 * factor)
-                    res[sym] = (dat[sym].year2 / dat['QQQ'].year2).toFixed(2)
+                    symVal = Number(dat[sym].year2);
+                    qqqVal = Number(dat['QQQ'].year2);
+                    qqqValFactor = Number(dat['QQQ'].year2 * factor);
                     break;
                 case 5:
-                    if (dat[sym].year5 > dat['QQQ'].year5 * factor)
-                    res[sym] = (dat[sym].year5 / dat['QQQ'].year5).toFixed(2)
+                    symVal = Number(dat[sym].year5);
+                    qqqVal = Number(dat['QQQ'].year5);
+                    qqqValFactor = Number(dat['QQQ'].year5 * factor);
                     break;
                 case 10:
-                    if (dat[sym].year10 > dat['QQQ'].year10 * factor)
-                    res[sym] = (dat[sym].year10 / dat['QQQ'].year10).toFixed(2)
+                    symVal = Number(dat[sym].year10);
+                    qqqVal = Number(dat['QQQ'].year10);
+                    qqqValFactor = Number(dat['QQQ'].year10 * factor);
                     break;
                 default: {
                     setError(['gainFilter ', 'invalidPeriod'])
                     console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
                 }
             }
-            if (ratio)
-                resArray.push(sym + ': ' + ratio + ', ')
-            ratio = undefined;
+            if (symVal > qqqValFactor) {
+                ratio = (symVal / qqqVal).toFixed(2)
+                resArray.push(sym + ': ' + ratio + ', ')               
+            }
         })
                
         const symbols = Object.keys(result.data)
