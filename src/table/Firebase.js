@@ -580,11 +580,11 @@ const Firebase = (props) => {
           <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;
           <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
           <button type="button" onClick={()=>firebaseStatistics (true)}>BackEnd-lists</button>   
-          <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
+          <button type="button" onClick={()=>peak2PeakBest ()}>Table_nsert-stocks-best-p2p </button> &nbsp;
         </div>
         <div>
-          <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
-          <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ  </button> &nbsp;
+          <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks</button> &nbsp;
+          <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Table-insert-stocks  </button> &nbsp;
         </div>
 
    
