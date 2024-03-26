@@ -184,7 +184,6 @@ const Firebase = (props) => {
       if (LOG_FLAG)
       console.log (props.rows[QQQ_index].values.mon6) 
       
-      const fasctor = 1.3;
       var userQuery;
       
         if (periodYears === 1) {
@@ -284,9 +283,10 @@ const Firebase = (props) => {
             })
 
             // display alert and list on console.
-            const textForAlert = `${len} symbols in commonDatabase with gain ${fasctor} times QQQ, during ${periodYears} years: \n `
+            const textForAlert = `${len} symbols in commonDatabase with gain ${factor} times QQQ, during ${periodYears} years: \n `
             console.log (textForAlert + Object.keys(found_stocks_array))
             alert (`${textForAlert} \n ${str} `)
+            // setResults(textForAlert + '\n' +str)
           }
       }
       else {
@@ -537,6 +537,13 @@ const Firebase = (props) => {
       }
     }
   }
+  
+  // display list (of holdings)
+  function renderList(array) {
+    if (array.length < 1)
+      return;
+      return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
+  }
 
   // const style = {
   //   //background: 'blue',
@@ -576,7 +583,8 @@ const Firebase = (props) => {
         <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ  </button> &nbsp;
-          
+          <div>&nbsp;</div>
+          <div>No firebase</div>
         </div>
           <button type="button" onClick={()=>backEndGetBest(false)}>Show-stocks-compared-to-QQQ </button> &nbsp;
           <button type="button" onClick={()=>backEndGetBest(true)}>Insert-stocks-compared-to-QQQ </button> &nbsp;
