@@ -49,7 +49,10 @@ return (
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td style={{color:'magenta'}}>Common database</td><td> Get Stocks preformed better than QQQ Year, 2Year, 5Year, 10Year <br></br> (from select list) </td> 
+                <td style={{color:'magenta'}}>Common database</td><td> Get Stocks preformed better than QQQ  (from select list) </td> 
+            </tr>
+            <tr>
+                <td style={{color:'magenta'}}>Verify</td><td>Compares with MarketWatch</td> 
             </tr>
             <tr>
                 <td style={{color:'magenta'}}>Table  </td><td>Compares many stocks </td> 
@@ -68,9 +71,7 @@ return (
             <tr>
                 <td style={{color:'magenta'}}>Historical stock prices</td><td>Recieved from AlphVatage.co</td> 
             </tr>
-            <tr>
-                <td style={{color:'magenta'}}>Verify</td><td>Compares with MarketWatch</td> 
-            </tr>
+
             
             <tr>
                 <td style={{color:'magenta'}}>Free sharing</td><td>Pease share with anyone interested</td> 
