@@ -563,14 +563,8 @@ const Firebase = (props) => {
 
       {displayFlag && 
       <div> &nbsp; 
-        <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;
-        <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
-        <button type="button" onClick={()=>firebaseStatistics (true)}>BackEnd-lists</button>
+  
 
-    
-        <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
- 
-        <div> &nbsp; </div> 
         {/* <hr/> */}
         <div style={{display:'flex'}}>
           Period: &nbsp;&nbsp;
@@ -582,42 +576,51 @@ const Firebase = (props) => {
         <GetInt title='Gain_above_QQQ' placeHolder={factor} init={factor} value={factor} pattern={undefined} type='Real' callBack={setFactor}/>
  
         <div>&nbsp;
+          <div>Get stocks gain heigher than QQQ (Firebase)</div>
+          <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;
+          <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
+          <button type="button" onClick={()=>firebaseStatistics (true)}>BackEnd-lists</button>   
+          <button type="button" onClick={()=>peak2PeakBest ()}>Fill-stocks-p2p-compare-to-QQQ </button> &nbsp;
+        </div>
+        <div>
           <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ  </button> &nbsp;
         </div>
 
-        {props.eliHome && <div>&nbsp;
-          <div>No firebase</div>
-          <button type="button" onClick={()=>backEndGetBest(false)}>Show-stocks-compared-to-QQQ </button> &nbsp;
-          <button type="button" onClick={()=>backEndGetBest(true)}>Insert-stocks-compared-to-QQQ </button> &nbsp;
-          <button type="button" onClick={()=>backEndGetBestLocal()}>Show-stocks-compared-to-QQQ-local </button> &nbsp;
-          <button type="button" onClick={()=>backEndFilterBackend()}>ShowBest_1_2_5_10 </button> &nbsp;
+   
+        <div>
+          {/* <hr/> */}
+          {/* <div> &nbsp; </div>  */}
+            <div>&nbsp;
+            <button type="button" onClick={()=>worst(false)}>Show worse than QQQ</button>
+            &nbsp;
+            {props.eliHome && <button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>}
+          </div>
+        
+        </div>
+          {props.admin &&
+            <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
+          }
+
+        <div> &nbsp; </div> 
+        {props.eliHome && <div>
+          <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
+          <button type="button" onClick={()=>backEndGetBest(false)}>Show filter on backEnd</button> &nbsp;
+          <button type="button" onClick={()=>backEndGetBest(true)}>Insert filter on backEnd</button>
         </div>}
 
-        <div>
-        {/* // show/remove from FireBase all stocks worse than QQQ */}
-        {/* <hr/> */}
-        <div> &nbsp; </div> 
-        <div>&nbsp;
-          <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button>
-          <button type="button" onClick={()=>worst(false)}>Show worse than QQQ</button>
-          &nbsp;
-          {props.eliHome && <button type="button" onClick={()=>worst(true)}>remove worse than QQQ</button>}
-        </div>
+        {props.eliHome && <div>    
+          <button type="button" onClick={()=>backEndGetBestLocal()}>Show filter on frontEnd </button> &nbsp;
+          <button type="button" onClick={()=>backEndFilterBackend()}>Show filter 1_2_5_10 backEnd </button>
+        </div>}
 
-        </div>
-        {props.admin &&
-          <div>
-            <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
-          </div>
-        }
+        {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
+
+        <div> &nbsp; </div> 
         {results && <div> <hr/>filteredSymbols ({results.length}): {JSON.stringify(results)} <hr/> </div>}
         {/* <div>{results.length} </div> */}
       </div>
     }
-      {/* <div  style =  {{ border: '2px solid green', display:'flex'}} > 
-        {props.admin && <Ip db = {props.db} stocksGainAll = {stocksGainAll} stocksInfoAll = {stocksInfoAll} localIp = {props.localIp} admin = {props.admin} />}
-      </div> */}
     </div>
   )
 }
