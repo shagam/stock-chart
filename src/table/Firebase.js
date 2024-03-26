@@ -283,22 +283,16 @@ const Firebase = (props) => {
               resArray.push(key + ': ' + found_stocks_array[key])
             })
 
-            // display alert and list on console.
+            // display  list on console.
             const textForAlert = `${len} symbols in commonDatabase with gain ${factor} times QQQ, during ${periodYears} years: \n `
             console.log (textForAlert + Object.keys(found_stocks_array))
-            // alert (`${textForAlert} \n ${str} `)
-            // setResults(textForAlert + '\n' +str)
             setResults(resArray);
           }
       }
       else {
         props.saveTable('all');
         window.location.reload();
-      }
-      // const ind = props.allColumns.findIndex((column)=> column.Header === 'gain_date');
-      // if (add_flag)
-      //   props.allColumns[ind].toggleHidden();
-        
+      }        
     } catch(e) { console.log (e)}
   }
 
@@ -578,9 +572,9 @@ const Firebase = (props) => {
           <input style={{marginLeft: '0px'}}  type="radio" name="years" value='1' id='1' checked={period===1} onChange={onOptionChange}/> 1_year
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='2' id='2' checked={period===2} onChange={onOptionChange}/> 2_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='5' id='5' checked={period===5} onChange={onOptionChange}/> 5_years
-          <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='2' checked={period===10} onChange={onOptionChange}/> 10_years
+          <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='10' checked={period===10} onChange={onOptionChange}/> 10_years
         </div>
-        <GetInt title='factor' placeHolder={factor} init={factor} value={factor} pattern={undefined} type='Real' callBack={setFactor}/>
+        <GetInt title='Gain_above_QQQ' placeHolder={factor} init={factor} value={factor} pattern={undefined} type='Real' callBack={setFactor}/>
  
         <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
