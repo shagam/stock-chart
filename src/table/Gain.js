@@ -19,7 +19,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     }
     const dat = rows[row_index].values;
     if ( dat.Industry)
-        dat.Industry = dat.Industry.replace('&', '-') // & cause problem for write at corsServer
+        dat.Industry = dat.Industry.replace(/&/g, '-') // & cause problem for write at corsServer
     var corsUrl;
     // if (corsServer === 'serv.dinagold.org')
     if (ssl)
@@ -122,4 +122,37 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
         console.log(getDate(), err, corsUrl)
     })
 }
-export  {GainWrite, GainFilter}
+
+function GainFilterLocal (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
+
+    const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
+  
+    var corsUrl;
+    if (ssl)
+    corsUrl = "https://";
+    else 
+        corsUrl = "http://"   
+    corsUrl += corsServer+ ":" + PORT + '/gain?cmd=a'
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+        if (result.status !== 200)
+            return;
+
+
+
+            
+        const symbols = Object.keys(result.data)
+        // if (LOG)
+        console.log (symbols)
+        setResults(symbols)
+        beep2();
+   
+    }).catch ((err) => {
+        setError(['gainFilterLocal ', err.message, corsUrl])
+        console.log(getDate(), err, corsUrl)
+    })   
+}
+
+
+export  {GainWrite, GainFilter, GainFilterLocal}

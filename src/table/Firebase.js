@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
-import {GainFilter} from './Gain'
+import {GainFilter, GainFilterLocal} from './Gain'
 
 // import Ip from './Ip'
 // import "./Firebase.css"
@@ -157,6 +157,13 @@ const Firebase = (props) => {
   function backEndGetBest (insert) {
 
     const filteredGain = GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+      props.logFlags, period, factor, setResults, insert)
+
+  }
+
+  function backEndGetBestLocal (insert) {
+
+    const filteredGain = GainFilterLocal (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
       props.logFlags, period, factor, setResults, insert)
 
   }
@@ -583,13 +590,16 @@ const Firebase = (props) => {
         <div>&nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(false, period)}>show-stocks-compared-to-QQQ firebase </button> &nbsp;
           <button type="button" onClick={()=>firebaseGainGetBest(true, period)}>Fill-stocks-compared-to-QQQ  </button> &nbsp;
-          <div>&nbsp;</div>
-          <div>No firebase</div>
         </div>
+
+        {props.eliHome && <div>&nbsp;
+          <div>No firebase</div>
           <button type="button" onClick={()=>backEndGetBest(false)}>Show-stocks-compared-to-QQQ </button> &nbsp;
           <button type="button" onClick={()=>backEndGetBest(true)}>Insert-stocks-compared-to-QQQ </button> &nbsp;
-        <div>
+          <button type="button" onClick={()=>backEndGetBestLocal()}>Show-stocks-compared-to-QQQ-local </button> &nbsp;
+        </div>}
 
+        <div>
         {/* // show/remove from FireBase all stocks worse than QQQ */}
         {/* <hr/> */}
         <div> &nbsp; </div> 
@@ -606,7 +616,8 @@ const Firebase = (props) => {
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
           </div>
         }
-        {results && <div> <hr/>filteredSymbols: {JSON.stringify(results)} <hr/> </div>}
+        {results && <div> <hr/>filteredSymbols ({results.length}): {JSON.stringify(results)} <hr/> </div>}
+        {/* <div>{results.length} </div> */}
       </div>
     }
       {/* <div  style =  {{ border: '2px solid green', display:'flex'}} > 
