@@ -151,7 +151,6 @@ const BasicTable = (props) => {
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
   const gainRef = collection(db, "stock-gain_")
-  const infoRef = collection(db, "stock-info")
 
   const ipStockRef = collection(db, "stockIp")
     // var flexConfig = localStorage.getItem('flex');
@@ -311,25 +310,6 @@ const BasicTable = (props) => {
       await deleteDoc (gainDoc);   
 
     }           
-  }
-
-  // send stock info to firebase, delete old and add new one (No woory about format change)
-  const firebaseInfoAdd = async (symbol, updateDate, updateMili, newInfo) => {
-    // get old entries
-    var userQuery = query (infoRef, where('__symbol', '==', symbol));
-    const info = await getDocs(userQuery);
-
-    // send new entry
-    await addDoc (infoRef, {__symbol: symbol, _ip: localIpv4, _updateDate: updateDate, _updateMili: updateMili, data: newInfo })
-
-    // delete old entries 
-    if (info.docs.length > 0 && LOG_FLAG)
-      console.log (symbol, 'info-send', info.docs.length); 
-    for (let i = 0; i < info.docs.length; i++) {
-      //const id = info.docs[i].id;
-      var infoDoc = doc(db, "stock-info", info.docs[i].id);
-      await deleteDoc (infoDoc);    
-    }
   }
 
   function setSer (serv) {
@@ -523,8 +503,7 @@ const BasicTable = (props) => {
       console.log (symbol, grahamTxt)
     childData['graham'] = grahamTxt;
     setStockInfo (childData);
-    firebaseInfoAdd (symbol, getDate(), Date.now(), childData);  // save in firestore
-
+ 
 
     // save target prices history for a symbol in array
     // targetPriceAdd (symbol, targetRaw, price,logFlags)
@@ -1314,9 +1293,9 @@ const BasicTable = (props) => {
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
        
-        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} infoRef = {infoRef} rows={rows} prepareRow={prepareRow} db = {db}
+        <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain}
-          updateTableInfo  = {updateTableInfo} allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>
+         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>
  
         <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>

@@ -32,36 +32,36 @@ function Tutorials () {
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/nDfYjmom24A">Drop recovery</a></td><td>Analyse drops of 2008, 2021, 2022 </td> 
+                        <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops of 2008, 2020, 2022 </td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>Long term yearly gain </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/-K2cdzIoJeQ">Market Bubble </a></td><td>Stock market bubble & crash prediction </td> 
+                        <td><a href="https://youtu.be/-K2cdzIoJeQ">Bubble-line </a></td><td>Stock market bubble & crash prediction </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/nWgoumPzsRs">ETF Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
+                        <td><a href="https://youtu.be/nWgoumPzsRs">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
                     </tr>
                                        
                     <tr>
-                        <td><a href="https://youtu.be/faEcqp7PIfw">Table view</a></td><td>Compare many stocks & ETF</td> 
+                        <td><a href="https://youtu.be/faEcqp7PIfw">Table-view</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart view</a></td><td>Compare a few stocks</td> 
+                        <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart-view</a></td><td>Compare a few stocks</td> 
                     </tr>
 
                     <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare historical price with MarketWatch</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/0sZ0QK1nwHo">Month gain</a></td><td>Months with highest gain</td> 
+                        <td><a href="https://youtu.be/0sZ0QK1nwHo">Month-gain</a></td><td>Months with highest gain</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/IElQqHTVPnE">Analyst-target-price</a></td><td>History of target-price</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/n_NXoU5ce-A">Raw data</a></td><td>Show raw data, as received</td> 
+                        <td><a href="https://youtu.be/n_NXoU5ce-A">Raw data</a></td><td>Show raw data, as received from AlphaVantage</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/cVxKLW3pPB0">Persistance</a></td><td>Stock info saved in localStorage</td> 

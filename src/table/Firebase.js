@@ -391,44 +391,6 @@ const Firebase = (props) => {
     window.location.reload();
   }
 
-  // get one symbol INFO from firebase  and clean duplicates
-  const firebaseInfoAll = async () => {
-    for (let row_index = 0; row_index < props.rows.length; row_index++) {
-      const symbol = props.rows[row_index].values.symbol;
-      var userQuery = query (props.infoRef, where('__symbol', '==', symbol));
-      const info = await getDocs(userQuery);
-      if (info.docs.length > 0) {
-        const rowIndex = props.rows.findIndex((row)=> row.values.symbol === symbol);            
-        if (rowIndex !== -1 && info !== undefined) {
-          const info_ = info.docs[0].data();
-          props.updateTableInfo (symbol, info_.data, info_._updateDate, info_._updateMili)
-        }
-
-        var latestIndex = 0;
-        if (info.docs.length > 1) {
-          console.log ('duplicates', info.docs.length, info.docs[0].data());
-          var updateMili = 0;
-          // search for latest
-          for (let i = 0; i < info.docs.length; i++) {
-            if (info.docs[i].data()._updateMili > updateMili) {
-              updateMili = info.docs[i].data()._updateMili;
-              latestIndex = i;
-            }
-          }
-          // delete all dups except latest
-          for (let i = 0; i < info.docs.length; i++) {
-            if (i === latestIndex)
-              continue;
-            //const id = info.docs[i].id;
-            var infoDoc = doc(db, "stock-info", info.docs[i].id);
-            await deleteDoc (infoDoc);    
-          }
-        }
-       }
-    } 
-    props.saveTable('all');
-  }
-
   const firebaseStatistics  = async () => {
     //db.collection("cities").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { db.collection("stock-gain_").doc(doc.id). update ({your data}) }); });
     const allGain = [];
@@ -440,18 +402,6 @@ const Firebase = (props) => {
     }
     allGain.sort();
 
-    // all.push (gain.docs[i].data().__symbol);
-    const allInfo = [];
-    const info = await getDocs(props.infoRef);
-    // infoLength = info.docs.length;
-    for (let i = 0; i < info.docs.length; i++) {
-      const sym = info.docs[i].data().__symbol;
-      if (allInfo.indexOf(sym) === -1)
-        allInfo.push (sym);
-      // if (! all.find (sym))
-        // all.push (sym);
-    }
-    allInfo.sort();
     var list = "";
     var alertList = "";
     for (let i = 0; i < allGain.length; i++) {
@@ -460,9 +410,8 @@ const Firebase = (props) => {
     }
     // alert (all.toString() + "  (" + all.length + ")"); 
     console.log ('firesbase gain list (', allGain.length, ")\n" + allGain);
-    console.log ('\nfirebase info list (', allInfo.length, ")\n" + allInfo);
 
-    alert ('firesbase gain list (' + allGain.length + ') ' + allGain + '\n\nfirebase info list (' + allInfo.length + ")" + allInfo + ")\n"); 
+    alert ('firesbase gain list (' + allGain.length + ') ' + allGain + ")\n"); 
     //gain.docs.map(doc) =>  
     //alert (gain.docs.map((doc) =>({...doc.data().__symbol})))
     //console.log ('firebase read gain: ', gain.docs.length, stocksGain.length);
@@ -480,7 +429,6 @@ const Firebase = (props) => {
     const allGain = [];
     const gain = await getDocs(props.gainRef);
     // gainLength = gain.docs.length;
-    const info = await getDocs(props.infoRef);
 
     for (let i = 0; i < gain.docs.length; i++) {
       const symDat = gain.docs[i].data();
@@ -525,18 +473,6 @@ const Firebase = (props) => {
 
     if (! del)
       alert ('Symbols worse than QQQ ratio: ' + ratio + '  List (' + allGain.length + ') ' + JSON.stringify(allGain))
-
-    // delete info of sym
-    if (del) {
-      for (let i = 0; i < info.docs.length; i++) {
-        const sym = info.docs[i].data().__symbol;
-        if (allGain.includes (sym)) {
-          var infoDoc = doc(db, "stock-info", info.docs[i].id);
-          await deleteDoc (infoDoc);
-          console.log (sym, 'del firebase info')
-        }  
-      }
-    }
   }
   
   // display list (of holdings)
@@ -578,7 +514,6 @@ const Firebase = (props) => {
         <div>&nbsp;
           <div>Get stocks gain heigher than QQQ (Firebase)</div>
           <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;
-          <button type="button" onClick={()=>firebaseInfoAll()} >Fill_info </button> &nbsp;
           <button type="button" onClick={()=>firebaseStatistics (true)}>BackEnd-lists</button>   
           <button type="button" onClick={()=>peak2PeakBest ()}>Table_nsert-stocks-best-p2p </button> &nbsp;
         </div>
