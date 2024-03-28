@@ -97,6 +97,7 @@ const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
+  const [first, setFirst] = useState(false); // turn chart on first run 
   const [infoSymbol, setInfoSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
   const [bubbleLine, setBubbleLine] = useState();
@@ -992,7 +993,21 @@ const BasicTable = (props) => {
   // }  
   )
 
-  
+  // first empty call handleGainClick for each: to show chart
+  useEffect (() => { 
+    var empty = true
+    for (let i =0; i < rows.length; i++) {
+      if (rows[i].values.year !== undefined && (rows[i].values.symbol === 'QQQ' || rows[i].values.symbol === 'SPY'))
+        empty = false;
+    }
+    if (empty) {
+      setFirst(true)
+      for (let i =0; i < rows.length; i++) {
+        handleGainClick(rows[i].values.symbol, false)
+      }
+    }   
+  }, )
+
   const saveTable = (sym) => {
     setGlobalFilter () // if not cleared will save only displayed rows
     const stocks = [];
@@ -1288,7 +1303,8 @@ const BasicTable = (props) => {
         </div>}
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly} logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine}/>}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly}
+           logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} first={first}/>}
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
