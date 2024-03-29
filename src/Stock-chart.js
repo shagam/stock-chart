@@ -14,8 +14,27 @@ import Plot from 'react-plotly.js';
 // const Plot = lazy(() => import('react-plotly.js').then((module) => ({default: module.Plot})))
 
 
-const StockChart = (props) => { 
-  const [chartFlag, setChartFlag] = useState(props.first); // hide / show page
+const StockChart = (props) => {
+
+  // show chart only first time after empty
+  var first = false;
+  if (props.rows.length === 2){
+      first = true;
+      const now = Date.now();
+    for (let i = 0; i < props.rows.length; i++) {
+      if (props.rows[i].values.symbol !== 'QQQ' && props.rows[i].values.symbol !== 'SPY'){
+        first = false;
+        // console.log('wrong sym', props.rows[i].values.symbol)
+      }
+      if(now - props.rows[i].values.updateMili > 1000) {
+        first = false;
+        console.log('wrong time')
+      }
+    }
+    // console.log ('first:', first, now - props.rows[0].values.gain_mili, now - props.rows[1].values.gain_mili)
+  }
+
+  const [chartFlag, setChartFlag] = useState(first); // hide / show page
   const [multi, setMulti] = useState(true);
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
@@ -40,6 +59,9 @@ const StockChart = (props) => {
   // props.gainMap
 
   const [oldestPrice, setOldestPrice] = useState()
+
+
+
 
   if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0)
     return null;

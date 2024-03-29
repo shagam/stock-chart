@@ -97,7 +97,6 @@ const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
   const [chartSymbol, setChartSymbol] = useState("");
-  const [first, setFirst] = useState(false); // turn chart on first run 
   const [infoSymbol, setInfoSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
   const [bubbleLine, setBubbleLine] = useState();
@@ -1001,7 +1000,6 @@ const BasicTable = (props) => {
         empty = false;
     }
     if (empty) {
-      setFirst(true)
       for (let i =0; i < rows.length; i++) {
         handleGainClick(rows[i].values.symbol, false)
       }
@@ -1304,7 +1302,7 @@ const BasicTable = (props) => {
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly}
-           logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} first={first}/>}
+           logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
