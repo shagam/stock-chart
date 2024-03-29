@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
-import {GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10} from './Gain'
+import {GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10, GainRemoveBad} from './Gain'
 
 // import Ip from './Ip'
 // import "./Firebase.css"
@@ -175,7 +175,10 @@ const Firebase = (props) => {
 
   }
 
-
+  function backEndRemoveBad () {
+    GainRemoveBad (props.errorAdd, props.corsServer, props.PORT, props.ssl,
+      props.logFlags, factor, setResults)
+  }
 
   // get all stocks better than QQQ
   const firebaseGainGetBest = async (add_flag, periodYears) => {
@@ -546,7 +549,11 @@ const Firebase = (props) => {
 
         {props.eliHome && <div>    
           <button type="button" onClick={()=>backEndGetBestLocal()}>Show filter on frontEnd </button> &nbsp;
-          <button type="button" onClick={()=>backEndFilterBackend()}>Show filter 1_2_5_10 backEnd </button>
+          <button type="button" onClick={()=>backEndFilterBackend()}>Show filter 1_2_5_10 backEnd </button>  &nbsp;
+        </div>}
+
+        {props.eliHome && <div>  
+          <button type="button" onClick={()=>backEndRemoveBad()}>Remove-stocks-low-gain </button>
         </div>}
 
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}

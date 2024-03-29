@@ -98,6 +98,12 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
     .then ((result) => {
         if (result.status !== 200)
             return;
+        const dat = result.data
+        if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+            setError([dat])
+            setResults([])
+            return;
+        }
         const symbols = Object.keys(result.data)
         // if (LOG)
         console.log (symbols)
@@ -142,7 +148,8 @@ function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, pe
             return;
         const dat = result.data
         if (! dat['QQQ']) {
-            setError('missing QQQ')            
+            setError(['missing QQQ'])
+            return;          
         }
         const res = {};
         var ratio;
@@ -213,6 +220,11 @@ function GainFilter_1_2_5_10 (rows, setError, corsServer, PORT, ssl, logFlags, p
         if (result.status !== 200)
             return;
         const dat = result.data
+        if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+            setError([dat])
+            setResults([])
+            return;
+        }
 
         var ratio;
         const resArray = [];
@@ -232,4 +244,45 @@ function GainFilter_1_2_5_10 (rows, setError, corsServer, PORT, ssl, logFlags, p
         console.log(getDate(), err, corsUrl)
     })   
 }
-export  {GainWrite, GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10}
+
+function GainRemoveBad (setError, corsServer, PORT, ssl, logFlags,  factor, setResults) {
+ 
+    var corsUrl;
+    if (ssl)
+    corsUrl = "https://";
+    else 
+        corsUrl = "http://"   
+    corsUrl += corsServer+ ":" + PORT + '/gain?cmd=d' + '&factor=' + factor 
+    setResults(['Request sent'])
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+        if (result.status !== 200)
+            return;
+        const dat = result.data
+        console.log (dat)
+        if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+            setError([dat])
+            setResults([])
+            return;
+        }
+
+        const resArray = [];
+        const keys = Object.keys(dat);
+        keys.forEach((sym) => {
+            resArray.push(sym + ', ')               
+        })
+               
+        const symbols = Object.keys(result.data)
+        // if (LOG)
+        console.log (resArray)
+        setResults(resArray)
+        beep2();
+   
+    }).catch ((err) => {
+        setError(['gainFilterLocal ', err.message, corsUrl])
+        console.log(getDate(), err, corsUrl)
+    })   
+}
+
+export  {GainWrite, GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10, GainRemoveBad}
