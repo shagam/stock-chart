@@ -15,6 +15,7 @@ const Firebase = (props) => {
   const [stocksGainAll, setStocksGainAll] = useState([]);
   const [stocksInfoAll, setStocksInfoAll] = useState([]); 
   const [displayFlag, setDisplayFlag] = useState(false);
+  const [symOnly, setSymOnly] = useState(false);
   const [results, setResults] = useState()
   const [factor, setFactor] = useState(1.25);
   const [period, setPeriod] = useState(1)
@@ -164,8 +165,7 @@ const Firebase = (props) => {
   // fetch all and filter locally
   function backEndGetBestLocal (insert) {
     GainFilterFrontEnd (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, insert)
-
+      props.logFlags, period, factor, setResults, symOnly, insert)
   }
 
   // get best year || 2 year || 5 year || 10 year
@@ -512,8 +512,14 @@ const Firebase = (props) => {
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='5' id='5' checked={period===5} onChange={onOptionChange}/> 5_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='10' checked={period===10} onChange={onOptionChange}/> 10_years
         </div>
-        <GetInt title='Gain_above_QQQ' placeHolder={factor} init={factor} value={factor} pattern={undefined} type='Real' callBack={setFactor}/>
- 
+
+        <div style={{display:'flex'}}>
+          <GetInt title='Gain_above_QQQ' placeHolder={factor} init={factor} value={factor} pattern={undefined}
+           type='Real' callBack={setFactor}/> &nbsp;&nbsp;
+          <input type="checkbox" checked={symOnly}   onChange={()=>setSymOnly(!symOnly)} style={{marginTop:'3px',paddingTop:'3px' }} />
+            <div style={{paddingTop:'6px' }}> symOnly </div>  
+        </div>
+
         <div>&nbsp;
           <div>Get stocks gain heigher than QQQ (Firebase)</div>
           <button type="button" onClick={()=>firebaseGainAll()} >Fill_gain </button> &nbsp;

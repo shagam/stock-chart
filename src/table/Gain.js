@@ -130,7 +130,7 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
 }
 
 // fetch all filter on front end
-function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
+function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, symOnly, insert) {
 
     const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
   
@@ -155,6 +155,12 @@ function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, pe
         var ratio;
         const resArray = [];
         const keys = Object.keys(dat);
+        if (symOnly) {
+            console.log (keys)
+            setResults(keys)
+            beep2();
+            return;
+        }
         keys.forEach((sym) => {
             var symVal
             var qqqVal 
