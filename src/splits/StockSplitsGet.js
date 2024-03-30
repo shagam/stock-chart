@@ -18,7 +18,7 @@ function getDate() {
 export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo) => {
 
       // const [splits, setSplits] = useState([])
-      const LOG = logFlags.includes('splits'); 
+      const LOG = logFlags && logFlags.includes('splits'); 
       if (LOG)
         console.log (sym, getDate(), 'req params ', rows.length)
 
