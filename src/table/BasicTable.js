@@ -146,6 +146,7 @@ const BasicTable = (props) => {
   const [stockInfo, setStockInfo] = useState ('');
 
   const [weekly, setWeekly] = useState (true);
+  const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
 
   // const homeUrl = '84.95.84.236'
@@ -565,6 +566,8 @@ const BasicTable = (props) => {
   }
 
   const handleGainClick = (sym, saveTabl) => {
+    if (saveTabl)
+      console.log(sym, 'handleGainClick  saveTable param on ')
     setChartSymbol (sym);
     localStorage.setItem ('chartSymbol', sym);
     handleInfoClick(sym, saveTabl);
@@ -776,7 +779,7 @@ const BasicTable = (props) => {
               }
     
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-                  weekly, props.logFlags, true,  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, saveTable)  //setCalcResults, setCalcInfo
+                  weekly, props.logFlags, true,  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, false)  //setCalcResults, setCalcInfo
 
               const updateMili = Date.now();
               const updateDate = getDate();
@@ -859,8 +862,8 @@ const BasicTable = (props) => {
             }
         )
         // handleInfoClick(sym, false);
-        // if (saveTabl)
-        //   saveTable(sym);
+        if (saveTabl)
+          saveTable(sym);
       searchURL (props.logFlags)
   }
 
@@ -1007,6 +1010,13 @@ const BasicTable = (props) => {
   }, )
 
   const saveTable = (sym) => {
+    // if (saveMili && Date.now - saveMili < 1000) {
+    //   console.log (sym, 'Avoid duplicate saveTable')
+    //   return;
+    // }
+    if (!saveMili)
+      setSaveMili(Date.now())
+
     setGlobalFilter () // if not cleared will save only displayed rows
     const stocks = [];
     if (useData) {
