@@ -17,25 +17,30 @@ import Plot from 'react-plotly.js';
 const StockChart = (props) => {
 
   // show chart only first time after empty
-  var first = false;
+  const LOG_FLAG = props.logFlags && props.logFlags.includes('chart');
+  const LOG_CHART_1 = props.logFlags && props.logFlags.includes('chart1');
 
-  // if (props.rows.length === 2){
-  //     first = true;
-  //     const now = Date.now();
-  //     console.log ('check first', props.rows.length)
-  //   for (let i = 0; i < props.rows.length; i++) {
-  //     if (props.rows[i].values.symbol !== 'QQQ' && props.rows[i].values.symbol !== 'SPY'){
-  //       first = false;
-  //       console.log('wrong sym', props.rows[i].values.symbol)
-  //     }
-  //     console.log (props.rows[i].values.symbol, now, props.rows[i].values.gain_mili, now - props.rows[i].values.gain_mili)
-  //     if(now - props.rows[i].values.gain_mili > 1000) {
-  //       first = false;
-  //       console.log('wrong time')
-  //     }
-  //   }
-  //   // console.log ('first:', first, now - props.rows[0].values.gain_mili, now - props.rows[1].values.gain_mili)
-  // }
+  var first = false;
+  if (props.rows.length === 2){
+      first = true;
+      const now = Date.now();
+      // console.log ('check first', props.rows.length)
+    for (let i = 0; i < props.rows.length; i++) {
+      if (props.rows[i].values.symbol !== 'QQQ' && props.rows[i].values.symbol !== 'SPY'){
+        first = false;
+        // console.log('wrong sym', props.rows[i].values.symbol)
+      }
+      // console.log (props.rows[i].values.symbol, now, props.rows[i].values.gain_mili, now - props.rows[i].values.gain_mili)
+      if(now - props.rows[i].values.gain_mili > 1000) {
+        first = false;
+        // console.log('if old row, chart off by default')
+      }
+      else
+        if (LOG_FLAG)
+          console.log ('first:', first, now - props.rows[0].values.gain_mili, now - props.rows[1].values.gain_mili)
+    }
+
+  }
 
   const [chartFlag, setChartFlag] = useState(first); // hide / show page
   const [multi, setMulti] = useState(true);
@@ -45,9 +50,6 @@ const StockChart = (props) => {
   const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
   const [endDate, setEndDate] = useState (new Date())
   const [months, setMonths] = useState();
-
-  const LOG_FLAG = props.logFlags && props.logFlags.includes('chart');
-  const LOG_CHART_1 = props.logFlags && props.logFlags.includes('chart1');
 
    const chartYear = chartDate.getFullYear();
    const chartMon = chartDate.getMonth() + 1; // [1..12]
