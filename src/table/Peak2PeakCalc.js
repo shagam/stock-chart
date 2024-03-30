@@ -113,7 +113,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
       if (row_index !== -1) {
         rows[row_index].values.peak2Peak = yearlyGain;
-        saveTable(symbol);
+        if (saveTable)
+          saveTable(symbol);
       }
     }    
 
