@@ -115,7 +115,8 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
                 if (row_index === -1) {// not in table
                     const r = result.data[sym]
                     // const newStock = {values: r}
-                    console.log (sym, 'isert')
+                    if (LOG)
+                        console.log (sym, 'isert')
                     // rows.values.push(r)
                 }
                 else
@@ -131,7 +132,7 @@ function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, fa
 
 // fetch all filter on front end
 function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, symOnly, insert) {
-
+    const LOG = logFlags.includes('gain'); 
     const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
   
     var corsUrl;
