@@ -64,7 +64,7 @@ function CommonDatabase (props) {
         const t = e.target.value;
         setPeriod(Number(t))
         // console.log(tool)
-      }
+    }
     
 
    
@@ -149,6 +149,14 @@ function CommonDatabase (props) {
             console.log(getDate(), err, corsUrl)
         })
     }
+    // filter on backRnd
+    function backEndGetBest (insert) {
+        GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+          props.logFlags, period, factor, setResults, insert)
+    
+    }
+    
+
 
     // fetch all filter on front end
     function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, symOnly, insert) {
@@ -230,6 +238,13 @@ function CommonDatabase (props) {
             console.log(getDate(), err, corsUrl)
         })   
     }
+    // fetch all and filter locally
+    function backEndGetBestLocal (insert) {
+        GainFilterFrontEnd (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+        props.logFlags, period, factor, setResults, symOnly, insert)
+    }
+
+
 
     // filter on backend best for year or 2 years or 5 years or 10 years
     function GainFilter_1_2_5_10 (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
@@ -271,6 +286,13 @@ function CommonDatabase (props) {
             console.log(getDate(), err, corsUrl)
         })   
     }
+    // get best year || 2 year || 5 year || 10 year
+    function backEndFilterBackend (insert) {
+        GainFilter_1_2_5_10 (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
+          props.logFlags, period, factor, setResults, insert)
+    }
+
+
 
     function GainRemoveBad (setError, corsServer, PORT, ssl, logFlags,  factor, setResults) {
     
@@ -312,8 +334,10 @@ function CommonDatabase (props) {
         })   
     }
 
-
-
+    function backEndRemoveBad () {
+        GainRemoveBad (props.errorAdd, props.corsServer, props.PORT, props.ssl,
+          props.logFlags, factor, setResults)
+    }
 
      
     function addSymOne (sym) {
@@ -332,37 +356,17 @@ function CommonDatabase (props) {
         // newStock.values.gain_mili = fireGain._updateMili;
         props.prepareRow(newStock);
         return (newStock)
+    } 
+ 
+    function insertInTable () {
+        for (let i = 0; i <results.length; i++) {
+            const newStock = addSymOne (results[i])
+            props.rows.push (newStock);
+            // console.log(results[i])
+        }
+        props.saveTable('any');  
+        window.location.reload();
     }
-    
-    
-
-
-
-
-    // filter on backRnd
-  function backEndGetBest (insert) {
-    GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, insert)
-
-  }
-
-  // fetch all and filter locally
-  function backEndGetBestLocal (insert) {
-    GainFilterFrontEnd (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, symOnly, insert)
-  }
-
-  // get best year || 2 year || 5 year || 10 year
-  function backEndFilterBackend (insert) {
-    GainFilter_1_2_5_10 (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, insert)
-
-  }
-
-  function backEndRemoveBad () {
-    GainRemoveBad (props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, factor, setResults)
-  }
 
 
   return (
@@ -371,7 +375,7 @@ function CommonDatabase (props) {
         <input
           type="checkbox" checked={displayFlag}
           onChange={() => {setDisplayFlag (! displayFlag)}}
-        /> Common-database
+        /> Common-Database
       </div>
 
       {displayFlag && 
@@ -405,7 +409,6 @@ function CommonDatabase (props) {
         {props.eliHome && <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
           <button type="button" onClick={()=>backEndGetBest(false)}>Show filter on backEnd</button> &nbsp;
-          <button type="button" onClick={()=>backEndGetBest(true)}>Insert filter on backEnd</button>
         </div>}
 
         {props.eliHome && <div>    
@@ -414,7 +417,8 @@ function CommonDatabase (props) {
         </div>}
 
         {props.eliHome && <div>  
-          <button type="button" onClick={()=>backEndRemoveBad()}>Remove-stocks-low-gain </button>
+            <button type="button" onClick={()=>insertInTable()}>insert </button>
+            <button type="button" onClick={()=>backEndRemoveBad()}>Remove-stocks-low-gain </button>
         </div>}
 
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
