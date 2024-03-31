@@ -59,6 +59,7 @@ function CommonDatabase (props) {
     const [factor, setFactor] = useState(1.25);
     const [period, setPeriod] = useState(1)
     const [displayFlag, setDisplayFlag] = useState(false);
+    const [next, setNext] = useState()
 
     const onOptionChange = e => {
         const t = e.target.value;
@@ -68,13 +69,13 @@ function CommonDatabase (props) {
     
 
    
-    function GainFilter (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
+    function backEndGetBest () {
 
-        const LOG = logFlags.includes('gain'); 
+        const LOG = props.logFlags.includes('gain'); 
         if (LOG)
-        console.log (getDate(), ' gainFilter req params ', rows.length)
+        console.log (getDate(), ' backEndGetBest req params ', props.rows.length)
 
-        const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
+        const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
         if (row_index === -1) {
             alert ('stock missing: QQQ')
             return;
@@ -83,19 +84,19 @@ function CommonDatabase (props) {
         var qqqValue;
         switch (period){
             case 1:
-                qqqValue = rows[row_index].values.year;
+                qqqValue = props.rows[row_index].values.year;
                 break;
             case 2:
-                qqqValue = rows[row_index].values.year2;
+                qqqValue = props.rows[row_index].values.year2;
                 break;
             case 5:
-                qqqValue = rows[row_index].values.year5;
+                qqqValue = props.rows[row_index].values.year5;
                 break;
             case 10:
-                qqqValue = rows[row_index].values.year10;
+                qqqValue = props.rows[row_index].values.year10;
                 break;
             default: {
-                setError(['gainFilter ', 'invalidPeriod'])
+                props.errorAdd(['gainFilter ', 'invalidPeriod'])
                 console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
             }                      
         }         
@@ -103,11 +104,11 @@ function CommonDatabase (props) {
 
         var corsUrl;
         // if (corsServer === 'serv.dinagold.org')
-        if (ssl)
+        if (props.ssl)
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += corsServer+ ":" + PORT + '/gain?cmd=f&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=f&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
         
 
         if (LOG)
@@ -120,7 +121,7 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                setError([dat])
+                props.errorAdd([dat])
                 setResults([])
                 return;
             }
@@ -128,47 +129,26 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (symbols)
             setResults(symbols)
+            setNext('insert')
             beep2();
-            if (insert) { // inser in table
-                Object.keys(result.data).forEach((sym) => {
-                    const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-                    if (row_index === -1) {// not in table
-                        const r = result.data[sym]
-                        // const newStock = {values: r}
-                        if (LOG)
-                            console.log (sym, 'isert')
-                        // rows.values.push(r)
-                    }
-                    else
-                        console.log (sym, 'alreadyInTable:')
-                })
-            }
-
         }).catch ((err) => {
-            setError(['gainFilter ', err.message, corsUrl])
+            props.errorAdd(['gainFilter ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })
-    }
-    // filter on backRnd
-    function backEndGetBest (insert) {
-        GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-          props.logFlags, period, factor, setResults, insert)
-    
-    }
-    
+    }    
 
 
     // fetch all filter on front end
-    function GainFilterFrontEnd (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, symOnly, insert) {
-        const LOG = logFlags.includes('gain'); 
-        const row_index = rows.findIndex((row)=> row.values.symbol === 'QQQ');
+    function backEndGetBestLocal () {
+        const LOG = props.logFlags.includes('gain'); 
+        const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
     
         var corsUrl;
-        if (ssl)
-        corsUrl = "https://";
+        if (props.ssl)
+            corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += corsServer+ ":" + PORT + '/gain?cmd=a'
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=a'
         setResults(['Request sent'])
         axios.get (corsUrl)
         // getDate()
@@ -177,7 +157,7 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (! dat['QQQ']) {
-                setError(['missing QQQ'])
+                props.errorAdd(['missing QQQ'])
                 return;          
             }
             const res = {};
@@ -216,7 +196,7 @@ function CommonDatabase (props) {
                         qqqValFactor = Number(dat['QQQ'].year10 * factor);
                         break;
                     default: {
-                        setError(['gainFilter ', 'invalidPeriod'])
+                        props.errorAdd(['gainFilter ', 'invalidPeriod'])
                         console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
                     }
                 }
@@ -231,30 +211,26 @@ function CommonDatabase (props) {
             console.log (Object.keys(res).length, res)
             console.log (resArray)
             setResults(resArray)
+            setNext('insert')
             beep2();
     
         }).catch ((err) => {
-            setError(['gainFilterLocal ', err.message, corsUrl])
+            props.errorAdd(['gainFilterLocal ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })   
-    }
-    // fetch all and filter locally
-    function backEndGetBestLocal (insert) {
-        GainFilterFrontEnd (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-        props.logFlags, period, factor, setResults, symOnly, insert)
     }
 
 
 
     // filter on backend best for year or 2 years or 5 years or 10 years
-    function GainFilter_1_2_5_10 (rows, setError, corsServer, PORT, ssl, logFlags, period, factor, setResults, insert) {
+    function GainFilter_1_2_5_10 () {
 
         var corsUrl;
-        if (ssl)
+        if (props.ssl)
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += corsServer+ ":" + PORT + '/gain?cmd=b' + '&factor=' + factor 
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=b' + '&factor=' + factor 
         setResults(['Request sent'])
         axios.get (corsUrl)
         // getDate()
@@ -263,7 +239,7 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                setError([dat])
+                props.errorAdd([dat])
                 setResults([])
                 return;
             }
@@ -279,29 +255,25 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (resArray.length, resArray)
             setResults(resArray)
+            setNext('insert')
             beep2();
     
         }).catch ((err) => {
-            setError(['gainFilterLocal ', err.message, corsUrl])
+            props.errorAdd(['gainFilterLocal ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })   
     }
-    // get best year || 2 year || 5 year || 10 year
-    function backEndFilterBackend (insert) {
-        GainFilter_1_2_5_10 (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-          props.logFlags, period, factor, setResults, insert)
-    }
 
 
 
-    function GainRemoveBad (setError, corsServer, PORT, ssl, logFlags,  factor, setResults) {
+    function backEndRemoveBad () {
     
         var corsUrl;
-        if (ssl)
+        if (props.ssl)
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += corsServer+ ":" + PORT + '/gain?cmd=d' + '&factor=' + factor 
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=d' + '&factor=' + factor 
         setResults(['Request sent'])
         axios.get (corsUrl)
         // getDate()
@@ -311,7 +283,7 @@ function CommonDatabase (props) {
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                setError([dat])
+                props.errorAdd([dat])
                 setResults([])
                 return;
             }
@@ -326,17 +298,13 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (resArray)
             setResults(resArray)
+            setNext('del')
             beep2();
     
         }).catch ((err) => {
-            setError(['gainFilterLocal ', err.message, corsUrl])
+            props.errorAdd(['gainFilterLocal ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })   
-    }
-
-    function backEndRemoveBad () {
-        GainRemoveBad (props.errorAdd, props.corsServer, props.PORT, props.ssl,
-          props.logFlags, factor, setResults)
     }
 
      
@@ -359,6 +327,10 @@ function CommonDatabase (props) {
     } 
  
     function insertInTable () {
+        if (next !== 'insert') {
+            props.errorAdd(['insert requires - insert state'])
+            return;
+        }
         for (let i = 0; i <results.length; i++) {
             const newStock = addSymOne (results[i])
             props.rows.push (newStock);
@@ -406,26 +378,29 @@ function CommonDatabase (props) {
         </div>
 
         <div> &nbsp; </div> 
-        {props.eliHome && <div>
+        <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
-          <button type="button" onClick={()=>backEndGetBest(false)}>Show filter on backEnd</button> &nbsp;
-        </div>}
+          <button type="button" onClick={()=>backEndGetBest()}>filter on backEnd</button> &nbsp;
+          <button type="button" onClick={()=>backEndGetBestLocal()}>filter on frontEnd </button> &nbsp;
+        </div>
 
-        {props.eliHome && <div>    
-          <button type="button" onClick={()=>backEndGetBestLocal()}>Show filter on frontEnd </button> &nbsp;
-          <button type="button" onClick={()=>backEndFilterBackend()}>Show filter 1_2_5_10 backEnd </button>  &nbsp;
-        </div>}
+        <div>    
+          <button type="button" onClick={()=>GainFilter_1_2_5_10()}>filter 1_2_5_10 backEnd </button>  &nbsp;
+          <button type="button" onClick={()=>insertInTable()}>insert </button>
+        </div>
 
-        {props.eliHome && <div>  
-            <button type="button" onClick={()=>insertInTable()}>insert </button>
-            <button type="button" onClick={()=>backEndRemoveBad()}>Remove-stocks-low-gain </button>
-        </div>}
+        <div>  
+            <button type="button" onClick={()=>backEndRemoveBad()}>getForRemove </button>
+
+        </div>
 
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
-
-        <div> &nbsp; </div> 
-        {results && <div> <hr/>filteredSymbols ({results.length}): {JSON.stringify(results)} <hr/> </div>}
-        {/* <div>{results.length} </div> */}
+        <div>
+        <div style-={{display:'flex'}}> &nbsp;</div>
+            <hr/>
+            <div style={{color:'red'}}>{next}  </div>
+            {results && <div> filteredSymbols ({results.length}): {JSON.stringify(results)} <hr/> </div>}
+        </div>
       </div>
     }
     </div>
