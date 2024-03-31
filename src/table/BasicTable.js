@@ -1305,10 +1305,10 @@ const BasicTable = (props) => {
     </table>
        
     <div id='trailer_id'>
-        {eliHome && <div style={{display: 'flex'}}>
+        {/* {eliHome && <div style={{display: 'flex'}}>
           <h4 style={{'color':'blue', display: 'flex'}}>Best_stocks</h4>
           <h4 style={{'color':'green'}}>(stocks-compare.netlify.app) - Tutorials</h4>
-        </div>}
+        </div>} */}
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly}
