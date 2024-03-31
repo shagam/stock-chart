@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
-import {GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10, GainRemoveBad} from './Gain'
+import {GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10, GainRemoveBad} from './CommonDatabase'
 
 // import Ip from './Ip'
 // import "./Firebase.css"

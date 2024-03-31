@@ -52,7 +52,7 @@ import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
 import {ErrorList, beep, beep2} from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
-import {GainWrite}  from './Gain'
+import {GainWrite}  from './CommonDatabase'
 
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
