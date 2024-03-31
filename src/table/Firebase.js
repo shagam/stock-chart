@@ -4,7 +4,7 @@ import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
 import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
 import GetInt from '../utils/GetInt'
-import {GainFilter, GainFilterFrontEnd, GainFilter_1_2_5_10, GainRemoveBad} from './CommonDatabase'
+
 
 // import Ip from './Ip'
 // import "./Firebase.css"
@@ -156,30 +156,7 @@ const Firebase = (props) => {
   }
 
   // filter on backRnd
-  function backEndGetBest (insert) {
-    GainFilter (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, insert)
-
-  }
-
-  // fetch all and filter locally
-  function backEndGetBestLocal (insert) {
-    GainFilterFrontEnd (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, symOnly, insert)
-  }
-
-  // get best year || 2 year || 5 year || 10 year
-  function backEndFilterBackend (insert) {
-    GainFilter_1_2_5_10 (props.rows, props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, period, factor, setResults, insert)
-
-  }
-
-  function backEndRemoveBad () {
-    GainRemoveBad (props.errorAdd, props.corsServer, props.PORT, props.ssl,
-      props.logFlags, factor, setResults)
-  }
-
+  
   // get all stocks better than QQQ
   const firebaseGainGetBest = async (add_flag, periodYears) => {
 
@@ -545,22 +522,6 @@ const Firebase = (props) => {
           {props.admin &&
             <button type="button" onClick={()=>ip_symbol_statistics()}>Stock_popularity</button>
           }
-
-        <div> &nbsp; </div> 
-        {props.eliHome && <div>
-          <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
-          <button type="button" onClick={()=>backEndGetBest(false)}>Show filter on backEnd</button> &nbsp;
-          <button type="button" onClick={()=>backEndGetBest(true)}>Insert filter on backEnd</button>
-        </div>}
-
-        {props.eliHome && <div>    
-          <button type="button" onClick={()=>backEndGetBestLocal()}>Show filter on frontEnd </button> &nbsp;
-          <button type="button" onClick={()=>backEndFilterBackend()}>Show filter 1_2_5_10 backEnd </button>  &nbsp;
-        </div>}
-
-        {props.eliHome && <div>  
-          <button type="button" onClick={()=>backEndRemoveBad()}>Remove-stocks-low-gain </button>
-        </div>}
 
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
 

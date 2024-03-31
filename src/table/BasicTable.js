@@ -52,7 +52,7 @@ import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
 import {ErrorList, beep, beep2} from './ErrorList'
 import CookieConsent from 'react-cookie-consent'
-import {GainWrite}  from './CommonDatabase'
+import  {CommonDatabase, GainWrite} from './CommonDatabase'
 
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
@@ -1320,7 +1320,12 @@ const BasicTable = (props) => {
         <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain}
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>
- 
+
+        {eliHome && <CommonDatabase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
+         admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain}
+         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
+
+
         <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
 
