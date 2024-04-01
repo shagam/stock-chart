@@ -69,7 +69,7 @@ function CommonDatabase (props) {
     
 
    
-    function backEndGetBest () {
+    function filterForInsert () {
 
         const LOG = props.logFlags.includes('gain'); 
         if (LOG)
@@ -139,7 +139,7 @@ function CommonDatabase (props) {
 
 
     // fetch all filter on front end
-    function backEndGetBestLocal () {
+    function filterForInsertFrontEnd () {
         const LOG = props.logFlags.includes('gain'); 
         const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
     
@@ -223,7 +223,7 @@ function CommonDatabase (props) {
 
 
     // filter on backend best for year or 2 years or 5 years or 10 years
-    function GainFilter_1_2_5_10 () {
+    function filterForInsert_1_2_5_10 () {
 
         var corsUrl;
         if (props.ssl)
@@ -266,7 +266,7 @@ function CommonDatabase (props) {
 
 
 
-    function backEndRemoveBad () {
+    function FilterForRemove () {
     
         var corsUrl;
         if (props.ssl)
@@ -380,17 +380,17 @@ function CommonDatabase (props) {
         <div> &nbsp; </div> 
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
-          <button type="button" onClick={()=>backEndGetBest()}>filter on backEnd</button> &nbsp;
-          <button type="button" onClick={()=>backEndGetBestLocal()}>filter on frontEnd </button> &nbsp;
+          <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button> &nbsp;
+          <button type="button" onClick={()=>filterForInsertFrontEnd()}>FilterForInsert-frontEnd </button> &nbsp;
         </div>
 
         <div>    
-          <button type="button" onClick={()=>GainFilter_1_2_5_10()}>filter 1_2_5_10 backEnd </button>  &nbsp;
+          <button type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>  &nbsp;
           <button type="button" onClick={()=>insertInTable()}>insert </button>
         </div>
 
         <div>  
-            <button type="button" onClick={()=>backEndRemoveBad()}>getForRemove </button>
+            <button type="button" onClick={()=>FilterForRemove()}>FilterForRemove </button>
 
         </div>
 
