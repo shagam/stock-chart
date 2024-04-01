@@ -339,7 +339,10 @@ function CommonDatabase (props) {
         props.saveTable('any');  
         window.location.reload();
     }
-
+    function clear () {
+        setNext()
+        setResults()
+    }
 
   return (
     <div style = {{ border: '2px solid green'}}>
@@ -391,15 +394,23 @@ function CommonDatabase (props) {
 
         <div>  
             <button type="button" onClick={()=>FilterForRemove()}>FilterForRemove </button>
-
+            <button type="button" onClick={()=>{clear()}}>ClearResults </button>
         </div>
 
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
-        <div>
-        <div style-={{display:'flex'}}> &nbsp;</div>
-            <hr/>
-            <div style={{color:'red'}}>{next}  </div>
-            {results && <div> filteredSymbols ({results.length}): {JSON.stringify(results)} <hr/> </div>}
+        <div style={{width: '100%'}}>
+            <div> &nbsp;</div>
+            {/* <hr/> */}
+            {results && <div style={{display:'flex'}}>
+                <div> filteredSymbols ({results.length}) Prepared for: </div>
+                <div style={{color:'red'}}>&nbsp;&nbsp;{next} &nbsp; </div>
+            </div>}
+            
+            {results &&  <div >
+                {results.map((r)=>{
+                    return <div>&nbsp; {r}&nbsp;&nbsp;</div>
+                })}
+            </div>}
         </div>
       </div>
     }
