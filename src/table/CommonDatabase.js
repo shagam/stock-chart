@@ -379,18 +379,16 @@ function CommonDatabase (props) {
             console.log (getDate(), 'gainFilter', corsUrl)
 
         axios.get (corsUrl)
-        // getDate()
         .then ((result) => {
             if (result.status !== 200)
                 return;
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
                 error([dat])
-                setResults([])
+                clear()
                 return;
             }
-
-            setNext()
+            clear()
         }).catch ((err) => {
             err(['Remove ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
@@ -470,7 +468,7 @@ function CommonDatabase (props) {
             {/* <hr/> */}
             {results && <div style={{display:'flex'}}>
                 <div> filteredSymbols ({results.length})</div>
-                {next && <div> &nbsp; Prepared for: </div>}
+                {next && results.length > 0 && <div> &nbsp; Prepared for: </div>}
                 <div style={{color:'red'}}>&nbsp;&nbsp;{next} &nbsp; </div>
             </div>}
             
