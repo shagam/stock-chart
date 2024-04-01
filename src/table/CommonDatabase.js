@@ -31,8 +31,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     else 
         corsUrl = "http://"
 
-    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&dat=' + JSON.stringify(dat);
-    
+    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat); 
 
     if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
@@ -296,8 +295,8 @@ function CommonDatabase (props) {
                 
             const symbols = Object.keys(result.data)
             // if (LOG)
-            console.log (resArray)
-            setResults(resArray)
+            console.log (keys)
+            setResults(keys)
             setNext('del')
             beep2();
     
@@ -336,9 +335,55 @@ function CommonDatabase (props) {
             props.rows.push (newStock);
             // console.log(results[i])
         }
+        setNext()
         props.saveTable('any');  
         window.location.reload();
     }
+
+    function del () {
+        const LOG = props.logFlags.includes('gain'); 
+        if (next !== 'del') {
+            props.errorAdd(['del requires - del state'])
+            return;
+        }
+        if (results.length > 5) {
+            props.errorAdd(['cannot delete more than 5, at once'])
+            return;
+        }
+        var corsUrl;
+        if (props.ssl)
+        corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=p&dat=' + JSON.stringify(results)     
+
+        if (LOG)
+            console.log (getDate(), 'gainFilter', corsUrl)
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+            const dat = result.data
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                props.errorAdd([dat])
+                setResults([])
+                return;
+            }
+
+            setNext()
+            beep2();
+        }).catch ((err) => {
+            props.errorAdd(['Remove ', err.message, corsUrl])
+            console.log(getDate(), err, corsUrl)
+        })
+
+        setNext()
+    }
+
+    
+
     function clear () {
         setNext()
         setResults()
@@ -393,7 +438,8 @@ function CommonDatabase (props) {
         </div>
 
         <div>  
-            <button type="button" onClick={()=>FilterForRemove()}>FilterForRemove </button>
+            <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>
+            <button type="button" onClick={()=>{del()}}>Delete </button>
             <button type="button" onClick={()=>{clear()}}>ClearResults </button>
         </div>
 
