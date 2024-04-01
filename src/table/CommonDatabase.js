@@ -455,18 +455,22 @@ function CommonDatabase (props) {
           <button type="button" onClick={()=>insertInTable()}>insert </button>
         </div>
 
-        <div>  
+        <div> 
+            <div> &nbsp; </div>  
             <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>
-            <button type="button" onClick={()=>{del()}}>Delete </button>
-            <button type="button" onClick={()=>{clear()}}>ClearResults </button>
+            <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
+            <div> &nbsp; </div> 
         </div>
+        <button type="button" onClick={()=>{clear()}}>ClearResults </button>
+
         {err && <div style={{color:'red'}}>{err}</div>}
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
-        <div style={{width: '100%'}}>
+        <div>
             <div> &nbsp;</div>
             {/* <hr/> */}
             {results && <div style={{display:'flex'}}>
-                <div> filteredSymbols ({results.length}) Prepared for: </div>
+                <div> filteredSymbols ({results.length})</div>
+                {next && <div> &nbsp; Prepared for: </div>}
                 <div style={{color:'red'}}>&nbsp;&nbsp;{next} &nbsp; </div>
             </div>}
             
