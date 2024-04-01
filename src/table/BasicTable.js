@@ -996,18 +996,18 @@ const BasicTable = (props) => {
   )
 
   // first empty call handleGainClick for each: to show chart
-  useEffect (() => { 
-    var empty = true
-    for (let i =0; i < rows.length; i++) {
-      if (rows[i].values.year !== undefined && (rows[i].values.symbol === 'QQQ' || rows[i].values.symbol === 'SPY'))
-        empty = false;
-    }
-    if (empty) {
-      for (let i =0; i < rows.length; i++) {
-        handleGainClick(rows[i].values.symbol, false)
-      }
-    }   
-  }, )
+  // useEffect (() => { 
+  //   var empty = true
+  //   for (let i =0; i < rows.length; i++) {
+  //     if (rows[i].values.year !== undefined && (rows[i].values.symbol === 'QQQ' || rows[i].values.symbol === 'SPY'))
+  //       empty = false;
+  //   }
+  //   if (empty) {
+  //     for (let i =0; i < rows.length; i++) {
+  //       handleGainClick(rows[i].values.symbol, false)
+  //     }
+  //   }   
+  // }, )
 
   const saveTable = (sym) => {
     // if (saveMili && Date.now - saveMili < 1000) {
