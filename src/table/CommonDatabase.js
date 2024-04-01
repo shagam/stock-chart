@@ -44,6 +44,13 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
         return;
         if (LOG)
             console.log (sym, result.data)
+        const dat = result.data;
+        if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+            // setError([dat])
+            console.log (sym, result.data)
+            return;
+        }
+
     })
     .catch ((err) => {
     setError([sym, 'gainWrite', err.message, corsUrl])
@@ -56,10 +63,12 @@ function CommonDatabase (props) {
     const [symOnly, setSymOnly] = useState(false);
     const [results, setResults] = useState()
     const [factor, setFactor] = useState(1.25);
-    const [period, setPeriod] = useState(1)
+
     const [displayFlag, setDisplayFlag] = useState(false);
     const [next, setNext] = useState()
+    const [err,setErr] = useState()
 
+    const [period, setPeriod] = useState(1)
     const onOptionChange = e => {
         const t = e.target.value;
         setPeriod(Number(t))
@@ -67,9 +76,13 @@ function CommonDatabase (props) {
     }
     
 
+    function error(arr) {
+        setErr (JSON.stringify(arr))
+        props.errorAdd(arr)
+    }
    
     function filterForInsert () {
-
+        setErr()
         const LOG = props.logFlags.includes('gain'); 
         if (LOG)
         console.log (getDate(), ' backEndGetBest req params ', props.rows.length)
@@ -95,7 +108,7 @@ function CommonDatabase (props) {
                 qqqValue = props.rows[row_index].values.year10;
                 break;
             default: {
-                props.errorAdd(['gainFilter ', 'invalidPeriod'])
+                error(['gainFilter ', 'invalidPeriod'])
                 console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
             }                      
         }         
@@ -120,7 +133,7 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd([dat])
+                error([dat])
                 setResults([])
                 return;
             }
@@ -131,7 +144,7 @@ function CommonDatabase (props) {
             setNext('insert')
             beep2();
         }).catch ((err) => {
-            props.errorAdd(['gainFilter ', err.message, corsUrl])
+            err(['gainFilter ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })
     }    
@@ -139,6 +152,7 @@ function CommonDatabase (props) {
 
     // fetch all filter on front end
     function filterForInsertFrontEnd () {
+        setErr()
         const LOG = props.logFlags.includes('gain'); 
         const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
     
@@ -156,7 +170,7 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (! dat['QQQ']) {
-                props.errorAdd(['missing QQQ'])
+                error(['missing QQQ'])
                 return;          
             }
             const res = {};
@@ -195,7 +209,7 @@ function CommonDatabase (props) {
                         qqqValFactor = Number(dat['QQQ'].year10 * factor);
                         break;
                     default: {
-                        props.errorAdd(['gainFilter ', 'invalidPeriod'])
+                        error(['gainFilter ', 'invalidPeriod'])
                         console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
                     }
                 }
@@ -214,7 +228,7 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            props.errorAdd(['gainFilterLocal ', err.message, corsUrl])
+            err(['gainFilterLocal ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })   
     }
@@ -223,7 +237,7 @@ function CommonDatabase (props) {
 
     // filter on backend best for year or 2 years or 5 years or 10 years
     function filterForInsert_1_2_5_10 () {
-
+        setErr()
         var corsUrl;
         if (props.ssl)
         corsUrl = "https://";
@@ -238,7 +252,7 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd([dat])
+                error([dat])
                 setResults([])
                 return;
             }
@@ -258,7 +272,7 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            props.errorAdd(['gainFilterLocal ', err.message, corsUrl])
+            err(['gainFilterLocal ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })   
     }
@@ -266,7 +280,7 @@ function CommonDatabase (props) {
 
 
     function FilterForRemove () {
-    
+        setErr()
         var corsUrl;
         if (props.ssl)
         corsUrl = "https://";
@@ -282,7 +296,7 @@ function CommonDatabase (props) {
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd([dat])
+                error([dat])
                 setResults([])
                 return;
             }
@@ -301,13 +315,14 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            props.errorAdd(['gainFilterLocal ', err.message, corsUrl])
+            err(['gainFilterLocal ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })   
     }
 
      
     function addSymOne (sym) {
+        setErr()
         const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
         if (sym_index !== -1) 
           return; // skip if already in table
@@ -326,12 +341,14 @@ function CommonDatabase (props) {
     } 
  
     function insertInTable () {
+        setErr()
         if (next !== 'insert') {
-            props.errorAdd(['insert requires - insert state'])
+            error(['insert requires - insert state'])
             return;
         }
         for (let i = 0; i <results.length; i++) {
-            const newStock = addSymOne (results[i])
+            var sym = results[i].replace(/[0-9\\.,: ]/g,'')
+            const newStock = addSymOne (sym)
             props.rows.push (newStock);
             // console.log(results[i])
         }
@@ -341,13 +358,14 @@ function CommonDatabase (props) {
     }
 
     function del () {
+        setErr()
         const LOG = props.logFlags.includes('gain'); 
         if (next !== 'del') {
-            props.errorAdd(['del requires - del state'])
+            error(['del requires - del state'])
             return;
         }
         if (results.length > 5) {
-            props.errorAdd(['cannot delete more than 5, at once'])
+            error(['cannot delete more than 5, at once'])
             return;
         }
         var corsUrl;
@@ -367,15 +385,14 @@ function CommonDatabase (props) {
                 return;
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd([dat])
+                error([dat])
                 setResults([])
                 return;
             }
 
             setNext()
-            beep2();
         }).catch ((err) => {
-            props.errorAdd(['Remove ', err.message, corsUrl])
+            err(['Remove ', err.message, corsUrl])
             console.log(getDate(), err, corsUrl)
         })
 
@@ -387,6 +404,7 @@ function CommonDatabase (props) {
     function clear () {
         setNext()
         setResults()
+        setErr()
     }
 
   return (
@@ -442,7 +460,7 @@ function CommonDatabase (props) {
             <button type="button" onClick={()=>{del()}}>Delete </button>
             <button type="button" onClick={()=>{clear()}}>ClearResults </button>
         </div>
-
+        {err && <div style={{color:'red'}}>{err}</div>}
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
         <div style={{width: '100%'}}>
             <div> &nbsp;</div>
