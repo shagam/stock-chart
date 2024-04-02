@@ -17,7 +17,7 @@ import LogFlags from './LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'
 import {TargetPrice} from './table/TargetPrice'
-// import Contact from './auth/Contact'
+import Contact from './auth/Contact'
 
 // import {BasicTable} from './table/BasicTable' 
 const BasicTable  = lazy(() => import ( './table/BasicTable'));
@@ -82,6 +82,7 @@ function App() {
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/targetPrice" element={<TargetPrice  />}/>
                 <Route path="/manual" element={<Manual  />}/>
+                <Route path="/contact" element={<Contact  />}/>
                 {/* <Route path="/contact" element={<Contact  />}/> */}
 
               </Routes>

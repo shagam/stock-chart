@@ -1196,7 +1196,8 @@ const BasicTable = (props) => {
         <Link to="/about">About</Link> &nbsp; &nbsp;
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
         <Link to="/targetPrice">Target-price-history</Link> &nbsp; &nbsp;
-        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}
+        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}&nbsp; &nbsp;
+        {eliHome && <Link to="/contact">Contact US</Link>}
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
