@@ -31,7 +31,7 @@ export default function ContactUs (props)  {
     // if (emailRef.current.value !== emailConfirmRef.current.value) {
     //   return setError ('Passwords do not match')
     // } 
-    console.log ('name=', nameRef.current.value, 'email=', emailRef.current.value, 'message='+ messageRef.current.value)
+    console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'message='+ messageRef.current.value)
     // console.log (form.current)
 
     const ssl = true
@@ -45,14 +45,17 @@ export default function ContactUs (props)  {
 
     corsUrl += corsServer+ ":" + PORT + "/email" +  '?name=' +  nameRef.current.value +
     "&email="+ emailRef.current.value + '&message='+messageRef.current.value
-
+      const miliStart =  Date.now();
+      setStat(getDate() + ' sent to server')
       axios.get (corsUrl)
       // getDate()
       .then ((result) => {
         if (result.status !== 200)
           return;
+        const miliEnd =  Date.now()
         console.log (getDate() + ' ' + emailRef.current.value + ' email sent')
-        setStat(getDate() + ' ' + emailRef.current.value + ' email sent')
+        const latency = miliEnd - miliStart
+        setStat(getDate() + ' ' + emailRef.current.value + ' email sent (' + latency + ' mili)')
       })
       .catch ((err) => {
       // setError([sym, 'email', err.message, corsUrl])
@@ -80,7 +83,7 @@ export default function ContactUs (props)  {
   // }
 
   return (
-    <div>
+    <div style={{width:'50vw'}}>
 
     <Card>
     <Card.Body>
