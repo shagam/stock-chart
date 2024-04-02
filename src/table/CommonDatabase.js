@@ -465,7 +465,7 @@ function CommonDatabase (props) {
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
         <div>
             <div> &nbsp;</div>
-            {/* <hr/> */}
+            {/* <hr/> */}     
             {results && <div style={{display:'flex'}}>
                 <div> filteredSymbols ({results.length})</div>
                 {next && results.length > 0 && <div> &nbsp; Prepared for: </div>}
