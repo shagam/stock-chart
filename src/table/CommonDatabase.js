@@ -119,7 +119,7 @@ function CommonDatabase (props) {
             }                      
         }         
 
-
+        const mili = Date.now()
         var corsUrl;
         // if (corsServer === 'serv.dinagold.org')
         if (props.ssl)
@@ -147,7 +147,8 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (symbols)
             setResults(symbols)
-            setNext('insert')
+            const latency = Date.now() - mili
+            setNext('insert  (latency=' + latency+')')
             beep2();
         }).catch ((err) => {
             err(['gainFilter ', err.message, corsUrl])
@@ -162,6 +163,8 @@ function CommonDatabase (props) {
         const LOG = props.logFlags.includes('gain'); 
         const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
     
+        const mili = Date.now()
+
         var corsUrl;
         if (props.ssl)
             corsUrl = "https://";
@@ -174,6 +177,7 @@ function CommonDatabase (props) {
         .then ((result) => {
             if (result.status !== 200)
                 return;
+            const latency = Date.now() - mili
             const dat = result.data
             if (! dat['QQQ']) {
                 error(['missing QQQ'])
@@ -230,7 +234,7 @@ function CommonDatabase (props) {
             console.log (Object.keys(res).length, res)
             console.log (resArray)
             setResults(resArray)
-            setNext('insert')
+            setNext('insert  (latency=' + latency+')')
             beep2();
     
         }).catch ((err) => {
@@ -251,11 +255,14 @@ function CommonDatabase (props) {
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=b' + '&factor=' + factor 
         setResults(['Request sent'])
+        const mili = Date.now()
+
         axios.get (corsUrl)
         // getDate()
         .then ((result) => {
             if (result.status !== 200)
                 return;
+            const latency = Date.now() - mili
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
                 error([dat])
@@ -274,7 +281,7 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (resArray.length, resArray)
             setResults(resArray)
-            setNext('insert')
+            setNext('insert  (latency=' + latency+')')
             beep2();
     
         }).catch ((err) => {
@@ -288,8 +295,9 @@ function CommonDatabase (props) {
     function FilterForRemove () {
         setErr()
         var corsUrl;
+        const mili = Date.now()
         if (props.ssl)
-        corsUrl = "https://";
+            corsUrl = "https://";
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=d' + '&factor=' + factor 
@@ -299,6 +307,7 @@ function CommonDatabase (props) {
         .then ((result) => {
             if (result.status !== 200)
                 return;
+            const latency = Date.now() - mili
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
@@ -317,7 +326,7 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (keys)
             setResults(keys)
-            setNext('del')
+            setNext('del  (latency=' + latency+')')
             beep2();
     
         }).catch ((err) => {
