@@ -18,7 +18,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
     if (row_index === -1) {
-        alert ('stock missing: ' + sym)
+        setError ('stock missing: ' + sym)
         return;
     }
     const dat = rows[row_index].values;
@@ -89,7 +89,13 @@ function CommonDatabase (props) {
 
         const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
         if (row_index === -1) {
-            alert ('stock missing: QQQ')
+            setErr ('stock missing: QQQ')
+            beep2()
+            return;
+        }
+        if (props.rows[row_index].values.year === undefined) {
+            setErr ('Need tp click <gain> on QQQ')
+            beep2()
             return;
         }
 
