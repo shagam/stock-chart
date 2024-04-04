@@ -83,7 +83,7 @@ export default function ContactUs (props)  {
   // }
 
   return (
-    <div style={{width:'50vw'}}>
+    <div style={{width:'35vw', fontSize: '20px'}}>
 
     <Card>
     <Card.Body>
@@ -91,22 +91,22 @@ export default function ContactUs (props)  {
       &nbsp; <Link to="/" >Home</Link>
       {error && <Alert variant="danger"> {error} </Alert>}
       <Form onSubmit={sendEmail}>
-      <div>&nbsp;</div>
+      {/* <div>&nbsp;</div> */}
         <Form.Group id="name">
           <Form.Label>Full Name</Form.Label>
-          <Form.Control type="text" ref= {nameRef} required />
+          <Form.Control style={{fontSize: '30px'}} type="text" ref= {nameRef} required />
         </Form.Group>
         <hr/> 
 
         <Form.Group id="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" ref= {emailRef} required />
+          <Form.Control style={{fontSize: '30px'}} type="email" ref= {emailRef} required />
         </Form.Group>
         <hr/>
 
         <div>Message</div>
-        <Form.Group style={{height: '20%'}} id="message" className="mb-3" controlId="text">
-          <Form.Control as="textarea" ref= {messageRef} required  type="text"
+        <Form.Group id="message" className="mb-3" controlId="text">
+          <Form.Control style={{fontSize: '25px', height: '20vh'}} as="textarea" ref= {messageRef} required  type="text"
            placeholder=""  defaultValue={''}/>
         </Form.Group>
 
@@ -116,7 +116,7 @@ export default function ContactUs (props)  {
         </Form.Group> */}
         <hr/>
 
-        <Button disabled={loading} className="w-40" type="submit"> Send Email </Button>
+        <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> Send </Button>
       </Form>
     </Card.Body>
     </Card>
