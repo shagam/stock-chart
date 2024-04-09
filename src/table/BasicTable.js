@@ -39,7 +39,7 @@ import {db} from '../firebaseConfig'
 
 import { Link, useNavigate } from 'react-router-dom'
 
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
+import { FaArrowDown, FaArrowUp, FaSlideshare } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
@@ -877,6 +877,10 @@ const BasicTable = (props) => {
   }
 
   const handleDeleteClick = (symbol) => {
+    if (chartSymbol === symbol){
+      alert ('Cannot del focus symbol, click <gain> on another symbol before delete')
+      return;
+    }
     try {
       if (useData) { // avoid unclean access to rows
         const index = data.findIndex((row)=> row.symbol === symbol);
