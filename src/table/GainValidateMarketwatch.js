@@ -26,7 +26,7 @@ import {format} from "date-fns"
   }
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, PORT, ssl, logFlags, setError, setText, nasdaq) {
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, PORT, ssl, logFlags, setError, setText, nasdaq, setErr) {
  
   const LOG = logFlags.includes("verify_1");
   // setError();
@@ -84,6 +84,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
   console.log (sym, corsUrl)
     axios.get (corsUrl)
     .then ((result) => {
+      setErr()
       if (LOG && result.data)
       console.log (sym, JSON.stringify(result.data))
       if (result.data.err === "No data") {

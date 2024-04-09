@@ -33,6 +33,7 @@ function Verify (props) {
     const [spikeInfo, setSpikesInfo] = useState ([]);
     const [corsUrl, setCorsUrl] = useState ();
     const [url, setUrl] = useState ();
+    const [err, setErr] = useState ();
 
     function verify (nasdaq) {
       const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
@@ -55,17 +56,17 @@ function Verify (props) {
         // url += '&closeDate=' + req.query.mon
         // url += '%2F' + req.query.day
         // url += '%2F' + req.query.year
-
+      setErr('Request sent to server')
       if (! nasdaq) {
         setUrl ("https://bigcharts.marketwatch.com/historical/default.asp?symb=" + props.symbol + '&closeDate=' + '5/25/2010')
         setCorsUrl ('https://' + props.servSelect + ":" + props.PORT + "/price?stock=" + props.symbol + "&year=2010&mon=5&day=25")
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyText, nasdaq, setErr);
         }
       else {
         setCorsUrl  ('https://' + props.servSelect + ":" + props.PORT + "/priceNasdaq?stock=" + props.symbol)
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq, setErr);
         }
     }
 
@@ -80,6 +81,7 @@ function Verify (props) {
       setSpikesInfo([])
       setUrl()
       setCorsUrl()
+      setErr()
     },[props.symbol]) 
 
 
@@ -88,11 +90,12 @@ function Verify (props) {
         alert ("Missing symbol, press gain for a symbol")
         return;
       }
+      setErr('Request sent to server')
       setCorsUrl ("https://" + props.servSelect + ":" + props.PORT + "/splits?stock=" + props.symbol)
       setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
 
       StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect,
-         props.PORT, props.ssl, props.logFlags, setSplitInfo)
+         props.PORT, props.ssl, props.logFlags, setSplitInfo, setErr)
          if (LOG_FLAG)
           console.log (splitInfo)
     }
@@ -164,6 +167,7 @@ function Verify (props) {
             <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
             <h6 style={{color: 'blue'}}> Verify &nbsp;  </h6>
           </div>
+          {err && <div style={{color: 'red'}}> {err} </div>}
           {LOG_FLAG && <div>{corsUrl}</div>}
           {LOG_FLAG && <div>{url}</div>}
           <div style={{display:'flex'}}>

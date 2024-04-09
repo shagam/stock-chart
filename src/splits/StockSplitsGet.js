@@ -15,7 +15,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = logFlags && logFlags.includes('splits'); 
@@ -41,6 +41,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
       axios.get (corsUrl)
       // getDate()
       .then ((result) => {
+        setErr() // clear message 'request sent'
         if (result.status !== 200)
           return;
         // setError('');
@@ -58,7 +59,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
 
         const row_index = rows.findIndex((row)=> row.values.symbol === sym);
         if (row_index === -1) {
-          alert ('stock missing: ' + sym)
+          alert ('stock missing (splits): ' + sym)
           return;
         }
 
