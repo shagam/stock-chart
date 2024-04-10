@@ -73,7 +73,7 @@ const Peak2PeakGui = (props) => {
     }
     // console.log (yBaseLine[results.indxEnd -1], xBaseLine[results.indxEnd -1] )
     console.log ('xVal', XValues[results.indexEnd - 1], xBubbleLine[loopCount - 1])
-    console.log ('yVal', YValues[results.indexEnd - 1], yBubbleLine[loopCount - 1])
+    console.log ('yVal', YValues[results.indexEnd - 1], yBubbleLine[loopCount - 1].toFixed(3))
     // console.log (XValues, YValues, xBaseLine, yBaseLine);
     props.setBubbleLine ({x: xBubbleLine, y: yBubbleLine})
     setBubbleLineFlag(true)
@@ -104,7 +104,7 @@ const Peak2PeakGui = (props) => {
               <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp;
 
-              {results && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
+              {results && ! props.bubleLine && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
               {bubbleLineFlag && <div style={{color: 'magenta'}} >bubbleLine </div>}
            </div>
            
