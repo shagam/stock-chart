@@ -377,7 +377,9 @@ const StockChart = (props) => {
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
           dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate_(date)} /> &nbsp; &nbsp; </div>
           
-          <input style={{marginLeft: '3px', marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
+          <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChange}/>
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_mon</label>
+          <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
           <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>  
