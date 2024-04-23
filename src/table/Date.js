@@ -267,7 +267,7 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFla
     if (Math.abs(oldestIndx - newestIndx) <= 1) {
       if (logFlags && logFlags.includes('date'))
         console.log(sym, 'found_: ', stockChartXValuesFunction[oldestIndx], 'search=', JSON.stringify(testDateArray), 'index:', oldestIndx);
-      if (oldestIndx == 1)
+      if (oldestIndx === 1)
         oldestIndx --; // force edge
       return oldestIndx;
     }
