@@ -376,13 +376,16 @@ const StockChart = (props) => {
 
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
           dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate_(date)} /> &nbsp; &nbsp; </div>
-          
+
+          <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={months==='1'} onChange={onOptionChange}/>
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> mon</label>         
           <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_mon</label>
           <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
           <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
-            <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>  
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
+
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='24' id='24' checked={months==='24'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 2_year </label> 
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='60' id='60' checked={months==='60'} onChange={onOptionChange}/> 
@@ -391,10 +394,11 @@ const StockChart = (props) => {
              <label style={{marginRight:'10px', paddingRight: '1px'}}> 10_year </label>
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
              <label style={{marginRight:'10px', paddingRight: '25px'}}> 22_Year </label>
-
         </div>
           <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
-            dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp; </div>
+            dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp;
+  
+          </div>
 
         <div style={{display:'flex'}}>
           <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
