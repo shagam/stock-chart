@@ -109,7 +109,7 @@ function Holdings (props) {
     // window.location.reload(); 
   }
 
-  function fetchHoldings (sch) {
+  function fetchHoldings (srcNum) {
     // if (props.rows[row_index].values.PE !== -2) {
     //   const er = 'Server connection fail';
     //   console.log (er)
@@ -124,14 +124,21 @@ function Holdings (props) {
     else
       corsUrl = "http://";
     
-    if (!sch) {
+    if (srcNum === 0) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + props.chartSymbol;
       setUrlCors('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/')
     }
-    else {
+    else if (srcNum === 1) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
       setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
-    } 
+    }
+    else if (srcNum === 2) {
+        corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
+        // setUrlCors('https://finance.yahoo.com/quote/' + props.chartSymbol  
+    }
+
+
+
     setUrlLast(corsUrl)
     setErr('request sent to server')
     axios.get (corsUrl)
@@ -246,8 +253,10 @@ function Holdings (props) {
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
-              <button type="button" onClick={()=>fetchHoldings (false)}>fetch50  </button> &nbsp; 
-              {props.eliHome && <button type="button" onClick={()=>fetchHoldings (true)}>fetch20  </button>} &nbsp;
+              <button type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
+              {props.eliHome && <button type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
+              <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp;
+
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
           </div> 
