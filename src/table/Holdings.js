@@ -152,6 +152,11 @@ function Holdings (props) {
       if (LOG)
         console.log (props.chartSymbol, JSON.stringify(result.data))
 
+      if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+        setErr(result.data)
+        return;
+      }
+
     // Check for err
       if (result.data.holdArr === 'Request failed with status code 404') {
         setErr(result.data.holdArr + ", May be not an ETF")
