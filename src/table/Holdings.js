@@ -253,7 +253,7 @@ function Holdings (props) {
         <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
       </div>
 
-      <br></br>
+      {/* <br></br> */}
       
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
