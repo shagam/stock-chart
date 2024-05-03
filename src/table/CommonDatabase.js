@@ -158,7 +158,7 @@ function CommonDatabase (props) {
 
 
     // fetch all filter on front end
-    function filterForInsertFrontEnd () {
+    function filterForInsertFrontEnd (filter) {
         setErr()
         const LOG = props.logFlags.includes('gain'); 
         const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
@@ -223,8 +223,14 @@ function CommonDatabase (props) {
                         console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
                     }
                 }
-                if (symVal > qqqValFactor) {
-                    ratio = (symVal / qqqVal).toFixed(2)
+                if (!filter || symVal > qqqValFactor) {
+                    if (symVal !== -1)
+                        ratio = (symVal / qqqVal).toFixed(2)
+                    else 
+                        ratio = -1  // missing
+                    // if (ratio < 0) {
+                    //     console.log(sym, ratio)
+                    // }
                     resArray.push(sym + ': ' + ratio + ', ')               
                 }
             })
@@ -460,7 +466,8 @@ function CommonDatabase (props) {
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
           <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button> &nbsp;
-          <button type="button" onClick={()=>filterForInsertFrontEnd()}>FilterForInsert-frontEnd </button> &nbsp;
+          <button type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button> &nbsp;
+          <button type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button> &nbsp;
         </div>
 
         <div>    
