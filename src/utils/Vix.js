@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
 import axios from 'axios'
+// https://go.cboe.com/l/77532/2021-10-13/bwkqfd
+// https://finance.yahoo.com/quote/%5EVIX/history   one year backwards
+
+// volatility index historical 
 
 function Vix (props) {
 

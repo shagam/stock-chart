@@ -26,8 +26,6 @@ import peak2PeakCalc from './Peak2PeakCalc'
 import searchURL from '../utils/SearchURL'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
-import {Vix} from '../utils/Vix'
-
 
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
@@ -1334,8 +1332,7 @@ const BasicTable = (props) => {
 
         <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
-        {eliHome && <Vix  corsServer={servSelect} ssl={ssl} PORT={PORT}/>}
-        
+
         {chartSymbol && <div>
           {/* <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze  */}
           <div style={{display: 'flex'}}> 

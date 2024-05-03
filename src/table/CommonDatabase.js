@@ -7,7 +7,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import {ErrorList, beep, beep2} from './ErrorList'
 import {nanoid} from 'nanoid';
 import GetInt from '../utils/GetInt'
-
+import {Vix} from '../utils/Vix'
 
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
@@ -474,8 +474,10 @@ function CommonDatabase (props) {
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
             <div> &nbsp; </div> 
         </div>
-        <button type="button" onClick={()=>{clear()}}>ClearResults </button>
-
+        <div style={{display: 'flex'}}>
+            <button type="button" onClick={()=>{clear()}}>ClearResults </button> &nbsp;&nbsp;&nbsp;&nbsp;
+            <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/>
+        </div>
         {err && <div style={{color:'red'}}>{err}</div>}
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
         <div>
