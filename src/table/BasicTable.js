@@ -380,7 +380,8 @@ const BasicTable = (props) => {
                   }
                   const index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
-                    alert (dataStr + `\n\n${API_Call}`);
+                    errorAdd([symbol, dataStr])
+                    // alert (dataStr + `\n\n${API_Call}`);
                     //alert (dataStr);
                     return;
                   }
@@ -614,7 +615,8 @@ const BasicTable = (props) => {
             (chartData) => {
               const dataStr = JSON.stringify(chartData);
               if (dataStr === "{}") {
-                alert (`Invalid symbol: (${sym})`)
+                errorAdd([sym, 'Invalid symbol'])
+                // alert (`Invalid symbol: (${sym})`)
                 return;
               }
               if (LOG_API) {
