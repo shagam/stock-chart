@@ -148,7 +148,8 @@ function CommonDatabase (props) {
             console.log (symbols)
             setResults(symbols)
             const latency = Date.now() - mili
-            setNext('insert  (latency=' + latency+')')
+            setNext('insert')
+            setErr ('(latency(msec)=' + latency)
             beep2();
         }).catch ((err) => {
             err(['gainFilter ', err.message, corsUrl])
@@ -240,7 +241,11 @@ function CommonDatabase (props) {
             console.log (Object.keys(res).length, res)
             console.log (resArray)
             setResults(resArray)
-            setNext('insert  (latency=' + latency+')')
+            if (! filter)
+                setNext('insert')
+            else
+                setNext('')
+            setErr('(latency(msec)=' + latency+')')
             beep2();
     
         }).catch ((err) => {
@@ -287,7 +292,8 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (resArray.length, resArray)
             setResults(resArray)
-            setNext('insert  (latency=' + latency+')')
+            setNext('insert')
+            setErr('(latency(msec)=' + latency+')')
             beep2();
     
         }).catch ((err) => {
@@ -332,7 +338,8 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log (keys)
             setResults(keys)
-            setNext('del  (latency=' + latency+')')
+            setNext('del')
+            setErr('(latency(msec)=' + latency+')')
             beep2();
     
         }).catch ((err) => {
@@ -346,7 +353,7 @@ function CommonDatabase (props) {
         setErr()
         const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
         if (sym_index !== -1) 
-          return; // skip if already in table
+          return null; // skip if already in table
         var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
         props.prepareRow(newStock);
         newStock.id = nanoid();
@@ -370,7 +377,8 @@ function CommonDatabase (props) {
         for (let i = 0; i <results.length; i++) {
             var sym = results[i].replace(/[0-9\\.,: ]/g,'')
             const newStock = addSymOne (sym)
-            props.rows.push (newStock);
+            if (newStock != null)
+                props.rows.push (newStock);
             // console.log(results[i])
         }
         setNext()
