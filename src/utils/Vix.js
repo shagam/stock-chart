@@ -25,7 +25,7 @@ function Vix (props) {
             corsUrl = 'http://'
         corsUrl += props.corsServer + ":" + props.PORT + "/vix"
 
-        setErr('request sent to server')
+        setDat('request sent to server')
         if (LOG)
             console.log (corsUrl)
 
@@ -45,7 +45,9 @@ function Vix (props) {
             return;
         }
 
-        setDat(result.data)
+        const vix = JSON.stringify(result.data,null,2)
+        setDat(result.data.val + '      diff=' + result.data.diff + '  ' + result.data.perc)
+        // setDat(vix)
             
         } )
         .catch ((err) => {
