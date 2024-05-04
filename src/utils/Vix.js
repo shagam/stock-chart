@@ -49,7 +49,7 @@ function Vix (props) {
         setDat(result.data.val + '      diff=' + result.data.diff + '  ' + result.data.perc)
         // setDat(vix)
             
-        } )
+         } )
         .catch ((err) => {
         setErr(err.message)
         // console.log(err.message)
