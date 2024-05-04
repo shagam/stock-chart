@@ -466,19 +466,19 @@ function CommonDatabase (props) {
         <div> &nbsp; </div> 
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
-          <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button> &nbsp;
-          <button type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button> &nbsp;
-          <button type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button> &nbsp;
+          <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
+          <button type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
+          <button type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>
         </div>
 
         <div>    
-          <button type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>  &nbsp;
+          <button type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
           <button type="button" onClick={()=>insertInTable()}>insert </button>
         </div>
 
         <div> &nbsp; </div> 
         <div style={{display: 'flex'}}> 
-            <div> &nbsp; </div>  
+            {/* <div> &nbsp; </div>   */}
             <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button> &nbsp;
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
             <button type="button" onClick={()=>{clear()}}>Clear</button> &nbsp; &nbsp;
