@@ -444,7 +444,7 @@ function CommonDatabase (props) {
       </div>
 
       {displayFlag && 
-      <div> &nbsp; 
+      <div>
   
 
         {/* <hr/> */}
@@ -462,13 +462,6 @@ function CommonDatabase (props) {
           <input type="checkbox" checked={symOnly}   onChange={()=>setSymOnly(!symOnly)} style={{marginTop:'3px',paddingTop:'3px' }} />
             <div style={{paddingTop:'6px' }}> symOnly </div>  
         </div>
-        
-   
-        <div>
-          {/* <hr/> */}
-          {/* <div> &nbsp; </div>  */}
-               
-        </div>
 
         <div> &nbsp; </div> 
         <div>
@@ -483,15 +476,20 @@ function CommonDatabase (props) {
           <button type="button" onClick={()=>insertInTable()}>insert </button>
         </div>
 
-        <div> 
+        <div> &nbsp; </div> 
+        <div style={{display: 'flex'}}> 
             <div> &nbsp; </div>  
-            <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>
+            <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button> &nbsp;
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
-            <div> &nbsp; </div> 
+            <button type="button" onClick={()=>{clear()}}>Clear</button> &nbsp; &nbsp;
+
+            {/* <div> &nbsp; </div>  */}
         </div>
+        
+        <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/>
+        
         <div style={{display: 'flex'}}>
-            <button type="button" onClick={()=>{clear()}}>ClearResults </button> &nbsp;&nbsp;&nbsp;&nbsp;
-            <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/>
+   
         </div>
         {err && <div style={{color:'red'}}>{err}</div>}
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
