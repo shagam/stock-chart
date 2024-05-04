@@ -477,14 +477,14 @@ function CommonDatabase (props) {
         </div>
 
         <div> &nbsp; </div> 
-        <div style={{display: 'flex'}}> 
+        {props.eliHome && <div style={{display: 'flex'}}> 
             {/* <div> &nbsp; </div>   */}
             <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button> &nbsp;
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
             <button type="button" onClick={()=>{clear()}}>Clear</button> &nbsp; &nbsp;
 
             {/* <div> &nbsp; </div>  */}
-        </div>
+        </div>}
         
         <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/>
         
