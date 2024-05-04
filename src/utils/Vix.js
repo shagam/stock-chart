@@ -32,7 +32,7 @@ function Vix (props) {
         axios.get (corsUrl)
         // getDate()
         .then ((result) => {
-        setErr()
+
         if (result.status !== 200) {
             console.log (props.chartSymbol, 'status=', result)
             return;
