@@ -59,7 +59,7 @@ function Vix (props) {
     return (
         <div>
             <div style={{display: 'flex'}}>
-                <div>  <button onClick={vixGet} >volatilty index (vix)</button> &nbsp; </div> 
+                <div>  <button onClick={vixGet} >volatility index (vix)</button> &nbsp; </div> 
                 {dat && <div> {dat} </div>}
                 {err && <div> {err} </div>}
             </div>
