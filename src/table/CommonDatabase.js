@@ -241,7 +241,7 @@ function CommonDatabase (props) {
             console.log (Object.keys(res).length, res)
             console.log (resArray)
             setResults(resArray)
-            if (! filter)
+            if (filter)
                 setNext('insert')
             else
                 setNext('')
