@@ -473,7 +473,8 @@ function CommonDatabase (props) {
 
         <div>    
           <button type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
-          <button type="button" onClick={()=>insertInTable()}>insert </button>
+          <button type="button" onClick={()=>insertInTable()}>insert </button>&nbsp;
+          <button type="button" onClick={()=>{clear()}}>Clear</button> &nbsp;
         </div>
 
         <div> &nbsp; </div> 
@@ -481,7 +482,7 @@ function CommonDatabase (props) {
             {/* <div> &nbsp; </div>   */}
             <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button> &nbsp;
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
-            <button type="button" onClick={()=>{clear()}}>Clear</button> &nbsp; &nbsp;
+
 
             {/* <div> &nbsp; </div>  */}
         </div>}
