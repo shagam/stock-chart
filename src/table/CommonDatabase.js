@@ -463,7 +463,7 @@ function CommonDatabase (props) {
             <div style={{paddingTop:'6px' }}> symOnly </div>  
         </div>
 
-        {/* <div> &nbsp; </div>  */}
+        <div> &nbsp; </div> 
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
           <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
