@@ -480,7 +480,7 @@ function CommonDatabase (props) {
 
 
         {props.eliHome && <div> 
-            <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button> &nbsp;
+            <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
             <div> &nbsp; </div> 
         </div>}
