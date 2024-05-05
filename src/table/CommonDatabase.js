@@ -463,7 +463,7 @@ function CommonDatabase (props) {
             <div style={{paddingTop:'6px' }}> symOnly </div>  
         </div>
 
-        <div> &nbsp; </div> 
+        {/* <div> &nbsp; </div>  */}
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
           <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
@@ -475,16 +475,14 @@ function CommonDatabase (props) {
           <button type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
           <button type="button" onClick={()=>insertInTable()}>insert </button>&nbsp;
           <button type="button" onClick={()=>{clear()}}>Clear</button> &nbsp;
+          <div> &nbsp; </div> 
         </div>
 
-        <div> &nbsp; </div> 
-        {props.eliHome && <div style={{display: 'flex'}}> 
-            {/* <div> &nbsp; </div>   */}
+
+        {props.eliHome && <div> 
             <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button> &nbsp;
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
-
-
-            {/* <div> &nbsp; </div>  */}
+            <div> &nbsp; </div> 
         </div>}
         
         <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/>
