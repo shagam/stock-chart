@@ -19,8 +19,6 @@ function IpContext  () {
 
   const LOG_FLAG = false;
 
-  const ipRef = collection(db, "ipList")
-
   useEffect (() => { 
     getIp();
   // eslint-disable-next-line
@@ -89,24 +87,7 @@ function IpContext  () {
 
     // admin password
      // save ip
-    var ipQuery = query (ipRef, where('_ipv4', '==', (res.data.IPv4)));
-    const ipInfo = await getDocs(ipQuery);
-
-    // add new entry
-    await addDoc (ipRef, {_ipv4: res.data.IPv4, update: getDate(), country_name: res.data.country_name,
-      city: res.data.city, state: res.data.state, postal: res.data.postal,
-       longitude: res.data.longitude, latitude: res.data.latitude, userAgent: userAgent })
-
-    // delete old entries
-    if (ipInfo.docs.length > 0 && LOG_FLAG)
-      console.log (res, 'ipList', ipInfo.docs.length);
-    for (let i = 0; i < ipInfo.docs.length; i++) {
-      //const id = ipInfo.docs[i].id;
-      var ipDoc = doc(db, "ipList", ipInfo.docs[i].id);
-      await deleteDoc (ipDoc);    
-    }
-
-    } catch (err) {
+     } catch (err) {
       console.log (err.message, url)
     }
   } 
