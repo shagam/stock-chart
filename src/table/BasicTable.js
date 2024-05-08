@@ -152,7 +152,6 @@ const BasicTable = (props) => {
   // const [corsServer, setCorsServer] = useState (homeUrl);
   const gainRef = collection(db, "stock-gain_")
 
-  const ipStockRef = collection(db, "stockIp")
     // var flexConfig = localStorage.getItem('flex');
 
 
@@ -407,8 +406,6 @@ const BasicTable = (props) => {
       return;
     }
 
-    firebase_stockSymbol_ip_pair(sym);
-
     rows[row_index].values.gain_mili = updateMili;
     // rows[row_index].values.gain_date = updateDate;
     rows[row_index].values.mon3 = mon3;
@@ -511,26 +508,7 @@ const BasicTable = (props) => {
 
   }
             
-  // save pair (stockSymbol ip)
-  const firebase_stockSymbol_ip_pair = async (chartSymbol) => {
-    if (localIp === '' || localIp === undefined)
-      return;
-    var ipSymbolQuery = query (ipStockRef, where('ip', '==', localIpv4), where
-    ('stockSymbol', '==', chartSymbol ));
-    const ipSymbolPair = await getDocs(ipSymbolQuery);
-    if (ipSymbolPair.docs.length > 0)
-      return;
-    // add new entry
-    await addDoc (ipStockRef, {ip: localIpv4, update: getDate(), stockSymbol: chartSymbol});
-
-    // // delete duplicate entries
-    // for (let i = 0; i < ipSymbolPair.docs.length; i++) {
-    //   const id = ipSymbolPair.docs[i].id;
-    //   var ipDoc = doc(db, "stockIp", ipSymbolPair.docs[i].id);
-    //   await deleteDoc (ipDoc);    
-    // }               
-  }
-
+  
   // 1. open: '87.7500'
   // 2. high: '97.7300'
   // 3. low:  '86.7500'
@@ -1322,12 +1300,7 @@ const BasicTable = (props) => {
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
-       
-        {/* <Firebase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
-         admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain}
-         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/> */}
-
-        {<CommonDatabase localIp={localIp} ipStockRef = {ipStockRef} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
+        {<CommonDatabase localIp={localIp} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain}
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
 
