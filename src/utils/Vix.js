@@ -24,6 +24,8 @@ function Vix (props) {
         else
             corsUrl = 'http://'
         corsUrl += props.corsServer + ":" + props.PORT + "/vix"
+        if (false)
+        corsUrl += '?txt=txt'
 
         setDat('request sent to server')
         if (LOG)
