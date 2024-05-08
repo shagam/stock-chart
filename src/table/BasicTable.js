@@ -424,8 +424,8 @@ const BasicTable = (props) => {
     rows[row_index].values.sym = sym; // added field
     rows[row_index].values.splits_list = splits;
     // console.log (splits)
-
-    targetPriceAdd (sym, rows[row_index].values.targetRaw, price, props.logFlags, 'gain') 
+    
+    targetPriceAdd (sym, rows[row_index].values.targetRaw, price, props.logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
 
     try {
     if (splits) {
@@ -479,7 +479,7 @@ const BasicTable = (props) => {
     rows[index].values.Cap = Number (childData["MarketCapitalization"] / 1000 / 1000 / 1000).toFixed(2);
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
     //Sector         
-    targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, 'info') 
+    targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
 
     rows[index].values.info_mili = updateMili;
     rows[index].values.info_date = updateDate;

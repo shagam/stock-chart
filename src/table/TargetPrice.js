@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useEffect} from 'react'
-
+import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import {collection, getDocs, addDoc,  doc, deleteDoc, updateDoc, query, where} from "firebase/firestore";
 import {db} from '../firebaseConfig'
@@ -16,7 +16,7 @@ function bigDiff (tar0, tar1, threshold) {
     return false
 }
 
-async  function targetPriceAdd (symbol, targetRaw, price, logFlags, src) {
+async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, src, ssl, PORT, servSelect) {
     const LOG = logFlags.includes('target')
     if (price === 0 || targetRaw === undefined) {
         if (LOG)
@@ -96,6 +96,39 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, src) {
         
         targetPriceArrayForSym.push (symTargetOne)
         const arrayStringify = JSON.stringify(targetPriceArrayForSym);
+        
+        // home server
+        var corsUrl = ''
+        if (ssl)
+            corsUrl = 'https://'
+        else
+            corsUrl = 'http://'
+        corsUrl += servSelect + ":" + PORT + "/target?cmd=w&" + "stock=" + symbol + "&dat=" + arrayStringify
+        
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+
+            if (result.status !== 200) {
+                console.log (symbol, 'status=', result)
+                return;
+            }
+            if (LOG)
+                console.log (JSON.stringify(result.data))
+
+            if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+                errorAdd([symbol, 'target',result.data])
+                return;
+            }
+            console.log('targetPrice', result.data)          
+        } )
+        .catch ((err) => {
+            errorAdd([symbol, 'target', err.message])
+            console.log('targetPrice', err.message)
+        })
+
+
+        // firefox firestore
         await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
 
         if (LOG) {
