@@ -165,7 +165,7 @@ const BasicTable = (props) => {
 
   const hiddenColsDefault = ["percent","Exchange","Industry","Cap","PE","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
   "EVToEBITDA","EVToRevenue","price","mon3","mon6","year20","splits_list","splits","alphaPrice","alphaDate","verifyDate","verifyPrice",
-  "info_date","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"] // ,"target"
+  "target","info_date","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"] // ,"target"
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
