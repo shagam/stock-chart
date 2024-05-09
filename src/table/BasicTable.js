@@ -550,7 +550,7 @@ const BasicTable = (props) => {
     if (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili) {
       let date = new Date(rows[row_index].values.gain_mili);
       // if (LOG_FLAG)
-        console.log (sym, 'Abort gain update, missing gain. diff:', diff / 1000, date.toString())
+        console.log (sym, 'Abort <gain>, too frequent. allowed once per day for sym. diff sec:', (diff / 1000).toFixed(0))
       return; // write only if fresh gain info
     }
 
