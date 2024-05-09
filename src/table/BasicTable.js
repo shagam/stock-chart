@@ -544,6 +544,16 @@ const BasicTable = (props) => {
   }
 
   const handleGainClick = (sym, saveTabl) => {
+    const row_index = rows.findIndex((row)=> row.values.symbol === sym);
+    const oneDayMili = 1000 * 3600 + 24;
+    var diff = Date.now() - rows[row_index].values.gain_mili;
+    if (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili) {
+      let date = new Date(rows[row_index].values.gain_mili);
+      // if (LOG_FLAG)
+        console.log (sym, 'Abort gain update, missing gain. diff:', diff / 1000, date.toString())
+      return; // write only if fresh gain info
+    }
+
     if (saveTabl)
       console.log(sym, 'handleGainClick  saveTable param on ')
     setChartSymbol (sym);
@@ -556,16 +566,6 @@ const BasicTable = (props) => {
       alert (`bug, chart sym vanished (${sym})`);
       return;
     }
-
-    const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    // const oneDayMili = 1000 * 3600 + 24;
-    // var diff = Date.now() - rows[row_index].values.gain_mili;
-    // if (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili) {
-    //   let date = new Date(rows[row_index].values.gain_mili);
-    //   if (LOG_FLAG)
-    //     console.log (sym, 'Abort gain update, missing gain. diff:', diff / 1000, date.toString())
-    //   return; // write only if fresh gain info
-    // }
 
     const ind = allColumns.findIndex((column)=> column.Header === 'splits_list');
     if (allColumns[ind].isVisible || ! isAdjusted ())  // high limit no need for compensation
@@ -1208,7 +1208,7 @@ const BasicTable = (props) => {
           {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
           {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;&nbsp; </div>  }
 
-          {eliHome && <div> <button onClick={gainAll} > gainAll </button> </div>}
+          {<div> <button onClick={gainAll} > gainAll </button> </div>}
           &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>}
