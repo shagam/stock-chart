@@ -231,84 +231,9 @@ const BasicTable = (props) => {
 
   // send stock gain to firebase, delete old and add new one (No woory about format change)
   const firebaseGainAdd = async (symbol, src) => {
-    const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
-    if (row_index === -1) {
-      console.log (symbol, 'missing symbol')
-      return;
-    }
-    const oneDayMili = 1000 * 3600 + 24;
-    var diff = Date.now() - rows[row_index].values.gain_mili;
-    if (rows[row_index].values.gain_mili === undefined || diff > oneDayMili) {
-      let date = new Date(rows[row_index].values.gain_mili);
-      console.log (symbol, 'Abort firebase gain update, missing gain. src:', src, 'diff:', diff / 1000, date.toString())
-      return; // write only if fresh gain info
-    }
-
-    if (! isAdjusted()) {
-      diff = Date.now() - rows[row_index].values.splitsUpdateMili;
-      if (rows[row_index].values.splitsUpdateMili === undefined || Date.now() - rows[row_index].values.splitsUpdateMili > oneDayMili){
-        if (LOG_FIREBASE)
-          console.log (symbol, 'Abort firebase gain update, missing splits. src:', src, 'diff:', diff)
-        return; // write only if fresh splits info
-      }
-
-      diff = Date.now() - rows[row_index].values.verifyUpdateMili;
-      if (rows[row_index].values.verifyUpdateMili === undefined || Date.now() - rows[row_index].values.verifyUpdateMili > oneDayMili) {
-        if (LOG_FIREBASE)
-          console.log (symbol, 'Abort firebase gain update, missing verify. src:', src, 'diff:', diff)
-        return; // write only if fresh verify info
-      }
-    }
-
-    diff = Date.now() - rows[row_index].values.deepUpdateMili;
-    if (rows[row_index].values.deepUpdateMili === undefined || Date.now() - rows[row_index].values.deepUpdateMili > oneDayMili) {
-      console.log (symbol, 'Abort firebase gain update, missing deep. src:', src, 'diff:', diff)
-      return; // write only if fresh deep info     
-    }
 
     GainWrite (symbol, rows, errorAdd, servSelect, PORT, ssl, props.logFlags)
 
-    // read old entries, to avoid duplicates
-    // var userQuery = query (gainRef, where('__symbol', '==', symbol));
-    // const gain = await getDocs(userQuery);
-    // if (rows[row_index].values.splits_list === undefined)
-    //     rows[row_index].values.splits_list = '[]';
-    // if (rows[row_index].values.splits === undefined)
-    //   rows[row_index].values.splits = -1;
-    //   if (rows[row_index].values.verify_1 === undefined)
-    //   rows[row_index].values.verify_1 = -1;
-    // rows[row_index].values.gain_date = getDate();
-    // // console.log(rows[row_index].values.peak2Peak)
-    // if (! rows[row_index].values.peak2Peak)
-    //   rows[row_index].values.peak2Peak = -1;
-    // // add new entry
-    // try {
-    // await addDoc (gainRef, {__symbol: rows[row_index].values.symbol,
-    //   _ip: localIpv4,
-    //   _updateDate: rows[row_index].values.gain_date,
-    //   _updateMili:rows[row_index].values.gain_mili,
-    //   splits: rows[row_index].values.splits_list,
-    //   mon3: rows[row_index].values.mon3, mon6: rows[row_index].values.mon6,
-    //   year: rows[row_index].values.year, year2: rows[row_index].values.year2, year5: rows[row_index].values.year5,
-    //   year10: rows[row_index].values.year10, year20: rows[row_index].values.year20,
-    //   peak2Peak: rows[row_index].values.peak2Peak, price: rows[row_index].values.price,
-    //   verify_1: rows[row_index].values.verify_1, deep: rows[row_index].values.deep, recoverWeek: rows[row_index].values.recoverWeek,
-    //   deepDate: rows[row_index].values.deepDate, priceDivHigh: rows[row_index].values.priceDivHigh})
-    //   if (LOG_FIREBASE)
-    //     console.log (symbol, 'gain-send to firebase. src:', src);
-    //   // saveTable(symbol);
-    // } catch (e) {console.log (symbol, e)}
-    // // delete old entries
-    // // if (LOG_FIREBASE && gain.docs.length > 0)
-    // //   console.log (symbol, 'delete old entries:', gain.docs.length)  
-    // if (gain && gain.docs && gain.docs.length > 1)
-    //   console.log (symbol, 'del duplicate gain entries', gain.docs.length) 
-    // for (let i = 0; i < gain.docs.length; i++) {
-    //   //const id = gain.docs[i].id;
-    //   var gainDoc = doc(db, "stock-gain_", gain.docs[i].id);
-    //   await deleteDoc (gainDoc);   
-
-    // }           
   }
 
   function setSer (serv) {
