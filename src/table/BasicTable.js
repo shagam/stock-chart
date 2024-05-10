@@ -544,6 +544,7 @@ const BasicTable = (props) => {
   }
 
   const handleGainClick = (sym, saveTabl) => {
+    setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
     const oneDayMili = 1000 * 3600 + 24;
     var diff = Date.now() - rows[row_index].values.gain_mili;
@@ -556,7 +557,7 @@ const BasicTable = (props) => {
 
     if (saveTabl)
       console.log(sym, 'handleGainClick  saveTable param on ')
-    setChartSymbol (sym);
+
     localStorage.setItem ('chartSymbol', sym);
     handleInfoClick(sym, saveTabl);
 
