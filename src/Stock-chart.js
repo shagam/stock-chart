@@ -405,8 +405,8 @@ const StockChart = (props) => {
         </div>
           <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
             dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp;
-             {/* some drop recovery ranges */}
-            <button onClick={() => setDateRange(new Date(2008,0,1), new Date(2011,0,1))}> 2008-2010</button>&nbsp;
+             {/* some drop recovery ranges  month 0-11 */}
+            <button onClick={() => setDateRange(new Date(2008,0,1), new Date(2011,0,1))}> 2008-2010</button>&nbsp;  
             <button onClick={() => setDateRange(new Date(2020,0,1), new Date(2020,6,1))}> 2020</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2023,0,1))}> 2022</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2023,0,1), new Date(2024,0,1))}> 2023</button>&nbsp;&nbsp;
