@@ -361,7 +361,7 @@ const StockChart = (props) => {
   }
 
   function setDateRange (start, end) {
-
+    if (LOG_FLAG)
     console.log ('Chart-range', start,end)
     // return
     setChartDate(start)
