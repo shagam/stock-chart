@@ -100,8 +100,8 @@ const BasicTable = (props) => {
   const [bubbleLine, setBubbleLine] = useState();
 
   
-  const servList = [process.env.REACT_APP_LOCAL_SERV_IP, process.env.REACT_APP_AWS_IP_,
-     process.env.REACT_APP_AWS_IP, 'localhost','10.100.102.4', process.env.REACT_APP_SERV_EXT];
+  const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP];
+  //  process.env.REACT_APP_AWS_IP_, 'localhost','10.100.102.4', process.env.REACT_APP_SERV_EXT];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
 
@@ -125,7 +125,11 @@ const BasicTable = (props) => {
   const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
   const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
-  const PORT = 5000;
+  var PORT;
+  if (servSelect === process.env.REACT_APP_LOCAL_SERV_IP)
+    PORT = 5000;
+  else
+    PORT = 443
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
   const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
