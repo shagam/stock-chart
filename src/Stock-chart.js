@@ -360,6 +360,14 @@ const StockChart = (props) => {
     setChartDate (new Date(dateStr));
   }
 
+  function setDateRange (start, end) {
+
+    console.log ('Chart-range', start,end)
+    // return
+    setChartDate(start)
+    setEndDate(end)
+  }
+
 
   return (
     <div>
@@ -397,7 +405,13 @@ const StockChart = (props) => {
         </div>
           <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
             dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp;
-  
+            
+            <button onClick={() => setDateRange(new Date(2008,1,1), new Date(2010,1,1))}> 2008-2009</button>&nbsp;
+            <button onClick={() => setDateRange(new Date(2020,1,1), new Date(2020,8,1))}> 2020</button>&nbsp;
+            <button onClick={() => setDateRange(new Date(2022,1,1), new Date(2023,1,1))}> 2022</button>&nbsp;
+            <button onClick={() => setDateRange(new Date(2023,1,1), new Date(2024,1,1))}> 2023</button>&nbsp;&nbsp;
+            <button onClick={() => setDateRange(new Date(2022,1,1), new Date(2024,1,1))}> 2022-2023</button>&nbsp;
+
           </div>
 
         <div style={{display:'flex'}}>
