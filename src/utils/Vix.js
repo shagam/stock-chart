@@ -15,7 +15,7 @@ function Vix (props) {
     const [err, setErr] = useState()
 
     function vixGet () {
-        setErr ()
+        setErr()
         setDat()
 
         var corsUrl = ''
@@ -26,7 +26,7 @@ function Vix (props) {
         corsUrl += props.corsServer + ":" + props.PORT + "/vix"
         if (false)
         corsUrl += '?txt=txt'
-
+        setErr()
         setDat('request sent to server')
         if (LOG)
             console.log (corsUrl)
@@ -43,17 +43,20 @@ function Vix (props) {
             console.log (JSON.stringify(result.data))
 
         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+            setDat()
             setErr(result.data)
             return;
         }
 
         const vix = JSON.stringify(result.data,null,2)
+        setErr()
         setDat(result.data.val + '      diff=' + result.data.diff + '  ' + result.data.perc)
         // setDat(vix)
             
          } )
         .catch ((err) => {
-        setErr(err.message)
+            setDat()
+            setErr(err.message)
         // console.log(err.message)
         })
     }
