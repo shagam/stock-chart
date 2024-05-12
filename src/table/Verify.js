@@ -181,9 +181,9 @@ function Verify (props) {
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>
           <br></br>  
     
-          <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
+          {/* <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)}  </div>
-          <br></br>  
+          <br></br>   */}
   
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(splitInfo)}
