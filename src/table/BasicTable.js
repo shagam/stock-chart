@@ -100,7 +100,7 @@ const BasicTable = (props) => {
   const [bubbleLine, setBubbleLine] = useState();
 
   
-  const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP];
+  const servList = [process.env.REACT_APP_LOCAL_SERV_IP, process.env.REACT_APP_AWS_IP, ];
   //  process.env.REACT_APP_AWS_IP_, 'localhost','10.100.102.4', process.env.REACT_APP_SERV_EXT];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
@@ -1128,7 +1128,7 @@ const BasicTable = (props) => {
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {eliHome && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
-          {eliHome && <div style={{display:'flex'}}> <ServerSelect serv={servSelect} setServSelect={setServSelect} title='server' options={servList} defaultValue={servSelect}/> </div>}
+          {<div style={{display:'flex'}}> <ServerSelect serv={servSelect} setServSelect={setServSelect} title='server' options={servList} defaultValue={servSelect}/> </div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
