@@ -95,25 +95,25 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
       // 'other=', result.data.open, 'alpha=', stockChartYValuesFunction[entry])
       const row_index = rows.findIndex((row)=> row.values.symbol === sym);
       if (result.data.err)
-        console.log (sym, result.data.err, corsUrl) 
+        console.log (sym, result.data, corsUrl) 
       var closeValue = result.data.close;
       if ((result.data !== '' || ! stockChartXValuesFunction) && ! result.data.err) {
-        if (nasdaq) {
-          const splitsArray = JSON.parse(rows[row_index].values.splits_list)
-          // compensate for splits
-          const oldestDateSplit = dateSplit(oldestDate)
-          for (let i = 0; i < splitsArray.length; i++) {
-            const oneSplit = splitsArray[i];
-            const oneSplitDate = dateSplit (oneSplit.date)
-            if (oneSplitDate[0] < oldestDateSplit[0])  // skip old splits
-              continue;
-            if (oneSplitDate[1] < oldestDateSplit[1])
-              continue;
-            if (oneSplitDate[2] < oldestDateSplit[2])
-              continue;
-            closeValue /= oneSplit.ratio;
-          }
-        }
+        // if (nasdaq) {
+        //   const splitsArray = JSON.parse(rows[row_index].values.splits_list)
+        //   // compensate for splits
+        //   const oldestDateSplit = dateSplit(oldestDate)
+        //   for (let i = 0; i < splitsArray.length; i++) {
+        //     const oneSplit = splitsArray[i];
+        //     const oneSplitDate = dateSplit (oneSplit.date)
+        //     if (oneSplitDate[0] < oldestDateSplit[0])  // skip old splits
+        //       continue;
+        //     if (oneSplitDate[1] < oldestDateSplit[1])
+        //       continue;
+        //     if (oneSplitDate[2] < oldestDateSplit[2])
+        //       continue;
+        //     closeValue /= oneSplit.ratio;
+        //   }
+        // }
 
         const alphaDate = stockChartXValuesFunction[entry];
         const alphaPrice = Number(stockChartYValuesFunction[entry]).toFixed(2);
