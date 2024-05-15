@@ -129,7 +129,7 @@ const BasicTable = (props) => {
   if (servSelect === process.env.REACT_APP_LOCAL_SERV_IP)
     PORT = 5000;
   else
-    PORT = 443
+    PORT = 5000
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
   const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
