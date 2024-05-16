@@ -54,62 +54,59 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 
       for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
         var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
-        if (weekOfNextMonth >= 0) { // if not end of array
+        if (weekOfNextMonth < 0) // if not end of array
+          break;
 
-          const date = xArray[i];
-          const dateSplit_ = dateSplit (date); // [year,mon,day]
-          const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
-          const year = Number(dateSplit_[0])
-    
-    
-          if (weekOfNextMonth < xArray.length) { // avoid overflow array
-            const p = yArray[i] / yArray[weekOfNextMonth]
-            debug.push ({d: xArray[i], m: mon, w: i, y: yArray[i], p: p.toFixed(4)}) //  yr: year,
+        if (weekOfNextMonth >= xArray.length) // avoid overflow array
+          break
 
-            if (yArray[weekOfNextMonth] === 0)
-              console.log (symm, weekOfNextMonth, yArray[weekOfNextMonth])
-            mGainForSymm[mon] *= Number(p)
-            if (isNaN(mGainForSymm[mon])) {
-              console.log (symm, NaN, yArray[weekOfNextMonth])
-              const a = -1;
-            }
-            mCountForSymm[mon] ++;
-            // mGainForSymm[mon] = mGainForSymm[mon].toFixed(2)
-            // mGain[mon] = mGainForSymm[mon];
-            // if (LOG)
-            //   console.log (xArray[weekOfNextMonth], ' ', xArray[i],  '  month:', mon, 'gain:', p.toFixed(2))
-          }
-          else
-            console.log (symm, 'weekOfNextMonth=', weekOfNextMonth, 'i=', i)
-          i = weekOfNextMonth;
+        const date = xArray[i];
+        const dateSplit_ = dateSplit (date); // [year,mon,day]
+        const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
+        const year = Number(dateSplit_[0])
+  
+
+        const p = yArray[i] / yArray[weekOfNextMonth]
+        const debugObj = {d: xArray[i], m: mon, w: i, y: yArray[i], p: p.toFixed(4)}
+        debug.push (debugObj) //  yr: year,
+        // console.log (debugObj)
+
+        if (yArray[weekOfNextMonth] === 0)
+          console.log (symm, weekOfNextMonth, yArray[weekOfNextMonth])
+        mGainForSymm[mon] *= Number(p)
+        if (isNaN(mGainForSymm[mon])) {
+          console.log (symm, NaN, yArray[weekOfNextMonth])
+          const a = -1;
         }
-        else {
-          // noralize values average
-          for (let i = 0; i < 12; i++) {
-            const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(3)
-            mGainForSymmShift[i] = gainTemp;
-            oneStockYearGain *= gainTemp;
-          }
-          if (LOG)
-            console.log (symm, 'yearlyGainForSym: ', oneStockYearGain.toFixed(3), mCountForSymm, mGainForSymm, ) // mGainForSymmShift
+        mCountForSymm[mon] ++;
+        i = weekOfNextMonth; // next month
+      } // end of one sym loop
 
-          console.log(symm, debug)
-          break // end of one stock
-        }
+
+
+
+      // average yearly  mon gain 
+      console.log(symm, 'addregate', mGainForSymm, mCountForSymm)
+      for (let i = 0; i < 12; i++) {
+        const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(3)
+        mGainForSymmShift[i] = gainTemp;
+        oneStockYearGain *= gainTemp;
+        
+
+
       }
+      console.log(symm, debug)
 
       // add symbol to other
+      console.log (symm, 'yearly', mGainForSymmShift)
       for (let j = 0; j < 12; j++) {
         mGain[j] *= mGainForSymmShift[j]
       }
+   
+    } 
 
-      // console.log ('monGain', symm, ' gain=', mGainForSymm, ' count=', mCountForSymm)
-      // for (let i = 0; i < 12; i++) {
-      //   mGainForSymm[i] = mGainForSymm[i] ^ (1 / (mCountForSymm[i]))
-      //   mGainForSymm[i] = mGainForSymm[i].toFixed(4)
-      // }
-      // console.log (mGainForSymm)
-    } // end one symm
+
+
     
     // prepare for print results calc average stocks gain for 
     var yearlyGain = 1;
