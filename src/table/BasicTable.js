@@ -1128,7 +1128,7 @@ const BasicTable = (props) => {
           {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
 
           {eliHome && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
-          {<div style={{display:'flex'}}> <ServerSelect serv={servSelect} setServSelect={setServSelect} title='server' options={servList} defaultValue={servSelect}/> </div>}
+          {eliHome && <div style={{display:'flex'}}> <ServerSelect serv={servSelect} setServSelect={setServSelect} title='server' options={servList} defaultValue={servSelect}/> </div>}
           {admin && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
@@ -1252,7 +1252,7 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='verify' id='2' checked={analyzeTool==='verify'} onChange={onOptionChange}/> verify       
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> gainRaw      
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools
+              {eliHome && <div><input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools</div>}
             </div>
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
