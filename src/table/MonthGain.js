@@ -50,7 +50,8 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
       const xArray = gainMapSym.x;
       const yArray = gainMapSym.y;
       var i = 0; // Jan Changed inside loop
-      
+      const debug = []
+
       for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
         var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
         if (weekOfNextMonth >= 0) { // if not end of array
@@ -58,10 +59,13 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
           const date = xArray[i];
           const dateSplit_ = dateSplit (date); // [year,mon,day]
           const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
+          const year = Number(dateSplit_[0])
     
     
-          if (weekOfNextMonth - i >= 3) {
+          if (weekOfNextMonth < xArray.length) { // avoid overflow array
             const p = yArray[i] / yArray[weekOfNextMonth]
+            debug.push ({d: xArray[i], m: mon, w: i, y: yArray[i], p: p.toFixed(4)}) //  yr: year,
+
             if (yArray[weekOfNextMonth] === 0)
               console.log (symm, weekOfNextMonth, yArray[weekOfNextMonth])
             mGainForSymm[mon] *= Number(p)
@@ -82,12 +86,14 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
         else {
           // noralize values average
           for (let i = 0; i < 12; i++) {
-            const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i]).toFixed(3))
+            const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(3)
             mGainForSymmShift[i] = gainTemp;
             oneStockYearGain *= gainTemp;
           }
           if (LOG)
-            console.log (symm, 'yearlyGainForSym: ', oneStockYearGain.toFixed(3), mGainForSymmShift)
+            console.log (symm, 'yearlyGainForSym: ', oneStockYearGain.toFixed(3), mCountForSymm, mGainForSymm, ) // mGainForSymmShift
+
+          console.log(symm, debug)
           break // end of one stock
         }
       }
@@ -96,6 +102,13 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
       for (let j = 0; j < 12; j++) {
         mGain[j] *= mGainForSymmShift[j]
       }
+
+      // console.log ('monGain', symm, ' gain=', mGainForSymm, ' count=', mCountForSymm)
+      // for (let i = 0; i < 12; i++) {
+      //   mGainForSymm[i] = mGainForSymm[i] ^ (1 / (mCountForSymm[i]))
+      //   mGainForSymm[i] = mGainForSymm[i].toFixed(4)
+      // }
+      // console.log (mGainForSymm)
     } // end one symm
     
     // prepare for print results calc average stocks gain for 
