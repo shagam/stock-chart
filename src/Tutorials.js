@@ -54,9 +54,9 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare historical price with MarketWatch</td> 
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td><a href="https://youtu.be/0sZ0QK1nwHo">Month-gain</a></td><td>Months with highest gain</td> 
-                    </tr>
+                    </tr> */}
                     <tr>
                         <td><a href="https://youtu.be/IElQqHTVPnE">Analyst-target-price</a></td><td>History of target-price</td> 
                     </tr>
