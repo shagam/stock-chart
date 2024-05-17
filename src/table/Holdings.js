@@ -270,9 +270,9 @@ function Holdings (props) {
       }
 
       {err && <div style={{color:'red'}}> {err} </div>} 
-      {Object.keys(warn).length > 0 && Object.keys(warn).map((w)=>{
+      {Object.keys(warn).length > 0 && Object.keys(warn).map((w, w1)=>{
         return(
-        <div style={{display: 'flex'}}>
+        <div key={w1} style={{display: 'flex'}}>
           {warn[w].sym} &nbsp;({warn[w].cnt}) &nbsp;&nbsp; {warn[w].update} &nbsp; total={warn[w].percentSum}%
           &nbsp; &nbsp; <div style={{color:'red'}}> {warn[w].warn} </div>
         </div>
@@ -297,13 +297,13 @@ function Holdings (props) {
         </thead>
 
         <tbody>             
-          {Object.keys(heldMasterObj).map((s, indx) =>{
+          {Object.keys(heldMasterObj).map((s, s1) =>{
             return (
-            <tr key={indx}>
+            <tr key={s1}>
               <td style={{width: '8px'}}>{s}</td>
-                {etfArr.map((k)=>{
+                {etfArr.map((k,n)=>{
                   return (
-                    <td>
+                    <td key={n}>
                       {heldMasterObj[s][k]}
                     </td>
                   )
