@@ -40,6 +40,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
     const stocks = Object.keys (gainMap);
 
     stockCount_ = stocks.length;
+    var arrayLen = 0; // collect average length in weeks
 
     for (var symm in gainMap) {
       const gainMapSym = gainMap[symm];
@@ -56,6 +57,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
         oldestIndex = xArray.length; // use shorter array
         console.log (symm, 'Date not found')
       }
+      arrayLen += oldestIndex;
       if (oldestIndex >= xArray.length) // verify range
         oldestIndex = xArray.length
 
@@ -149,7 +151,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
 
     }
     if (LOG)
-        console.log(symm,'agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift)
+        console.log(symm,'agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
 
 
   mGainObj.Jan = monthGainShift[0]
