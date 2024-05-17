@@ -49,6 +49,10 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
       var oneStockYearGain = 1
       const xArray = gainMapSym.x;
       const yArray = gainMapSym.y;
+
+
+      // const oldestIndex = searchDateInArray (xArray, startDateSplit, null);
+
       var i = 0; // Jan Changed inside loop
       const debug = []
 
@@ -65,9 +69,8 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
         const mon = (Number(dateSplit_[1]) - 1 + 12) % 12; // month  0..11
         const year = Number(dateSplit_[0])
   
-
-        const p = yArray[i] / yArray[weekOfNextMonth]
-        const debugObj = {d: xArray[i], m: mon, w: i, y: yArray[i], p: p.toFixed(4)}
+        const p = Number((yArray[i] / yArray[weekOfNextMonth]).toFixed(4))
+        const debugObj = {d: xArray[i], m: mon, w: i, y: yArray[i], p: p}
         debug.push (debugObj) //  yr: year,
         // console.log (debugObj)
 
@@ -86,14 +89,11 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 
 
       // average yearly  mon gain 
-      console.log(symm, 'addregate', mGainForSymm, mCountForSymm)
+      console.log(symm, 'mult array', mGainForSymm, mCountForSymm)
       for (let i = 0; i < 12; i++) {
-        const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(3)
+        const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(5)
         mGainForSymmShift[i] = gainTemp;
         oneStockYearGain *= gainTemp;
-        
-
-
       }
       console.log(symm, debug)
 
