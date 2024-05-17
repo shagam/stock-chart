@@ -52,6 +52,10 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
 
       const startDateSplit = rawDateSplit (startDate) 
       var oldestIndex = searchDateInArray (xArray, startDateSplit, null);
+      if (oldestIndex === -1) {
+        oldestIndex = xArray.length; // use shorter array
+        console.log (symm, 'Date not found')
+      }
       if (oldestIndex >= xArray.length) // verify range
         oldestIndex = xArray.length
 
@@ -93,8 +97,9 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
       // average yearly  mon gain 
       if (LOG)
       console.log(symm, 'mult array', mGainForSymm, mCountForSymm)
-      if (mCountForSymm[0] === 0)
-          console.log (symm, mCountForSymm);
+      if (mCountForSymm[0] === 0) {
+          console.log (symm, 'NaN', mCountForSymm);
+      }
       else  
       for (let i = 0; i < 12; i++) {
         const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(5)
