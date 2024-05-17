@@ -93,10 +93,17 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
       // average yearly  mon gain 
       if (LOG)
       console.log(symm, 'mult array', mGainForSymm, mCountForSymm)
+      if (mCountForSymm[0] === 0)
+          console.log (symm, mCountForSymm);
+      else  
       for (let i = 0; i < 12; i++) {
         const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(5)
-        mGainForSymmShift[i] = gainTemp;
-        oneStockYearGain *= gainTemp;
+          if (! isNaN(gainTemp)) {
+          mGainForSymmShift[i] = gainTemp;
+          oneStockYearGain *= gainTemp;
+        }
+        else
+          console.log (symm, 'NaN', mGainForSymm, mCountForSymm)
       }
       if (LOG)
       console.log(symm, debug)
@@ -105,7 +112,12 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
       if (LOG)
       console.log (symm, 'yearly', mGainForSymmShift)
       for (let j = 0; j < 12; j++) {
+        if (! isNaN(mGainForSymmShift[j]))
         mGain[j] *= mGainForSymmShift[j]
+        else {
+          if (j=== 0)
+            console.log (symm,'NaN',  mGainForSymmShift)
+        }
       }
    
     } 
@@ -121,7 +133,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
     for (let i = 0; i < 12; i++)
         monthGain[i] = Number(Math.pow(Number(mGain[i]), 1 / stockCount_).toFixed(3))
     if (LOG)
-        console.log('agregate gainShiftBefore', monthGain)
+        console.log(symm, 'agregate gainShiftBefore', monthGain)
 
     // shift gain from next month
     var monthGainShift = []
@@ -129,9 +141,10 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
         const nextMonth = (i + 1) % 12
         monthGainShift[i] = Number(Math.exp((Math.log (monthGain[i]) * 0.9) + Math.log (monthGain[nextMonth]) * 0.1).toFixed(3))
         yearlyGain *= monthGainShift[i];
+
     }
     if (LOG)
-        console.log('agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift)
+        console.log(symm,'agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift)
 
 
   mGainObj.Jan = monthGainShift[0]
