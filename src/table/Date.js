@@ -21,6 +21,15 @@ const todayDateSplit = () => {
   return dateArraySplit;
 }
 
+const rawDateSplit = (date) => {
+  const formattedDate = format(date, "yyyy-MM-dd");
+  const dateArraySplit = formattedDate.split('-');
+  dateArraySplit[0] = Number(dateArraySplit[0]);
+  dateArraySplit[1] = Number(dateArraySplit[1]);
+  dateArraySplit[2] = Number(dateArraySplit[2]);
+  return dateArraySplit;
+}
+
 function getDate() {
   const date = new Date();
   var formattedDate = format(date, "yyyy-MMM-dd  HH:mm");
@@ -299,5 +308,5 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFla
 
 
 
-export {getDate, getDateSec, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack,
+export {getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
    compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr}

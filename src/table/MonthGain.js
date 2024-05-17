@@ -1,6 +1,6 @@
 import React, {useState, useMemo, useEffect} from 'react' 
 
-import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 
  // loop through months
@@ -26,7 +26,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   var stockCount_ = -1
 
   // collect month gain over the history
-  function monthGain (gainMap, mGainObj, setMgainObj, setYearGain, logFlags) {    
+  function monthGain (gainMap, mGainObj, setMgainObj, setYearGain, logFlags, startDate) {    
 
     // const n = 1.05;
     // const l = Math.log(n) // natural log
@@ -50,18 +50,20 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
       const xArray = gainMapSym.x;
       const yArray = gainMapSym.y;
 
-
-      // const oldestIndex = searchDateInArray (xArray, startDateSplit, null);
+      const startDateSplit = rawDateSplit (startDate) 
+      var oldestIndex = searchDateInArray (xArray, startDateSplit, null);
+      if (oldestIndex >= xArray.length) // verify range
+        oldestIndex = xArray.length
 
       var i = 0; // Jan Changed inside loop
       const debug = []
 
-      for (; i < yArray.length; ) { // index into weekly x (date) y (price) arrays 
+      for (; i < oldestIndex; ) { // index into weekly x (date) y (price) arrays 
         var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
         if (weekOfNextMonth < 0) // if not end of array
           break;
 
-        if (weekOfNextMonth >= xArray.length) // avoid overflow array
+        if (weekOfNextMonth >= oldestIndex) // avoid overflow array
           break
 
         const date = xArray[i];
@@ -89,15 +91,18 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 
 
       // average yearly  mon gain 
+      if (LOG)
       console.log(symm, 'mult array', mGainForSymm, mCountForSymm)
       for (let i = 0; i < 12; i++) {
         const gainTemp = Number(Math.pow (mGainForSymm[i], 1 / mCountForSymm[i])).toFixed(5)
         mGainForSymmShift[i] = gainTemp;
         oneStockYearGain *= gainTemp;
       }
+      if (LOG)
       console.log(symm, debug)
 
       // add symbol to other
+      if (LOG)
       console.log (symm, 'yearly', mGainForSymmShift)
       for (let j = 0; j < 12; j++) {
         mGain[j] *= mGainForSymmShift[j]

@@ -5,6 +5,10 @@ import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll, targetH
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 
+import {format} from "date-fns"
+import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+    
 import logFlags from '../LogFlags'
 import {monthGain} from './MonthGain'
 
@@ -19,6 +23,9 @@ function Tools (props) {
     const [yearGain, setYearGain] = useState ();
     const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
 
+    
+    const [startDate, setStartDate] = useState (new Date(2002, 9, 15));
+ 
     // const [logFlags, setLogFlags] = useState([]);
     
     var totalGain;
@@ -66,7 +73,10 @@ function Tools (props) {
                 </div>
           
                 {/* &nbsp; &nbsp; */}
-                {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags)}>monthGain</button>}
+                <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+                  dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp; 
+                 {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
+                </div>
 
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
