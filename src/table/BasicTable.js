@@ -1252,7 +1252,7 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='verify' id='2' checked={analyzeTool==='verify'} onChange={onOptionChange}/> verify       
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> gainRaw      
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw
-              {eliHome && <div><input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools</div>}
+              {<div><input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools</div>}
             </div>
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
