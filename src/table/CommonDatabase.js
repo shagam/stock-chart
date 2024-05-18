@@ -485,7 +485,7 @@ function CommonDatabase (props) {
             <div> &nbsp; </div> 
         </div>}
         
-        <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/>
+        {/* <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/> */}
         
         <div style={{display: 'flex'}}>
    

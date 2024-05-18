@@ -1105,13 +1105,14 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
-        <Link to="/tutorials">Tutorials</Link> &nbsp; &nbsp;
-        <Link to="/about">About</Link> &nbsp; &nbsp;
+        <Link to="/tutorials">Tutorials</Link> &nbsp; 
+        <Link to="/about">About</Link> &nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
-        <Link to="/targetPrice">Target-price-history</Link> &nbsp; &nbsp;
+        <Link to="/targetPrice">Target-price-history</Link> &nbsp;
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}&nbsp; &nbsp;
+        <a href="https://www.google.com/search?q=vix">VIX (Google)</a> &nbsp;
+        <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp;
         {eliHome && <Link to="/contact">Contact US</Link>}
-
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
