@@ -1109,9 +1109,9 @@ const BasicTable = (props) => {
         <Link to="/about">About</Link> &nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
         <Link to="/targetPrice">Target-price-history</Link> &nbsp;
-        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>}&nbsp; &nbsp;
-        <a href="https://www.google.com/search?q=vix">VIX (Google)</a> &nbsp;
-        <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp;
+        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
+        <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp;
+        {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp; */}
         {eliHome && <Link to="/contact">Contact US</Link>}
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
