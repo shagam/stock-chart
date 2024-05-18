@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+// import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 
 import axios from 'axios'
 import {format} from "date-fns"

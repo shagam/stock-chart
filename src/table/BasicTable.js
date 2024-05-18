@@ -33,7 +33,7 @@ import {format} from "date-fns"
 //import cloneDeep from 'lodash/cloneDeep';
 
 
-import {db} from '../firebaseConfig'
+// import {db} from '../firebaseConfig'
 
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -55,7 +55,7 @@ import  {CommonDatabase, GainWrite} from './CommonDatabase'
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 
-import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
+// import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
 // const collection = lazy(() => import('firebase/firestore').then((module) => ({default: module.collection})))
 // const getDocs= lazy(() => import('firebase/firestore').then((module) => ({default: module.getDocs})))
 // const addDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.addDoc})))
@@ -154,7 +154,7 @@ const BasicTable = (props) => {
 
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
-  const gainRef = collection(db, "stock-gain_")
+  // const gainRef = collection(db, "stock-gain_")
 
     // var flexConfig = localStorage.getItem('flex');
 
@@ -1231,7 +1231,7 @@ const BasicTable = (props) => {
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
-        {<CommonDatabase localIp={localIp} gainRef = {gainRef} rows={rows} prepareRow={prepareRow} db = {db}
+        {<CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns} updateTableGain ={updateTableGain}
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
 
