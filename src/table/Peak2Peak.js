@@ -35,6 +35,7 @@ const Peak2PeakGui = (props) => {
     const [results, setResults] = useState ();
     const [searchPeak, setSearchPeak] = useState (true);
     const [bubbleLineFlag, setBubbleLineFlag] = useState (false); // show that bubleLine calculated
+    const [bubbleLineRatio, setBubbleLineRatio] = useState ();
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
@@ -77,6 +78,13 @@ const Peak2PeakGui = (props) => {
     // console.log (XValues, YValues, xBaseLine, yBaseLine);
     props.setBubbleLine ({x: xBubbleLine, y: yBubbleLine})
     setBubbleLineFlag(true)
+
+    //calc ratio sym/bubbleline
+    console.log (YValues[0], yBubbleLine[1])
+    const bubbleLineOver = (YValues[0] / yBubbleLine[1]).toFixed(3)
+    setBubbleLineRatio(bubbleLineOver)
+    console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
+
   }
 
   return (
@@ -98,14 +106,14 @@ const Peak2PeakGui = (props) => {
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
            </div>
            
-           <div> &nbsp; 
+           <div style={{display:'flex'}}> &nbsp; 
               <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
               <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp;
+               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;
 
               {results && ! props.bubleLine && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
-              {bubbleLineFlag && <div style={{color: 'magenta'}} >bubbleLine </div>}
+              {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} / bubbleLine = {bubbleLineRatio} </div>}
            </div>
            
            {results && <div>

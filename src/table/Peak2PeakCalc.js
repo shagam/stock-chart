@@ -75,10 +75,10 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           startDateArray = lastDateSplit;
         else {
           const err =  ' peak2Peak, date beyond range; ';
-          results['err'] = symbol + err  + ' ' + startDateArray + '  ' + lastDateSplit;
+          results['err'] = symbol + err  + ' searchFor=' + startDateArray + 'dateStart= ' + lastDateSplit;
 
           if (errorAdd)
-            errorAdd([symbol, err, 'searchFor=', startDateArray, 'symStarts=', lastDateSplit])
+            errorAdd([symbol, err, 'searchFor=', startDateArray, 'dateStarts=', lastDateSplit])
           console.log ('%c' + results['err'], 'color: red')
           return;            
         }
