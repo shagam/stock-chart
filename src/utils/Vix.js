@@ -13,6 +13,7 @@ function Vix (props) {
     const [vix, setVix] = useState()
     const [dat, setDat] = useState()
     const [err, setErr] = useState()
+    const [url, setUrl] = useState()
 
     function vixGet () {
         setErr()
@@ -30,7 +31,7 @@ function Vix (props) {
         setDat('request sent to server')
         if (LOG)
             console.log (corsUrl)
-
+        setUrl('https://www.google.com/search?q=vix')
         axios.get (corsUrl)
         // getDate()
         .then ((result) => {
@@ -62,12 +63,16 @@ function Vix (props) {
     }
 
     return (
-        <div>
-            <div style={{display: 'flex'}}>
-                <div>  <button onClick={vixGet} >volatility index (vix)</button> &nbsp; </div> 
-                {dat && <div> {dat} </div>}
-                {err && <div style={{color: 'red'}}> {err} </div>}
-            </div>
+        <div style={{display: 'flex'}}>
+            <h5>Volatility index </h5> &nbsp;&nbsp;
+            <a href="https://www.google.com/search?q=vix">VIX (Google)</a> &nbsp;&nbsp;&nbsp;
+            <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo/finance)</a> &nbsp;&nbsp;&nbsp;
+
+            {/* <div>  <button onClick={()=> window.open('https://www.google.com/search?q=vix', '_blank')} >VIX Google tab</button> &nbsp; </div>  */}
+            {/* <div>  <button onClick={()=> window.open('https://finance.yahoo.com/quote/%5EVIX/', '_blank')} >VIX Yahoo tab</button> &nbsp; </div>  */}
+
+            {/* <a href='https://www.marketwatch.com/investing/index/vix'>VIX (CBOA)</a> */}
+            {/* window.open(URL, '_blank'); */}
         </div>
     )
 
