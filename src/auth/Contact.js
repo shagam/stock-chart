@@ -83,7 +83,7 @@ export default function ContactUs (props)  {
   // }
 
   return (
-    <div style={{width:'35vw', fontSize: '20px'}}>
+    <div style={{width:'90%', fontSize: '20px'}}>
 
     <Card>
     <Card.Body>
