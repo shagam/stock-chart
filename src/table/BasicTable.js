@@ -477,7 +477,7 @@ const BasicTable = (props) => {
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
     const oneDayMili = 1000 * 3600 + 24;
     var diff = Date.now() - rows[row_index].values.gain_mili;
-    if (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili) {
+    if (! eliHome && (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili)) {
       let date = new Date(rows[row_index].values.gain_mili);
       // if (LOG_FLAG)
         console.log (sym, 'Abort <gain>, too frequent. allowed once per day for sym. diff sec:', (diff / 1000).toFixed(0))
@@ -1108,11 +1108,12 @@ const BasicTable = (props) => {
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
         <Link to="/about">About</Link> &nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
-        <Link to="/targetPrice">Target-price-history</Link> &nbsp;
+
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
         <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp;
         {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp; */}
-        {eliHome && <Link to="/contact">Contact US</Link>}
+        {eliHome && <Link to="/contact">Contact US</Link>}  &nbsp;
+        <Link to="/targetPrice">Target-price-history</Link> &nbsp;
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
