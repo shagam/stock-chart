@@ -23,6 +23,7 @@ export default function ContactUs (props)  {
   const [error, setError] = useState ('');
   const [loading, setLoading] = useState(false);
   const [stat, setStat] = useState()
+  const [info, setInfo] = useState()
 
   const navigate = useNavigate();
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
@@ -53,16 +54,18 @@ export default function ContactUs (props)  {
       '&message='+messageRef.current.value;
 
       const miliStart =  Date.now();
-      setStat(getDate() + ' msg sent to server')
+      setInfo(getDate() + ' msg sent to server')
+      setStat()
       axios.get (corsUrl)
       // getDate()
       .then ((result) => {
         if (result.status !== 200)
           return;
         const miliEnd =  Date.now()
-        console.log (getDate() + ' email=' + emailRef.current.value + ' msg sent')
+        console.log (getDate() +  ' msg arrived, from=' + emailRef.current.value )
         const latency = miliEnd - miliStart
-        setStat(getDate() + ' msg sent, from=' + emailRef.current.value) // + '  (' + latency + ' mili)
+        setInfo()
+        setStat(getDate() + ' msg arrived') // + '  (' + latency + ' mili)
         nameRef.current.value= null
         // emailRef.current.value= null
         // messageRef.current.value = null;
@@ -70,31 +73,13 @@ export default function ContactUs (props)  {
       })
       .catch ((err) => {
       // setError([sym, 'email', err.message, corsUrl])
-        console.log(getDate(), 'email', err, corsUrl)
+        console.log(getDate(), 'msg', err, corsUrl)
       })     
-
-
-      // emailjs.sendForm('service_hckn29m', 'template_g6rsdnw', form.current, 'cWaOkZhGCDz_uQceT')
-      //   .then((result) => {
-      //       console.log(result.text);
-      //   }, (error) => {
-      //       console.log(error.text);
-      //   });
-      //   e.target.reset()
     };
 
-  //   try {
-  //     setError('');
-  //     setLoading(true);
-  //     // await login (emailRef.current.value, passwordRef.current.value)
-  //     navigate ('/')
-
-  //   } catch (e) {setError (e.message)}
-  //   setLoading (false);
-  // }
 
   return (
-    <div style={{width:'100%', fontSize: '20px'}}>
+    <div style={{width:'100%', fontSize: '18px'}}>
 
     <Card>
     <Card.Body>
@@ -105,19 +90,19 @@ export default function ContactUs (props)  {
       {/* <div>&nbsp;</div> */}
         <Form.Group id="name">
           <Form.Label>Full Name</Form.Label>
-          <Form.Control style={{fontSize: '30px'}} type="text" ref= {nameRef} required />
+          <Form.Control style={{fontSize: '22px'}} type="text" ref= {nameRef} required />
         </Form.Group>
         <hr/> 
 
         <Form.Group id="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control style={{fontSize: '30px'}} type="email" ref= {emailRef} required />
+          <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
         </Form.Group>
         <hr/>
 
         <div>Message</div>
         <Form.Group id="message" className="mb-3" controlId="text">
-          <Form.Control style={{fontSize: '25px', height: '20vh'}} as="textarea" ref= {messageRef} required  type="text"
+          <Form.Control style={{fontSize: '20px', height: '20vh'}} as="textarea" ref= {messageRef} required  type="text"
            placeholder=""  defaultValue={''}/>
         </Form.Group>
 
@@ -126,12 +111,13 @@ export default function ContactUs (props)  {
           <Form.Control type="email" ref= {messageRef} required />
         </Form.Group> */}
         <hr/>
-
         <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> Send </Button>
       </Form>
+      <dev>{info}</dev>
+      <dev style={{color:'red'}}>{stat}</dev>
     </Card.Body>
     </Card>
-        <dev style={{color:'red'}}>{stat}</dev>
+
     </div>
   );
 
