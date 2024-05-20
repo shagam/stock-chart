@@ -64,8 +64,8 @@ export default function ContactUs (props)  {
         const latency = miliEnd - miliStart
         setStat(getDate() + ' msg sent, from=' + emailRef.current.value) // + '  (' + latency + ' mili)
         nameRef.current.value= null
-        emailRef.current.value= null
-        messageRef.current.value = null;
+        // emailRef.current.value= null
+        // messageRef.current.value = null;
         beep2()
       })
       .catch ((err) => {
