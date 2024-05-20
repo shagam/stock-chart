@@ -6,7 +6,7 @@ import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../table/Date'
 import IpContext from '../table/IpContext';
-
+import {beep2} from '../table/ErrorList'
 
 export default function ContactUs (props)  {
 
@@ -62,7 +62,11 @@ export default function ContactUs (props)  {
         const miliEnd =  Date.now()
         console.log (getDate() + ' email=' + emailRef.current.value + ' msg sent')
         const latency = miliEnd - miliStart
-        setStat(getDate() + ' email=' + emailRef.current.value + ' msg sent (' + latency + ' mili)')
+        setStat(getDate() + ' msg sent, from=' + emailRef.current.value) // + '  (' + latency + ' mili)
+        nameRef.current.value= null
+        emailRef.current.value= null
+        messageRef.current.value = null;
+        beep2()
       })
       .catch ((err) => {
       // setError([sym, 'email', err.message, corsUrl])
@@ -127,8 +131,7 @@ export default function ContactUs (props)  {
       </Form>
     </Card.Body>
     </Card>
-        <dev>{stat}</dev>
-
+        <dev style={{color:'red'}}>{stat}</dev>
     </div>
   );
 
