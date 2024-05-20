@@ -82,7 +82,7 @@ function App() {
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/targetPrice" element={<TargetPrice  />}/>
                 <Route path="/manual" element={<Manual  />}/>
-                <Route path="/contact" element={<Contact  />}/>
+                <Route path="/contactUs" element={<Contact  />}/>
                 {/* <Route path="/contact" element={<Contact  />}/> */}
 
               </Routes>
