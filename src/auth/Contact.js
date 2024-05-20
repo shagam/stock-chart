@@ -36,7 +36,7 @@ export default function ContactUs (props)  {
     // } 
     console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'message='+ messageRef.current.value)
     // console.log (form.current)
-    console.log (localIp, localIpv4, city, countryName, countryCode)
+    // console.log (localIpv4, city, countryName, countryCode)
 
     const ssl = true
     const PORT = 5000
@@ -60,9 +60,9 @@ export default function ContactUs (props)  {
         if (result.status !== 200)
           return;
         const miliEnd =  Date.now()
-        console.log (getDate() + ' ' + emailRef.current.value + ' msg sent')
+        console.log (getDate() + ' email=' + emailRef.current.value + ' msg sent')
         const latency = miliEnd - miliStart
-        setStat(getDate() + ' ' + emailRef.current.value + ' msg sent (' + latency + ' mili)')
+        setStat(getDate() + ' email=' + emailRef.current.value + ' msg sent (' + latency + ' mili)')
       })
       .catch ((err) => {
       // setError([sym, 'email', err.message, corsUrl])
