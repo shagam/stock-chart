@@ -79,7 +79,7 @@ export default function ContactUs (props)  {
 
 
   return (
-    <div style={{width:'100%', fontSize: '18px'}}>
+    <div style={{width:'120%', fontSize: '18px'}}>
 
     <Card>
     <Card.Body>
@@ -92,13 +92,13 @@ export default function ContactUs (props)  {
           <Form.Label>Full Name</Form.Label>
           <Form.Control style={{fontSize: '22px'}} type="text" ref= {nameRef} required />
         </Form.Group>
-        <hr/> 
+        {/* <hr/>  */}
 
         <Form.Group id="email">
           <Form.Label>Email</Form.Label>
           <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
         </Form.Group>
-        <hr/>
+        {/* <hr/> */}
 
         <div>Message</div>
         <Form.Group id="message" className="mb-3" controlId="text">
