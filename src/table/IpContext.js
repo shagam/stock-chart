@@ -13,6 +13,9 @@ function IpContext  () {
   const [localIp, setLocalIP] = useState('');
   const [localIpv4, setLocalIPv4] = useState('');
   const [userAgent, setUserAgent] = useState("");
+  const [city, setCity] = useState("");
+  const [countryName, setCountryName] = useState("");
+  const [countryCode, setCountryCode] = useState("");
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   const [ios, setIos] = useState(false);
   const [eliHome, setEliHome] = useState(false);
@@ -80,7 +83,9 @@ function IpContext  () {
         setLocalIP(res.data);
         setEliHome (res.data.IPv4 === '62.0.92.49');
         setLocalIPv4 (res.data.IPv4);
-
+        setCity (res.data.city);
+        setCountryName(res.data.country_name)
+        setCountryCode(res.data.country_code)
       }
       else
         console.log ('no ip');
@@ -96,6 +101,9 @@ function IpContext  () {
   const value = {
     localIp,
     localIpv4,
+    city,
+    countryName,
+    countryCode,
     userAgent,
     userAgentMobile,
     ios,

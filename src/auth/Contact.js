@@ -5,6 +5,8 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../table/Date'
+import IpContext from '../table/IpContext';
+
 
 export default function ContactUs (props)  {
 
@@ -23,6 +25,7 @@ export default function ContactUs (props)  {
   const [stat, setStat] = useState()
 
   const navigate = useNavigate();
+  const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
   
 
    function sendEmail (e) {
@@ -33,6 +36,7 @@ export default function ContactUs (props)  {
     // } 
     console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'message='+ messageRef.current.value)
     // console.log (form.current)
+    console.log (localIp, localIpv4, city, countryName, countryCode)
 
     const ssl = true
     const PORT = 5000
@@ -44,18 +48,21 @@ export default function ContactUs (props)  {
       corsUrl = "http://"
 
     corsUrl += corsServer+ ":" + PORT + "/email" +  '?name=' +  nameRef.current.value +
-    "&email="+ emailRef.current.value + '&message='+messageRef.current.value
+      "&email="+ emailRef.current.value + '&ip=' + localIpv4 +
+      '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
+      '&message='+messageRef.current.value;
+
       const miliStart =  Date.now();
-      setStat(getDate() + ' sent to server')
+      setStat(getDate() + ' msg sent to server')
       axios.get (corsUrl)
       // getDate()
       .then ((result) => {
         if (result.status !== 200)
           return;
         const miliEnd =  Date.now()
-        console.log (getDate() + ' ' + emailRef.current.value + ' email sent')
+        console.log (getDate() + ' ' + emailRef.current.value + ' msg sent')
         const latency = miliEnd - miliStart
-        setStat(getDate() + ' ' + emailRef.current.value + ' email sent (' + latency + ' mili)')
+        setStat(getDate() + ' ' + emailRef.current.value + ' msg sent (' + latency + ' mili)')
       })
       .catch ((err) => {
       // setError([sym, 'email', err.message, corsUrl])
@@ -83,7 +90,7 @@ export default function ContactUs (props)  {
   // }
 
   return (
-    <div style={{width:'90%', fontSize: '20px'}}>
+    <div style={{width:'100%', fontSize: '20px'}}>
 
     <Card>
     <Card.Body>
