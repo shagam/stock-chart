@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Link, useNavigate } from 'react-router-dom'
 import { Card, Button, Alert } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
-import {getDateSec} from './table/Date'
+import {getDateSec} from './utils/Date'
 import CookieConsent from "react-cookie-consent"
 import LogFlags from './LogFlags'
 import About from './About'

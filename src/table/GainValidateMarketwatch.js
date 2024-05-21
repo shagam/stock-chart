@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import cors from 'cors'
-import {dateSplit} from './Date'
+import {dateSplit} from '../utils/Date'
 import {format} from "date-fns"
 // import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
 

@@ -1,5 +1,5 @@
 // import React from 'react'
-import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from './Date'
+import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, getDate} from '../utils/Date'
 
 export const GainValidate = (symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json) => {
   //symbol, rows, stockChartXValues, stockChartYValues, gain_validation_json, refreshCallBack

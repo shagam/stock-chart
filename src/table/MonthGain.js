@@ -1,7 +1,7 @@
 import React, {useState, useMemo, useEffect} from 'react' 
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-    searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
+    searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
  // loop through months
   function nextMonthWeek (i, xArray) {

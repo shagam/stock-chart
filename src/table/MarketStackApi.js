@@ -1,7 +1,7 @@
 import { getMonth } from 'date-fns';
 import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
-import {dateSplit, monthsBack, daysBack} from './Date';
+import {dateSplit, monthsBack, daysBack} from '../utils/Date';
 
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";

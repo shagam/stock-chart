@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './table/Date';
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './utils/Date';
 import { keys } from '@material-ui/core/styles/createBreakpoints';
 
 import Plot from 'react-plotly.js';

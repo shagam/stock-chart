@@ -6,7 +6,7 @@ import StockSplitsGet from '../splits/StockSplitsGet'
 import GetInt from '../utils/GetInt'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import {getTargetPriceArray, targetHistAll} from './TargetPrice'
 
 function Verify (props) {

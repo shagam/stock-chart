@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {db} from '../firebaseConfig'
 import { getDocs, doc, deleteDoc, query, where} from "firebase/firestore";
 import {nanoid} from 'nanoid';
-import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from './Date'
+import {dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, getDate} from '../utils/Date'
 import GetInt from '../utils/GetInt'
 
 
