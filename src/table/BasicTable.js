@@ -42,7 +42,7 @@ import { FaArrowDown, FaArrowUp, FaSlideshare } from 'react-icons/fa'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
-import IpContext from './IpContext';
+import IpContext from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 
 import StockSplitsGet from '../splits/StockSplitsGet'

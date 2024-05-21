@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../table/Date'
-import IpContext from '../table/IpContext';
+import IpContext from '../contexts/IpContext';
 import {beep2} from '../table/ErrorList'
 
 export default function ContactUs (props)  {
