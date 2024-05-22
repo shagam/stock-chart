@@ -119,7 +119,7 @@ export default function ContactUs (props)  {
         <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> Send </Button>
       </Form>
       <div>{info}</div>
-      <dev style={{color:'red'}}>{stat}</dev>
+      <div style={{color:'red'}}>{stat}</div>
     </Card.Body>
     </Card>
 
