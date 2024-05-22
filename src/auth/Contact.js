@@ -30,7 +30,7 @@ export default function ContactUs (props)  {
   
 
    function sendEmail (e) {
-
+  
     e.preventDefault();
     // if (emailRef.current.value !== emailConfirmRef.current.value) {
     //   return setError ('Passwords do not match')
@@ -50,13 +50,13 @@ export default function ContactUs (props)  {
 
     const txt = messageRef.current.value;
     const txtArray = txt.split("\n");
-
+    console.log (txtArray)
     corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
       "&email="+ emailRef.current.value + 
       // '&ip=' + localIpv4 +
       // '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
-      '&message='+txtArray;
-      // '&message='+JSON.stringify(txtArray);
+      // '&message='+txtArray;
+      '&message='+JSON.stringify(txtArray);
 
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
