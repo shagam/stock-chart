@@ -29,7 +29,7 @@ export default function ContactUs (props)  {
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
   
 
-   function sendEmail (e) {
+   function sendContact (e) {
   
     e.preventDefault();
     // if (emailRef.current.value !== emailConfirmRef.current.value) {
@@ -91,7 +91,7 @@ export default function ContactUs (props)  {
       <h2 className='text-center mb-4'>Contact Us</h2>
       &nbsp; <Link to="/" >Home</Link>
       {error && <Alert variant="danger"> {error} </Alert>}
-      <Form onSubmit={sendEmail}>
+      <Form onSubmit={sendContact}>
       {/* <div>&nbsp;</div> */}
         <Form.Group id="name">
           <Form.Label>Full Name</Form.Label>
