@@ -48,10 +48,15 @@ export default function ContactUs (props)  {
     else 
       corsUrl = "http://"
 
-    corsUrl += corsServer+ ":" + PORT + "/email" +  '?name=' +  nameRef.current.value +
-      "&email="+ emailRef.current.value + '&ip=' + localIpv4 +
-      '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
-      '&message='+messageRef.current.value;
+    const txt = messageRef.current.value;
+    const txtArray = txt.split("\n");
+
+    corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
+      "&email="+ emailRef.current.value + 
+      // '&ip=' + localIpv4 +
+      // '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
+      '&message='+txtArray;
+      // '&message='+JSON.stringify(txtArray);
 
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
