@@ -35,7 +35,7 @@ export default function ContactGet (props)  {
     
         const ssl = true
         const PORT = 5000
-        const corsServer = 'dinagold.org'
+        const corsServer = 'dinagold.net'
         var corsUrl;
         if (ssl)
           corsUrl = "https://";
