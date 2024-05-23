@@ -49,14 +49,14 @@ export default function ContactUs (props)  {
       corsUrl = "http://"
 
     const txt = messageRef.current.value;
-    const txtArray = txt.split("\n");
-    console.log (txtArray)
+    const txtSplit = txt.replaceAll("\n",'_NL_');
+    console.log ('txtSplit:', txtSplit)
     corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
       "&email="+ emailRef.current.value + 
       // '&ip=' + localIpv4 +
       // '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
       // '&message='+txtArray;
-      '&text='+JSON.stringify(txtArray);
+      '&text='+txtSplit;
 
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
@@ -71,7 +71,8 @@ export default function ContactUs (props)  {
         const latency = miliEnd - miliStart
         setInfo()
         setStat(getDate() + ' msg arrived') // + '  (' + latency + ' mili)
-        nameRef.current.value= null
+        setError()
+        // nameRef.current.value= null
         // emailRef.current.value= null
         // messageRef.current.value = null;
         beep2()
