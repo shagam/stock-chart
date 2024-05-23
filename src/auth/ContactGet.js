@@ -8,12 +8,14 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import IpContext from '../contexts/IpContext';
 import {beep2} from '../table/ErrorList'
 import DatePicker, {moment} from 'react-datepicker';
+import GetInt from '../utils/GetInt'
+
 
   // display list
   function renderList(array) {
     if (array.length < 1)
       return;
-      return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
+      return array.map((item) => <li key={item.sym}>{item}</li>);  
   }
 
 
@@ -21,11 +23,6 @@ export default function ContactGet (props)  {
 
     const nameRef = useRef()
 
-  
-    // const emailConfirmRef = useRef();
-    const pictureRef = useRef();
-    const commentRef = useState();
-  
     const form = useRef();
   
     const [error, setError] = useState ('');
@@ -56,13 +53,15 @@ export default function ContactGet (props)  {
           corsUrl = "http://"
     
           corsUrl += corsServer+ ":" + PORT + "/contactGet";
-          corsUrl += '?after=' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
+          // corsUrl += '?after=' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
           // corsUrl += '?on=' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21;
           // corsUrl += '?name=' + 'eli'
-          // corsUrl += '?last=' + 3
+          corsUrl += '?last=' + 5
     
           const miliStart =  Date.now();
           setStat(getDate() + ' msg sent to server', corsUrl)
+          setTextArray()
+          setError()
           axios.get (corsUrl)
           // getDate()
           .then ((result) => {
@@ -106,13 +105,15 @@ export default function ContactGet (props)  {
           {/* <br/> */}
           <div style={{display:'flex'}}>
               <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> all &nbsp;         
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> week &nbsp;    
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> last &nbsp;    
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> day &nbsp;    
 
             </div>
             <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
-                
+
+
+            <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>    
             <button onClick={() =>{contactGet('all')} }> getAll</button>&nbsp;  
             
             <hr/> 
