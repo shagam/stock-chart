@@ -14,7 +14,7 @@ export default function ContactUs (props)  {
   const emailRef = useRef();
   const messageRef = useRef();
 
-  // const emailConfirmRef = useRef();
+  const emailConfirmRef = useRef();
   const pictureRef = useRef();
   const commentRef = useState();
 
@@ -32,16 +32,16 @@ export default function ContactUs (props)  {
    function sendContact (e) {
   
     e.preventDefault();
-    // if (emailRef.current.value !== emailConfirmRef.current.value) {
-    //   return setError ('Passwords do not match')
-    // } 
+    if (emailRef.current.value !== emailConfirmRef.current.value) {
+      return setError ('Passwords do not match')
+    } 
     console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'message='+ messageRef.current.value)
     // console.log (form.current)
     // console.log (localIpv4, city, countryName, countryCode)
 
     const ssl = true
     const PORT = 5000
-    const corsServer = 'dinagold.net'
+    const corsServer = 'dinagold.org'
     var corsUrl;
     if (ssl)
       corsUrl = "https://";
@@ -103,6 +103,11 @@ export default function ContactUs (props)  {
           <Form.Label>Email</Form.Label>
           <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
         </Form.Group>
+        <Form.Group id="text">
+          <Form.Label>Email confirm</Form.Label>
+          <Form.Control type="email" ref= {emailConfirmRef} required />
+        </Form.Group>
+
         {/* <hr/> */}
 
         <div>Message</div>
@@ -111,11 +116,7 @@ export default function ContactUs (props)  {
            placeholder=""  defaultValue={''}/>
         </Form.Group>
 
-        {/* <Form.Group id="text">
-          <Form.Label>Message</Form.Label>
-          <Form.Control type="email" ref= {messageRef} required />
-        </Form.Group> */}
-        <hr/>
+          <hr/>
         <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> Send </Button>
       </Form>
       <div>{info}</div>
