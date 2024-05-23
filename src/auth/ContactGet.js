@@ -23,7 +23,15 @@ export default function ContactGet (props)  {
     const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
     const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
+    const [count,setCount] = useState(8);
 
+    const [searchType, setSearchType] = useState()
+
+    const onOptionChange = e => {
+      const tool = e.target.value;
+      setSearchType(tool)
+      console.log(tool)
+    }
 
     function contactGet (e) {
 
@@ -43,15 +51,20 @@ export default function ContactGet (props)  {
           corsUrl = "http://"
     
           corsUrl += corsServer+ ":" + PORT + "/contactGet";
-          // corsUrl += '?after=' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
+
+          if (searchType == 'date')
+            corsUrl +==' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
           // corsUrl += '?on=' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21;
-          // corsUrl += '?name=' + 'eli'
-          corsUrl += '?last=' + 5
+          if (searchType == 'name')
+            corsUrl += '?name=' + 'eli'
+          if (searchType == 'count')
+            corsUrl += '?last=' + count
     
           const miliStart =  Date.now();
           setStat(getDate() + ' msg sent to server', corsUrl)
           setTextArray()
           setError()
+          console.log ('url', corsUrl)
           axios.get (corsUrl)
           // getDate()
           .then ((result) => {
@@ -77,14 +90,6 @@ export default function ContactGet (props)  {
     
     
         };
-
-
-        const [analyzeTool, setAnalyzeTool] = useState()
-        const onOptionChange = e => {
-          const tool = e.target.value;
-          setAnalyzeTool(tool)
-          // console.log(tool)
-        }
       
   
       return (
@@ -98,17 +103,18 @@ export default function ContactGet (props)  {
           <hr/> 
           {/* <br/> */}
           <div style={{display:'flex'}}>
-              <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> all &nbsp;         
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> last &nbsp;    
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> day &nbsp;    
-
+        
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='count' id='0' checked={searchType==='count'} onChange={onOptionChange}/> count &nbsp;    
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='date' id='1' checked={searchType==='date'} onChange={onOptionChange}/> date &nbsp;    
+              <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='name' id='2' checked={searchType==='name'} onChange={onOptionChange}/> name &nbsp; 
             </div>
             <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
 
 
-            <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>    
-            <button onClick={() =>{contactGet('all')} }> getAll</button>&nbsp;  
+            <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
+            
+            <button onClick={() =>{contactGet('all')} }> get</button>&nbsp;  
             
             <hr/> 
 
