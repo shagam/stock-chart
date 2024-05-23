@@ -11,14 +11,6 @@ import DatePicker, {moment} from 'react-datepicker';
 import GetInt from '../utils/GetInt'
 
 
-  // display list
-  function renderList(array) {
-    if (array.length < 1)
-      return;
-      return array.map((item) => <li key={item.sym}>{item}</li>);  
-  }
-
-
 export default function ContactGet (props)  {
 
     const nameRef = useRef()
@@ -32,8 +24,6 @@ export default function ContactGet (props)  {
     const navigate = useNavigate();
     const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
 
-    // const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
-  
 
     function contactGet (e) {
 
@@ -74,7 +64,11 @@ export default function ContactGet (props)  {
 
             console.log (result.data)
             setStat(getDate() + ' msg sent (' + latency + ' mili)')
-            setTextArray(result.data) // display list of contact requests
+
+            const withNL = [];
+            for (let i = 0; i < result.data.length; i++)
+              withNL.push(result.data[i].replaceAll('_NL_','\n'))
+            setTextArray(withNL) // display list of contact requests
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
@@ -131,7 +125,7 @@ export default function ContactGet (props)  {
         </Card.Body>
         </Card>
             <div>{stat}</div>
-            {textArray && renderList(textArray)}
+            {textArray && textArray.map((item) => <li key={item.sym}>{item}</li>)} 
             
         </div>
       );
