@@ -8,7 +8,15 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import IpContext from '../contexts/IpContext';
 import {beep2} from '../table/ErrorList'
 import DatePicker, {moment} from 'react-datepicker';
-  
+
+  // display list
+  function renderList(array) {
+    if (array.length < 1)
+      return;
+      return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
+  }
+
+
 export default function ContactGet (props)  {
 
     const nameRef = useRef()
@@ -23,7 +31,7 @@ export default function ContactGet (props)  {
     const [error, setError] = useState ('');
     const [loading, setLoading] = useState(false);
     const [stat, setStat] = useState()
-  
+    const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
     const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
 
@@ -33,9 +41,7 @@ export default function ContactGet (props)  {
     function contactGet (e) {
 
         e.preventDefault();
-        // if (emailRef.current.value !== emailConfirmRef.current.value) {
-        //   return setError ('Passwords do not match')
-        // } 
+
         console.log (getDate(), 'contactGet params', 'name=', nameRef.current.value, )
         // console.log (form.current)
         // console.log (localIpv4, city, countryName, countryCode)
@@ -63,11 +69,13 @@ export default function ContactGet (props)  {
             if (result.status !== 200)
               return;
             const miliEnd =  Date.now()
+            // const parsedList = JSON.parse(result.data)
             console.log (getDate() +  ' msg sent')
             const latency = miliEnd - miliStart
 
             console.log (result.data)
             setStat(getDate() + ' msg sent (' + latency + ' mili)')
+            setTextArray(result.data) // display list of contact requests
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
@@ -122,6 +130,8 @@ export default function ContactGet (props)  {
         </Card.Body>
         </Card>
             <div>{stat}</div>
+            {textArray && renderList(textArray)}
+            
         </div>
       );
     
