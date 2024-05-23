@@ -66,9 +66,9 @@ export default function ContactGet (props)  {
             setStat(getDate() + ' msg sent (' + latency + ' mili)')
 
             const withNL = [];
-            for (let i = 0; i < result.data.length; i++)
-              withNL.push(result.data[i].replaceAll('_NL_','\n'))
-            setTextArray(withNL) // display list of contact requests
+            // for (let i = 0; i < result.data.length; i++)
+            //   withNL.push(result.data[i].replaceAll('_NL_','\n'))
+            setTextArray(result.data) // display list of contact requests
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
@@ -125,7 +125,7 @@ export default function ContactGet (props)  {
         </Card.Body>
         </Card>
             <div>{stat}</div>
-            {textArray && textArray.map((item) => <li key={item.sym}>{item}</li>)} 
+            {textArray && textArray.map((item,k) => <li key={k}> name: {item.name},  email: {item.email},  txt: {item.text}</li>)} 
             
         </div>
       );

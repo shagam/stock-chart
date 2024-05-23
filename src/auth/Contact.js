@@ -57,7 +57,7 @@ export default function ContactUs (props)  {
       // '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
       // '&message='+txtArray;
       '&text='+txtSplit;
-
+      console.log (corsUrl)
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
       setStat()
