@@ -71,7 +71,7 @@ export default function ContactGet (props)  {
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
-            console.log(getDate(), 'email', err, corsUrl)
+            console.log(getDate(), 'contact', err, corsUrl)
           })     
     
     

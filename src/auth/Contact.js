@@ -33,9 +33,9 @@ export default function ContactUs (props)  {
   
     e.preventDefault();
     if (emailRef.current.value !== emailConfirmRef.current.value) {
-      return setError ('Passwords do not match')
+      return setError ('Email_confirm do not match')
     } 
-    console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'message='+ messageRef.current.value)
+    console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'text='+ messageRef.current.value)
     // console.log (form.current)
     // console.log (localIpv4, city, countryName, countryCode)
 
@@ -56,7 +56,7 @@ export default function ContactUs (props)  {
       // '&ip=' + localIpv4 +
       // '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
       // '&message='+txtArray;
-      '&message='+JSON.stringify(txtArray);
+      '&text='+JSON.stringify(txtArray);
 
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
@@ -92,25 +92,33 @@ export default function ContactUs (props)  {
       &nbsp; <Link to="/" >Home</Link>
       {error && <Alert variant="danger"> {error} </Alert>}
       <Form onSubmit={sendContact}>
-      {/* <div>&nbsp;</div> */}
-        <Form.Group id="name">
-          <Form.Label>Full Name</Form.Label>
+
+      <div>&nbsp;</div>
+        <Form.Group id="name"  style={{display:'flex'}}>
+          <Form.Label style={{color: 'magenta', marginTop: '10px', width: '150px'}}>Full_Name&nbsp;</Form.Label>
           <Form.Control style={{fontSize: '22px'}} type="text" ref= {nameRef} required />
         </Form.Group>
-        {/* <hr/>  */}
 
-        <Form.Group id="email">
-          <Form.Label>Email</Form.Label>
+        <Form.Group id="email"  style={{display:'flex'}}>
+          <Form.Label style={{color: 'magenta', marginTop: '10px', width: '150px'}}>Email&nbsp;</Form.Label>
           <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
         </Form.Group>
-        <Form.Group id="text">
-          <Form.Label>Email confirm</Form.Label>
-          <Form.Control type="email" ref= {emailConfirmRef} required />
+
+        {/* <hr/>  */}
+
+        {/* <Form.Group id="email" style={{display:'flex'}}>
+          <Form.Label style={{color: 'magenta', marginTop: '10px'}}>Email &nbsp;</Form.Label>
+          <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
+        </Form.Group> */}
+
+        <Form.Group id="email1" style={{display:'flex'}}>
+          <Form.Label style={{color: 'magenta', marginTop: '10px', width: '150px'}}>Email_confirm</Form.Label>
+          <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailConfirmRef} required />
         </Form.Group>
 
         {/* <hr/> */}
 
-        <div>Message</div>
+        <div style={{color: 'magenta'}}>Text</div>
         <Form.Group id="message" className="mb-3" controlId="text">
           <Form.Control style={{fontSize: '20px', height: '20vh'}} as="textarea" ref= {messageRef} required  type="text"
            placeholder=""  defaultValue={''}/>
