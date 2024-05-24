@@ -57,20 +57,21 @@ export default function ContactGet (props)  {
         const ssl = true
         const PORT = 5000
         const corsServer = 'dinagold.net'
+
         var corsUrl;
         if (ssl)
           corsUrl = "https://";
         else 
           corsUrl = "http://"
     
-          corsUrl += corsServer+ ":" + PORT + "/contactGet";
+          corsUrl += corsServer+ ":" + PORT + "/contactGet?search";
     
           // if (searchType === 'date')
-            corsUrl += '?date' + '&year=' + searchYear + '&mon=' + searchMon + '&day=' + searchDay; 
+            corsUrl += '&year=' + searchYear + '&mon=' + searchMon + '&day=' + searchDay; 
           if (searchText)
-            corsUrl += '?name=' + searchText
+            corsUrl += '&name=' + searchText
           if (count)
-            corsUrl += '?last=' + count
+            corsUrl += '&count=' + count
 
           const miliStart =  Date.now();
 
@@ -85,11 +86,11 @@ export default function ContactGet (props)  {
               return;
             const miliEnd =  Date.now()
             // const parsedList = JSON.parse(result.data)
-            console.log (getDate() +  ' msg sent')
+            // console.log (getDate() +  ' msg sent')
             const latency = miliEnd - miliStart
 
             console.log (result.data)
-            setStat(getDate() + ' msg sent (' + latency + ' mili)')
+            setStat(getDate() + ' response (' + latency + ' mili)' + ' count=' + result.data.length )
 
             const withNL = [];
             // for (let i = 0; i < result.data.length; i++)
@@ -116,25 +117,19 @@ export default function ContactGet (props)  {
           <hr/> 
           {/* <br/> */}
           <div>
-              <div  style={{display:'flex'}}>       
-                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='count' id='0' checked={searchType==='count'} onChange={onOptionChange}/> &nbsp; Count  
-                  &nbsp; &nbsp; &nbsp;  
-                <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
-              </div>
+    
+            <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
 
-              <div  style={{display:'flex'}}> 
-                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='name' id='2' checked={searchType==='name'} onChange={onOptionChange}/> &nbsp;  Name 
-                &nbsp; &nbsp; &nbsp;  
-                <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> 
-              </div>
 
-              <div  style={{display:'flex'}}>  
-                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='date' id='1' checked={searchType==='date'} onChange={onOptionChange}/> &nbsp;  Date
-                &nbsp; &nbsp; &nbsp;  
-                <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+            <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> 
+
+
+            <div>&nbsp;</div>
+    
+            <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp; </div>
-              </div>
             </div>
+
            
             <div>&nbsp;</div>
             <button onClick={() =>{contactGet('all')} }> get</button>&nbsp;  
@@ -154,6 +149,7 @@ export default function ContactGet (props)  {
         </Card.Body>
         </Card>
             <div>{stat}</div>
+
             {textArray && textArray.map((item,k) => <li key={k}> name: {item.name},  email: {item.email},  txt: {item.text}</li>)} 
             
         </div>
