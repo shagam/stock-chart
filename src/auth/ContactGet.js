@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
+import { Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -34,10 +34,10 @@ export default function ContactGet (props)  {
     const [searchType, setSearchType] = useState()
     const [searchText,setSearchText] = useState()
 
-    const searchYear = searchDate.getFullYear();
-    const searchMon = searchDate.getMonth() + 1; // [1..12]
-    const searchDay = searchDate.getDate(); // [1..31]
-    const chartDateArr = [searchYear, searchMon, searchDay]
+    // const searchYear = searchDate.getFullYear();
+    // const searchMon = searchDate.getMonth() + 1; // [1..12]
+    // const searchDay = searchDate.getDate(); // [1..31]
+    // const chartDateArr = [searchYear, searchMon, searchDay]
  
     
     const onOptionChange = e => {
@@ -48,9 +48,8 @@ export default function ContactGet (props)  {
 
     function contactGet (e) {
 
-        e.preventDefault();
 
-        console.log (getDate(), 'contactGet params', 'name=', nameRef.current.value, )
+        // console.log (getDate(), 'contactGet params', 'name=', nameRef.current.value, )
         // console.log (form.current)
         // console.log (localIpv4, city, countryName, countryCode)
     
@@ -65,9 +64,7 @@ export default function ContactGet (props)  {
           corsUrl = "http://"
     
           corsUrl += corsServer+ ":" + PORT + "/contactGet?search";
-    
-          // if (searchType === 'date')
-            corsUrl += '&year=' + searchYear + '&mon=' + searchMon + '&day=' + searchDay; 
+          corsUrl += '&mili=' + searchDate.getTime(); 
           if (searchText)
             corsUrl += '&name=' + searchText
           if (count)
@@ -78,6 +75,7 @@ export default function ContactGet (props)  {
           setStat(getDate() + ' msg sent to server', corsUrl)
           setTextArray()
           setError()
+
           console.log ('url', corsUrl)
           axios.get (corsUrl)
           // getDate()
@@ -89,7 +87,7 @@ export default function ContactGet (props)  {
             // console.log (getDate() +  ' msg sent')
             const latency = miliEnd - miliStart
 
-            console.log (result.data)
+            console.log ('Response:', result.data)
             setStat(getDate() + ' response (' + latency + ' mili)' + ' count=' + result.data.length )
 
             const withNL = [];
@@ -109,8 +107,6 @@ export default function ContactGet (props)  {
       return (
         <div style={{width:'100%', fontSize: '20px'}}>
 
-        <Card>
-        <Card.Body>
           <h2 className='text-center mb-4'>Contact get</h2>
           &nbsp; <Link to="/" >Home</Link>
           {error && <Alert variant="danger"> {error} </Alert>}
@@ -136,18 +132,6 @@ export default function ContactGet (props)  {
             
             <hr/> 
 
-          <Form onSubmit={contactGet}>
-          {/* <div>&nbsp;</div> */}
-            <Form.Group id="name">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control style={{fontSize: '30px'}} type="text" ref= {nameRef} required />
-            </Form.Group>
-            <hr/> 
-    
-            <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> get </Button>
-          </Form>
-        </Card.Body>
-        </Card>
             <div>{stat}</div>
 
             {textArray && textArray.map((item,k) =>
