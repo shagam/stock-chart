@@ -51,16 +51,16 @@ export default function ContactGet (props)  {
           corsUrl = "http://"
     
           corsUrl += corsServer+ ":" + PORT + "/contactGet";
-
+    
           if (searchType == 'date')
-            corsUrl +==' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
-          // corsUrl += '?on=' + 'true' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21;
+            corsUrl += '?date' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
           if (searchType == 'name')
             corsUrl += '?name=' + 'eli'
           if (searchType == 'count')
             corsUrl += '?last=' + count
-    
+
           const miliStart =  Date.now();
+
           setStat(getDate() + ' msg sent to server', corsUrl)
           setTextArray()
           setError()
