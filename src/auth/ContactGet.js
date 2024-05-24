@@ -46,7 +46,7 @@ export default function ContactGet (props)  {
       console.log(tool)
     }
 
-    function contactGet (e) {
+    function contactGet () {
 
 
         // console.log (getDate(), 'contactGet params', 'name=', nameRef.current.value, )
@@ -99,10 +99,14 @@ export default function ContactGet (props)  {
           // setError([sym, 'email', err.message, corsUrl])
             console.log(getDate(), 'contact', err, corsUrl)
           })     
-    
-    
         };
       
+        function splitLines (text) {
+          const lineArray = text.split('_NL_')
+          // console.log (lineArray)
+          return (lineArray)
+        }
+
   
       return (
         <div style={{width:'100%', fontSize: '20px'}}>
@@ -128,7 +132,7 @@ export default function ContactGet (props)  {
 
            
             <div>&nbsp;</div>
-            <button onClick={() =>{contactGet('all')} }> get</button>&nbsp;  
+            <button onClick={() =>{contactGet()} }> get</button>&nbsp;  
             
             <hr/> 
 
@@ -136,7 +140,7 @@ export default function ContactGet (props)  {
 
             {textArray && textArray.map((item,k) =>
                <li key={k}>date: {item.date} name: {item.name},  email: {item.email},
-                <div> txt: {item.text}</div></li>)} 
+                <div> {splitLines(item.text).map((t,j)=><div>{t}</div>)}</div></li>)} 
             
         </div>
       );
