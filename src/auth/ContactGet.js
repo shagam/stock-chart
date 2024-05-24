@@ -26,8 +26,8 @@ export default function ContactGet (props)  {
     const [stat, setStat] = useState()
     const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
-    const [searchDate, setSearchDate] = useState (new Date(2002, 9, 15));
-    const [count,setCount] = useState(8);
+    const [searchDate, setSearchDate] = useState (new Date(2024, 4, 20));
+    const [count, setCount] = useState(5);
 
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
@@ -37,7 +37,7 @@ export default function ContactGet (props)  {
     const searchYear = searchDate.getFullYear();
     const searchMon = searchDate.getMonth() + 1; // [1..12]
     const searchDay = searchDate.getDate(); // [1..31]
-    const chartDateArr = [searchYear,chartMon, searchDay]
+    const chartDateArr = [searchYear, searchMon, searchDay]
  
     
     const onOptionChange = e => {
@@ -65,11 +65,11 @@ export default function ContactGet (props)  {
     
           corsUrl += corsServer+ ":" + PORT + "/contactGet";
     
-          if (searchType === 'date')
+          // if (searchType === 'date')
             corsUrl += '?date' + '&year=' + searchYear + '&mon=' + searchMon + '&day=' + searchDay; 
-          if (searchType === 'name')
+          if (searchText)
             corsUrl += '?name=' + searchText
-          if (searchType === 'count')
+          if (count)
             corsUrl += '?last=' + count
 
           const miliStart =  Date.now();
@@ -115,19 +115,28 @@ export default function ContactGet (props)  {
           {error && <Alert variant="danger"> {error} </Alert>}
           <hr/> 
           {/* <br/> */}
-          <div style={{display:'flex'}}>
-        
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='count' id='0' checked={searchType==='count'} onChange={onOptionChange}/> count &nbsp;    
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='date' id='1' checked={searchType==='date'} onChange={onOptionChange}/> date &nbsp;    
-              <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='name' id='2' checked={searchType==='name'} onChange={onOptionChange}/> name &nbsp; 
-            </div>
-            <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+          <div>
+              <div  style={{display:'flex'}}>       
+                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='count' id='0' checked={searchType==='count'} onChange={onOptionChange}/> &nbsp; Count  
+                  &nbsp; &nbsp; &nbsp;  
+                <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
+              </div>
+
+              <div  style={{display:'flex'}}> 
+                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='name' id='2' checked={searchType==='name'} onChange={onOptionChange}/> &nbsp;  Name 
+                &nbsp; &nbsp; &nbsp;  
+                <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> 
+              </div>
+
+              <div  style={{display:'flex'}}>  
+                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='date' id='1' checked={searchType==='date'} onChange={onOptionChange}/> &nbsp;  Date
+                &nbsp; &nbsp; &nbsp;  
+                <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp; </div>
-
-
-            <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
-            <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search' isMobile={isMobile}/>
-
+              </div>
+            </div>
+           
+            <div>&nbsp;</div>
             <button onClick={() =>{contactGet('all')} }> get</button>&nbsp;  
             
             <hr/> 
