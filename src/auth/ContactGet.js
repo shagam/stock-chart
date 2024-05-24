@@ -76,7 +76,7 @@ export default function ContactGet (props)  {
           setTextArray()
           setError()
 
-          console.log ('url', corsUrl)
+          console.log (getDate(), 'url', corsUrl)
           axios.get (corsUrl)
           // getDate()
           .then ((result) => {
@@ -87,7 +87,7 @@ export default function ContactGet (props)  {
             // console.log (getDate() +  ' msg sent')
             const latency = miliEnd - miliStart
 
-            console.log ('Response:', result.data)
+            console.log (getDate(), 'Response:', result.data)
             setStat(getDate() + ' response (' + latency + ' mili)' + ' count=' + result.data.length )
 
             const withNL = [];
