@@ -52,11 +52,11 @@ export default function ContactGet (props)  {
     
           corsUrl += corsServer+ ":" + PORT + "/contactGet";
     
-          if (searchType == 'date')
+          if (searchType === 'date')
             corsUrl += '?date' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
-          if (searchType == 'name')
+          if (searchType === 'name')
             corsUrl += '?name=' + 'eli'
-          if (searchType == 'count')
+          if (searchType === 'count')
             corsUrl += '?last=' + count
 
           const miliStart =  Date.now();
