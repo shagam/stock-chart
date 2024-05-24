@@ -1,14 +1,18 @@
 import React, { useState, useRef } from 'react'
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import IpContext from '../contexts/IpContext';
 import {beep2} from '../table/ErrorList'
 import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 import GetInt from '../utils/GetInt'
+import GlobalFilter from '../table/GlobalFilter'
+import MobileContext from '../contexts/MobileContext'
+
 
 
 export default function ContactGet (props)  {
@@ -22,11 +26,20 @@ export default function ContactGet (props)  {
     const [stat, setStat] = useState()
     const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
-    const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
+    const [searchDate, setSearchDate] = useState (new Date(2002, 9, 15));
     const [count,setCount] = useState(8);
 
-    const [searchType, setSearchType] = useState()
+    const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
+    const [searchType, setSearchType] = useState()
+    const [searchText,setSearchText] = useState()
+
+    const searchYear = searchDate.getFullYear();
+    const searchMon = searchDate.getMonth() + 1; // [1..12]
+    const searchDay = searchDate.getDate(); // [1..31]
+    const chartDateArr = [searchYear,chartMon, searchDay]
+ 
+    
     const onOptionChange = e => {
       const tool = e.target.value;
       setSearchType(tool)
@@ -53,9 +66,9 @@ export default function ContactGet (props)  {
           corsUrl += corsServer+ ":" + PORT + "/contactGet";
     
           if (searchType === 'date')
-            corsUrl += '?date' + '&year=' + 2024 + '&mon=' + 5 + '&day=' + 21; 
+            corsUrl += '?date' + '&year=' + searchYear + '&mon=' + searchMon + '&day=' + searchDay; 
           if (searchType === 'name')
-            corsUrl += '?name=' + 'eli'
+            corsUrl += '?name=' + searchText
           if (searchType === 'count')
             corsUrl += '?last=' + count
 
@@ -109,11 +122,12 @@ export default function ContactGet (props)  {
               <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='name' id='2' checked={searchType==='name'} onChange={onOptionChange}/> name &nbsp; 
             </div>
             <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
-                dateFormat="yyyy-LLL-dd" selected={chartDate} onChange={(date) => setChartDate(date)} /> &nbsp; &nbsp; </div>
+                dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp; </div>
 
 
             <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
-            
+            <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search' isMobile={isMobile}/>
+
             <button onClick={() =>{contactGet('all')} }> get</button>&nbsp;  
             
             <hr/> 
