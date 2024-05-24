@@ -107,11 +107,6 @@ export default function ContactUs (props)  {
 
         {/* <hr/>  */}
 
-        {/* <Form.Group id="email" style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '10px'}}>Email &nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
-        </Form.Group> */}
-
         <Form.Group id="email1" style={{display:'flex'}}>
           <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>EmailConfirm</Form.Label>
           <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="email" ref= {emailConfirmRef} required />
