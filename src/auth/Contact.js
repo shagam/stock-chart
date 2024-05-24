@@ -96,13 +96,13 @@ export default function ContactUs (props)  {
 
       <div>&nbsp;</div>
         <Form.Group id="name"  style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '10px', width: '150px'}}>Full_Name&nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px'}} type="text" ref= {nameRef} required />
+          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Full_Name&nbsp;</Form.Label>
+          <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="text" ref= {nameRef} required />
         </Form.Group>
 
         <Form.Group id="email"  style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '10px', width: '150px'}}>Email&nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailRef} required />
+          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Email&nbsp;</Form.Label>
+          <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="email" ref= {emailRef} required />
         </Form.Group>
 
         {/* <hr/>  */}
@@ -113,15 +113,15 @@ export default function ContactUs (props)  {
         </Form.Group> */}
 
         <Form.Group id="email1" style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '10px', width: '150px'}}>Email_confirm</Form.Label>
-          <Form.Control style={{fontSize: '22px'}} type="email" ref= {emailConfirmRef} required />
+          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>EmailConfirm</Form.Label>
+          <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="email" ref= {emailConfirmRef} required />
         </Form.Group>
 
         {/* <hr/> */}
 
         <div style={{color: 'magenta'}}>Text</div>
         <Form.Group id="message" className="mb-3" controlId="text">
-          <Form.Control style={{fontSize: '20px', height: '20vh'}} as="textarea" ref= {messageRef} required  type="text"
+          <Form.Control style={{fontSize: '20px', height: '20vh', backgroundColor: 'LemonChiffon'}} as="textarea" ref= {messageRef} required  type="text"
            placeholder=""  defaultValue={''}/>
         </Form.Group>
 
