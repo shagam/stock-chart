@@ -150,7 +150,9 @@ export default function ContactGet (props)  {
         </Card>
             <div>{stat}</div>
 
-            {textArray && textArray.map((item,k) => <li key={k}> name: {item.name},  email: {item.email},  txt: {item.text}</li>)} 
+            {textArray && textArray.map((item,k) =>
+               <li key={k}>date: {item.date} name: {item.name},  email: {item.email},
+                <div> txt: {item.text}</div></li>)} 
             
         </div>
       );
