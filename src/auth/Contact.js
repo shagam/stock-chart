@@ -96,7 +96,7 @@ export default function ContactUs (props)  {
 
       <div>&nbsp;</div>
         <Form.Group id="name"  style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Full_Name&nbsp;</Form.Label>
+          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Name&nbsp;</Form.Label>
           <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="text" ref= {nameRef} required />
         </Form.Group>
 
