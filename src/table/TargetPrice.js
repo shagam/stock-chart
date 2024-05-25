@@ -129,22 +129,13 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 
 
         // firefox firestore
-        await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
+        // await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
 
         if (LOG) {
             console.log (symbol, 'targetPrice add', 'target=',  targetRaw, (targetRaw / target).toFixed(3), arrayStringify, ' size=', targetPriceArrayForSym.length, 'src=', src)  
         }   
     }
 
-    // delete all extra collection except earliest
-    for (let i = 0; i < fromFireBase.docs.length; i++) {
-        if (! bigDifference && i === earliestIndx)
-        continue       
-        var tarDoc_ = doc(db, "targetPriceArray", fromFireBase.docs[i].id);
-        if (LOG)
-            console.log (symbol, 'targetPrice, delete duplicate arrays', fromFireBase.docs[i].data())
-        await deleteDoc (tarDoc_);    
-    }
 }
 
 
