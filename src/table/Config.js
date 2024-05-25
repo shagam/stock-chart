@@ -15,6 +15,7 @@ const  Config = (props) => {
     for (let index = props.rows.length -1; index >= 0; index--)
       props.rows.splice(index, 1);
     props.saveTable();
+    window.location.reload(false);
   }
 
   function reloadPage() {
