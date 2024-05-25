@@ -255,7 +255,7 @@ function Holdings (props) {
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
               <button type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
               {props.eliHome && <button type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
-              <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp;
+              {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
 
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
               <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
