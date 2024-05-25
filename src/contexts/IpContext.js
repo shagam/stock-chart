@@ -6,7 +6,7 @@ import axios from 'axios'
 import {format} from "date-fns"
 
 import {db} from '../firebaseConfig'
-
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
 
 function IpContext  () {
 
@@ -19,6 +19,7 @@ function IpContext  () {
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   const [ios, setIos] = useState(false);
   const [eliHome, setEliHome] = useState(false);
+  const { login, currentUser, admin } = useAuth();
 
   const LOG_FLAG = false;
 
@@ -81,7 +82,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.IPv4 === '62.0.92.49');
+        setEliHome (res.data.IPv4 === '62.0.92.49' || admin);
         setLocalIPv4 (res.data.IPv4);
         setCity (res.data.city);
         setCountryName(res.data.country_name)
