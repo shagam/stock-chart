@@ -342,7 +342,7 @@ const BasicTable = (props) => {
     rows[row_index].values.splits_list = splits;
     // console.log (splits)
     
-    targetPriceAdd (sym, rows[row_index].values.targetRaw, price, props.logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
+    targetPriceAdd (sym, rows[row_index].values.target_raw, price, props.logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
 
     try {
     if (splits) {
