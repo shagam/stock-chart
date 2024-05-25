@@ -55,15 +55,6 @@ import  {CommonDatabase, GainWrite} from './CommonDatabase'
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 
-// import {collection, getDocs, addDoc,  doc, deleteDoc, query, where} from "firebase/firestore";
-// const collection = lazy(() => import('firebase/firestore').then((module) => ({default: module.collection})))
-// const getDocs= lazy(() => import('firebase/firestore').then((module) => ({default: module.getDocs})))
-// const addDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.addDoc})))
-// const doc = lazy(() => import('firebase/firestore').then((module) => ({default: module.doc})))
-// const deleteDoc = lazy(() => import('firebase/firestore').then((module) => ({default: module.deleteDoc})))
-// const query = lazy(() => import('firebase/firestore').then((module) => ({default: module.query})))
-// const where = lazy(() => import('firebase/firestore').then((module) => ({default: module.where})))
-
 const Manual = lazy(() => import ('../manual/Manual'))
 
 const Tools = lazy(() => import ('./Tools'))
@@ -88,7 +79,7 @@ const polygon = lazy(() => import('./Polygon').then((module) => ({default: modul
 const marketwatchGainValidate = lazy(() => import('./GainValidateMarketwatch').then((module) => ({default: module.marketwatchGainValidate})))
 
 const StockChart = lazy(() => import ('../Stock-chart'));
-const Firebase  = lazy(() => import ( './Firebase'));
+
 const MarketStackApi = lazy(() => import ('./MarketStackApi'))
 
 const BasicTable = (props) => {
