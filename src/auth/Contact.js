@@ -41,7 +41,7 @@ export default function ContactUs (props)  {
 
     const ssl = true
     const PORT = 5000
-    const corsServer = 'dinagold.net'
+    const corsServer = props.server //'dinagold.net'
     var corsUrl;
     if (ssl)
       corsUrl = "https://";

@@ -55,7 +55,7 @@ export default function ContactGet (props)  {
     
         const ssl = true
         const PORT = 5000
-        const corsServer = 'dinagold.net'
+        const corsServer = props.server //'dinagold.net'
 
         var corsUrl;
         if (ssl)
@@ -132,7 +132,7 @@ export default function ContactGet (props)  {
 
            
             <div>&nbsp;</div>
-            <button onClick={() =>{contactGet()} }> get</button>&nbsp;  
+            <button onClick={() =>{contactGet()} } style={{backgroundColor:'lightGreen'}}> get contact requests</button>&nbsp;  
             
             <hr/> 
 

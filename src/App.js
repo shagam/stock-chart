@@ -39,7 +39,7 @@ const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "fireb
 function App() {
   const [count, setCount] = useState (0);
   const [logFlags, setLogFlags] = useState([]);
-
+  const [server, setServer] = useState('dinagold.net')
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
   const nowStr = getDateSec()
@@ -70,7 +70,7 @@ function App() {
                    {/* <hr/>  */}
             <Router>
               <Routes>
-                <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} logFlags={logFlags} />}/>
+                <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} logFlags={logFlags} setServer={setServer}/>}/>
                 <Route path ="/dashBoard"  element={<Dashboard />}/>
                       {/* <Route path="/" element={<Dashboard/>}   /> */}
                 <Route path="/signup" element={<Signup/> } />
@@ -83,8 +83,8 @@ function App() {
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/targetPrice" element={<TargetPrice  />}/>
                 <Route path="/manual" element={<Manual  />}/>
-                <Route path="/contactUs" element={<Contact  />}/>
-                <Route path="/contactGet" element={<ContactGet  />}/>
+                <Route path="/contactUs" element={<Contact server={server} />}/>
+                <Route path="/contactGet" element={<ContactGet server={server} />}/>
                 {/* <Route path="/contact" element={<Contact  />}/> */}
 
               </Routes>

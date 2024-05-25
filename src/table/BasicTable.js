@@ -1101,7 +1101,8 @@ const BasicTable = (props) => {
     setAnalyzeTool(tool)
     // console.log(tool)
   }
-
+  props.setServer(servSelect)
+    
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
@@ -1112,8 +1113,10 @@ const BasicTable = (props) => {
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
         <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp;
         {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp; */}
+
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {eliHome && <Link to="/contactGet">ContactGet</Link>} &nbsp;
+
         {eliHome && <Link to="/targetPrice">Target-price</Link>} &nbsp;
 
         <div className='w-100 text-left mt-2 d-flex '>   
