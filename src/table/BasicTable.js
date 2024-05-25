@@ -1102,7 +1102,7 @@ const BasicTable = (props) => {
     // console.log(tool)
   }
   props.setServer(servSelect)
-    
+
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
@@ -1129,21 +1129,21 @@ const BasicTable = (props) => {
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
-          {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>}
+          {/* {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>} */}
           {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
 
-          {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>}
+          {/* {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>} */}
 
           {eliHome && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
           {eliHome && <div style={{display:'flex'}}> <ServerSelect serv={servSelect} setServSelect={setServSelect} title='server' options={servList} defaultValue={servSelect}/> </div>}
-          {admin && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>}
+          {/* {admin && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>} */}
 
           {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
-          {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}     
-          {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;&nbsp; </div>  }
+          {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
+          {/* {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;&nbsp; </div>  } */}
 
           {<div> <button onClick={gainAll} > gainAll </button> </div>}
           &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
