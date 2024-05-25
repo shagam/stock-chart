@@ -174,12 +174,7 @@ function Holdings (props) {
           etfArr_.push (etf)
         }
         
-        if (holdingsRawObj[props.chartSymbol] === undefined)
-          holdingsRawObj[props.chartSymbol] = result.data;
-        else {
-          console.log (etf, 'dulicate')
-          // return;        
-        }
+        holdingsRawObj[props.chartSymbol] = result.data;
 
         const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
         var cnt = 0;
