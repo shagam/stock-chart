@@ -76,9 +76,9 @@ return (
             <tr>
                 <td style={{color:'magenta'}}>Free sharing</td><td>Pease share with anyone interested</td> 
             </tr>
-            <tr>
+            {/* <tr>
                 <td style={{color:'magenta'}}>Public source code</td><td>github.com/shagam</td> 
-            </tr>
+            </tr> */}
             <tr>
                 <td style={{color:'magenta'}}>No garentee </td><td>Please compare with other sites</td> 
             </tr>
