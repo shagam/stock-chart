@@ -150,9 +150,12 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         else
           ver['nasdaqPrice'] = rows[row_index].values.verifyPrice;
 
-        ver['entry'] = entry;
+        ver['week'] = entry;
         ver['max'] = stockChartXValuesFunction.length - 1
         ver['verify_1'] = p
+
+        if (p < 0.85 || p > 1.2)
+          setErr('Verify_1 mismatch. Too far from "1" ')
 
         if (LOG) {
           console.log (ver)
