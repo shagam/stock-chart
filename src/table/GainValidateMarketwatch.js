@@ -146,7 +146,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
         ver['alphaPrice'] = alphaPrice
 
         if (!nasdaq)
-          ver['marketwatchPrice'] = rows[row_index].values.verifyPrice;
+          ver['verifyPrice'] = rows[row_index].values.verifyPrice;
         else
           ver['nasdaqPrice'] = rows[row_index].values.verifyPrice;
 

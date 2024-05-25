@@ -177,7 +177,7 @@ function Verify (props) {
           </div>   
           <br></br>
 
-          <button type="button" onClick={()=>verify (false)}>verify &nbsp;(MarketWatch)   </button>
+          <button type="button" onClick={()=>verify (false)}>verify &nbsp;   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>
           <br></br>  
     
