@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll} from './TargetPrice'
+import {getTargetPriceArray, targetHistAll, targetHistoryAll, moveFromFirebase} from './TargetPrice'
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
@@ -11,10 +11,12 @@ import "react-datepicker/dist/react-datepicker.css";
     
 import logFlags from '../LogFlags'
 import {monthGain} from './MonthGain'
+import IpContext from '../contexts/IpContext';
 
 function Tools (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
 
+    const {localIp, localIpv4, eliHome} = IpContext();
     const [mGainObj, setMgainObj] = useState ({});
     
     const [targetInfo, setTargetInfo] = useState ();
@@ -95,6 +97,10 @@ function Tools (props) {
                 {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
                 <br></br>           
                 
+                 <h3>Target price history</h3>
+
+                {eliHome && <button type="button" onClick={()=>moveFromFirebase (props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)}>moveFromFirebase</button>}  &nbsp; &nbsp;
+
                 <button type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
                 
                 {props.symbol && <button type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> }
