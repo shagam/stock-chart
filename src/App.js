@@ -81,7 +81,6 @@ function App() {
                 <Route path="/tutorials" element={<Tutorials  />}/>
                 <Route path="/about" element={<About  />}/>
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
-                <Route path="/targetPrice" element={<TargetPrice  />}/>
                 <Route path="/manual" element={<Manual  />}/>
                 <Route path="/contactUs" element={<Contact server={server} />}/>
                 <Route path="/contactGet" element={<ContactGet server={server} />}/>

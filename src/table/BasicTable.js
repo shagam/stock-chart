@@ -1108,7 +1108,6 @@ const BasicTable = (props) => {
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {eliHome && <Link to="/contactGet">ContactGet</Link>} &nbsp;
 
-        {eliHome && <Link to="/targetPrice">Target-price</Link>} &nbsp;
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
