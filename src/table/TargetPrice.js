@@ -148,15 +148,6 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
             console.log(getDate(), symbol, 'targetPrice', err.message)
         })
 
-
-        // firefox firestore
-        // await addDoc (targetRef, {symbol: symbol, dat: arrayStringify}) 
-
-        // if (LOG) {
-        //     console.log (symbol, 'targetPrice add', 'target=',  targetRaw, (targetRaw / target).toFixed(3), arrayStringify, ' size=', targetPriceArrayForSym.length, 'src=', src)  
-        // }   
-
-
 }
 
 
@@ -252,37 +243,54 @@ async function targetHistBest (setTargetPriceHist, logFlags) {
     setTargetPriceHist(tarHist);
 }
 
-async function targetHistAll (setTargetPriceHist, logFlags) {
-    const LOG = false; //logFlags.includes('target')
-    const tagetHistory = await getDocs(targetRef);
-    if (LOG)
-        console.log ('count=', tagetHistory.docs.length)
-    var tarHist = {}
-    for (let i = 0; i < tagetHistory.docs.length; i++) {
-        const sym = tagetHistory.docs[i].data().symbol;
-        if (sym === 'AAPL') {
-            const b = 1
+async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT, servSelect) {
+    const LOG = true;//logFlags.includes('target')
+
+    var corsUrl = ''
+    if (ssl)
+        corsUrl = 'https://'
+    else
+        corsUrl = 'http://'
+    corsUrl += servSelect + ":" + PORT + "/target?cmd=readAll&" 
+    console.log (corsUrl)
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+
+        if (result.status !== 200) {
+            console.log (getDate(), 'status=', result)
+            return;
         }
-        const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
+
+        const dat = result.data // JSON.parse(result.data);
+
+
+        if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+            errorAdd([getDate(), 'targetAll', result.data])
+            return;
+        }
         if (LOG)
-            console.log (sym, histArr.length, histArr)
-        for (let j = 0; j < histArr.length; j++)  {                 
-            delete histArr[j].dateMili;  // reduce unimportant info
+        console.log(getDate(),  'targetAll arrived', result.data,)  
+
+        //delete dateMili
+        const stocks = Object.keys(dat);
+        for (let i = 0 ; i < stocks.length; i++) {
+            for (let j = 0; j < dat[stocks[i]].length; j++)  {                 
+                delete dat[stocks[i]][j].dateMili;  // reduce unimportant info
+            }
         }
-        if (! tarHist[sym])
-            tarHist[sym] = histArr;
-        else
-            if (LOG)
-                console.log (sym, 'duplicate', tarHist[sym].length, histArr.length)
-        if (histArr.length > 1) {
-            const a = 1
-        }
-    }
-    setTargetPriceHist(tarHist);
+
+        setTargetPriceHist(dat);     
+    } )
+    .catch ((err) => {
+        errorAdd([getDate(), 'target', err.message])
+        console.log(getDate(), 'targetPrice', err.message)
+    })
+
   }
 
 function TargetPrice () {
-    const [targetPriceHist, setTargetPriceHist] = useState ({});
+
 
     return (
 
@@ -297,27 +305,10 @@ function TargetPrice () {
 
         <hr/>  
 
-        <button type="button" onClick={()=>targetHistAll (setTargetPriceHist)}>targetHistoryAll</button>  &nbsp; &nbsp;
+ 
         {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
-        <button type="button" onClick={()=>targetHistBest (setTargetPriceHist)}>targetHistBest</button>         
+        {/* <button type="button" onClick={()=>targetHistBest (setTargetPriceHist)}>targetHistBest</button>          */}
 
-        {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
-         <div  style={{display: 'flex'}}>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; &nbsp; <div style={{color: 'lightGreen'}}>(targetNew &nbsp;/ targetOld)</div> </div>}
-
-        <div  style={{ maxHeight: '65vh', 'overflowY': 'scroll'}}  > 
-
-          {targetPriceHist && Object.keys(targetPriceHist).length > 0 && Object.keys(targetPriceHist).sort().map((sym,i)=>{
-            return (
-                <div style={{width: '90vw'}} key={i}>
-                  <div  style={{display: 'flex'}} >
-                    <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
-                    <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
-                  </div> 
-                  {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
-                </div>
-              )
-          })}
-        </div>
         <br></br>
         <hr/>  
       </div>
