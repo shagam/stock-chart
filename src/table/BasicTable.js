@@ -1270,7 +1270,8 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
-            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap} /> }
+            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
+             ssl={ssl} PORT={PORT} servSelect={servSelect} /> }
 
             {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}     
 

@@ -160,18 +160,42 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 }
 
 
-// get all target Price history for one symbol
-async function getTargetPriceArray (symbol, setTargetInfo) {
+// get all target Price history for one symbol  // 
+async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, ssl, PORT, servSelect) {
+    const LOG = logFlags.includes('target') 
 
-    var userQuery = query (targetRef, where ('symbol', '==', symbol));
-    const fromFireBase = await getDocs (userQuery);
+     // home server
+     var corsUrl = ''
+     if (ssl)
+         corsUrl = 'https://'
+     else
+         corsUrl = 'http://'
+     corsUrl += servSelect + ":" + PORT + "/target?cmd=readOne&" + "stock=" + symbol
+     console.log (corsUrl)
+     axios.get (corsUrl)
+     // getDate()
+     .then ((result) => {
 
-    const targetPriceArray = fromFireBase.docs.length > 0? JSON.parse(fromFireBase.docs[0].data().dat) : [];
-    var str = JSON.stringify (targetPriceArray)
-    str = str.replace (/,"dateMili":\d*/g, '')
-    const arr = JSON.parse (str)
-    setTargetInfo (arr)
-    // return targetPriceArray;   
+         if (result.status !== 200) {
+             console.log (symbol, getDate(), 'status=', result)
+             return;
+         }
+
+         const dat = result.data // JSON.parse(result.data);
+         if (LOG)
+             console.log (symbol, getDate(), dat)
+
+         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+             errorAdd([symbol, getDate(), 'target',result.data])
+             return;
+         }
+         console.log(getDate(), symbol, 'targetPrice arrived', result.data,)  
+         setTargetInfo(dat)        
+     } )
+     .catch ((err) => {
+         errorAdd([symbol, getDate(), 'target', err.message])
+         console.log(getDate(), symbol, 'targetPrice', err.message)
+     })
 }
 
 // obsolete
@@ -282,7 +306,7 @@ function TargetPrice () {
 
         <div  style={{ maxHeight: '65vh', 'overflowY': 'scroll'}}  > 
 
-          {targetPriceHist && Object.keys(targetPriceHist).sort().map((sym,i)=>{
+          {targetPriceHist && Object.keys(targetPriceHist).length > 0 && Object.keys(targetPriceHist).sort().map((sym,i)=>{
             return (
                 <div style={{width: '90vw'}} key={i}>
                   <div  style={{display: 'flex'}} >

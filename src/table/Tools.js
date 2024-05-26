@@ -43,7 +43,7 @@ function Tools (props) {
   
   
     function targetGetOne (symbol) {
-      const tar = getTargetPriceArray (props.symbol, setTargetInfo)
+      const tar = getTargetPriceArray (props.symbol, setTargetInfo, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)
   
       const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
       if (row_index  === -1)
