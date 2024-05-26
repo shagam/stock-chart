@@ -33,9 +33,9 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
 
     if (lastTargetPrice[symbol]) {
-        const p = lastTargetPrice[symbol].targetRaw / targetRaw;
+        const p = lastTargetPrice[symbol].target / targetRaw;
         if ( p  <  1.1 && p > 0.9) {// small diff
-            console.log (symbol, 'target price no diff', symTargetOne)
+            console.log (symbol, 'target price small diff', symTargetOne)
             return;
         }
     }
