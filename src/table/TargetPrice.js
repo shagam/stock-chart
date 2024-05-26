@@ -189,59 +189,6 @@ async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, s
      })
 }
 
-// obsolete
-async function targetHistBigDiff (setTargetPriceHist, logFlags) {
-    const LOG = logFlags.includes('target')
-
-    const tagetHistory = await getDocs(targetRef);
-    var tarHist = {}
-    for (let i = 0; i < tagetHistory.docs.length; i++) {
-        const sym = tagetHistory.docs[i].data().symbol;
-        try {
-            const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
-            const tar0 =  histArr[0].target;
-            const tar1 =  histArr[histArr.length - 1].target;            
-
-            if (bigDiff (tar0, tar1, 1.05)) {
-                if (LOG)
-                    console.log (sym, histArr.length)
-                for (let i = 0; i < histArr.length; i++)                   
-                    delete histArr[i].dateMili;  // reduce unimportant info
-                if (LOG)
-                    console.dir (histArr)
-                tarHist[sym] = histArr;
-
-            }
-        } catch (e) {console.log (sym, e.message)}
-    }
-
-    setTargetPriceHist(tarHist);
-}
-
-// hiest target gain
-async function targetHistBest (setTargetPriceHist, logFlags) {
-    const LOG = false; //logFlags.includes('target')
-
-    const tagetHistory = await getDocs(targetRef);
-
-    var tarHist = {}
-    for (let i = 0; i < tagetHistory.docs.length; i++) {
-        const sym = tagetHistory.docs[i].data().symbol;
-        try {
-            const histArr = JSON.parse (tagetHistory.docs[i].data().dat)
-            const tar =  histArr[histArr.length - 1].tar;            
-
-            if (tar > 1.12) {
-                for (let i = 0; i < histArr.length; i++)                   
-                    delete histArr[i].dateMili;  // reduce unimportant info
-                tarHist[sym] = histArr;
-            }
-        } catch (e) {console.log (sym, e.message)}
-    }
-    // IBM [{"target":152.06,"date":"2024-Jan-15  11:39"},{"target":138.69,"date":"2024-Jan-17  13:42"}]
-
-    setTargetPriceHist(tarHist);
-}
 
 async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT, servSelect) {
     const LOG = true;//logFlags.includes('target')
@@ -272,7 +219,7 @@ async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT,
         if (LOG)
         console.log(getDate(),  'targetAll arrived', result.data,)  
 
-        //delete dateMili
+        //delete dateMili non essential info
         const stocks = Object.keys(dat);
         for (let i = 0 ; i < stocks.length; i++) {
             for (let j = 0; j < dat[stocks[i]].length; j++)  {                 
@@ -289,31 +236,6 @@ async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT,
 
   }
 
-function TargetPrice () {
 
 
-    return (
-
-        <div>
-        <div className='w-100 text-left mt-2'>
-            <Link to="/" > Home </Link>
-        </div>
-        <br></br>
-        {/* <hr/>  */}
-        <h4 style={{color:'Green'}}>TargetPriceHistory</h4>
-        {/* <hb/> */}
-
-        <hr/>  
-
- 
-        {/* <button type="button" onClick={()=>targetHistBigDiff (setTargetPriceArray, logFlags)}>targetHistBigDiff</button>  &nbsp; &nbsp; */}
-        {/* <button type="button" onClick={()=>targetHistBest (setTargetPriceHist)}>targetHistBest</button>          */}
-
-        <br></br>
-        <hr/>  
-      </div>
-
-    )
-}
-
-export {TargetPrice, targetPriceAdd, getTargetPriceArray, targetHistAll, targetHistBigDiff, targetHistBest}
+export {targetPriceAdd, getTargetPriceArray, targetHistAll}

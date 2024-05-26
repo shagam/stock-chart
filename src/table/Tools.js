@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll, targetHistBigDiff, targetHistBest} from './TargetPrice'
+import {getTargetPriceArray, targetHistAll, targetGet, targetHistoryAll} from './TargetPrice'
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
