@@ -24,7 +24,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     const LOG = logFlags.includes('target') 
     if (price === 0 || targetRaw === undefined) {
         if (LOG)
-            console.log (symbol, 'targetPrice abort price=', price,  'targetRaw=', targetRaw, ' src=', src)
+            console.log (symbol, getDate(), 'targetPrice abort price=', price,  'targetRaw=', targetRaw, ' src=', src)
         return; // do not add tar record
     }
      
@@ -35,7 +35,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     if (lastTargetPrice[symbol]) {
         const p = lastTargetPrice[symbol].target / targetRaw;
         if ( p  <  1.1 && p > 0.9) {// small diff
-            console.log (symbol, 'target price small diff', symTargetOne)
+            console.log ( symbol, getDate(), 'target price small diff', p)
             return;
         }
     }
@@ -103,7 +103,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     //         console.log (symbol, 'targetPrice new')
 
 
-    if (true) {
+
 
 
         // const target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; 
@@ -131,20 +131,20 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
         .then ((result) => {
 
             if (result.status !== 200) {
-                console.log (symbol, 'status=', result)
+                console.log (symbol, getDate(), 'status=', result)
                 return;
             }
             if (LOG)
                 console.log (JSON.stringify(result.data))
 
             if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-                errorAdd([symbol, 'target',result.data])
+                errorAdd([symbol, getDate(), 'target',result.data])
                 return;
             }
-            console.log(getDate(), symbol, 'targetPrice sent', result.data, 'from:', src)          
+            console.log(getDate(), symbol, 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
         } )
         .catch ((err) => {
-            errorAdd([symbol, 'target', err.message])
+            errorAdd([symbol, getDate(), 'target', err.message])
             console.log(getDate(), symbol, 'targetPrice', err.message)
         })
 
@@ -155,7 +155,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
         // if (LOG) {
         //     console.log (symbol, 'targetPrice add', 'target=',  targetRaw, (targetRaw / target).toFixed(3), arrayStringify, ' size=', targetPriceArrayForSym.length, 'src=', src)  
         // }   
-    }
+
 
 }
 
