@@ -79,6 +79,10 @@ const Peak2PeakGui = (props) => {
     props.setBubbleLine ({x: xBubbleLine, y: yBubbleLine})
     setBubbleLineFlag(true)
 
+    if (Object.keys(props.gainMap).length > 1) {
+      props.errorAdd(['Bubble-line only for sinle stock. <reloadPage> and try again'])
+    }
+
     //calc ratio sym/bubbleline
     console.log (YValues[0], yBubbleLine[1])
     const bubbleLineOver = (YValues[0] / yBubbleLine[1]).toFixed(3)
