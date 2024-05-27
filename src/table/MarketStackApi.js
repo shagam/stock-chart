@@ -95,7 +95,7 @@ export const MarketstackApi = (props) => {
               return null;
             if (chartData.error) {
               console.log (chartData.error, chartData.message, )
-              props.errorAdd([props.symbol, 'try firefox', chartData.error.code, chartData.error.message])
+              props.errorAdd([props.symbol, chartData.error.code, ', Use Firefox'])
               return;
             }
             const dataStr = JSON.stringify(chartData);
@@ -160,7 +160,7 @@ export const MarketstackApi = (props) => {
        <div style={{display:'flex'}} >
           <button type="button" onClick={()=>getData(props.symbol)}>marketStackSearch </button>
           &nbsp;&nbsp;
-          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)}  /> &nbsp; (Limited to one year, not all browsers)
+          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)}  /> &nbsp; (Limited to one year, use firefox)
 
    
         </div>
