@@ -99,7 +99,7 @@ function Tools (props) {
                 
                  <h3>Target price history</h3>
 
-                {eliHome && <button type="button" onClick={()=>moveFromFirebase (props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)}>moveFromFirebase</button>}  &nbsp; &nbsp;
+                {false && eliHome && <button type="button" onClick={()=>moveFromFirebase (props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)}>moveFromFirebase</button>}  &nbsp; &nbsp;
 
                 <button type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
                 
