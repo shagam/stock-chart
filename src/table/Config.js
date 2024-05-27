@@ -4,6 +4,7 @@ import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
 import IpContext from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
+import {beep2} from './ErrorList'
 
 const  Config = (props) => { 
 
@@ -54,7 +55,7 @@ const  Config = (props) => {
             <div> &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;&nbsp; </div>
             <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable &nbsp;   </button>
           </div>
- 
+          &nbsp;&nbsp;{eliHome && <button type="button" onClick={()=>beep2()}>beep </button>}
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
           <div  style={{display:'flex', paddingTop: '5px'}}>            
