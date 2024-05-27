@@ -2,12 +2,15 @@ import React, {useState} from 'react';
 
 import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
+import IpContext from '../contexts/IpContext';
+import MobileContext from '../contexts/MobileContext'
 
 const  Config = (props) => { 
 
   const [configFlag, setConfigFlag] = useState (false);
   //console.log(`AlphaVantage localStorage ${alpha}`); 
-
+  const {localIp, localIpv4, eliHome} = IpContext();
+  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
@@ -65,6 +68,8 @@ const  Config = (props) => {
           <AlphaVantage alphaCallBack={props.alphaCallBack} />
           <div>&nbsp; </div>
           <div>Url: {window.location.href} </div>
+          {eliHome && <div>Global-ip: {localIpv4} </div>}
+          {eliHome && <div>Browser:  {userAgent} </div>}
         </div>
       }
 
