@@ -20,7 +20,7 @@ export const MarketstackApi = (props) => {
   const [title, setTitle] = useState()
   const [gainChart, setGainChart] = useState()
 
-
+  
 
   const getData = (sym) => {
 
@@ -158,7 +158,7 @@ export const MarketstackApi = (props) => {
       </div>
       {displayFlag && <div>
        <div style={{display:'flex'}} >
-          <button type="button" onClick={()=>getData(props.symbol)}>marketStackSearch </button>
+          <button type="button" onClick={()=>getData(props.symbol)}>marketStackInfo </button>
           &nbsp;&nbsp;
           <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)}  /> &nbsp; (Limited to one year, use firefox)
 
