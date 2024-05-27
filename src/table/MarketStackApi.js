@@ -1,23 +1,28 @@
 import { getMonth } from 'date-fns';
 import React, {useState, useMemo, useEffect} from 'react'
 import { useTable, useSortBy, useGlobalFilter, useRowSelect } from 'react-table'
-import {dateSplit, monthsBack, daysBack} from '../utils/Date';
+import {dateSplit, monthsBack, daysBack, getDate} from '../utils/Date';
 
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {} from "date-fns";
 import {format} from "date-fns"
+import Plot from 'react-plotly.js';
 
 export const MarketstackApi = (props) => {
 
-  const [startDate, setStartDate] = useState(new Date(2021, 9, 15));
+  const [startDate, setStartDate] = useState(new Date(2022, 9, 15));
   const [displayFlag, setDisplayFlag] = useState (false); 
 
 
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
+  const [title, setTitle] = useState()
+  const [gainChart, setGainChart] = useState()
 
-  const searchSplits = (sym) => {
+
+
+  const getData = (sym) => {
 
     if (props.symbol !== undefined)
       sym = props.symbol;
@@ -88,6 +93,11 @@ export const MarketstackApi = (props) => {
           (chartData) => {
             if (chartData === undefined)
               return null;
+            if (chartData.error) {
+              console.log (chartData.error, chartData.message, )
+              // props.errorAdd([props.symbol, chartData.error, chartData.message])
+              return;
+            }
             const dataStr = JSON.stringify(chartData);
             if (dataStr === "{}") {
               alert (`Invalid symbol: (${sym})`)
@@ -102,9 +112,9 @@ export const MarketstackApi = (props) => {
               for (let i = 0; i < chartData.data.length; i++) {
                 var date = chartData.data[i].date;
                 date = date.split('T')[0];
-                const open = chartData.data[i].open;
+                const close = chartData.data[i].close;
                 stockChartXValuesFunction.push(date);
-                stockChartYValuesFunction.push(open);
+                stockChartYValuesFunction.push(close);
               }
             } catch (e) {console.log(e)}
 
@@ -112,46 +122,23 @@ export const MarketstackApi = (props) => {
             // let i = 0;
             var splits = "";
             var splitArray = [];
-            // for (var key in chartData[`${periodTag}`]) {
-            //     stockChartXValuesFunction.push(key);
-            //     stockChartYValuesFunction.push(Number (chartData[`${periodTag}`][key]['1. open']));
-            //     if (i > 0) {
-            //       let ratio = stockChartYValuesFunction[i] / stockChartYValuesFunction[i-1];
-            //       if (ratio > 1.8 || ratio < 0.6) {
-            //         ratio = ratio.toFixed(2);
-            //         //splits += `date=${key}  ratio=${ratio} week=${i}, `;
-            //         const  split = {ratio: ratio, date: key, week: -1};
-            //         splitArray.push(split); 
-            //       }                        
-            //     }
-            //     i++;
-            // }
-
-            // compensate for splits
-            // if (splitArray.length > 0) {
-            //   for (let i = 0; i < splitArray.length; i++) {
-            //     var ratio = splitArray[i].ratio;
-            //     if (ratio > 1)
-            //       ratio = Math.round (ratio);
-            //     else
-            //       ratio = 1 / Math.round (1/ratio);                  
-            //     for ( let j = splitArray[i].week; j < stockChartYValuesFunction.length; j++) {
-            //         stockChartYValuesFunction[j] /= ratio;
-            //         chartData[`${periodTag}`][key]['1. open'] /= ratio;
-            //     }
-            //   }
-            // }
             setStockChartXValues (stockChartXValuesFunction);
             setStockChartYValues (stockChartYValuesFunction);
 
             console.dir (stockChartXValuesFunction)
             console.dir (stockChartYValuesFunction)
-            if (splitArray.length > 0)
-              splits = JSON.stringify(splitArray);
-            else
-              splits = '';  
-            // if (splitArray.length > 1 && (splitArray[splitArray.length - 1].week - splitArray[0].week) < 100)
-            //   splits = '';
+
+            const chartObj =
+            {
+              name: props.symbol,
+              nameSingle: props.symbol,
+              x: stockChartXValuesFunction,
+              y: stockChartYValuesFunction,
+              type: 'scatter',
+              mode: 'lines+markers',
+              //    marker: { color: 'green' },
+            }
+            setGainChart (chartObj)
             //const updateMili = Date.now();
             //const updateDate = getDate();
          }
@@ -169,15 +156,22 @@ export const MarketstackApi = (props) => {
               onChange={displayFlagChange}
             /> marketStack
       </div>
-      {displayFlag &&
+      {displayFlag && <div>
        <div style={{display:'flex'}} >
-          <button type="button" onClick={()=>searchSplits(props.symbol)}>marketStackSearch </button>
+          <button type="button" onClick={()=>getData(props.symbol)}>marketStackSearch </button>
           &nbsp;&nbsp;
-          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+          <DatePicker dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)}  /> &nbsp; (Limited to one year, not all browsers)
 
-
-        </div> 
-      }     
+   
+        </div>
+          <div>
+            {console.dir(gainChart)}
+          {stockChartXValues.length > 0  && <Plot  data={[gainChart]} 
+            layout={{ width: 850, height: 500, title: title, yaxis: {autorange: true, }  }}
+             />}
+       </div>
+       </div>
+      } 
     </>
   )
 }
