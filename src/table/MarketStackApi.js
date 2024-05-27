@@ -95,7 +95,7 @@ export const MarketstackApi = (props) => {
               return null;
             if (chartData.error) {
               console.log (chartData.error, chartData.message, )
-              // props.errorAdd([props.symbol, chartData.error, chartData.message])
+              props.errorAdd([props.symbol, 'try firefox', chartData.error.code, chartData.error.message])
               return;
             }
             const dataStr = JSON.stringify(chartData);
