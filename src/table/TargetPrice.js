@@ -34,111 +34,36 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     // save locally last targetPrice for each sym
     lastTargetPrice[symbol] = symTargetOne;
 
-    // var userQuery = query (targetRef, where ('symbol', '==', symbol));
-    // const fromFireBase = await getDocs (userQuery);
-
-
+         
+    // home server
+    var corsUrl = ''
+    if (ssl)
+        corsUrl = 'https://'
+    else
+        corsUrl = 'http://'
+    corsUrl += servSelect + ":" + PORT + "/target?cmd=writeOne&" + "stock=" + symbol + "&dat=" + JSON.stringify(symTargetOne)
     
-    
-    // if (isNaN (tar)) {
-    //     console.log (symbol, 'faile to calc tar', symTargetOne)
-    //     return;  // do not add bad records
-    // }
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
 
+        if (result.status !== 200) {
+            console.log (symbol, getDate(), 'status=', result)
+            return;
+        }
+        if (LOG)
+            console.log (JSON.stringify(result.data))
 
- // choose earliest, in case of more than one
-    // var targetPriceArrayForSym = [];
-    // var earliestIndx = -1;
-    // var earliest = Date.now()
-    // var target = -1;
-
-    // // find earliest collection (if more than one)
-    // var bigDifference = true;
-    // if (fromFireBase.docs.length > 0) {
-    //     for (let i = 0; i < fromFireBase.docs.length; i++) {
-    //         targetPriceArrayForSym = JSON.parse(fromFireBase.docs[i].data().dat);
-    //         if (targetPriceArrayForSym[0].dateMili < earliest) {
-    //             earliest = targetPriceArrayForSym[0].dateMili;   // 0 is oldest
-    //             earliestIndx = i
-    //         }
-    //     }
-    //     targetPriceArrayForSym = JSON.parse(fromFireBase.docs[earliestIndx].data().dat); // indx of earliest
-
-    //     // avoid too many
-    //     if (targetPriceArrayForSym.length > 40)  {
-    //         targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym.length/4), 1) // remove oldest    
-    //         targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym.length/4*2), 1) // remove oldest    
-    //         targetPriceArrayForSym.splice(Math.floor(targetPriceArrayForSym.length/4*3), 1) // remove oldest    
-    //     }
-
-    //     // delete all previous entries but the earliest
-    //     if (fromFireBase.docs.length > 1) {
-    //         const debug = 1;
-    //     }else {
-    //         const debug = 0
-    //     }
-
-        // allow new record only if none or significant dufferent
-        // if (targetPriceArrayForSym.length > 0) {
-        //     target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; // compare new target with last entry of collection           
-        //     const priceLast =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].price; 
-        //     if (! bigDiff (targetRaw, target, 1.02) || bigDiff (price, priceLast, 1.04)) {
-        //         bigDifference = false;
-        //         if (LOG)
-        //             console.log (symbol, 'targetPrice abort, small diff=', (targetRaw / target).toFixed(3),  'price=', price, 'targetRaw=', targetRaw, 'src=', src); // show the change of last target
-        //     }
-        // }
-    // }
-    // else
-    //     if (LOG)
-    //         console.log (symbol, 'targetPrice new')
-
-
-
-
-
-        // const target =  targetPriceArrayForSym[targetPriceArrayForSym.length - 1].target; 
-        // remove bad records
-        // for (let i = 0; i < targetPriceArrayForSym.length; i++) {
-        //     if (targetPriceArrayForSym[i].price === undefined) {
-        //         console.log (symbol, 'bad record', targetPriceArrayForSym[i])
-        //         targetPriceArrayForSym = targetPriceArrayForSym.splice(i,1); // remove bad 
-        //     }
-        // }
-        
-        // targetPriceArrayForSym.push (symTargetOne)
-        // const arrayStringify = JSON.stringify(targetPriceArrayForSym);
-        
-        // home server
-        var corsUrl = ''
-        if (ssl)
-            corsUrl = 'https://'
-        else
-            corsUrl = 'http://'
-        corsUrl += servSelect + ":" + PORT + "/target?cmd=writeOne&" + "stock=" + symbol + "&dat=" + JSON.stringify(symTargetOne)
-        
-        axios.get (corsUrl)
-        // getDate()
-        .then ((result) => {
-
-            if (result.status !== 200) {
-                console.log (symbol, getDate(), 'status=', result)
-                return;
-            }
-            if (LOG)
-                console.log (JSON.stringify(result.data))
-
-            if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-                errorAdd([symbol, getDate(), 'target',result.data])
-                return;
-            }
-            console.log(getDate(), symbol, 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
-        } )
-        .catch ((err) => {
-            errorAdd([symbol, getDate(), 'target', err.message])
-            console.log(getDate(), symbol, 'targetPrice', err.message)
-        })
-
+        if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+            errorAdd([symbol, getDate(), 'target',result.data])
+            return;
+        }
+        console.log(getDate(), symbol, 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
+    } )
+    .catch ((err) => {
+        errorAdd([symbol, getDate(), 'target', err.message])
+        console.log(getDate(), symbol, 'targetPrice', err.message)
+    })
 }
 
 
