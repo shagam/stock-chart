@@ -224,7 +224,12 @@ async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, s
          if (LOG)
              console.log (symbol, getDate(), dat)
 
-         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+        // remove milisec
+        for (let j = 0; j < dat.length; j++)  {                 
+            delete dat[j].dateMili;  // reduce unimportant info
+        }
+
+        if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
              errorAdd([symbol, getDate(), 'target',result.data])
              return;
          }
