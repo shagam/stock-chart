@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, jumpTo } from 'react-router-dom'
 import { Card, Button, Alert } from 'react-bootstrap'
 
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, updateCurrentUser } from 'firebase/auth'
@@ -60,7 +60,7 @@ export default function Dashboard (props) {
     setError('');
     try {
       await logout();
-      navigate('/dashBoard')
+      navigate('/')
     } catch (e) {setError(e.message) && console.log (e)}
   }
 
