@@ -42,8 +42,14 @@ function TargetPriceGui (props) {
     }
     
     function checkPrediction () {
-        console.log ('predicted:', targetInfo[targetBase].date, targetInfo[targetBase].target, 
-        'actual:', targetInfo[targetInfo.length - 1].date, targetInfo[targetInfo.length - 1].price)
+        const LOG = props.logFlags.includes('target')
+        const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+        if (row_index  === -1)
+            return;
+        const price = props.rows[row_index].values.price // for display
+        if (LOG)
+            console.log ('predicted:', targetInfo[targetBase].date, targetInfo[targetBase].target, 
+            'actual:', targetInfo[targetInfo.length - 1].date, targetInfo[targetInfo.length - 1].price)
 
         const days =  (targetInfo[targetInfo.length - 1].dateMili -  targetInfo[targetBase].dateMili) / 1000 / 3600 / 24
 
@@ -51,7 +57,7 @@ function TargetPriceGui (props) {
             predictionDate:  targetInfo[targetBase].date,
             predictionPrice: targetInfo[targetBase].target,
             actualDate:  targetInfo[targetInfo.length - 1].date,
-            actualPrice: targetInfo[targetInfo.length - 1].price,
+            actualPrice: price,
             days: days.toFixed(0),
             ratio: (targetInfo[targetInfo.length - 1].price / targetInfo[targetBase].target).toFixed(2)
         }
