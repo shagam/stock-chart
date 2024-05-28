@@ -1102,7 +1102,7 @@ const BasicTable = (props) => {
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
-        <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp;
+        <a href="https://www.google.com/search?q=vix">VIX</a>&nbsp;
         {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp; */}
 
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
