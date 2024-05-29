@@ -72,7 +72,7 @@ export default function ContactUs (props)  {
         setInfo()
         setStat(getDate() + ' msg arrived') // + '  (' + latency + ' mili)
         setError()
-        // nameRef.current.value= null
+        nameRef.current.value= null
         // emailRef.current.value= null
         // messageRef.current.value = null;
         beep2()
