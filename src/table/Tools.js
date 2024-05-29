@@ -13,10 +13,13 @@ import logFlags from '../LogFlags'
 import {monthGain} from './MonthGain'
 import IpContext from '../contexts/IpContext';
 import { TargetPriceGui } from './TargetPriceGui';
+import axios from 'axios'
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
 function Tools (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
-
+    const [status, setStatus] = useState (); 
     const {localIp, localIpv4, eliHome} = IpContext();
 
     const [mGainObj, setMgainObj] = useState ({});
@@ -34,10 +37,45 @@ function Tools (props) {
 
   // clear vars when symbol change
     useEffect(() => {
-
+        setStatus()
         setMgainObj({})
       },[props.symbol]) 
   
+
+    async function backendFlush () {
+      var corsUrl = ''
+      if (props.ssl)
+          corsUrl = 'https://'
+      else
+          corsUrl = 'http://'
+      corsUrl += props.servSelect + ":" + props.PORT + "/flushAll"
+      
+      setStatus('BackEnd Flush request')  
+      
+      axios.get (corsUrl)
+      // getDate()
+      .then ((result) => {
+  
+          if (result.status !== 200) {
+              console.log (getDate(), 'status=', result)
+              return;
+          }
+          if (LOG)
+              console.log (JSON.stringify(result.data))
+  
+          if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+              props.errorAdd([getDate(), 'target',result.data])
+              return;
+          }
+          console.log(getDate(), 'targetPrice arrived', result.data) 
+          setStatus('BackEnd Flush done')         
+      } )
+      .catch ((err) => {
+          props.errorAdd([getDate(), 'target', err.message])
+          console.log(getDate(), 'targetPrice', err.message)
+      })
+
+    }
       
     return (
         <div style = {{border: '2px solid blue'}} >
@@ -53,7 +91,12 @@ function Tools (props) {
                   dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp; 
                  {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
                 </div>
-
+                
+                <br></br> 
+                {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>}
+                <div>{status}</div>
+                
+                {/* <br></br>  */}
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
                       <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
