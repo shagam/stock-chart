@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {getTargetPriceArray, targetHistAll, targetHistoryAll, moveFromFirebase} from './TargetPrice'
+import {getTargetPriceArray, targetHistAll, targetHistoryAll} from './TargetPrice'
 import IpContext from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 
@@ -82,8 +82,6 @@ function TargetPriceGui (props) {
         <div>
 
             <h3>Target price history</h3>
-
-            {false && eliHome && <button type="button" onClick={()=>moveFromFirebase (props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)}>moveFromFirebase</button>}  &nbsp; &nbsp;
 
             <button type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
             
