@@ -67,7 +67,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 }
 
 // get all target Price history for one symbol  // 
-async function targetHistoryOne (symbol, setTargetInfo, setTargetPriceHist, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
+async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
     const LOG = logFlags.includes('target') 
 
      // home server
@@ -103,9 +103,9 @@ async function targetHistoryOne (symbol, setTargetInfo, setTargetPriceHist, logF
              return;
          }
          console.log(getDate(), symbol, 'targetPrice arrived', result.data,)  
-         setStatus()
-         setTargetInfo(dat) 
-         setTargetPriceHist();        
+         setStatus() // clear msg sent
+         setTargetInfoOne(dat) 
+         setTargetHistAll();       
      } )
      .catch ((err) => {
          errorAdd([symbol, getDate(), 'target', err.message])
@@ -114,7 +114,7 @@ async function targetHistoryOne (symbol, setTargetInfo, setTargetPriceHist, logF
 }
 
 
-async function targetHistAll (setTargetPriceHist, setTargetInfo, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
+async function targetHistAll (setTargetPriceHist, setTargetInfoOne, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
     const LOG = true;//logFlags.includes('target')
 
     var corsUrl = ''
@@ -154,7 +154,7 @@ async function targetHistAll (setTargetPriceHist, setTargetInfo, logFlags, error
         }
         setStatus()
         setTargetPriceHist(dat); 
-        setTargetInfo()    
+        setTargetInfoOne()    
     } )
     .catch ((err) => {
         errorAdd([getDate(), 'target', err.message])

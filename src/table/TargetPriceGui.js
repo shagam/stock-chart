@@ -4,8 +4,8 @@ import IpContext from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 
 function TargetPriceGui (props) {
-    const [targetInfo, setTargetInfo] = useState ();
-    const [targetPriceHist, setTargetPriceHist] = useState ({});
+    const [targetInfoOne, setTargetInfoOne] = useState ();
+    const [targetPriceHist, setTargetHistAll] = useState ({});
 
     const [price, setPrice] = useState ();
     const [target, setTarget] = useState ();
@@ -19,7 +19,7 @@ function TargetPriceGui (props) {
 
     // clear vars when symbol change
     useEffect(() => {
-        setTargetInfo()
+        setTargetInfoOne()
         setPrice()
         setPredict()
 
@@ -34,13 +34,13 @@ function TargetPriceGui (props) {
             props.errorAdd([props.symbol, 'no target price for ETF'])
             return;
         }
-        const tar = targetHistoryOne (props.symbol, setTargetInfo, setTargetPriceHist,  props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
+        const tar = targetHistoryOne (props.symbol, setTargetInfoOne, setTargetHistAll,  props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
         setPrice (props.rows[row_index].values.price) // for display
         setTarget (props.rows[row_index].values.target) // for display
     }
     
     function targetGetAll () {
-        const tar = targetHistAll (setTargetPriceHist, setTargetInfo, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
+        const tar = targetHistAll (setTargetHistAll, setTargetInfoOne, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
     }
     
     function checkPrediction () {
@@ -50,18 +50,18 @@ function TargetPriceGui (props) {
             return;
         const price = props.rows[row_index].values.price // for display
         if (LOG)
-            console.log ('predicted:', targetInfo[targetBase].date, targetInfo[targetBase].target, 
-            'actual:', targetInfo[targetInfo.length - 1].date, targetInfo[targetInfo.length - 1].price)
+            console.log ('predicted:', targetInfoOne[targetBase].date, targetInfoOne[targetBase].target, 
+            'actual:', targetInfoOne[targetInfoOne.length - 1].date, targetInfoOne[targetInfoOne.length - 1].price)
 
-        const days =  (targetInfo[targetInfo.length - 1].dateMili -  targetInfo[targetBase].dateMili) / 1000 / 3600 / 24
+        const days =  (targetInfoOne[targetInfoOne.length - 1].dateMili -  targetInfoOne[targetBase].dateMili) / 1000 / 3600 / 24
 
         const predictionObj = {
-            predictionDate:  targetInfo[targetBase].date,
-            predictionPrice: targetInfo[targetBase].target,
-            actualDate:  targetInfo[targetInfo.length - 1].date,
+            predictionDate:  targetInfoOne[targetBase].date,
+            predictionPrice: targetInfoOne[targetBase].target,
+            actualDate:  targetInfoOne[targetInfoOne.length - 1].date,
             actualPrice: price,
             days: days.toFixed(0),
-            ratio: (targetInfo[targetInfo.length - 1].price / targetInfo[targetBase].target).toFixed(2)
+            ratio: (targetInfoOne[targetInfoOne.length - 1].price / targetInfoOne[targetBase].target).toFixed(2)
         }
 
         setPredict(predictionObj);
@@ -87,13 +87,13 @@ function TargetPriceGui (props) {
             {props.symbol && <button type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> }
             <div> {status} </div>
             <div style = {{display: 'flex'}}>
-                {targetInfo && <GetInt init={targetBase} callBack={setTargetBase} title='targetBase' type='Number' pattern="[0-9]+"/>} &nbsp; &nbsp;
-                {targetInfo && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }
+                {targetInfoOne && <GetInt init={targetBase} callBack={setTargetBase} title='targetBase' type='Number' pattern="[0-9]+"/>} &nbsp; &nbsp;
+                {targetInfoOne && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }
             </div>
 
             {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
             
-            {price && targetInfo && renderList(targetInfo)}
+            {price && targetInfoOne && renderList(targetInfoOne)}
 
             <br></br>           
 
@@ -108,7 +108,7 @@ function TargetPriceGui (props) {
                     <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
                     <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
                     </div> 
-                    {targetPriceHist[sym].map((targetItem) => <li key={targetItem.date}>{JSON.stringify(targetItem)} </li>)} 
+                    {targetPriceHist[sym].map((targetItem, k) => <li key={k}>{JSON.stringify(targetItem)} </li>)} 
                 </div>
                 )
             })}
