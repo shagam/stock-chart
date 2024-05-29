@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {getTargetPriceArray, targetHistAll, targetHistoryAll} from './TargetPrice'
+import {targetHistoryOne, targetHistAll, targetHistoryAll} from './TargetPrice'
 import IpContext from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 
@@ -12,6 +12,8 @@ function TargetPriceGui (props) {
     const {localIp, localIpv4, eliHome} = IpContext();
     const [targetBase, setTargetBase] = useState (0);
     const [predict, setPredict] = useState ();
+    const [status, setStatus] = useState ();
+
 
     const LOG = props.logFlags.includes('month')
 
@@ -32,13 +34,13 @@ function TargetPriceGui (props) {
             props.errorAdd([props.symbol, 'no target price for ETF'])
             return;
         }
-        const tar = getTargetPriceArray (props.symbol, setTargetInfo, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)
+        const tar = targetHistoryOne (props.symbol, setTargetInfo, setTargetPriceHist,  props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
         setPrice (props.rows[row_index].values.price) // for display
         setTarget (props.rows[row_index].values.target) // for display
     }
     
     function targetGetAll () {
-        const tar = targetHistAll (setTargetPriceHist, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect)
+        const tar = targetHistAll (setTargetPriceHist, setTargetInfo, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
     }
     
     function checkPrediction () {
@@ -69,11 +71,8 @@ function TargetPriceGui (props) {
     // show as vertical list of array items
     function renderList(array) {
         if (array.length < 1)
-        return;
-        if (array[0].date)
-        return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
-        else
-        return array.map((item) => <li>{JSON.stringify(item)}</li>);  
+            return;
+        return array.map((item, k) => <li key={k}>{JSON.stringify(item)}</li>);
     }
   
 
@@ -86,7 +85,7 @@ function TargetPriceGui (props) {
             <button type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
             
             {props.symbol && <button type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> }
-
+            <div> {status} </div>
             <div style = {{display: 'flex'}}>
                 {targetInfo && <GetInt init={targetBase} callBack={setTargetBase} title='targetBase' type='Number' pattern="[0-9]+"/>} &nbsp; &nbsp;
                 {targetInfo && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }

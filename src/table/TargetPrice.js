@@ -67,7 +67,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 }
 
 // get all target Price history for one symbol  // 
-async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, ssl, PORT, servSelect) {
+async function targetHistoryOne (symbol, setTargetInfo, setTargetPriceHist, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
     const LOG = logFlags.includes('target') 
 
      // home server
@@ -78,6 +78,8 @@ async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, s
          corsUrl = 'http://'
      corsUrl += servSelect + ":" + PORT + "/target?cmd=readOne&" + "stock=" + symbol
      console.log (corsUrl)
+     setStatus('request sent')
+
      axios.get (corsUrl)
      // getDate()
      .then ((result) => {
@@ -101,7 +103,9 @@ async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, s
              return;
          }
          console.log(getDate(), symbol, 'targetPrice arrived', result.data,)  
-         setTargetInfo(dat)        
+         setStatus()
+         setTargetInfo(dat) 
+         setTargetPriceHist();        
      } )
      .catch ((err) => {
          errorAdd([symbol, getDate(), 'target', err.message])
@@ -110,7 +114,7 @@ async function getTargetPriceArray (symbol, setTargetInfo, logFlags, errorAdd, s
 }
 
 
-async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT, servSelect) {
+async function targetHistAll (setTargetPriceHist, setTargetInfo, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
     const LOG = true;//logFlags.includes('target')
 
     var corsUrl = ''
@@ -120,6 +124,8 @@ async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT,
         corsUrl = 'http://'
     corsUrl += servSelect + ":" + PORT + "/target?cmd=readAll&" 
     console.log (corsUrl)
+    setStatus('request sent')
+
     axios.get (corsUrl)
     // getDate()
     .then ((result) => {
@@ -146,8 +152,9 @@ async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT,
                 delete dat[stocks[i]][j].dateMili;  // reduce unimportant info
             }
         }
-
-        setTargetPriceHist(dat);     
+        setStatus()
+        setTargetPriceHist(dat); 
+        setTargetInfo()    
     } )
     .catch ((err) => {
         errorAdd([getDate(), 'target', err.message])
@@ -158,4 +165,4 @@ async function targetHistAll (setTargetPriceHist, logFlags, errorAdd, ssl, PORT,
 
 
 
-export {targetPriceAdd, getTargetPriceArray, targetHistAll, }
+export {targetPriceAdd, targetHistoryOne, targetHistAll, }
