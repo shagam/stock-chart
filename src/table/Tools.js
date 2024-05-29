@@ -51,7 +51,9 @@ function Tools (props) {
       corsUrl += props.servSelect + ":" + props.PORT + "/flushAll"
       
       setStatus('BackEnd Flush request')  
-      
+      if (LOG)
+      console.log (corsUrl)
+
       axios.get (corsUrl)
       // getDate()
       .then ((result) => {
@@ -93,9 +95,11 @@ function Tools (props) {
                 </div>
                 
                 <br></br> 
-                {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>}
-                <div>{status}</div>
-                
+                <div style={{display: 'flex'}}>
+                  {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
+                  <div>{status}</div>
+                </div>
+
                 {/* <br></br>  */}
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (
