@@ -44,7 +44,7 @@ function Tools (props) {
       },[props.symbol]) 
   
     async function delOneSym () {
-      const delCommands = ["gain", "price", "priceNasdaq", "splits", "holdings", "holdingsSch"]
+      const delCommands = ["gain", "price", "priceNasdaq", "splits", "holdings", "holdingsSch","target"]
 
       for (let i = 0; i < delCommands.length; i++) {
         var corsUrl = ''
