@@ -33,47 +33,60 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
         corsUrl = "http://"
 
     // clear uneeded fields to reduce storage
-    delete dat.BETA
-    delete dat.Cap
-    delete dat.Div
-    delete dat.EVToEBITDA
-    delete dat.EVToRevenue
-    delete dat.Exchange
-    delete dat.ForwPE
-    delete dat.Industry
-    delete dat.PE
-    delete dat.PEG
-    delete dat.PriceToBookRatio
-    delete dat.TrailPE
-    delete dat.alphaDate
-    delete dat.alphaPrice
-    delete dat.deep
-    delete dat.deepDate
-    delete dat.deepUpdateMili
-    delete dat.gain_date
-    delete dat.gain_mili
-    delete dat.gap
-    delete dat.info_date
-    delete dat.info_mili
-    delete dat.peak2Peak
-    delete dat.percent
-    delete dat.price
-    delete dat.priceDivHigh
-    delete dat.recoverWeek
-    delete dat.splits
-    delete dat.splits_list
-    // delete dat.sym
-    delete dat.target
-    delete dat.target_raw
-    delete dat.varifyDate
-    delete dat.verify_1
-    delete dat.verifyDate
-    delete dat.verifyPrice
+
+    const dat1 = {
+        symbol: dat.symbol,
+        mon3: dat.mon3,
+        mon6: dat.mon6,
+        year: dat.year,
+        year2 : dat.year2,
+        year5 : dat.year5,
+        year10: dat.year10,
+        year20: dat.year20,
+        sym: dat.sym
+    }
+
+    // delete dat.BETA
+    // delete dat.Cap
+    // delete dat.Div
+    // delete dat.EVToEBITDA
+    // delete dat.EVToRevenue
+    // delete dat.Exchange
+    // delete dat.ForwPE
+    // delete dat.Industry
+    // delete dat.PE
+    // delete dat.PEG
+    // delete dat.PriceToBookRatio
+    // delete dat.TrailPE
+    // delete dat.alphaDate
+    // delete dat.alphaPrice
+    // delete dat.deep
+    // delete dat.deepDate
+    // delete dat.deepUpdateMili
+    // delete dat.gain_date
+    // delete dat.gain_mili
+    // delete dat.gap
+    // delete dat.info_date
+    // delete dat.info_mili
+    // delete dat.peak2Peak
+    // delete dat.percent
+    // delete dat.price
+    // delete dat.priceDivHigh
+    // delete dat.recoverWeek
+    // delete dat.splits
+    // delete dat.splits_list
+    // // delete dat.sym
+    // delete dat.target
+    // delete dat.target_raw
+    // delete dat.varifyDate
+    // delete dat.verify_1
+    // delete dat.verifyDate
+    // delete dat.verifyPrice
 
     // if (LOG)
-    console.log (dat)
+    console.log (dat1)
 
-    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat); 
+    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
 
     if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
