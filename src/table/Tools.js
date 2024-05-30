@@ -35,6 +35,8 @@ function Tools (props) {
     
   const LOG = props.logFlags.includes('month')
 
+
+
   // clear vars when symbol change
     useEffect(() => {
         setStatus()
@@ -42,39 +44,44 @@ function Tools (props) {
       },[props.symbol]) 
   
     async function delOneSym () {
-      var corsUrl = ''
-      if (props.ssl)
-          corsUrl = 'https://'
-      else
-          corsUrl = 'http://'
-      corsUrl += props.servSelect + ":" + props.PORT + "/gain?cmd=delOneSym" + '&stock=' + props.symbol
-      
-      setStatus('gain delRequest request sent')  
-      // if (LOG)
-      console.log (corsUrl)
+      const delCommands = ["gain", "price"]
 
-      axios.get (corsUrl)
-      // getDate()
-      .then ((result) => {
-  
-          if (result.status !== 200) {
-              console.log (getDate(), 'status=', result)
-              return;
-          }
-          if (LOG)
-              console.log (JSON.stringify(result.data))
-  
-          if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-              props.errorAdd([getDate(), 'gain Delete symbol', result.data])
-              return;
-          }
-          console.log(getDate(), 'targetPrice arrived', result.data) 
-          setStatus('gain delRequest done')         
-      } )
-      .catch ((err) => {
-          props.errorAdd([getDate(), 'target', err.message])
-          console.log(getDate(), 'targetPrice', err.message)
-      })     
+      for (let i = 0; i < delCommands.length; i++) {
+        var corsUrl = ''
+        if (props.ssl)
+            corsUrl = 'https://'
+        else
+            corsUrl = 'http://'
+        corsUrl += props.servSelect + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
+        
+        setStatus(delCommands[i] + ' delRequest request sent')  
+        // if (LOG)
+        console.log (corsUrl)
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+    
+            if (result.status !== 200) {
+                console.log (getDate(), 'status=', result)
+                return;
+            }
+            if (LOG)
+                console.log (JSON.stringify(result.data))
+    
+            if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+                props.errorAdd([getDate(), delCommands[i] + ' Delete symbol', result.data])
+                setStatus(result.data)
+                return;
+            }
+            console.log(getDate(), delCommands[i]+ ' arrived', result.data) 
+            setStatus(delCommands[i]+ ' delRequest done')         
+        } )
+        .catch ((err) => {
+            props.errorAdd([getDate(), 'target', err.message])
+            console.log(getDate(), 'targetPrice', err.message)
+        }) 
+      }   
     }
 
 
@@ -103,6 +110,7 @@ function Tools (props) {
   
           if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
               props.errorAdd([getDate(), 'target',result.data])
+              setStatus(result.data)
               return;
           }
           console.log(getDate(), 'targetPrice arrived', result.data) 
@@ -117,13 +125,14 @@ function Tools (props) {
       
     return (
         <div style = {{border: '2px solid blue'}} >
-       
               <div>
                 <div style = {{display: 'flex'}}>
                   <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
                   <h6 style={{color: 'blue'}}> Tools </h6>
                 </div>
-          
+                <div style={{color:'red'}}>{status}</div>
+                
+                <br></br> 
                 {/* &nbsp; &nbsp; */}
                 <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
                   dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp; 
@@ -133,13 +142,11 @@ function Tools (props) {
                 <br></br> 
                 <div style={{display: 'flex'}}>
                   {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-                  <div>{status}</div>
                 </div>
 
                 <br></br> 
                 <div>
-                  {eliHome && <button type="button" onClick={()=> delOneSym ()}>gain delete {props.symbol} </button>} &nbsp;&nbsp;
-                  <div>{status}</div>
+                  {eliHome && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;&nbsp;
                 </div>
 
                 {/* <br></br>  */}
