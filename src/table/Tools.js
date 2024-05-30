@@ -41,6 +41,42 @@ function Tools (props) {
         setMgainObj({})
       },[props.symbol]) 
   
+    async function delOneSym () {
+      var corsUrl = ''
+      if (props.ssl)
+          corsUrl = 'https://'
+      else
+          corsUrl = 'http://'
+      corsUrl += props.servSelect + ":" + props.PORT + "/gain?cmd=delOneSym" + '&stock=' + props.symbol
+      
+      setStatus('gain delRequest request sent')  
+      // if (LOG)
+      console.log (corsUrl)
+
+      axios.get (corsUrl)
+      // getDate()
+      .then ((result) => {
+  
+          if (result.status !== 200) {
+              console.log (getDate(), 'status=', result)
+              return;
+          }
+          if (LOG)
+              console.log (JSON.stringify(result.data))
+  
+          if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+              props.errorAdd([getDate(), 'gain Delete symbol', result.data])
+              return;
+          }
+          console.log(getDate(), 'targetPrice arrived', result.data) 
+          setStatus('gain delRequest done')         
+      } )
+      .catch ((err) => {
+          props.errorAdd([getDate(), 'target', err.message])
+          console.log(getDate(), 'targetPrice', err.message)
+      })     
+    }
+
 
     async function backendFlush () {
       var corsUrl = ''
@@ -97,6 +133,12 @@ function Tools (props) {
                 <br></br> 
                 <div style={{display: 'flex'}}>
                   {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
+                  <div>{status}</div>
+                </div>
+
+                <br></br> 
+                <div>
+                  {eliHome && <button type="button" onClick={()=> delOneSym ()}>gain delete {props.symbol} </button>} &nbsp;&nbsp;
                   <div>{status}</div>
                 </div>
 
