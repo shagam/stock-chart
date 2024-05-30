@@ -8,6 +8,7 @@ import {ErrorList, beep, beep2} from './ErrorList'
 import {nanoid} from 'nanoid';
 import GetInt from '../utils/GetInt'
 import {Vix} from '../utils/Vix'
+import { capitalize } from '@material-ui/core'
 
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
@@ -30,6 +31,46 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     corsUrl = "https://";
     else 
         corsUrl = "http://"
+
+    // clear uneeded fields to reduce storage
+    delete dat.BETA
+    delete dat.Cap
+    delete dat.Div
+    delete dat.EVToEBITDA
+    delete dat.EVToRevenue
+    delete dat.Exchange
+    delete dat.ForwPE
+    delete dat.Industry
+    delete dat.PE
+    delete dat.PEG
+    delete dat.PriceToBookRatio
+    delete dat.TrailPE
+    delete dat.alphaDate
+    delete dat.alphaPrice
+    delete dat.deep
+    delete dat.deepDate
+    delete dat.deepUpdateMili
+    delete dat.gain_date
+    delete dat.gain_mili
+    delete dat.gap
+    delete dat.info_date
+    delete dat.info_mili
+    delete dat.peak2Peak
+    delete dat.percent
+    delete dat.price
+    delete dat.priceDivHigh
+    delete dat.recoverWeek
+    delete dat.splits
+    delete dat.splits_list
+    // delete dat.sym
+    delete dat.target
+    delete dat.target_raw
+    delete dat.varifyDate
+    delete dat.verify_1
+    delete dat.verifyDate
+    delete dat.verifyPrice
+
+    console.log (dat)
 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat); 
 
