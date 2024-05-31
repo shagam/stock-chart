@@ -109,7 +109,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
 
     })
     .catch ((err) => {
-    setError([sym, 'gainWrite', err.message])
+    error([sym, 'gainWrite', err.message])
     console.log(getDate(), 'gainWrite', err.message)
     })     
 }
@@ -134,8 +134,10 @@ function CommonDatabase (props) {
     
 
     function error(arr) {
+        clear()
         setErr (JSON.stringify(arr))
         props.errorAdd(arr)
+
     }
    
     function filterForInsert () {
@@ -209,8 +211,9 @@ function CommonDatabase (props) {
             setErr ('(latency(msec)=' + latency)
             beep2();
         }).catch ((err) => {
-            err(['gainFilter ', err.message, corsUrl])
-            console.log(getDate(), err, corsUrl)
+            clear()
+            error(['gainFilter ', err.message])
+            console.log(getDate(), err.message)
         })
     }    
 
@@ -306,8 +309,9 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            err(['gainFilterLocal ', err.message, corsUrl])
-            console.log(getDate(), err, corsUrl)
+            clear()
+            error(['gainFilterLocal ', err.message])
+            console.log(getDate(), err.message)
         })   
     }
 
@@ -354,8 +358,9 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            err(['gainFilterLocal ', err.message, corsUrl])
-            console.log(getDate(), err, corsUrl)
+            clear()
+            error(['gainFilterLocal ', err.message])
+            console.log(getDate(), err.message)
         })   
     }
 
@@ -400,9 +405,10 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            props.errorAdd(['gainFilterForRemove ', err.message, corsUrl])
-            setErr('gainFilterForRemove ' + err.message)
-            console.log(getDate(), err.message, corsUrl)
+            clear()
+            error(['gainFilterForRemove ', err.message])
+            // setErr('gainFilterForRemove ' + err.message)
+            console.log(getDate(), err.message)
         })   
     }
 
@@ -479,8 +485,9 @@ function CommonDatabase (props) {
             }
             clear()
         }).catch ((err) => {
-            err(['Remove ', err.message, corsUrl])
-            console.log(getDate(), err, corsUrl)
+            clear()
+            error(['Remove ', err.message])
+            console.log(getDate(), err.message)
         })
 
         setNext()
@@ -495,7 +502,7 @@ function CommonDatabase (props) {
             corsUrl = 'https://'
         else
             corsUrl = 'http://'
-        corsUrl += props.servSelect + ":" + props.PORT + "/flushAll"
+        corsUrl += props.corsServer + ":" + props.PORT + "/flushAll"
         
         setErr('BackEnd Flush request')  
         if (LOG)
@@ -521,7 +528,8 @@ function CommonDatabase (props) {
             setErr('BackEnd Flush done')         
         } )
         .catch ((err) => {
-            props.errorAdd([getDate(), 'target', err.message])
+            clear()
+            error([getDate(), 'target', err.message])
             console.log(getDate(), 'targetPrice', err.message)
         })  
       }
@@ -538,7 +546,7 @@ function CommonDatabase (props) {
               corsUrl = 'https://'
           else
               corsUrl = 'http://'
-          corsUrl += props.servSelect + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
+          corsUrl += props.corsSErver + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
           
           setErr(delCommands[i] + ' delRequest request sent')  
           // if (LOG)
@@ -564,8 +572,9 @@ function CommonDatabase (props) {
               setErr(delCommands[i]+ ' delRequest done')         
           } )
           .catch ((err) => {
-              props.errorAdd([getDate(), 'target', err.message])
-              console.log(getDate(), 'targetPrice', err.message)
+            clear()
+            error([getDate(), 'target', err.message])
+            console.log(getDate(), 'targetPrice', err.message)
           }) 
         }   
       }
@@ -652,8 +661,8 @@ function CommonDatabase (props) {
             </div>}
             
             {results &&  <div >
-                {results.map((r)=>{
-                    return <div>&nbsp; {r}&nbsp;&nbsp;</div>
+                {results.map((r,k)=>{
+                    return <div key={k}>&nbsp; {r}&nbsp;&nbsp;</div>
                 })}
             </div>}
         </div>
