@@ -13,7 +13,7 @@ import { Card, Button, Alert } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import {getDateSec} from './utils/Date'
 import CookieConsent from "react-cookie-consent"
-import LogFlags from './LogFlags'
+import LogFlags from './utils/LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'
 import {TargetPrice} from './table/TargetPrice'
