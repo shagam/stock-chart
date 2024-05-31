@@ -43,85 +43,6 @@ function Tools (props) {
         setMgainObj({})
       },[props.symbol]) 
   
-    async function delOneSym () {
-      const delCommands = ["gain", "price", "priceNasdaq", "splits", "holdings", "holdingsSch","target"]
-
-      for (let i = 0; i < delCommands.length; i++) {
-        var corsUrl = ''
-        if (props.ssl)
-            corsUrl = 'https://'
-        else
-            corsUrl = 'http://'
-        corsUrl += props.servSelect + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
-        
-        setStatus(delCommands[i] + ' delRequest request sent')  
-        // if (LOG)
-        console.log (corsUrl)
-
-        axios.get (corsUrl)
-        // getDate()
-        .then ((result) => {
-    
-            if (result.status !== 200) {
-                console.log (getDate(), 'status=', result)
-                return;
-            }
-            if (LOG)
-                console.log (JSON.stringify(result.data))
-    
-            if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-                props.errorAdd([getDate(), delCommands[i] + ' Delete symbol', result.data])
-                setStatus(result.data)
-                return;
-            }
-            console.log(getDate(), delCommands[i]+ ' arrived', result.data) 
-            setStatus(delCommands[i]+ ' delRequest done')         
-        } )
-        .catch ((err) => {
-            props.errorAdd([getDate(), 'target', err.message])
-            console.log(getDate(), 'targetPrice', err.message)
-        }) 
-      }   
-    }
-
-
-    async function backendFlush () {
-      var corsUrl = ''
-      if (props.ssl)
-          corsUrl = 'https://'
-      else
-          corsUrl = 'http://'
-      corsUrl += props.servSelect + ":" + props.PORT + "/flushAll"
-      
-      setStatus('BackEnd Flush request')  
-      if (LOG)
-      console.log (corsUrl)
-
-      axios.get (corsUrl)
-      // getDate()
-      .then ((result) => {
-  
-          if (result.status !== 200) {
-              console.log (getDate(), 'status=', result)
-              return;
-          }
-          if (LOG)
-              console.log (JSON.stringify(result.data))
-  
-          if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-              props.errorAdd([getDate(), 'target',result.data])
-              setStatus(result.data)
-              return;
-          }
-          console.log(getDate(), 'targetPrice arrived', result.data) 
-          setStatus('BackEnd Flush done')         
-      } )
-      .catch ((err) => {
-          props.errorAdd([getDate(), 'target', err.message])
-          console.log(getDate(), 'targetPrice', err.message)
-      })
-
-    }
       
     return (
         <div style = {{border: '2px solid blue'}} >
@@ -139,16 +60,6 @@ function Tools (props) {
                  {props.symbol && <button type="button" onClick={()=>monthGain(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
                 </div>
                 
-                <br></br> 
-                <div style={{display: 'flex'}}>
-                  {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-                </div>
-
-                <br></br> 
-                <div>
-                  {eliHome && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;&nbsp;
-                </div>
-
                 {/* <br></br>  */}
                 { Object.keys(mGainObj).map((oneKey,i)=>{
                   return (

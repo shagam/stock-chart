@@ -485,7 +485,90 @@ function CommonDatabase (props) {
         setNext()
     }
 
+
+    // write to disk all undestaged data
+    async function backendFlush () {
+        const LOG = props.logFlags.includes('gain'); 
+        var corsUrl = ''
+        if (props.ssl)
+            corsUrl = 'https://'
+        else
+            corsUrl = 'http://'
+        corsUrl += props.servSelect + ":" + props.PORT + "/flushAll"
+        
+        setErr('BackEnd Flush request')  
+        if (LOG)
+        console.log (corsUrl)
+  
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
     
+            if (result.status !== 200) {
+                console.log (getDate(), 'status=', result)
+                return;
+            }
+            if (LOG)
+                console.log (JSON.stringify(result.data))
+    
+            if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+                props.errorAdd([getDate(), 'target',result.data])
+                setErr(result.data)
+                return;
+            }
+            console.log(getDate(), 'targetPrice arrived', result.data) 
+            setErr('BackEnd Flush done')         
+        } )
+        .catch ((err) => {
+            props.errorAdd([getDate(), 'target', err.message])
+            console.log(getDate(), 'targetPrice', err.message)
+        })  
+      }
+  
+
+      // delete symbol from all backend collections
+    async function delOneSym () {
+        const LOG = props.logFlags.includes('gain'); 
+        const delCommands = ["gain", "price", "priceNasdaq", "splits", "holdings", "holdingsSch","target"]
+  
+        for (let i = 0; i < delCommands.length; i++) {
+          var corsUrl = ''
+          if (props.ssl)
+              corsUrl = 'https://'
+          else
+              corsUrl = 'http://'
+          corsUrl += props.servSelect + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
+          
+          setErr(delCommands[i] + ' delRequest request sent')  
+          // if (LOG)
+          console.log (corsUrl)
+  
+          axios.get (corsUrl)
+          // getDate()
+          .then ((result) => {
+      
+              if (result.status !== 200) {
+                  console.log (getDate(), 'status=', result)
+                  return;
+              }
+              if (LOG)
+                  console.log (JSON.stringify(result.data))
+      
+              if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+                  props.errorAdd([getDate(), delCommands[i] + ' Delete symbol', result.data])
+                  setErr(result.data)
+                  return;
+              }
+              console.log(getDate(), delCommands[i]+ ' arrived', result.data) 
+              setErr(delCommands[i]+ ' delRequest done')         
+          } )
+          .catch ((err) => {
+              props.errorAdd([getDate(), 'target', err.message])
+              console.log(getDate(), 'targetPrice', err.message)
+          }) 
+        }   
+      }
+  
 
     function clear () {
         setNext()
@@ -504,7 +587,8 @@ function CommonDatabase (props) {
 
       {displayFlag && 
       <div>
-  
+
+        <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
 
         {/* <hr/> */}
         <div style={{display:'flex'}}>
@@ -543,7 +627,13 @@ function CommonDatabase (props) {
             <button type="button" onClick={()=>{del()}}>Delete </button> &nbsp;
             <div> &nbsp; </div> 
         </div>}
-        
+
+        {/* <br></br>  */}
+        <div style={{display: 'flex'}}>
+            {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;&nbsp;
+        </div>
+
         {/* <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/> */}
         
         <div style={{display: 'flex'}}>
