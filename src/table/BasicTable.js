@@ -48,7 +48,7 @@ import MobileContext from '../contexts/MobileContext'
 import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
-import {ErrorList, beep, beep2} from './ErrorList'
+import {ErrorList, beep, beep2} from '../utils/ErrorList'
 import CookieConsent from 'react-cookie-consent'
 import  {CommonDatabase, GainWrite} from './CommonDatabase'
 

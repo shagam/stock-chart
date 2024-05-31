@@ -4,7 +4,7 @@ import cors from 'cors'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
-import {ErrorList, beep, beep2} from './ErrorList'
+import {ErrorList, beep, beep2} from '../utils/ErrorList'
 import {nanoid} from 'nanoid';
 import GetInt from '../utils/GetInt'
 import {Vix} from '../utils/Vix'

@@ -4,7 +4,7 @@ import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
 import IpContext from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
-import {beep2} from './ErrorList'
+import {beep2} from '../utils/ErrorList'
 
 const  Config = (props) => { 
 
