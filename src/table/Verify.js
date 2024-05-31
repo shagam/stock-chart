@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
-import LogFlags from '../LogFlags'
+import LogFlags from '../utils/LogFlags'
 import {marketwatchGainValidate, nasdaqTest} from './GainValidateMarketwatch'
 import StockSplitsGet from '../splits/StockSplitsGet'
 import GetInt from '../utils/GetInt'

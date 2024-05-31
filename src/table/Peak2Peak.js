@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // import { columnIsLastLeftSticky } from 'react-table-sticky';
 import peak2PeakCalc from './Peak2PeakCalc'
 
-import LogFlags from '../LogFlags'
+import LogFlags from '../utils/LogFlags'
 
 
 

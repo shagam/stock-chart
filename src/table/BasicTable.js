@@ -21,7 +21,7 @@ import GainValidate from './GainValidate'
 import {Holdings} from './Holdings'
 
 
-import LogFlags from '../LogFlags'
+import LogFlags from '../utils/LogFlags'
 import peak2PeakCalc from './Peak2PeakCalc'
 import searchURL from '../utils/SearchURL'
 import {spikesSmooth, spikesGet} from './Spikes'

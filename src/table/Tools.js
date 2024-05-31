@@ -9,7 +9,7 @@ import {format} from "date-fns"
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
     
-import logFlags from '../LogFlags'
+import logFlags from '../utils/LogFlags'
 import {monthGain} from './MonthGain'
 import IpContext from '../contexts/IpContext';
 import { TargetPriceGui } from './TargetPriceGui';
