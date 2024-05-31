@@ -9,6 +9,7 @@ import {nanoid} from 'nanoid';
 import GetInt from '../utils/GetInt'
 import {Vix} from '../utils/Vix'
 import { capitalize } from '@material-ui/core'
+import IpContext from '../contexts/IpContext';
 
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
@@ -122,6 +123,7 @@ function CommonDatabase (props) {
     const [displayFlag, setDisplayFlag] = useState(false);
     const [next, setNext] = useState()
     const [err,setErr] = useState()
+    const {localIp, localIpv4, eliHome} = IpContext();
 
     const [period, setPeriod] = useState(1)
     const onOptionChange = e => {
@@ -426,8 +428,10 @@ function CommonDatabase (props) {
     function insertInTable () {
         setErr()
         if (next !== 'insert') {
-            error(['insert requires - insert state'])
-            return;
+            if (! eliHome) {// only admin allowed to insert from del list to allow del from common database
+                error(['insert requires - insert state'])
+                return;
+            }
         }
         for (let i = 0; i <results.length; i++) {
             var sym = results[i].replace(/[0-9\\.,: ]/g,'')
