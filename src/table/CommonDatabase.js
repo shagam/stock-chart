@@ -546,7 +546,7 @@ function CommonDatabase (props) {
               corsUrl = 'https://'
           else
               corsUrl = 'http://'
-          corsUrl += props.corsSErver + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
+          corsUrl += props.corsServer + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
           
           setErr(delCommands[i] + ' delRequest request sent')  
           // if (LOG)
