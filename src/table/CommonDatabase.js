@@ -400,8 +400,9 @@ function CommonDatabase (props) {
             beep2();
     
         }).catch ((err) => {
-            err(['gainFilterLocal ', err.message, corsUrl])
-            console.log(getDate(), err, corsUrl)
+            props.errorAdd(['gainFilterForRemove ', err.message, corsUrl])
+            setErr('gainFilterForRemove ' + err.message)
+            console.log(getDate(), err.message, corsUrl)
         })   
     }
 
