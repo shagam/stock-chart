@@ -109,7 +109,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
 
     })
     .catch ((err) => {
-    error([sym, 'gainWrite', err.message])
+    setError([sym, 'gainWrite', err.message])
     console.log(getDate(), 'gainWrite', err.message)
     })     
 }
