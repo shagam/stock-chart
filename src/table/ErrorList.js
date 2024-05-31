@@ -25,7 +25,7 @@ function ErrorList (props) {
                 /> errors ({props.errorList.length})
             </div>
 
-            <Container  className='d-flex align-items-left justify-content-left' style={{maxHeight: "15vh", padding: '0px', margin:'0px'}}  > 
+            <Container  className='d-flex align-items-left justify-content-left' style={{maxHeight: "25vh", padding: '0px', margin:'0px'}}  > 
             {/* <hr/>  */}
             <div className="container" style ={{overflow: 'scroll', hight: '17%'}} >
                 { visible && props.errorList.map((err) => (
