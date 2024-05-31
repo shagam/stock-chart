@@ -592,9 +592,9 @@ function CommonDatabase (props) {
       
           var corsUrl = ''
 
-          corsUrl = 'http://'
-          corsUrl += 'dinagold.org:' + 3001 + '/ping'
-        //   corsUrl += 'localhost:' + 3001 + '/ping'
+          corsUrl = 'https://'
+          corsUrl += 'dinagold.org:' + 5001 + '/ping'
+        //   corsUrl += 'localhost:' + 5001 + '/ping'
           
           setErr(' ping request sent')  
           // if (LOG)
