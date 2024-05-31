@@ -586,6 +586,42 @@ function CommonDatabase (props) {
         setErr()
     }
 
+    // test speed
+    async function ping () {
+        const LOG = props.logFlags.includes('gain'); 
+      
+          var corsUrl = ''
+
+          corsUrl = 'http://'
+          corsUrl += 'dinagold.org:' + 3001 + '/ping'
+        //   corsUrl += 'localhost:' + 3001 + '/ping'
+          
+          setErr(' ping request sent')  
+          // if (LOG)
+          console.log (corsUrl)
+  
+          axios.get (corsUrl)
+          // getDate()
+          .then ((result) => {
+      
+              if (result.status !== 200) {
+                  console.log (getDate(), 'status=', result)
+                  return;
+              }
+              if (LOG)
+                  console.log (JSON.stringify(result.data))
+      
+            console.log(getDate(), ' arrived', result.data) 
+              setErr(' done')         
+          } )
+          .catch ((err) => {
+            clear()
+            error([getDate(), err.message])
+            console.log(getDate(), err.message)
+          }) 
+      }
+  
+
   return (
     <div style = {{ border: '2px solid green'}}>
       <div>
@@ -641,7 +677,8 @@ function CommonDatabase (props) {
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
             {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;&nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;
+            {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
         </div>
 
         {/* <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/> */}
