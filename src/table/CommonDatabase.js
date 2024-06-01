@@ -538,7 +538,7 @@ function CommonDatabase (props) {
             }
             const latency = Date.now() - mili
             console.log(getDate(), 'targetPrice arrived', result.data, 'responseTime(msec)=', latency) 
-            setErr('BackEnd Flush done, responseTime=' + latency)         
+            setErr('BackEnd Flush done,  Latency(msec)=' + latency)         
         } )
         .catch ((err) => {
             clear()
@@ -579,20 +579,18 @@ function CommonDatabase (props) {
       
               if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
                   props.errorAdd([getDate(), delCommands[i] + ' Delete symbol', result.data])
-                  setErr(result.data)
-                  return;
               }
-              console.log(getDate(), delCommands[i]+ ' arrived', result.data) 
-              setErr(delCommands[i]+ ' delRequest done')         
+              console.log(getDate(), delCommands[i]+ ' arrived', result.data)        
           } )
           .catch ((err) => {
             clear()
-            error([getDate(), 'target', err.message])
+            error([getDate(), 'backEnd sym del', err.message])
             console.log(getDate(), 'targetPrice', err.message)
           }) 
         }
         const latency = Date.now() - mili
-        setErr('del sym done,   responseTime(msec)=' + latency)    
+        // error([getDate(), 'del sym', 'response(msec)=', latency])
+        setErr('del sym done,  Latency(msec)=' + latency)    
       }
   
 
@@ -629,7 +627,7 @@ function CommonDatabase (props) {
                   console.log (JSON.stringify(result.data))
               const latency = Date.now() - mili
               console.log(getDate(), ' arrived', result.data, latency) 
-              setErr('Ping  done,   responseTime(msec)=' + latency)         
+              setErr('Ping  done, latency(msec)=' + latency)         
           } )
           .catch ((err) => {
             clear()
