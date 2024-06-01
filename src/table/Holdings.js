@@ -141,6 +141,8 @@ function Holdings (props) {
 
     setUrlLast(corsUrl)
     setErr('request sent to server')
+    const mili = Date.now()
+
     axios.get (corsUrl)
     // getDate()
     .then ((result) => {
@@ -221,7 +223,8 @@ function Holdings (props) {
       if (LOG)
       console.log (Object.keys(holdingsRawObj))
 
-      // setErr(JSON.stringify(result.data))
+      const latency = Date.now() - mili
+      setErr('get holdings done,  Latency(msec)=' + latency)    
       setArr(result.data.holdArr)
       setDat(result.data)
          
