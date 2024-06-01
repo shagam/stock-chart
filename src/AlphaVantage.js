@@ -37,7 +37,8 @@ const  AlphaVantage = (props) => {
 
     return (
       <div className = 'alpha'>
-        <label> &nbsp;  AlphaVatage.co key: ({alpha}) </label>
+        <div>&nbsp;</div>
+        <h5> AlphaVatage.co </h5>
         <form onSubmit = {handleAddFormSubmit}>
           <input
             type="text"
@@ -47,10 +48,15 @@ const  AlphaVantage = (props) => {
             onChange={handleAddFormChange}
             // value={alpha}
           />
+
+
+
+         
           <button type="submit"> Enter new key</button> 
-          
-          &nbsp; <button type="button" onClick={()=>clearKey()}>Clear AlphaVantage key </button> 
         </form>
+          {/* <div>&nbsp;</div> */}
+        &nbsp;&nbsp;key: ({alpha})
+        &nbsp; <button type="button" onClick={()=>clearKey()}>Clear AlphaVantage key </button> 
 
       </div>
     )
