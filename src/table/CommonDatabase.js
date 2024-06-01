@@ -365,7 +365,7 @@ function CommonDatabase (props) {
     }
 
 
-
+    // get a list of symbols with low gain
     function FilterForRemove () {
         setErr()
         var corsUrl;
@@ -432,6 +432,7 @@ function CommonDatabase (props) {
         return (newStock)
     } 
  
+    // Insert in table list of symbols 
     function insertInTable () {
         setErr()
         if (next !== 'insert') {
@@ -452,6 +453,7 @@ function CommonDatabase (props) {
         window.location.reload();
     }
 
+    // delete symbols gain from prepared list of low gain
     function del () {
         setErr()
         const LOG = props.logFlags.includes('gain'); 
@@ -593,7 +595,7 @@ function CommonDatabase (props) {
           var corsUrl = ''
 
           corsUrl = 'https://'
-          corsUrl += 'dinagold.org:' + 5001 + '/ping'
+          corsUrl += props.corsServer + ':' + 5001 + '/ping'
         //   corsUrl += 'localhost:' + 5001 + '/ping'
           
           setErr(' ping request sent')  
@@ -612,7 +614,7 @@ function CommonDatabase (props) {
                   console.log (JSON.stringify(result.data))
       
             console.log(getDate(), ' arrived', result.data) 
-              setErr(' done')         
+              setErr('Ping  done')         
           } )
           .catch ((err) => {
             clear()
