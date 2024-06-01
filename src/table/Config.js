@@ -49,13 +49,16 @@ const  Config = (props) => {
         <div id = "config_id">
           <div>  &nbsp; <Link to="/dashboard" > Login Dashboard </Link>  </div>
           <div  style={{display:'flex', paddingTop: '5px'}}>
-             <div> &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp; </div>
+             <div> <button onClick={purgeStockTable} > Purge stock table </button> </div>
             <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
             {/* <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div> */}
-            <div> &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;&nbsp; </div>
-            <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable &nbsp;   </button>
           </div>
-          &nbsp;&nbsp;{eliHome && <button type="button" onClick={()=>beep2()}>beep </button>}
+
+          <div>
+              <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>
+              &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
+            {eliHome && <button type="button" onClick={()=>beep2()}>beep </button>}
+          </div>
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
           <div  style={{display:'flex', paddingTop: '5px'}}>            
