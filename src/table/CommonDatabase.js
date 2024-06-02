@@ -653,6 +653,8 @@ function CommonDatabase (props) {
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
         {/* <hr/> */}
+
+        {/* ====== Filters list */} 
         <div style={{display:'flex'}}>
           Period: &nbsp;&nbsp;
           <input style={{marginLeft: '0px'}}  type="radio" name="years" value='1' id='1' checked={period===1} onChange={onOptionChange}/> 1_year
@@ -668,6 +670,7 @@ function CommonDatabase (props) {
             <div style={{paddingTop:'6px' }}> symOnly </div>  
         </div>
 
+        {/* ====== Buttons */} 
         <div> &nbsp; </div> 
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
@@ -696,17 +699,11 @@ function CommonDatabase (props) {
             {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
         </div>
-
-        {/* <Vix  corsServer={props.corsServer} ssl={props.ssl} PORT={props.PORT}/> */}
         
-        <div style={{display: 'flex'}}>
-   
-        </div>
-
-        {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
         <div>
+
+            {/* ========= Display filtered list */} 
             <div> &nbsp;</div>
-            {/* <hr/> */}     
             {results && <div style={{display:'flex'}}>
                 <div> filteredSymbols ({results.length})</div>
                 {next && results.length > 0 && <div> &nbsp; Prepared for: </div>}
