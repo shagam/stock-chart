@@ -39,7 +39,10 @@ const  Config = (props) => {
   };
   //   
   return (
+
     <div style = {{border: '2px solid maroon'}}>
+
+      {/* ====== Displasy/hide checkbox */} 
       <input
         type="checkbox" checked={configFlag}
         onChange={ configFlagChange }
@@ -48,6 +51,8 @@ const  Config = (props) => {
       { configFlag &&
         <div id = "config_id">
           <div>  &nbsp; <Link to="/dashboard" > Login Dashboard </Link>  </div>
+
+          {/* ====== Filter buttons */} 
           <div  style={{display:'flex', paddingTop: '5px'}}>
              <div> <button onClick={purgeStockTable} > Purge stock table </button> </div>
             <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
@@ -61,6 +66,9 @@ const  Config = (props) => {
           </div>
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
+
+          
+          {/* ====== General checlboxes */} 
           <div  style={{display:'flex', paddingTop: '5px'}}>            
             <div style={{display:'flex'}}> &nbsp; &nbsp; <input  type="checkbox" checked={props.smoothSpikes} 
               onChange={() => props.setSmoothSpikes(! props.smoothSpikes)} />  &nbsp;smoothSpikes  &nbsp;  </div>
@@ -68,8 +76,12 @@ const  Config = (props) => {
             <div style={{display:'flex'}}>  &nbsp; <input  type="checkbox" checked={props.openMarketFlag}
               onChange={() => props.setOpenMaretFlag(! props.openMarketFlag,)} />  &nbsp;OpenMarket </div>
           </div>
-          
+
+
           <AlphaVantage alphaCallBack={props.alphaCallBack} />
+
+
+          {/* ====== Location info */} 
           <div>&nbsp; </div>
           <div>Url: {window.location.href} </div>
           {eliHome && <div>Global-ip: {localIpv4} </div>}
