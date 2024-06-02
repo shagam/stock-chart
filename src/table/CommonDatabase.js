@@ -210,8 +210,7 @@ function CommonDatabase (props) {
             setNext('insert')
             const latency = Date.now() - mili
             setErr('filtered list done, latency(msec)=' + latency)
-
-            beep2();
+            // beep2();
         }).catch ((err) => {
             clear()
             error(['gainFilter ', err.message])
@@ -310,7 +309,7 @@ function CommonDatabase (props) {
 
             const latency = Date.now() - mili
             setErr('filtered list done, latency(msec)=' + latency)
-            beep2();
+            // beep2();
     
         }).catch ((err) => {
             clear()
@@ -360,7 +359,7 @@ function CommonDatabase (props) {
             setNext('insert')
             const latency = Date.now() - mili
             setErr('filtered list done, latency(msec)=' + latency)
-            beep2();
+            // beep2();
     
         }).catch ((err) => {
             clear()
@@ -411,7 +410,7 @@ function CommonDatabase (props) {
 
             const latency = Date.now() - mili
             setErr('Filtered list done, latency(msec)=' + latency)
-            beep2();
+            // beep2();
     
         }).catch ((err) => {
             clear()
@@ -495,9 +494,11 @@ function CommonDatabase (props) {
                 return;
             }
             clear()
+            setErr('BackEnd del bad done')
+
         }).catch ((err) => {
             clear()
-            error(['Remove ', err.message])
+            error(['BackEnd del bad', err.message])
             console.log(getDate(), err.message)
         })
 
@@ -532,12 +533,12 @@ function CommonDatabase (props) {
                 console.log (JSON.stringify(result.data))
     
             if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-                props.errorAdd([getDate(), 'target',result.data])
+                props.errorAdd([getDate(), 'BackEnd Flush',result.data])
                 setErr(result.data)
                 return;
             }
             const latency = Date.now() - mili
-            console.log(getDate(), 'targetPrice arrived', result.data, 'responseTime(msec)=', latency) 
+            console.log(getDate(), 'BackEnd Flush', result.data, 'responseTime(msec)=', latency) 
             setErr('BackEnd Flush done,  Latency(msec)=' + latency)         
         } )
         .catch ((err) => {
@@ -590,7 +591,7 @@ function CommonDatabase (props) {
         }
         const latency = Date.now() - mili
         // error([getDate(), 'del sym', 'response(msec)=', latency])
-        setErr('del sym done,  Latency(msec)=' + latency)    
+        setErr('backEnd del sym done,  Latency(msec)=' + latency)    
       }
   
 
@@ -631,8 +632,8 @@ function CommonDatabase (props) {
           } )
           .catch ((err) => {
             clear()
-            error([getDate(), err.message])
-            console.log(getDate(), err.message)
+            error([getDate(), 'ping', err.message])
+            console.log(getDate(), 'ping', err.message)
           }) 
       }
   
@@ -650,7 +651,7 @@ function CommonDatabase (props) {
       <div>
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
-
+        {err && <div style={{color:'red'}}>{err}</div>}
         {/* <hr/> */}
         <div style={{display:'flex'}}>
           Period: &nbsp;&nbsp;
@@ -701,7 +702,7 @@ function CommonDatabase (props) {
         <div style={{display: 'flex'}}>
    
         </div>
-        {err && <div style={{color:'red'}}>{err}</div>}
+
         {/* <button type="button" onClick={()=>magnificent7()}>Add Magnificent_7</button> */}
         <div>
             <div> &nbsp;</div>
