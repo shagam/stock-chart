@@ -60,6 +60,8 @@ export default function ContactUs (props)  {
       console.log (corsUrl)
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
+      const mili = Date.now();
+
       setStat()
       axios.get (corsUrl)
       // getDate()
@@ -70,12 +72,12 @@ export default function ContactUs (props)  {
         console.log (getDate() +  ' msg arrived, from=' + emailRef.current.value )
         const latency = miliEnd - miliStart
         setInfo()
-        setStat(getDate() + ' msg arrived') // + '  (' + latency + ' mili)
-        setError()
+        setStat(getDate() + ' msg reeived (latency=' + latency + ')')
+
+        const response = Date.now() - mili
+        setError()// 'delay(msec)=' + response)
         nameRef.current.value= null
         // emailRef.current.value= null
-        // messageRef.current.value = null;
-        beep2()
       })
       .catch ((err) => {
       // setError([sym, 'email', err.message, corsUrl])
