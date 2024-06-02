@@ -280,7 +280,7 @@ function Holdings (props) {
       {LOG && props.eliHome && <div> {urlLast} </div>}
       {LOG && props.eliHome && <div> {urlCors} </div>}
 
-      {<div>
+      {<div  style={{ maxHeight: '40vh', 'overflowY': 'scroll'}}>
       <table>
         <thead>
           <tr>
