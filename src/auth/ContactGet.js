@@ -76,7 +76,7 @@ export default function ContactGet (props)  {
 
           const miliStart =  Date.now();
 
-          setStat(getDate() + ' msg sent to server', corsUrl)
+          setStat(' msg sent to server')
           setTextArray()
           setError()
 
@@ -92,7 +92,7 @@ export default function ContactGet (props)  {
             const latency = miliEnd - miliStart
 
             console.log (getDate(), 'Response:', result.data)
-            setStat(getDate() + ' response (' + latency + ' mili)' + ' count=' + result.data.length )
+            setStat( 'Responses (' + latency + ' mili)' + ' count=' + result.data.length )
 
             const withNL = [];
             // for (let i = 0; i < result.data.length; i++)
@@ -141,10 +141,11 @@ export default function ContactGet (props)  {
             <hr/> 
 
             <div>{stat}</div>
-
+            <div>&nbsp;</div>
             {textArray && textArray.map((item,k) =>
                <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, city: {item.city}, country: {item.countryName}
-                <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div></li>)} 
+                <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div> <div>&nbsp;</div></li>)}
+               
             
         </div>
       );
