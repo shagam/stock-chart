@@ -27,8 +27,9 @@ export default function ContactGet (props)  {
     const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
 
+    // contact requests of last week
     const mili7DaysAgo = (Date.now() - 7 * 24 * 3600 * 1000)
-    const [searchDate, setSearchDate] = useState (new Date(mili7DaysAgo)); // last week
+    const [searchDate, setSearchDate] = useState (new Date(mili7DaysAgo)); 
 
     const [count, setCount] = useState(5);
 
