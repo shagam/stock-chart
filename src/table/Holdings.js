@@ -246,13 +246,14 @@ function Holdings (props) {
   return (
     <div style={{ border: '2px solid blue'}}> 
 
+      {/* ====== Header titles */} 
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div> &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
       </div>
 
       {/* <br></br> */}
-      
+      {/* ====== Buttons */} 
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
@@ -267,6 +268,7 @@ function Holdings (props) {
         </div>
       }
 
+      {/* ====== List of ETF */} 
       {err && <div style={{color:'red'}}> {err} </div>} 
       {Object.keys(warn).length > 0 && Object.keys(warn).map((w, w1)=>{
         return(
@@ -280,6 +282,8 @@ function Holdings (props) {
       {LOG && props.eliHome && <div> {urlLast} </div>}
       {LOG && props.eliHome && <div> {urlCors} </div>}
 
+
+      {/* ====== Display filtered held list */} 
       {<div  style={{ maxHeight: '40vh', 'overflowY': 'scroll'}}>
       <table>
         <thead>
