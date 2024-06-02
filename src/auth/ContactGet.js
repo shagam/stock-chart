@@ -26,7 +26,10 @@ export default function ContactGet (props)  {
     const [stat, setStat] = useState()
     const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
-    const [searchDate, setSearchDate] = useState (new Date(2024, 4, 20));
+
+    const mili7DaysAgo = (Date.now() - 7 * 24 * 3600 * 1000)
+    const [searchDate, setSearchDate] = useState (new Date(mili7DaysAgo)); // last week
+
     const [count, setCount] = useState(5);
 
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
