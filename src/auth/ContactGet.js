@@ -91,9 +91,8 @@ export default function ContactGet (props)  {
             // console.log (getDate() +  ' msg sent')
             const latency = miliEnd - miliStart
 
-            console.log (getDate(), 'Response:', result.data)
-            setStat( 'Responses (' + latency + ' mili)' + ' count=' + result.data.length )
-
+            console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
+            setStat( 'Contact-count=' + result.data.length + '  (latency=' + latency +' mili)' )
             const withNL = [];
             // for (let i = 0; i < result.data.length; i++)
             //   withNL.push(result.data[i].replaceAll('_NL_','\n'))
