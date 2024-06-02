@@ -5,7 +5,7 @@ import { useSticky } from 'react-table-sticky'
 //import{ Styles } from './TableStyles'
 import MOCK_DATA from './mock-data.json'
 import { COLUMNS, GROUPED_COLUMNS } from './columns'
-import GAIN_VALIDATION from './GainValidate.json'
+
 import './table.css'
 import GlobalFilter from './GlobalFilter'
 import CheckBox from './CheckBox'
@@ -136,7 +136,7 @@ const BasicTable = (props) => {
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(false);
   const [smoothSpikes, setSmoothSpikes] = useState(true);
-  const [marketwatch, setMarketwatch] = useState (true);
+
   const [stockInfo, setStockInfo] = useState ('');
 
   const [weekly, setWeekly] = useState (true);
@@ -169,7 +169,6 @@ const BasicTable = (props) => {
       console.log ('hiddenColumns', hiddenCols)
   }
 
-  var  gain_validation_json = useMemo(() => GAIN_VALIDATION, []);
   const columns = useMemo(() => GROUPED_COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = localStorage.getItem("stocks");
@@ -671,11 +670,8 @@ const BasicTable = (props) => {
                 console.log (chartData)
               } 
               const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
-              if (allColumns[ind].isVisible || ! isAdjusted) {           
-              if (marketwatch)
+              if (allColumns[ind].isVisible || ! isAdjusted) {
                 marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, props.logFlags, errorAdd, null);
-              else
-                GainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, gain_validation_json, props.logFlags) // static table
               }
     
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
@@ -981,7 +977,6 @@ const BasicTable = (props) => {
   const calcChange = () => {setSplitsCalcFlag(! splitsCalcFlag)}
   const openMaretFlagChange = () => {setOpenMaretFlag ( ! openMarketFlag)}
   const columnHideFlagChange = () => {setColumnHideFlag (! columnHideFlag)}
-  const marketwatchToggle = () => {setMarketwatch (! marketwatch)}
   const sslToggle = () => {setSsl (! ssl)}
 
   const freq = 'week'
@@ -1001,7 +996,7 @@ const BasicTable = (props) => {
   }
 
   function test () {
-    console.log ('checkBox (marketwatch):', marketwatch, 'radio(servSelect):', servSelect, 'verifyOffset:', verifyDateOffset)
+
   }
 
   function marketStackCompare () {
