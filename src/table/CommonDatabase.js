@@ -85,7 +85,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     // delete dat.verifyPrice
 
     // if (LOG)
-    console.log (dat1)
+    console.log ('gainWrite', dat1)
 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
 
