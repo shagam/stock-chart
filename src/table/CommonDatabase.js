@@ -711,9 +711,8 @@ function CommonDatabase (props) {
                 <div> filteredSymbols ({results.length})</div>
                 {next && results.length > 0 && <div> &nbsp; Prepared for: </div>}
                 <div style={{color:'red'}}>&nbsp;&nbsp;{next} &nbsp; </div>
-            </div>}
-            
-            {results &&  <div >
+            </div>} 
+            {results &&  <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}>
                 {results.map((r,k)=>{
                     return <div key={k}>&nbsp; {r}&nbsp;&nbsp;</div>
                 })}
