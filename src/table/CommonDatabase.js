@@ -116,7 +116,6 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
 
 
 function CommonDatabase (props) {
-    const [symOnly, setSymOnly] = useState(false);
     const [results, setResults] = useState()
     const [factor, setFactor] = useState(1.25);
 
@@ -249,12 +248,7 @@ function CommonDatabase (props) {
             var ratio;
             const resArray = [];
             const keys = Object.keys(dat);
-            if (symOnly) {
-                console.log (keys)
-                setResults(keys)
-                beep2();
-                return;
-            }
+ 
             keys.forEach((sym) => {
                 var symVal
                 var qqqVal 
@@ -666,8 +660,6 @@ function CommonDatabase (props) {
         <div style={{display:'flex'}}>
           <GetInt title='Gain_above_QQQ' placeHolder={factor} init={factor} value={factor} pattern={undefined}
            type='Real' callBack={setFactor}/> &nbsp;&nbsp;
-          <input type="checkbox" checked={symOnly}   onChange={()=>setSymOnly(!symOnly)} style={{marginTop:'3px',paddingTop:'3px' }} />
-            <div style={{paddingTop:'6px' }}> symOnly </div>  
         </div>
 
         {/* ====== Buttons */} 
