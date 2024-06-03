@@ -62,7 +62,13 @@ const  Config = (props) => {
           <div>
               <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>
               &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
-            {eliHome && <button type="button" onClick={()=>beep2()}>beep </button>}
+          </div>
+          <div>
+            {eliHome && <button type="button" onClick={()=>beep2 ()}>beep2</button>} &nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(10,64,10)}>64Hz</button>}&nbsp;  {/*beep(vol, freq, duration){ */}
+            {eliHome && <button type="button" onClick={()=>beep(10,128,10)}>128Hz</button>}&nbsp; {/*beep(vol, freq, duration){ */}
+            {eliHome && <button type="button" onClick={()=>beep(10,256,10)}>256Hz</button>} &nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(10,512,10)}>512Hz</button>}&nbsp;
           </div>
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
@@ -83,8 +89,6 @@ const  Config = (props) => {
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
-          {eliHome && <button type="button" onClick={()=>beep2 ()}>beep2 &nbsp; </button>}  &nbsp;
-          {eliHome && <button type="button" onClick={()=>beep(10,300,50)}>beep &nbsp; </button>}
           <div>Url: {window.location.href} </div>
           {eliHome && <div>Global-ip: {localIpv4} </div>}
           {eliHome && <div>Browser:  {userAgent} </div>}
