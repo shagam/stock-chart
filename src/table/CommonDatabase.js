@@ -626,8 +626,9 @@ function CommonDatabase (props) {
           } )
           .catch ((err) => {
             clear()
-            error([getDate(), 'ping', err.message])
-            console.log(getDate(), 'ping', err.message)
+            const latency = Date.now() - mili
+            error([getDate(), 'ping', err.message, 'latency(msec)=', latency])
+            console.log(getDate(), 'ping', err.message, 'latency(msec)=' + latency)
           }) 
       }
   
