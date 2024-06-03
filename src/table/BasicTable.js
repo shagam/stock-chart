@@ -1093,7 +1093,7 @@ const BasicTable = (props) => {
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
-        <Link to="/about">About</Link> &nbsp; 
+        <Link to="/about">About</Link>&nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;

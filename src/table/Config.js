@@ -4,7 +4,7 @@ import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
 import IpContext from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
-import {beep2} from '../utils/ErrorList'
+import {beep2, beep} from '../utils/ErrorList'
 
 const  Config = (props) => { 
 
@@ -83,6 +83,8 @@ const  Config = (props) => {
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
+          {eliHome && <button type="button" onClick={()=>beep2 ()}>beep2 &nbsp; </button>}  &nbsp;
+          {eliHome && <button type="button" onClick={()=>beep(10,300,50)}>beep &nbsp; </button>}
           <div>Url: {window.location.href} </div>
           {eliHome && <div>Global-ip: {localIpv4} </div>}
           {eliHome && <div>Browser:  {userAgent} </div>}

@@ -622,7 +622,8 @@ function CommonDatabase (props) {
                   console.log (JSON.stringify(result.data))
               const latency = Date.now() - mili
               console.log(getDate(), ' arrived', result.data, latency) 
-              setErr('Ping  done, latency(msec)=' + latency)         
+              setErr('Ping  done, latency(msec)=' + latency) 
+              beep(10,300,50)        // (vol, freq, duration)
           } )
           .catch ((err) => {
             clear()
@@ -689,7 +690,7 @@ function CommonDatabase (props) {
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
             {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>} &nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
         </div>
         
