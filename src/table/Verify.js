@@ -171,9 +171,8 @@ function Verify (props) {
           {LOG_FLAG && <div>{corsUrl}</div>}
           {LOG_FLAG && <div>{url}</div>}
           <div style={{display:'flex'}}>
-            <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>
-            &nbsp; &nbsp; &nbsp;
-            <button style={{height: '4vh', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns  </button>
+              <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button> &nbsp;&nbsp;
+              <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>
           </div>   
           <br></br>
 
