@@ -61,14 +61,15 @@ const  Config = (props) => {
 
           <div>
               <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>
-              &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
+              &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
           </div>
+          {isMobile && <div> &nbsp; </div>} 
           <div>
             {eliHome && <button type="button" onClick={()=>beep2 ()}>beep2</button>} &nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(10,64,10)}>64Hz</button>}&nbsp;  {/*beep(vol, freq, duration){ */}
-            {eliHome && <button type="button" onClick={()=>beep(10,128,10)}>128Hz</button>}&nbsp; {/*beep(vol, freq, duration){ */}
-            {eliHome && <button type="button" onClick={()=>beep(10,256,10)}>256Hz</button>} &nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(10,512,10)}>512Hz</button>}&nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(20,64,50)}>64Hz</button>}&nbsp;  {/*beep(vol, freq, duration){ */}
+            {eliHome && <button type="button" onClick={()=>beep(20,128,50)}>128Hz</button>}&nbsp; {/*beep(vol, freq, duration){ */}
+            {eliHome && <button type="button" onClick={()=>beep(20,256,50)}>256Hz</button>} &nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(20,512,50)}>512Hz</button>}&nbsp;
           </div>
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
