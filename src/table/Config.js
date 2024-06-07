@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
 import IpContext from '../contexts/IpContext';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
 
@@ -12,6 +13,7 @@ const  Config = (props) => {
   //console.log(`AlphaVantage localStorage ${alpha}`); 
   const {localIp, localIpv4, eliHome} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+  const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
@@ -65,14 +67,17 @@ const  Config = (props) => {
           </div>
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}
-          <div>
+          {admin && <div>
             {eliHome && <button type="button" onClick={()=>beep2 ()}>beep2</button>} &nbsp;
             {eliHome && <button type="button" onClick={()=>beep(20,64,50)}>64Hz</button>}&nbsp;  {/*beep(vol, freq, duration){ */}
             {eliHome && <button type="button" onClick={()=>beep(20,128,50)}>128Hz</button>}&nbsp; {/*beep(vol, freq, duration){ */}
             {eliHome && <button type="button" onClick={()=>beep(20,256,50)}>256Hz</button>} &nbsp;
             {eliHome && <button type="button" onClick={()=>beep(20,512,50)}>512Hz</button>}&nbsp;
             {eliHome && <button type="button" onClick={()=>beep(20,1024,50)}>1024Hz</button>}&nbsp;
-          </div>
+            {eliHome && <button type="button" onClick={()=>beep(20,2048,50)}>2048Hz</button>}&nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(20,3072,50)}>3072Hz</button>}&nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(20,4096,50)}>4096Hz</button>}&nbsp;
+          </div>}
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
 
