@@ -169,7 +169,7 @@ function Holdings (props) {
     
       const etf = result.data.sym;
       const holdArr = result.data.holdArr;
-      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < 3) {
+      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < 4) {
 
         if (! etfArr.includes(etf)) {
           etfArr.push (etf)
@@ -262,7 +262,7 @@ function Holdings (props) {
               {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
 
               {holdingsRawObj[props.chartSymbol] && <button type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} </button> } &nbsp;
-              <button type="button" onClick={()=>togglePercent ()}>toggleColumnPercent  </button>
+              <button type="button" onClick={()=>togglePercent ()}>togglePercentColumn  </button>
           </div> 
           <div>&nbsp; </div>
         </div>
