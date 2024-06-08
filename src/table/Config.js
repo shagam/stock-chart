@@ -76,7 +76,7 @@ const  Config = (props) => {
             {eliHome && <button type="button" onClick={()=>beep(20,1024,50)}>1024Hz</button>}&nbsp;
             {eliHome && <button type="button" onClick={()=>beep(20,2048,50)}>2048Hz</button>}&nbsp;
             {eliHome && <button type="button" onClick={()=>beep(20,3072,50)}>3072Hz</button>}&nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,4096,50)}>4096Hz</button>}&nbsp;
+            {eliHome && <button type="button" onClick={()=>beep(20,3430,80)}>3430Hz</button>}&nbsp;
           </div>}
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
