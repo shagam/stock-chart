@@ -1070,6 +1070,10 @@ const BasicTable = (props) => {
     return col;
   }
 
+  const openInNewTab = (url) => {
+    window.open(url, "_blank", "noreferrer");
+  };
+
   const toolEnum = {
     None: 'None',
     DropRecovery: 'DropRecovery',
@@ -1097,12 +1101,13 @@ const BasicTable = (props) => {
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
-        <a href="https://www.google.com/search?q=vix">VIX</a>&nbsp;
-        {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX (Yahoo)</a> &nbsp; */}
 
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {eliHome && <Link to="/contactGet">ContactGet</Link>} &nbsp;
 
+        {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
+        {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
+        <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button>
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
