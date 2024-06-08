@@ -68,15 +68,15 @@ const  Config = (props) => {
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}
           {admin && <div>
-            {eliHome && <button type="button" onClick={()=>beep2 ()}>beep2</button>} &nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,64,50)}>64Hz</button>}&nbsp;  {/*beep(vol, freq, duration){ */}
-            {eliHome && <button type="button" onClick={()=>beep(20,128,50)}>128Hz</button>}&nbsp; {/*beep(vol, freq, duration){ */}
-            {eliHome && <button type="button" onClick={()=>beep(20,256,50)}>256Hz</button>} &nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,512,50)}>512Hz</button>}&nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,1024,50)}>1024Hz</button>}&nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,2048,50)}>2048Hz</button>}&nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,3072,50)}>3072Hz</button>}&nbsp;
-            {eliHome && <button type="button" onClick={()=>beep(20,3430,80)}>3430Hz</button>}&nbsp;
+            <button type="button" onClick={()=>beep2 ()}>beep2</button>} &nbsp;
+            <button type="button" onClick={()=>beep(20,64,50)}>64Hz</button>&nbsp;  {/*beep(vol, freq, duration){ */}
+            <button type="button" onClick={()=>beep(20,128,50)}>128Hz</button>&nbsp; {/*beep(vol, freq, duration){ */}
+            <button type="button" onClick={()=>beep(20,256,50)}>256Hz</button> &nbsp;
+            <button type="button" onClick={()=>beep(20,512,50)}>512Hz</button>&nbsp;
+            <button type="button" onClick={()=>beep(20,1024,50)}>1024Hz</button>&nbsp;
+            <button type="button" onClick={()=>beep(20,2048,50)}>2048Hz</button>&nbsp;
+            <button type="button" onClick={()=>beep(20,3072,50)}>3072Hz</button>&nbsp;
+            <button type="button" onClick={()=>beep(20,3430,80)}>3430Hz</button>&nbsp;
           </div>}
           {/* <div> &nbsp; </div>  */}
           {/* <hr/> */}
