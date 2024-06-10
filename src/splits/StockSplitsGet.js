@@ -49,7 +49,7 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
         if (splits.length > 0 && LOG) {
           // console.log('\x1B[31mhello\x1B[34m world');
           console.log (sym, getDate(), result.data, result.status)
-          console.dir (sym, "splits from server", splits)
+          console.log (sym, "splits from server", splits, Date(splits[0].updateMili))
           // console.log ('last web split: ', splits[splits.length - 1]);
         }
         if (splits === '') { // no splits
