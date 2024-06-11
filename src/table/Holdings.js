@@ -4,6 +4,7 @@ import axios from 'axios'
 import {nanoid} from 'nanoid';
 
 import GetInt from '../utils/GetInt'
+import IpContext from '../contexts/IpContext';
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
@@ -24,6 +25,8 @@ function Holdings (props) {
   const [count, setCount] =useState(25)
   const [urlLast, setUrlLast] = useState();
   const [urlCors, setUrlCors] = useState();
+  const [ignoreSaved, setIgnoreSaved] = useState ();
+  const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
   const LOG = props.logFlags.includes('holdings')
 
@@ -132,6 +135,9 @@ function Holdings (props) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
       setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
     }
+    if (ignoreSaved)
+      corsUrl += '&ignoreSaved=true';
+
     else if (srcNum === 2) {
         corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
         // setUrlCors('https://finance.yahoo.com/quote/' + props.chartSymbol  
@@ -242,6 +248,9 @@ function Holdings (props) {
       return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
   }
 
+  function setIgnore () {
+    setIgnoreSaved (!ignoreSaved)
+  }
 
   return (
     <div style={{ border: '2px solid blue'}}> 
@@ -256,6 +265,7 @@ function Holdings (props) {
       {/* ====== Buttons */} 
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
+              {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
               <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
               <button type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
               {props.eliHome && <button type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
