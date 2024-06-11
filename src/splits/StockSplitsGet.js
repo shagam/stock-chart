@@ -15,7 +15,7 @@ function getDate() {
   return date + " " + time;    
 }
 
-export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr) => {
+export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = logFlags && logFlags.includes('splits'); 
@@ -32,6 +32,9 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
         corsUrl = "http://"
         corsUrl += corsServer+ ":" + PORT + "/splits?stock=" + sym;
       }
+      if (ignoreSaved)
+        corsUrl += '&ignoreSaved=true';
+
       if (LOG)
         console.log (sym, corsUrl)
       // corsUrl = "http://192.168.1.4:5000/splits?stock=" + sym;

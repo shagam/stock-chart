@@ -26,7 +26,7 @@ import {format} from "date-fns"
   }
 
 export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, PORT, ssl, logFlags, setError, setText, nasdaq, setErr) {
+   requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, PORT, ssl, logFlags, setError, setText, nasdaq, setErr, ignoreSaved) {
  
   const LOG = logFlags.includes("verify_1");
   // setError();
@@ -80,6 +80,10 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     //corsUrl = "http://localhost:5000/price?stock=" + sym
     corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
     // console.log (getDate(), corsUrl)
+    
+    if (ignoreSaved)
+      corsUrl += '&ignoreSaved=true';
+
   if (LOG)
   console.log (sym, corsUrl)
     axios.get (corsUrl)

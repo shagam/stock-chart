@@ -8,6 +8,8 @@ import {spikesSmooth, spikesGet} from './Spikes'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import {getTargetPriceArray, targetHistAll} from './TargetPrice'
+import IpContext from '../contexts/IpContext';
+
 
 function Verify (props) {
 
@@ -34,6 +36,8 @@ function Verify (props) {
     const [corsUrl, setCorsUrl] = useState ();
     const [url, setUrl] = useState ();
     const [err, setErr] = useState ();
+    const [ignoreSaved, setIgnoreSaved] = useState ();
+    const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
     function verify (nasdaq) {
       const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
@@ -58,10 +62,10 @@ function Verify (props) {
         // url += '%2F' + req.query.year
       setErr('Request sent to server')
       if (! nasdaq) {
-        setUrl ("https://bigcharts.marketwatch.com/historical/default.asp?symb=" + props.symbol + '&closeDate=' + '5/25/2010')
-        setCorsUrl ('https://' + props.servSelect + ":" + props.PORT + "/price?stock=" + props.symbol + "&year=2010&mon=5&day=25")
+        setUrl ("https://bigcharts.marketwatch.com/historical/default.asp?symb=" + props.symbol + '&closeDate=' + '5/25/2010')  // save url for debug
+        setCorsUrl ('https://' + props.servSelect + ":" + props.PORT + "/price?stock=" + props.symbol + "&year=2010&mon=5&day=25")   // save url for debug
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyText, nasdaq, setErr);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyText, nasdaq, setErr, ignoreSaved);
         }
       else {
         setCorsUrl  ('https://' + props.servSelect + ":" + props.PORT + "/priceNasdaq?stock=" + props.symbol)
@@ -95,7 +99,7 @@ function Verify (props) {
       setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
 
       StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect,
-         props.PORT, props.ssl, props.logFlags, setSplitInfo, setErr)
+         props.PORT, props.ssl, props.logFlags, setSplitInfo, setErr, ignoreSaved)
          if (LOG_FLAG)
           console.log (splitInfo)
     }
@@ -158,6 +162,9 @@ function Verify (props) {
   };
   // style={{display:'flex'}}
 
+  function setIgnore () {
+    setIgnoreSaved (!ignoreSaved)
+  }
 
 
   return (
@@ -171,6 +178,7 @@ function Verify (props) {
           {LOG_FLAG && <div>{corsUrl}</div>}
           {LOG_FLAG && <div>{url}</div>}
           <div style={{display:'flex'}}>
+              {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
               <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button> &nbsp;&nbsp;
               <GetInt init={props.verifyDateOffset} callBack={props.setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>
           </div>   
