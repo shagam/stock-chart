@@ -70,7 +70,7 @@ function Verify (props) {
       else {
         setCorsUrl  ('https://' + props.servSelect + ":" + props.PORT + "/priceNasdaq?stock=" + props.symbol)
         marketwatchGainValidate (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues, props.verifyDateOffset,
-          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq, setErr);
+          props.refreshByToggleColumns, props.firebaseGainAdd, props.servSelect, props.PORT, props.ssl, props.logFlags, props.errorAdd, setVerifyNasdaqText, nasdaq, setErr, ignoreSaved);
         }
     }
 
