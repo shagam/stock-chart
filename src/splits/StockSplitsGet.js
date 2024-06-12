@@ -2,6 +2,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
+import {formatDate} from '../utils/Date';
 
 // https://62.0.92.49:5000/splits?stock=MSFT
 // https://dinagold.org:5000/splits?stock=MSFT
@@ -52,9 +53,10 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
         if (splits.length > 0 && LOG) {
           // console.log('\x1B[31mhello\x1B[34m world');
           console.log (sym, getDate(), result.data, result.status)
-          console.log (sym, "splits from server", splits, Date(splits[0].updateMili))
-          // console.log ('last web split: ', splits[splits.length - 1]);
         }
+        console.log (sym, "splits from server", splits, formatDate (new Date(splits[0].updateMili)))
+          // console.log ('last web split: ', splits[splits.length - 1]);
+
         if (splits === '') { // no splits
           setSplitInfo([])
           return;
