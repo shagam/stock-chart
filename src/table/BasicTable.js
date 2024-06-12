@@ -75,9 +75,6 @@ const Verify = lazy(() => import ('./Verify'))
 // import {polygon} from './Polygon'
 const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
 
-//  import {marketwatchGainValidate} from './GainValidateMarketwatch'
-const marketwatchGainValidate = lazy(() => import('./GainValidateMarketwatch').then((module) => ({default: module.marketwatchGainValidate})))
-
 const StockChart = lazy(() => import ('../Stock-chart'));
 
 const MarketStackApi = lazy(() => import ('./MarketStackApi'))
@@ -669,10 +666,10 @@ const BasicTable = (props) => {
                 console.log (stockChartYValuesFunction)
                 console.log (chartData)
               } 
-              const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
-              if (allColumns[ind].isVisible || ! isAdjusted) {
-                marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, props.logFlags, errorAdd, null);
-              }
+              // const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
+              // if (allColumns[ind].isVisible || ! isAdjusted) {
+              //   marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, props.logFlags, errorAdd, null);
+              // }
     
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
                   weekly, props.logFlags, true,  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, false)  //setCalcResults, setCalcInfo
