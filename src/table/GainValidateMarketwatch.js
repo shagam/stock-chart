@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import cors from 'cors'
-import {dateSplit} from '../utils/Date'
+import {dateSplit, formatDate} from '../utils/Date'
 import {format} from "date-fns"
 // import {todaySplit, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, getDate} from './Date'
 
@@ -89,8 +89,10 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     axios.get (corsUrl)
     .then ((result) => {
       setErr()
-      if (LOG && result.data)
-      console.log (sym, JSON.stringify(result.data))
+      if (result.data) {
+        console.log (sym, JSON.stringify(result.data), formatDate (new Date(result.data.updateMili)))
+      }
+      
       if (result.data.err === "No data") {
         setError([sym, 'verify marketwatch', result.data.err])
         return;
