@@ -196,7 +196,7 @@ function Verify (props) {
           {splitInfo && renderList(splitInfo)}
           <div>&nbsp;</div>          
           
-          <button type="button" onClick={()=>spikes ()}>Spikes  </button>  
+          {eliHome && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
           <div>&nbsp;</div>  
         </div>
