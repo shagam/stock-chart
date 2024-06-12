@@ -4,15 +4,57 @@ import axios from 'axios'
 import cors from 'cors'
 import {formatDate} from '../utils/Date';
 import {getDate} from '../utils/Date'
+import IpContext from '../contexts/IpContext';
+import {useAuth} from '../contexts/AuthContext';
+
 
 // https://62.0.92.49:5000/splits?stock=MSFT
 // https://dinagold.org:5000/splits?stock=MSFT
 // https://www.stocksplithistory.com/?symbol=MSFT
 
-function Splits () {
-  
-}
+function Splits (props) {
+  const { eliHome} = IpContext();
+  const { currentUser, admin, logout } = useAuth();
+  const [ignoreSaved, setIgnoreSaved] = useState ();
+  const [splitInfo, setSplitInfo] = useState ([]);
+  const [url, setUrl] = useState ();
+  const [err, setErr] = useState ();
+  const [corsUrl, setCorsUrl] = useState ();
+  const [updateDate, setUpdateDate] = useState ();
 
+  const LOG_FLAG = props.logFlags && props.logFlags.includes('splits');
+
+  function renderList(array) {
+    if (array.length === 0)
+      return <div>[]</div>
+    if (array[0].date)
+      return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
+    else
+      return array.map((item) => <li>{JSON.stringify(item)}</li>);
+  }
+
+ function setIgnore () {
+    setIgnoreSaved (!ignoreSaved)
+  }
+
+  function splitsGet () {
+    if (! props.symbol) {
+      alert ("Missing symbol, press gain for a symbol")
+      return;
+    }
+    setErr('Request sent to server')
+    setCorsUrl ("https://" + props.servSelect + ":" + props.PORT + "/splits?stock=" + props.symbol)
+    setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
+
+    StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect,
+       props.PORT, props.ssl, props.logFlags, setSplitInfo, setErr, ignoreSaved)
+       if (LOG_FLAG)
+        console.log (splitInfo)
+  }
+
+
+
+ 
 
 const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
 
@@ -48,6 +90,7 @@ const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, se
           return;
         // setError('');
         const splits = result.data;
+        // setUpdateDate(formatDate (new Date(result.data.updateMili)))
         if (splits.length > 0 && LOG) {
           // console.log('\x1B[31mhello\x1B[34m world');
           console.log (sym, getDate(), result.data, result.status)
@@ -114,5 +157,25 @@ const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, se
         
 }
 
-export {Splits, StockSplitsGet}
+return (
+  <div>
+    <br></br> 
+
+    {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
+    <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
+    {splitInfo && renderList(splitInfo)}
+    <div>&nbsp;</div>          
+    
+
+    <div>&nbsp;</div>  
+
+
+  </div>
+)
+
+}
+
+
+
+export {Splits}
 

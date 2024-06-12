@@ -303,7 +303,7 @@ function VerifyGain (props) {
       <button type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;
       <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button> &nbsp;&nbsp;
       <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div> 
-      <div>Update: {updateDate}</div>     
+      {updateDate&& <div>Update: {updateDate}</div>}
     </div>
   )
 }

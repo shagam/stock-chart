@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react'
 
 import LogFlags from '../utils/LogFlags'
 import {VerifyGain} from './GainValidateMarketwatch'
-import {Splits, StockSplitsGet} from '../splits/StockSplitsGet'
+import {Splits} from '../splits/StockSplitsGet'
 
-import {spikesSmooth, spikesGet} from './Spikes'
+import {spikesGet} from './Spikes'
 
 import IpContext from '../contexts/IpContext';
 import {  useAuth, logout } from '../contexts/AuthContext';
@@ -46,20 +46,6 @@ function Verify (props) {
     },[props.symbol]) 
 
 
-    function splitsGet () {
-      if (! props.symbol) {
-        alert ("Missing symbol, press gain for a symbol")
-        return;
-      }
-      setErr('Request sent to server')
-      setCorsUrl ("https://" + props.servSelect + ":" + props.PORT + "/splits?stock=" + props.symbol)
-      setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
-
-      StockSplitsGet(props.symbol, props.rows, props.errorAdd, props.servSelect,
-         props.PORT, props.ssl, props.logFlags, setSplitInfo, setErr, ignoreSaved)
-         if (LOG_FLAG)
-          console.log (splitInfo)
-    }
 
     function spikes () {
       if (! props.symbol) {
@@ -111,15 +97,21 @@ function Verify (props) {
           <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                 stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
                   logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
-    
+          
+          <br></br> 
+
+          <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
+                stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
+                  logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
+
           {/* <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
           <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)}  </div>
            */}
-  
-          <br></br> 
+            <br></br> 
+          {/*
           <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
           {splitInfo && renderList(splitInfo)}
-          <div>&nbsp;</div>          
+          <div>&nbsp;</div>           */}
           
           {admin && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
