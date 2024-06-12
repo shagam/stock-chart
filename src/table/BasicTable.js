@@ -100,7 +100,7 @@ const BasicTable = (props) => {
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [gainData, setGainData] = useState();
-  const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
+
   
 //   const [logFlags, setLogFlags] = useState([]);
 //   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
@@ -1261,7 +1261,7 @@ const BasicTable = (props) => {
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-                stockChartYValues = {stockChartYValues} verifyDateOffset = {verifyDateOffset} setVerifyDateOffset={setVerifyDateOffset} refreshByToggleColumns = {refreshByToggleColumns}
+                stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
                  firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
