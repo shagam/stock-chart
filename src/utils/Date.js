@@ -36,6 +36,12 @@ function getDate() {
   return formattedDate;    
 }
 
+function formatDate(date) {
+  // const date = new Date();
+  var formattedDate = format(date, "yyyy-MMM-dd  HH:mm");
+  return formattedDate;    
+}
+
 function getDateSec() {
   const date = new Date();
   var formattedDate = format(date, "yyyy-MMM-dd  HH:mm:ss");
@@ -309,4 +315,4 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFla
 
 
 export {getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate}
