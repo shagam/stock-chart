@@ -90,7 +90,8 @@ const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, se
           return;
         // setError('');
         const splits = result.data;
-        // setUpdateDate(formatDate (new Date(result.data.updateMili)))
+        if (splits.length > 0)
+          setUpdateDate(formatDate (new Date(splits[0].updateMili)))
         if (splits.length > 0 && LOG) {
           // console.log('\x1B[31mhello\x1B[34m world');
           console.log (sym, getDate(), result.data, result.status)
@@ -163,6 +164,7 @@ return (
 
     {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
     <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
+    {updateDate && <div>Update:&nbsp;&nbsp; {updateDate}</div>}
     {splitInfo && renderList(splitInfo)}
     <div>&nbsp;</div>          
     
