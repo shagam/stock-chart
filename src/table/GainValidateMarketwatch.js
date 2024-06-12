@@ -33,10 +33,11 @@ function VerifyGain (props) {
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
   const { currentUser, admin, logout } = useAuth();
 
-  
+  const LOG = props.logFlags.includes("verify_1");
+    
 
   function marketwatchGainValidate (nasdaq) {
-    const LOG = props.logFlags.includes("verify_1");
+
     // setError();
 
     // choose entry for compare
@@ -294,6 +295,9 @@ function VerifyGain (props) {
 
   return (
     <div>
+      {LOG && <div>{corsUrl}</div>}
+      {LOG && <div>{url}</div>}
+      {err && <div style={{color: 'red'}}> {err} </div>}
       <div style={{display:'flex'}}>
           {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
 

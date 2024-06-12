@@ -27,22 +27,15 @@ function Verify (props) {
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('verify_1');
 
-    const [splitInfo, setSplitInfo] = useState ([]);
     const [spikeInfo, setSpikesInfo] = useState ([]);
-    const [corsUrl, setCorsUrl] = useState ();
-    const [url, setUrl] = useState ();
-    const [err, setErr] = useState ();
     const [ignoreSaved, setIgnoreSaved] = useState ();
     const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
     const { currentUser, admin, logout } = useAuth();
 
 
     useEffect(() => {
-      setSplitInfo();
+
       setSpikesInfo([])
-      setUrl()
-      setCorsUrl()
-      setErr()
     },[props.symbol]) 
 
 
@@ -89,10 +82,7 @@ function Verify (props) {
             <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
             <h6 style={{color: 'blue'}}> Verify &nbsp;  </h6>
           </div>
-          {err && <div style={{color: 'red'}}> {err} </div>}
-          {LOG_FLAG && <div>{corsUrl}</div>}
-          {LOG_FLAG && <div>{url}</div>}
-  
+
           <br></br>
           <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                 stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
@@ -104,14 +94,7 @@ function Verify (props) {
                 stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
                   logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
 
-          {/* <button type="button" onClick={()=>verify (true)}>verify &nbsp;(Nasdaq)   </button>
-          <div  style={{display:'flex' }}>  {JSON.stringify(verifyNasdaqTxt)}  </div>
-           */}
-            <br></br> 
-          {/*
-          <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
-          {splitInfo && renderList(splitInfo)}
-          <div>&nbsp;</div>           */}
+          <br></br> 
           
           {admin && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}

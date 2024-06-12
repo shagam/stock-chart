@@ -161,7 +161,9 @@ function Splits (props) {
 return (
   <div>
     <br></br> 
-
+    {err && <div style={{color: 'red'}}> {err} </div>}
+    {LOG_FLAG && <div>{corsUrl}</div>}
+    {LOG_FLAG && <div>{url}</div>}
     {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
     <button type="button" onClick={()=>splitsGet ()}>Splits  </button>  
     {updateDate && <div>Update:&nbsp;&nbsp; {updateDate}</div>}
