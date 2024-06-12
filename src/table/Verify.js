@@ -9,7 +9,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import {getTargetPriceArray, targetHistAll} from './TargetPrice'
 import IpContext from '../contexts/IpContext';
-
+import {  useAuth, logout } from '../contexts/AuthContext';
 
 function Verify (props) {
 
@@ -38,6 +38,7 @@ function Verify (props) {
     const [err, setErr] = useState ();
     const [ignoreSaved, setIgnoreSaved] = useState ();
     const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
+    const { currentUser, admin, logout } = useAuth();
 
     function verify (nasdaq) {
       const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
@@ -196,7 +197,7 @@ function Verify (props) {
           {splitInfo && renderList(splitInfo)}
           <div>&nbsp;</div>          
           
-          {eliHome && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
+          {admin && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
           <div>&nbsp;</div>  
         </div>
