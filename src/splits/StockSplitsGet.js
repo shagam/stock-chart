@@ -3,18 +3,11 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {formatDate} from '../utils/Date';
+import {getDate} from '../utils/Date'
 
 // https://62.0.92.49:5000/splits?stock=MSFT
 // https://dinagold.org:5000/splits?stock=MSFT
 // https://www.stocksplithistory.com/?symbol=MSFT
-
-function getDate() {
-  const today = new Date();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  // var formattedDate = format(date, "yyyy-MMM-dd HH:mm"); 
-  return date + " " + time;    
-}
 
 export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
 
