@@ -28,8 +28,11 @@ function VerifyGain (props) {
   const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
+  const [updateDate, setUpdateDate] = useState ();
+
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
   const { currentUser, admin, logout } = useAuth();
+
   
 
   function marketwatchGainValidate (nasdaq) {
@@ -96,6 +99,7 @@ function VerifyGain (props) {
         setErr()
         if (result.data) {
           console.log (props.symbol, JSON.stringify(result.data), formatDate (new Date(result.data.updateMili)))
+          setUpdateDate(formatDate (new Date(result.data.updateMili)))
         }
         
         if (result.data.err === "No data") {
@@ -216,6 +220,7 @@ function VerifyGain (props) {
     setUrl()
     setCorsUrl()
     setErr()
+    setUpdateDate()
   },[props.symbol]) 
 
 
@@ -297,7 +302,8 @@ function VerifyGain (props) {
 
       <button type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;
       <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button> &nbsp;&nbsp;
-      <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>      
+      <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div> 
+      <div>Update: {updateDate}</div>     
     </div>
   )
 }
