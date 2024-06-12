@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 import LogFlags from '../utils/LogFlags'
 import {VerifyGain} from './GainValidateMarketwatch'
-import StockSplitsGet from '../splits/StockSplitsGet'
+import {Splits, StockSplitsGet} from '../splits/StockSplitsGet'
 
 import {spikesSmooth, spikesGet} from './Spikes'
 

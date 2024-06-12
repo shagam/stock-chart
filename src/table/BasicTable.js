@@ -45,7 +45,6 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import IpContext from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 
-import StockSplitsGet from '../splits/StockSplitsGet'
 import '../GlobalVar'
 import { ServerSelect } from './ServerSelect'
 import {ErrorList, beep, beep2} from '../utils/ErrorList'
@@ -485,8 +484,6 @@ const BasicTable = (props) => {
     }
 
     const ind = allColumns.findIndex((column)=> column.Header === 'splits_list');
-    if (allColumns[ind].isVisible || ! isAdjusted ())  // high limit no need for compensation
-      StockSplitsGet(sym, rows, errorAdd, servSelect, ssl, props.logFlags, null) // no need for return value
 
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[1][0];  

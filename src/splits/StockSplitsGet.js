@@ -9,7 +9,12 @@ import {getDate} from '../utils/Date'
 // https://dinagold.org:5000/splits?stock=MSFT
 // https://www.stocksplithistory.com/?symbol=MSFT
 
-export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
+function Splits () {
+  
+}
+
+
+const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = logFlags && logFlags.includes('splits'); 
@@ -109,5 +114,5 @@ export const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFl
         
 }
 
-export default StockSplitsGet
+export {Splits, StockSplitsGet}
 
