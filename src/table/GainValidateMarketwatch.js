@@ -25,7 +25,7 @@ import {format} from "date-fns"
     return false;
   }
 
-export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
+function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
    requestedEntry_, refreshCallBack, firebaseGainAdd, corsServer, PORT, ssl, logFlags, setError, setText, nasdaq, setErr, ignoreSaved) {
  
   const LOG = logFlags.includes("verify_1");
@@ -187,7 +187,7 @@ export function marketwatchGainValidate (sym, rows, stockChartXValuesFunction, s
     refreshCallBack();
 }
 
-export function nasdaqTest () {
+function nasdaqTest () {
   const url='https://data.nasdaq.com/api/v3/datasets/WIKI/NVDA/data.json?start_date=2010-05-01&end_date=2024-2-2&limit=1'
   axios.get (url)
   .then ((result) => {
@@ -199,3 +199,5 @@ export function nasdaqTest () {
 
   })
 }
+
+export {marketwatchGainValidate, nasdaqTest}
