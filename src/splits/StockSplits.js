@@ -56,7 +56,7 @@ function Splits (props) {
 
  
 
-const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
+  const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, setSplitInfo, setErr, ignoreSaved) => {
 
       // const [splits, setSplits] = useState([])
       const LOG = logFlags && logFlags.includes('splits'); 
@@ -156,7 +156,7 @@ const StockSplitsGet = (sym, rows, setError, corsServer, PORT, ssl, logFlags, se
       })
     
         
-}
+  }
 
 return (
   <div>
