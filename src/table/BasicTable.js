@@ -60,16 +60,6 @@ const Tools = lazy(() => import ('./Tools'))
 
 const Config = lazy(() => import ('./Config'))
 
-const Verify = lazy(() => import ('./Verify'))
-
-// +
-// in comboModule.js:
-// export A from '../test/A'
-// export B from '../test/B'
-
-// in the code that needs lazy modules
-// const A = lazy(() => import('./comboModule').then((module) => ({default: module.A})))
-// const B = lazy(() => import('./comboModule').then((module) => ({default: module.B})))
 
 // import {polygon} from './Polygon'
 const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
@@ -1073,7 +1063,6 @@ const BasicTable = (props) => {
     DropRecovery: 'DropRecovery',
     Holdings: 'Holdings',
     peak2Peak: 'peak2Peak',
-    Verify: 'Verify',
     StockGainRaw: 'StockGainRaw',
     StockInfoRaw: 'StockInfoRaw', 
     Tools: 'Tools'
@@ -1240,10 +1229,9 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> dropRecovery          
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> peak2peak
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='holdings' id='5' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> holdings
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='verify' id='2' checked={analyzeTool==='verify'} onChange={onOptionChange}/> verify       
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools&nbsp;       
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> gainRaw
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools&nbsp;
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw&nbsp;  
               <input style={{marginLeft: '0px', color:'red'}}  type="radio" name="mon" value='none' id='7' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
                 {! isMobile && <div style={{color:'red'}}>none</div>}
             </div>
@@ -1257,17 +1245,15 @@ const BasicTable = (props) => {
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
-            {analyzeTool==='verify' && <Verify symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-                stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
-                 firebaseGainAdd = {firebaseGainAdd}  logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/> }
+            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
+            stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
+             firebaseGainAdd = {firebaseGainAdd}  servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
-            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
-            stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
-             firebaseGainAdd = {firebaseGainAdd}  servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
+   
 
             {eliHome && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>}
 

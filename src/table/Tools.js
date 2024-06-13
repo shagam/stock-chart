@@ -15,7 +15,7 @@ import IpContext from '../contexts/IpContext';
 import { TargetPriceGui } from './TargetPriceGui';
 import {VerifyGain} from './GainValidateMarketwatch'
 import {Splits} from './StockSplits'
-
+import Verify from './Verify'
 
 // import axios from 'axios'
 // import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -90,6 +90,13 @@ function Tools (props) {
             {/* <br></br>  */}
             <TargetPriceGui  symbol = {props.symbol} rows = {props.rows} logFlags = {props.logFlags} errorAdd={props.errorAdd} gainMap = {props.gainMap}
              ssl={props.ssl} PORT={props.PORT} servSelect={props.servSelect}/>
+
+            <Verify symbol = {props.symbol} rows = {props.rows} stockChartXValues = {props.stockChartXValues} 
+                stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns}
+                 logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
+
+
+
         </div>
     )
 

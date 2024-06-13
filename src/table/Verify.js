@@ -28,7 +28,6 @@ function Verify (props) {
     const LOG_FLAG = props.logFlags && props.logFlags.includes('verify_1');
 
     const [spikeInfo, setSpikesInfo] = useState ([]);
-    const [ignoreSaved, setIgnoreSaved] = useState ();
     const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
     const { currentUser, admin, logout } = useAuth();
 
@@ -62,41 +61,9 @@ function Verify (props) {
 
     }
 
-  const style = {
-    // background: 'blue',
-    // color: 'red',
-    // fontSize: 200,
-    border: '2px solid green'
-  };
-  // style={{display:'flex'}}
-
-  function setIgnore () {
-    setIgnoreSaved (!ignoreSaved)
-  }
-
-
   return (
-        <div style={{ border: '2px solid blue'}}> 
-
-          <div style = {{display: 'flex'}}>
-            <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-            <h6 style={{color: 'blue'}}> Verify &nbsp;  </h6>
-          </div>
-
-          <br></br>
-          <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
-                stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
-                  logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
-          
-          <br></br> 
-
-          <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
-                stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
-                  logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
-
-          <br></br> 
-          
-          {admin && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
+        <div>      
+          {eliHome && <button type="button" onClick={()=>spikes ()}>Spikes  </button> } 
           {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
           <div>&nbsp;</div>  
         </div>
