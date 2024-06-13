@@ -8,7 +8,7 @@ import { COLUMNS, GROUPED_COLUMNS } from './columns'
 
 import './table.css'
 import GlobalFilter from './GlobalFilter'
-import CheckBox from './CheckBox'
+import CheckBox from '../utils/CheckBox'
 
 // import Splits from '../splits/Splits'
 
