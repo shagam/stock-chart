@@ -80,7 +80,7 @@ function TargetPriceGui (props) {
 
         <div>
 
-            <h3>Target price history</h3>
+            <h5>Target price history</h5>
 
             <button type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp; &nbsp;
             

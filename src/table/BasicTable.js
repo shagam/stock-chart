@@ -1266,11 +1266,8 @@ const BasicTable = (props) => {
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
             {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
-             ssl={ssl} PORT={PORT} servSelect={servSelect} /> }
-
-            {/* props.verifyDateOffset,   props.refreshByToggleColumns, props.firebaseGainAdd,  */}     
-
-            {/* <Splits symbol ={chartSymbol} rows = {rows} admin = {admin} localIpv4 = {localIpv4}  saveTable = {saveTable}refreshCallBack = {props.refreshCallBack}/> */}
+            stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
+             firebaseGainAdd = {firebaseGainAdd}  servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
 
             {eliHome && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>}
 

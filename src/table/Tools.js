@@ -13,9 +13,13 @@ import logFlags from '../utils/LogFlags'
 import {monthGain} from './MonthGain'
 import IpContext from '../contexts/IpContext';
 import { TargetPriceGui } from './TargetPriceGui';
-import axios from 'axios'
-import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
+import {VerifyGain} from './GainValidateMarketwatch'
+import {Splits} from './StockSplits'
+
+
+// import axios from 'axios'
+// import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+//   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
 function Tools (props) {
     const [displayFlag, setDisplayFlag] = useState (false); 
@@ -54,6 +58,7 @@ function Tools (props) {
                 <div style={{color:'red'}}>{status}</div>
                 
                 <br></br> 
+                <h5>Month gain </h5>
                 {/* &nbsp; &nbsp; */}
                 <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
                   dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp; 
@@ -72,6 +77,17 @@ function Tools (props) {
                     
             </div>
 
+            {/* <br></br> */}
+            <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
+                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
+                    logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
+            
+            <br></br> 
+            <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
+                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
+                    logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
+
+            {/* <br></br>  */}
             <TargetPriceGui  symbol = {props.symbol} rows = {props.rows} logFlags = {props.logFlags} errorAdd={props.errorAdd} gainMap = {props.gainMap}
              ssl={props.ssl} PORT={props.PORT} servSelect={props.servSelect}/>
         </div>

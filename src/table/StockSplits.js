@@ -160,7 +160,7 @@ function Splits (props) {
 
 return (
   <div>
-    <br></br> 
+    <h5>Stock splits</h5>
     {err && <div style={{color: 'red'}}> {err} </div>}
     {LOG_FLAG && <div>{corsUrl}</div>}
     {LOG_FLAG && <div>{url}</div>}
@@ -169,11 +169,6 @@ return (
     {updateDate && <div>Update:&nbsp;&nbsp; {updateDate}</div>}
     {splitInfo && renderList(splitInfo)}
     <div>&nbsp;</div>          
-    
-
-    <div>&nbsp;</div>  
-
-
   </div>
 )
 

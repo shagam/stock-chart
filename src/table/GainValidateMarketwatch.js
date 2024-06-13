@@ -295,6 +295,7 @@ function VerifyGain (props) {
 
   return (
     <div>
+      <h5>Verify_1 </h5>
       {LOG && <div>{corsUrl}</div>}
       {LOG && <div>{url}</div>}
       {err && <div style={{color: 'red'}}> {err} </div>}
