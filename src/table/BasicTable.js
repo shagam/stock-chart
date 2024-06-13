@@ -17,7 +17,7 @@ import {Peak2PeakGui} from './Peak2Peak'
 
 import StockInfo from './StockInfo'
 import StockGain from './StockGain'
-import GainValidate from './GainValidate'
+
 import {Holdings} from './Holdings'
 
 
