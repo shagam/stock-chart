@@ -95,7 +95,7 @@ function TargetPriceGui (props) {
             
             {price && targetInfoOne && renderList(targetInfoOne)}
 
-            <br></br>           
+            {/* <br></br>            */}
 
             {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
             <div  style={{display: 'flex'}}>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; &nbsp; <div style={{color: 'lightGreen'}}>(targetNew &nbsp;/ targetOld)</div> </div>}
