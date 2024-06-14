@@ -42,20 +42,24 @@ function Tools (props) {
             <MonthGain symbol = {props.symbol}  gainMap = {props.gainMap}  stockChartXValues = {props.stockChartXValues} 
                   stockChartYValues = {props.stockChartYValues} logFlags = {props.logFlags} errorAdd={props.errorAdd}/>
 
+            <hr/> 
             {/* <br></br> */}
             <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                   stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
             
-            <br></br> 
+            <hr/> 
+            {/* <br></br>  */}
             <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                   stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
-
+            
+            <hr/> 
             {/* <br></br>  */}
             <TargetPriceGui  symbol = {props.symbol} rows = {props.rows} logFlags = {props.logFlags} errorAdd={props.errorAdd} gainMap = {props.gainMap}
              ssl={props.ssl} PORT={props.PORT} servSelect={props.servSelect}/>
-
+            
+            <hr/> 
             <Spikes symbol = {props.symbol} rows = {props.rows} stockChartXValues = {props.stockChartXValues} 
                 stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns}
                  logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>

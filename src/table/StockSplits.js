@@ -168,7 +168,6 @@ return (
     <button style={{background: 'aqua'}} type="button" onClick={()=>splitsGet ()}>Splits  </button>  
     {updateDate && <div>Update:&nbsp;&nbsp; {updateDate}</div>}
     {splitInfo && renderList(splitInfo)}
-    <div>&nbsp;</div>          
   </div>
 )
 
