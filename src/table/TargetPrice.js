@@ -22,7 +22,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     // save target prices for symbol in array
     const tar = targetRaw / price; 
     const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
-    if (tar === NaN) {
+    if (isNaN(tar)) {
         console.log (symbol, 'tar invalid', symTargetOne)
         return;
     }
