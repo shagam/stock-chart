@@ -200,7 +200,7 @@ function MonthGain (props) {
         <div style={{color:'red'}}>{status}</div>
         <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
           dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp; 
-          {props.symbol && <button type="button" onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
+          {props.symbol && <button style={{background: 'aqua'}}  type="button" onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
         </div>
         
         {/* <br></br>  */}

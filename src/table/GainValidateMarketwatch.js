@@ -300,13 +300,13 @@ function VerifyGain (props) {
       {LOG && <div>{url}</div>}
       {err && <div style={{color: 'red'}}> {err} </div>}
       <div style={{display:'flex'}}>
-          {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
-
+          {eliHome &&  <input style={{height: '7%', marginTop: '8px'}} type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved  &nbsp;
+          <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button>  &nbsp;
           <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>
       </div> 
 
-      <button type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;
-      <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button> &nbsp;&nbsp;
+      <button style={{background: 'aqua'}} type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;
+
       <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div> 
       {updateDate&& <div>Update: {updateDate}</div>}
     </div>

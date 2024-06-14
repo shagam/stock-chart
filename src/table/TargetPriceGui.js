@@ -82,9 +82,9 @@ function TargetPriceGui (props) {
 
             <h5>Target price history</h5>
 
-            {props.symbol && <button type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> } &nbsp;
+            {props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> } &nbsp;
 
-            <button type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button> 
+            <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button> 
 
             <div> {status} </div>
             <div style = {{display: 'flex'}}>
