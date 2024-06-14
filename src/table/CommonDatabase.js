@@ -668,13 +668,13 @@ function CommonDatabase (props) {
         <div> &nbsp; </div> 
         <div>
           <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
-          <button type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
-          <button type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
-          <button type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>
         </div>
 
         <div>    
-          <button type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
           {next === 'insert' && <button type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
           {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>} &nbsp;
           <div> &nbsp; </div> 
@@ -682,15 +682,15 @@ function CommonDatabase (props) {
 
 
         {props.eliHome && <div> 
-            <button type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
             {next === 'del' &&  <button type="button" onClick={()=>{del()}}>Delete </button>} &nbsp;
             <div> &nbsp; </div> 
         </div>}
 
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
-            {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}
+            {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
+            {eliHome && props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
         </div>
         

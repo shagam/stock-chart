@@ -113,10 +113,10 @@ const Peak2PeakGui = (props) => {
            <div style={{display:'flex'}}> &nbsp; 
               <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp;
            
-              <button type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
+              <button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;
 
-              {results && ! props.bubleLine && <button type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
+              {results && ! props.bubleLine && <button style={{background: 'aqua'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
               {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} / bubbleLine = {bubbleLineRatio} </div>}
            </div>
            
