@@ -1,7 +1,28 @@
 import React, {useState, useMemo, useEffect} from 'react' 
+import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
+import IpContext from '../contexts/IpContext';
 import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
+
+
+function MonthGain (props) {
+  const [status, setStatus] = useState (); 
+  const {localIp, localIpv4, eliHome} = IpContext();
+
+  const [mGainObj, setMgainObj] = useState ({});
+  const [yearGain, setYearGain] = useState ();
+  const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+  const [startDate, setStartDate] = useState (new Date(2002, 9, 15));
+
+
+  useEffect(() => {
+    setStatus()
+    setMgainObj({})
+  },[props.symbol]) 
+
+
 
  // loop through months
   function nextMonthWeek (i, xArray) {
@@ -26,7 +47,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
   var stockCount_ = -1
 
   // collect month gain over the history
-  function monthGain (gainMap, mGainObj, setMgainObj, setYearGain, logFlags, startDate) {    
+  function monthGainCalc (gainMap, mGainObj, setMgainObj, setYearGain, logFlags, startDate) {    
 
     // const n = 1.05;
     // const l = Math.log(n) // natural log
@@ -154,27 +175,46 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBa
         console.log(symm,'agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
 
 
-  mGainObj.Jan = monthGainShift[0]
-  mGainObj.Feb = monthGainShift[1]
-  mGainObj.Mar = monthGainShift[2]
-  mGainObj.Apr = monthGainShift[3]
-  mGainObj.May = monthGainShift[4]
-  mGainObj.Jun = monthGainShift[5]     
-  mGainObj.Jul = monthGainShift[6]
-  mGainObj.Aug = monthGainShift[7]
-  mGainObj.Sep = monthGainShift[8]
-  mGainObj.Oct = monthGainShift[9]
-  mGainObj.Nov = monthGainShift[10]
-  mGainObj.Dec = monthGainShift[11]
+    mGainObj.Jan = monthGainShift[0]
+    mGainObj.Feb = monthGainShift[1]
+    mGainObj.Mar = monthGainShift[2]
+    mGainObj.Apr = monthGainShift[3]
+    mGainObj.May = monthGainShift[4]
+    mGainObj.Jun = monthGainShift[5]     
+    mGainObj.Jul = monthGainShift[6]
+    mGainObj.Aug = monthGainShift[7]
+    mGainObj.Sep = monthGainShift[8]
+    mGainObj.Oct = monthGainShift[9]
+    mGainObj.Nov = monthGainShift[10]
+    mGainObj.Dec = monthGainShift[11]
 
+  // compensate for month shift
 
-// compensate for month shift
+    setYearGain (yearlyGain)
+  }
 
+  return (
+    <div>
+       <h5>Month gain </h5>
+        {/* &nbsp; &nbsp; */}
+        <div style={{color:'red'}}>{status}</div>
+        <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
+          dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp; 
+          {props.symbol && <button type="button" onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
+        </div>
+        
+        {/* <br></br>  */}
+        { Object.keys(mGainObj).map((oneKey,i)=>{
+          return (
+              <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
+            )
+        })}
 
+        {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
+        <br></br>           
+    </div>
+  )
 
-
-
-  setYearGain (yearlyGain)
 }
 
-export {monthGain}
+export {MonthGain}
