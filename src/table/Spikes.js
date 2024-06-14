@@ -94,10 +94,12 @@ function Spikes (props) {
       return;
     }
     var spikes =  spikesGet (props.symbol, props.stockChartXValues, props.stockChartYValues, props.logFlags);
-    // if (spikes.length > 0) {
-    //   setSpikesInfo (spikes)
-    //   console.log ('spikes:', spikes)
-    // }
+    if (spikes.length > 0) {
+      setSpikesInfo (spikes)
+      console.log ('spikes:', spikes)
+    }
+    else
+      setSpikesInfo (['No spikes'])
   }
 
   function renderList(array) {
