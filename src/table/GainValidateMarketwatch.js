@@ -306,9 +306,8 @@ function VerifyGain (props) {
       </div> 
 
       <button style={{background: 'aqua'}} type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;
-
+      {updateDate && <div>Update: {updateDate}</div>}
       <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div> 
-      {updateDate&& <div>Update: {updateDate}</div>}
     </div>
   )
 }
