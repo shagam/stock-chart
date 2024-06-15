@@ -5,7 +5,7 @@ import axios from 'axios'
 function searchURL (logFlags) {
     const mili = Date.now();
 
-    if (mili % 113 !== 0 || true) // rare access to search
+    if (mili % 113 !== 0 || true) // block rare access to search
         return;
 
     const LOG = logFlags.includes('splits');
@@ -22,7 +22,7 @@ function searchURL (logFlags) {
     .catch ((err) => {
         // setError([err.message, url])
         if (LOG)
-            console.log(err.messaged, url)
+            console.log(err.message, url) //  has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
     })
 }
 
