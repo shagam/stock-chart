@@ -10,7 +10,7 @@ import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 import GetInt from '../utils/GetInt'
-import GlobalFilter from '../table/GlobalFilter'
+import GlobalFilter from '../utils/GlobalFilter'
 import MobileContext from '../contexts/MobileContext'
 
 

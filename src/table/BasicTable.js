@@ -7,7 +7,7 @@ import MOCK_DATA from './mock-data.json'
 import { COLUMNS, GROUPED_COLUMNS } from './columns'
 
 import './table.css'
-import GlobalFilter from './GlobalFilter'
+import GlobalFilter from '../utils/GlobalFilter'
 import CheckBox from '../utils/CheckBox'
 
 // import Splits from '../splits/Splits'
