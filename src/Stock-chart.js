@@ -21,26 +21,6 @@ const StockChart = (props) => {
   const LOG_CHART_1 = props.logFlags && props.logFlags.includes('chart1');
 
   var first = false;
-  // if (props.rows.length === 2){
-  //     first = true;
-  //     const now = Date.now();
-  //     // console.log ('check first', props.rows.length)
-  //   for (let i = 0; i < props.rows.length; i++) {
-  //     if (props.rows[i].values.symbol !== 'QQQ' && props.rows[i].values.symbol !== 'SPY'){
-  //       first = false;
-  //       // console.log('wrong sym', props.rows[i].values.symbol)
-  //     }
-  //     // console.log (props.rows[i].values.symbol, now, props.rows[i].values.gain_mili, now - props.rows[i].values.gain_mili)
-  //     if(now - props.rows[i].values.gain_mili > 1000) {
-  //       first = false;
-  //       // console.log('if old row, chart off by default')
-  //     }
-  //     else
-  //       if (LOG_FLAG)
-  //         console.log ('first:', first, now - props.rows[0].values.gain_mili, now - props.rows[1].values.gain_mili)
-  //   }
-
-  // }
 
   const [chartFlag, setChartFlag] = useState(first); // hide / show page
   const [multi, setMulti] = useState(true);
@@ -394,6 +374,11 @@ const StockChart = (props) => {
           <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
 
+             </div>
+        
+        <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+            dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp;
+             {/* some drop recovery ranges  month 0-11 */}
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='24' id='24' checked={months==='24'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 2_year </label> 
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='60' id='60' checked={months==='60'} onChange={onOptionChange}/> 
@@ -402,22 +387,18 @@ const StockChart = (props) => {
              <label style={{marginRight:'10px', paddingRight: '1px'}}> 10_year </label>
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
              <label style={{marginRight:'10px', paddingRight: '25px'}}> 22_Year </label>
+
         </div>
-          <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
-            dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp;
-             {/* some drop recovery ranges  month 0-11 */}
+  
+        <div style={{display:'flex'}}>
+          <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
+          <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
+          {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>}  &nbsp; &nbsp;
             <button onClick={() => setDateRange(new Date(2008,0,1), new Date(2011,0,1))}> 2008-2010</button>&nbsp;  
             <button onClick={() => setDateRange(new Date(2020,0,1), new Date(2020,6,1))}> 2020</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2023,0,1))}> 2022</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2023,0,1), new Date(2024,0,1))}> 2023</button>&nbsp;&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2024,0,1))}> 2022-2023</button>&nbsp;
-
-          </div>
-
-        <div style={{display:'flex'}}>
-          <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
-          <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
-          {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>    }
         </div>
 
         <div id = 'chart_id'>
@@ -427,7 +408,7 @@ const StockChart = (props) => {
             layout={{ width: 700, height: 350, title: title, staticPlot: true, yaxis: {fixedrange: false}  }}
              config={{staticPlot: true, 'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
           {! props.isMobile && <Plot  data={gainChart} 
-            layout={{ width: 850, height: 500, title: title, yaxis: {autorange: true, }, xaxis:{tickformat: '%Y-%b-%d'} }}
+            layout={{ width: 750, height: 500, title: title, yaxis: {autorange: true, }, xaxis:{tickformat: '%Y-%b-%d'} }}
              config={{'modeBarButtonsToRemove': []}} />}
         </div>
 
