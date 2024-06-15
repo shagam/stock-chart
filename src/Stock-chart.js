@@ -24,6 +24,8 @@ const StockChart = (props) => {
 
   const [chartFlag, setChartFlag] = useState(first); // hide / show page
   const [multi, setMulti] = useState(true);
+  const [showRanges, setShowRanges] = useState();
+
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
 
@@ -392,13 +394,17 @@ const StockChart = (props) => {
   
         <div style={{display:'flex'}}>
           <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
-          <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp; &nbsp;  </div>
-          {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale  </div>}  &nbsp; &nbsp;
+          <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp;  </div>
+          {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp; </div>}  &nbsp; 
+          <input  type="checkbox" checked={showRanges}  onChange={() => setShowRanges (! showRanges)} /> &nbsp;ranges  &nbsp;
+          {showRanges && <div>
+            &nbsp; &nbsp;
             <button onClick={() => setDateRange(new Date(2008,0,1), new Date(2011,0,1))}> 2008-2010</button>&nbsp;  
             <button onClick={() => setDateRange(new Date(2020,0,1), new Date(2020,6,1))}> 2020</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2023,0,1))}> 2022</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2023,0,1), new Date(2024,0,1))}> 2023</button>&nbsp;&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2024,0,1))}> 2022-2023</button>&nbsp;
+          </div>}
         </div>
 
         <div id = 'chart_id'>
