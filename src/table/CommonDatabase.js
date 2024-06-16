@@ -675,7 +675,7 @@ function CommonDatabase (props) {
 
         <div>    
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
-          {next === 'insert' && <button type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
+          {next === 'insert' && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
           {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>} &nbsp;
           <div> &nbsp; </div> 
         </div>
@@ -683,7 +683,7 @@ function CommonDatabase (props) {
 
         {props.eliHome && <div> 
             <button style={{background: 'aqua'}} type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
-            {next === 'del' &&  <button type="button" onClick={()=>{del()}}>Delete </button>} &nbsp;
+            {next === 'del' &&  <button style={{background: 'Chartreuse'}} type="button" onClick={()=>{del()}}>Delete </button>} &nbsp;
             <div> &nbsp; </div> 
         </div>}
 
