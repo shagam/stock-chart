@@ -7,6 +7,7 @@ export const ServerSelect = (props) => {
   // props.defaultValue  missing
   // props.title
   // props.options
+  // props.names  
 
 
 
@@ -20,7 +21,7 @@ export const ServerSelect = (props) => {
     <select   value={props.servSelect}  onChange={(e) =>{
       props.setServSelect (e.target.value)}} >
       {props.options.map((s, i) => (
-          <option key={i} value={s} > {s} &nbsp; </option> 
+          <option key={i} value={s} > {props.servNameList[i]} &nbsp; </option> 
       ))}  
     </select>
 
