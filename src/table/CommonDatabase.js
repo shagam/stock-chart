@@ -152,7 +152,7 @@ function CommonDatabase (props) {
             return;
         }
         if (props.rows[row_index].values.year === undefined) {
-            setErr ('Need tp click <gain> on QQQ')
+            setErr ('Need to click <gain> on QQQ')
             beep2()
             return;
         }
