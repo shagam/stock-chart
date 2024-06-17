@@ -667,7 +667,7 @@ function CommonDatabase (props) {
         {/* ====== Buttons */} 
         <div> &nbsp; </div> 
         <div>
-          <div>Get stocks gain heigher than QQQ (Self backEnd)</div>
+          <div>Get stocks gain heigher than QQQ </div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>
