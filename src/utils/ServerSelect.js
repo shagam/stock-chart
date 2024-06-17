@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 // import MobileContext from './MobileContext';
 
 
-export const ServerSelect = (props) => {
+export const ComboBoxSelect = (props) => {
   // props.setServ
   // props.defaultValue  missing
   // props.title
@@ -19,9 +19,9 @@ export const ServerSelect = (props) => {
     {props.title} &nbsp;
 
     <select   value={props.servSelect}  onChange={(e) =>{
-      props.setServSelect (e.target.value)}} >
+      props.setSelect (e.target.value)}} >
       {props.options.map((s, i) => (
-          <option key={i} value={s} > {props.servNameList[i]} &nbsp; </option> 
+          <option key={i} value={s} > {props.nameList[i]} &nbsp; </option> 
       ))}  
     </select>
 
@@ -36,4 +36,4 @@ export const ServerSelect = (props) => {
   )
 }
 
-export default ServerSelect;
+export default ComboBoxSelect;
