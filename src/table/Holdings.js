@@ -26,6 +26,9 @@ function Holdings (props) {
   const [urlLast, setUrlLast] = useState();
   const [urlCors, setUrlCors] = useState();
   const [ignoreSaved, setIgnoreSaved] = useState ();
+  const [logBackEnd, setLogBackEnd] = useState ();
+
+
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
   const LOG = props.logFlags.includes('holdings')
@@ -137,6 +140,8 @@ function Holdings (props) {
     }
     if (ignoreSaved)
       corsUrl += '&ignoreSaved=true';
+    if (logBackEnd)
+      corsUrl += '&LOG=true';
 
     else if (srcNum === 2) {
         corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
@@ -248,8 +253,14 @@ function Holdings (props) {
       return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
   }
 
+  // avoid loop
   function setIgnore () {
     setIgnoreSaved (!ignoreSaved)
+  }
+
+  // avoid loop
+  function setLog () {
+    setLogBackEnd (! logBackEnd)
   }
 
   return (
@@ -268,6 +279,7 @@ function Holdings (props) {
           <div stype={{display: 'flex'}}>
             <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
           </div>
 
