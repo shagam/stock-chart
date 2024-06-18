@@ -22,6 +22,7 @@ function TargetPriceGui (props) {
         setTargetInfoOne()
         setPrice()
         setPredict()
+        setTarget()
 
         // setTargetPriceHist()
     },[props.symbol]) 
