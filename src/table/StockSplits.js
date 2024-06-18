@@ -105,7 +105,7 @@ function Splits (props) {
           // console.log('\x1B[31mhello\x1B[34m world');
           console.log (sym, getDate(), result.data, result.status)
         }
-        console.log (sym, "splits from server", splits, formatDate (new Date(splits[0].updateMili)))
+        console.log (sym, "splits from server", splits)
           // console.log ('last web split: ', splits[splits.length - 1]);
 
         if (splits === '') { // no splits
