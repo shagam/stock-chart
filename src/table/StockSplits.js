@@ -16,6 +16,7 @@ function Splits (props) {
   const { eliHome} = IpContext();
   const { currentUser, admin, logout } = useAuth();
   const [ignoreSaved, setIgnoreSaved] = useState ();
+  const [logBackEnd, setLogBackEnd] = useState ();
   const [splitInfo, setSplitInfo] = useState ([]);
   const [url, setUrl] = useState ();
   const [err, setErr] = useState ();
@@ -36,6 +37,11 @@ function Splits (props) {
  function setIgnore () {
     setIgnoreSaved (!ignoreSaved)
   }
+
+  function setLog () {
+    setLogBackEnd (! logBackEnd)
+  }
+
 
   function splitsGet () {
     if (! props.symbol) {
@@ -75,6 +81,9 @@ function Splits (props) {
       }
       if (ignoreSaved)
         corsUrl += '&ignoreSaved=true';
+
+      if (logBackEnd)
+        corsUrl += '&LOG=true';
 
       if (LOG)
         console.log (sym, corsUrl)
@@ -165,6 +174,8 @@ return (
     {LOG_FLAG && <div>{corsUrl}</div>}
     {LOG_FLAG && <div>{url}</div>}
     {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
+    {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp; &nbsp;
+
     <button style={{background: 'aqua'}} type="button" onClick={()=>splitsGet ()}>Splits  </button>  
     {updateDate && <div>Update:&nbsp;&nbsp; {updateDate}</div>}
     {splitInfo && renderList(splitInfo)}
