@@ -49,6 +49,8 @@ function Splits (props) {
       return;
     }
     setErr('Request sent to server')
+    setSplitInfo()
+    setUpdateDate()
     setCorsUrl ("https://" + props.servSelect + ":" + props.PORT + "/splits?stock=" + props.symbol)
     setUrl ("https://www.stocksplithistory.com/?symbol=" + props.symbol)
 
@@ -162,10 +164,9 @@ function Splits (props) {
       .catch ((err) => {
         setError([sym, err.message, corsUrl])
         console.log(err, corsUrl)
-      })
-    
-        
+      })     
   }
+
 
 return (
   <div>

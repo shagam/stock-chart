@@ -13,7 +13,7 @@ function TargetPriceGui (props) {
     const [targetBase, setTargetBase] = useState (0);
     const [predict, setPredict] = useState ();
     const [status, setStatus] = useState ();
-
+    const [logBackEnd, setLogBackEnd] = useState ();
 
     const LOG = props.logFlags.includes('month')
 
@@ -26,6 +26,10 @@ function TargetPriceGui (props) {
         // setTargetPriceHist()
     },[props.symbol]) 
 
+    function setLog () {
+        setLogBackEnd (! logBackEnd)
+    }
+
     function targetGetOne () {
         const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
         if (row_index  === -1)
@@ -34,13 +38,19 @@ function TargetPriceGui (props) {
             props.errorAdd([props.symbol, 'no target price for ETF'])
             return;
         }
-        const tar = targetHistoryOne (props.symbol, setTargetInfoOne, setTargetHistAll,  props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
+        const tar = targetHistoryOne (props.symbol, setTargetInfoOne, setTargetHistAll,  props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus, logBackEnd)
+        setTargetInfoOne()
+        setPrice()
+        setPredict()
         setPrice (props.rows[row_index].values.price) // for display
         setTarget (props.rows[row_index].values.target) // for display
     }
     
     function targetGetAll () {
-        const tar = targetHistAll (setTargetHistAll, setTargetInfoOne, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus)
+        setTargetInfoOne()
+        setPrice()
+        setPredict()
+        const tar = targetHistAll (setTargetHistAll, setTargetInfoOne, props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus, logBackEnd)
     }
     
     function checkPrediction () {
@@ -84,7 +94,8 @@ function TargetPriceGui (props) {
 
             {props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> } &nbsp;
 
-            <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button> 
+            <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp;
+            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp;
 
             <div> {status} </div>
             <div style = {{display: 'flex'}}>
@@ -106,8 +117,8 @@ function TargetPriceGui (props) {
             return (
                 <div style={{width: '90vw'}} key={i}>
                     <div  style={{display: 'flex'}} >
-                    <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
-                    <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
+                        <div style={{color: 'red', width: '50px'}} > {sym}   </div>   ({targetPriceHist[sym].length}) &nbsp; &nbsp;
+                        <div style={{color: 'lightGreen'}} > {(targetPriceHist[sym][targetPriceHist[sym].length - 1].target /  targetPriceHist[sym][0].target).toFixed(3)} </div>
                     </div> 
                     {targetPriceHist[sym].map((targetItem, k) => <li key={k}>{JSON.stringify(targetItem)} </li>)} 
                 </div>

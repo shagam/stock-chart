@@ -72,7 +72,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 }
 
 // get all target Price history for one symbol  // 
-async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
+async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, logFlags, errorAdd, ssl, PORT, servSelect, setStatus, logBackEnd) {
     const LOG = logFlags.includes('target') 
 
      // home server
@@ -82,6 +82,10 @@ async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, log
      else
          corsUrl = 'http://'
      corsUrl += servSelect + ":" + PORT + "/target?cmd=readOne&" + "stock=" + symbol
+
+     if (logBackEnd)
+        corsUrl += '&LOG=true';
+
      console.log (corsUrl)
      setStatus('request sent')
 
@@ -119,7 +123,7 @@ async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, log
 }
 
 
-async function targetHistAll (setTargetPriceHist, setTargetInfoOne, logFlags, errorAdd, ssl, PORT, servSelect, setStatus) {
+async function targetHistAll (setTargetPriceHist, setTargetInfoOne, logFlags, errorAdd, ssl, PORT, servSelect, setStatus, logBackEnd) {
     const LOG = true;//logFlags.includes('target')
 
     var corsUrl = ''
@@ -128,6 +132,9 @@ async function targetHistAll (setTargetPriceHist, setTargetInfoOne, logFlags, er
     else
         corsUrl = 'http://'
     corsUrl += servSelect + ":" + PORT + "/target?cmd=readAll&" 
+    if (logBackEnd)
+        corsUrl += '&LOG=true';
+
     console.log (corsUrl)
     setStatus('request sent')
 
