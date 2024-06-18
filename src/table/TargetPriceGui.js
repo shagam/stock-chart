@@ -37,6 +37,7 @@ function TargetPriceGui (props) {
             return;
         if (props.rows[row_index].values.PE === -2) {
             props.errorAdd([props.symbol, 'no target price for ETF'])
+            setStatus('no target price for ETF')
             return;
         }
         const tar = targetHistoryOne (props.symbol, setTargetInfoOne, setTargetHistAll,  props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setStatus, logBackEnd)
@@ -98,7 +99,7 @@ function TargetPriceGui (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp;
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp;
 
-            <div> {status} </div>
+            <div style={{color: 'red'}}> {status} </div>
             <div style = {{display: 'flex'}}>
                 {targetInfoOne && <GetInt init={targetBase} callBack={setTargetBase} title='targetBase' type='Number' pattern="[0-9]+"/>} &nbsp; &nbsp;
                 {targetInfoOne && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }
