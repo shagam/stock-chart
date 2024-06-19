@@ -1077,6 +1077,9 @@ const BasicTable = (props) => {
   }
   props.setServer(servSelect)
 
+  const globalTechUrl = 'https://www.as-invest.co.il/media/tdmprbse/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C-%D7%9E%D7%9E%D7%95%D7%A7%D7%93-%D7%97%D7%95%D7%9C-%D7%A4%D7%90%D7%A1%D7%99%D7%91%D7%99-%D7%9E%D7%93%D7%93%D7%99-%D7%9E%D7%A0%D7%99%D7%95%D7%AA_global-tech.pdf'
+
+
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
@@ -1091,8 +1094,9 @@ const BasicTable = (props) => {
 
         {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
         {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
-        <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button>
-
+        <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
+        {eliHome && <button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTechUrl </button>}
+     
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
