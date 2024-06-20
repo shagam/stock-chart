@@ -99,26 +99,26 @@ export default function ContactUs (props)  {
       <div>&nbsp;</div>
         <Form.Group id="name"  style={{display:'flex'}}>
           <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Name&nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="text" ref= {nameRef} required />
+          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="text" ref= {nameRef} required />
         </Form.Group>
 
         <Form.Group id="email"  style={{display:'flex'}}>
           <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Email&nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="email" ref= {emailRef} required />
+          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="email" ref= {emailRef} required />
         </Form.Group>
 
         {/* <hr/>  */}
 
         <Form.Group id="email1" style={{display:'flex'}}>
           <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>EmailConfirm</Form.Label>
-          <Form.Control style={{fontSize: '22px', backgroundColor: 'Gold', height: '35px'}} type="email" ref= {emailConfirmRef} required />
+          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="email" ref= {emailConfirmRef} required />
         </Form.Group>
 
         {/* <hr/> */}
 
         <div style={{color: 'magenta'}}>Text</div>
         <Form.Group id="message" className="mb-3" controlId="text">
-          <Form.Control style={{fontSize: '20px', height: '20vh', backgroundColor: 'LemonChiffon'}} as="textarea" ref= {messageRef} required  type="text"
+          <Form.Control style={{fontSize: '20px', height: '20vh', backgroundColor: '	#c0e0c0'}} as="textarea" ref= {messageRef} required  type="text"
            placeholder=""  defaultValue={''}/>
         </Form.Group>
 
