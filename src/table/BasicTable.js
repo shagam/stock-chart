@@ -1224,22 +1224,28 @@ const BasicTable = (props) => {
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
 
         {chartSymbol && <div>
-          {/* <input type="checkbox" checked={analyzeShow}  onChange={() => setAnalyzeShow (! analyzeShow) } /> Analyze  */}
-          <div style={{display: 'flex'}}> 
+          <div>&nbsp;</div>
+          {! analyzeTool && <div style={{display: 'flex'}}> 
             <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; Analyze &nbsp;
             <div style={{color: 'blue'}}> (Choose):</div>
-          </div>
+          </div>}
+
           {<div>
             <div style={{display:'flex'}}>
-              <input style={{marginLeft: '0px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/> peak2peak  
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/> dropRecovery          
- 
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='holdings' id='5' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> holdings
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/> tools       
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> gainRaw
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/> infoRaw  
-              <input style={{marginLeft: '5px', color:'red'}}  type="radio" name="mon" value='none' id='7' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
-                {! isMobile && <div style={{color:'red'}}>none</div>} &nbsp; 
+              <input style={{'color':'magenta', marginLeft: '0px'}}  type="radio" name="mon" value='peak2peak' id='1' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/>
+              <div style={{color:'blue'}}> peak2peak  </div> 
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='dropRecovery' id='0' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/>         
+              <div style={{color:'blue'}}>  dropRecovery   </div> 
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='holdings' id='5' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> 
+              <div style={{color:'blue'}}> holdings  </div> 
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='tools' id='5' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
+              <div style={{color:'blue'}}>  tools       </div> 
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockGain' id='3' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> 
+              <div style={{color:'blue'}}> gainRaw  </div> 
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='4' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/>  
+              <div style={{color:'blue'}}> infoRaw   </div> 
+              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='none' id='7' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+                {! isMobile && <div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
