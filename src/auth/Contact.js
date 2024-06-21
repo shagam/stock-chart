@@ -99,19 +99,22 @@ export default function ContactUs (props)  {
       <div>&nbsp;</div>
         <Form.Group id="name"  style={{display:'flex'}}>
           <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Name&nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="text" ref= {nameRef} required />
+          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="text" ref= {nameRef} required />&nbsp;
+          <Form.Label style={{color: 'blue', marginTop: '3px', width: '120px'}}> (required)&nbsp;</Form.Label>
         </Form.Group>
 
         <Form.Group id="email"  style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Email&nbsp;</Form.Label>
-          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="email" ref= {emailRef} required />
+          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>Email </Form.Label>&nbsp;
+          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="email" ref= {emailRef} required/> &nbsp;
+          <Form.Label style={{color: 'blue', marginTop: '3px', width: '120px'}}> (required)&nbsp;</Form.Label>
         </Form.Group>
 
         {/* <hr/>  */}
 
         <Form.Group id="email1" style={{display:'flex'}}>
-          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>EmailConfirm</Form.Label>
-          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="email" ref= {emailConfirmRef} required />
+          <Form.Label style={{color: 'magenta', marginTop: '3px', width: '150px'}}>EmailConfirm </Form.Label>
+          <Form.Control style={{fontSize: '22px', backgroundColor: '	#7FFF00', height: '35px'}} type="email" ref= {emailConfirmRef} required />&nbsp;
+          <Form.Label style={{color: 'blue', marginTop: '3px', width: '120px'}}> (required)</Form.Label>
         </Form.Group>
 
         {/* <hr/> */}
