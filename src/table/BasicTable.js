@@ -62,15 +62,20 @@ import Config from './Config'
 
 import MarketStackApi from  './MarketStackApi'
 
+import Manual from '../manual/Manual';
+
+import {polygon} from './Polygon'
+
+import StockChart from '../Stock-chart';
+
 // const Tools = lazy(() => import ('./Tools'))
 
 // const Config = lazy(() => import ('./Config'))
 
-// import {polygon} from './Polygon'
-const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
-const Manual = lazy(() => import ('../manual/Manual'))
+// const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
+// const Manual = lazy(() => import ('../manual/Manual'))
 
-const StockChart = lazy(() => import ('../Stock-chart'));
+// const StockChart = lazy(() => import ('../Stock-chart'));
 
 // const MarketStackApi = lazy(() => import ('./MarketStackApi'))
 
