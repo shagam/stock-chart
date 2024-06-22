@@ -54,19 +54,25 @@ import  {CommonDatabase, GainWrite} from './CommonDatabase'
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 
-const Manual = lazy(() => import ('../manual/Manual'))
 
-const Tools = lazy(() => import ('./Tools'))
 
-const Config = lazy(() => import ('./Config'))
+import Tools from './Tools'
 
+import Config from './Config'
+
+import MarketStackApi from  './MarketStackApi'
+
+// const Tools = lazy(() => import ('./Tools'))
+
+// const Config = lazy(() => import ('./Config'))
 
 // import {polygon} from './Polygon'
 const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
+const Manual = lazy(() => import ('../manual/Manual'))
 
 const StockChart = lazy(() => import ('../Stock-chart'));
 
-const MarketStackApi = lazy(() => import ('./MarketStackApi'))
+// const MarketStackApi = lazy(() => import ('./MarketStackApi'))
 
 const BasicTable = (props) => {
 
