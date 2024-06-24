@@ -377,8 +377,9 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               const year10_ = Number (year10) ** 0.1
               const year20_ = Number (year20) ** 0.05  
               const short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/7)
-              console.log (mon3_.toFixed(3), mon6_.toFixed(3), year_.toFixed(3), year2_.toFixed(3), year5_.toFixed(3), year10_.toFixed(3), (year20_ ).toFixed(3))
-              console.log ((short).toFixed(3))
+              if (LOG_FLAG)
+              console.log ('sym short gain,  agrgate=', short.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
+               '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3))
               rows[row_index].values.short = short.toFixed(3);
 
               var price = stockChartYValuesFunction[0];
