@@ -124,8 +124,8 @@ export const COLUMNS = [
     accessor: 'year20'
   },
   {
-    Header: 'yearly',
-    Footer: 'yearly',    
+    Header: 'short',
+    Footer: 'short',    
     accessor: 'yearly'
   },
   {
@@ -354,8 +354,8 @@ export const GROUPED_COLUMNS = [
         accessor: 'year20'
       },
       {
-        Header: 'yearly',
-        Footer: 'yearly',    
+        Header: 'Short',
+        Footer: 'Short',    
         accessor: 'yearly'
       },  
       {
