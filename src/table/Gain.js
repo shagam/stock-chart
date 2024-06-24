@@ -14,8 +14,6 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate) {
 
-    console.log (gain)
-
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
     }
@@ -371,10 +369,17 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                   year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));         
               }
 
-              const yearly = (mon3 ^ 4 * mon6 ^ 2 * year * year2 ^ 0.5 * year5 ^ 0.2 * year10 ^ 0.1 * year20 * 0.05) ^ (1/7)
-              console.log (mon3 ^ 4, mon6 ^ 2, year, year2 ^ 0.5, year5 ^ 0.2, year10 ^ 0.1, year20 * 0.05)
-              console.log (yearly)
-              rows[row_index].values.yearly = yearly;
+              const mon3_ = Number(mon3) ** 4;
+              const mon6_ = Number(mon6) ** 2;
+              const year_ = Number(year)
+              const year2_ = Number(year2) ** 0.5
+              const year5_ = Number (year5) ** 0.2
+              const year10_ = Number (year10) ** 0.1
+              const year20_ = Number (year20) ** 0.05  
+              const yearly = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/7)
+              console.log (mon3_.toFixed(3), mon6_.toFixed(3), year_.toFixed(3), year2_.toFixed(3), year5_.toFixed(3), year10_.toFixed(3), (year20_ ).toFixed(3))
+              console.log ((yearly).toFixed(3))
+              rows[row_index].values.yearly = yearly.toFixed(3);
 
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
