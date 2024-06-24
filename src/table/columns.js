@@ -372,8 +372,8 @@ export const GROUPED_COLUMNS = [
   },
 
   {
-    Header: 'yearly',
-    Footer: 'yearly',
+    Header: 'gain-yearly',
+    Footer: 'gain-yearly',
     accessor: 'yearly',   
     columns: [
       {
