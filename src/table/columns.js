@@ -354,16 +354,6 @@ export const GROUPED_COLUMNS = [
         accessor: 'year20'
       },
       {
-        Header: 'Short',
-        Footer: 'Short',    
-        accessor: 'short'
-      },  
-      {
-        Header: 'Long',
-        Footer: 'Long',    
-        accessor: 'peak2Peak'
-      },
-      {
         Header: 'splits_list',
         Footer: 'splis_list',    
         accessor: 'splits_list'
@@ -380,6 +370,25 @@ export const GROUPED_COLUMNS = [
       },    
     ]
   },
+
+  {
+    Header: 'yearly',
+    Footer: 'yearly',
+    accessor: 'yearly',   
+    columns: [
+      {
+        Header: 'Short',
+        Footer: 'Short',    
+        accessor: 'short'
+      },  
+      {
+        Header: 'Long',
+        Footer: 'Long',    
+        accessor: 'peak2Peak'
+      }
+    ]
+  },
+
   {
     Header: 'deep-recover',
     Footer: 'deep-recover',
