@@ -26,7 +26,7 @@ import peak2PeakCalc from './Peak2PeakCalc'
 import searchURL from '../utils/SearchURL'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
-
+import {gain} from './Gain'
 import {nanoid} from 'nanoid';
 import {format} from "date-fns"
 
@@ -462,6 +462,8 @@ const BasicTable = (props) => {
 
   const handleGainClick = (sym, saveTabl) => {
     setChartSymbol (sym);
+
+
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
     const oneDayMili = 1000 * 3600 + 24;
     var diff = Date.now() - rows[row_index].values.gain_mili;
@@ -477,7 +479,7 @@ const BasicTable = (props) => {
 
     localStorage.setItem ('chartSymbol', sym);
     handleInfoClick(sym, saveTabl);
-
+  
     if (LOG_FLAG)
       console.log(sym, 'gain/chart (symbol)'); 
     if (sym === '' || sym === undefined) {
