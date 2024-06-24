@@ -354,6 +354,11 @@ export const GROUPED_COLUMNS = [
         accessor: 'year20'
       },
       {
+        Header: 'yearly',
+        Footer: 'yearly',    
+        accessor: 'yearly'
+      },  
+      {
         Header: 'Long',
         Footer: 'Long',    
         accessor: 'peak2Peak'
