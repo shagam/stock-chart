@@ -126,7 +126,7 @@ export const COLUMNS = [
   {
     Header: 'short',
     Footer: 'short',    
-    accessor: 'yearly'
+    accessor: 'short'
   },
   {
     Header: 'Long',
@@ -356,7 +356,7 @@ export const GROUPED_COLUMNS = [
       {
         Header: 'Short',
         Footer: 'Short',    
-        accessor: 'yearly'
+        accessor: 'short'
       },  
       {
         Header: 'Long',
