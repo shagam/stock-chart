@@ -426,17 +426,39 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                   year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));         
               }
 
+              var count = 3;
               const mon3_ = Number(mon3) ** 4;
               const mon6_ = Number(mon6) ** 2;
               const year_ = Number(year)
-              const year2_ = year2 !== -1? Number(year2) ** 0.5 : 1;  // if missing use netral '1'
-              const year5_ = year5 !== -1? Number (year5) ** 0.2 : 1;
-              const year10_ = year10 !== -1? Number (year10) ** 0.1 : 1;
-              const year20_ = year20 !== -1 ? Number (year20) ** 0.05 : 1;  
-              const short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/7)
+
+              var year2_ = 1;   // if missing use netral '1'
+              if (year2 !== -1) {
+                year2_ = Number(year2) ** 0.5;
+                count ++;
+              }
+
+              var year5_ = 1;
+              if (year5 !== -1) {
+                year5_ = Number (year5) ** 0.2;
+                count ++;
+              }
+
+              var year10_ = 1;
+                if (year10 !== -1){
+                  year10_ = Number (year10) ** 0.1;
+                  count ++;
+                }
+
+              var year20_ = 1;
+              if (year20 !== -1) {
+                year20_ = Number (year20) ** 0.05
+                count ++;
+              }
+              var short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/count)
+
               if (LOG_FLAG)
               console.log ('sym short gain,  agrgate=', short.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
-               '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3))
+               '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3), 'count=', count)
               rows[row_index].values.short = short.toFixed(3);
 
               var price = stockChartYValuesFunction[0];
