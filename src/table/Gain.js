@@ -12,7 +12,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate) {
+    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate, ssl, PORT, servSelect) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -388,7 +388,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
-              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl);                      
+              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect);                      
             }
         )
         // handleInfoClick(sym, false);

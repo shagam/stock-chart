@@ -302,7 +302,7 @@ const BasicTable = (props) => {
     
   }
 
-  const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl) => {
+  const   updateTableGain = (sym, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect) => {
     //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
@@ -434,7 +434,7 @@ const BasicTable = (props) => {
     handleInfoClick(sym, saveTabl);
   
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate)
+      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate, ssl, PORT, servSelect)
 
       if (saveTabl)
         saveTable(sym);
