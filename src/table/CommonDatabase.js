@@ -46,7 +46,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
         year20: dat.year20,
         short: dat.short,
         long: dat.peak2Peak,
-        sym: dat.sym
+        // sym: dat.sym
     }
 
     // delete dat.BETA
