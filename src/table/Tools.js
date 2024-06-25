@@ -45,13 +45,13 @@ function Tools (props) {
             <hr/> 
             {/* <br></br> */}
             <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
-                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
+                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
             
             <hr/> 
             {/* <br></br>  */}
             <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
-                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} firebaseGainAdd = {props.firebaseGainAdd} 
+                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
             
             <hr/> 

@@ -219,13 +219,6 @@ const BasicTable = (props) => {
   }
 
 
-  // send stock gain to firebase, delete old and add new one (No woory about format change)
-  const firebaseGainAdd = async (symbol, src) => {
-
-    GainWrite (symbol, rows, errorAdd, servSelect, PORT, ssl, props.logFlags)
-
-  }
-
   function setSer (serv) {
     console.log ('setServer new:', serv, 'old:', servSelect)
     setServSelect(serv)
@@ -353,7 +346,8 @@ const BasicTable = (props) => {
       console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
       rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
-    firebaseGainAdd (sym, 'gain');  // save in firestore
+    GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, props.logFlags)
+
     if (saveTabl)
       saveTable(sym);
   }
@@ -940,7 +934,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
             stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
-             firebaseGainAdd = {firebaseGainAdd}  servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
+            servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
 
