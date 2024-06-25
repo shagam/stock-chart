@@ -429,10 +429,10 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
               const mon3_ = Number(mon3) ** 4;
               const mon6_ = Number(mon6) ** 2;
               const year_ = Number(year)
-              const year2_ = Number(year2) ** 0.5
-              const year5_ = Number (year5) ** 0.2
-              const year10_ = Number (year10) ** 0.1
-              const year20_ = Number (year20) ** 0.05  
+              const year2_ = year2 != -1? Number(year2) ** 0.5 : 1;  // if missing use netral '1'
+              const year5_ = year5 !== -1? Number (year5) ** 0.2 : 1;
+              const year10_ = year10 !== -1? Number (year10) ** 0.1 : 1;
+              const year20_ = year20 !== -1 ? Number (year20) ** 0.05 : 1;  
               const short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/7)
               if (LOG_FLAG)
               console.log ('sym short gain,  agrgate=', short.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
@@ -445,7 +445,8 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
-              updateTableGain (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags);   
+              updateTableGain (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags); 
+              // updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags)  
 
             }
         )
