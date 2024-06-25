@@ -323,7 +323,8 @@ const BasicTable = (props) => {
     rows[index].values.PEG = (PEG === 'None' || PEG === undefined) ? -1 : Number (PEG); 
     rows[index].values.TrailPE = Number (childData["TrailingPE"]);
     rows[index].values.ForwPE = Number (childData["ForwardPE"]);
-    rows[index].values.Div = Number (childData["DividendYield"]);
+    const div = childData["DividendYield"];
+    rows[index].values.Div = div !== 'None' ? Number(div) : -1;
     rows[index].values.BETA = Number (childData["Beta"]);
     rows[index].values.EVToEBITDA = Number (childData["EVToEBITDA"]);
     rows[index].values.EVToRevenue = Number (childData["EVToRevenue"]);
