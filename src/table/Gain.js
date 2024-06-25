@@ -5,10 +5,67 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import peak2PeakCalc from './Peak2PeakCalc'
 import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
 import searchURL from '../utils/SearchURL'
+import {targetPriceAdd} from './TargetPrice'
+import  {CommonDatabase, GainWrite} from './CommonDatabase'
 
 let periodTag;
 
 const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
+
+const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags) => {
+
+  const LOG_API = logFlags && logFlags.includes('api');
+  const LOG_DROP = logFlags && logFlags.includes('drop_');
+
+
+  //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
+  const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
+  if (row_index === -1) {
+    alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
+    return;
+  }
+
+  rows[row_index].values.gain_mili = updateMili;
+  // rows[row_index].values.gain_date = updateDate;
+  rows[row_index].values.mon3 = mon3;
+  rows[row_index].values.mon6 = mon6; 
+  rows[row_index].values.year = year; 
+  rows[row_index].values.year2 = year2; 
+  rows[row_index].values.year5 = year5; 
+  rows[row_index].values.year10 = year10;
+  rows[row_index].values.year20 = year20;
+  // rows[row_index].values.peak2Peak = peak2Peak;
+  rows[row_index].values.price = price;
+
+  rows[row_index].values.sym = sym; // added field
+  rows[row_index].values.splits_list = splits;
+  // console.log (splits)
+  
+  targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
+
+  try {
+  if (splits) {
+    if (splits.startsWith('u')) {
+      alert ('bad splits json ' + splits + ' ' + sym)
+    }
+    const splitsParse = JSON.parse(splits);
+    const splitsCount = splits.length;
+  }
+  } catch (e) {console.log('Bad splits', e, sym.splits) }
+
+  if (LOG_API)
+  console.dir (rows[row_index].values)
+  if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
+    rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
+  if (LOG_DROP)
+    console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
+    rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
+
+  GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags)
+
+  // if (saveTabl)
+  //   saveTable(sym);
+}
 
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
@@ -388,7 +445,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
-              updateTableGain (sym, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect);                      
+              updateTableGain (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags);   
+
             }
         )
         // handleInfoClick(sym, false);
