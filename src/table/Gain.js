@@ -12,7 +12,7 @@ let periodTag;
 
 const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
-const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags) => {
+const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable) => {
 
   const LOG_API = logFlags && logFlags.includes('api');
   const LOG_DROP = logFlags && logFlags.includes('drop_');
@@ -63,13 +63,13 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
 
   GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags)
 
-  // if (saveTabl)
-  //   saveTable(sym);
+  if (saveTabl)
+    saveTable(sym);
 }
 
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate, ssl, PORT, servSelect) {
+    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -429,7 +429,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
               const mon3_ = Number(mon3) ** 4;
               const mon6_ = Number(mon6) ** 2;
               const year_ = Number(year)
-              const year2_ = year2 != -1? Number(year2) ** 0.5 : 1;  // if missing use netral '1'
+              const year2_ = year2 !== -1? Number(year2) ** 0.5 : 1;  // if missing use netral '1'
               const year5_ = year5 !== -1? Number (year5) ** 0.2 : 1;
               const year10_ = year10 !== -1? Number (year10) ** 0.1 : 1;
               const year20_ = year20 !== -1 ? Number (year20) ** 0.05 : 1;  
@@ -445,8 +445,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
-              updateTableGain (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags); 
-              // updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags)  
+              updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable)  
 
             }
         )

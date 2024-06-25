@@ -302,56 +302,7 @@ const BasicTable = (props) => {
     
   }
 
-  const   updateTableGain = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags) => {
-    //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
-    const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
-    if (row_index === -1) {
-      alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
-      return;
-    }
-
-    rows[row_index].values.gain_mili = updateMili;
-    // rows[row_index].values.gain_date = updateDate;
-    rows[row_index].values.mon3 = mon3;
-    rows[row_index].values.mon6 = mon6; 
-    rows[row_index].values.year = year; 
-    rows[row_index].values.year2 = year2; 
-    rows[row_index].values.year5 = year5; 
-    rows[row_index].values.year10 = year10;
-    rows[row_index].values.year20 = year20;
-    // rows[row_index].values.peak2Peak = peak2Peak;
-    rows[row_index].values.price = price;
-
-    rows[row_index].values.sym = sym; // added field
-    rows[row_index].values.splits_list = splits;
-    // console.log (splits)
-    
-    targetPriceAdd (sym, rows[row_index].values.target_raw, price, props.logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
-
-    try {
-    if (splits) {
-      if (splits.startsWith('u')) {
-        alert ('bad splits json ' + splits + ' ' + sym)
-      }
-      const splitsParse = JSON.parse(splits);
-      const splitsCount = splits.length;
-    }
-    } catch (e) {console.log('Bad splits', e, sym.splits) }
-
-    if (LOG_API)
-    console.dir (rows[row_index].values)
-    if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
-      rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
-    if (LOG_DROP)
-      console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
-      rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
-
-    GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, props.logFlags)
-
-    if (saveTabl)
-      saveTable(sym);
-  }
-
+  
   const updateTableInfo = (symbol, childData, updateDate, updateMili)  => {
     if (childData === null || childData["Exchange"] == null) {
       console.log ('ChildData missing');
@@ -434,7 +385,7 @@ const BasicTable = (props) => {
     handleInfoClick(sym, saveTabl);
   
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, updateTableGain, deepStartDate, ssl, PORT, servSelect)
+      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable)
 
       if (saveTabl)
         saveTable(sym);
