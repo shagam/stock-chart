@@ -304,8 +304,8 @@ export const GROUPED_COLUMNS = [
     ]
   },
   {
-    Header: 'gain-ratio',
-    Footer: 'gain-ratio',
+    Header: 'gain-factor',
+    Footer: 'gain-factor',
     accessor: 'gain',   
     columns: [
       {
