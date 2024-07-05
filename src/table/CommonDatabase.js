@@ -10,7 +10,7 @@ import GetInt from '../utils/GetInt'
 import {Vix} from '../utils/Vix'
 import { capitalize } from '@material-ui/core'
 import IpContext from '../contexts/IpContext';
-
+import { useAuth } from '../contexts/AuthContext';
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, localIpv4, city, countryName, countryCode) {
 
@@ -126,6 +126,7 @@ function CommonDatabase (props) {
     const [next, setNext] = useState()
     const [err,setErr] = useState()
     const {localIp, localIpv4, eliHome} = IpContext();
+    const { currentUser, admin, logout } = useAuth();
 
     const [period, setPeriod] = useState(1)
     const onOptionChange = e => {
@@ -634,7 +635,49 @@ function CommonDatabase (props) {
             console.log(getDate(), 'ping', err.message, 'latency(msec)=' + latency)
           }) 
       }
-  
+
+    async function users () {
+        const LOG = props.logFlags.includes('gain');  
+        const mili = Date.now()
+
+        var corsUrl = ''
+        if (props.ssl)
+            corsUrl = 'https://'
+        else
+            corsUrl = 'http://'
+        corsUrl += props.corsServer + ":" + props.PORT + '/users'
+        
+        setErr('users Request request sent')  
+        // if (LOG)
+        console.log (corsUrl)
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+    
+            if (result.status !== 200) {
+                console.log (getDate(), 'status=', result)
+                return;
+            }
+            if (LOG)
+                console.log (JSON.stringify(result.data))
+    
+            if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+                props.errorAdd([getDate(),  ' users', result.data])
+            }
+            console.log(getDate(),  'users arrived', result.data)        
+        } )
+        .catch ((err) => {
+        clear()
+        error([getDate(), 'backEnd users', err.message])
+        console.log(getDate(), 'backEnd users', err.message)
+    }) 
+
+    const latency = Date.now() - mili
+    // error([getDate(), 'del sym', 'response(msec)=', latency])
+    setErr('backEnd users,  Latency(msec)=' + latency)    
+    }
+      
 
   return (
     <div style = {{ border: '2px solid green'}}>
@@ -694,6 +737,7 @@ function CommonDatabase (props) {
             {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
             {eliHome && props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
+            {admin && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
         </div>
         
         <div>
