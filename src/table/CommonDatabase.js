@@ -12,7 +12,7 @@ import { capitalize } from '@material-ui/core'
 import IpContext from '../contexts/IpContext';
 
 
-function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
+function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, localIpv4, city, countryName, countryCode) {
 
     const LOG = logFlags.includes('gain'); 
     if (LOG)
@@ -90,8 +90,9 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags) {
     console.log ('CommonDatabase gainWrite', dat1)
 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
+    corsUrl += '&ip=' + localIpv4 + '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode;
 
-    if (LOG)
+    // if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
 
 
@@ -187,7 +188,6 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=f&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
-        
 
         if (LOG)
         console.log (getDate(), 'gainFilter', corsUrl)

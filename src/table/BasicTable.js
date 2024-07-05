@@ -49,7 +49,7 @@ import '../GlobalVar'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import {ErrorList, beep, beep2} from '../utils/ErrorList'
 import CookieConsent from 'react-cookie-consent'
-import  {CommonDatabase, GainWrite} from './CommonDatabase'
+import  {CommonDatabase} from './CommonDatabase'
 
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
@@ -192,7 +192,7 @@ const BasicTable = (props) => {
   }
 
   const { login, currentUser, admin } = useAuth();
-  const {localIp, localIpv4, eliHome} = IpContext();
+  const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
   async function refreshByToggleColumns ()  {
@@ -386,7 +386,7 @@ const BasicTable = (props) => {
     handleInfoClick(sym, saveTabl);
   
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable)
+      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, localIpv4, city, countryName, countryCode)
 
       if (saveTabl)
         saveTable(sym);
