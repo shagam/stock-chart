@@ -89,7 +89,7 @@ const BasicTable = (props) => {
 
   
   const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP];
-  const servNameList = ['production', 'testBackend'];
+  const servNameList = ['production', 'test'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_AWS_IP_, '10.100.102.4',];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
