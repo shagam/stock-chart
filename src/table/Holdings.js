@@ -27,7 +27,7 @@ function Holdings (props) {
   const [urlCors, setUrlCors] = useState();
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [logBackEnd, setLogBackEnd] = useState ();
-
+  const [saveInFile, setSaveInFile] = useState ();
 
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
@@ -142,6 +142,8 @@ function Holdings (props) {
       corsUrl += '&ignoreSaved=true';
     if (logBackEnd)
       corsUrl += '&LOG=true';
+    if (saveInFile)
+      corsUrl += '&saveInFile=true';
 
     else if (srcNum === 2) {
         corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
@@ -263,6 +265,10 @@ function Holdings (props) {
     setLogBackEnd (! logBackEnd)
   }
 
+  function setSave() {
+    setSaveInFile (! saveInFile)
+  }
+
   return (
     <div style={{ border: '2px solid blue'}}> 
 
@@ -280,12 +286,13 @@ function Holdings (props) {
             <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={setSave}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+"/> 
           </div>
 
           <div>  
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
-            {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
+            { <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
             {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table column&nbsp; {props.chartSymbol} </button> } &nbsp;
           </div> 
