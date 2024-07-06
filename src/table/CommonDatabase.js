@@ -672,7 +672,8 @@ function CommonDatabase (props) {
                 props.errorAdd([getDate(),  ' users', result.data])
             }
             // if (LOG)
-            console.log(getDate(),  'users arrived', result.data)        
+            console.log(getDate(),  'users arrived', result.data) 
+            setErr('backEnd users,  Latency(msec)=' + latency + ';  ....    ' + JSON.stringify (result.data) )       
         } )
         .catch ((err) => {
         clear()
@@ -682,7 +683,7 @@ function CommonDatabase (props) {
 
     const latency = Date.now() - mili
     // error([getDate(), 'del sym', 'response(msec)=', latency])
-    setErr('backEnd users,  Latency(msec)=' + latency)    
+  
     }
       
 
