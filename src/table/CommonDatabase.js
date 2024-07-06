@@ -127,6 +127,7 @@ function CommonDatabase (props) {
     const [err,setErr] = useState()
     const {localIp, localIpv4, eliHome} = IpContext();
     const { currentUser, admin, logout } = useAuth();
+    const [logBackEnd, setLogBackEnd] = useState ();
 
     const [period, setPeriod] = useState(1)
     const onOptionChange = e => {
@@ -135,6 +136,9 @@ function CommonDatabase (props) {
         // console.log(tool)
     }
     
+    function setLog () {
+        setLogBackEnd (! logBackEnd)
+    }
 
     function error(arr) {
         clear()
@@ -646,6 +650,8 @@ function CommonDatabase (props) {
         else
             corsUrl = 'http://'
         corsUrl += props.corsServer + ":" + props.PORT + '/users'
+        if (logBackEnd)
+            corsUrl += '?LOG=1'
         
         setErr('users Request request sent')  
         // if (LOG)
@@ -665,6 +671,7 @@ function CommonDatabase (props) {
             if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
                 props.errorAdd([getDate(),  ' users', result.data])
             }
+            // if (LOG)
             console.log(getDate(),  'users arrived', result.data)        
         } )
         .catch ((err) => {
@@ -735,9 +742,10 @@ function CommonDatabase (props) {
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
             {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}
+            {eliHome && props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;&nbsp;
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
-            {admin && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
+            {eliHome && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
+            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp; &nbsp;
         </div>
         
         <div>
