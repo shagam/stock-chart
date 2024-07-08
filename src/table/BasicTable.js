@@ -720,7 +720,7 @@ const BasicTable = (props) => {
         {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
         {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
         <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
-        {eliHome && <button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTechUrl </button>}
+        {eliHome && <button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech </button>}
      
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
