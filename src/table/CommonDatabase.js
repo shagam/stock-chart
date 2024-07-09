@@ -86,13 +86,13 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, localI
     // delete dat.verifyDate
     // delete dat.verifyPrice
 
-    // if (LOG)
+    if (LOG)
     console.log ('CommonDatabase gainWrite', dat1)
 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
     corsUrl += '&ip=' + localIpv4 + '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode;
 
-    // if (LOG)
+    if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
 
 
