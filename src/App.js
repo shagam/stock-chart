@@ -12,7 +12,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Card, Button, Alert } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import {getDateSec} from './utils/Date'
-import CookieConsent from "react-cookie-consent"
+// import CookieConsent from "react-cookie-consent"
 import LogFlags from './utils/LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'

@@ -48,7 +48,7 @@ import MobileContext from '../contexts/MobileContext'
 import '../GlobalVar'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import {ErrorList, beep, beep2} from '../utils/ErrorList'
-import CookieConsent from 'react-cookie-consent'
+// import CookieConsent from 'react-cookie-consent'
 import  {CommonDatabase} from './CommonDatabase'
 
 
