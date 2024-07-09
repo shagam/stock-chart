@@ -19,8 +19,8 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       return;
     }
 
-    function gainHigh(i) {return Number(gainObj[stockChartXValues[i]]['2. high'])}
-    function gainLow(i) {return Number(gainObj[stockChartXValues[i]]['3. low'])}
+    function gainHigh(i) {return Number(gainObj[stockChartXValues[i]]['5. adjusted close'])}
+    function gainLow(i) {return Number(gainObj[stockChartXValues[i]]['5. adjusted close'])}
     // console.log (gainObj[stockChartXValues[0]]['2. high'], gainObj[stockChartXValues[0]]['3. low'])
     
     // if(LOG_FLAG) 
@@ -74,6 +74,9 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
           deepPrice = price;
           deepIndex = i;
           deepDate = stockChartXValues[i];
+          if (price < 125) {
+            console.log (StockSymbol, 'deepDate=', deepDate, 'deepPrice=', deepPrice, 'index=', i)
+          }
         }
       }
       if (LOG_FLAG) {
