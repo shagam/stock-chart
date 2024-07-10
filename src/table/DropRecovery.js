@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { toDate } from "date-fns";
 import {format} from "date-fns"
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
-
+// https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
 //import './DropRecovery.css'
 
 
@@ -192,7 +192,7 @@ const DropRecoveryButtons = (props) => {
 
   function swap_period_2008() {
 
-    props.setDropStartDate (new Date(2008, 9, 15)); // 2007 Oct 15  
+    props.setDropStartDate (new Date(2008, 1, 15)); // 2007 Oct 15  
       // setEndDate (new Date(2009, 1, 1));
   }
 
@@ -303,7 +303,7 @@ const DropRecoveryButtons = (props) => {
 
 
           <div  style={{display:'flex', }}> 
-            <div style={{color: 'black'}}  > Start_date:   </div>
+            <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={props.deepStartDate} onChange={(date) => props.setDropStartDate(date)} /> 
 
           </div>
