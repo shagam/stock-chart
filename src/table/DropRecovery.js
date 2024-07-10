@@ -133,10 +133,11 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       //   return;
 
       if (LOG_FLAG) {
-        console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', ' deep:', deep, 'index:', deepIndex );
+        // console.log(nowStr  + '  %cstock compare start', 'background: #fff; color: #22ef11');
+        console.log (StockSymbol, 'deepPrice=' + deepPrice + ' ('+ deepDate + ')' + ' deep= ' + deep + ' index=' + deepIndex );
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
-        console.log (StockSymbol, 'highBeforeDeep:', highPriceBeforeDeep, '('+ highPriceDateBeforeDeep +')', ' index: ',  highPriceBeforeDeepIndex)
-        console.log (StockSymbol, 'highAfterDeep:', highPriceAfterDeep, '('+ recoverDate +')', ' recoverIndex:', recoverIndex,  recoverText + '(since high):', recoverPeriod);
+        console.log (StockSymbol, 'highBeforeDeep=' + highPriceBeforeDeep.toFixed(2) + ' ('+ highPriceDateBeforeDeep +')', ' index=' +  highPriceBeforeDeepIndex)
+        console.log (StockSymbol, 'highAfterDeep=' + highPriceAfterDeep.toFixed(2) + ' ('+ recoverDate +') ' + recoverText + '=' + recoverPeriod + ' index=' + recoverIndex);
       }  
     }
 
@@ -154,9 +155,9 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     highistBeforeDeep(errorAdd);
     recoveryWeeks(errorAdd);
     const lastPriceHigh = gainClose(0);
-    const priceDivHigh = Number(lastPriceHigh / highPriceBeforeDeep).toFixed(3);
+    const priceDivHigh = Number(lastPriceHigh / highPriceBeforeDeep).toFixed(2);
     if (LOG_FLAG)
-      console.log (StockSymbol, 'latestPrice:', stockChartYValues[0], '(' + stockChartXValues[0] +')', 'price/highBeforeDrop=', priceDivHigh)
+      console.log (StockSymbol, 'latestPrice=' + stockChartYValues[0], '(' + stockChartXValues[0] +')', 'price/highBeforeDrop=' + priceDivHigh)
     // fill columns in stock table
     // if (recoverPeriod === undefined)
     //   alert (StockSymbol + ' recoverWeek undef')
