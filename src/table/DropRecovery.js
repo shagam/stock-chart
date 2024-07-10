@@ -197,7 +197,7 @@ const DropRecoveryButtons = (props) => {
   }
 
   function swap_period_2020() {
-    props.setDropStartDate (new Date(2020, 1, 5));  // 2020 Feb 5
+    props.setDropStartDate (new Date(2020, 0, 1));  // 2020 jan 1
     // setEndDate (new Date(2020, 4, 15));
   }
 
@@ -285,7 +285,7 @@ const DropRecoveryButtons = (props) => {
     if (absDiff < sixMonthsMili)
       return true;
     else {
-      console.log ('big date diff', 'deepDate', deepDate, 'startDate', startDate)
+      console.log ('old date, big date diff. need gain click', 'deepDate', deepDate, 'startDate', startDate)
       // errorAdd ([props.StockSymbol, 'big date diff, deepDate' + deepDate + 'startDate'+ startDate])
       return false;
     }
