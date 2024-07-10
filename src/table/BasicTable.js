@@ -102,15 +102,9 @@ const BasicTable = (props) => {
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [gainData, setGainData] = useState();
 
-  
-//   const [logFlags, setLogFlags] = useState([]);
-//   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
-// "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target"];
-
   const LOG_FLAG = props.logFlags && props.logFlags.includes('aux');
   const LOG_API = props.logFlags && props.logFlags.includes('api');
   const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
-  const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
   var PORT;
   if (servSelect === process.env.REACT_APP_LOCAL_SERV_IP)
