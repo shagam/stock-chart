@@ -742,8 +742,8 @@ function CommonDatabase (props) {
 
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
-            {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;&nbsp;
+            {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;&nbsp;
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
             {eliHome && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp; &nbsp;
