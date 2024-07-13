@@ -61,20 +61,28 @@ const Peak2PeakGui = (props) => {
   // results['toValue'] = stockChartYValues[indexEnd];
 
   // temp save bubble crash baseline
-  function calcBaseLine (XValues, YValues) {
+  function calcBaseLine (XValues, YValues) {  
     const loopCount = results.indexFirst - results.indexEnd;
     var xBubbleLine = [];
     var yBubbleLine = [];
     yBubbleLine[results.indexFirst] = YValues[results.indexFirst]
     xBubbleLine[results.indexFirst] = XValues[results.indexFirst]
-
     for (let i = 1; i < results.indexFirst; i ++) {
       xBubbleLine[results.indexFirst - i] = XValues[results.indexFirst - i]
       yBubbleLine[results.indexFirst - i] = yBubbleLine[ results.indexFirst - i + 1] * results.weeklyGain // calc fro previos
     }
+    if (! xBubbleLine[0])
+      xBubbleLine[0] = xBubbleLine[1]
+    if (! yBubbleLine[0])
+      yBubbleLine[0] = yBubbleLine[1]
+    
     // console.log (yBaseLine[results.indxEnd -1], xBaseLine[results.indxEnd -1] )
-    console.log ('xVal', XValues[results.indexEnd - 1], xBubbleLine[loopCount - 1])
-    console.log ('yVal', YValues[results.indexEnd - 1], yBubbleLine[loopCount - 1].toFixed(3))
+    if (LOG_FLAG) {
+      console.log ('bubbleLine xVal', xBubbleLine)
+      console.log ('bubbleLine yVal', yBubbleLine)
+      console.log ('bubbleLine xVal (index=', results.indexEnd - 1, ')', XValues[results.indexEnd - 1], '(index=', loopCount - 1, ')', xBubbleLine[loopCount - 1])
+      console.log ('bubbleLine yVal (index=', results.indexEnd - 1, ')', YValues[results.indexEnd - 1], '(index=', loopCount - 1, ')', yBubbleLine[loopCount - 1].toFixed(3))
+    }
     // console.log (XValues, YValues, xBaseLine, yBaseLine);
     props.setBubbleLine ({x: xBubbleLine, y: yBubbleLine})
     setBubbleLineFlag(true)
@@ -84,10 +92,11 @@ const Peak2PeakGui = (props) => {
     }
 
     //calc ratio sym/bubbleline
-    console.log (YValues[0], yBubbleLine[1])
+
     const bubbleLineOver = (YValues[0] / yBubbleLine[1]).toFixed(3)
     setBubbleLineRatio(bubbleLineOver)
-    console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
+    console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[1].toFixed(2))
+    // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
   }
 

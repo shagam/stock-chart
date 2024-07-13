@@ -25,14 +25,14 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       if (highPrice < price) {  // at least weeks to recover
         highPrice  = price;
         priceIndex = i;
-        if (LOG_FLAG)
-          console.log ('index=', i, 'date=', stockChartXValues[i], 'price=', price)
+        // if (LOG_FLAG)
+        //   console.log ('QuasyTop index=', i, 'date=', stockChartXValues[i], 'price=', price)
       }
       if (LOG_FLAG && i === endIndex - 1)
         console.log ('index=', i, 'last', stockChartXValues[endIndex], stockChartYValues[endIndex])// end of loop
     }
     if (LOG_FLAG)
-    console.log ('Found top  index=', priceIndex, 'last', stockChartXValues[priceIndex], stockChartYValues[priceIndex])
+    console.log ('Found quasy top  index=', priceIndex, 'last', stockChartXValues[priceIndex], stockChartYValues[priceIndex])
     return priceIndex;
 
   }
