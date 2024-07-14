@@ -285,7 +285,7 @@ const DropRecoveryButtons = (props) => {
     if (absDiff < sixMonthsMili)
       return true;
     else {
-      console.log ('old date, big date diff. need gain click', 'deepDate', deepDate, 'startDate', startDate)
+      console.log ('date mismatch. need to gain click', 'deepDate', deepDate, 'startDate', startDate)
       // errorAdd ([props.StockSymbol, 'big date diff, deepDate' + deepDate + 'startDate'+ startDate])
       return false;
     }
