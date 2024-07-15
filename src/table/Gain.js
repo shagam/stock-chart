@@ -382,7 +382,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                 if (stockChartYValuesFunction.length > 520)
                   year10 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[520]).toFixed(2));
                 if (stockChartYValuesFunction.length > 1024)
-                  year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1040]).toFixed(2));
+                  year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[1024]).toFixed(2));
               }
               else {
                 var dateBackSplit = daysBack (todaySplit, 7);
