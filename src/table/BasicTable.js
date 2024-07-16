@@ -397,8 +397,7 @@ const BasicTable = (props) => {
 
   const handleDeleteClick = (symbol) => {
     if (chartSymbol === symbol){
-      alert ('Cannot del focus symbol, click <gain> on another symbol before delete')
-      return;
+      setChartSymbol()
     }
     try {
       if (useData) { // avoid unclean access to rows
