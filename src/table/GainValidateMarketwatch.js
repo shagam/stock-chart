@@ -222,6 +222,7 @@ function VerifyGain (props) {
     setCorsUrl()
     setErr()
     setUpdateDate()
+    setIgnoreSaved()
   },[props.symbol]) 
 
 

@@ -1,5 +1,5 @@
 
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {formatDate} from '../utils/Date';
@@ -24,6 +24,19 @@ function Splits (props) {
   const [updateDate, setUpdateDate] = useState ();
 
   const LOG_FLAG = props.logFlags && props.logFlags.includes('splits');
+
+  useEffect(() => {
+    setSplitInfo()
+    setUrl()
+    setCorsUrl()
+    setErr()
+    setUpdateDate()
+    setUpdateDate()
+    setLogBackEnd()
+    setIgnoreSaved()
+  },[props.symbol]) 
+
+
 
   function renderList(array) {
     if (array.length === 0)
