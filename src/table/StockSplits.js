@@ -174,10 +174,12 @@ return (
     {err && <div style={{color: 'red'}}> {err} </div>}
     {LOG_FLAG && <div>{corsUrl}</div>}
     {LOG_FLAG && <div>{url}</div>}
-    {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  } &nbsp;IgnoreSaved &nbsp; &nbsp;
-    {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp; &nbsp;
+    <div style={{display: 'flex'}}>
+      {eliHome &&  <div> <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />   &nbsp;IgnoreSaved &nbsp; &nbsp; </div>}
+      {eliHome &&  <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  &nbsp;LogBackend &nbsp; &nbsp; </div>}
+      <button style={{background: 'aqua'}} type="button" onClick={()=>splitsGet ()}>Splits  </button>  
+    </div>
 
-    <button style={{background: 'aqua'}} type="button" onClick={()=>splitsGet ()}>Splits  </button>  
     {updateDate && <div>Update:&nbsp;&nbsp; {updateDate}</div>}
     {splitInfo && renderList(splitInfo)}
   </div>
