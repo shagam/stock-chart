@@ -94,10 +94,11 @@ function TargetPriceGui (props) {
 
             <h5>Target price history</h5>
 
+            {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  &nbsp;LogBackend &nbsp; </div> } 
+
             {props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> } &nbsp;
 
             <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetAll ()}>targetHistoryAll</button>  &nbsp;
-            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  } &nbsp;LogBackend &nbsp;
 
             <div style={{color: 'red'}}> {status} </div>
             <div style = {{display: 'flex'}}>
