@@ -115,7 +115,7 @@ function Spikes (props) {
   return (
       <div>
         <h5>Spikes</h5>      
-        {eliHome && <button style={{background: 'aqua'}}  type="button" onClick={()=>spikes ()}>Spikes  </button> } 
+        <button style={{background: 'aqua'}}  type="button" onClick={()=>spikes ()}>Spikes  </button> 
         {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
         <div>&nbsp;</div>  
       </div>
