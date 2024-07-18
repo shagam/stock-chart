@@ -11,6 +11,8 @@ import {Vix} from '../utils/Vix'
 import { capitalize } from '@material-ui/core'
 import IpContext from '../contexts/IpContext';
 import { useAuth } from '../contexts/AuthContext';
+import MobileContext from '../contexts/MobileContext'
+import GlobalFilter from '../utils/GlobalFilter'
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, localIpv4, city, countryName, countryCode) {
 
@@ -130,6 +132,10 @@ function CommonDatabase (props) {
     const [logBackEnd, setLogBackEnd] = useState ();
 
     const [period, setPeriod] = useState(1)
+
+    const [nameFilter, setNameFilter] = useState ();
+    const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
     const onOptionChange = e => {
         const t = e.target.value;
         setPeriod(Number(t))
@@ -462,6 +468,64 @@ function CommonDatabase (props) {
         window.location.reload();
     }
 
+    function searchName(nameFilter) {
+        if (! nameFilter) {
+            setErr('missing search text')
+            return
+        }
+
+        nameFilter = nameFilter.toUpperCase()
+        console.log('nameSearch', nameFilter)
+        setErr()
+        var corsUrl;
+
+        if (props.ssl)
+            corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=searchName' + '&stock=' + nameFilter
+        setResults(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            console.log (dat)
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                error([dat])
+                setResults([])
+                return;
+            }
+
+            const resArray = [];
+            const keys = Object.keys(dat);
+            keys.forEach((sym) => {
+                resArray.push(sym + ', ')               
+            })
+                
+            // const symbols = Object.keys(result.data)
+            // if (LOG)
+            // console.log (keys)
+            setResults(result.data)
+            setNext()
+
+            const latency = Date.now() - mili
+            setErr('Filtered list done, latency(msec)=' + latency)
+            // beep2();
+    
+        }).catch ((err) => {
+            clear()
+            error(['gainFilterForRemove ', err.message])
+            // setErr('gainFilterForRemove ' + err.message)
+            console.log(getDate(), err.message)
+        })   
+
+    }
+
     // delete symbols gain from prepared list of low gain
     function del () {
         setErr()
@@ -733,6 +797,12 @@ function CommonDatabase (props) {
           <div> &nbsp; </div> 
         </div>
 
+        <div  style={{display:'flex'}}>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>searchName(nameFilter)}>search </button>&nbsp;
+            <GlobalFilter  className="stock_button_class_" filter={nameFilter} setFilter={setNameFilter} name='name' isMobile={isMobile}/>
+        </div>
+        <div> &nbsp; </div> 
+        {/* <hr/> */}
 
         {props.eliHome && <div> 
             <button style={{background: 'aqua'}} type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
