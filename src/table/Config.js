@@ -92,7 +92,7 @@ const  Config = (props) => {
           </div>
 
 
-          <AlphaVantage alphaCallBack={props.alphaCallBack} />
+          {admin && <AlphaVantage alphaCallBack={props.alphaCallBack} />}
 
 
           {/* ====== Location info */} 
