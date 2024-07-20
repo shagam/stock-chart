@@ -35,8 +35,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     const startMon = startDate.getMonth() + 1;
     const startDay = startDate.getDate();
 
-      
-
+  
     // var startBeforeDropWeek = (todayYear - startYear) * 52 + (todayMon - startMon) * 4.34 + (todayDay - startDay) / 4.34;
     // startBeforeDropWeek = Math.round(startBeforeDropWeek);
 
@@ -154,7 +153,14 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     highistBeforeDeep(errorAdd);
     recoveryWeeks(errorAdd);
     const lastPriceHigh = gainClose(0);
-    const priceDivHigh = Number(lastPriceHigh / highPriceBeforeDeep).toFixed(2);
+
+    var highestPrice = -1; // highest price
+    for (let i = 0; i < stockChartYValues.length; i++) {
+      if (stockChartYValues[i] > highestPrice)
+        highestPrice = stockChartYValues[i];
+    }
+
+    const priceDivHigh = Number(lastPriceHigh / highestPrice).toFixed(3);
     if (LOG_FLAG)
       console.log (StockSymbol + ' latestPrice=' + stockChartYValues[0] + ' (' + stockChartXValues[0] +') ' + ' %cprice/highBeforeDrop=' + priceDivHigh, 'background: #fff; color: #f53df3')
     // fill columns in stock table
