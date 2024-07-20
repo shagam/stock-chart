@@ -12,7 +12,7 @@ import CheckBox from '../utils/CheckBox'
 
 // import Splits from '../splits/Splits'
 
-import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
+import {DropRecoveryButtons} from './DropRecovery'
 import {Peak2PeakGui} from './Peak2Peak'
 
 import StockInfo from './StockInfo'
