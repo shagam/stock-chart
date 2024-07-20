@@ -115,27 +115,6 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
       }
       return yValue;
     }
-
-    const deepCallBack = (stockSymbol, deep, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
-      //console.log (stockSymbol, deep, deepWeek, recoverWeek);
-      const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
-      if (index === -1) {
-        alert (`crash recovery symbol not found, deep (${stockSymbol})`);
-        return;
-      } 
-      // rows[index]values.
-      rows[index].values.deep = Number(deep);
-      rows[index].values.recoverWeek = Number(recoverWeek);
-      rows[index].values.deepDate = deepDate;
-      rows[index].values.priceDivHigh = Number(priceDivHigh);
-      rows[index].values.deepUpdateMili = Date.now();
-      if (LOG_DROP) {
-        console.log(stockSymbol, 'old deep:', rows[index].values.deep, 'recoverIndx:', rows[index].values.recoverWeek,
-        'deep date/val:', rows[index].values.deepDate, rows[index].values.priceDivHigh)
-  
-        console.log (stockSymbol, 'new deep:', deep, deepWeek, recoverWeek, deepDate, priceDivHigh)
-      }
-    }
   
     if (weekly)
       periodTag = 'Weekly Adjusted Time Series';
@@ -466,7 +445,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray); 
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepCallBack, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
+              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
               updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, localIpv4, city, countryName, countryCode)  
 
             }

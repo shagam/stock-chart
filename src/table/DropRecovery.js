@@ -10,7 +10,31 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 
 
-function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, deepCallBack, startDate, logFlags, weekly, gainObj, errorAdd) {
+function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, logFlags, weekly, gainObj, errorAdd) {
+
+  const LOG_DROP = logFlags && logFlags.includes('drop_');
+
+  const deepCallBack = (stockSymbol, deep, deepWeek, recoverWeek, deepDate, priceDivHigh) => {
+    //console.log (stockSymbol, deep, deepWeek, recoverWeek);
+    const index = rows.findIndex((row)=> row.values.symbol === stockSymbol);
+    if (index === -1) {
+      alert (`crash recovery symbol not found, deep (${stockSymbol})`);
+      return;
+    } 
+    // rows[index]values.
+    rows[index].values.deep = Number(deep);
+    rows[index].values.recoverWeek = Number(recoverWeek);
+    rows[index].values.deepDate = deepDate;
+    rows[index].values.priceDivHigh = Number(priceDivHigh);
+    rows[index].values.deepUpdateMili = Date.now();
+    if (LOG_DROP) {
+      console.log(stockSymbol, 'old deep:', rows[index].values.deep, 'recoverIndx:', rows[index].values.recoverWeek,
+      'deep date/val:', rows[index].values.deepDate, rows[index].values.priceDivHigh)
+
+      console.log (stockSymbol, 'new deep:', deep, deepWeek, recoverWeek, deepDate, priceDivHigh)
+    }
+  }
+
 
     const LOG_FLAG = logFlags && logFlags.includes('drop');
 
