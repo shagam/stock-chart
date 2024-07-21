@@ -702,9 +702,8 @@ const BasicTable = (props) => {
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
 
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
-        {eliHome && <Link to="/contactGet">ContactGet</Link>} 
         {<Link to="/generalLinks">Auxilary links</Link>} &nbsp;
-     
+        {eliHome && <Link to="/contactGet">ContactGet</Link>}
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong>(admin)</strong>  &nbsp; </div>}
