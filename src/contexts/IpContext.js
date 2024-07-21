@@ -22,10 +22,22 @@ function IpContext  () {
   const [eliHome, setEliHome] = useState(false);
   const { login, currentUser, admin } = useAuth();
   const [err, setErr] = useState();
+  const [ip, setIp] = useState();
 
   const LOG_FLAG = false;
 
+
+  const getData = async () => {
+    const res = await axios.get("https://api.ipify.org/?format=json");
+    // console.log(res.data);
+    setIp(res.data.ip);
+    setEliHome (res.data.ip === '62.0.92.49' || admin);
+  };
+
+
+
   useEffect (() => { 
+    getData ()
     getIp();
   // eslint-disable-next-line
   }, []) 
@@ -85,7 +97,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.IPv4 === '62.0.92.49' || admin);
+        setEliHome (ip === '62.0.92.49' || admin);
         setLocalIPv4 (res.data.IPv4);
         setCity (res.data.city);
         setCountryName(res.data.country_name)
@@ -113,7 +125,8 @@ function IpContext  () {
     userAgentMobile,
     ios,
     eliHome,
-    err
+    err,
+    ip
   }
   return (value)
 
