@@ -7,6 +7,7 @@ import {format} from "date-fns"
 
 import {db} from '../firebaseConfig'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import {ErrorList, errorAdd, beep, beep2} from '../utils/ErrorList'
 
 function IpContext  () {
 
@@ -20,6 +21,7 @@ function IpContext  () {
   const [ios, setIos] = useState(false);
   const [eliHome, setEliHome] = useState(false);
   const { login, currentUser, admin } = useAuth();
+  const [err, setErr] = useState();
 
   const LOG_FLAG = false;
 
@@ -38,6 +40,7 @@ function IpContext  () {
   
 
   const getIp = async () => {
+    setErr()
     if (localIp !== '' && localIp !== undefined) {
       //console.log('ip ', ip)
       return;
@@ -95,6 +98,7 @@ function IpContext  () {
      // save ip
      } catch (err) {
       console.log (err.message, url)
+      setErr ('ipContext, url=' + url + '  err=' + err.message)
     }
   } 
   
@@ -108,7 +112,8 @@ function IpContext  () {
     userAgent,
     userAgentMobile,
     ios,
-    eliHome
+    eliHome,
+    err
   }
   return (value)
 
