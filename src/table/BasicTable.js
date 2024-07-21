@@ -673,10 +673,6 @@ const BasicTable = (props) => {
     return col;
   }
 
-  const openInNewTab = (url) => {
-    window.open(url, "_blank", "noreferrer");
-  };
-
   const toolEnum = {
     None: 'None',
     DropRecovery: 'DropRecovery',
@@ -706,11 +702,8 @@ const BasicTable = (props) => {
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
 
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
-        {eliHome && <Link to="/contactGet">ContactGet</Link>} &nbsp;
-
-        {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
-        {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
-        {eliHome && <Link to="/generalLinks">Auxilary links</Link>} &nbsp;
+        {eliHome && <Link to="/contactGet">ContactGet</Link>} 
+        {<Link to="/generalLinks">Auxilary links</Link>} &nbsp;
      
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
@@ -718,7 +711,6 @@ const BasicTable = (props) => {
           {/* <div> <Link to="/dashboard" > Login Dashboard </Link>  </div>  */}
         </div>
         {errors.length > 0 && <ErrorList errorList={errors}/> }
-
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
