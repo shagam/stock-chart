@@ -20,6 +20,7 @@ import {TargetPrice} from './table/TargetPrice'
 import Contact from './auth/Contact'
 import ContactGet from './auth/ContactGet'
 
+import AuxilaryLinks from './utils/AuxilaryLinks'
 // import {BasicTable} from './table/BasicTable' 
 const BasicTable  = lazy(() => import ( './table/BasicTable'));
 
@@ -84,6 +85,8 @@ function App() {
                 <Route path="/manual" element={<Manual  />}/>
                 <Route path="/contactUs" element={<Contact server={server} />}/>
                 <Route path="/contactGet" element={<ContactGet server={server} />}/>
+                <Route path="/generalLinks" element={< AuxilaryLinks />}/>
+               
                 {/* <Route path="/contact" element={<Contact  />}/> */}
 
               </Routes>
