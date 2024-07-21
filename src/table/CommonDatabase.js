@@ -14,7 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import GlobalFilter from '../utils/GlobalFilter'
 
-function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, localIpv4, city, countryName, countryCode) {
+function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, ip, city, countryName, countryCode) {
 
     const LOG = logFlags.includes('gain'); 
     if (LOG)
@@ -92,7 +92,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, localI
     console.log ('CommonDatabase gainWrite', dat1)
 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
-    corsUrl += '&ip=' + localIpv4 + '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode;
+    corsUrl += '&ip=' + ip + '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode;
 
     if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
