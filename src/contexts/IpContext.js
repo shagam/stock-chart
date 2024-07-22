@@ -26,12 +26,14 @@ function IpContext  () {
 
   const LOG_FLAG = false;
 
+  var eliHome_ = false;
 
   const getData = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     // console.log(res.data);
     setIp(res.data.ip);
     setEliHome (res.data.ip === '62.0.92.49' || admin);
+    eliHome_ = res.data.ip === '62.0.92.49'
   };
 
 
@@ -111,7 +113,7 @@ function IpContext  () {
      } catch (err) {
       console.log (err.message, url)
       var err_txt = 'ipContext,  err=' + err.message
-      if (eliHome)
+      if (eliHome_)
         err_txt +=  ' url=' + url
       setErr (err_txt)
     }
