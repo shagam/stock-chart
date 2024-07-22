@@ -43,8 +43,23 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       return;
     }
 
+    function gainHigh(i) {
+      const high = gainObj[stockChartXValues[i]]['2. high'] * 
+        Number(gainObj[stockChartXValues[i]]['5. adjusted close']) / 
+        Number(gainObj[stockChartXValues[i]]['4. close']) 
+      return high.toFixed(3);
+    }
+
+    function gainLow(i) {
+      const low = gainObj[stockChartXValues[i]]['3. low'] * 
+        Number(gainObj[stockChartXValues[i]]['5. adjusted close']) / 
+        Number(gainObj[stockChartXValues[i]]['4. close']) 
+      return low.toFixed(3);
+    }
+
     function gainClose(i) {return Number(gainObj[stockChartXValues[i]]['5. adjusted close'])}
-   
+    console.log (gainObj[stockChartXValues[stockChartXValues.length-1]])
+    console.log ('high=', gainHigh(stockChartXValues.length-1), 'low=', gainLow(stockChartXValues.length-1), 'close=', gainClose(stockChartXValues.length-1))
     // console.log (gainObj[stockChartXValues[0]]['2. high'], gainObj[stockChartXValues[0]]['3. low'])
     
     // if(LOG_FLAG) 
