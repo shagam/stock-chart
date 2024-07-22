@@ -110,7 +110,10 @@ function IpContext  () {
      // save ip
      } catch (err) {
       console.log (err.message, url)
-      setErr ('ipContext, url=' + url + '  err=' + err.message)
+      const err_txt = 'ipContext,  err=' + err.message
+      if (eliHome)
+        err_txt +=  ' url=' + url
+      setErr (err_txt)
     }
   } 
   
