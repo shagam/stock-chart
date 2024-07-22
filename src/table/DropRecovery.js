@@ -43,23 +43,31 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
       return;
     }
 
+    const END_OF_DAY = false; // ignore in week high low
+
     function gainHigh(i) {
-      const high = gainObj[stockChartXValues[i]]['2. high'] * 
+      if (END_OF_DAY)
+        return  Number(gainObj[stockChartXValues[i]]['5. adjusted close'])
+      const high = Number(gainObj[stockChartXValues[i]]['2. high']) * 
         Number(gainObj[stockChartXValues[i]]['5. adjusted close']) / 
         Number(gainObj[stockChartXValues[i]]['4. close']) 
       return high.toFixed(3);
     }
 
     function gainLow(i) {
-      const low = gainObj[stockChartXValues[i]]['3. low'] * 
+      if (END_OF_DAY)
+        return  Number(gainObj[stockChartXValues[i]]['5. adjusted close'])
+      const low = Number(gainObj[stockChartXValues[i]]['3. low']) * 
         Number(gainObj[stockChartXValues[i]]['5. adjusted close']) / 
         Number(gainObj[stockChartXValues[i]]['4. close']) 
       return low.toFixed(3);
     }
 
     function gainClose(i) {return Number(gainObj[stockChartXValues[i]]['5. adjusted close'])}
-    console.log (gainObj[stockChartXValues[stockChartXValues.length-1]])
-    console.log ('high=', gainHigh(stockChartXValues.length-1), 'low=', gainLow(stockChartXValues.length-1), 'close=', gainClose(stockChartXValues.length-1))
+    if (LOG_DROP) {
+      console.log (gainObj[stockChartXValues[stockChartXValues.length-1]])
+      console.log ('high=', gainHigh(stockChartXValues.length-1), 'low=', gainLow(stockChartXValues.length-1), 'close=', gainClose(stockChartXValues.length-1))
+    }
     // console.log (gainObj[stockChartXValues[0]]['2. high'], gainObj[stockChartXValues[0]]['3. low'])
     
     // if(LOG_FLAG) 
@@ -102,12 +110,12 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         // errorAdd([StockSymbol,'DropRecovery: Fail to calc deep date'])
         return;
       }
-      const startBeforeDropValue = gainClose(startBeforeDropIndex) // gainObj[stockChartXValues[startBeforeDropIndex]]['3. low']
+      const startBeforeDropValue = gainLow(startBeforeDropIndex) // gainObj[stockChartXValues[startBeforeDropIndex]]['3. low']
       deepPrice = startBeforeDropValue;
       deepDate = stockChartXValues[startBeforeDropIndex];
       for (var i = startBeforeDropIndex; i >= 0; i--) {
         // search for lowestPrrice 
-        const price = gainClose(i) // [i]]['3. low'])
+        const price = gainLow(i) // [i]]['3. low'])
         if (deepPrice > price) {
           deepPrice = price;
           deepIndex = i;
@@ -130,7 +138,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
         return;
       }
       for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
-        const price = gainClose(i)
+        const price = gainHigh(i)
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
           highPriceDateBeforeDeep = stockChartXValues[i]
@@ -145,7 +153,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
 
     const recoveryWeeks = (errorAdd) => {
       for (let i = deepIndex; i >= 0; i--) {      
-        const price = gainClose(i)
+        const price = gainHigh(i)
         // console.log (price)
         if (i === 0) { // for debug of last iteration
           const a = 1;
@@ -191,7 +199,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     }
     highistBeforeDeep(errorAdd);
     recoveryWeeks(errorAdd);
-    const lastPriceHigh = gainClose(0);
+    const lastPriceHigh = gainHigh(0);
 
     var highestPrice = -1; // highest price
     for (let i = 0; i < stockChartYValues.length; i++) {
