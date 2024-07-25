@@ -199,7 +199,7 @@ function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValue
     }
     highistBeforeDeep(errorAdd);
     recoveryWeeks(errorAdd);
-    const lastPriceHigh = gainHigh(0);
+    const lastPriceHigh = Number(gainClose(0));
 
     var highestPrice = -1; // highest price
     for (let i = 0; i < stockChartYValues.length; i++) {
