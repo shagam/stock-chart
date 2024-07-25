@@ -12,7 +12,8 @@ let periodTag;
 
 const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
-const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, ip, city, countryName, countryCode) => {
+const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price,
+   saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, ip, city, countryName, countryCode, regionName) => {
 
   const LOG_API = logFlags && logFlags.includes('api');
   const LOG_DROP = logFlags && logFlags.includes('drop_');
@@ -61,7 +62,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
     console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
     rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
 
-  GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags, ip, city, countryName, countryCode)
+  GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags, ip, city, countryName, countryCode, regionName)
 
   if (saveTabl)
     saveTable(sym);
@@ -69,7 +70,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
 
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, ip, city, countryName, countryCode) {
+    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, ip, city, countryName, countryCode, regionName) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -446,7 +447,8 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
               // if (LOG_SPLITS)
               // console.log (splitArray); 
               searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
-              updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price, saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, ip, city, countryName, countryCode)  
+              updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price,
+                 saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, ip, city, countryName, countryCode, regionName)  
 
             }
         )

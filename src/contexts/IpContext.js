@@ -17,6 +17,7 @@ function IpContext  () {
   const [city, setCity] = useState("");
   const [countryName, setCountryName] = useState("");
   const [countryCode, setCountryCode] = useState("");
+  const [regionName, setRegionName] = useState()
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   const [ios, setIos] = useState(false);
   const [eliHome, setEliHome] = useState(false);
@@ -40,6 +41,7 @@ function IpContext  () {
 
   useEffect (() => { 
     getData ()
+    getIp_api () 
     // getIp_geolocation();
     userAgentGet()
   // eslint-disable-next-line
@@ -107,7 +109,47 @@ function IpContext  () {
       setErr (err_txt)
     }
   } 
+
+  async function getIp_api () {
+    setErr()
+    if (localIp !== '' && localIp !== undefined) {
+      //console.log('ip ', ip)
+      return;
+    }
   
+    // const url = 'ip-api.com/json/?fields=61439';
+      
+    const url = 'http://ip-api.com/json/';
+    try {
+      console.log ('url=', url)
+      const res = await axios.get(url)
+      // if (LOG_FLAG)
+      console.log('ip ', res.data);
+      if (res.data !== '') {
+        // setLocalIP(res.data);
+        setEliHome (res.data.query === '62.0.92.49' || admin);
+        setLocalIPv4 (res.data.query);
+        setCity (res.data.city);
+        setCountryName(res.data.country)
+        setCountryCode(res.data.countryCode)
+        setRegionName(res.data.regionName)
+      }
+      else
+        console.log ('no ip');
+
+    // admin password
+     // save ip
+     } catch (err) {
+      console.log (err.message, url)
+      var err_txt = 'ipContext,  err=' + err.message
+      if (eliHome_)
+        err_txt +=  ' url=' + url
+      setErr (err_txt)
+    }
+  } 
+
+
+
   
   const value = {
     localIp,
@@ -115,6 +157,7 @@ function IpContext  () {
     city,
     countryName,
     countryCode,
+    regionName,
     userAgent,
     userAgentMobile,
     ios,
