@@ -57,6 +57,9 @@ function IpContext  () {
   
   function userAgentGet () {
     const userAgent = navigator.userAgent;
+    if (LOG_FLAG)
+    console.log ('navigator=', navigator)
+      
     setUserAgent(navigator.userAgent)
     //if (/Android/i.test(navigator.userAgent))
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
@@ -123,7 +126,7 @@ function IpContext  () {
     try {
       console.log ('url=', url)
       const res = await axios.get(url)
-      // if (LOG_FLAG)
+      if (LOG_FLAG)
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
