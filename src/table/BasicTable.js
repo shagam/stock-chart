@@ -833,7 +833,7 @@ const BasicTable = (props) => {
 
         {chartSymbol && <div>
           <div>&nbsp;</div>
-          {! analyzeTool && <div style={{display: 'flex'}}> 
+          {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
             <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; Analyze &nbsp;
             <div style={{color: 'blue'}}> (Choose):</div>
           </div>}
