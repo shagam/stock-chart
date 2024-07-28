@@ -363,7 +363,7 @@ const DropRecoveryButtons = (props) => {
 
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <div style={{display:'flex', }}> 
-            <div style={{color: 'black'}}>Main Drop period: &nbsp; </div>
+            <div style={{color: 'black'}}>Drop period: &nbsp; </div>
             <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp; &nbsp;
