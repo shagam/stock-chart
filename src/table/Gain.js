@@ -3,7 +3,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
   
 import peak2PeakCalc from './Peak2PeakCalc'
-import {searchDeepValue, DropRecoveryButtons} from './DropRecovery'
+import {dropRecovery, DropRecoveryButtons} from './DropRecovery'
 import searchURL from '../utils/SearchURL'
 import {targetPriceAdd} from './TargetPrice'
 import  {CommonDatabase, GainWrite} from './CommonDatabase'
@@ -446,7 +446,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray); 
-              searchDeepValue (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
+              dropRecovery (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
               updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price,
                  saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, ip, city, countryName, countryCode, regionName)  
 

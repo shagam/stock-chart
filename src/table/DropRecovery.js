@@ -10,7 +10,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 
 
-function searchDeepValue (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, logFlags, weekly, gainObj, errorAdd) {
+function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, logFlags, weekly, gainObj, errorAdd) {
 
   const LOG_DROP = logFlags && logFlags.includes('drop_');
 
@@ -389,4 +389,4 @@ const DropRecoveryButtons = (props) => {
   )
 }
 
-export {DropRecoveryButtons, searchDeepValue}
+export {DropRecoveryButtons, dropRecovery}
