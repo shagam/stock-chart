@@ -26,14 +26,7 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/AMrNSLRRuxY">PortFolio Check</a></td><td>Compare Stocks & ETF</td> 
                     </tr>
-                    <tr>
-                        <td><a href="https://youtu.be/_ONG8fc7kdM">Common DataBase  </a></td><td>
-                             stocks that gains more than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
-                    </tr>
-
-                    <tr>
-                        <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops of 2008, 2020, 2022 </td> 
-                    </tr>
+        
                     <tr>
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>Long term yearly gain </td> 
                     </tr>
@@ -41,9 +34,19 @@ function Tutorials () {
                         <td><a href="https://youtu.be/-K2cdzIoJeQ">Bubble-line </a></td><td>Stock market bubble & crash prediction </td> 
                     </tr>
                     <tr>
+                        <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops of 2008, 2020, 2022 </td> 
+                    </tr>
+                    <tr>
                         <td><a href="https://youtu.be/nWgoumPzsRs">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
                     </tr>
-                                       
+                    <tr>
+                        <td><a href="https://youtu.be/_ONG8fc7kdM">Common DataBase  </a></td><td>
+                             stocks that gains more than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/0sZ0QK1nwHo">Month-gain</a></td><td>Months with highest gain</td> 
+                    </tr>
+                               
                     <tr>
                         <td><a href="https://youtu.be/faEcqp7PIfw">Table-view</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
@@ -53,9 +56,6 @@ function Tutorials () {
 
                     <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare historical price with MarketWatch</td> 
-                    </tr>
-                    <tr>
-                        <td><a href="https://youtu.be/0sZ0QK1nwHo">Month-gain</a></td><td>Months with highest gain</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/IElQqHTVPnE">Analyst-target-price</a></td><td>History of target-price</td> 
