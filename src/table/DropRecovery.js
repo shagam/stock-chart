@@ -241,6 +241,13 @@ const DropRecoveryButtons = (props) => {
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
+
+   useEffect (() => { 
+    setGainLostWeeks()
+    setDateOfEqualVal()
+  }, [props.StockSymbol]) 
+
+
    // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
    //  2007, 11, 1  2008 deep
 
