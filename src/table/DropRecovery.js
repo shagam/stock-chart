@@ -112,7 +112,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       }
       const startBeforeDropValue = Number(gainLow(startBeforeDropIndex)) // gainObj[stockChartXValues[startBeforeDropIndex]]['3. low']
       deepPrice = startBeforeDropValue;
-      deepDate = Number(stockChartXValues[startBeforeDropIndex]);
+      deepDate = stockChartXValues[startBeforeDropIndex];
       for (var i = startBeforeDropIndex; i >= 0; i--) {
         // search for lowestPrrice 
         const price = Number(gainLow(i)) // [i]]['3. low'])
@@ -237,7 +237,8 @@ const DropRecoveryButtons = (props) => {
   // props.deepStartDate
   // props.setDropStartDate
   // 
-
+  const [gainLostWeeks, setGainLostWeeks] = useState()
+  const [dateOfEqualVal, setDateOfEqualVal] = useState()
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
    // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
@@ -259,6 +260,11 @@ const DropRecoveryButtons = (props) => {
     // setEndDate (new Date(2020, 4, 15));
   }
   
+  function swap_period_2024() {
+    props.setDropStartDate (new Date(2024, 6, 1));  // 2024 jul 1 
+    // setEndDate (new Date(2020, 4, 15));
+  }
+
   function swap_period_8_mon() {
     var date = new Date();
     var formattedDate = format(date, "yyyy-MM-dd");
@@ -319,11 +325,9 @@ const DropRecoveryButtons = (props) => {
 
 
   function closeDates(deepDate, startDate, errorAdd) {
-
     const deepDateSplit = dateSplit (deepDate)
     const dateDeep = new Date(deepDateSplit[0], deepDateSplit[1], deepDateSplit[2])
-    const deepDateMili = dateDeep.getTime()
-
+    const deepDateMili = dateDeep.getTime()   
 
     const startYear = startDate.getFullYear();
     const startMon = startDate.getMonth();
@@ -343,6 +347,35 @@ const DropRecoveryButtons = (props) => {
       return false;
     }
   }
+
+  function gainLostWeeksCalc () {
+    // const dateStr = format(props.deepStartDate, "yyyy-MM-dd");
+    // const dateArr = dateToArray(props.deepStartDate)
+    //   var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, dateArr, props.symbol, props.logFlags)  
+    //   console.log ('Start date', props.deepStartDate, dateArr, startBeforeDropIndex)
+
+      // find highest index
+      var highValue = props.stockChartYValues[0]
+      var highIndex = 0;
+      for (let i = 0; i < props.stockChartXValues.length; i++) {
+        if (props.stockChartYValues[i] > highValue) {
+          highValue = props.stockChartYValues[i];
+          highIndex = i;
+          break;
+        }
+      }
+      
+      // search for value lower than today.
+      setGainLostWeeks(-1)
+      for (let i = highIndex; i < props.stockChartXValues.length; i++) {
+        if (props.stockChartYValues[i] < props.stockChartYValues[0]) {
+          setGainLostWeeks(i)
+          setDateOfEqualVal(props.stockChartXValues[i])
+          return;
+        }
+      }
+  }
+
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
@@ -366,23 +399,28 @@ const DropRecoveryButtons = (props) => {
             <div style={{color: 'black'}}>Drop period: &nbsp; </div>
             <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
-            <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp; &nbsp;
+            <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
+            <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp;
             <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           </div>
           {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
    
 
-          <br></br>  
+          {/* <br></br>   */}
           {props.StockSymbol && row_index >= 0 &&
             <div style={{display:'flex'}} >
-              &nbsp;  deepDate: <div style={{ color: 'green'}}>  &nbsp; {props.rows[row_index].values.deepDate} </div>
+              deepDate: <div style={{ color: 'green'}}>  &nbsp; {props.rows[row_index].values.deepDate} </div>
               &nbsp;&nbsp;&nbsp;&nbsp; deep:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.deep}</div>
               &nbsp;&nbsp;&nbsp;&nbsp; recoverWeek:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.recoverWeek} </div>
             </div>
           }
           {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate,props.errorAdd) && 
             <h5 style={{color:'red'}}>Date mismatch, Press Gain for a stock </h5>}
-          
+  
+          <br></br> 
+          <h5>GainWeeksLost</h5>
+          <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
+          <h6>price/high={props.rows[row_index].values.priceDivHigh}  &nbsp; &nbsp;  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
         </div>
 
     </div>

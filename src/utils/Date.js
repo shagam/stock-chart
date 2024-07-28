@@ -312,7 +312,12 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFla
   alert(log);
 }
 
-
+function dateToArray (date) {
+  const year = date.getFullYear();
+  const mon = date.getMonth() + 1;
+  const day = date.getDate();
+  return [year,mon,day]
+}
 
 export {getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray}

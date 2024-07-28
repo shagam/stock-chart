@@ -857,7 +857,7 @@ const BasicTable = (props) => {
             </div>
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
-             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  errorAdd={errorAdd}/>}
+             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} errorAdd={errorAdd}/>}
 
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={weekly} setBubbleLine={setBubbleLine}  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
