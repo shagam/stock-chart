@@ -92,7 +92,15 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, ip, ci
     console.log ('CommonDatabase gainWrite', dat1)
 
     corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
-    corsUrl += '&ip=' + ip + '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode + '&regionName=' + regionName
+    corsUrl += '&ip=' + ip;
+    if (city)
+        corsUrl += '&city=' + city;
+    if (countryName)
+        corsUrl += '&countryName=' + countryName;
+    if (countryCode)
+        corsUrl += '&countryCode=' + countryCode;
+    if (regionName)
+        corsUrl += '&regionName=' + regionName
 
     if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
