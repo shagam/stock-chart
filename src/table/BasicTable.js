@@ -718,11 +718,11 @@ const BasicTable = (props) => {
 
           {/* {admin && <div> &nbsp; <button onClick={polygonCompare} > polygonCompare </button> &nbsp; </div>} */}
 
-          {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>}
+          {/* {admin && <div> &nbsp; <input  type="checkbox" checked={ssl}  onChange={sslToggle} /> ssl &nbsp;&nbsp;</div>} */}
      
           {/* {admin && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>} */}
 
-          {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>}
+          {/* {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>} */}
         </div>
         {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>}
         <div id="buttons_id" style={{display:'flex'}}>
