@@ -14,9 +14,9 @@ function IpContext  () {
   const [localIp, setLocalIP] = useState('');
   const [localIpv4, setLocalIPv4] = useState('');
   const [userAgent, setUserAgent] = useState("");
-  const [city, setCity] = useState("");
-  const [countryName, setCountryName] = useState("");
-  const [countryCode, setCountryCode] = useState("");
+  const [city, setCity] = useState();
+  const [countryName, setCountryName] = useState();
+  const [countryCode, setCountryCode] = useState();
   const [regionName, setRegionName] = useState()
   const [userAgentMobile, setUserAgentMobile] = useState(false);
   const [ios, setIos] = useState(false);
