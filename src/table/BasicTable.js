@@ -875,7 +875,7 @@ const BasicTable = (props) => {
          
    
 
-            {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>}
+            {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
 
           </div>}
         </div>}
