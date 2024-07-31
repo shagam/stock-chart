@@ -35,6 +35,14 @@ function IpContext  () {
     setIp(res.data.ip);
     setEliHome (res.data.ip === '62.0.92.49' || admin);
     eliHome_ = res.data.ip === '62.0.92.49'
+
+    // if (eliHome_) {
+    //   console.log (window, window.location)
+    //   console.log (window, window.navigator)
+    //   console.log (window, window.navigator.appVersion)
+    // }
+    // // console.log (process.env)
+    // console.log (System.Threading)
   };
 
 
