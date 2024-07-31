@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -143,6 +143,10 @@ function CommonDatabase (props) {
 
     const [nameFilter, setNameFilter] = useState ();
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
+    useEffect (() => { 
+        setErr()
+    }, [props.symbol]) 
 
     const onOptionChange = e => {
         const t = e.target.value;
