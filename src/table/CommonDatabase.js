@@ -138,6 +138,7 @@ function CommonDatabase (props) {
     const {localIp, localIpv4, eliHome} = IpContext();
     const { currentUser, admin, logout } = useAuth();
     const [logBackEnd, setLogBackEnd] = useState ();
+    const [logExtra, setLogExtra] = useState ();
 
     const [period, setPeriod] = useState(1)
 
@@ -156,6 +157,9 @@ function CommonDatabase (props) {
     
     function setLog () {
         setLogBackEnd (! logBackEnd)
+    }
+    function toggleLogExtra () {
+        setLogExtra (! logExtra)
     }
 
     function error(arr) {
@@ -725,9 +729,11 @@ function CommonDatabase (props) {
             corsUrl = 'https://'
         else
             corsUrl = 'http://'
-        corsUrl += props.corsServer + ":" + props.PORT + '/users'
+        corsUrl += props.corsServer + ":" + props.PORT + '/users?param=1'
         if (logBackEnd)
-            corsUrl += '?LOG=1'
+            corsUrl += '&LOG=1'
+        if (logExtra)
+            corsUrl += '&LOG_EXTRA=1'
         
         setErr('users Request request sent')  
         // if (LOG)
@@ -829,6 +835,7 @@ function CommonDatabase (props) {
             {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
             {eliHome && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
+            {eliHome && <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>}
         </div>
         
         <div>
