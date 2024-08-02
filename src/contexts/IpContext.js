@@ -36,15 +36,6 @@ function IpContext  () {
     setIp(res.data.ip);
     setEliHome (res.data.ip === '62.0.92.49' || admin);
     eliHome_ = res.data.ip === '62.0.92.49'
-
-    getIpInfo_io ()
-    // if (eliHome_) {
-    //   console.log (window, window.location)
-    //   console.log (window, window.navigator)
-    //   console.log (window, window.navigator.appVersion)
-    // }
-    // // console.log (process.env)
-    // console.log (System.Threading)
   };
 
 
@@ -179,13 +170,10 @@ function IpContext  () {
     url = 'https://www.iplocation.net/'
     url = 'http://www.criminalip.io/'
     url = 'https://ipinfo.io/66.87.125.72/json?token=cf93a24a1d146d'
-    url = 'https://ipinfo.io/' + ip_ + '/json?token=cf93a24a1d146d'
-    if (! ip) {
-      console.log ('mising ip', ip)
-      return;
-    }
+    url = 'https://ipinfo.io/json?token=cf93a24a1d146d'
+
     try {
-      console.log ('url=', url)
+      // console.log ('url=', url)
       const res = await axios.get(url)
       if (eliHome_ || LOG_FLAG)
       console.log('ip ', res.data);
