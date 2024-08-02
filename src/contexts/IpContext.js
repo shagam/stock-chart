@@ -29,7 +29,7 @@ function IpContext  () {
 
   var eliHome_ = false;
 
-  const getData = async () => {
+  const getIp = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     // console.log(res.data);
     setIp(res.data.ip);
@@ -48,9 +48,9 @@ function IpContext  () {
 
 
   useEffect (() => { 
-    getData ()
+    getIp ()
     // getIp_api__ () 
-    getIp_api () 
+    // getIp_api () //*  blocked by netlify.app because http not allowed 
     // getIp_geolocation();
     userAgentGet()
   // eslint-disable-next-line
