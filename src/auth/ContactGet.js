@@ -142,7 +142,7 @@ export default function ContactGet (props)  {
             <div>{stat}</div>
             <div>&nbsp;</div>
             {textArray && textArray.map((item,k) =>
-               <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, city: {item.city}, country: {item.countryName}
+               <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, city: {item.city}, region: {item.region}, country: {item.country}
                 <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div> <div>&nbsp;</div></li>)}
                
         </div>

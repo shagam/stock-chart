@@ -57,8 +57,7 @@ export default function ContactUs (props)  {
     corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
       "&email="+ emailRef.current.value + 
       // '&ip=' + localIpv4 +
-      '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
-      '&regionName=' + regionName
+      '&city=' + city + '&region=' + regionName+ '&country=' + countryName 
       // '&message='+txtArray;
       + '&text='+txtSplit;
       console.log (corsUrl)
