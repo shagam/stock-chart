@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'

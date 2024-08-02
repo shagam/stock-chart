@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import {beep2} from '../utils/ErrorList'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -145,7 +145,6 @@ export default function ContactGet (props)  {
                <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, city: {item.city}, country: {item.countryName}
                 <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div> <div>&nbsp;</div></li>)}
                
-            
         </div>
       );
     

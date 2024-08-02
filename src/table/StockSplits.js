@@ -4,7 +4,7 @@ import axios from 'axios'
 import cors from 'cors'
 import {formatDate} from '../utils/Date';
 import {getDate} from '../utils/Date'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import {useAuth} from '../contexts/AuthContext';
 
 

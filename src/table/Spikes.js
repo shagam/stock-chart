@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import {  useAuth, logout } from '../contexts/AuthContext';
 
 function spikesSmooth (sym, stockChartXValues, stockChartYValues, logFlags) {

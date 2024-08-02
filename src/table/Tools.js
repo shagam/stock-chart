@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
     
 import logFlags from '../utils/LogFlags'
 import {MonthGain} from './MonthGain'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import { TargetPriceGui } from './TargetPriceGui';
 import {VerifyGain} from './GainValidateMarketwatch'
 import {Splits} from './StockSplits'

@@ -2,7 +2,7 @@ import React, {useState, useMemo, useEffect} from 'react'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 

@@ -3,7 +3,7 @@ import axios from 'axios'
 // import cors from 'cors'
 import {dateSplit, formatDate} from '../utils/Date'
 import {format} from "date-fns"
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import {  useAuth, logout } from '../contexts/AuthContext';
 
 import GetInt from '../utils/GetInt'

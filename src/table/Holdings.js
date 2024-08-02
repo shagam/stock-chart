@@ -4,7 +4,7 @@ import axios from 'axios'
 import {nanoid} from 'nanoid';
 
 import GetInt from '../utils/GetInt'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 

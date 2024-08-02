@@ -9,6 +9,9 @@ import {db} from '../firebaseConfig'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import {ErrorList, errorAdd, beep, beep2} from '../utils/ErrorList'
 
+const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
+const IPINFO_TOKEN = process.env.REACT_APP_IOINFO_TOKEN
+
 function IpContext  () {
 
   const [localIp, setLocalIP] = useState('');
@@ -25,8 +28,7 @@ function IpContext  () {
   const [err, setErr] = useState();
   const [ip, setIp] = useState();
 
-  const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
-  const IPINFO_TOKEN = process.env.REACT_APP_IOINFO_TOKEN
+
 
   const LOG_FLAG = false;
 
@@ -199,9 +201,6 @@ function IpContext  () {
       setErr (err_txt)
     }
   } 
-
-  
-
   
   const value = {
     localIp,
@@ -221,4 +220,46 @@ function IpContext  () {
 
 }
 
-export default IpContext;// getIpInfo_io
+function getIpInfo (ip) {
+  const eliHome_ = ip === ELI_HOME_IP
+
+  async function getIpInfo_io () {
+    var url;
+
+    // url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
+    url = 'https://ipinfo.io/'
+    if (ip)
+      url += ip + '/';
+    url += 'json?token=' + IPINFO_TOKEN;
+    if (eliHome_)
+      console.log ('url=', url)
+    try {
+
+      const res = await axios.get(url)
+      if (eliHome_)
+        console.log('ip ', res.data);
+      if (res.data !== '') {
+
+        const info = {
+          ip: res.data.ip,
+          city: res.data.city,
+          country: res.data.country,
+          region: res.data.region
+        }
+        return info
+
+      }
+      else
+        console.log ('no ip');
+
+    // admin password
+     // save ip
+     } catch (err) {
+      console.log (err.message, url)
+      return {name: 'ipInfo', error: err.message, url: url}
+    }
+  }
+}
+
+
+export  {IpContext, getIpInfo}
