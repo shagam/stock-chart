@@ -220,46 +220,4 @@ function IpContext  () {
 
 }
 
-function getIpInfo (ip) {
-  const eliHome_ = ip === ELI_HOME_IP
-
-  async function getIpInfo_io () {
-    var url;
-
-    // url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
-    url = 'https://ipinfo.io/'
-    if (ip)
-      url += ip + '/';
-    url += 'json?token=' + IPINFO_TOKEN;
-    if (eliHome_)
-      console.log ('url=', url)
-    try {
-
-      const res = await axios.get(url)
-      if (eliHome_)
-        console.log('ip ', res.data);
-      if (res.data !== '') {
-
-        const info = {
-          ip: res.data.ip,
-          city: res.data.city,
-          country: res.data.country,
-          region: res.data.region
-        }
-        return info
-
-      }
-      else
-        console.log ('no ip');
-
-    // admin password
-     // save ip
-     } catch (err) {
-      console.log (err.message, url)
-      return {name: 'ipInfo', error: err.message, url: url}
-    }
-  }
-}
-
-
-export  {IpContext, getIpInfo}
+export  {IpContext}
