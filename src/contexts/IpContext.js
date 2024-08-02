@@ -50,7 +50,7 @@ function IpContext  () {
   useEffect (() => { 
     getData ()
     // getIp_api__ () 
-    // getIp_api () 
+    getIp_api () 
     // getIp_geolocation();
     userAgentGet()
   // eslint-disable-next-line
@@ -135,7 +135,7 @@ function IpContext  () {
     try {
       console.log ('url=', url)
       const res = await axios.get(url)
-      if (LOG_FLAG)
+      if (eliHome_ || LOG_FLAG)
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
