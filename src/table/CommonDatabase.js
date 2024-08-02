@@ -815,13 +815,12 @@ function CommonDatabase (props) {
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
           {next === 'insert' && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
           {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>} &nbsp;
-          <div> &nbsp; </div> 
+            <div  style={{display:'flex'}}>
+                <button style={{background: 'aqua'}} type="button" onClick={()=>searchName(nameFilter)}>search Stock </button>&nbsp;
+                <GlobalFilter  className="stock_button_class_" filter={nameFilter} setFilter={setNameFilter} name='name' isMobile={isMobile}/>
+            </div>
         </div>
-
-        <div  style={{display:'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>searchName(nameFilter)}>search </button>&nbsp;
-            <GlobalFilter  className="stock_button_class_" filter={nameFilter} setFilter={setNameFilter} name='name' isMobile={isMobile}/>
-        </div>
+ 
         <div> &nbsp; </div> 
         {/* <hr/> */}
 
@@ -834,8 +833,8 @@ function CommonDatabase (props) {
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
             {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;&nbsp;
-            {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;
+            {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
             {eliHome && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
             {eliHome && <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>}
