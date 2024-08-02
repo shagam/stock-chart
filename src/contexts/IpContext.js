@@ -26,6 +26,8 @@ function IpContext  () {
   const [ip, setIp] = useState();
 
   const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
+  const IPINFO_TOKEN = process.env.REACT_APP_IOINFO_TOKEN
+
   const LOG_FLAG = false;
 
   var eliHome_ = false;
@@ -170,8 +172,8 @@ function IpContext  () {
     url = 'https://www.ipaddressapi.com/l/oHCakZMb1fMG?h=HOST'
     url = 'https://www.iplocation.net/'
     url = 'http://www.criminalip.io/'
-    url = 'https://ipinfo.io/66.87.125.72/json?token=cf93a24a1d146d'
-    url = 'https://ipinfo.io/json?token=cf93a24a1d146d'
+    url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
+    url = 'https://ipinfo.io/json?token=' + IPINFO_TOKEN
 
     try {
       // console.log ('url=', url)
