@@ -167,11 +167,8 @@ function IpContext  () {
 
     
 
-    var url = 'https://ipgeolocation.io/';
-    url = 'https://www.ipaddressapi.com/'
-    url = 'https://www.ipaddressapi.com/l/oHCakZMb1fMG?h=HOST'
-    url = 'https://www.iplocation.net/'
-    url = 'http://www.criminalip.io/'
+    var url;
+
     url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
     url = 'https://ipinfo.io/json?token=' + IPINFO_TOKEN
 
