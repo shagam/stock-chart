@@ -96,11 +96,11 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, ip, ci
     if (city)
         corsUrl += '&city=' + city;
     if (countryName)
-        corsUrl += '&countryName=' + countryName;
-    if (countryCode)
-        corsUrl += '&countryCode=' + countryCode;
+        corsUrl += '&country=' + countryName;
+    // if (countryCode)
+    //     corsUrl += '&countryCode=' + countryCode;
     if (regionName)
-        corsUrl += '&regionName=' + regionName
+        corsUrl += '&region=' + regionName
 
     if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
@@ -135,6 +135,7 @@ function CommonDatabase (props) {
     const [displayFlag, setDisplayFlag] = useState(false);
     const [next, setNext] = useState()
     const [err,setErr] = useState()
+    const [info, setInfo] = useState()
     const {localIp, localIpv4, eliHome} = IpContext();
     const { currentUser, admin, logout } = useAuth();
     const [logBackEnd, setLogBackEnd] = useState ();
@@ -147,6 +148,7 @@ function CommonDatabase (props) {
 
     useEffect (() => { 
         setErr()
+        setInfo()
     }, [props.symbol]) 
 
     const onOptionChange = e => {
@@ -755,7 +757,8 @@ function CommonDatabase (props) {
             }
             // if (LOG)
             console.log(getDate(),  'users arrived', result.data) 
-            setErr('backEnd users,  Latency(msec)=' + latency + ';  ....    ' + JSON.stringify (result.data) )       
+            setErr('backEnd users,  Latency(msec)=' + latency + ';  ....    ' + JSON.stringify (result.data) )  
+            // setInfo (JSON.stringify(result.data))
         } )
         .catch ((err) => {
         clear()
@@ -852,6 +855,7 @@ function CommonDatabase (props) {
                     return <div key={k}>&nbsp; {r}&nbsp;&nbsp;</div>
                 })}
             </div>}
+            {info && <div>{info}</div>}
         </div>
       </div>
     }
