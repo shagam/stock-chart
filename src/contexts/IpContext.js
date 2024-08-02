@@ -28,14 +28,16 @@ function IpContext  () {
   const LOG_FLAG = false;
 
   var eliHome_ = false;
-
+  var ip_; 
   const getIp = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     // console.log(res.data);
+    ip_ = res.data.ip;  //* for use in module
     setIp(res.data.ip);
     setEliHome (res.data.ip === '62.0.92.49' || admin);
     eliHome_ = res.data.ip === '62.0.92.49'
 
+    getIpInfo_io ()
     // if (eliHome_) {
     //   console.log (window, window.location)
     //   console.log (window, window.navigator)
@@ -49,7 +51,7 @@ function IpContext  () {
 
   useEffect (() => { 
     getIp ()
-    getIp_api__ () 
+    getIpInfo_io () 
     // getIp_api () //*  blocked by netlify.app because http not allowed 
     // getIp_geolocation();
     userAgentGet()
@@ -160,7 +162,7 @@ function IpContext  () {
     }
   } 
 
-  async function getIp_api__ () {
+  async function getIpInfo_io () {
     setErr()
     if (localIp !== '' && localIp !== undefined) {
       //console.log('ip ', ip)
@@ -168,13 +170,20 @@ function IpContext  () {
     }
   
     // const url = 'ip-api.com/json/?fields=61439';
-      
+
+    
+
     var url = 'https://ipgeolocation.io/';
     url = 'https://www.ipaddressapi.com/'
     url = 'https://www.ipaddressapi.com/l/oHCakZMb1fMG?h=HOST'
     url = 'https://www.iplocation.net/'
     url = 'http://www.criminalip.io/'
     url = 'https://ipinfo.io/66.87.125.72/json?token=cf93a24a1d146d'
+    url = 'https://ipinfo.io/' + ip_ + '/json?token=cf93a24a1d146d'
+    if (! ip) {
+      console.log ('mising ip', ip)
+      return;
+    }
     try {
       console.log ('url=', url)
       const res = await axios.get(url)
@@ -182,12 +191,12 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.query === '62.0.92.49' || admin);
+        setEliHome (res.data.ip === '62.0.92.49' || admin);
         setLocalIPv4 (res.data.query);
         setCity (res.data.city);
         setCountryName(res.data.country)
         setCountryCode(res.data.countryCode)
-        setRegionName(res.data.regionName)
+        setRegionName(res.data.region)
       }
       else
         console.log ('no ip');
@@ -224,4 +233,4 @@ function IpContext  () {
 
 }
 
-export default IpContext;
+export default IpContext;// getIpInfo_io
