@@ -195,8 +195,8 @@ function IpContext  () {
      // save ip
      } catch (err) {
       console.log (err.message, url)
-      var err_txt = 'ipContext_,  err=' + err.message
-      if (eliHome_)
+      var err_txt = 'ipInfo,  err=' + err.message
+      if (eliHome_ || admin)
         err_txt +=  ' url=' + url
       setErr (err_txt)
     }
