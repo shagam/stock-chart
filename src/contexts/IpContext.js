@@ -25,6 +25,7 @@ function IpContext  () {
   const [err, setErr] = useState();
   const [ip, setIp] = useState();
 
+  const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
   const LOG_FLAG = false;
 
   var eliHome_ = false;
@@ -34,8 +35,8 @@ function IpContext  () {
     // console.log(res.data);
     ip_ = res.data.ip;  //* for use in module
     setIp(res.data.ip);
-    setEliHome (res.data.ip === '62.0.92.49' || admin);
-    eliHome_ = res.data.ip === '62.0.92.49'
+    setEliHome (res.data.ip === ELI_HOME_IP || admin);
+    eliHome_ = res.data.ip === ELI_HOME_IP
   };
 
 
@@ -132,7 +133,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.query === '62.0.92.49' || admin);
+        setEliHome (res.data.query === ELI_HOME_IP || admin);
         setLocalIPv4 (res.data.query);
         setCity (res.data.city);
         setCountryName(res.data.country)
@@ -179,7 +180,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.ip === '62.0.92.49' || admin);
+        setEliHome (res.data.ip === ELI_HOME_IP || admin);
         setLocalIPv4 (res.data.query);
         setCity (res.data.city);
         setCountryName(res.data.country)
