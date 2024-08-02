@@ -49,7 +49,7 @@ function IpContext  () {
 
   useEffect (() => { 
     getIp ()
-    // getIp_api__ () 
+    getIp_api__ () 
     // getIp_api () //*  blocked by netlify.app because http not allowed 
     // getIp_geolocation();
     userAgentGet()
@@ -174,10 +174,11 @@ function IpContext  () {
     url = 'https://www.ipaddressapi.com/l/oHCakZMb1fMG?h=HOST'
     url = 'https://www.iplocation.net/'
     url = 'http://www.criminalip.io/'
+    url = 'https://ipinfo.io/66.87.125.72/json?token=cf93a24a1d146d'
     try {
       console.log ('url=', url)
       const res = await axios.get(url)
-      // if (LOG_FLAG)
+      if (eliHome_ || LOG_FLAG)
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
