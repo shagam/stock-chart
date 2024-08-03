@@ -226,8 +226,6 @@ async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
   const eliHome_ = ip === ELI_HOME_IP
 
     var url;
-
-    setErr()
     // url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
     url = 'https://ipinfo.io/'
     if (ip)
@@ -235,10 +233,10 @@ async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
     url += 'json?token=' + IPINFO_TOKEN;
 
     // if (eliHome_)
-      console.log ('url=', url)
+      console.log ('ipInfoUrl=', url)
     try {
       const res = await axios.get(url)
-        console.log('ip ', res.data);
+        console.log('ipInfo results ', res.data);
       if (res.data !== '') {
         if (setCity)
           setCity (res.data.city);
@@ -246,6 +244,7 @@ async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
           setRegion(res.data.region)
         if (setCountry)
           setCountry(res.data.country)
+
       }
       else
         console.log ('no ip');
@@ -257,9 +256,7 @@ async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
         console.log (err.message, url)
       else
         console.log (err.message)
-      setErr ({name: 'ipInfo', error: err.message, url: url})
     }
-
 }
 
 

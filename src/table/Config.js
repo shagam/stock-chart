@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
-import {IpContext} from '../contexts/IpContext';
+import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
@@ -14,6 +14,11 @@ const  Config = (props) => {
   const {localIp, localIpv4, eliHome, err, ip} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
+  const [city_, setCity_] = useState()
+  const [region_, setRegion_] = useState()
+  const [country_, setCountry_] = useState()
+  const [err_, setErr_] = useState()
+
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
@@ -33,6 +38,13 @@ const  Config = (props) => {
     reloadPage()
   }
   
+  function getIpInfoClick () {
+    getIpInfo ('66.87.125.72', setCity_, setRegion_, setCountry_, setErr_)
+    // getIpInfo ('66.87.125.72', null, null, null, null)
+    // console.log('ipInfo', city_, country_, region_)
+    // getIpInfo ('66.87.125.72', null, null, null, null)
+  }
+
   const style = {
     // background: 'blue',
     // color: 'red',
@@ -94,6 +106,10 @@ const  Config = (props) => {
 
           {admin && <AlphaVantage alphaCallBack={props.alphaCallBack} />}
 
+          <div  style={{display:'flex', paddingTop: '5px'}}>    
+            {eliHome &&  <div> &nbsp; <button onClick={getIpInfoClick} > ipInfo </button> &nbsp; </div>}
+            {eliHome && city_ && <div> &nbsp; city={city_}  &nbsp; region={region_}  &nbsp; country={country_}  </div>}
+          </div>
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
@@ -102,6 +118,7 @@ const  Config = (props) => {
           {eliHome && <div>Global-ip: {ip} </div>}
           {eliHome && <div>Browser:  {userAgent} </div>}
           <div style={{color: 'red'}}> {err} </div>
+
         </div>
       }
 
