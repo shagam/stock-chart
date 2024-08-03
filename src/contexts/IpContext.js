@@ -166,8 +166,7 @@ function IpContext  () {
     }
   
     // const url = 'ip-api.com/json/?fields=61439';
-
-    
+    // getIpInfo (null, setEliHome, setCity, setRegionName, setCountryName, setErr)
 
     var url;
 
@@ -192,7 +191,7 @@ function IpContext  () {
         console.log ('no ip');
 
     // admin password
-     // save ip
+    // save ip
      } catch (err) {
       console.log (err.message, url)
       var err_txt = 'ipInfo,  err=' + err.message
@@ -220,4 +219,47 @@ function IpContext  () {
 
 }
 
-export  {IpContext}
+
+//* get ipInfo from ip  failed unused
+function getIpInfo (ip, setCity, setRegionName, setCountryName, setErr) {
+  const eliHome_ = ip === ELI_HOME_IP
+
+  async function getIpInfo_io () {
+    var url;
+
+    setErr()
+    // url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
+    url = 'https://ipinfo.io/'
+    if (ip)
+      url += ip + '/';
+    url += 'json?token=' + IPINFO_TOKEN;
+
+    if (eliHome_)
+      console.log ('url=', url)
+    try {
+
+      const res = await axios.get(url)
+      // if (eliHome_)
+        console.log('ip ', res.data);
+      if (res.data !== '') {
+        setCity (res.data.city);
+        setRegionName(res.data.regionName)
+        setCountryName(res.data.country)
+      }
+      else
+        console.log ('no ip');
+
+    // admin password
+     // save ip
+     } catch (err) {
+      if (eliHome_)
+        console.log (err.message, url)
+      else
+        console.log (err.message, url)
+      setErr ({name: 'ipInfo', error: err.message, url: url})
+    }
+  }
+}
+
+
+export  {IpContext, getIpInfo}
