@@ -20,7 +20,7 @@ return (
 
   <form  style={{display:'flex'}} onSubmit = {flexSubmit}>
     <div> {props.title}&nbsp; </div>
-    <input  style={{ 'width': '15%'}}
+    <input  style={{ 'width': '35%'}}
       type={props.type}
       pattern={props.pattern}
       name={props.title}
@@ -30,7 +30,7 @@ return (
       onChange={(e)=>
         setInt ((v) => e.target.validity.valid ? e.target.value : v)}
     />
-    <button type="submit"> Enter</button>
+    <button  style={{width: '30%', background: 'aqua'}} type="submit"> Enter</button>
   </form>
 
 </div>
