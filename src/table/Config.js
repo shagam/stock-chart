@@ -6,6 +6,7 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
+import GetInt from '../utils/GetInt'
 
 const  Config = (props) => { 
 
@@ -18,6 +19,7 @@ const  Config = (props) => {
   const [region_, setRegion_] = useState()
   const [country_, setCountry_] = useState()
   const [err_, setErr_] = useState()
+  const [ipSearch, setIpSearch] = useState()
 
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
@@ -39,7 +41,10 @@ const  Config = (props) => {
   }
   
   function getIpInfoClick () {
-    getIpInfo ('66.87.125.72', setCity_, setRegion_, setCountry_, setErr_)
+    var ipForSearch = '66.87.125.72'
+    if (ipSearch)
+      ipForSearch = ipSearch;
+    getIpInfo (ipForSearch, setCity_, setRegion_, setCountry_, setErr_)
     // getIpInfo ('66.87.125.72', null, null, null, null)
     // console.log('ipInfo', city_, country_, region_)
     // getIpInfo ('66.87.125.72', null, null, null, null)
@@ -106,10 +111,12 @@ const  Config = (props) => {
 
           {admin && <AlphaVantage alphaCallBack={props.alphaCallBack} />}
 
-          <div  style={{display:'flex', paddingTop: '5px'}}>    
-            {eliHome &&  <div> &nbsp; <button onClick={getIpInfoClick} > ipInfo </button> &nbsp; </div>}
-            {eliHome && city_ && <div> &nbsp; city={city_}  &nbsp; region={region_}  &nbsp; country={country_}  </div>}
+          <div style={{display:'flex'}}>    
+          {/* <div>&nbsp; </div> */}
+            {eliHome && <GetInt style={{marginLeft: '0px'}} init={null} callBack={setIpSearch} title='ipSearch' type='Text' pattern="[0-9\\.]+"/>} &nbsp; &nbsp;
+            {eliHome &&  <div> &nbsp; <button style={{marginTop: '15px', marginLeft: '-30x'}} onClick={getIpInfoClick} > ipInfo </button> &nbsp; </div>}
           </div>
+          {eliHome && city_ && <div style={{marginTop: '15px'}}> &nbsp; city={city_}  &nbsp; region={region_}  &nbsp; country={country_}  </div>}
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
