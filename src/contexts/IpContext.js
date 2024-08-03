@@ -33,11 +33,11 @@ function IpContext  () {
   const LOG_FLAG = false;
 
   var eliHome_ = false;
-  var ip_; 
+
   const getIp = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     // console.log(res.data);
-    ip_ = res.data.ip;  //* for use in module
+
     setIp(res.data.ip);
     setEliHome (res.data.ip === ELI_HOME_IP || admin);
     eliHome_ = res.data.ip === ELI_HOME_IP
@@ -213,7 +213,8 @@ function IpContext  () {
     ios,
     eliHome,
     err,
-    ip
+    ip,
+    setIp
   }
   return (value)
 
@@ -221,10 +222,9 @@ function IpContext  () {
 
 
 //* get ipInfo from ip  failed unused
-function getIpInfo (ip, setCity, setRegionName, setCountryName, setErr) {
+async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
   const eliHome_ = ip === ELI_HOME_IP
 
-  async function getIpInfo_io () {
     var url;
 
     setErr()
@@ -234,17 +234,18 @@ function getIpInfo (ip, setCity, setRegionName, setCountryName, setErr) {
       url += ip + '/';
     url += 'json?token=' + IPINFO_TOKEN;
 
-    if (eliHome_)
+    // if (eliHome_)
       console.log ('url=', url)
     try {
-
       const res = await axios.get(url)
-      // if (eliHome_)
         console.log('ip ', res.data);
       if (res.data !== '') {
-        setCity (res.data.city);
-        setRegionName(res.data.regionName)
-        setCountryName(res.data.country)
+        if (setCity)
+          setCity (res.data.city);
+        if (setRegion)
+          setRegion(res.data.region)
+        if (setCountry)
+          setCountry(res.data.country)
       }
       else
         console.log ('no ip');
@@ -255,10 +256,10 @@ function getIpInfo (ip, setCity, setRegionName, setCountryName, setErr) {
       if (eliHome_)
         console.log (err.message, url)
       else
-        console.log (err.message, url)
+        console.log (err.message)
       setErr ({name: 'ipInfo', error: err.message, url: url})
     }
-  }
+
 }
 
 
