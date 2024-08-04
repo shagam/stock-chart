@@ -27,6 +27,7 @@ function IpSearchGui () {
       
     return (
         <div>
+          <h5>ip geoLocation</h5>
           <div style={{display:'flex'}}>    
           {/* <div>&nbsp; </div> */}
             {eliHome && <GetInt style={{marginright: '0px'}} init={null} callBack={setIpSearch} title='ipSearch' type='Text' pattern="[0-9\\.]+"/>} &nbsp; &nbsp;
