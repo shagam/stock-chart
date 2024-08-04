@@ -66,7 +66,7 @@ function Tools (props) {
                  logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
             
             <hr/> 
-            {eliHome && <IpSearchGui/>}
+            {eliHome &&  <IpSearchGui/>}
 
         </div>
     )
