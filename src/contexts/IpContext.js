@@ -181,7 +181,7 @@ function IpContext  () {
       if (res.data !== '') {
         // setLocalIP(res.data);
         setEliHome (res.data.ip === ELI_HOME_IP || admin);
-        setLocalIPv4 (res.data.query);
+        setLocalIPv4 (res.data.ip);
         setCity (res.data.city);
         setCountryName(res.data.country)
         setCountryCode(res.data.countryCode)
