@@ -6,7 +6,7 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
-import GetInt from '../utils/GetInt'
+
 
 const  Config = (props) => { 
 
@@ -15,11 +15,7 @@ const  Config = (props) => {
   const {localIp, localIpv4, eliHome, err, ip} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
-  const [city_, setCity_] = useState()
-  const [region_, setRegion_] = useState()
-  const [country_, setCountry_] = useState()
-  const [err_, setErr_] = useState()
-  const [ipSearch, setIpSearch] = useState()
+
 
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
@@ -40,17 +36,7 @@ const  Config = (props) => {
     reloadPage()
   }
   
-  function getIpInfoClick () {
-    var ipForSearch = '66.87.125.72'
-    if (ipSearch)
-      ipForSearch = ipSearch;
-    getIpInfo (ipForSearch, setCity_, setRegion_, setCountry_, setErr_)
-    // getIpInfo ('66.87.125.72', null, null, null, null)
-    // console.log('ipInfo', city_, country_, region_)
-    // getIpInfo ('66.87.125.72', null, null, null, null)
-  }
-
-  const style = {
+   const style = {
     // background: 'blue',
     // color: 'red',
     // fontSize: 200,
@@ -108,15 +94,9 @@ const  Config = (props) => {
               onChange={() => props.setOpenMaretFlag(! props.openMarketFlag,)} />  &nbsp;OpenMarket </div>
           </div>
 
-
-          {admin && <AlphaVantage alphaCallBack={props.alphaCallBack} />}
-
-          <div style={{display:'flex'}}>    
+               
           {/* <div>&nbsp; </div> */}
-            {eliHome && <GetInt style={{marginright: '0px'}} init={null} callBack={setIpSearch} title='ipSearch' type='Text' pattern="[0-9\\.]+"/>} &nbsp; &nbsp;
-            {eliHome &&  <div> &nbsp; <button style={{marginTop: '15px', background: 'aqua'}} onClick={getIpInfoClick} > ipInfo </button> &nbsp; </div>}
-          </div>
-          {eliHome && city_ && <div style={{marginTop: '15px'}}> &nbsp; city={city_}  &nbsp; region={region_}  &nbsp; country={country_}  </div>}
+          {admin && <AlphaVantage alphaCallBack={props.alphaCallBack} />}
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
