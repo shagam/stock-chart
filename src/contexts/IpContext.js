@@ -100,7 +100,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (ip === '62.0.92.49' || admin);
+        setEliHome (ip === ELI_HOME_IP || admin);
         setLocalIPv4 (res.data.IPv4);
         setCity (res.data.city);
         setCountryName(res.data.country_name)
