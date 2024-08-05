@@ -214,7 +214,6 @@ function IpContext  () {
     eliHome,
     err,
     ip,
-    setIp
   }
   return (value)
 
