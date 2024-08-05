@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 
 import AlphaVantage from '../AlphaVantage'
 import { Link, useNavigate } from 'react-router-dom'
-import IpContext from '../contexts/IpContext';
+import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
+
 
 const  Config = (props) => { 
 
@@ -14,6 +15,8 @@ const  Config = (props) => {
   const {localIp, localIpv4, eliHome, err, ip} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
+
+
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
@@ -33,7 +36,7 @@ const  Config = (props) => {
     reloadPage()
   }
   
-  const style = {
+   const style = {
     // background: 'blue',
     // color: 'red',
     // fontSize: 200,
@@ -91,9 +94,9 @@ const  Config = (props) => {
               onChange={() => props.setOpenMaretFlag(! props.openMarketFlag,)} />  &nbsp;OpenMarket </div>
           </div>
 
-
+               
+          {/* <div>&nbsp; </div> */}
           {admin && <AlphaVantage alphaCallBack={props.alphaCallBack} />}
-
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
@@ -102,6 +105,7 @@ const  Config = (props) => {
           {eliHome && <div>Global-ip: {ip} </div>}
           {eliHome && <div>Browser:  {userAgent} </div>}
           <div style={{color: 'red'}}> {err} </div>
+
         </div>
       }
 

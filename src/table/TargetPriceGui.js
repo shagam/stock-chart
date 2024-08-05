@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {targetHistoryOne, targetHistAll, targetHistoryAll} from './TargetPrice'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 
 function TargetPriceGui (props) {

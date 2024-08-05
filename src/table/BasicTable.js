@@ -42,7 +42,7 @@ import { FaArrowDown, FaArrowUp, FaSlideshare } from 'react-icons/fa'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 
 import '../GlobalVar'
@@ -359,19 +359,21 @@ const BasicTable = (props) => {
 
   }
 
+  //** gain click for sym pressed. */
   const handleGainClick = (sym, saveTabl) => {
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    const oneDayMili = 1000 * 3600 + 24;
-    var diff = Date.now() - rows[row_index].values.gain_mili;
-    
 
-    if (! eliHome && (rows[row_index].values.gain_mili !== undefined || diff < oneDayMili)) {
-      let date = new Date(rows[row_index].values.gain_mili);
-      // if (LOG_FLAG)
-        console.log (sym, 'Abort <gain>, too frequent. allowed once per day for sym. diff sec:', (diff / 1000).toFixed(0))
-      return; // write only if fresh gain info
+    var avoidTooFrequentLimit = 2000 //** allowed frequency of 2 sec */
+    const lastGainMili = rows[row_index].values.gain_mili; //** save before change */
+
+    var diff = lastGainMili ? Date.now() - lastGainMili : avoidTooFrequentLimit * 2; //** empty => assume more than limit*/ 
+    if (diff < avoidTooFrequentLimit) {
+      console.log (sym, 'Abort <gain>, too frequent. allowed once per day for sym. diff sec:', (diff / 1000).toFixed(0))
+      return;
     }
+
+    rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
 
     if (saveTabl)
       console.log(sym, 'handleGainClick  saveTable param on ')

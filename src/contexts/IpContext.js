@@ -9,6 +9,9 @@ import {db} from '../firebaseConfig'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import {ErrorList, errorAdd, beep, beep2} from '../utils/ErrorList'
 
+const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
+const IPINFO_TOKEN = process.env.REACT_APP_IOINFO_TOKEN
+
 function IpContext  () {
 
   const [localIp, setLocalIP] = useState('');
@@ -25,24 +28,27 @@ function IpContext  () {
   const [err, setErr] = useState();
   const [ip, setIp] = useState();
 
+
+
   const LOG_FLAG = false;
 
   var eliHome_ = false;
 
-  const getData = async () => {
+  const getIp = async () => {
     const res = await axios.get("https://api.ipify.org/?format=json");
     // console.log(res.data);
+
     setIp(res.data.ip);
-    setEliHome (res.data.ip === '62.0.92.49' || admin);
-    eliHome_ = res.data.ip === '62.0.92.49'
+    setEliHome (res.data.ip === ELI_HOME_IP || admin);
+    eliHome_ = res.data.ip === ELI_HOME_IP
   };
 
 
 
   useEffect (() => { 
-    getData ()
-    // getIp_api__ () 
-    // getIp_api () 
+    getIp ()
+    getIpInfo_io () 
+    // getIp_api () //*  blocked by netlify.app because http not allowed 
     // getIp_geolocation();
     userAgentGet()
   // eslint-disable-next-line
@@ -94,7 +100,7 @@ function IpContext  () {
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (ip === '62.0.92.49' || admin);
+        setEliHome (ip === ELI_HOME_IP || admin);
         setLocalIPv4 (res.data.IPv4);
         setCity (res.data.city);
         setCountryName(res.data.country_name)
@@ -127,11 +133,11 @@ function IpContext  () {
     try {
       console.log ('url=', url)
       const res = await axios.get(url)
-      if (LOG_FLAG)
+      if (eliHome_ || LOG_FLAG)
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.query === '62.0.92.49' || admin);
+        setEliHome (res.data.query === ELI_HOME_IP || admin);
         setLocalIPv4 (res.data.query);
         setCity (res.data.city);
         setCountryName(res.data.country)
@@ -152,7 +158,7 @@ function IpContext  () {
     }
   } 
 
-  async function getIp_api__ () {
+  async function getIpInfo_io () {
     setErr()
     if (localIp !== '' && localIp !== undefined) {
       //console.log('ip ', ip)
@@ -160,42 +166,40 @@ function IpContext  () {
     }
   
     // const url = 'ip-api.com/json/?fields=61439';
-      
-    var url = 'https://ipgeolocation.io/';
-    url = 'https://www.ipaddressapi.com/'
-    url = 'https://www.ipaddressapi.com/l/oHCakZMb1fMG?h=HOST'
-    url = 'https://www.iplocation.net/'
-    url = 'http://www.criminalip.io/'
+    // getIpInfo (null, setEliHome, setCity, setRegionName, setCountryName, setErr)
+
+    var url;
+
+    url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
+    url = 'https://ipinfo.io/json?token=' + IPINFO_TOKEN
+
     try {
-      console.log ('url=', url)
+      // console.log ('url=', url)
       const res = await axios.get(url)
-      // if (LOG_FLAG)
+      if (eliHome_ || LOG_FLAG)
       console.log('ip ', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
-        setEliHome (res.data.query === '62.0.92.49' || admin);
+        setEliHome (res.data.ip === ELI_HOME_IP || admin);
         setLocalIPv4 (res.data.query);
         setCity (res.data.city);
         setCountryName(res.data.country)
         setCountryCode(res.data.countryCode)
-        setRegionName(res.data.regionName)
+        setRegionName(res.data.region)
       }
       else
         console.log ('no ip');
 
     // admin password
-     // save ip
+    // save ip
      } catch (err) {
       console.log (err.message, url)
-      var err_txt = 'ipContext_,  err=' + err.message
-      if (eliHome_)
+      var err_txt = 'ipInfo,  err=' + err.message
+      if (eliHome_ || admin)
         err_txt +=  ' url=' + url
       setErr (err_txt)
     }
   } 
-
-  
-
   
   const value = {
     localIp,
@@ -209,10 +213,51 @@ function IpContext  () {
     ios,
     eliHome,
     err,
-    ip
+    ip,
+    setIp
   }
   return (value)
 
 }
 
-export default IpContext;
+
+//* get ipInfo from ip  failed unused
+async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
+  const eliHome_ = ip === ELI_HOME_IP
+
+    var url;
+    // url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
+    url = 'https://ipinfo.io/'
+    if (ip)
+      url += ip + '/';
+    url += 'json?token=' + IPINFO_TOKEN;
+
+    // if (eliHome_)
+      console.log ('ipInfoUrl=', url)
+    try {
+      const res = await axios.get(url)
+        console.log('ipInfo results ', res.data);
+      if (res.data !== '') {
+        if (setCity)
+          setCity (res.data.city);
+        if (setRegion)
+          setRegion(res.data.region)
+        if (setCountry)
+          setCountry(res.data.country)
+
+      }
+      else
+        console.log ('no ip');
+
+    // admin password
+     // save ip
+     } catch (err) {
+      if (eliHome_)
+        console.log (err.message, url)
+      else
+        console.log (err.message)
+    }
+}
+
+
+export  {IpContext, getIpInfo}

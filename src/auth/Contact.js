@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
-import IpContext from '../contexts/IpContext';
+import {IpContext, getIpInfo} from '../contexts/IpContext';
 import {beep2} from '../utils/ErrorList'
 
 export default function ContactUs (props)  {
@@ -26,11 +26,14 @@ export default function ContactUs (props)  {
   const [info, setInfo] = useState()
 
   const navigate = useNavigate();
-  const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
+  const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName} = IpContext();
   
 
    function sendContact (e) {
   
+    // const ipInfo =getIpInfo()
+    // console.log (ipInfo)
+
     e.preventDefault();
     if (emailRef.current.value !== emailConfirmRef.current.value) {
       return setError ('Email_confirm do not match')
@@ -54,9 +57,9 @@ export default function ContactUs (props)  {
     corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
       "&email="+ emailRef.current.value + 
       // '&ip=' + localIpv4 +
-      '&city=' + city + '&countryName=' + countryName + '&countryCode=' + countryCode +
+      '&city=' + city + '&region=' + regionName+ '&country=' + countryName 
       // '&message='+txtArray;
-      '&text='+txtSplit;
+      + '&text='+txtSplit;
       console.log (corsUrl)
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')

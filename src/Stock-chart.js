@@ -135,7 +135,7 @@ const StockChart = (props) => {
   // clip newest entries
   function clipTrailingEntries (arrIn, endIndex, symbol) {
     if (endIndex < 0 || endIndex >= arrIn.length) {
-      console.log (symbol, 'ClipTrailFail,', endDateArr)
+      console.log (symbol, 'Fail, begin date after end,', endDateArr,'endIndex=' + endIndex, 'arrIn.length=' + arrIn.length)
       return arrIn;
     }
     var arrOut = [];

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import cors from 'cors'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -9,7 +9,7 @@ import {nanoid} from 'nanoid';
 import GetInt from '../utils/GetInt'
 import {Vix} from '../utils/Vix'
 import { capitalize } from '@material-ui/core'
-import IpContext from '../contexts/IpContext';
+import {IpContext} from '../contexts/IpContext';
 import { useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import GlobalFilter from '../utils/GlobalFilter'
@@ -96,11 +96,11 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, ip, ci
     if (city)
         corsUrl += '&city=' + city;
     if (countryName)
-        corsUrl += '&countryName=' + countryName;
-    if (countryCode)
-        corsUrl += '&countryCode=' + countryCode;
+        corsUrl += '&country=' + countryName;
+    // if (countryCode)
+    //     corsUrl += '&countryCode=' + countryCode;
     if (regionName)
-        corsUrl += '&regionName=' + regionName
+        corsUrl += '&region=' + regionName
 
     if (LOG)
     console.log (sym, 'gainWrite', corsUrl)
@@ -135,14 +135,21 @@ function CommonDatabase (props) {
     const [displayFlag, setDisplayFlag] = useState(false);
     const [next, setNext] = useState()
     const [err,setErr] = useState()
+    const [info, setInfo] = useState()
     const {localIp, localIpv4, eliHome} = IpContext();
     const { currentUser, admin, logout } = useAuth();
     const [logBackEnd, setLogBackEnd] = useState ();
+    const [logExtra, setLogExtra] = useState ();
 
     const [period, setPeriod] = useState(1)
 
     const [nameFilter, setNameFilter] = useState ();
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
+    useEffect (() => { 
+        setErr()
+        setInfo()
+    }, [props.symbol]) 
 
     const onOptionChange = e => {
         const t = e.target.value;
@@ -152,6 +159,9 @@ function CommonDatabase (props) {
     
     function setLog () {
         setLogBackEnd (! logBackEnd)
+    }
+    function toggleLogExtra () {
+        setLogExtra (! logExtra)
     }
 
     function error(arr) {
@@ -721,9 +731,11 @@ function CommonDatabase (props) {
             corsUrl = 'https://'
         else
             corsUrl = 'http://'
-        corsUrl += props.corsServer + ":" + props.PORT + '/users'
+        corsUrl += props.corsServer + ":" + props.PORT + '/users?param=1'
         if (logBackEnd)
-            corsUrl += '?LOG=1'
+            corsUrl += '&LOG=1'
+        if (logExtra)
+            corsUrl += '&LOG_EXTRA=1'
         
         setErr('users Request request sent')  
         // if (LOG)
@@ -745,7 +757,8 @@ function CommonDatabase (props) {
             }
             // if (LOG)
             console.log(getDate(),  'users arrived', result.data) 
-            setErr('backEnd users,  Latency(msec)=' + latency + ';  ....    ' + JSON.stringify (result.data) )       
+            setErr('backEnd users,  Latency(msec)=' + latency + ';  ....    ' + JSON.stringify (result.data) )  
+            // setInfo (JSON.stringify(result.data))
         } )
         .catch ((err) => {
         clear()
@@ -802,13 +815,12 @@ function CommonDatabase (props) {
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
           {next === 'insert' && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
           {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>} &nbsp;
-          <div> &nbsp; </div> 
+            <div  style={{display:'flex'}}>
+                <button style={{background: 'aqua'}} type="button" onClick={()=>searchName(nameFilter)}>search Stock </button>&nbsp;
+                <GlobalFilter  className="stock_button_class_" filter={nameFilter} setFilter={setNameFilter} name='name' isMobile={isMobile}/>
+            </div>
         </div>
-
-        <div  style={{display:'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>searchName(nameFilter)}>search </button>&nbsp;
-            <GlobalFilter  className="stock_button_class_" filter={nameFilter} setFilter={setNameFilter} name='name' isMobile={isMobile}/>
-        </div>
+ 
         <div> &nbsp; </div> 
         {/* <hr/> */}
 
@@ -821,10 +833,11 @@ function CommonDatabase (props) {
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
             {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;&nbsp;
-            {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;
+            {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
             {eliHome && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
+            {eliHome && <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>}
         </div>
         
         <div>
@@ -841,6 +854,7 @@ function CommonDatabase (props) {
                     return <div key={k}>&nbsp; {r}&nbsp;&nbsp;</div>
                 })}
             </div>}
+            {info && <div>{info}</div>}
         </div>
       </div>
     }
