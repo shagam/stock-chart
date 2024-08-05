@@ -93,10 +93,13 @@ export default function ContactGet (props)  {
 
             console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
             setStat( 'Contact-count=' + result.data.length + '  (latency=' + latency +' mili)' )
-            const withNL = [];
-            // for (let i = 0; i < result.data.length; i++)
-            //   withNL.push(result.data[i].replaceAll('_NL_','\n'))
-            setTextArray(result.data) // display list of contact requests
+            
+            //** Change newest first*/
+            var newestFirstArr  = [];
+            for (let i = 0; i < result.data.length; i++)
+              newestFirstArr.push (result.data [result.data.length - i - 1])
+
+            setTextArray(newestFirstArr) // display list of contact requests
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
@@ -142,7 +145,7 @@ export default function ContactGet (props)  {
             <div>{stat}</div>
             <div>&nbsp;</div>
             {textArray && textArray.map((item,k) =>
-               <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, city: {item.city}, region: {item.region}, country: {item.country}
+               <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, ip: {item.ip}, city: {item.city}, region: {item.region}, country: {item.country}
                 <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div> <div>&nbsp;</div></li>)}
                
         </div>
