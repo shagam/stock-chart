@@ -97,7 +97,7 @@ export default function ContactGet (props)  {
             //** Change newest first*/
             var newestFirstArr  = [];
             for (let i = 0; i < result.data.length; i++)
-              newestFirstArr.push (result.data [result.data.length - i - 1])
+              newestFirstArr.push (result.data[result.data.length - i - 1])
 
             setTextArray(newestFirstArr) // display list of contact requests
           })
