@@ -37,6 +37,8 @@ export default function ContactGet (props)  {
 
     const [searchType, setSearchType] = useState()
     const [searchText,setSearchText] = useState()
+    
+    const [logBackEnd, setLogBackEnd] = useState ();
 
     // const searchYear = searchDate.getFullYear();
     // const searchMon = searchDate.getMonth() + 1; // [1..12]
@@ -50,6 +52,10 @@ export default function ContactGet (props)  {
       console.log(tool)
     }
 
+      // avoid loop
+  function setLog () {
+    setLogBackEnd (! logBackEnd)
+  }
     function contactGet () {
 
 
@@ -73,6 +79,8 @@ export default function ContactGet (props)  {
             corsUrl += '&name=' + searchText
           if (count)
             corsUrl += '&count=' + count
+          if (logBackEnd)
+            corsUrl += '&LOG=true';
 
           const miliStart =  Date.now();
 
@@ -121,10 +129,11 @@ export default function ContactGet (props)  {
     
             <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
 
-
-            <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> 
-
-
+            <div style={{display: 'flex'}}>
+              <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> &nbsp;  &nbsp;&nbsp;
+              <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} LogBackEnd /> &nbsp;
+              <label style={{marginTop: '15px'}}>LogBackEnd </label>
+            </div>
             <div>&nbsp;</div>
     
             <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
