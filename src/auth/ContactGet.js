@@ -52,10 +52,11 @@ export default function ContactGet (props)  {
       console.log(tool)
     }
 
-      // avoid loop
-  function setLog () {
-    setLogBackEnd (! logBackEnd)
-  }
+    // avoid loop
+    function setLog () {
+      setLogBackEnd (! logBackEnd)
+    }
+
     function contactGet () {
 
 

@@ -27,7 +27,12 @@ export default function ContactUs (props)  {
 
   const navigate = useNavigate();
   const {ip, localIp, localIpv4, eliHome, city, countryName, countryCode, regionName} = IpContext();
-  
+  const [logBackEnd, setLogBackEnd] = useState ();
+
+    // avoid loop
+    function setLog () {
+      setLogBackEnd (! logBackEnd)
+    }
 
    function sendContact (e) {
   
@@ -60,6 +65,8 @@ export default function ContactUs (props)  {
       '&city=' + city + '&region=' + regionName+ '&country=' + countryName 
       // '&message='+txtArray;
       + '&text='+txtSplit;
+      if (logBackEnd)
+        corsUrl += '&LOG=true';
       console.log (corsUrl)
       const miliStart =  Date.now();
       setInfo(getDate() + ' msg sent to server')
@@ -129,7 +136,14 @@ export default function ContactUs (props)  {
         </Form.Group>
 
           <hr/>
-        <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> Send </Button>
+          {eliHome && <div style={{display: 'flex'}}>
+            <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} LogBackEnd /> &nbsp;
+            <label style={{marginTop: '15px'}}>LogBackEnd </label>
+            <div>&nbsp;</div>
+          </div>}
+          <div>&nbsp;</div>
+          <Button  style={{fontSize: '23px'}} disabled={loading} className="w-40" type="submit"> Send </Button>
+
       </Form>
       <div>{info}</div>
       <div style={{color:'red'}}>{stat}</div>
