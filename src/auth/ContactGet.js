@@ -94,12 +94,7 @@ export default function ContactGet (props)  {
             console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
             setStat( 'Contact-count=' + result.data.length + '  (latency=' + latency +' mili)' )
             
-            //** Change newest first*/
-            var newestFirstArr  = [];
-            for (let i = 0; i < result.data.length; i++)
-              newestFirstArr.push (result.data[result.data.length - i - 1])
-
-            setTextArray(newestFirstArr) // display list of contact requests
+            setTextArray(result.data) // display list of contact requests
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
