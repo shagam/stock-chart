@@ -186,7 +186,7 @@ const BasicTable = (props) => {
   }
 
   const { login, currentUser, admin } = useAuth();
-  const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip} = IpContext();
+  const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip, os} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
   async function refreshByToggleColumns ()  {
@@ -382,7 +382,7 @@ const BasicTable = (props) => {
     handleInfoClick(sym, saveTabl);
   
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, ip, city, countryName, countryCode, regionName)
+      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName)
 
       if (saveTabl)
         saveTable(sym);

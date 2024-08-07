@@ -22,12 +22,12 @@ function IpContext  () {
   const [countryCode, setCountryCode] = useState();
   const [regionName, setRegionName] = useState()
   const [userAgentMobile, setUserAgentMobile] = useState(false);
-  const [ios, setIos] = useState(false);
+  // const [ios, setIos] = useState(false);
   const [eliHome, setEliHome] = useState(false);
   const { login, currentUser, admin } = useAuth();
   const [err, setErr] = useState();
   const [ip, setIp] = useState();
-
+  const [os, setOs] = useState()
 
 
   const LOG_FLAG = false;
@@ -77,13 +77,13 @@ function IpContext  () {
         console.log("not mobile device");
     }
 
-    if(/iPhone|iPad|iPod/i.test(navigator.userAgent)){
-      setIos(true);
-      if (LOG_FLAG)
-        console.log("ios device");
-    } else {
-      setIos(false);
-    }
+
+    if (userAgent.includes('Linux'))
+      setOs('Linux')
+    if (userAgent.includes('Windows'))
+      setOs('Windows')
+    if (/iPhone|iPad|iPod/i.test(userAgent))
+      setOs ('ioOs')
   }
 
   const getIp_geolocation = async () => {
@@ -210,10 +210,10 @@ function IpContext  () {
     regionName,
     userAgent,
     userAgentMobile,
-    ios,
     eliHome,
     err,
     ip,
+    os
   }
   return (value)
 
@@ -256,6 +256,18 @@ async function getIpInfo (ip, setCity, setRegion, setCountry, setErr) {
       else
         console.log (err.message)
     }
+}
+
+function isUnix(userAgent) {
+  return userAgent.includes('Linux')
+}
+
+function isWindows(userAgent) {
+  return userAgent.includes('Windows')
+}
+
+function isIos(userAgent) {
+  return (/iPhone|iPad|iPod/i.test(userAgent))
 }
 
 

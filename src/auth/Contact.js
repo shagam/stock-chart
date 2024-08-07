@@ -26,7 +26,7 @@ export default function ContactUs (props)  {
   const [info, setInfo] = useState()
 
   const navigate = useNavigate();
-  const {ip, localIp, localIpv4, eliHome, city, countryName, countryCode, regionName} = IpContext();
+  const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
   const [logBackEnd, setLogBackEnd] = useState ();
 
     // avoid loop
@@ -61,10 +61,13 @@ export default function ContactUs (props)  {
     console.log ('txtSplit:', txtSplit)
     corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
       "&email="+ emailRef.current.value + 
+      '&os=' + os +
       '&ip=' + ip +
       '&city=' + city + '&region=' + regionName+ '&country=' + countryName 
       // '&message='+txtArray;
-      + '&text='+txtSplit;
+      + '&text='+txtSplit
+
+      
       if (logBackEnd)
         corsUrl += '&LOG=true';
       console.log (corsUrl)

@@ -14,7 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import GlobalFilter from '../utils/GlobalFilter'
 
-function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, ip, city, countryName, countryCode, regionName) {
+function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip, city, countryName, countryCode, regionName) {
 
     const LOG = logFlags.includes('gain'); 
     if (LOG)
@@ -101,9 +101,10 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, ip, ci
     //     corsUrl += '&countryCode=' + countryCode;
     if (regionName)
         corsUrl += '&region=' + regionName
+    corsUrl += '&os=' + os
 
     if (LOG)
-    console.log (sym, 'gainWrite', corsUrl)
+        console.log (sym, 'gainWrite', corsUrl)
 
 
     axios.get (corsUrl)
