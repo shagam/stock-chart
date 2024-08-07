@@ -132,7 +132,7 @@ export default function ContactGet (props)  {
 
             <div style={{display: 'flex'}}>
               <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> &nbsp;  &nbsp;&nbsp;
-              <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} LogBackEnd /> &nbsp;
+              <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} /> &nbsp;
               <label style={{marginTop: '15px'}}>LogBackEnd </label>
             </div>
             <div>&nbsp;</div>

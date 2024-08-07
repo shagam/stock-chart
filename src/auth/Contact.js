@@ -67,7 +67,7 @@ export default function ContactUs (props)  {
       // '&message='+txtArray;
       + '&text='+txtSplit
 
-      
+
       if (logBackEnd)
         corsUrl += '&LOG=true';
       console.log (corsUrl)
@@ -140,7 +140,7 @@ export default function ContactUs (props)  {
 
           <hr/>
           {eliHome && <div style={{display: 'flex'}}>
-            <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} LogBackEnd /> &nbsp;
+            <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} /> &nbsp;
             <label style={{marginTop: '15px'}}>LogBackEnd </label>
             <div>&nbsp;</div>
           </div>}
