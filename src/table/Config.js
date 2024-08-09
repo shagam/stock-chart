@@ -12,7 +12,7 @@ const  Config = (props) => {
 
   const [configFlag, setConfigFlag] = useState (false);
   //console.log(`AlphaVantage localStorage ${alpha}`); 
-  const {localIp, localIpv4, eliHome, err, ip} = IpContext();
+  const {localIp, localIpv4, eliHome, err, ip, os} = IpContext();
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
 
@@ -102,7 +102,7 @@ const  Config = (props) => {
           <div>&nbsp; </div>
           <div>Url: {window.location.href} </div>
           {/* {eliHome && <div>Global-ip: {localIpv4} </div>} */}
-          {eliHome && <div>Global-ip: {ip} </div>}
+          {eliHome && <div>ip={ip}  &nbsp; os={os}</div>}
           {eliHome && <div>Browser:  {userAgent} </div>}
           <div style={{color: 'red'}}> {err} </div>
 
