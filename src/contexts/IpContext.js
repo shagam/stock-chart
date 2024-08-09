@@ -77,12 +77,13 @@ function IpContext  () {
         console.log("not mobile device");
     }
 
-
-    if (userAgent.includes('Linux'))
+    if (userAgent.includes('Android'))
+      setOs('Android')
+    else if (userAgent.includes('Linux'))
       setOs('Linux')
-    if (userAgent.includes('Windows'))
+    else if (userAgent.includes('Windows'))
       setOs('Windows')
-    if (/iPhone|iPad|iPod/i.test(userAgent))
+    else if (/iPhone|iPad|iPod/i.test(userAgent))
       setOs ('ioOs')
   }
 
