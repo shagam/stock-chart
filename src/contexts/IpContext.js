@@ -84,7 +84,7 @@ function IpContext  () {
     else if (userAgent.includes('Windows'))
       setOs('Windows')
     else if (/iPhone|iPad|iPod/i.test(userAgent))
-      setOs ('ioOs')
+      setOs ('iOS')
   }
 
   const getIp_geolocation = async () => {
