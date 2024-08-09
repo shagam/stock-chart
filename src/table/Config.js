@@ -70,7 +70,7 @@ const  Config = (props) => {
           </div>
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}
-          {admin && <div>
+          {admin && false && <div>
             <button type="button" onClick={()=>beep2 ()}>beep2</button>} &nbsp;
             <button type="button" onClick={()=>beep(20,64,50)}>64Hz</button>&nbsp;  {/*beep(vol, freq, duration){ */}
             <button type="button" onClick={()=>beep(20,128,50)}>128Hz</button>&nbsp; {/*beep(vol, freq, duration){ */}
