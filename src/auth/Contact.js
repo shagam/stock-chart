@@ -43,7 +43,7 @@ export default function ContactUs (props)  {
     if (emailRef.current.value !== emailConfirmRef.current.value) {
       return setError ('Email_confirm do not match')
     } 
-    console.log (getDate(), 'email params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'text='+ messageRef.current.value)
+    console.log (getDate(), 'contact params', 'name=', nameRef.current.value, 'email=', emailRef.current.value, 'text='+ messageRef.current.value)
     // console.log (form.current)
     // console.log (localIpv4, city, countryName, countryCode)
 
@@ -61,9 +61,8 @@ export default function ContactUs (props)  {
     console.log ('txtSplit:', txtSplit)
     corsUrl += corsServer+ ":" + PORT + "/contactUs" +  '?name=' +  nameRef.current.value +
       "&email="+ emailRef.current.value + 
-      '&os=' + os +
       '&ip=' + ip +
-      '&city=' + city + '&region=' + regionName+ '&country=' + countryName 
+      '&city=' + city + '&region=' + regionName+ '&country=' + countryName + '&os=' + os
       // '&message='+txtArray;
       + '&text='+txtSplit
 
@@ -82,7 +81,7 @@ export default function ContactUs (props)  {
         if (result.status !== 200)
           return;
         const miliEnd =  Date.now()
-        console.log (getDate() +  ' msg arrived, from=' + emailRef.current.value )
+        console.log (getDate() +  ' msg from=' + emailRef.current.value )
         const latency = miliEnd - miliStart
         setInfo()
         setStat(getDate() + ' msg reeived (latency=' + latency + ')')
