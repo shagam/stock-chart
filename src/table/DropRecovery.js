@@ -407,7 +407,7 @@ const DropRecoveryButtons = (props) => {
             <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
-            {/* <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp; */}
+            <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp;
             <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           </div>
           {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
@@ -425,7 +425,7 @@ const DropRecoveryButtons = (props) => {
             <h5 style={{color:'red'}}>Date mismatch, Press Gain for a stock </h5>}
   
           <br></br> 
-          <h5>GainWeeksLost</h5>
+          <h5>TodayGainWeeksLost</h5>
           <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
           <h6>price/high={props.rows[row_index].values.priceDivHigh}  &nbsp; &nbsp;  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
         </div>
