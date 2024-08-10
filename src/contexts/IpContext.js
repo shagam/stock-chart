@@ -178,7 +178,7 @@ function IpContext  () {
       // console.log ('url=', url)
       const res = await axios.get(url)
       if (eliHome_ || LOG_FLAG)
-      console.log('ip ', res.data);
+      console.log('ip geoLocation', res.data);
       if (res.data !== '') {
         // setLocalIP(res.data);
         setEliHome (res.data.ip === ELI_HOME_IP || admin);
