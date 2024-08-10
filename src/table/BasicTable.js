@@ -144,7 +144,8 @@ const BasicTable = (props) => {
   // const [searchDeepDate, setSearchDeepDate] = useState()
   const [analyzeShow, setAnalyzeShow] = useState(false);
 
-  const [deepStartDate, setDropStartDate] = useState(new Date(2021, 8, 1)); // 2021 sep 1   Mon 0-11
+  //** default start date for drop recovery  Mon 0-11 */
+  const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
   
   const useData = false;
 
