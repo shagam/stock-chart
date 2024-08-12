@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState} from 'react'
 import { Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -16,13 +16,8 @@ import {format} from "date-fns"
 
 
 export default function ContactGet (props)  {
-
-    const nameRef = useRef()
-
-    const form = useRef();
   
     const [error, setError] = useState ('');
-    const [loading, setLoading] = useState(false);
     const [stat, setStat] = useState()
     const [textArray, setTextArray] = useState();
     const navigate = useNavigate();
@@ -35,8 +30,6 @@ export default function ContactGet (props)  {
     const [count, setCount] = useState(5);
 
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
-
-    const [searchType, setSearchType] = useState()
     const [searchText,setSearchText] = useState()
     
     const [logBackEnd, setLogBackEnd] = useState ();
@@ -45,22 +38,14 @@ export default function ContactGet (props)  {
     // const searchMon = searchDate.getMonth() + 1; // [1..12]
     // const searchDay = searchDate.getDate(); // [1..31]
     // const chartDateArr = [searchYear, searchMon, searchDay]
- 
-    
-    const onOptionChange = e => {
-      const tool = e.target.value;
-      setSearchType(tool)
-      console.log(tool)
-    }
 
     // avoid loop
     function setLog () {
       setLogBackEnd (! logBackEnd)
     }
 
+    //** Send request to backEnd server */
     function contactGet () {
-
-
         // console.log (getDate(), 'contactGet params', 'name=', nameRef.current.value, )
         // console.log (form.current)
         // console.log (localIpv4, city, countryName, countryCode)
@@ -150,11 +135,13 @@ export default function ContactGet (props)  {
             </div>
             <div>&nbsp;</div>
     
+            {/* Choose start date */}
             <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp;
             </div>
 
             <div>
+              {/* Buttons for Quick set of start date */}
               <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={months==='1'} onChange={onOptionChangeDate}/>
                 <label style={{marginRight:'10px', paddingRight: '1px'}}> mon</label>         
               <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChangeDate}/>
@@ -176,6 +163,7 @@ export default function ContactGet (props)  {
 
           <div>{stat}</div>
           <div>&nbsp;</div>
+          {/* Display list of contactsUs. Split text lines _NL_  */}
           {textArray && textArray.map((item,k) =>
               <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, ip: {item.ip},
               city: {item.city}, region: {item.region}, country: {item.country}, os: {item.os}
