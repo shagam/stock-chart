@@ -95,12 +95,12 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
     corsUrl += '&ip=' + ip;
     if (city)
         corsUrl += '&city=' + city;
+    if (regionName)
+        corsUrl += '&region=' + regionName
     if (countryName)
         corsUrl += '&country=' + countryName;
     // if (countryCode)
     //     corsUrl += '&countryCode=' + countryCode;
-    if (regionName)
-        corsUrl += '&region=' + regionName
     corsUrl += '&os=' + os
 
     if (LOG)
