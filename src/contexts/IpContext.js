@@ -30,9 +30,9 @@ function IpContext  () {
   const [os, setOs] = useState()
 
   const IP_GEO_LOCATION = "ipGeolocation"
-  const ipGeoLocation = useMemo(() => JSON.parse (localStorage.getItem("ipGeolocation")), []);
+  const ipGeoLocation = useMemo(() => JSON.parse (localStorage.getItem(IP_GEO_LOCATION)), []);
   if (ipGeoLocation)
-    console.log("ipGeolocation", ipGeoLocation);
+    console.log(IP_GEO_LOCATION, ipGeoLocation);
 
   const LOG_FLAG = false;
 
@@ -192,7 +192,7 @@ function IpContext  () {
         setCountryCode(res.data.countryCode)
         setRegionName(res.data.region)
         res.data.date = getDate();
-        localStorage.setItem("ipGeolocation", JSON.stringify(res.data))
+        localStorage.setItem(IP_GEO_LOCATION, JSON.stringify(res.data))
       }
       else
         console.log ('no ip');
