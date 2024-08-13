@@ -8,6 +8,8 @@ import {format} from "date-fns"
 import {db} from '../firebaseConfig'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import {ErrorList, errorAdd, beep, beep2} from '../utils/ErrorList'
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
 const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
 const IPINFO_TOKEN = process.env.REACT_APP_IOINFO_TOKEN
@@ -31,8 +33,8 @@ function IpContext  () {
 
   const IP_GEO_LOCATION = "ipGeolocation"
   const ipGeoLocation = useMemo(() => JSON.parse (localStorage.getItem(IP_GEO_LOCATION)), []);
-  if (ipGeoLocation)
-    console.log(IP_GEO_LOCATION, ipGeoLocation);
+  // if (ipGeoLocation && ! city)
+  //   console.log(IP_GEO_LOCATION + '_', ipGeoLocation);
 
   const LOG_FLAG = false;
 
@@ -60,11 +62,11 @@ function IpContext  () {
 
    // eslint-disable-line_
 
-  function getDate() {
-    const date = new Date();
-    var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
-    return formattedDate;    
-  }
+  // function getDate() {
+  //   const date = new Date();
+  //   var formattedDate = format(date, "yyyy-MMM-dd HH:mm");
+  //   return formattedDate;    
+  // }
   
   function userAgentGet () {
     const userAgent = navigator.userAgent;
@@ -91,77 +93,77 @@ function IpContext  () {
       setOs ('iOS')
   }
 
-  const getIp_geolocation = async () => {
-    setErr()
-    if (localIp !== '' && localIp !== undefined) {
-      //console.log('ip ', ip)
-      return;
-    }
+  // const getIp_geolocation = async () => {
+  //   setErr()
+  //   if (localIp !== '' && localIp !== undefined) {
+  //     //console.log('ip ', ip)
+  //     return;
+  //   }
   
-    const url = 'https://geolocation-db.com/json/';
-    try {
-      const res = await axios.get(url)
-      if (LOG_FLAG)
-      console.log('ip ', res.data);
-      if (res.data !== '') {
-        // setLocalIP(res.data);
-        setEliHome (ip === ELI_HOME_IP || admin);
-        setLocalIPv4 (res.data.IPv4);
-        setCity (res.data.city);
-        setCountryName(res.data.country_name)
-        setCountryCode(res.data.country_code)
-      }
-      else
-        console.log ('no ip');
+  //   const url = 'https://geolocation-db.com/json/';
+  //   try {
+  //     const res = await axios.get(url)
+  //     if (LOG_FLAG)
+  //     console.log('ip ', res.data);
+  //     if (res.data !== '') {
+  //       // setLocalIP(res.data);
+  //       setEliHome (ip === ELI_HOME_IP || admin);
+  //       setLocalIPv4 (res.data.IPv4);
+  //       setCity (res.data.city);
+  //       setCountryName(res.data.country_name)
+  //       setCountryCode(res.data.country_code)
+  //     }
+  //     else
+  //       console.log ('no ip');
 
-    // admin password
-     // save ip
-     } catch (err) {
-      console.log (err.message, url)
-      var err_txt = 'ipContext,  err=' + err.message
-      if (eliHome_)
-        err_txt +=  ' url=' + url
-      setErr (err_txt)
-    }
-  } 
+  //   // admin password
+  //    // save ip
+  //    } catch (err) {
+  //     console.log (err.message, url)
+  //     var err_txt = 'ipContext,  err=' + err.message
+  //     if (eliHome_)
+  //       err_txt +=  ' url=' + url
+  //     setErr (err_txt)
+  //   }
+  // } 
 
-  async function getIp_api () {
-    setErr()
-    if (localIp !== '' && localIp !== undefined) {
-      //console.log('ip ', ip)
-      return;
-    }
+  // async function getIp_api () {
+  //   setErr()
+  //   if (localIp !== '' && localIp !== undefined) {
+  //     //console.log('ip ', ip)
+  //     return;
+  //   }
   
-    // const url = 'ip-api.com/json/?fields=61439';
+  //   // const url = 'ip-api.com/json/?fields=61439';
       
-    const url = 'http://ip-api.com/json/';
-    try {
-      console.log ('url=', url)
-      const res = await axios.get(url)
-      if (eliHome_ || LOG_FLAG)
-      console.log('ip ', res.data);
-      if (res.data !== '') {
-        // setLocalIP(res.data);
-        setEliHome (res.data.query === ELI_HOME_IP || admin);
-        setLocalIPv4 (res.data.query);
-        setCity (res.data.city);
-        setCountryName(res.data.country)
-        setCountryCode(res.data.countryCode)
-        setRegionName(res.data.regionName)
-      }
-      else
-        console.log ('no ip');
+  //   const url = 'http://ip-api.com/json/';
+  //   try {
+  //     console.log ('url=', url)
+  //     const res = await axios.get(url)
+  //     if (eliHome_ || LOG_FLAG)
+  //     console.log('ip ', res.data);
+  //     if (res.data !== '') {
+  //       // setLocalIP(res.data);
+  //       setEliHome (res.data.query === ELI_HOME_IP || admin);
+  //       setLocalIPv4 (res.data.query);
+  //       setCity (res.data.city);
+  //       setCountryName(res.data.country)
+  //       setCountryCode(res.data.countryCode)
+  //       setRegionName(res.data.regionName)
+  //     }
+  //     else
+  //       console.log ('no ip');
 
-    // admin password
-     // save ip
-     } catch (err) {
-      console.log (err.message, url)
-      var err_txt = 'ipContext_,  err=' + err.message
-      if (eliHome_)
-        err_txt +=  ' url=' + url
-      setErr (err_txt)
-    }
-  } 
+  //   // admin password
+  //    // save ip
+  //    } catch (err) {
+  //     console.log (err.message, url)
+  //     var err_txt = 'ipContext_,  err=' + err.message
+  //     if (eliHome_)
+  //       err_txt +=  ' url=' + url
+  //     setErr (err_txt)
+  //   }
+  // } 
 
   async function getIpInfo_io () {
     setErr()
@@ -169,12 +171,17 @@ function IpContext  () {
       //console.log('ip ', ip)
       return;
     }
-  
-    // const url = 'ip-api.com/json/?fields=61439';
-    // getIpInfo (null, setEliHome, setCity, setRegionName, setCountryName, setErr)
+    
+
+    // console.log ('old geolocation:', ipGeoLocation)
+    const geoLOcationDateSplit = ipGeoLocation.date.split(/[\s-:]+/)
+    const oldMili = (new Date(ipGeoLocation.date)).getTime();
+    
+    //** avoid too frequent access  */
+    if (Date.now() - oldMili < 1000000)
+      return;
 
     var url;
-
     url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
     url = 'https://ipinfo.io/json?token=' + IPINFO_TOKEN
 
