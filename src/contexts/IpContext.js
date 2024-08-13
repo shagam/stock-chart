@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 
 
 
@@ -29,6 +29,10 @@ function IpContext  () {
   const [ip, setIp] = useState();
   const [os, setOs] = useState()
 
+  const IP_GEO_LOCATION = "ipGeolocation"
+  const ipGeoLocation = useMemo(() => JSON.parse (localStorage.getItem("ipGeolocation")), []);
+  if (ipGeoLocation)
+    console.log("ipGeolocation", ipGeoLocation);
 
   const LOG_FLAG = false;
 
@@ -187,6 +191,8 @@ function IpContext  () {
         setCountryName(res.data.country)
         setCountryCode(res.data.countryCode)
         setRegionName(res.data.region)
+        res.data.date = getDate();
+        localStorage.setItem("ipGeolocation", JSON.stringify(res.data))
       }
       else
         console.log ('no ip');
