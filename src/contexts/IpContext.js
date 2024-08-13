@@ -173,13 +173,21 @@ function IpContext  () {
     }
     
 
-    // console.log ('old geolocation:', ipGeoLocation)
     const geoLOcationDateSplit = ipGeoLocation.date.split(/[\s-:]+/)
     const oldMili = (new Date(ipGeoLocation.date)).getTime();
     
     //** avoid too frequent access  */
-    if (Date.now() - oldMili < 1000000)
+    if (Date.now() - oldMili < 1000000) {
+      console.log ('old geolocation:', ipGeoLocation)
+      setEliHome (ipGeoLocation.ip === ELI_HOME_IP || admin);
+      setLocalIPv4 (ipGeoLocation.ip);
+      setCity (ipGeoLocation.city);
+      setCountryName(ipGeoLocation.country)
+      // setCountryCode(res.data.countryCode)
+      setRegionName(ipGeoLocation.region)
       return;
+    }
+
 
     var url;
     url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
@@ -196,7 +204,7 @@ function IpContext  () {
         setLocalIPv4 (res.data.ip);
         setCity (res.data.city);
         setCountryName(res.data.country)
-        setCountryCode(res.data.countryCode)
+        // setCountryCode(res.data.countryCode)
         setRegionName(res.data.region)
         res.data.date = getDate();
         localStorage.setItem(IP_GEO_LOCATION, JSON.stringify(res.data))
