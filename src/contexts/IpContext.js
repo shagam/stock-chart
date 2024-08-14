@@ -172,22 +172,22 @@ function IpContext  () {
       return;
     }
     
-
-    const geoLOcationDateSplit = ipGeoLocation.date.split(/[\s-:]+/)
-    const oldMili = (new Date(ipGeoLocation.date)).getTime();
-    
-    //** avoid too frequent access  */
-    if (Date.now() - oldMili < 1000000) {
-      console.log ('old geolocation:', ipGeoLocation)
-      setEliHome (ipGeoLocation.ip === ELI_HOME_IP || admin);
-      setLocalIPv4 (ipGeoLocation.ip);
-      setCity (ipGeoLocation.city);
-      setCountryName(ipGeoLocation.country)
-      // setCountryCode(res.data.countryCode)
-      setRegionName(ipGeoLocation.region)
-      return;
+    if (ipGeoLocation && ipGeoLocation.date) {
+      const geoLOcationDateSplit = ipGeoLocation.date.split(/[\s-:]+/)
+      const oldMili = (new Date(ipGeoLocation.date)).getTime();
+      
+      //** avoid too frequent access  */
+      if (Date.now() - oldMili < 1000000) {
+        console.log ('old geolocation:', ipGeoLocation)
+        setEliHome (ipGeoLocation.ip === ELI_HOME_IP || admin);
+        setLocalIPv4 (ipGeoLocation.ip);
+        setCity (ipGeoLocation.city);
+        setCountryName(ipGeoLocation.country)
+        // setCountryCode(res.data.countryCode)
+        setRegionName(ipGeoLocation.region)
+        return;
+      }
     }
-
 
     var url;
     url = 'https://ipinfo.io/66.87.125.72/json?token=' + IPINFO_TOKEN
