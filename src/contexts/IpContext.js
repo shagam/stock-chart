@@ -178,7 +178,8 @@ function IpContext  () {
       
       //** avoid too frequent access  */
       if (Date.now() - oldMili < 1000000) {
-        console.log ('old geolocation:', ipGeoLocation)
+        if (LOG_FLAG)
+          console.log ('old geolocation:', ipGeoLocation)
         setEliHome (ipGeoLocation.ip === ELI_HOME_IP || admin);
         setLocalIPv4 (ipGeoLocation.ip);
         setCity (ipGeoLocation.city);
