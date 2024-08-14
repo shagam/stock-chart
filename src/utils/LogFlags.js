@@ -18,7 +18,7 @@ const LogFlags = (props) => {
   props.checkList.forEach((f) => {
     if (cnt < 6)
       flags0.push(f)
-    else if (cnt < 12)
+    else if (cnt < 13)
       flags1.push(f)
     else
       flags2.push(f)

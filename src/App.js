@@ -34,7 +34,7 @@ const Manual = lazy(() => import ('./manual/Manual'))
 
 
 const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "firebase", "verify_1", "splits",
-"xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","month","target","gain","backEnd"];
+"xyValue", "chart", 'chart1', 'alpha','contact','api', "aux","date","spikes","month","target","gain","backEnd"];
 
 
 function App() {
@@ -83,8 +83,8 @@ function App() {
                 <Route path="/about" element={<About  />}/>
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/manual" element={<Manual  />}/>
-                <Route path="/contactUs" element={<Contact server={server} />}/>
-                <Route path="/contactGet" element={<ContactGet server={server} />}/>
+                <Route path="/contactUs" element={<Contact server={server} logFlags={logFlags} />}/>
+                <Route path="/contactGet" element={<ContactGet server={server} logFlags={logFlags} />}/>
                 <Route path="/generalLinks" element={< AuxilaryLinks />}/>
                
                 {/* <Route path="/contact" element={<Contact  />}/> */}

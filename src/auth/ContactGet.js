@@ -33,7 +33,8 @@ export default function ContactGet (props)  {
     const [searchText,setSearchText] = useState()
     
     const [logBackEnd, setLogBackEnd] = useState ();
-
+    
+    const LOG = props.logFlags.includes('contact')
     // const searchYear = searchDate.getFullYear();
     // const searchMon = searchDate.getMonth() + 1; // [1..12]
     // const searchDay = searchDate.getDate(); // [1..31]
@@ -74,8 +75,9 @@ export default function ContactGet (props)  {
           setStat(' msg sent to server')
           setTextArray()
           setError()
-
-          console.log (getDate(), 'url', corsUrl)
+          
+          if (LOG)
+            console.log (getDate(), 'url', corsUrl)
           axios.get (corsUrl)
           // getDate()
           .then ((result) => {
@@ -86,7 +88,8 @@ export default function ContactGet (props)  {
             // console.log (getDate() +  ' msg sent')
             const latency = miliEnd - miliStart
 
-            console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
+            if (LOG)
+              console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
             setStat( 'Contact-count=' + result.data.length + '  (latency=' + latency +' mili)' )
             
             setTextArray(result.data) // display list of contact requests
