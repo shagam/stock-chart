@@ -113,7 +113,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
     if (result.status !== 200)
         return;
         if (LOG)
-            console.log (sym, result.data)
+            console.log (sym, 'gainWrite', result.data)
         const dat = result.data;
         if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
             // setError([dat])
