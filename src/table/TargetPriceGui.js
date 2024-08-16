@@ -13,6 +13,7 @@ function TargetPriceGui (props) {
     const [targetBase, setTargetBase] = useState (0);
     const [predict, setPredict] = useState ();
     const [status, setStatus] = useState ();
+    const [predictStatus, setPredictStatus] = useState ();
     const [logBackEnd, setLogBackEnd] = useState ();
 
     const LOG = props.logFlags.includes('month')
@@ -63,6 +64,9 @@ function TargetPriceGui (props) {
     
     function checkPrediction () {
         const LOG = props.logFlags.includes('target')
+        const extremeRatio = targetInfoOne[targetInfoOne.length - 1].price / targetInfoOne[0].price
+        if (extremeRatio > 2.5 || extremeRatio < 0.4)
+            setStatus ('Check for splits diostortion')
         const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
         if (row_index  === -1)
             return;
@@ -76,12 +80,16 @@ function TargetPriceGui (props) {
         const predictionObj = {
             predictionDate:  targetInfoOne[targetBase].date,
             predictionPrice: targetInfoOne[targetBase].target,
-            actualDate:  targetInfoOne[targetInfoOne.length - 1].date,
             actualPrice: price,
             days: days.toFixed(0),
-            ratio: (targetInfoOne[targetInfoOne.length - 1].price / targetInfoOne[targetBase].target).toFixed(2)
+            ratio: (price / targetInfoOne[targetBase].target).toFixed(2)
         }
 
+        const ratio = (Number(predictionObj.ratio))
+        if (ratio > 1.2 && ! status)
+            setPredictStatus('Price rose more than predicted')
+        if (ratio < 0.8 && ! status)
+            setPredictStatus('Price rose less than predicted')
         setPredict(predictionObj);
     }
 
@@ -134,6 +142,7 @@ function TargetPriceGui (props) {
                 )
             })}
             </div>
+            <div style={{color: 'red'}}> {predictStatus} </div>
             <pre>{JSON.stringify(predict, null, 2)}</pre>
         </div>
     )
