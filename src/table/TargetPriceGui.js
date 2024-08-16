@@ -20,8 +20,8 @@ function TargetPriceGui (props) {
     // clear vars when symbol change
     useEffect(() => {
         setTargetInfoOne()
-        setTargetHistAll()
-        setTargetBase()
+        setTargetHistAll({})
+        setTargetBase(0)
         setPrice()
         setPredict()
         setTarget()
