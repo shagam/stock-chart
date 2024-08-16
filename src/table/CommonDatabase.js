@@ -146,6 +146,7 @@ function CommonDatabase (props) {
 
     const [nameFilter, setNameFilter] = useState ();
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+    const [userInfo, setUserInfp] = useState ();
 
     useEffect (() => { 
         setErr()
@@ -758,7 +759,8 @@ function CommonDatabase (props) {
             }
             // if (LOG)
             console.log(getDate(),  'users arrived', result.data) 
-            setErr('backEnd users,  Latency(msec)=' + latency + ';  ....    ' + JSON.stringify (result.data) )  
+            setErr('backEnd users,  Latency(msec)=' + latency ) 
+            setUserInfp (result.data) // show in obj format
             // setInfo (JSON.stringify(result.data))
         } )
         .catch ((err) => {
@@ -836,11 +838,11 @@ function CommonDatabase (props) {
         <div style={{display: 'flex'}}>
             {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;
             {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
-            {eliHome && <button type="button" onClick={()=> users ()}>users  </button>} &nbsp;&nbsp;
+            {eliHome && <button type="button" onClick={()=> users ()}>userInfo  </button>} &nbsp;&nbsp;
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
             {eliHome && <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>}
         </div>
-        
+        <pre>{JSON.stringify(userInfo, null, 2)}</pre>
         <div>
 
             {/* ========= Display filtered list */} 
