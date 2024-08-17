@@ -219,6 +219,8 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=f&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
 
         if (LOG)
         console.log (getDate(), 'gainFilter', corsUrl)
@@ -265,6 +267,8 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=a'
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
         setResults(['Request sent'])
         axios.get (corsUrl)
         // getDate()
@@ -282,12 +286,20 @@ function CommonDatabase (props) {
             const resArray = [];
             const keys = Object.keys(dat);
  
+            //** if get all */
+            if (! filter) {
+                setResults(keys)
+                return;
+            }
             keys.forEach((sym) => {
                 var symVal
                 var qqqVal 
                 var qqqValFactor 
                 switch (period){
-                    case 1:                   
+                    case 1: 
+                        if (! sym || ! dat[sym].year) {
+                            console.log ('missing year attrib', sym)
+                        }                
                         symVal = Number(dat[sym].year);
                         qqqVal = Number(dat['QQQ'].year);
                         qqqValFactor = Number(dat['QQQ'].year * factor);
@@ -324,7 +336,6 @@ function CommonDatabase (props) {
                 }
             })
                 
-            const symbols = Object.keys(result.data)
             // if (LOG)
             console.log (Object.keys(res).length, res)
             console.log (resArray)
@@ -356,6 +367,8 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=b' + '&factor=' + factor 
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
         setResults(['Request sent'])
         const mili = Date.now()
 
@@ -406,6 +419,9 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=d' + '&factor=' + factor 
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+
         setResults(['Request sent'])
         const mili = Date.now()
 
@@ -504,6 +520,9 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=searchName' + '&stock=' + nameFilter
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+
         setResults(['Request sent'])
         const mili = Date.now()
 
@@ -564,6 +583,8 @@ function CommonDatabase (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=p&dat=' + JSON.stringify(results)     
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
 
         if (LOG)
             console.log (getDate(), 'gainFilter', corsUrl)
@@ -600,7 +621,9 @@ function CommonDatabase (props) {
         else
             corsUrl = 'http://'
         corsUrl += props.corsServer + ":" + props.PORT + "/flushAll"
-        
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+
         setErr('BackEnd Flush request')  
         if (LOG)
         console.log (corsUrl)
@@ -647,7 +670,9 @@ function CommonDatabase (props) {
           else
               corsUrl = 'http://'
           corsUrl += props.corsServer + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
-          
+          if (logBackEnd)
+            corsUrl += '&LOG=1'
+
           setErr(delCommands[i] + ' delRequest request sent')  
           // if (LOG)
           console.log (corsUrl)
