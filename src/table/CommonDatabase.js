@@ -91,7 +91,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
     if (LOG)
     console.log ('CommonDatabase gainWrite', dat1)
 
-    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=w&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
+    corsUrl += corsServer+ ":" + PORT + "/gain?cmd=writeOneSym&stock=" + sym + '&factor=1.1' + '&dat=' + JSON.stringify(dat1); 
     corsUrl += '&ip=' + ip;
     if (city)
         corsUrl += '&city=' + city;
@@ -218,7 +218,7 @@ function CommonDatabase (props) {
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=f&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=filterBetterThanQQQ&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
         if (logBackEnd)
             corsUrl += '&LOG=1'
 
@@ -266,7 +266,7 @@ function CommonDatabase (props) {
             corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=a'
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=getAll'
         if (logBackEnd)
             corsUrl += '&LOG=1'
         setResults(['Request sent'])
@@ -289,6 +289,7 @@ function CommonDatabase (props) {
             //** if get all */
             if (! filter) {
                 setResults(keys)
+                setNext('insert')
                 return;
             }
             keys.forEach((sym) => {
@@ -366,7 +367,7 @@ function CommonDatabase (props) {
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=b' + '&factor=' + factor 
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=betterThanQQQ_1_2_5_10' + '&factor=' + factor 
         if (logBackEnd)
             corsUrl += '&LOG=1'
         setResults(['Request sent'])
@@ -418,7 +419,8 @@ function CommonDatabase (props) {
             corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=d' + '&factor=' + factor 
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=listForDelete'
+         + '&factor=' + factor 
         if (logBackEnd)
             corsUrl += '&LOG=1'
 
