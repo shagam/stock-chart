@@ -257,7 +257,7 @@ function CommonDatabase (props) {
     function filterForInsertFrontEnd (filter) {
         setErr()
         const LOG = props.logFlags.includes('gain'); 
-        const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
+        // const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
     
         const mili = Date.now()
 
@@ -292,7 +292,12 @@ function CommonDatabase (props) {
                 setNext('insert')
                 return;
             }
-            keys.forEach((sym) => {
+            for (let i = 0; i < keys.length; i++) {
+                const sym = keys[i];
+                if (! dat[sym]) {
+                    console.log ('invalid key', sym)
+                    continue;
+                }
                 var symVal
                 var qqqVal 
                 var qqqValFactor 
@@ -335,7 +340,7 @@ function CommonDatabase (props) {
                     // }
                     resArray.push(sym + ': ' + ratio + ', ')               
                 }
-            })
+            }
                 
             // if (LOG)
             console.log (Object.keys(res).length, res)
