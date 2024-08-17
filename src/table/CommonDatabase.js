@@ -658,6 +658,48 @@ function CommonDatabase (props) {
         })  
       }
   
+    //** verify and del records missing year, year2 */
+  async function verifyAll () {
+    const LOG = props.logFlags.includes('gain'); 
+    var corsUrl = ''
+    if (props.ssl)
+        corsUrl = 'https://'
+    else
+        corsUrl = 'http://'
+    corsUrl += props.corsServer + ":" + props.PORT + "/gain?cmd=verifyAll"
+    if (logBackEnd)
+        corsUrl += '&LOG=1'
+
+    if (LOG)
+    console.log (corsUrl)
+    const mili = Date.now()
+
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+
+        if (result.status !== 200) {
+            console.log (getDate(), 'status=', result)
+            return;
+        }
+        if (LOG)
+            console.log (JSON.stringify(result.data))
+
+        if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+            props.errorAdd([getDate(), 'verify',result.data])
+            setErr(result.data)
+            return;
+        }
+        const latency = Date.now() - mili
+        console.log(getDate(), 'verify', result.data, 'responseTime(msec)=', latency) 
+        setErr('verify done,  Latency(msec)=' + latency)         
+    } )
+    .catch ((err) => {
+        clear()
+        error([getDate(), 'target', err.message])
+        console.log(getDate(), 'targetPrice', err.message)
+    })  
+  }
 
       // delete symbol from all backend collections
     async function delOneSym () {
@@ -838,7 +880,9 @@ function CommonDatabase (props) {
           <div>Get stocks gain heigher than QQQ </div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
-          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>&nbsp;
+          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}
+          {/* missingYearRemove */}
         </div>
 
         <div>    
