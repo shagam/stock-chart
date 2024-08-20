@@ -481,7 +481,7 @@ function CommonDatabase (props) {
         newStock.id = nanoid();
         newStock.values.symbol = sym;
         newStock.original.symbol = sym;
-        newStock.cells = null;
+        delete newStock.cells;
         newStock.allCells = [];
         
         // newStock.values.gain_date = fireGain._updateDate;
