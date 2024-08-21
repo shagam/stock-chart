@@ -24,11 +24,12 @@ const Simulate = (props) => {
   // weekly
 
     //** for symulate */
+    const [tradeFlag, setTradeFlag] = useState (true);
     const [accountValue, setAccountValue] = useState (10000); //
-    const [portionPercent, setPortionPercent] = useState (90); // default 80%
+    const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startIndex, setStartIndex] = useState (0); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
-    const [thresholdPercent, setThresholdPercent] = useState (1.2);
+    const [thresholdPercent, setThresholdPercent] = useState (0.5);
     const [interestRate, setInterestRate]  = useState (5);
     const [transactionFee, setTransactionFee]  =  useState (0);
 
@@ -62,7 +63,8 @@ const Simulate = (props) => {
         const moneyMarketInit = accountValue * (1 - portionPercent/100) // initial moneyMarket 
         var moneyMarket = moneyMarketInit
 
-        const weeklyInterest = Math.pow(interestRate, 1/52)
+        const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
+        console.log ('weeklyInterest=', weeklyInterest)
 
         //** log initial data */
         console.log (props.symbol, getDate(), 'start value=', accountVal.toFixed(2), 'count=', stockCount.toFixed(2),
@@ -74,30 +76,38 @@ const Simulate = (props) => {
             price = YValues[i] // default oldest
             // const step = thresholdPercent; // 2%
         
-            accountVal =price*stockCount + moneyMarket;
+            accountVal = price*stockCount + moneyMarket;
+
             const tradeCount =  thresholdPercent / 100 * stockCount;  
 
-            //** If up sell */
-            if (price*stockCount / accountVal >  (portionPercent + thresholdPercent) /100) {
-                stockCount -= tradeCount;
-                moneyMarket += tradeCount * price;
-            }
+            const portionDiff = price*stockCount / accountVal - portionPercent / 100;
 
-            //** if down buy */
-            else if (price*stockCount / accountVal < (portionPercent - thresholdPercent)) {
-                if (moneyMarket > tradeCount * price) { // negative moneyMarket not allowed
-                    stockCount += tradeCount;
-                    moneyMarket -= tradeCount * price;
+            if (tradeFlag) {
+                //** If up sell */
+                if (price*stockCount / accountVal >  (portionPercent + thresholdPercent) /100) {
+                    stockCount -= tradeCount;
+                    moneyMarket += tradeCount * price;
                 }
-            }
-        
-            //** Check out of range */
-            const currentPercent = price*stockCount /  accountVal;
-            if (currentPercent * 1.03 < portionPercent / 100 || currentPercent / 1.03 > portionPercent / 100) // portion 3% off
-                console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent,
-            // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
-            )
 
+                //** if down buy */
+                else if (price*stockCount / accountVal < (portionPercent - thresholdPercent)) {
+                    if (moneyMarket > tradeCount * price) { // negative moneyMarket not allowed
+                        stockCount += tradeCount;
+                        moneyMarket -= tradeCount * price;
+                    }
+                }
+   
+                //** Check out of range */
+                const currentPercent = price*stockCount /  accountVal;
+                if (currentPercent * 1.03 < portionPercent / 100 || currentPercent / 1.03 > portionPercent / 100) // portion 3% off
+                    console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent,
+                // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
+                )    
+            }
+
+            // //** weekly interest of money market */
+            moneyMarket *= weeklyInterest; 
+       
             //** LOG loop start */
             if (LOG &&  i > YValues.length - startIndex && i < YValues.length - startIndex - 10)
                 console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2), 'tradeCount=', tradeCount.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
@@ -140,6 +150,8 @@ const Simulate = (props) => {
     return (
         <div>
             <div> &nbsp;</div>
+            {<div> <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (!tradeFlag)} /> tradeFlag &nbsp;</div>}     
+
             <GetInt init={accountValue} callBack={setAccountValue} title='accountValue $' type='Number' pattern="[0-9]+"/>
             <GetInt init={portionPercent} callBack={setPortionPercent} title='portion %' type='Number' pattern="[0-9]+"/>
             <GetInt init={startIndex} callBack={setStartIndex} title='startWeek' type='Number' pattern="[0-9]+"/>
