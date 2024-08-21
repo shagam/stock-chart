@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 // import { columnIsLastLeftSticky } from 'react-table-sticky';
 import peak2PeakCalc from './Peak2PeakCalc'
-
+import Simulate from './Simulate'
 import LogFlags from '../utils/LogFlags'
 
 
@@ -133,6 +133,13 @@ const Peak2PeakGui = (props) => {
              <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>
              <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div>
            </div>}
+
+           <hr/> 
+
+           { <Simulate symbol = {props.symbol} rows = {props.rows} stockChartXValues = {props.stockChartXValues} gainMap = {props.gainMap}
+                stockChartYValues = {props.stockChartYValues} logFlags = {props.logFlags}
+                 errorAdd={props.errorAdd} saveTable={props.saveTable}/>}
+
 
         </div>
 
