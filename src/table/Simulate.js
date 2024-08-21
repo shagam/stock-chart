@@ -25,7 +25,7 @@ const Simulate = (props) => {
 
     //** for symulate */
     const [accountValue, setAccountValue] = useState (10000); //
-    const [portionPercent, setPortionPercent] = useState (80); // default 80%
+    const [portionPercent, setPortionPercent] = useState (90); // default 80%
     const [startIndex, setStartIndex] = useState (0); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
     const [thresholdPercent, setThresholdPercent] = useState (1.2);
@@ -65,10 +65,12 @@ const Simulate = (props) => {
         const weeklyInterest = Math.pow(interestRate, 1/52)
 
         //** log initial data */
-        console.log (props.symbol, getDate(), 'start value=', accountVal.toFixed(2), 'count=', stockCount.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
+        console.log (props.symbol, getDate(), 'start value=', accountVal.toFixed(2), 'count=', stockCount.toFixed(2),
+         'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
         
         const oldestIndex = YValues.length - 1 - startIndex;
         for (let i = oldestIndex; i > 0; i--) {
+            try {
             price = YValues[i] // default oldest
             // const step = thresholdPercent; // 2%
         
@@ -92,14 +94,17 @@ const Simulate = (props) => {
             //** Check out of range */
             const currentPercent = price*stockCount /  accountVal;
             if (currentPercent * 1.03 < portionPercent / 100 || currentPercent / 1.03 > portionPercent / 100) // portion 3% off
-                console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent.toFixed(2),
+                console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent,
             // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
             )
 
             //** LOG loop start */
             if (LOG &&  i > YValues.length - startIndex && i < YValues.length - startIndex - 10)
                 console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2), 'tradeCount=', tradeCount.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
-
+        } catch (e) {
+            console.log ('exception index=', i, e.message, ' portionPercent=', portionPercent)
+            break;
+        }
         }
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
