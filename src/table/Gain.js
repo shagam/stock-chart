@@ -70,7 +70,8 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
 
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName) {
+    splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
+     os, ip, city, countryName, countryCode, regionName, setChartData) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -197,7 +198,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                 //setChartData ('');
                 return;
               }
-
+              setChartData(chartData); // needed for dropRecovery
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
       

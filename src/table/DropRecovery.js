@@ -262,8 +262,16 @@ const DropRecoveryButtons = (props) => {
   // 
   const [gainLostWeeks, setGainLostWeeks] = useState()
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
+  const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
+  //** used by dropRecovery */
+  const weekly = true;
+  var periodTag;
+  if (weekly)
+    periodTag = 'Weekly Adjusted Time Series';
+  else
+    periodTag = "Time Series (Daily)"
 
    useEffect (() => { 
     setGainLostWeeks()
@@ -443,9 +451,10 @@ const DropRecoveryButtons = (props) => {
             <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp;
             <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           </div>
-          {/* <button type="button" onClick={()=>swap_period_8_mon()}>  last_8_Months    </button> */}
-   
 
+          <button type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
+            deepStartDate, props.logFlags, props.weekly, props.chartData[`${periodTag}`], props.errorAdd)}>  DropRecoveryCalc    </button>
+   
           {/* <br></br>   */}
           {props.StockSymbol && row_index >= 0 &&
             <div style={{display:'flex'}} >
