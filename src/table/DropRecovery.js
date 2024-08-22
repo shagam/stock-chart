@@ -240,7 +240,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       deepIndex: deepIndex,
       recoverPeriod: recoverPeriod,
       deepDate:    deepDate,
-      priceDivHigh: priceDivHigh
+      priceDivHigh: priceDivHigh,
+      gainLostWeeks: gainLostWeeks
     })
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
