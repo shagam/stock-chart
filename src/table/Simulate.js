@@ -7,6 +7,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
+import transitions from '@material-ui/core/styles/transitions';
 
 
 const Simulate = (props) => {
@@ -27,7 +28,7 @@ const Simulate = (props) => {
     const [tradeFlag, setTradeFlag] = useState (true);
     const [accountValueInit, setAccountValue] = useState (10000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
-    const [startIndex, setStartIndex] = useState (0); // default oldest 
+    const [startWeek, setStartWeek] = useState (0); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
     const [thresholdPercent, setThresholdPercent] = useState (0.1);
     const [interestRate, setInterestRate]  = useState (5);
@@ -42,7 +43,7 @@ const Simulate = (props) => {
     useEffect(() => {
         setResults()
         setStartNumbers()
-    },[props.symbol, accountValueInit, portionPercent, startIndex, thresholdPercent, interestRate, transactionFee]) 
+    },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
   // style={{display:'flex'}}
 
@@ -51,7 +52,7 @@ const Simulate = (props) => {
     function simulateTrade(XValues, YValues) {
 
 
-        var price = YValues[YValues.length - 1 - startIndex]  // begining price // default oldest
+        var price = YValues[YValues.length - 1 - startWeek]  // begining price // default oldest
         const priceInit = price
 
         var accountVal =  accountValueInit;
@@ -63,16 +64,18 @@ const Simulate = (props) => {
         var moneyMarket = moneyMarketInit
 
         //** log initial data */
-        console.log (props.symbol, getDate(), 'trade-start value=', accountVal.toFixed(2), 'count=', stockCount.toFixed(2),
-         'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
+        console.log (props.symbol, getDate(), 'trade-start value=', accountVal.toFixed(2), 'stocksCount=', stockCount.toFixed(2),
+         'price=', price, 'moneyMarket=', moneyMarket.toFixed(2), 'portionPercent=', portionPercent,
+          'thresholdPercent=', thresholdPercent, 'interestRate=', interestRate, 'transactionFee=', transactionFee, 'startWeek=', startWeek)
         
         const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
         console.log ('weeklyInterest=', weeklyInterest) // on moneyMarket
 
-        const oldestIndex = YValues.length - 1 - startIndex; // startIndex == 0 means oldest
+        const oldestIndex = YValues.length - 1 - startWeek; // startIndex == 0 means oldest
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
         var stockToTrade;
         var tradeCount = 0;
+        var tradeSkipCount = 0;
         for (let i = oldestIndex; i > 0; i--) {
             try {
             const pricePrev = price;
@@ -124,12 +127,14 @@ const Simulate = (props) => {
                 // // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
                 // )    
             }
+            else
+            tradeSkipCount ++;
 
             // //** weekly interest of money market */
             moneyMarket *= weeklyInterest; 
        
             //** LOG loop start info */
-            if (LOG &&  i > YValues.length - startIndex && i < YValues.length - startIndex - 10)
+            if (LOG &&  i > YValues.length - startWeek && i < YValues.length - startWeek - 10)
                 console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2),
                      'tradeCount=', stockToTrade.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
         } catch (e) {
@@ -139,18 +144,20 @@ const Simulate = (props) => {
         }
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
-        console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2))
+        console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'tradeCount=', tradeCount)
 
         setResults (
             {
-              accountValueEnd: accountVal.toFixed(2),
-              stockCountEnd: stockCount.toFixed(2),
-              moneyMarketEnd: moneyMarket.toFixed(2),
-              priceEnd: price.toFixed(2),
+                gainOfAccount: gain, 
+                gainOfStock: stockGainDuringPeriod.toFixed(2),
 
-              gainOfAccount: gain, 
-              gainOfStock: stockGainDuringPeriod.toFixed(2),
-              tradeCount: tradeCount,
+                accountValueEnd: accountVal.toFixed(2),
+                stockCountEnd: stockCount.toFixed(2),
+                moneyMarketEnd: moneyMarket.toFixed(2),
+                priceEnd: price.toFixed(2),
+
+                tradeCount: tradeCount,
+                tradeSkipCount: tradeSkipCount,
             }
         )
 
@@ -170,19 +177,20 @@ const Simulate = (props) => {
 
     return (
         <div>
-            <div> &nbsp;</div>
+            <h4>Simulate trade (keep portion)</h4>
+            {/* <div> &nbsp;</div> */}
             {<div> <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (!tradeFlag)} /> tradeFlag &nbsp;</div>}     
 
             <GetInt init={accountValueInit} callBack={setAccountValue} title='accountValue $' type='Number' pattern="[0-9]+"/>
             <GetInt init={portionPercent} callBack={setPortionPercent} title='portion %' type='Number' pattern="[0-9]+"/>
-            <GetInt init={startIndex} callBack={setStartIndex} title='startWeek' type='Number' pattern="[0-9]+"/>
             <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='threshold %' type='text' pattern="[\\.0-9]+"/>
-            <GetInt init={interestRate} callBack={setInterestRate} title='interestRate' type='Number' pattern="[0-9]+"/>
-            <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee' type='text' pattern="[\.0-9]+"/>
-            
+            <GetInt init={interestRate} callBack={setInterestRate} title='interestRate %' type='Number' pattern="[0-9]+"/>
+            <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee $' type='text' pattern="[\.0-9]+"/>
+            <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+"/>
+
             <div> &nbsp;</div>
 
-            {<button type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
+            {<button style={{background: 'lightGreen'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             {results && <div> End values &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
             {startNumbers && <div> Begin values &nbsp;</div>}
