@@ -102,6 +102,16 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     var recoverPeriod = -1
     var deep = -1;
 
+    //** Search for value like deep before deep */
+    function gainLostWeeksIfSoldOnDeep (StockSymbol, stockChartYValues, deepIndex, deepPrice ) {
+      if (stockChartYValues.length < deepIndex - 10)
+        return -1;
+      for (let i = deepIndex + 10; i < stockChartYValues.length; i++) {
+        if (stockChartYValues[i] < deepPrice)
+          return i - deepIndex;
+      }
+    }
+
     // search for deepPrice after start date
     const deep_ = (errorAdd) => {
       // deepPrice = Number(stockChartYValues[startBeforeDropIndex]);
@@ -197,6 +207,10 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     if (startBeforeDropIndex === -1) { // start date out of range
       return;
     }
+
+    const gainLostWeeks = gainLostWeeksIfSoldOnDeep (StockSymbol, stockChartYValues, deepIndex, deepPrice, )
+    console.log (StockSymbol, 'gainLostWeeks-IfSoldOnDeep=', gainLostWeeks)
+
     highistBeforeDeep(errorAdd);
     recoveryWeeks(errorAdd);
     const lastPriceHigh = Number(gainClose(0));
@@ -220,6 +234,14 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       return;
     } 
 
+    return ({
+      simbol: StockSymbol,
+      deep: deep,
+      deepIndex: deepIndex,
+      recoverPeriod: recoverPeriod,
+      deepDate:    deepDate,
+      priceDivHigh: priceDivHigh
+    })
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
     // rows[index].values.deepDate = deepDate;
@@ -252,12 +274,22 @@ const DropRecoveryButtons = (props) => {
    //  2007, 11, 1  2008 deep
 
   function swap_period_2008() {
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2008, 0, 1], props.StockSymbol, props.logFlags)  
+    if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
+      props.errorAdd([props.StockSymbol, '[2008, 0, 1]', 'Date before available data'])
+      return;
+    }
 
     props.setDropStartDate (new Date(2008, 1, 15)); // 2007 Oct 15  
       // setEndDate (new Date(2009, 1, 1));
   }
 
   function swap_period_2020() {
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2020, 0, 1], props.StockSymbol, props.logFlags)  
+    if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
+      props.errorAdd([props.StockSymbol, '[2020, 0, 1]', 'Date before available data'])
+      return;
+    }
     props.setDropStartDate (new Date(2020, 0, 1));  // 2020 jan 1
     // setEndDate (new Date(2020, 4, 15));
   }

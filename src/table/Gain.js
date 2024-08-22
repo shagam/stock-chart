@@ -446,7 +446,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                 price = -1;
               // if (LOG_SPLITS)
               // console.log (splitArray); 
-              dropRecovery (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
+              const dropRecoberyResults = dropRecovery (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
               updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price,
                  saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, os, ip, city, countryName, countryCode, regionName)  
 
