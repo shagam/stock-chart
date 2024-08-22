@@ -26,7 +26,7 @@ const Simulate = (props) => {
 
     //** for symulate */
     const [tradeFlag, setTradeFlag] = useState (true);
-    const [accountValueInit, setAccountValue] = useState (10000); //
+    const [accountValueInit, setAccountValue] = useState (1000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (0); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
@@ -34,7 +34,6 @@ const Simulate = (props) => {
     const [interestRate, setInterestRate]  = useState (5);
     const [transactionFee, setTransactionFee]  =  useState (0);
 
-    const [startNumbers, setStartNumbers] =  useState ();
     const [results, setResults] =  useState ();
 
 
@@ -42,7 +41,7 @@ const Simulate = (props) => {
 
     useEffect(() => {
         setResults()
-        setStartNumbers()
+
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
   // style={{display:'flex'}}
@@ -152,26 +151,24 @@ const Simulate = (props) => {
                 gainOfStock: stockGainDuringPeriod.toFixed(2),
 
                 accountValueEnd: accountVal.toFixed(2),
+                accountValInit: accountValueInit.toFixed(2),
+
                 stockCountEnd: stockCount.toFixed(2),
+                stockCountInit: stockCountInit.toFixed(2),
+
                 moneyMarketEnd: moneyMarket.toFixed(2),
+                moneyMarketInit: moneyMarketInit.toFixed(2),
+
                 priceEnd: price.toFixed(2),
+                priceInit: priceInit,
 
                 tradeCount: tradeCount,
                 tradeSkipCount: tradeSkipCount,
+
+                dateStart: XValues[oldestIndex],
+                totalWeeksBack: oldestIndex,
             }
         )
-
-        setStartNumbers({
-            accountValInit: accountValueInit.toFixed(2),
-            stockCountInit: stockCountInit.toFixed(2),
-            moneyMarketInit: moneyMarketInit.toFixed(2),
-
-            dateStart: XValues[oldestIndex],
-            totalWeeksBack: oldestIndex,
-            // 'gain/stockGain': (accountVal/accountValInit).toFixed(2)
-        })
-
-
     }
 
 
@@ -191,11 +188,9 @@ const Simulate = (props) => {
             <div> &nbsp;</div>
 
             {<button style={{background: 'lightGreen'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
-            {results && <div> End values &nbsp;</div>}
+            {results && <div> Values &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
-            {startNumbers && <div> Begin values &nbsp;</div>}
-            <pre>{JSON.stringify(startNumbers, null, 2)}</pre>
-        </div>
+         </div>
     )
  }
 
