@@ -29,7 +29,7 @@ const Simulate = (props) => {
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startIndex, setStartIndex] = useState (0); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
-    const [thresholdPercent, setThresholdPercent] = useState (0.5);
+    const [thresholdPercent, setThresholdPercent] = useState (0.1);
     const [interestRate, setInterestRate]  = useState (5);
     const [transactionFee, setTransactionFee]  =  useState (0);
 
@@ -62,53 +62,76 @@ const Simulate = (props) => {
         const moneyMarketInit = accountValueInit * (1 - portionPercent/100) // initial moneyMarket 
         var moneyMarket = moneyMarketInit
 
-        const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
-        console.log ('weeklyInterest=', weeklyInterest.toFixed(2)) // on moneyMarket
-
         //** log initial data */
-        console.log (props.symbol, getDate(), 'start value=', accountVal.toFixed(2), 'count=', stockCount.toFixed(2),
+        console.log (props.symbol, getDate(), 'trade-start value=', accountVal.toFixed(2), 'count=', stockCount.toFixed(2),
          'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
         
+        const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
+        console.log ('weeklyInterest=', weeklyInterest) // on moneyMarket
+
         const oldestIndex = YValues.length - 1 - startIndex; // startIndex == 0 means oldest
+        const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
+        var stockToTrade;
+        var tradeCount = 0;
         for (let i = oldestIndex; i > 0; i--) {
             try {
+            const pricePrev = price;
             price = YValues[i] 
         
+            const accountValPrev  = accountVal;
             accountVal = price*stockCount + moneyMarket;
+            const accountValBeforeTrade = accountVal
+            // if (Math.abs(accountValPrev - accountVal) > 1.1) {
+            //     console.log ('accountVal diff', accountValPrev, accountVal)
+            // }
+            // const tradeCount =  thresholdPercent / 100 * stockCount;  
 
-            const tradeCount =  thresholdPercent / 100 * stockCount;  
+            const portionDiff = price*stockCount / accountVal - portionPercent / 100; 
 
-            const portionDiff = price*stockCount / accountVal - portionPercent / 100;
-
-            if (tradeFlag) {
+            if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100) { // if less than one percent do not trade
                 //** If up sell */
-                if (price*stockCount / accountVal >  (portionPercent + thresholdPercent) /100) {
-                    stockCount -= tradeCount;
-                    moneyMarket += tradeCount * price;
+                stockToTrade = Math.abs(stockCount * portionDiff);
+                if (portionDiff > 0) {
+                    stockCount -= stockToTrade;
+                    moneyMarket += (stockToTrade * price);
+                    moneyMarket -= transactionFee; // for stocks trade only
                 }
 
                 //** if down buy */
-                else if (price*stockCount / accountVal < (portionPercent - thresholdPercent)) {
-                    if (moneyMarket > tradeCount * price) { // negative moneyMarket not allowed
-                        stockCount += tradeCount;
-                        moneyMarket -= tradeCount * price;
-                    }
+                else {
+                    stockCount += stockToTrade;
+                    moneyMarket -= (stockToTrade * price);
+                    moneyMarket -= transactionFee;
                 }
-   
+                tradeCount++;
+
+                //** Trade should not change account value */
+                accountVal = price*stockCount + moneyMarket;
+                if (Math.abs(accountValBeforeTrade - accountVal) >  2*transactionFee + 0.01) {
+                    console.log ('accountVal trade diff, before=', accountValPrev.toFixed(2), ' after=', accountVal.toFixed(2))
+                }
+                // const portionPer = price*stockCount / (price*stockCount + moneyMarket)
+
+                //** log first 10 */
+                if (LOG && i > oldestIndex -10 )
+                    console.log ('valBefore=', accountVal.toFixed(2), 'stockVal=', (price*stockCount).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 'price=', price)
+
                 //** Check out of range */
-                const currentPercent = price*stockCount /  accountVal;
-                if (currentPercent * 1.03 < portionPercent / 100 || currentPercent / 1.03 > portionPercent / 100) // portion 3% off
-                    console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent,
-                // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
-                )    
+                // const currentPercent = price*stockCount /  accountVal;
+                // const EPICS = 1.02;
+                // if (currentPercent * EPICS < portionPercent / 100 || currentPercent / EPICS > portionPercent / 100) // portion 3% off
+                //     console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent,
+                // // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
+                // )    
             }
 
             // //** weekly interest of money market */
             moneyMarket *= weeklyInterest; 
        
-            //** LOG loop start */
+            //** LOG loop start info */
             if (LOG &&  i > YValues.length - startIndex && i < YValues.length - startIndex - 10)
-                console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2), 'tradeCount=', tradeCount.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
+                console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2),
+                     'tradeCount=', stockToTrade.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
         } catch (e) {
             console.log ('exception index=', i, e.message, ' portionPercent=', portionPercent)
             break;
@@ -116,8 +139,7 @@ const Simulate = (props) => {
         }
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
-        console.log (props.symbol, 'end accountValue=', accountVal.toFixed(2), 'stockCount=', stockCount.toFixed(2), 'price=', price.toFixed(2),
-        'moneyMarket=', moneyMarket.toFixed(2), 'gain=', gain)
+        console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2))
 
         setResults (
             {
@@ -127,7 +149,8 @@ const Simulate = (props) => {
               priceEnd: price.toFixed(2),
 
               gainOfAccount: gain, 
-              gainOfStock: (YValues[0]/YValues[YValues.length - 1 - startIndex]).toFixed(2),
+              gainOfStock: stockGainDuringPeriod.toFixed(2),
+              tradeCount: tradeCount,
             }
         )
 
@@ -155,7 +178,7 @@ const Simulate = (props) => {
             <GetInt init={startIndex} callBack={setStartIndex} title='startWeek' type='Number' pattern="[0-9]+"/>
             <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='threshold %' type='text' pattern="[\\.0-9]+"/>
             <GetInt init={interestRate} callBack={setInterestRate} title='interestRate' type='Number' pattern="[0-9]+"/>
-            <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee' type='Number' pattern="[0-9]+"/>
+            <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee' type='text' pattern="[\.0-9]+"/>
             
             <div> &nbsp;</div>
 
