@@ -28,7 +28,7 @@ const Simulate = (props) => {
     const [tradeFlag, setTradeFlag] = useState (true);
     const [accountValueInit, setAccountValue] = useState (1000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
-    const [startWeek, setStartWeek] = useState (0); // default oldest 
+    const [startWeek, setStartWeek] = useState (200); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
     const [thresholdPercent, setThresholdPercent] = useState (0.1);
     const [interestRate, setInterestRate]  = useState (5);
