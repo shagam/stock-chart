@@ -24,9 +24,8 @@ const DropRecoveryButtons = (props) => {
    const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
 
   //** used by dropRecovery */
-  const weekly = true;
   var periodTag;
-  if (weekly)
+  if (props.weekly)
     periodTag = 'Weekly Adjusted Time Series';
   else
     periodTag = "Time Series (Daily)"
@@ -435,7 +434,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
           <h5>TodayGainWeeksLost</h5>
           <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
-          <h6>latestPrice/highest={props.rows[row_index].values.priceDivHigh}  &nbsp; &nbsp;  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
+          <h6>  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
         </div>
     </div>
   )
