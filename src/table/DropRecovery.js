@@ -386,7 +386,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         if (props.stockChartYValues[i] > highValue) {
           highValue = props.stockChartYValues[i];
           highIndex = i;
-          break;
         }
       }
       
