@@ -8,6 +8,34 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
 //import './DropRecovery.css'
 
+// visible part
+const DropRecoveryButtons = (props) => {
+  // props.StockSymbol
+  // props.rows
+  // props.allColumhs
+  // props.deepStartDate
+  // props.setDropStartDate
+  // 
+  const [gainLostWeeks, setGainLostWeeks] = useState()
+  const [dateOfEqualVal, setDateOfEqualVal] = useState()
+  const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
+   // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
+
+   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
+
+  //** used by dropRecovery */
+  const weekly = true;
+  var periodTag;
+  if (weekly)
+    periodTag = 'Weekly Adjusted Time Series';
+  else
+    periodTag = "Time Series (Daily)"
+
+   useEffect (() => { 
+    setGainLostWeeks()
+    setDateOfEqualVal()
+  }, [props.StockSymbol]) 
+
 
 
 function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, logFlags, weekly, gainObj, errorAdd) {
@@ -234,14 +262,14 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       return;
     } 
 
-    return ({
+    setDropRecoveryInfo ({
       simbol: StockSymbol,
       deep: deep,
-      deepIndex: deepIndex,
       recoverPeriod: recoverPeriod,
       deepDate:    deepDate,
       priceDivHigh: priceDivHigh,
-      gainLostWeeks: gainLostWeeks
+      gainLostWeeks: gainLostWeeks,
+      deepIndex: deepIndex,
     })
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
@@ -251,32 +279,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
 
-
-// visible part
-const DropRecoveryButtons = (props) => {
-  // props.StockSymbol
-  // props.rows
-  // props.allColumhs
-  // props.deepStartDate
-  // props.setDropStartDate
-  // 
-  const [gainLostWeeks, setGainLostWeeks] = useState()
-  const [dateOfEqualVal, setDateOfEqualVal] = useState()
-  const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
-   // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
-
-  //** used by dropRecovery */
-  const weekly = true;
-  var periodTag;
-  if (weekly)
-    periodTag = 'Weekly Adjusted Time Series';
-  else
-    periodTag = "Time Series (Daily)"
-
-   useEffect (() => { 
-    setGainLostWeeks()
-    setDateOfEqualVal()
-  }, [props.StockSymbol]) 
 
 
    // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
@@ -289,7 +291,7 @@ const DropRecoveryButtons = (props) => {
       return;
     }
 
-    props.setDropStartDate (new Date(2008, 1, 15)); // 2007 Oct 15  
+    setDropStartDate (new Date(2008, 1, 15)); // 2007 Oct 15  
       // setEndDate (new Date(2009, 1, 1));
   }
 
@@ -299,17 +301,17 @@ const DropRecoveryButtons = (props) => {
       props.errorAdd([props.StockSymbol, '[2020, 0, 1]', 'Date before available data'])
       return;
     }
-    props.setDropStartDate (new Date(2020, 0, 1));  // 2020 jan 1
+    setDropStartDate (new Date(2020, 0, 1));  // 2020 jan 1
     // setEndDate (new Date(2020, 4, 15));
   }
 
   function swap_period_2022() {
-    props.setDropStartDate (new Date(2021, 8, 1));  // 2022 sep 1 
+    setDropStartDate (new Date(2021, 8, 1));  // 2022 sep 1 
     // setEndDate (new Date(2020, 4, 15));
   }
   
   function swap_period_2024() {
-    props.setDropStartDate (new Date(2024, 6, 1));  // 2024 jul 1 
+    setDropStartDate (new Date(2024, 6, 1));  // 2024 jul 1 
     // setEndDate (new Date(2020, 4, 15));
   }
 
@@ -321,7 +323,7 @@ const DropRecoveryButtons = (props) => {
     // date = date.split('T')[0];
     const dateArray1 = monthsBack (dateArray, 8);
     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
-    props.setDropStartDate (new Date(dateStr));
+    setDropStartDate (new Date(dateStr));
     // setEndDate (new Date());
   }
 
@@ -438,7 +440,7 @@ const DropRecoveryButtons = (props) => {
 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
-            &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={props.deepStartDate} onChange={(date) => props.setDropStartDate(date)} /> 
+            &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={deepStartDate} onChange={(date) => setDropStartDate(date)} /> 
 
           </div>
 
@@ -455,25 +457,24 @@ const DropRecoveryButtons = (props) => {
           <button type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
             deepStartDate, props.logFlags, props.weekly, props.chartData[`${periodTag}`], props.errorAdd)}>  DropRecoveryCalc    </button>
    
+          <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
+
           {/* <br></br>   */}
-          {props.StockSymbol && row_index >= 0 &&
-            <div style={{display:'flex'}} >
-              deepDate: <div style={{ color: 'green'}}>  &nbsp; {props.rows[row_index].values.deepDate} </div>
-              &nbsp;&nbsp;&nbsp;&nbsp; deep:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.deep}</div>
-              &nbsp;&nbsp;&nbsp;&nbsp; recoverWeek:  <div style={{ color: 'green'}}> &nbsp; {props.rows[row_index].values.recoverWeek} </div>
-            </div>
-          }
-          {! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate,props.errorAdd) && 
+
+          {props.deepStartDate && ! closeDates(props.rows[row_index].values.deepDate, props.deepStartDate,props.errorAdd) && 
             <h5 style={{color:'red'}}>Date mismatch, Press Gain for a stock </h5>}
-  
+          <hr/> 
           <br></br> 
           <h5>TodayGainWeeksLost</h5>
           <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
           <h6>price/high={props.rows[row_index].values.priceDivHigh}  &nbsp; &nbsp;  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
+
+
+
         </div>
 
     </div>
   )
 }
 
-export {DropRecoveryButtons, dropRecovery}
+export {DropRecoveryButtons}
