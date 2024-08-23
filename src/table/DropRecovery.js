@@ -265,11 +265,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
     setDropRecoveryInfo ({
       symbol: StockSymbol,
-      deep: deep,
+      'deepPrice/BubblePrice': deep,
       recoverPeriod: recoverPeriod,
       deepDate:    deepDate,
-      priceDivHigh: priceDivHigh,
-      gainLostWeeks: gainLostWeeks,
+      'latestPrice/Highest': priceDivHigh,
+      deepGainLostWeeks: gainLostWeeks,
       deepIndex: deepIndex,
     })
     // rows[index].values.deep = Number(deep);
@@ -436,7 +436,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
           <h5>TodayGainWeeksLost</h5>
           <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
-          <h6>price/high={props.rows[row_index].values.priceDivHigh}  &nbsp; &nbsp;  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
+          <h6>latestPrice/highest={props.rows[row_index].values.priceDivHigh}  &nbsp; &nbsp;  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
         </div>
     </div>
   )
