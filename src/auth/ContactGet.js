@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect} from 'react'
 import { Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -23,12 +23,12 @@ export default function ContactGet (props)  {
     const navigate = useNavigate();
 
     // contact requests of last week
-    const mili7DaysAgo = (Date.now() - 7 * 24 * 3600 * 1000)
+    const mili7DaysAgo = (Date.now() - 90 * 24 * 3600 * 1000) //** date 90 days back */
     const [searchDate, setSearchDate] = useState (new Date(mili7DaysAgo)); 
     const [months, setMonths] = useState();
 
-    const [count, setCount] = useState(5);
-
+    const [count, setCount] = useState(2); //** max msg count */
+    const [beutify, setbeutify] = useState(true)
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
     const [searchText,setSearchText] = useState()
     
@@ -39,6 +39,11 @@ export default function ContactGet (props)  {
     // const searchMon = searchDate.getMonth() + 1; // [1..12]
     // const searchDay = searchDate.getDate(); // [1..31]
     // const chartDateArr = [searchYear, searchMon, searchDay]
+
+    useEffect (() => { 
+      setTextArray()
+  }, [beutify]) 
+
 
     // avoid loop
     function setLog () {
@@ -92,7 +97,15 @@ export default function ContactGet (props)  {
               console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
             setStat( 'Contact-count=' + result.data.length + '  (latency=' + latency +' mili)' )
             
-            setTextArray(result.data) // display list of contact requests
+            if (beutify) {
+              const txtArrModified = result.data
+              for (let i = 0; i < txtArrModified.length; i++) {
+                  txtArrModified[i].text = splitLines(txtArrModified[i].text)
+              }
+              setTextArray(txtArrModified) // display list of contact requests
+            }
+            else
+              setTextArray(result.data)
           })
           .catch ((err) => {
           // setError([sym, 'email', err.message, corsUrl])
@@ -101,6 +114,8 @@ export default function ContactGet (props)  {
         };
       
         function splitLines (text) {
+          if (Array.isArray(text)) 
+            return text;
           const lineArray = text.split('_NL_')
           // console.log (lineArray)
           return (lineArray)
@@ -119,6 +134,10 @@ export default function ContactGet (props)  {
           setSearchDate (new Date(dateStr));
         }
       
+        function swapBeutify () {
+          setbeutify(! beutify)
+        }
+
       return (
         <div style={{width:'100%', fontSize: '20px'}}>
 
@@ -136,6 +155,7 @@ export default function ContactGet (props)  {
               <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} /> &nbsp;
               <label style={{marginTop: '15px'}}>LogBackEnd </label>
             </div>
+            <input type="checkbox" checked={beutify} onChange={swapBeutify} /> beutify 
             <div>&nbsp;</div>
     
             {/* Choose start date */}
@@ -167,11 +187,18 @@ export default function ContactGet (props)  {
           <div>{stat}</div>
           <div>&nbsp;</div>
           {/* Display list of contactsUs. Split text lines _NL_  */}
-          {textArray && textArray.map((item,k) =>
+
+            {! beutify && textArray && textArray.map((item,k) =>
               <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, ip: {item.ip},
               city: {item.city}, region: {item.region}, country: {item.country}, os: {item.os}
               <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div> <div>&nbsp;</div></li>)}
-               
+
+       
+           {beutify && textArray && textArray.map((item,k) =>
+             {return (<li>beutify && <pre>{JSON.stringify(item, null, 2)}</pre> </li>)}
+            )}
+
+
         </div>
       );
     
