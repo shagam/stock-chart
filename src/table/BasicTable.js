@@ -54,7 +54,7 @@ import  {CommonDatabase} from './CommonDatabase'
 
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 
-
+import Simulate from './Simulate'
 
 import Tools from './Tools'
 
@@ -684,7 +684,8 @@ const BasicTable = (props) => {
     peak2Peak: 'peak2Peak',
     StockGainRaw: 'StockGainRaw',
     StockInfoRaw: 'StockInfoRaw', 
-    Tools: 'Tools'
+    Tools: 'Tools',
+    SimulateTrade: 'SimulateTrade'
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState()
@@ -853,8 +854,14 @@ const BasicTable = (props) => {
               <div style={{color:'blue'}}> gainRaw  </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}> infoRaw   </div> 
-              <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='none' id='7' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
-                {! isMobile && <div style={{color:'blue'}}>none</div>} &nbsp; 
+            </div>
+              
+              <div style={{display:'flex'}}>
+                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='simulateTrade' id='6' checked={analyzeTool==='simulateTRade'} onChange={onOptionChange}/>  
+                <div style={{color:'blue'}}> simulateTrade   </div> 
+
+                <input style={{marginLeft: '5px'}}  type="radio" name="mon" value='none' id='7' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+                {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
 
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
@@ -875,7 +882,9 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
-   
+            {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {props.rows} stockChartXValues = {props.stockChartXValues} gainMap = {props.gainMap}
+                stockChartYValues = {props.stockChartYValues} logFlags = {props.logFlags}
+                 errorAdd={props.errorAdd} saveTable={props.saveTable}/>}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
 

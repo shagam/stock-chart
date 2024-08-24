@@ -173,13 +173,18 @@ const Simulate = (props) => {
 
 
     return (
-        <div>
-            <h4>Simulate trade (keep portion)</h4>
+        <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
+            <div style = {{display: 'flex'}}>
+              <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+              <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
+            </div>
+
+            {/* <h4>Simulate trade (keep portion)</h4> */}
             {/* <div> &nbsp;</div> */}
             {<div> <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (!tradeFlag)} /> tradeFlag &nbsp;</div>}     
 
             <GetInt init={accountValueInit} callBack={setAccountValue} title='accountValue $' type='Number' pattern="[0-9]+"/>
-            <GetInt init={portionPercent} callBack={setPortionPercent} title='portion %' type='Number' pattern="[0-9]+"/>
+            <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
             <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='threshold %' type='text' pattern="[\\.0-9]+"/>
             <GetInt init={interestRate} callBack={setInterestRate} title='interestRate %' type='Number' pattern="[0-9]+"/>
             <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee $' type='text' pattern="[\.0-9]+"/>
