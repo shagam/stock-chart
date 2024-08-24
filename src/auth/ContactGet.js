@@ -25,7 +25,7 @@ export default function ContactGet (props)  {
     // contact requests of last week
     const mili7DaysAgo = (Date.now() - 90 * 24 * 3600 * 1000) //** date 90 days back */
     const [searchDate, setSearchDate] = useState (new Date(mili7DaysAgo)); 
-    const [months, setMonths] = useState();
+    const [days, setDays] = useState();
 
     const [count, setCount] = useState(2); //** max msg count */
     const [beutify, setbeutify] = useState(true)
@@ -125,7 +125,7 @@ export default function ContactGet (props)  {
         //** Set date of months back */
         const onOptionChangeDate = e => {
           const mon = e.target.value;
-          setMonths(mon)
+          setDays(mon)
           var date = new Date();
           var formattedDate = format(date, "yyyy-MM-dd");
           var dateArray = formattedDate.split('-');
@@ -167,23 +167,23 @@ export default function ContactGet (props)  {
             <div style={{display: 'flex'}}>
               {/* Buttons for Quick set of start date */}
               <div>
-                <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={months==='1'} onChange={onOptionChangeDate}/>
+                <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={days==='1'} onChange={onOptionChangeDate}/>
                 <label style={{marginRight:'10px', paddingRight: '1px'}}> day</label>         
               </div>
               <div>
-                <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChangeDate}/>
+                <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={days==='3'} onChange={onOptionChangeDate}/>
                 <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_day</label>
               </div>
               <div>
-                  <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='7' id='7' checked={months==='7'} onChange={onOptionChangeDate}/>
+                  <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='7' id='7' checked={days==='7'} onChange={onOptionChangeDate}/>
                   <label style={{marginRight:'10px', paddingRight: '1px'}}> week</label>
               </div>
               <div>
-                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='14' id='14' checked={months==='14'} onChange={onOptionChangeDate}/>
+                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='14' id='14' checked={days==='14'} onChange={onOptionChangeDate}/>
                   <label style={{marginRight:'10px', paddingRight: '1px'}}> 2_week</label>
               </div>
               {/* <div>
-                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='30' id='30' checked={months==='30'} onChange={onOptionChangeDate}/>
+                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='30' id='30' checked={days==='30'} onChange={onOptionChangeDate}/>
                   <label style={{marginRight:'10px', paddingRight: '1px'}}> mon</label>
               </div> */}
             </div>
