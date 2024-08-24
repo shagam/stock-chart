@@ -42,6 +42,7 @@ export default function ContactGet (props)  {
 
     useEffect (() => { 
       setTextArray()
+      setStat()
   }, [beutify]) 
 
 
@@ -195,7 +196,7 @@ export default function ContactGet (props)  {
 
        
            {beutify && textArray && textArray.map((item,k) =>
-             {return (<li>beutify && <pre>{JSON.stringify(item, null, 2)}</pre> </li>)}
+             {return (<li   key={k}> beutify && <pre>{JSON.stringify(item, null, 2)}</pre> </li>)}
             )}
 
 
