@@ -89,8 +89,11 @@ const Simulate = (props) => {
             // const tradeCount =  thresholdPercent / 100 * stockCount;  
 
             const portionDiff = price*stockCount / accountVal - portionPercent / 100; 
+            if (Math.abs(portionDiff) > accountVal / 5000) {
+                console.log (accountVal, portionDiff)
+            }
 
-            if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100) { // if less than one percent do not trade
+            if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100 && Math.abs(portionDiff) > 5 * transactionFee) { // if less than one percent do not trade
                 //** If up sell */
                 stockToTrade = Math.abs(stockCount * portionDiff);
                 if (portionDiff > 0) {
