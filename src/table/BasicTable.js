@@ -882,8 +882,8 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
-            {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {props.rows} stockChartXValues = {props.stockChartXValues} gainMap = {props.gainMap}
-                stockChartYValues = {props.stockChartYValues} logFlags = {props.logFlags}
+            {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
+                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
                  errorAdd={props.errorAdd} saveTable={props.saveTable}/>}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
