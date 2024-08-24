@@ -129,7 +129,7 @@ export default function ContactGet (props)  {
           var date = new Date();
           var formattedDate = format(date, "yyyy-MM-dd");
           var dateArray = formattedDate.split('-');
-          const dateArray1 = monthsBack (dateArray, Number(mon));
+          const dateArray1 = daysBack (dateArray, Number(mon));
           // setMonthsBack (months);
           const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
           setSearchDate (new Date(dateStr));
@@ -168,20 +168,24 @@ export default function ContactGet (props)  {
               {/* Buttons for Quick set of start date */}
               <div>
                 <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={months==='1'} onChange={onOptionChangeDate}/>
-                <label style={{marginRight:'10px', paddingRight: '1px'}}> mon</label>         
+                <label style={{marginRight:'10px', paddingRight: '1px'}}> day</label>         
               </div>
               <div>
                 <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChangeDate}/>
-                <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_mon</label>
+                <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_day</label>
               </div>
               <div>
-                  <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChangeDate}/>
-                  <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
+                  <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='7' id='7' checked={months==='7'} onChange={onOptionChangeDate}/>
+                  <label style={{marginRight:'10px', paddingRight: '1px'}}> week</label>
               </div>
               <div>
-                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChangeDate}/>
-                  <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
+                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='14' id='14' checked={months==='14'} onChange={onOptionChangeDate}/>
+                  <label style={{marginRight:'10px', paddingRight: '1px'}}> 2_week</label>
               </div>
+              {/* <div>
+                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='30' id='30' checked={months==='30'} onChange={onOptionChangeDate}/>
+                  <label style={{marginRight:'10px', paddingRight: '1px'}}> mon</label>
+              </div> */}
             </div>
 
 
@@ -198,13 +202,13 @@ export default function ContactGet (props)  {
           {/* Display list of contactsUs. Split text lines _NL_  */}
 
             {! beutify && textArray && textArray.map((item,k) =>
-              <li key={k}>date: {item.date} name: {item.name}, email: {item.email}, ip: {item.ip},
+              <li key={k}> #{k} &nbsp; date: {item.date} name: {item.name}, email: {item.email}, ip: {item.ip},
               city: {item.city}, region: {item.region}, country: {item.country}, os: {item.os}
               <div> {splitLines(item.text).map((t,j)=><div key={j}>{t}</div>)}</div> <div>&nbsp;</div></li>)}
 
        
            {beutify && textArray && textArray.map((item,k) =>
-             {return (<li   key={k}> beutify && <pre>{JSON.stringify(item, null, 2)}</pre> </li>)}
+             {return (<li key={k}> #{k} <pre>{JSON.stringify(item, null, 2)}</pre> </li>)}
             )}
 
 
