@@ -156,24 +156,32 @@ export default function ContactGet (props)  {
               <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} /> &nbsp;
               <label style={{marginTop: '15px'}}>LogBackEnd </label>
             </div>
-            <input type="checkbox" checked={beutify} onChange={swapBeutify} /> beutify 
             <div>&nbsp;</div>
+            <input type="checkbox" checked={beutify} onChange={swapBeutify} /> beutify 
     
             {/* Choose start date */}
             <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp;
             </div>
 
-            <div>
+            <div style={{display: 'flex'}}>
               {/* Buttons for Quick set of start date */}
-              <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={months==='1'} onChange={onOptionChangeDate}/>
+              <div>
+                <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='1' id='1' checked={months==='1'} onChange={onOptionChangeDate}/>
                 <label style={{marginRight:'10px', paddingRight: '1px'}}> mon</label>         
-              <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChangeDate}/>
+              </div>
+              <div>
+                <input style={{marginLeft: '3px', width: '20px'}}  type="radio" name="mon" value='3' id='3' checked={months==='3'} onChange={onOptionChangeDate}/>
                 <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_mon</label>
-              <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChangeDate}/>
-                <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
-              <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChangeDate}/>
-                <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
+              </div>
+              <div>
+                  <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChangeDate}/>
+                  <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
+              </div>
+              <div>
+                  <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChangeDate}/>
+                  <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
+              </div>
             </div>
 
 
