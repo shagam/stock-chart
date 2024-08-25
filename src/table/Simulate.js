@@ -73,8 +73,12 @@ const Simulate = (props) => {
         const oldestIndex = YValues.length - 1 - startWeek; // startIndex == 0 means oldest
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
         var stockToTrade;
-        var tradeCount = 0;
+        var buyCount = 0;
+        var sellCount = 0;
         var tradeSkipCount = 0;
+        var sellSumTotal = 0;
+        var buySumTotal = 0;
+
         for (let i = oldestIndex; i > 0; i--) {
             try {
             const pricePrev = price;
@@ -100,6 +104,8 @@ const Simulate = (props) => {
                     stockCount -= stockToTrade;
                     moneyMarket += (stockToTrade * price);
                     moneyMarket -= transactionFee; // for stocks trade only
+                    sellCount ++;
+                    sellSumTotal += (stockToTrade * price);
                 }
 
                 //** if down buy */
@@ -107,8 +113,9 @@ const Simulate = (props) => {
                     stockCount += stockToTrade;
                     moneyMarket -= (stockToTrade * price);
                     moneyMarket -= transactionFee;
+                    buyCount ++
+                    buySumTotal += (stockToTrade * price);
                 }
-                tradeCount++;
 
                 //** Trade should not change account value */
                 accountVal = price*stockCount + moneyMarket;
@@ -146,7 +153,7 @@ const Simulate = (props) => {
         }
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
-        console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'tradeCount=', tradeCount)
+        console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
 
         setResults (
             {
@@ -165,7 +172,10 @@ const Simulate = (props) => {
                 priceEnd: price.toFixed(2),
                 priceInit: priceInit,
 
-                tradeCount: tradeCount,
+                buyCount: buyCount,
+                buyAverage: (buySumTotal/buyCount).toFixed(2), 
+                sellCount: sellCount,
+                sellAverage: (sellSumTotal/sellCount).toFixed(2),
                 tradeSkipCount: tradeSkipCount,
 
                 dateStart: XValues[oldestIndex],
