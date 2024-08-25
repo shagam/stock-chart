@@ -169,17 +169,17 @@ const Simulate = (props) => {
                 gainOfAccount: gain, 
                 gainOfStock: stockGainDuringPeriod.toFixed(2),
 
-                accountValueEnd: accountVal.toFixed(2),
-                accountValInit: accountValueInit.toFixed(2),
+                accountValueEnd_$: accountVal.toFixed(2),
+                accountValInit_$: accountValueInit.toFixed(2),
 
                 stockCountEnd: stockCount.toFixed(2),
                 stockCountInit: stockCountInit.toFixed(2),
 
-                moneyMarketEnd: moneyMarket.toFixed(2),
-                moneyMarketInit: moneyMarketInit.toFixed(2),
+                moneyMarketEnd_$: moneyMarket.toFixed(2),
+                moneyMarketInit_$: moneyMarketInit.toFixed(2),
 
-                priceEnd: price.toFixed(2),
-                priceInit: priceInit,
+                priceEnd_$: price.toFixed(2),
+                priceInit_$: priceInit,
 
 
                 dateStart: XValues[oldestIndex],
@@ -188,11 +188,11 @@ const Simulate = (props) => {
 
             setCounters({
                 buyCount: buyCount,
-                buyAverage: (buySumTotal/buyCount).toFixed(2), 
-                buyMin: buyMin.toFixed(2),
+                buyAverage_$: (buySumTotal/buyCount).toFixed(2), 
+                buyMin_$: buyMin.toFixed(2),
                 sellCount: sellCount,
-                sellAverage: (sellSumTotal/sellCount).toFixed(2),
-                sellMin: sellMin.toFixed(2),
+                sellAverage_$: (sellSumTotal/sellCount).toFixed(2),
+                sellMin_$: sellMin.toFixed(2),
                 tradeSkipCount: tradeSkipCount,
             })
         
