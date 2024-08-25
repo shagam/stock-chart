@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 // import "./logFlagaStyles.css";
 // https://contactmentor.com/checkbox-list-react-js-example/
 
+//** Flags defined in app.js */
+
 const LogFlags = (props) => {
 
   const flags0 = []
@@ -16,9 +18,9 @@ const LogFlags = (props) => {
   // }, [props.checkList])
 
   props.checkList.forEach((f) => {
-    if (cnt < 6)
+    if (cnt < 7)
       flags0.push(f)
-    else if (cnt < 13)
+    else if (cnt < 15)
       flags1.push(f)
     else
       flags2.push(f)

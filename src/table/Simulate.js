@@ -30,14 +30,14 @@ const Simulate = (props) => {
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (200); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
-    const [thresholdPercent, setThresholdPercent] = useState (0.5);
+    const [thresholdPercent, setThresholdPercent] = useState (0.8);
     const [interestRate, setInterestRate]  = useState (5);
     const [transactionFee, setTransactionFee]  =  useState (0);
 
     const [results, setResults] =  useState ();
     const [counters, setCounters] =  useState ();
 
-    const LOG = props.logFlags && props.logFlags.includes('peak2Peak');
+    const LOG = props.logFlags && props.logFlags.includes('simulateTrade');
 
     useEffect(() => {
         setResults()
@@ -69,7 +69,8 @@ const Simulate = (props) => {
           'thresholdPercent=', thresholdPercent, 'interestRate=', interestRate, 'transactionFee=', transactionFee, 'startWeek=', startWeek)
         
         const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
-        console.log ('weeklyInterest=', weeklyInterest) // on moneyMarket
+        if (LOG)
+            console.log ('weeklyInterest=', weeklyInterest, 'interest=', interestRate) // on moneyMarket
 
         const oldestIndex = YValues.length - 1 - startWeek; // startIndex == 0 means oldest
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
@@ -96,11 +97,11 @@ const Simulate = (props) => {
             // const tradeCount =  thresholdPercent / 100 * stockCount;  
 
             const portionDiff = price*stockCount / accountVal - portionPercent / 100; 
-            if (Math.abs(portionDiff) > accountVal / 5000) {
-                console.log (accountVal, portionDiff)
-            }
+            // if (Math.abs(portionDiff) > accountVal / 5000) {
+            //     console.log (accountVal, portionDiff)
+            // }
 
-            if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100 && Math.abs(portionDiff) > 5 * transactionFee) { // if less than one percent do not trade
+            if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100 && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
                 //** If up sell */
                 stockToTrade = Math.abs(stockCount * portionDiff);
                 const tradeSum = (stockToTrade * price);
@@ -134,8 +135,9 @@ const Simulate = (props) => {
                 // const portionPer = price*stockCount / (price*stockCount + moneyMarket)
 
                 //** log first 10 */
-                if (LOG && i > oldestIndex -10 )
-                    console.log ('valBefore=', accountVal.toFixed(2), 'stockVal=', (price*stockCount).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 'price=', price)
+                if (LOG)
+                    console.log (props.symbol, 'i=', YValues.length - i, 'accountVal=', accountVal.toFixed(2), 'stockVal=',
+                 (price*stockCount).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price)
 
                 //** Check out of range */
                 // const currentPercent = price*stockCount /  accountVal;
