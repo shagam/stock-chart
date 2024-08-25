@@ -30,17 +30,18 @@ const Simulate = (props) => {
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (200); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
-    const [thresholdPercent, setThresholdPercent] = useState (0.1);
+    const [thresholdPercent, setThresholdPercent] = useState (0.5);
     const [interestRate, setInterestRate]  = useState (5);
     const [transactionFee, setTransactionFee]  =  useState (0);
 
     const [results, setResults] =  useState ();
-
+    const [counters, setCounters] =  useState ();
 
     const LOG = props.logFlags && props.logFlags.includes('peak2Peak');
 
     useEffect(() => {
         setResults()
+        setCounters()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
@@ -78,6 +79,8 @@ const Simulate = (props) => {
         var tradeSkipCount = 0;
         var sellSumTotal = 0;
         var buySumTotal = 0;
+        var buyMin;
+        var sellMin;
 
         for (let i = oldestIndex; i > 0; i--) {
             try {
@@ -100,21 +103,27 @@ const Simulate = (props) => {
             if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100 && Math.abs(portionDiff) > 5 * transactionFee) { // if less than one percent do not trade
                 //** If up sell */
                 stockToTrade = Math.abs(stockCount * portionDiff);
+                const tradeSum = (stockToTrade * price);
+
                 if (portionDiff > 0) {
                     stockCount -= stockToTrade;
-                    moneyMarket += (stockToTrade * price);
+                    moneyMarket += tradeSum;
                     moneyMarket -= transactionFee; // for stocks trade only
                     sellCount ++;
-                    sellSumTotal += (stockToTrade * price);
+                    sellSumTotal += tradeSum;
+                    if (sellMin === undefined || tradeSum < sellMin)
+                        sellMin = tradeSum;
                 }
 
                 //** if down buy */
                 else {
                     stockCount += stockToTrade;
-                    moneyMarket -= (stockToTrade * price);
+                    moneyMarket -= tradeSum;
                     moneyMarket -= transactionFee;
                     buyCount ++
-                    buySumTotal += (stockToTrade * price);
+                    buySumTotal += tradeSum;
+                    if (buyMin === undefined || tradeSum < buyMin)
+                        buyMin = tradeSum;
                 }
 
                 //** Trade should not change account value */
@@ -172,16 +181,21 @@ const Simulate = (props) => {
                 priceEnd: price.toFixed(2),
                 priceInit: priceInit,
 
-                buyCount: buyCount,
-                buyAverage: (buySumTotal/buyCount).toFixed(2), 
-                sellCount: sellCount,
-                sellAverage: (sellSumTotal/sellCount).toFixed(2),
-                tradeSkipCount: tradeSkipCount,
 
                 dateStart: XValues[oldestIndex],
                 totalWeeksBack: oldestIndex,
-            }
-        )
+            })
+
+            setCounters({
+                buyCount: buyCount,
+                buyAverage: (buySumTotal/buyCount).toFixed(2), 
+                buyMin: buyMin.toFixed(2),
+                sellCount: sellCount,
+                sellAverage: (sellSumTotal/sellCount).toFixed(2),
+                sellMin: sellMin.toFixed(2),
+                tradeSkipCount: tradeSkipCount,
+            })
+        
     }
 
 
@@ -208,6 +222,8 @@ const Simulate = (props) => {
             {<button style={{background: 'lightGreen'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             {results && <div> Values &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
+            {results && <div> Counters &nbsp;</div>}
+            <pre>{JSON.stringify(counters, null, 2)}</pre>
          </div>
     )
  }
