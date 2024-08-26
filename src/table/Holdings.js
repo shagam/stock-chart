@@ -316,7 +316,7 @@ function Holdings (props) {
 
 
       {/* ====== Display filtered held list */} 
-      {<div  style={{ maxHeight: '40vh', 'overflowY': 'scroll'}}>
+      {<div  style={{ maxHeight: '40vh', width: '95%', 'overflowY': 'scroll'}}>
       <table>
         <thead>
           <tr>
