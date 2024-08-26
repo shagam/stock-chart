@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 // import "./logFlagaStyles.css";
 // https://contactmentor.com/checkbox-list-react-js-example/
 
-//** Flags defined in app.js */
+//** props.checkList   Flags defined in app.js */
 
 const LogFlags = (props) => {
 
