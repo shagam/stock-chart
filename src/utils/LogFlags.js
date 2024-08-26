@@ -18,9 +18,9 @@ const LogFlags = (props) => {
   // }, [props.checkList])
 
   props.checkList.forEach((f) => {
-    if (cnt < 7)
+    if (cnt < (props.checkList.length)/3)
       flags0.push(f)
-    else if (cnt < 15)
+    else if (cnt < (props.checkList.length + 2) * 2 / 3)
       flags1.push(f)
     else
       flags2.push(f)
