@@ -12,69 +12,18 @@ let periodTag;
 
 const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
-const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price,
-   saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, os, ip, city, countryName, countryCode, regionName) => {
-
-  const LOG_API = logFlags && logFlags.includes('api');
-  const LOG_DROP = logFlags && logFlags.includes('drop_');
-
-
-  //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
-  const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
-  if (row_index === -1) {
-    alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
-    return;
-  }
-
-  rows[row_index].values.gain_mili = updateMili;
-  // rows[row_index].values.gain_date = updateDate;
-  rows[row_index].values.mon3 = mon3;
-  rows[row_index].values.mon6 = mon6; 
-  rows[row_index].values.year = year; 
-  rows[row_index].values.year2 = year2; 
-  rows[row_index].values.year5 = year5; 
-  rows[row_index].values.year10 = year10;
-  rows[row_index].values.year20 = year20;
-  // rows[row_index].values.peak2Peak = peak2Peak;
-  rows[row_index].values.price = price;
-
-  rows[row_index].values.sym = sym; // added field
-  rows[row_index].values.splits_list = splits;
-  // console.log (splits)
-  
-  targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
-
-  try {
-  if (splits) {
-    if (splits.startsWith('u')) {
-      alert ('bad splits json ' + splits + ' ' + sym)
-    }
-    const splitsParse = JSON.parse(splits);
-    const splitsCount = splits.length;
-  }
-  } catch (e) {console.log('Bad splits', e, sym.splits) }
-
-  if (LOG_API)
-  console.dir (rows[row_index].values)
-  if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
-    rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
-  if (LOG_DROP)
-    console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
-    rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
-
-  GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags, os, ip, city, countryName, countryCode, regionName)
-
-  if (saveTabl)
-    saveTable(sym);
-}
-
-
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
      os, ip, city, countryName, countryCode, regionName, setChartData) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
+    }
+
+    const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
+    if (row_index === -1) {
+      alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
+      return;
     }
 
     function spikesSmooth (sym, stockChartXValues, stockChartYValues, logFlags) {
@@ -129,7 +78,6 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
 
     const LOG_DROP = logFlags && logFlags.includes('drop_');
 
-    const row_index = rows.findIndex((row)=> row.values.symbol === sym);
     const oneDayMili = 1000 * 3600 + 24;
 
     if (LOG_FLAG)
@@ -328,11 +276,7 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                 console.log (stockChartYValuesFunction)
                 console.log (chartData)
               } 
-              // const ind = allColumns.findIndex((column)=> column.Header === 'verify_1');
-              // if (allColumns[ind].isVisible || ! isAdjusted) {
-              //   marketwatchGainValidate (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, verifyDateOffset,refreshByToggleColumns, firebaseGainAdd, servSelect, ssl, logFlags, errorAdd, null);
-              // }
-    
+          
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
                   weekly, logFlags, true,  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, false)  //setCalcResults, setCalcInfo
 
@@ -407,32 +351,34 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
                   year20 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));         
               }
 
+
+              //** calc short term yearly gain. latest val given higher wieght, because they are moredense */
               var count = 3;
-              const mon3_ = Number(mon3) ** 4;
-              const mon6_ = Number(mon6) ** 2;
+              const mon3_ = Number(mon3) ** 4; //** calc yearly gain */
+              const mon6_ = Number(mon6) ** 2; //** calc yearly gain */
               const year_ = Number(year)
 
               var year2_ = 1;   // if missing use netral '1'
               if (year2 !== -1) {
-                year2_ = Number(year2) ** 0.5;
+                year2_ = Number(year2) ** (1/2); //** calc yearly gain */
                 count ++;
               }
 
               var year5_ = 1;
               if (year5 !== -1) {
-                year5_ = Number (year5) ** 0.2;
+                year5_ = Number (year5) ** (1/5); //** calc yearly gain */
                 count ++;
               }
 
               var year10_ = 1;
                 if (year10 !== -1){
-                  year10_ = Number (year10) ** 0.1;
+                  year10_ = Number (year10) ** (1/10); //** calc yearly gain */
                   count ++;
                 }
 
               var year20_ = 1;
               if (year20 !== -1) {
-                year20_ = Number (year20) ** 0.05
+                year20_ = Number (year20) ** (1/20) //** calc yearly gain */
                 count ++;
               }
               var short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/count)
@@ -445,13 +391,60 @@ const   updateTableGain_ = (sym, rows, splits, updateDate, updateMili, mon3, mon
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
-              // if (LOG_SPLITS)
-              // console.log (splitArray); 
-              // const dropRecoberyResults = dropRecovery (rows, sym, stockChartXValuesFunction, stockChartYValuesFunction, deepStartDate, logFlags, weekly, chartData[`${periodTag}`], errorAdd)
-              updateTableGain_  (sym, rows, splitArray, updateDate, updateMili, mon3, mon6, year, year2, year5, year10, year20, price,
-                 saveTabl, ssl, PORT, servSelect, errorAdd, logFlags, saveTable, os, ip, city, countryName, countryCode, regionName)  
-
+                       
+              //** Compare latest price to highest  */
+              var highestPrice = -1; // highest price
+              for (let i = 0; i < stockChartYValuesFunction.length; i++) {
+                const val = stockChartYValuesFunction[i];
+                if (val > highestPrice)
+                  highestPrice = val;
+              }
+              const priceDivHigh = (price/ highestPrice).toFixed(3)
+            
+              //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
+               
+              rows[row_index].values.gain_mili = updateMili;
+              // rows[row_index].values.gain_date = updateDate;
+              rows[row_index].values.mon3 = mon3;
+              rows[row_index].values.mon6 = mon6; 
+              rows[row_index].values.year = year; 
+              rows[row_index].values.year2 = year2; 
+              rows[row_index].values.year5 = year5; 
+              rows[row_index].values.year10 = year10;
+              rows[row_index].values.year20 = year20;
+              // rows[row_index].values.peak2Peak = peak2Peak;
+              rows[row_index].values.price = price;
+              rows[row_index].values.priceDivHigh = priceDivHigh;
+            
+              rows[row_index].values.sym = sym; // added field
+              rows[row_index].values.splits_list = splitArray;
+              // console.log (splits)
+              
+              targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
+            
+              try {
+              if (splitArray) {
+                if (splitArray.startsWith('u')) {
+                  alert ('bad splits json ' + splitArray+ ' ' + sym)
+                }
+                const splitsParse = JSON.parse(splitArray);
+                const splitsCount = splitArray.length;
+              }
+              } catch (e) {console.log('Bad splits', e, sym.splitArray) }
+            
+              if (LOG_API)
+              console.dir (rows[row_index].values)
+              if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
+                rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
+              if (LOG_DROP)
+                console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
+                rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)
+            
+              GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags, os, ip, city, countryName, countryCode, regionName)
+            
+              if (saveTabl)
+                saveTable(sym);
+            
             }
         )
-        // handleInfoClick(sym, false);
   }
