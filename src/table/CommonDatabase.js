@@ -42,12 +42,13 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
         mon3: dat.mon3,
         mon6: dat.mon6,
         year: dat.year,
-        year2 : dat.year2,
+        year2 : dat.year2, 
         year5 : dat.year5,
         year10: dat.year10,
         year20: dat.year20,
         short: dat.short,
         long: dat.peak2Peak,
+        exchange: dat.Exchange,
         // sym: dat.sym
     }
 
@@ -410,6 +411,50 @@ function CommonDatabase (props) {
         }).catch ((err) => {
             clear()
             error(['gainFilterLocal ', err.message])
+            console.log(getDate(), err.message)
+        })   
+    }
+
+
+    //** get etf with no exchange */
+    function etfList () {
+        setErr()
+        setNext()
+        var corsUrl;
+        if (props.ssl)
+        corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=etf'
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+        setResults(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                error([dat])
+                setResults([])
+                return;
+            }
+                
+            // if (LOG)
+            console.log (dat.length, dat)
+            setResults(dat)
+            setNext('insert')
+            const latency = Date.now() - mili
+            setErr('etf list done, latency(msec)=' + latency)
+            // beep2();
+
+        }).catch ((err) => {
+            clear()
+            error(['etf ', err.message])
             console.log(getDate(), err.message)
         })   
     }
@@ -886,7 +931,8 @@ function CommonDatabase (props) {
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>&nbsp;
-          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}
+          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}&nbsp;
+          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf </button>}
           {/* missingYearRemove */}
         </div>
 
