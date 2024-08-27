@@ -95,6 +95,8 @@ const Peak2PeakGui = (props) => {
 
     const bubbleLineOver = (YValues[0] / yBubbleLine[1]).toFixed(3)
     setBubbleLineRatio(bubbleLineOver)
+    if (results)
+      results['CurrentPrice/bubbleLine'] = bubbleLineOver;
     console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[1].toFixed(2))
     // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
@@ -126,7 +128,7 @@ const Peak2PeakGui = (props) => {
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;
 
               {results && ! props.bubleLine && <button style={{background: 'aqua'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}>  Bubble baseLine </button>}
-              {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} / bubbleLine = {bubbleLineRatio} </div>}
+              {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
            </div>
            
            {results && <div>
