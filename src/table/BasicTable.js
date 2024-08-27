@@ -383,6 +383,13 @@ const BasicTable = (props) => {
     localStorage.setItem ('chartSymbol', sym);
     handleInfoClick(sym, saveTabl);
   
+    //** avoid bubbleline while another symbol */
+    if (gainMap['bubbleLine']) {
+      console.log (sym, 'delete bubbleLine, avoid bubbleline while another symbol', Object.keys(gainMap))
+      delete gainMap['bubbleLine']
+    }
+
+
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
 
