@@ -132,6 +132,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
 
 function CommonDatabase (props) {
     const [results, setResults] = useState()
+    const [infoJson, setInfoJson] = useState()
     const [factor, setFactor] = useState(1.25);
 
     const [displayFlag, setDisplayFlag] = useState(false);
@@ -147,11 +148,12 @@ function CommonDatabase (props) {
 
     const [nameFilter, setNameFilter] = useState ();
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
-    const [userInfo, setUserInfp] = useState ();
+    // const [userInfo, setUserInfp] = useState ();
 
     useEffect (() => { 
         setErr()
         setInfo()
+        setInfoJson()
     }, [props.symbol]) 
 
     const onOptionChange = e => {
@@ -450,6 +452,50 @@ function CommonDatabase (props) {
             setNext('insert')
             const latency = Date.now() - mili
             setErr('etf list done, latency(msec)=' + latency)
+            // beep2();
+
+        }).catch ((err) => {
+            clear()
+            error(['etf ', err.message])
+            console.log(getDate(), err.message)
+        })   
+    }
+
+
+    //** get one symbol  */
+    function readOneGain () {
+        setErr()
+        setNext()
+        var corsUrl;
+        if (props.ssl)
+        corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=readOne' + '&stock=' + props.symbol
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+        setResults(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                error([dat])
+                setResults([])
+                return;
+            }
+                
+            // if (LOG)
+            console.log (dat)
+            setInfoJson(dat)
+
+            const latency = Date.now() - mili
+            setErr('readone done, latency(msec)=' + latency)
             // beep2();
 
         }).catch ((err) => {
@@ -879,7 +925,7 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log(getDate(),  'users arrived', result.data) 
             setErr('backEnd users,  Latency(msec)=' + latency ) 
-            setUserInfp (result.data) // show in obj format
+            setInfoJson (result.data) // show in obj format
             // setInfo (JSON.stringify(result.data))
         } )
         .catch ((err) => {
@@ -932,11 +978,11 @@ function CommonDatabase (props) {
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>&nbsp;
           {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}&nbsp;
-          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf </button>}
+          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf-list </button>}
           {/* missingYearRemove */}
         </div>
 
-        <div>    
+        <div> 
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp;
           {next === 'insert' && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
           {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>} &nbsp;
@@ -958,13 +1004,14 @@ function CommonDatabase (props) {
 
         {/* <br></br>  */}
         <div style={{display: 'flex'}}>
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend delete {props.symbol} </button>}&nbsp;
+            {props.symbol && eliHome && <button type="button" onClick={()=>readOneGain()}>readOneGain ({props.symbol}) </button>}&nbsp;
+            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend-delete-One{props.symbol} </button>}&nbsp;
             {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
             {eliHome && <button type="button" onClick={()=> users ()}>userInfo  </button>} &nbsp;&nbsp;
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
             {eliHome && <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>}
         </div>
-        <pre>{JSON.stringify(userInfo, null, 2)}</pre>
+        <pre>{JSON.stringify(infoJson, null, 2)}</pre>
         <div>
 
             {/* ========= Display filtered list */} 
