@@ -177,7 +177,7 @@ function CommonDatabase (props) {
     }
    
     function filterForInsert () {
-        setErr()
+        clear();
         const LOG = props.logFlags.includes('gain'); 
         if (LOG)
         console.log (getDate(), ' backEndGetBest req params ', props.rows.length)
@@ -258,7 +258,7 @@ function CommonDatabase (props) {
 
     // fetch all filter on front end
     function filterForInsertFrontEnd (filter) {
-        setErr()
+        clear();
         const LOG = props.logFlags.includes('gain'); 
         // const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
     
@@ -369,7 +369,7 @@ function CommonDatabase (props) {
 
     // filter on backend best for year or 2 years or 5 years or 10 years
     function filterForInsert_1_2_5_10 () {
-        setErr()
+        clear();
         var corsUrl;
         if (props.ssl)
         corsUrl = "https://";
@@ -420,8 +420,7 @@ function CommonDatabase (props) {
 
     //** get etf with no exchange */
     function etfList () {
-        setErr()
-        setNext()
+        clear();
         var corsUrl;
         if (props.ssl)
         corsUrl = "https://";
@@ -464,8 +463,7 @@ function CommonDatabase (props) {
 
     //** get one symbol  */
     function readOneGain () {
-        setErr()
-        setNext()
+        clear();
         var corsUrl;
         if (props.ssl)
         corsUrl = "https://";
@@ -508,7 +506,7 @@ function CommonDatabase (props) {
 
     // get a list of symbols with low gain
     function FilterForRemove () {
-        setErr()
+        clear();
         var corsUrl;
 
         if (props.ssl)
@@ -563,7 +561,7 @@ function CommonDatabase (props) {
 
      
     function addSymOne (sym) {
-        setErr()
+        clear();
         const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
         if (sym_index !== -1) 
           return null; // skip if already in table
@@ -583,7 +581,7 @@ function CommonDatabase (props) {
  
     // Insert in table list of symbols 
     function insertInTable () {
-        setErr()
+        clear();
         if (next !== 'insert') {
             if (! eliHome) {// only admin allowed to insert from del list to allow del from common database
                 error(['insert requires - insert state'])
@@ -610,7 +608,7 @@ function CommonDatabase (props) {
 
         nameFilter = nameFilter.toUpperCase()
         console.log('nameSearch', nameFilter)
-        setErr()
+        clear();
         var corsUrl;
 
         if (props.ssl)
@@ -665,7 +663,7 @@ function CommonDatabase (props) {
 
     // delete symbols gain from prepared list of low gain
     function del () {
-        setErr()
+        clear();
         const LOG = props.logFlags.includes('gain'); 
         if (next !== 'del') {
             error(['del requires - del state'])
@@ -712,6 +710,7 @@ function CommonDatabase (props) {
 
     // write to disk all undestaged data
     async function backendFlush () {
+        clear();
         const LOG = props.logFlags.includes('gain'); 
         var corsUrl = ''
         if (props.ssl)
@@ -756,6 +755,7 @@ function CommonDatabase (props) {
   
     //** verify and del records missing year, year2 */
   async function verifyAll () {
+    clear();
     const LOG = props.logFlags.includes('gain'); 
     var corsUrl = ''
     if (props.ssl)
@@ -799,6 +799,7 @@ function CommonDatabase (props) {
 
       // delete symbol from all backend collections
     async function delOneSym () {
+        clear();
         const LOG = props.logFlags.includes('gain'); 
         const delCommands = ["gain", "price", "priceNasdaq", "splits", "holdings", "holdingsSch","target"]
         
@@ -849,12 +850,13 @@ function CommonDatabase (props) {
         setNext()
         setResults()
         setErr()
+        setInfoJson()
     }
 
     // test speed
     async function ping () {
         const LOG = props.logFlags.includes('gain'); 
-      
+        clear();
           var corsUrl = ''
 
           corsUrl = 'https://'
@@ -890,6 +892,7 @@ function CommonDatabase (props) {
       }
 
     async function users () {
+        clear();
         const LOG = props.logFlags.includes('gain');  
         const mili = Date.now()
 
