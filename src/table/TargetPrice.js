@@ -23,7 +23,8 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
     const tar = targetRaw / price; 
     const symTargetOne =  {date: getDate(), dateMili: Date.now(), target: targetRaw, price: price, tar: tar.toFixed(3)};
     if (isNaN(tar)) {
-        console.log (symbol, 'tar invalid', symTargetOne)
+        if (LOG)
+            console.log (symbol, getDate(), 'tar invalid', ' src=', src, symTargetOne)
         return;
     }
 
@@ -55,7 +56,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
             console.log (symbol, getDate(), 'status=', result)
             return;
         }
-        if (LOG)
+        if (LOG && ! result.data === 'ok')
             console.log (JSON.stringify(result.data))
 
         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
@@ -63,7 +64,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
             return;
         }
         if (LOG)
-            console.log(getDate(), symbol, 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
+            console.log(symbol, getDate(), 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
     } )
     .catch ((err) => {
         errorAdd([symbol, getDate(), 'target', err.message])
