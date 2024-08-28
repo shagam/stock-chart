@@ -362,7 +362,7 @@ const BasicTable = (props) => {
   }
 
   //** gain click for sym pressed. */
-  const handleGainClick = (sym, saveTabl) => {
+  const handleGainClick = (sym, singleSym) => {
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
 
@@ -377,11 +377,11 @@ const BasicTable = (props) => {
 
     rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
 
-    if (saveTabl)
-      console.log(sym, 'handleGainClick  saveTable param on ')
+    if (singleSym)
+      console.log(sym, getDate(), 'handleGainClick  singleSym=', singleSym)
 
     localStorage.setItem ('chartSymbol', sym);
-    handleInfoClick(sym, saveTabl);
+    handleInfoClick(sym, singleSym);
   
     //** avoid bubbleline while another symbol */
     if (gainMap['bubbleLine']) {
@@ -391,9 +391,9 @@ const BasicTable = (props) => {
 
 
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-      splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
+      splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
 
-      if (saveTabl)
+      if (singleSym)
         saveTable(sym);
       searchURL (props.logFlags)
   }
