@@ -6,6 +6,7 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
+import StockLists from './StockLists'
 
 
 const  Config = (props) => { 
@@ -68,6 +69,10 @@ const  Config = (props) => {
               <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>
               &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
           </div>
+
+          <hr/> 
+          <StockLists rows = {props.rows} logFlags = {props.logFlags} saveTable={props.saveTable}/>
+
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}
           {admin && false && <div>

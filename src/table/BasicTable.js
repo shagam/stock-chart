@@ -837,7 +837,7 @@ const BasicTable = (props) => {
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
 
 
-        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} refreshByToggleColumns={refreshByToggleColumns}
+        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
 
         {chartSymbol && <div>
