@@ -152,7 +152,10 @@ function StockLists (props) {
                 </div>
 
                 <pre> names {JSON.stringify(nameArray, null, 2)}</pre>
-                <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre>
+                { nameArray.map((m,k)=> {
+                    return(<div key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
+                })}
+                {/* <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre> */}
                 
           </div>}
       </div>
