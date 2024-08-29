@@ -58,7 +58,7 @@ function Holdings (props) {
     if (sym_index !== -1) 
       return; // skip if already in table
 
-    addStock (props.rows, sym)
+    addStock (props.rows, sym, false)
     
     // newStock.values.gain_date = fireGain._updateDate;
     // newStock.values.gain_mili = fireGain._updateMili;

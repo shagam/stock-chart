@@ -445,7 +445,7 @@ const BasicTable = (props) => {
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
-    addStock (rows, addFormData.symbol)
+    addStock (rows, addFormData.symbol, true)
     prepareRow(rows[rows.length -1]);
     saveTable(addFormData.symbol);
     //window.location.reload();

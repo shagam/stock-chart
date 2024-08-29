@@ -567,7 +567,7 @@ function CommonDatabase (props) {
         if (sym_index !== -1) 
           return null; // skip if already in table
 
-        addStock (props.rows, sym)
+        addStock (props.rows, sym, false)
         props.prepareRow(props.rows[props.rows.length - 1]);
         // newStock.values.gain_date = fireGain._updateDate;
         // newStock.values.gain_mili = fireGain._updateMili;

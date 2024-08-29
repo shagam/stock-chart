@@ -1,6 +1,6 @@
 import {nanoid} from 'nanoid';
 
-export function addStock (rows, symbol) {
+export function addStock (rows, symbol, warnDuplicate) {
 
   const re = new RegExp('^[a-zA-Z0-9^._=-]*$');  // Verify valid symbol in englis letters
   if (! re.test (symbol)) {
@@ -9,12 +9,13 @@ export function addStock (rows, symbol) {
   }
 
   // check for duplicate symbol
-  const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === symbol.toUpperCase());
-  if (index !== -1) {
-    alert ('Trying to add duplicate symbol: (' + symbol + ')');
-    return;
-  }
 
+    const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === symbol.toUpperCase());
+    if (index !== -1) {
+        if (warnDuplicate)
+            alert ('Trying to add duplicate symbol: (' + symbol + ')');
+        return;
+    }
 
   var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
 //   prepareRow(newStock);

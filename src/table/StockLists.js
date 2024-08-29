@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import GlobalFilter from '../utils/GlobalFilter'
-
+import {addStock} from './AddStock'
 
 function StockLists (props) {
     const [listName, setListName] = useState();
@@ -60,7 +60,16 @@ function StockLists (props) {
     }
 
     function insert() {
+        if (! listName) {
+            alert ('Missing list Name')
+            return;
+        }
 
+        const list = stockLists[listName];
+        for (let i = 0; i < list.length; i++)
+            addStock(props.rows, list[i], false)
+        props.saveTable('stockLists');  
+        window.location.reload();
     }
 
     return (
@@ -84,7 +93,7 @@ function StockLists (props) {
                     &nbsp; &nbsp; <button onClick={add} > addLIst </button>  
                     {/* &nbsp; &nbsp; <button onClick={get} > get </button>   */}
                     &nbsp; &nbsp; <button onClick={del} > delete </button>  
-                    &nbsp; &nbsp; <button onClick={inser} > insertInTable </button>  
+                    &nbsp; &nbsp; <button onClick={insert} > insertInTable </button>  
                 </div>
                 <pre>{JSON.stringify(stockLists, null, 2)}</pre>
           </div>}
