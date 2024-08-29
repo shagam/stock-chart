@@ -16,7 +16,7 @@ function StockLists (props) {
 
     function refresh() {
         // window.location.reload();
-        setVersion(version+1)
+        // setVersion(version+1)
     }
 
     const keys = Object.keys(stockLists);
@@ -49,7 +49,7 @@ function StockLists (props) {
             symbols.push (sym)
         }
        
-        console.log (newListName, symbols)
+        console.log ('addNewList', newListName, symbols)
 
         if (! newListName) {
             alert ('Missing list Name')
@@ -68,20 +68,21 @@ function StockLists (props) {
         setStockLists(stockLists)
         // buildListSelect(stockLists)
         localStorage.setItem('stocksLists', JSON.stringify(stockLists))
-        refresh()
     }
 
     function get () {
-        // if (LOG)
-            console.log('get')
         const listsRaw = localStorage.getItem('stocksLists')
-        if (listsRaw) {
+        if (! listsRaw || listsRaw === '{}')
+            return;
+        // const keys = Object.keys(listsRaw);
+        // if (keys.length > 0) {
             const stockListLocal = JSON.parse(listsRaw)
             setStockLists(stockListLocal)
-            // const nameArrayLocal = Object.keys(stockLists)
-            // setNameArray(nameArrayLocal)
-            buildListSelect(stockListLocal)
-        }
+
+            const nameArrayLocal = Object.keys(stockListLocal)
+            setNameArray(nameArrayLocal)
+            // buildListSelect(stockListLocal)
+        // }
     }
 
     function del () {
@@ -89,6 +90,7 @@ function StockLists (props) {
             alert ('Missing list Name')
             return;
         }
+        console.log('del', listName)
         if (stockLists[listName]) {
             delete stockLists[listName]
             localStorage.setItem('stocksLists', JSON.stringify(stockLists))
@@ -99,7 +101,6 @@ function StockLists (props) {
         }
         else
             console.log ('missing list=', listName)
-        refresh()
     }
 
     function insert() {
@@ -107,10 +108,13 @@ function StockLists (props) {
             alert ('Missing list Name')
             return;
         }
+        
+        console.log('insetInTable', listName)
 
         const list = stockLists[listName];
         if (! list) {
             console.log ('err', listName)
+            return;
         }
         for (let i = 0; i < list.length; i++)
             addStock(props.rows, list[i], false)
@@ -141,13 +145,14 @@ function StockLists (props) {
                 </div>
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
-                    <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName} title='Choose-list' options={nameArray} defaultValue={nameArray[0]}/> </div>
+                    <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
+                     title='Choose-list' options={nameArray} defaultValue={listName}/> </div>
                     &nbsp; &nbsp; <button onClick={del} > delete </button>  
                     &nbsp; &nbsp; <button onClick={insert} > insertInTable </button>  
                 </div>
 
-                <pre> {JSON.stringify(nameArray, null, 2)}</pre>
-                <pre> {JSON.stringify(stockLists, null, 2)}</pre>
+                <pre> names {JSON.stringify(nameArray, null, 2)}</pre>
+                <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre>
                 
           </div>}
       </div>
