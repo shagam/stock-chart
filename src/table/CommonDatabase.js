@@ -13,6 +13,7 @@ import {IpContext} from '../contexts/IpContext';
 import { useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import GlobalFilter from '../utils/GlobalFilter'
+import {addStock} from './AddStock'
 
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip, city, countryName, countryCode, regionName) {
 
@@ -565,18 +566,11 @@ function CommonDatabase (props) {
         const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
         if (sym_index !== -1) 
           return null; // skip if already in table
-        var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-        props.prepareRow(newStock);
-        newStock.id = nanoid();
-        newStock.values.symbol = sym;
-        newStock.original.symbol = sym;
-        delete newStock.cells;
-        newStock.allCells = [];
-        
+
+        addStock (props.rows, sym)
+        props.prepareRow(props.rows[props.rows.length - 1]);
         // newStock.values.gain_date = fireGain._updateDate;
         // newStock.values.gain_mili = fireGain._updateMili;
-        props.prepareRow(newStock);
-        return (newStock)
     } 
  
     // Insert in table list of symbols 
@@ -590,10 +584,7 @@ function CommonDatabase (props) {
         }
         for (let i = 0; i <results.length; i++) {
             var sym = results[i].replace(/[0-9\\.,: ]/g,'')
-            const newStock = addSymOne (sym)
-            if (newStock != null)
-                props.rows.push (newStock);
-            // console.log(results[i])
+            addSymOne (sym)
         }
         setNext()
         props.saveTable('any');  

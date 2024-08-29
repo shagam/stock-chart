@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 // import cors from 'cors'
-import {nanoid} from 'nanoid';
 
 import GetInt from '../utils/GetInt'
 import {IpContext} from '../contexts/IpContext';
 
+import {addStock} from './AddStock'
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
 // https://stockanalysis.com/etf/ivv/holdings/
@@ -57,18 +57,12 @@ function Holdings (props) {
     const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
     if (sym_index !== -1) 
       return; // skip if already in table
-    var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-    props.prepareRow(newStock);
-    newStock.id = nanoid();
-    newStock.values.symbol = sym;
-    newStock.original.symbol = sym;
-    newStock.cells = null;
-    newStock.allCells = [];
+
+    addStock (props.rows, sym)
     
     // newStock.values.gain_date = fireGain._updateDate;
     // newStock.values.gain_mili = fireGain._updateMili;
-    props.prepareRow(newStock);
-    return (newStock)
+    props.prepareRow(props.rows[props.rows.length - 1]);
   }
 
   function togglePercent () {
@@ -103,16 +97,15 @@ function Holdings (props) {
         }
         else {
           // add a new sym
-          const newStock = addSymOne (sym)
+          addSymOne (sym)
           if (LOG)
-            console.log ('added', newStock)
-          newStock.values.percent = holdArr[i].perc
-          props.rows.push (newStock);
+            console.log ('added', sym)
+          props.rows[props.rows.length - 1].values.percent = holdArr[i].perc
         }  
     } // end of add
 
     props.saveTable()
-    // window.location.reload(); 
+    window.location.reload(); 
   }
 
   function fetchHoldings (srcNum) {

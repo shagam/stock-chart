@@ -27,9 +27,10 @@ import searchURL from '../utils/SearchURL'
 import {spikesSmooth, spikesGet} from './Spikes'
 import {targetPriceAdd} from './TargetPrice'
 import {gain} from './Gain'
-import {nanoid} from 'nanoid';
+
 import {format} from "date-fns"
 
+import {addStock} from './AddStock'
 //import cloneDeep from 'lodash/cloneDeep';
 
 
@@ -444,44 +445,9 @@ const BasicTable = (props) => {
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
-  
-    //console.log (addFormData.symbol)
-    const re = new RegExp('^[a-zA-Z0-9^._=-]*$');  // Verify valid symbol in englis letters
-    if (! re.test (addFormData.symbol)) {
-      alert (`Invalid letters: ${addFormData.symbol}`);
-      return;
-    }
-
-    // check for duplicate symbol
-    const index = rows.findIndex((row)=> row.values.symbol.toUpperCase() === addFormData.symbol.toUpperCase());
-    if (index !== -1) {
-      alert ('Trying to add duplicate symbol: (' + addFormData.symbol + ')');
-      return;
-    }
-
-    if (useData) {
-      const newSym = addFormData.symbol
-      const newStock = {
-        'symbol': addFormData.symbol
-      }
-      data.push ( newStock)
-      saveTable(newSym);
-    } else {
-    var newStock = JSON.parse ('{"id":"0","original":{"symbol":""},"index":0,"values":{"symbol":""}}');
-    prepareRow(newStock);
-
-    newStock.id = nanoid();
-    newStock.values.symbol = addFormData.symbol.toUpperCase();
-    newStock.original.symbol = addFormData.symbol.toUpperCase();
-    newStock.values.sym = addFormData.symbol.toUpperCase();
-    newStock.original.sym = addFormData.symbol.toUpperCase();
-    newStock.cells = null;
-    newStock.allCells = [];
-    
-    rows.push (newStock);
-    //firebaseGetAndFill();      
-    saveTable(newStock.values.symbol);
-    }
+    addStock (rows, addFormData.symbol)
+    prepareRow(rows[rows.length -1]);
+    saveTable(addFormData.symbol);
     //window.location.reload();
     event.target.reset(); // clear input field
   }
