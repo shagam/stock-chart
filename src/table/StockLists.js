@@ -63,7 +63,6 @@ function StockLists (props) {
 
     //** get localstorage */
     function get () {
-        setErr();
         const listsRaw = localStorage.getItem('stocksLists')
         if (! listsRaw || listsRaw === '{}')
             return;
@@ -330,7 +329,7 @@ function StockLists (props) {
 
 
     return (
-        <div style={{border:'2px solid blue', width: '100%'}}>
+        <div style={{border:'2px solid blue', width: '95vw'}}>
 
             <div>
                 <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stock-lists-share
