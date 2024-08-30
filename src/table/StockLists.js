@@ -347,6 +347,7 @@ function StockLists (props) {
                     <button onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
                     {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
+
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
@@ -354,21 +355,20 @@ function StockLists (props) {
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
                     <button onClick={backendShare} > backEnd-share </button> &nbsp; &nbsp; 
-
                 </div>
 
-                <div style={{display:'flex'}}>
-                    {backendNameArray.length > 0 && <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
-                     title='Choose-backend-list' options={backendNameArray} defaultValue={listName}/> </div>}  &nbsp; &nbsp;
+                <div> &nbsp; </div>
+                {backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
+                    <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
+                     title='Choose-backend-list' options={backendNameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
-                    {/* <button onClick={insertTable} > insertInTable </button> &nbsp; &nbsp;  */}
                     {eliHome && <button onClick={backendDelete} > backend-delete </button>} &nbsp; &nbsp; 
-                </div>
+                </div>}
 
                 {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 { nameArray.map((m,k)=> {
-                    return(<div key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
+                    return(<div style={{width:'800px', overflow:'auto'}} key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
                 })}
                 {/* <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre> */}
                 
