@@ -71,7 +71,7 @@ const  Config = (props) => {
           </div>
 
           <hr/> 
-          <StockLists rows = {props.rows} logFlags = {props.logFlags} saveTable={props.saveTable}/>
+          <StockLists ip={props.ip} rows = {props.rows} logFlags = {props.logFlags} saveTable={props.saveTable} errorAdd={props.errorAdd} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT}/>
 
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}

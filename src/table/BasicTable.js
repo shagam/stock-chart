@@ -803,8 +803,9 @@ const BasicTable = (props) => {
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
 
 
-        <Config alphaCallBack = {alphaCallBack} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
-        smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag}/>
+        <Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
+        smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
+         servSelect={servSelect} ssl={ssl} PORT={PORT}/>
 
         {chartSymbol && <div>
           <div>&nbsp;</div>

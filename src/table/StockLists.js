@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import GlobalFilter from '../utils/GlobalFilter'
 import {addStock} from './AddStock'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+import axios from 'axios'
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+    searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
 function StockLists (props) {
     const [displayFlag, setDisplayFlag] = useState(false);
@@ -9,8 +12,9 @@ function StockLists (props) {
     const [listName, setListName] = useState();
     const [newListName, setNewListName] = useState();
     const [stockLists, setStockLists] = useState({});
-
     const [nameArray, setNameArray] = useState([]);
+    const [err,setErr] = useState()
+    const [info, setInfo] = useState()
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
 
@@ -125,6 +129,55 @@ function StockLists (props) {
         window.location.reload();
     }
 
+    //** share with others */
+    function sendToServer () {
+        if (! listName) {
+            alert ('Missing list Name')
+            return;
+        }
+        //servSelect={servSelect} ssl={ssl} PORT={PORT}
+        var corsUrl;
+
+        if (props.ssl)
+            corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=writeOne&listName=' + listName + '&ip=' + props.ip +'&dat=' + JSON.stringify(stockLists[listName])
+
+        // if (LOG)
+            console.log (corsUrl)
+        // if (logBackEnd)
+        //     corsUrl += '&LOG=1'
+
+        // setResults(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            console.log (dat)
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                props.errorAdd(['stockListsSend ', listName]) 
+                return;
+            }
+
+            const resArray = [];
+
+            const latency = Date.now() - mili
+            setErr('stockListsSend done, latency(msec)=' + latency)
+            // beep2();
+    
+        }).catch ((err) => {
+            props.errorAdd(['stockListsSend ', listName, err.message])
+            setErr(getDate() + ' ' + err.message)
+            console.log(getDate(), err.message)
+        })   
+    }
+
     return (
 
 
@@ -135,7 +188,8 @@ function StockLists (props) {
             </div>
 
             { displayFlag && <div>
-                {version}
+                {err && <div style={{color:'red'}}>{err}</div>}
+
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
                     <button style={{hight: '8px' }} onClick={add} > addNewList </button>   &nbsp; &nbsp;
@@ -148,9 +202,11 @@ function StockLists (props) {
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
                      title='Choose-list' options={nameArray} defaultValue={listName}/> </div>
                     &nbsp; &nbsp; <button onClick={del} > delete </button>  
-                    &nbsp; &nbsp; <button onClick={insert} > insertInTable </button>  
+                    &nbsp; &nbsp; <button onClick={insert} > insertInTable </button> 
+                    &nbsp; &nbsp; <button onClick={sendToServer} > share(backEnd) </button> 
                 </div>
 
+                <pre> info {JSON.stringify(info, null, 2)}</pre>
                 <pre> names {JSON.stringify(nameArray, null, 2)}</pre>
                 { nameArray.map((m,k)=> {
                     return(<div key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
