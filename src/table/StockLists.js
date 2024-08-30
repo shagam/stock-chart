@@ -31,9 +31,26 @@ function StockLists (props) {
     if (keys.length === 0)
         get()
 
+    function buildListSelect(stockListLocal) {
+        // if (stockLists === {})
+        //     return;
+        if (nameArray.length !== 0)
+            return
+
+        const nameArrayLocal = Object.keys(stockListLocal) 
+        // if (LOG )
+        console.log ('before build array=', nameArray); 
+       
+        if (nameArrayLocal.length === 0)
+            return;
+       
+        setNameArray(nameArrayLocal.sort())
+        console.log ('after build array=', nameArrayLocal); 
+        setListName(nameArrayLocal[0])
+    }
+
 
     function add() {
-        setErr();
         const symbols = [];
         for (let i = 0; i < props.rows.length; i++) {
             const sym = props.rows[i].values.symbol
@@ -61,9 +78,7 @@ function StockLists (props) {
         localStorage.setItem('stocksLists', JSON.stringify(stockLists))
     }
 
-    //** get localstorage */
     function get () {
-        setErr();
         const listsRaw = localStorage.getItem('stocksLists')
         if (! listsRaw || listsRaw === '{}')
             return;
@@ -78,9 +93,7 @@ function StockLists (props) {
         // }
     }
 
-    //** delete local list */
     function del () {
-        setErr();
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -98,10 +111,7 @@ function StockLists (props) {
             console.log ('missing list=', listName)
     }
 
-
-    //** insert list in table */
     function insert() {
-        setErr();
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -123,10 +133,8 @@ function StockLists (props) {
         window.location.reload();
     }
 
-
-    //** share with others by sending to backend */
+    //** share with others */
     function backendShare () {
-        setErr();
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -174,15 +182,12 @@ function StockLists (props) {
         })   
     }
 
-
-    //** filter list names on backend */
     function backEndFilterNames () {
         // if (! newListName) {
         //     alert ('Missing list Name')
         //     return;
         // }
         //servSelect={servSelect} ssl={ssl} PORT={PORT}
-        setErr();
         var corsUrl;
 
         if (props.ssl)
@@ -226,10 +231,7 @@ function StockLists (props) {
         })   
     }
 
-
-    //** get one list from backend */
     function backendGetOne() {
-        setErr();
         if (! backendListName) {
             alert ('Missing list Name')
             return;
@@ -279,9 +281,7 @@ function StockLists (props) {
     }
 
 
-    //** delete one list on backend */
     function backendDelete () {
-        setErr();
         console.log (backendListName, info)
         if (! backendListName) {
             alert ('Missing list Name')
@@ -330,7 +330,9 @@ function StockLists (props) {
 
 
     return (
-        <div style={{border:'2px solid blue', width: '100%'}}>
+
+
+        <div style={{border:'2px solid blue'}}>
 
             <div>
                 <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stock-lists-share
@@ -361,7 +363,7 @@ function StockLists (props) {
                      title='Choose-backend-list' options={backendNameArray} defaultValue={listName}/> </div>}  &nbsp; &nbsp;
                     <button onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
                     {/* <button onClick={insertTable} > insertInTable </button> &nbsp; &nbsp;  */}
-                    {eliHome && <button onClick={backendDelete} > backend-delete </button>} &nbsp; &nbsp; 
+                    <button onClick={backendDelete} > backend-delete </button> &nbsp; &nbsp; 
                 </div>
 
                 {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
