@@ -5,8 +5,10 @@ import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
+import {IpContext, getIpInfo} from '../contexts/IpContext';
 
 function StockLists (props) {
+    const {localIp, localIpv4, eliHome} = IpContext();
     const [displayFlag, setDisplayFlag] = useState(false);
     const [version, setVersion] = useState(0)
     const [listName, setListName] = useState();
@@ -15,12 +17,12 @@ function StockLists (props) {
     const [nameArray, setNameArray] = useState([]);
     const [err,setErr] = useState()
     const [info, setInfo] = useState()
+    const [logBackEnd, setLogBackEnd] = useState ();
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
 
-    function refresh() {
-        // window.location.reload();
-        // setVersion(version+1)
+    function setLog () {
+        setLogBackEnd (! logBackEnd)
     }
 
     const keys = Object.keys(stockLists);
@@ -130,7 +132,7 @@ function StockLists (props) {
     }
 
     //** share with others */
-    function sendToServer () {
+    function backendShare () {
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -178,13 +180,62 @@ function StockLists (props) {
         })   
     }
 
+    function backEndFilterNames () {
+        if (! newListName) {
+            alert ('Missing list Name')
+            return;
+        }
+        //servSelect={servSelect} ssl={ssl} PORT={PORT}
+        var corsUrl;
+
+        if (props.ssl)
+            corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=filterNames&filterName=' + newListName
+
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+        // if (LOG)
+        console.log (corsUrl)
+        
+        // setResults(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            console.log (dat)
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                props.errorAdd(['stockListsSend ', listName]) 
+                return;
+            }
+            setInfo(dat)
+            const resArray = [];
+
+            const latency = Date.now() - mili
+            setErr('stockListsSend done, latency(msec)=' + latency)
+            // beep2();
+    
+        }).catch ((err) => {
+            props.errorAdd(['stockListsSend ', listName, err.message])
+            setErr(getDate() + ' ' + err.message)
+            console.log(getDate(), err.message)
+        })   
+    }
+
+
     return (
 
 
         <div style={{border:'2px solid blue'}}>
 
             <div>
-                <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stocks-lists
+                <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stock-lists-share
             </div>
 
             { displayFlag && <div>
@@ -192,22 +243,24 @@ function StockLists (props) {
 
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
-                    <button style={{hight: '8px' }} onClick={add} > addNewList </button>   &nbsp; &nbsp;
                     <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>
+                    <button style={{hight: '8px' }} onClick={add} > addNewList </button>   &nbsp; &nbsp;
 
                     {/* &nbsp; &nbsp; <button onClick={get} > get </button>   */}
                 </div>
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
-                     title='Choose-list' options={nameArray} defaultValue={listName}/> </div>
-                    &nbsp; &nbsp; <button onClick={del} > delete </button>  
-                    &nbsp; &nbsp; <button onClick={insert} > insertInTable </button> 
-                    &nbsp; &nbsp; <button onClick={sendToServer} > share(backEnd) </button> 
+                     title='Choose-local-list' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                    <button onClick={del} > delete </button>  &nbsp; &nbsp;
+                    <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
+                    <button onClick={backendShare} > backEnd-share </button> &nbsp; &nbsp; 
+                    <button onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
+                    {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
 
-                <pre> info {JSON.stringify(info, null, 2)}</pre>
-                <pre> names {JSON.stringify(nameArray, null, 2)}</pre>
+                <pre> filtered-names {JSON.stringify(info)}</pre>
+                {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 { nameArray.map((m,k)=> {
                     return(<div key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
                 })}
