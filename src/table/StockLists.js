@@ -15,6 +15,8 @@ function StockLists (props) {
     const [newListName, setNewListName] = useState();
     const [stockLists, setStockLists] = useState({});
     const [nameArray, setNameArray] = useState([]);
+    const [backendNameArray, setBackendNameArray] = useState([]);
+    const [backendListName, setBackendListName] = useState();
     const [err,setErr] = useState()
     const [info, setInfo] = useState()
     const [logBackEnd, setLogBackEnd] = useState ();
@@ -146,12 +148,12 @@ function StockLists (props) {
             corsUrl = "http://"   
         corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=writeOne&listName=' + listName + '&ip=' + props.ip +'&dat=' + JSON.stringify(stockLists[listName])
 
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
         // if (LOG)
             console.log (corsUrl)
-        // if (logBackEnd)
-        //     corsUrl += '&LOG=1'
 
-        // setResults(['Request sent'])
+        setInfo(['Request sent'])
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -181,10 +183,10 @@ function StockLists (props) {
     }
 
     function backEndFilterNames () {
-        if (! newListName) {
-            alert ('Missing list Name')
-            return;
-        }
+        // if (! newListName) {
+        //     alert ('Missing list Name')
+        //     return;
+        // }
         //servSelect={servSelect} ssl={ssl} PORT={PORT}
         var corsUrl;
 
@@ -199,7 +201,56 @@ function StockLists (props) {
         // if (LOG)
         console.log (corsUrl)
         
-        // setResults(['Request sent'])
+        setInfo(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            console.log (dat)
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                props.errorAdd(['stockListsGetOne ', listName]) 
+                return;
+            }
+            setInfo(dat)
+            setBackendNameArray(dat)
+            const resArray = [];
+
+            const latency = Date.now() - mili
+            setErr('stockListsSend done, latency(msec)=' + latency)
+            // beep2();
+    
+        }).catch ((err) => {
+            props.errorAdd(['stockListsSend ', listName, err.message])
+            setErr(getDate() + ' ' + err.message)
+            console.log(getDate(), err.message)
+        })   
+    }
+
+    function backendGetOne() {
+        if (! backendListName) {
+            alert ('Missing list Name')
+            return;
+        }
+        //servSelect={servSelect} ssl={ssl} PORT={PORT}
+        var corsUrl;
+
+        if (props.ssl)
+            corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=getOne&listName=' + backendListName
+
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+        // if (LOG)
+        console.log (corsUrl)
+        
+        setInfo(['Request sent'])
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -215,6 +266,7 @@ function StockLists (props) {
                 return;
             }
             setInfo(dat)
+            stockLists[dat.listName] = dat.list; //** insert in list */ 
             const resArray = [];
 
             const latency = Date.now() - mili
@@ -226,6 +278,54 @@ function StockLists (props) {
             setErr(getDate() + ' ' + err.message)
             console.log(getDate(), err.message)
         })   
+    }
+
+
+    function backendDelete () {
+        console.log (backendListName, info)
+        if (! backendListName) {
+            alert ('Missing list Name')
+            return;
+        }
+        //servSelect={servSelect} ssl={ssl} PORT={PORT}
+        var corsUrl;
+
+        if (props.ssl)
+            corsUrl = "https://";
+        else 
+            corsUrl = "http://"   
+        corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=delOne&listName=' + backendListName
+
+        if (logBackEnd)
+            corsUrl += '&LOG=1'
+        // if (LOG)
+        console.log (corsUrl)
+        
+        setInfo(['Request sent'])
+        const mili = Date.now()
+
+        axios.get (corsUrl)
+        // getDate()
+        .then ((result) => {
+            if (result.status !== 200)
+                return;
+
+            const dat = result.data
+            console.log (dat)
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                props.errorAdd(['stockListsSend ', listName]) 
+                return;
+            }
+
+            const latency = Date.now() - mili
+            setErr('stockListsSend done, latency(msec)=' + latency)
+            // beep2();
+    
+        }).catch ((err) => {
+            props.errorAdd(['stockListsSend ', listName, err.message])
+            setErr(getDate() + ' ' + err.message)
+            console.log(getDate(), err.message)
+        }) 
     }
 
 
@@ -243,10 +343,10 @@ function StockLists (props) {
 
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
-                    <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>
-                    <button style={{hight: '8px' }} onClick={add} > addNewList </button>   &nbsp; &nbsp;
-
-                    {/* &nbsp; &nbsp; <button onClick={get} > get </button>   */}
+                    <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
+                    <button style={{hight: '8px' }} onClick={add} > new-list </button>   &nbsp; &nbsp;
+                    <button onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
+                    {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
@@ -255,11 +355,18 @@ function StockLists (props) {
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
                     <button onClick={backendShare} > backEnd-share </button> &nbsp; &nbsp; 
-                    <button onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
-                    {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
+
                 </div>
 
-                <pre> filtered-names {JSON.stringify(info)}</pre>
+                <div style={{display:'flex'}}>
+                    {backendNameArray.length > 0 && <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
+                     title='Choose-backend-list' options={backendNameArray} defaultValue={listName}/> </div>}  &nbsp; &nbsp;
+                    <button onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
+                    {/* <button onClick={insertTable} > insertInTable </button> &nbsp; &nbsp;  */}
+                    <button onClick={backendDelete} > backend-delete </button> &nbsp; &nbsp; 
+                </div>
+
+                {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 { nameArray.map((m,k)=> {
                     return(<div key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
