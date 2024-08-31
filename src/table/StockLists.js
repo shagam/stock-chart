@@ -381,7 +381,7 @@ function StockLists (props) {
                 {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 <div  style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}>
-                    { nameArray.map((m,k)=> {
+                    {Object.keys(stockLists).map((m,k)=> {
                         return(<div style={{width:'600px', overflow:'auto'}} key={k}> 
                          <div style={{color: 'magenta'}}>&nbsp;{m} &nbsp;&nbsp; {stockLists[m].length}</div> {JSON.stringify(stockLists[m])}</div>)
                     })}
