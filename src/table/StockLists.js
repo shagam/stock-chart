@@ -67,14 +67,14 @@ function StockLists (props) {
         if (! listsRaw || listsRaw === '{}')
             return;
         // const keys = Object.keys(listsRaw);
-        // if (keys.length > 0) {
-            const stockListLocal = JSON.parse(listsRaw)
-            setStockLists(stockListLocal)
 
-            const nameArrayLocal = Object.keys(stockListLocal)
-            setNameArray(nameArrayLocal)
-            // buildListSelect(stockListLocal)
-        // }
+        const stockListLocal = JSON.parse(listsRaw)
+        setStockLists(stockListLocal)
+
+        const nameArrayLocal = Object.keys(stockListLocal)
+        setNameArray(nameArrayLocal)
+        if (nameArrayLocal && nameArrayLocal.length > 0)
+            setListName(nameArrayLocal[0])
     }
 
     //** delete local list */
@@ -214,6 +214,8 @@ function StockLists (props) {
             }
             setInfo(dat)
             setBackendNameArray(dat)
+            if (dat && dat.length > 0)
+                setBackendListName(dat[0])
             const resArray = [];
 
             const latency = Date.now() - mili
@@ -264,9 +266,11 @@ function StockLists (props) {
                 props.errorAdd(['stockListsSend ', listName]) 
                 return;
             }
-            setInfo(dat)
-            stockLists[dat.listName] = dat.list; //** insert in list */ 
-            const resArray = [];
+            // setInfo(dat)
+            stockLists[dat.listName] = dat.list.stocks; //** insert in list */ 
+            localStorage.setItem('stocksLists', JSON.stringify(stockLists))
+            if (stockLists[dat.listName] && stockLists[dat.listName].length > 0)
+                setBackendListName(stockLists[dat.listName])
 
             const latency = Date.now() - mili
             setErr('stockListsSend done, latency(msec)=' + latency)
@@ -360,7 +364,8 @@ function StockLists (props) {
                 <div> &nbsp; </div>
                 {backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
-                     title='Choose-backend-list' options={backendNameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                     title='Choose-backend-list' options={backendNameArray} defaultValue={backendListName}/> </div>
+                       &nbsp; &nbsp;
                     <button onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
                     {eliHome && <button onClick={backendDelete} > backend-delete </button>} &nbsp; &nbsp; 
                 </div>}
@@ -368,7 +373,7 @@ function StockLists (props) {
                 {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 { nameArray.map((m,k)=> {
-                    return(<div style={{width:'800px', overflow:'auto'}} key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
+                    return(<div style={{width:'600px', overflow:'auto'}} key={k}> <hr/> {m} &nbsp;&nbsp; {stockLists[m].length} &nbsp; &nbsp; {JSON.stringify(stockLists[m])}</div>)
                 })}
                 {/* <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre> */}
                 
