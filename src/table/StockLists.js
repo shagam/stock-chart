@@ -345,7 +345,7 @@ function StockLists (props) {
 
 
     return (
-        <div style={{border:'2px solid blue', width: '115vw'}}>
+        <div style={{border:'2px solid blue'}}>
 
             <div>
                 <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stock-lists-share
@@ -363,7 +363,7 @@ function StockLists (props) {
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
-                     title='Choose-local-list' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                     title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendShare} > share_through_backEnd </button> &nbsp; &nbsp; 
@@ -380,7 +380,7 @@ function StockLists (props) {
                 <div> &nbsp; </div>
                 {backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
-                     title='Choose-backend-list' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
+                     title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
 
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
                     {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 

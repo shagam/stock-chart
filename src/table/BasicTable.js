@@ -819,7 +819,7 @@ const BasicTable = (props) => {
 
           {<div>
             <div style={{display:'flex'}}>
-              <input style={{'color':'magenta', marginLeft: '0px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/>
+              <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}> peak2peak  </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/>         
               <div style={{color:'blue'}}>  dropRecovery   </div> 
