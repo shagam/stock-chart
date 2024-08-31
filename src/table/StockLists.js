@@ -343,7 +343,7 @@ function StockLists (props) {
 
 
     return (
-        <div style={{border:'2px solid blue', width: '95vw'}}>
+        <div style={{border:'2px solid blue', width: '115vw'}}>
 
             <div>
                 <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stock-lists-share
@@ -355,8 +355,8 @@ function StockLists (props) {
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
                     <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
-                    <button style={{hight: '8px' }} onClick={add} > new-list-from-table </button>   &nbsp; &nbsp;
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
+                    <button style={{hight: '8px' }} onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > backEnd_filterNames </button> &nbsp; &nbsp; 
                     {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
 
