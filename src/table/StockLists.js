@@ -356,7 +356,7 @@ function StockLists (props) {
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
                     <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
                     <button style={{hight: '8px' }} onClick={add} > new-list-from-table </button>   &nbsp; &nbsp;
-                    <button onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > backEnd-filterNames </button> &nbsp; &nbsp; 
                     {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
 
@@ -366,7 +366,7 @@ function StockLists (props) {
                      title='Choose-local-list' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
-                    <button onClick={backendShare} > backEnd-share </button> &nbsp; &nbsp; 
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendShare} > backEnd-share </button> &nbsp; &nbsp; 
                 </div>
 
                 <div> &nbsp; </div>
@@ -374,8 +374,8 @@ function StockLists (props) {
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
                      title='Choose-backend-list' options={backendNameArray} defaultValue={backendListName}/> </div>
                        &nbsp; &nbsp;
-                    <button onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
-                    {eliHome && <button onClick={backendDelete} > backend-delete </button>} &nbsp; &nbsp; 
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
+                    {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > backend-delete </button>} &nbsp; &nbsp; 
                 </div>}
 
                 {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
