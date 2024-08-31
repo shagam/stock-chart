@@ -356,14 +356,14 @@ function StockLists (props) {
 
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
-                    <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
+                    &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
                     <button style={{hight: '8px' }} onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
                 </div>
 
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
-                    <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
-                     title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
+                        title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendShare} > share_through_backEnd </button> &nbsp; &nbsp; 
@@ -371,7 +371,7 @@ function StockLists (props) {
 
                 <div> &nbsp; </div>
                 <div style={{display:'flex'}}>
-                    <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter-backend' isMobile={false}/>  &nbsp; &nbsp;
+                    &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter-backend' isMobile={false}/>  &nbsp; &nbsp;
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filterNames_backEnd </button> &nbsp; &nbsp; 
                     {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
@@ -379,7 +379,7 @@ function StockLists (props) {
 
                 <div> &nbsp; </div>
                 {backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
-                    <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
+                &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
                      title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
 
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
