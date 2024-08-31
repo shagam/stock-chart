@@ -27,9 +27,27 @@ function StockLists (props) {
         setLogBackEnd (! logBackEnd)
     }
 
+    //** get from localstorage on startup */
     const keys = Object.keys(stockLists);
-    if (keys.length === 0)
+    if (keys.length === 0) 
         get()
+
+
+   function get () {
+        const listsRaw = localStorage.getItem('stocksLists')
+        if (! listsRaw || listsRaw === '{}')
+            return;
+        // const keys = Object.keys(listsRaw);
+
+        const stockListLocal = JSON.parse(listsRaw)
+        setStockLists(stockListLocal)
+
+        const nameArrayLocal = Object.keys(stockListLocal)
+        setNameArray(nameArrayLocal)
+        if (nameArrayLocal && nameArrayLocal.length > 0)
+            setListName(nameArrayLocal[0])
+    }
+
 
 
     //** create list from table */
@@ -62,22 +80,7 @@ function StockLists (props) {
         localStorage.setItem('stocksLists', JSON.stringify(stockLists))
     }
 
-    //** get from localstorage */
-    function get () {
-        const listsRaw = localStorage.getItem('stocksLists')
-        if (! listsRaw || listsRaw === '{}')
-            return;
-        // const keys = Object.keys(listsRaw);
-
-        const stockListLocal = JSON.parse(listsRaw)
-        setStockLists(stockListLocal)
-
-        const nameArrayLocal = Object.keys(stockListLocal)
-        setNameArray(nameArrayLocal)
-        if (nameArrayLocal && nameArrayLocal.length > 0)
-            setListName(nameArrayLocal[0])
-    }
-
+ 
     //** delete local list */
     function del () {
         setErr();
