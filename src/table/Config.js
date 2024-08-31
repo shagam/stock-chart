@@ -6,7 +6,7 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
-import StockLists from './StockLists'
+
 
 
 const  Config = (props) => { 
@@ -70,8 +70,7 @@ const  Config = (props) => {
               &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
           </div>
 
-          <hr/> 
-          <StockLists ip={props.ip} rows = {props.rows} logFlags = {props.logFlags} saveTable={props.saveTable} errorAdd={props.errorAdd} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT}/>
+          {/* <hr/>  */}
 
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}

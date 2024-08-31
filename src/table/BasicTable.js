@@ -60,6 +60,7 @@ import Simulate from './Simulate'
 import Tools from './Tools'
 
 import Config from './Config'
+import StockLists from './StockLists'
 
 import MarketStackApi from  './MarketStackApi'
 
@@ -807,6 +808,8 @@ const BasicTable = (props) => {
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
          servSelect={servSelect} ssl={ssl} PORT={PORT}/>
 
+        <StockLists ip={ip} rows = {rows} logFlags = {props.logFlags} saveTable={saveTable}
+         errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>
         {chartSymbol && <div>
           <div>&nbsp;</div>
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
