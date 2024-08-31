@@ -32,8 +32,10 @@ function StockLists (props) {
         get()
 
 
+    //** create list from table */
     function add() {
         setErr();
+        setInfo();
         const symbols = [];
         for (let i = 0; i < props.rows.length; i++) {
             const sym = props.rows[i].values.symbol
@@ -55,13 +57,12 @@ function StockLists (props) {
         stockLists[newListName] = symbols;
         const nameArrayLocal = Object.keys(stockLists)
         setNameArray(nameArrayLocal)
-        setStockLists({})
+        setListName(newListName)
         setStockLists(stockLists)
-        // buildListSelect(stockLists)
         localStorage.setItem('stocksLists', JSON.stringify(stockLists))
     }
 
-    //** get localstorage */
+    //** get from localstorage */
     function get () {
         const listsRaw = localStorage.getItem('stocksLists')
         if (! listsRaw || listsRaw === '{}')
@@ -80,6 +81,7 @@ function StockLists (props) {
     //** delete local list */
     function del () {
         setErr();
+        setInfo();
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -101,6 +103,7 @@ function StockLists (props) {
     //** insert list in table */
     function insert() {
         setErr();
+        setInfo();
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -122,10 +125,12 @@ function StockLists (props) {
         window.location.reload();
     }
 
+    ////////////////////////////////////////////////////////////////
 
     //** share with others by sending to backend */
     function backendShare () {
         setErr();
+        setInfo();
         if (! listName) {
             alert ('Missing list Name')
             return;
@@ -182,6 +187,7 @@ function StockLists (props) {
         // }
         //servSelect={servSelect} ssl={ssl} PORT={PORT}
         setErr();
+        setInfo();
         var corsUrl;
 
         if (props.ssl)
@@ -216,7 +222,6 @@ function StockLists (props) {
             setBackendNameArray(dat)
             if (dat && dat.length > 0)
                 setBackendListName(dat[0])
-            const resArray = [];
 
             const latency = Date.now() - mili
             setErr('stockListsSend done, latency(msec)=' + latency)
@@ -233,13 +238,12 @@ function StockLists (props) {
     //** get one list from backend */
     function backendGetOne() {
         setErr();
+        setInfo();
         if (! backendListName) {
             alert ('Missing list Name')
             return;
         }
-        //servSelect={servSelect} ssl={ssl} PORT={PORT}
         var corsUrl;
-
         if (props.ssl)
             corsUrl = "https://";
         else 
@@ -287,12 +291,13 @@ function StockLists (props) {
     //** delete one list on backend */
     function backendDelete () {
         setErr();
+        setInfo();
         console.log (backendListName, info)
         if (! backendListName) {
             alert ('Missing list Name')
             return;
         }
-        //servSelect={servSelect} ssl={ssl} PORT={PORT}
+
         var corsUrl;
 
         if (props.ssl)
