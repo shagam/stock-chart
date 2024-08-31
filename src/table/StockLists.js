@@ -15,6 +15,8 @@ function StockLists (props) {
     const [newListName, setNewListName] = useState();
     const [stockLists, setStockLists] = useState({});
     const [nameArray, setNameArray] = useState([]);
+    
+    const [backEndFilter, setBackEndFilter] = useState();
     const [backendNameArray, setBackendNameArray] = useState([]);
     const [backendListName, setBackendListName] = useState();
     const [err,setErr] = useState()
@@ -198,8 +200,8 @@ function StockLists (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=filterNames'
-        if (newListName)
-            corsUrl += '&filterName=' + newListName;
+        if (backEndFilter)
+            corsUrl += '&filterName=' + backEndFilter;
 
         if (logBackEnd)
             corsUrl += '&LOG=1'
@@ -356,8 +358,6 @@ function StockLists (props) {
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
                     <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
                     <button style={{hight: '8px' }} onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > backEnd_filterNames </button> &nbsp; &nbsp; 
-                    {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
 
                 <div> &nbsp; </div>
@@ -366,19 +366,27 @@ function StockLists (props) {
                      title='Choose-local-list' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendShare} > backEnd-share </button> &nbsp; &nbsp; 
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendShare} > share_through_backEnd </button> &nbsp; &nbsp; 
                 </div>
+
+                <div> &nbsp; </div>
+                <div style={{display:'flex'}}>
+                    <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter-backend' isMobile={false}/>  &nbsp; &nbsp;
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filterNames_backEnd </button> &nbsp; &nbsp; 
+                    {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
+                </div>
+                {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
 
                 <div> &nbsp; </div>
                 {backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
                     <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
-                     title='Choose-backend-list' options={backendNameArray} defaultValue={backendListName}/> </div>
-                       &nbsp; &nbsp;
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > backEnd-getOne </button> &nbsp; &nbsp; 
-                    {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > backend-delete </button>} &nbsp; &nbsp; 
+                     title='Choose-backend-list' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
+
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
+                    {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 
                 </div>}
 
-                {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
+
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 <div  style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}>
                     {Object.keys(stockLists).map((m,k)=> {
