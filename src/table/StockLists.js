@@ -276,7 +276,7 @@ function StockLists (props) {
                 return;
             }
             // setInfo(dat)
-            stockLists[dat.listName] = dat.list.stocks; //** insert in list */ 
+            stockLists[dat.listName] = dat.stocks; //** insert in list */ 
             localStorage.setItem('stocksLists', JSON.stringify(stockLists))
             if (stockLists[dat.listName] && stockLists[dat.listName].length > 0)
                 setBackendListName(stockLists[dat.listName])
@@ -385,8 +385,8 @@ function StockLists (props) {
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
                     {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 
                 </div>}
-
-
+                <h6>Local stock-lists</h6>
+                {/* <h6> local stock listNames: {JSON.stringify(Object.keys(stockLists))} </h6> */}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 <div  style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}>
                     {Object.keys(stockLists).map((m,k)=> {
