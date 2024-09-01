@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import GlobalFilter from '../utils/GlobalFilter'
 import {addStock} from './AddStock'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
@@ -24,6 +24,15 @@ function StockLists (props) {
     const [logBackEnd, setLogBackEnd] = useState ();
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
+
+    useEffect (() => { 
+        setErr()
+        setInfo()
+        setBackendListName()
+        setBackendNameArray()
+        setBackEndFilter()
+    }, [props.servSelect]) 
+
 
     function setLog () {
         setLogBackEnd (! logBackEnd)
@@ -284,7 +293,6 @@ function StockLists (props) {
             const latency = Date.now() - mili
             setErr('stockListsSend done, latency(msec)=' + latency)
             // beep2();
-    
         }).catch ((err) => {
             props.errorAdd(['stockListsSend ', listName, err.message])
             setErr(getDate() + ' ' + err.message)
@@ -335,7 +343,8 @@ function StockLists (props) {
             const latency = Date.now() - mili
             setErr('stockListsSend done, latency(msec)=' + latency)
             // beep2();
-    
+            setBackendNameArray (backendNameArray.removeItem(listName)) 
+
         }).catch ((err) => {
             props.errorAdd(['stockListsSend ', listName, err.message])
             setErr(getDate() + ' ' + err.message)
@@ -375,11 +384,11 @@ function StockLists (props) {
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filterNames_backEnd </button> &nbsp; &nbsp; 
                     {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
-                {info && <pre> filtered-names {JSON.stringify(info)}</pre>}
+                {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>}
 
                 <div> &nbsp; </div>
-                {backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
-                &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
+                {backendNameArray && backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
+                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
                      title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
 
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
