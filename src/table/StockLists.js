@@ -21,6 +21,7 @@ function StockLists (props) {
     const [backendListName, setBackendListName] = useState();
     const [err,setErr] = useState()
     const [info, setInfo] = useState()
+    const [latency, setLatency] = useState()
     const [logBackEnd, setLogBackEnd] = useState ();
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
@@ -28,6 +29,7 @@ function StockLists (props) {
     useEffect (() => { 
         setErr()
         setInfo()
+        setLatency()
         setBackendListName()
         setBackendNameArray()
         setBackEndFilter()
@@ -163,7 +165,7 @@ function StockLists (props) {
         // if (LOG)
             console.log (corsUrl)
 
-        setInfo(['Request sent'])
+        setLatency ('Request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -182,7 +184,7 @@ function StockLists (props) {
             const resArray = [];
 
             const latency = Date.now() - mili
-            setErr('stockListsSend done, latency(msec)=' + latency)
+            setLatency('stockListsSend done, latency(msec)=' + latency)
             // beep2();
     
         }).catch ((err) => {
@@ -216,8 +218,8 @@ function StockLists (props) {
             corsUrl += '&LOG=1'
         // if (LOG)
         console.log (corsUrl)
-        
-        setInfo(['Request sent'])
+    
+        setLatency('Request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -232,13 +234,13 @@ function StockLists (props) {
                 props.errorAdd(['stockListsGetOne ', listName]) 
                 return;
             }
-            setInfo(dat)
+            // setInfo(dat)
             setBackendNameArray(dat)
             if (dat && dat.length > 0)
                 setBackendListName(dat[0])
 
             const latency = Date.now() - mili
-            setErr('stockListsSend done, latency(msec)=' + latency)
+            setLatency('stockListsSend done, latency(msec)=' + latency)
             // beep2();
     
         }).catch ((err) => {
@@ -252,7 +254,7 @@ function StockLists (props) {
     //** get one list from backend */
     function backendGetOne() {
         setErr();
-        setInfo();
+        // setInfo();
         if (! backendListName) {
             alert ('Missing list Name')
             return;
@@ -269,7 +271,7 @@ function StockLists (props) {
         // if (LOG)
         console.log (corsUrl)
         
-        setInfo(['Request sent'])
+        setLatency('Request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -279,6 +281,7 @@ function StockLists (props) {
                 return;
 
             const dat = result.data
+            if (LOG)
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
                 props.errorAdd(['stockListsSend ', listName]) 
@@ -291,7 +294,7 @@ function StockLists (props) {
                 setBackendListName(stockLists[dat.listName])
 
             const latency = Date.now() - mili
-            setErr('stockListsSend done, latency(msec)=' + latency)
+            setLatency ('stockListsSend done, latency(msec)=' + latency)
             // beep2();
         }).catch ((err) => {
             props.errorAdd(['stockListsSend ', listName, err.message])
@@ -304,7 +307,7 @@ function StockLists (props) {
     //** delete one list on backend */
     function backendDelete () {
         setErr();
-        setInfo();
+        // setInfo();
         console.log (backendListName, info)
         if (! backendListName) {
             alert ('Missing list Name')
@@ -324,7 +327,7 @@ function StockLists (props) {
         // if (LOG)
         console.log (corsUrl)
         
-        setInfo(['Request sent'])
+        setLatency('Request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -336,17 +339,24 @@ function StockLists (props) {
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd(['stockListsSend ', listName]) 
+                props.errorAdd(['stockListsSend ', backendListName]) 
                 return;
             }
 
             const latency = Date.now() - mili
-            setErr('stockListsSend done, latency(msec)=' + latency)
+            setLatency('stockListsSend done, latency(msec)=' + latency)
             // beep2();
-            setBackendNameArray (backendNameArray.removeItem(listName)) 
-
+            // remove backendListName from list
+            if (backendNameArray.length > 0) {
+                var backendNameArrayTemp = []
+                for (let i = 0; i < backendNameArray.length - 1; i++) {
+                    if (backendNameArray[i] !== backendListName)
+                        backendNameArrayTemp.push(backendNameArray[i])
+                }
+                setBackendNameArray(backendNameArrayTemp)
+            }
         }).catch ((err) => {
-            props.errorAdd(['stockListsSend ', listName, err.message])
+            props.errorAdd(['stockListsSend ', backendListName, err.message])
             setErr(getDate() + ' ' + err.message)
             console.log(getDate(), err.message)
         }) 
@@ -362,6 +372,7 @@ function StockLists (props) {
 
             { displayFlag && <div>
                 {err && <div style={{color:'red'}}>{err}</div>}
+                <div style={{color: 'green'}}>{latency}</div>
 
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
@@ -384,8 +395,9 @@ function StockLists (props) {
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filterNames_backEnd </button> &nbsp; &nbsp; 
                     {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
                 </div>
-                {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>}
-
+                {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
+                {backendNameArray && <pre> filtered-backend-names {backendNameArray.length} {JSON.stringify(backendNameArray)}</pre>}
+                
                 <div> &nbsp; </div>
                 {backendNameArray && backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
                     &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
