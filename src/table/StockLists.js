@@ -183,7 +183,7 @@ function StockLists (props) {
 
             const resArray = [];
 
-            if (! backendNameArray.includes(listName))
+            if (backendNameArray && ! backendNameArray.includes(listName))
                 backendNameArray.push(listName)
 
             const latency = Date.now() - mili
