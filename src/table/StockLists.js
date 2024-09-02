@@ -374,6 +374,8 @@ function StockLists (props) {
                 {err && <div style={{color:'red'}}>{err}</div>}
                 <div style={{color: 'green'}}>{latency}</div>
 
+                {/* Locak lists  */}
+
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
                     &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
@@ -386,19 +388,29 @@ function StockLists (props) {
                         title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendShare} > share_through_backEnd </button> &nbsp; &nbsp; 
                 </div>
 
-                <div> &nbsp; </div>
+                <hr/> 
+                {/* <div> &nbsp; </div> */}
                 <div style={{display:'flex'}}>
-                    &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter-backend' isMobile={false}/>  &nbsp; &nbsp;
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filterNames_backEnd </button> &nbsp; &nbsp; 
-                    {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
+                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
+                        title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                    <button style={{backgroundColor: 'pink'}} onClick={backendShare} > share_to_backEnd </button> &nbsp; &nbsp; 
+                </div>
+                <hr/> 
+                {/* shared Back-end */}
+
+                {/* <div> &nbsp; </div> */}
+                <h5 style={{color: 'green'}}> Shared backend </h5>
+                <div style={{display:'flex'}}>
+                    &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
+                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
+                    {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;Log &nbsp; &nbsp;</div>}
                 </div>
                 {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
-                {backendNameArray && <pre> filtered-backend-names {backendNameArray.length} {JSON.stringify(backendNameArray)}</pre>}
+                {backendNameArray && <pre> filtered-names {backendNameArray.length} {JSON.stringify(backendNameArray)}</pre>}
                 
-                <div> &nbsp; </div>
+                {/* <div> &nbsp; </div> */}
                 {backendNameArray && backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
                     &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
                      title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
@@ -406,7 +418,10 @@ function StockLists (props) {
                     <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
                     {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 
                 </div>}
-                <h6>Local stock-lists</h6>
+
+                {/* LOcal lists */}
+                <hr/> 
+                {stockLists && <h6>Local stock-lists &nbsp; ({Object.keys(stockLists).length}) </h6>}
                 {/* <h6> local stock listNames: {JSON.stringify(Object.keys(stockLists))} </h6> */}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 <div  style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}>
