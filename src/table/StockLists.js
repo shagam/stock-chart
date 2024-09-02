@@ -378,7 +378,7 @@ function StockLists (props) {
                 <div style={{color: 'green'}}>{latency}</div>
 
                 {/* Locak lists  */}
-
+                <h5 style={{color: 'blue'}}> Local stock lists </h5>
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
                     &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
@@ -431,7 +431,7 @@ function StockLists (props) {
                     {Object.keys(stockLists).map((m,k)=> {
                         return(<div  key={k}> 
                          <div style={{color: 'magenta'}}>&nbsp;{m} &nbsp;&nbsp; {stockLists[m].length}</div>
-                          <div style={{width:'600px', overflow:'auto'}}>{JSON.stringify(stockLists[m])}</div> </div>)
+                          <div style={{width:'600px', overflow:'auto'}}>{JSON.stringify(stockLists[m])}</div> &nbsp; &nbsp;</div>)
                     })}
                 </div>
                 {/* <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre> */}
