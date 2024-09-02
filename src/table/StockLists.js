@@ -183,6 +183,9 @@ function StockLists (props) {
 
             const resArray = [];
 
+            if (! backendNameArray.includes(listName))
+                backendNameArray.push(listName)
+
             const latency = Date.now() - mili
             setLatency('stockListsSend done, latency(msec)=' + latency)
             // beep2();
@@ -426,8 +429,9 @@ function StockLists (props) {
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}
                 <div  style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}>
                     {Object.keys(stockLists).map((m,k)=> {
-                        return(<div style={{width:'600px', overflow:'auto'}} key={k}> 
-                         <div style={{color: 'magenta'}}>&nbsp;{m} &nbsp;&nbsp; {stockLists[m].length}</div> {JSON.stringify(stockLists[m])}</div>)
+                        return(<div  key={k}> 
+                         <div style={{color: 'magenta'}}>&nbsp;{m} &nbsp;&nbsp; {stockLists[m].length}</div>
+                          <div style={{width:'600px', overflow:'auto'}}>{JSON.stringify(stockLists[m])}</div> </div>)
                     })}
                 </div>
                 {/* <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre> */}
