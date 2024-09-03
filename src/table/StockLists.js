@@ -195,7 +195,7 @@ function StockLists (props) {
     
         }).catch ((err) => {
             setErr(getDate() + ' backendShare ' + err.message)
-            beep()
+            beep2()
         })   
     }
 
@@ -252,7 +252,7 @@ function StockLists (props) {
     
         }).catch ((err) => {
             setErr(getDate() + ' filterNames ' + err.message)
-            beep()
+            beep2()
         })   
     }
 
@@ -304,7 +304,7 @@ function StockLists (props) {
             // beep2();
         }).catch ((err) => {
             setErr(getDate() + ' backendGetOne ' + err.message)
-            beep()
+            beep2()
         })   
     }
 
@@ -347,7 +347,7 @@ function StockLists (props) {
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
                 setErr(getDate() + ' stockLists delete ' + dat)
-                beep() 
+                beep2() 
                 return;
             }
 
@@ -365,7 +365,7 @@ function StockLists (props) {
             }
         }).catch ((err) => {
             setErr(getDate() + ' backendDelete ' + err.message)
-            beep()
+            beep2()
         }) 
     }
 
