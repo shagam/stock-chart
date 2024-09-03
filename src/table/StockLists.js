@@ -7,6 +7,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
+import {ErrorList, beep, beep2} from '../utils/ErrorList'
 
 function StockLists (props) {
     const {localIp, localIpv4, eliHome} = IpContext();
@@ -41,10 +42,6 @@ function StockLists (props) {
         setBackEndFilter()
     }, [props.servSelect]) 
 
-
-    function setLog () {
-        setLogBackEnd (! logBackEnd)
-    }
 
     //** get from localstorage on startup */
     const keys = Object.keys(stockLists);
@@ -197,9 +194,8 @@ function StockLists (props) {
             // beep2();
     
         }).catch ((err) => {
-            props.errorAdd(['stockListsSend ', listName, err.message])
-            setErr(getDate() + ' ' + err.message)
-            console.log(getDate(), err.message)
+            setErr(getDate() + ' backendShare ' + err.message)
+            beep()
         })   
     }
 
@@ -255,9 +251,8 @@ function StockLists (props) {
             // beep2();
     
         }).catch ((err) => {
-            props.errorAdd(['stockListsSend ', listName, err.message])
-            setErr(getDate() + ' ' + err.message)
-            console.log(getDate(), err.message)
+            setErr(getDate() + ' filterNames ' + err.message)
+            beep()
         })   
     }
 
@@ -308,9 +303,8 @@ function StockLists (props) {
             setLatency ('stockListsSend done, latency(msec)=' + latency)
             // beep2();
         }).catch ((err) => {
-            props.errorAdd(['stockListsSend ', listName, err.message])
-            setErr(getDate() + ' ' + err.message)
-            console.log(getDate(), err.message)
+            setErr(getDate() + ' backendGetOne ' + err.message)
+            beep()
         })   
     }
 
@@ -352,8 +346,8 @@ function StockLists (props) {
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                setErr(['stockListsSend ' + backendListName + '  ' + dat])
-                // props.errorAdd(['stockListsSend ', backendListName, dat]) 
+                setErr(getDate() + ' stockLists delete ' + dat)
+                beep() 
                 return;
             }
 
@@ -370,9 +364,8 @@ function StockLists (props) {
                 setBackendNameArray(backendNameArrayTemp)
             }
         }).catch ((err) => {
-            props.errorAdd(['stockList Delete ', backendListName, err.message])
-            setErr(getDate() + ' ' + err.message)
-            console.log(getDate(), err.message)
+            setErr(getDate() + ' backendDelete ' + err.message)
+            beep()
         }) 
     }
 
@@ -414,7 +407,7 @@ function StockLists (props) {
                         &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
                         <div> <input style={{marginTop: '15px'}} type="checkbox" checked={myIp}  onChange={() => setMyIp(! myIp) }  /> &nbsp; onlyMy-ip &nbsp; &nbsp;</div>
-                        {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;Log &nbsp; &nbsp;</div>}
+                        {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  /> &nbsp;Log &nbsp; &nbsp;</div>}
                     </div>
 
                     {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
