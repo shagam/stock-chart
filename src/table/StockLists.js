@@ -404,24 +404,28 @@ function StockLists (props) {
                 {/* shared Back-end */}
 
                 {/* <div> &nbsp; </div> */}
-                <h5 style={{color: 'green'}}> Shared backend </h5>
-                <div style={{display:'flex'}}>
-                    &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
-                    {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;Log &nbsp; &nbsp;</div>}
+                <div  style= {{background: '#aaffdd'}}>
+                    <h5 style={{color: 'green'}}> Shared backend </h5>
+                    <div style={{display:'flex'}}>
+                        &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
+                        <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
+                        {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;Log &nbsp; &nbsp;</div>}
+                    </div>
+
+                    {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
+                    {backendNameArray && <div> filtered-names({backendNameArray.length})
+                            <div style={{'overflowY': 'scroll'}}> {JSON.stringify(backendNameArray)}</div>
+                         </div>}
+                    
+                    {/* <div> &nbsp; </div> */}
+                    {backendNameArray && backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
+                        &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
+                        title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
+
+                        <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backend </button> &nbsp; &nbsp; 
+                        {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 
+                    </div>}
                 </div>
-                {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
-                {backendNameArray && <pre> filtered-names {backendNameArray.length} {JSON.stringify(backendNameArray)}</pre>}
-                
-                {/* <div> &nbsp; </div> */}
-                {backendNameArray && backendNameArray.length > 0 &&  <div style={{display:'flex'}}>
-                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
-                     title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
-
-                    <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backEnd </button> &nbsp; &nbsp; 
-                    {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 
-                </div>}
-
                 {/* LOcal lists */}
                 <hr/> 
                 {stockLists && <h6>Local stock-lists &nbsp; ({Object.keys(stockLists).length}) </h6>}
