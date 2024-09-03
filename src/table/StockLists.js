@@ -21,10 +21,14 @@ function StockLists (props) {
     const [backEndFilter, setBackEndFilter] = useState();
     const [backendNameArray, setBackendNameArray] = useState([]);
     const [backendListName, setBackendListName] = useState();
+    
     const [err,setErr] = useState()
     const [info, setInfo] = useState()
     const [latency, setLatency] = useState()
+    
     const [logBackEnd, setLogBackEnd] = useState ();
+    const [myIp, setMyIp] = useState (true);
+
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
 
@@ -218,7 +222,8 @@ function StockLists (props) {
         corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=filterNames'
         if (backEndFilter)
             corsUrl += '&filterName=' + backEndFilter;
-        corsUrl += '&ip=' + props.ip
+        if (myIp)
+            corsUrl += '&ip=' + props.ip
 
         if (logBackEnd)
             corsUrl += '&LOG=1'
@@ -408,6 +413,7 @@ function StockLists (props) {
                     <div style={{display:'flex'}}>
                         &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
+                        <div> <input style={{marginTop: '15px'}} type="checkbox" checked={myIp}  onChange={() => setMyIp(! myIp) }  /> &nbsp; onlyMy-ip &nbsp; &nbsp;</div>
                         {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;Log &nbsp; &nbsp;</div>}
                     </div>
 
@@ -422,7 +428,7 @@ function StockLists (props) {
                         title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
 
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backend </button> &nbsp; &nbsp; 
-                        {eliHome && <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button>} &nbsp; &nbsp; 
+                        <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button> &nbsp; &nbsp; 
                     </div>}
                 </div>
                 {/* LOcal lists */}
