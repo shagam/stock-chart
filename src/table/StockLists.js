@@ -6,9 +6,11 @@ import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import {IpContext, getIpInfo} from '../contexts/IpContext';
+import { AuthProvider, useAuth } from '../contexts/AuthContext';
 
 function StockLists (props) {
     const {localIp, localIpv4, eliHome} = IpContext();
+    const {currentUser, admin} = useAuth();
     const [displayFlag, setDisplayFlag] = useState(false);
     const [version, setVersion] = useState(0)
     const [listName, setListName] = useState();
@@ -166,10 +168,10 @@ function StockLists (props) {
             console.log (corsUrl)
 
         setLatency ('Request sent')
-        const mili = Date.now()
+        const mili = Date.now() // measure latency
 
         axios.get (corsUrl)
-        // getDate()
+
         .then ((result) => {
             if (result.status !== 200)
                 return;
@@ -216,17 +218,18 @@ function StockLists (props) {
         corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=filterNames'
         if (backEndFilter)
             corsUrl += '&filterName=' + backEndFilter;
+        corsUrl += '&ip=' + props.ip
 
         if (logBackEnd)
             corsUrl += '&LOG=1'
-        // if (LOG)
+
         console.log (corsUrl)
     
         setLatency('Request sent')
-        const mili = Date.now()
+        const mili = Date.now() // measure latency
 
         axios.get (corsUrl)
-        // getDate()
+
         .then ((result) => {
             if (result.status !== 200)
                 return;
@@ -275,7 +278,7 @@ function StockLists (props) {
         console.log (corsUrl)
         
         setLatency('Request sent')
-        const mili = Date.now()
+        const mili = Date.now() // measure latency
 
         axios.get (corsUrl)
         // getDate()
@@ -324,17 +327,19 @@ function StockLists (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.servSelect+ ":" + props.PORT + '/stockLists?cmd=delOne&listName=' + backendListName
-
+        corsUrl += '&ip=' + props.ip;
+        if (admin)
+            corsUrl += '&admin=' + true;
         if (logBackEnd)
             corsUrl += '&LOG=1'
         // if (LOG)
         console.log (corsUrl)
         
         setLatency('Request sent')
-        const mili = Date.now()
+        const mili = Date.now()  // measure latency
 
         axios.get (corsUrl)
-        // getDate()
+
         .then ((result) => {
             if (result.status !== 200)
                 return;
@@ -342,7 +347,8 @@ function StockLists (props) {
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd(['stockListsSend ', backendListName]) 
+                setErr(['stockListsSend ' + backendListName + '  ' + dat])
+                // props.errorAdd(['stockListsSend ', backendListName, dat]) 
                 return;
             }
 
@@ -359,7 +365,7 @@ function StockLists (props) {
                 setBackendNameArray(backendNameArrayTemp)
             }
         }).catch ((err) => {
-            props.errorAdd(['stockListsSend ', backendListName, err.message])
+            props.errorAdd(['stockList Delete ', backendListName, err.message])
             setErr(getDate() + ' ' + err.message)
             console.log(getDate(), err.message)
         }) 
@@ -377,7 +383,7 @@ function StockLists (props) {
                 {err && <div style={{color:'red'}}>{err}</div>}
                 <div style={{color: 'green'}}>{latency}</div>
 
-                {/* Locak lists  */}
+                {/* Local lists  */}
                 <h5 style={{color: 'blue'}}> Local stock lists </h5>
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
@@ -391,19 +397,12 @@ function StockLists (props) {
                         title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button onClick={del} > delete </button>  &nbsp; &nbsp;
                     <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
-                </div>
-
-                <hr/> 
-                {/* <div> &nbsp; </div> */}
-                <div style={{display:'flex'}}>
-                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
-                        title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                     <button style={{backgroundColor: 'pink'}} onClick={backendShare} > share_to_backEnd </button> &nbsp; &nbsp; 
                 </div>
+
+
                 <hr/> 
                 {/* shared Back-end */}
-
-                {/* <div> &nbsp; </div> */}
                 <div  style= {{background: '#aaffdd'}}>
                     <h5 style={{color: 'green'}}> Shared backend </h5>
                     <div style={{display:'flex'}}>
@@ -414,7 +413,7 @@ function StockLists (props) {
 
                     {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
                     {backendNameArray && <div> filtered-names({backendNameArray.length})
-                            <div style={{'overflowY': 'scroll'}}> {JSON.stringify(backendNameArray)}</div>
+                            <div style={{maxWidth: '90%', 'overflowY': 'scroll'}}> {JSON.stringify(backendNameArray)}</div>
                          </div>}
                     
                     {/* <div> &nbsp; </div> */}
