@@ -64,7 +64,9 @@ function StockLists (props) {
             setListName(nameArrayLocal[0])
     }
 
-
+    function setNewListName_lower (name) {
+        setNewListName(name.toLowerCase())
+    }
 
     //** create list from table */
     function add() {
@@ -385,7 +387,7 @@ function StockLists (props) {
                 <h5 style={{color: 'blue'}}> Local stock lists </h5>
                 <div style={{display: 'flex'}}>
                     {/* <div style={{padding: '14px'}}>List-name</div> */}
-                    &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
+                    &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName_lower} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
                     <button style={{hight: '8px' }} onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
                 </div>
 
