@@ -313,9 +313,9 @@ function StockLists (props) {
     function backendDelete () {
         setErr();
         // setInfo();
-        console.log (backendListName, info)
+        // console.log (backendListName, info)
         if (! backendListName) {
-            alert ('Missing list Name')
+            alert ('Missing list Name=', backendListName)
             return;
         }
 
