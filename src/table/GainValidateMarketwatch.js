@@ -133,42 +133,27 @@ function VerifyGain (props) {
 
           const alphaDate = props.stockChartXValues[entry];
           const alphaPrice = Number(props.stockChartYValues[entry]).toFixed(2);
-
-          props.rows[row_index].values.verifyDate = oldestDate;
-          props.rows[row_index].values.verifyPrice = closeValue;
-
-          // const alphaPrice = stockChartYValuesFunction[stockChartYValuesFunction.length - backIndex]
-          props.rows[row_index].values.alphaDate = alphaDate;
-          props.rows[row_index].values.alphaPrice = alphaPrice;
   
           var p = Number(alphaPrice / closeValue).toFixed(2)
 
           //MarketWatch fail whenReverse split
-          if (reverseSplit(props.rows[row_index].values.splits_list)) {
-            props.rows[row_index].values.verify_1 = 'Rv-split';
-          }
-          else  
-          props.rows[row_index].values.verify_1 = Number(p);
-          props.rows[row_index].values.verifyUpdateMili = Date.now();
-
+       
           const searcDate = year + '-' + mon + '-' + day;
     
           // build return object
           const ver = {};
 
           ver['sym'] = props.symbol;
-          ver['date'] = alphaDate
+          ver['verify_date'] = alphaDate
 
           ver['alphaPrice'] = alphaPrice
-
-          if (!nasdaq)
-            ver['verifyPrice'] = props.rows[row_index].values.verifyPrice;
-          else
-            ver['nasdaqPrice'] = props.rows[row_index].values.verifyPrice;
-
+          ver['verifyPrice'] = closeValue;
+ 
           ver['week'] = entry;
           ver['max'] = props.stockChartXValues.length - 1
-          ver['verify_1'] = p
+          ver['verify_1'] = Number(p)
+          if (reverseSplit(props.rows[row_index].values.splits_list))
+              ver['verify_1'] = 'Rv-split';
 
           if (p < 0.85 || p > 1.2)
             setErr('Verify_1 mismatch. Too far from "1" ')
@@ -308,7 +293,8 @@ function VerifyGain (props) {
 
       <button style={{background: 'aqua'}} type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;
       {updateDate && <div>Update: {updateDate}</div>}
-      <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div> 
+      {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
+      {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
     </div>
   )
 }

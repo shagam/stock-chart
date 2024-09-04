@@ -151,31 +151,6 @@ export const COLUMNS = [
 
 
   {
-    Header: 'alphaDate',
-    Footer: 'alphaDate',    
-    accessor: 'alphaDate'
-  },
-  {
-    Header: 'alphaPrice',
-    Footer: 'alphaPrice',    
-    accessor: 'alphaPrice'
-  },
-   {
-    Header: 'verifyDate',
-    Footer: 'verifyDate',    
-    accessor: 'verifyDate'
-  },
-  {
-    Header: 'verifyPrice',
-    Footer: 'verifyPrice',
-    accessor: 'verifyPrice',
-  },
-  {
-    Header: 'verify_1',
-    Footer: 'verify_1',    
-    accessor: 'verify_1'
-  },
-  {
     Header: 'deep',
     Footer: 'deep',    
     accessor: 'deep'
@@ -415,39 +390,6 @@ export const GROUPED_COLUMNS = [
         accessor: 'priceDivHigh'
       },
     
-    ]
-  },
-  {
-    Header: 'verify',
-    Footer: 'verify',
-    accessor: 'verify',   
-    columns: [
-      {
-        Header: 'alphaDate',
-        Footer: 'alphaDate',    
-        accessor: 'alphaDate'
-      },
-      {
-        Header: 'alphaPrice',
-        Footer: 'alphaPrice',    
-        accessor: 'alphaPrice'
-      },
-       {
-        Header: 'verifyDate',
-        Footer: 'verifyDate',    
-        accessor: 'verifyDate'
-      },
-      {
-        Header: 'verifyPrice',
-        Footer: 'verifyPrice',
-        accessor: 'verifyPrice',
-      },
-      {
-        Header: 'verify_1',
-        Footer: 'verify_1',    
-        accessor: 'verify_1'
-      },
-
     ]
   },
   {
