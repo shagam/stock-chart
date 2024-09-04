@@ -158,10 +158,13 @@ function MonthGain (props) {
 
     // calc average of stocks gain
     var monthGain = []
-    for (let i = 0; i < 12; i++)
+    var yearGain_ = 1;
+    for (let i = 0; i < 12; i++) {
         monthGain[i] = Number(Math.pow(Number(mGain[i]), 1 / stockCount_).toFixed(3))
+        yearGain_ *= monthGain[i]
+    }
     // if (LOG)
-        console.log(symm, 'agregate gainShiftBefore', monthGain)
+        console.log(symm, 'agregate gainShiftBefore', ' yearlyGain', yearGain_.toFixed(3), monthGain)
 
     // shift gain from next month
     var monthGainShift = []
@@ -172,7 +175,7 @@ function MonthGain (props) {
 
     }
     // if (LOG)
-        console.log(symm,'agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
+        console.log(symm,'agregate gainShiftAfter', ' yearlyGain', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
 
     // resultArray   monthGainShift
 
