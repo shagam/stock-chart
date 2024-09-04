@@ -133,12 +133,12 @@ function MonthGain (props) {
         else
           console.log (symm, 'NaN', mGainForSymm, mCountForSymm)
       }
-      if (LOG)
-      console.log(symm, debug)
+      // if (LOG)
+      // console.log(symm, debug)
 
       // add symbol to other
-      if (LOG)
-      console.log (symm, 'yearly', mGainForSymmShift)
+      // if (LOG)
+        console.log (symm, 'yearly', mGainForSymmShift, mCountForSymm) // syngle sym 
       for (let j = 0; j < 12; j++) {
         if (! isNaN(mGainForSymmShift[j]))
         mGain[j] *= mGainForSymmShift[j]
@@ -153,14 +153,14 @@ function MonthGain (props) {
 
 
     
-    // prepare for print results calc average stocks gain for 
+    // prepare for print results calc average stocks gain for few stocks
     var yearlyGain = 1;
 
-    // calc average
+    // calc average of stocks gain
     var monthGain = []
     for (let i = 0; i < 12; i++)
         monthGain[i] = Number(Math.pow(Number(mGain[i]), 1 / stockCount_).toFixed(3))
-    if (LOG)
+    // if (LOG)
         console.log(symm, 'agregate gainShiftBefore', monthGain)
 
     // shift gain from next month
@@ -171,9 +171,10 @@ function MonthGain (props) {
         yearlyGain *= monthGainShift[i];
 
     }
-    if (LOG)
+    // if (LOG)
         console.log(symm,'agregate gainShiftAfter', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
 
+    // resultArray   monthGainShift
 
     mGainObj.Jan = monthGainShift[0]
     mGainObj.Feb = monthGainShift[1]
