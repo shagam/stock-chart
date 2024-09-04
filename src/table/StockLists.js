@@ -182,7 +182,8 @@ function StockLists (props) {
             const dat = result.data
             console.log (dat)
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                props.errorAdd(['stockListsSend ', listName]) 
+                setErr(getDate() + ' stockList share ' + dat)
+                beep2();
                 return;
             }
 
