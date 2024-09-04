@@ -63,18 +63,16 @@ const Peak2PeakGui = (props) => {
   // temp save bubble crash baseline
   function calcBaseLine (XValues, YValues) {  
 
-    var yBubbleLine_ = []
+    var yBubbleLine = []
 
     //** extrapolate value of today */
-
-    const val0 = results.toValue * results.weeklyGain ** results.indexEnd // weekCount
-    yBubbleLine_[0] = val0; 
+    yBubbleLine[0] = results.toValue * results.weeklyGain ** results.indexEnd // weekCount 
 
     //** exstrapolate from 0 (latest) bubbleLine */
     for (let i = 0; i < YValues.length - 1; i ++)
-      yBubbleLine_.push(yBubbleLine_[i] / results.weeklyGain);  
+      yBubbleLine.push(yBubbleLine[i] / results.weeklyGain);  
 
-    props.setBubbleLine ({x: XValues, y: yBubbleLine_})
+    props.setBubbleLine ({x: XValues, y: yBubbleLine})
     setBubbleLineFlag(true)
 
     if (Object.keys(props.gainMap).length > 1) {
@@ -82,11 +80,11 @@ const Peak2PeakGui = (props) => {
     }
   
     //** calc ratio latestValue/bubbleline */
-    const bubbleLineOver = (YValues[0] / yBubbleLine_[0]).toFixed(3)
+    const bubbleLineOver = (YValues[0] / yBubbleLine[0]).toFixed(3)
     setBubbleLineRatio(bubbleLineOver)
     if (results)
       results['CurrentPrice/bubbleLine'] = bubbleLineOver;
-    console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine_[0].toFixed(2))
+    console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
     // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
   }
