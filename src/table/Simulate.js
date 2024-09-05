@@ -26,13 +26,17 @@ const Simulate = (props) => {
 
     //** for symulate */
     const [tradeFlag, setTradeFlag] = useState (true);
+    const [log, setLog] = useState (false);
+
     const [accountValueInit, setAccountValue] = useState (1000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (200); // default oldest 
     // const [stockCountInit, setStockCount] =  useState (100);
     const [thresholdPercent, setThresholdPercent] = useState (0.8);
-    const [interestRate, setInterestRate]  = useState (5);
-    const [transactionFee, setTransactionFee]  =  useState (0);
+    const [interestRate, setInterestRate] = useState (5);
+    const [transactionFee, setTransactionFee] = useState (0);
+    const [bubbleAvoidFactor, setBubbleAvoidFactor] = useState (0);
+
 
     const [results, setResults] =  useState ();
     const [counters, setCounters] =  useState ();
@@ -51,6 +55,7 @@ const Simulate = (props) => {
 
     function simulateTrade(XValues, YValues) {
 
+        const bubbleLine = props.gainMap.bubbleLine;
 
         var price = YValues[YValues.length - 1 - startWeek]  // begining price // default oldest
         const priceInit = price
@@ -64,9 +69,20 @@ const Simulate = (props) => {
         var moneyMarket = moneyMarketInit
 
         //** log initial data */
-        console.log (props.symbol, getDate(), 'trade-start value=', accountVal.toFixed(2), 'stocksCount=', stockCount.toFixed(2),
-         'price=', price, 'moneyMarket=', moneyMarket.toFixed(2), 'portionPercent=', portionPercent,
-          'thresholdPercent=', thresholdPercent, 'interestRate=', interestRate, 'transactionFee=', transactionFee, 'startWeek=', startWeek)
+        const tradeInitInfo = {
+            'trade_start_value_$': accountVal.toFixed(2),
+            stocksCount: stockCount.toFixed(2),
+            'moneyMarket_$': moneyMarket.toFixed(2),
+            'price_$': price,
+            'portion_%': portionPercent,
+            'threshold_%': thresholdPercent,
+            'interestRate_%': interestRate,
+            'transactionFee_$': transactionFee,
+            startWeek: startWeek
+        }
+        console.log (props.symbol, getDate(), tradeInitInfo); 
+          
+             
         
         const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
         if (LOG)
@@ -135,7 +151,7 @@ const Simulate = (props) => {
                 // const portionPer = price*stockCount / (price*stockCount + moneyMarket)
 
                 //** log first 10 */
-                if (LOG)
+                if (log)
                     console.log (props.symbol, 'i=', YValues.length - i, 'accountVal=', accountVal.toFixed(2), 'stockVal=',
                  (price*stockCount).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price)
 
@@ -202,7 +218,7 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '80vw'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue', width: '600px'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
@@ -210,14 +226,18 @@ const Simulate = (props) => {
 
             {/* <h4>Simulate trade (keep portion)</h4> */}
             {/* <div> &nbsp;</div> */}
-            {<div> <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (!tradeFlag)} /> tradeFlag &nbsp;</div>}     
+            <div>
+                <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
+                <input  type="checkbox" checked={log}  onChange={() => setLog (! log)} /> log &nbsp;
+            </div>  
             <div style = {{width: '70vw'}}>
-            <GetInt init={accountValueInit} callBack={setAccountValue} title='accountValue $' type='Number' pattern="[0-9]+"/>
-            <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
-            <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='threshold %' type='text' pattern="[\\.0-9]+"/>
-            <GetInt init={interestRate} callBack={setInterestRate} title='interestRate %' type='Number' pattern="[0-9]+"/>
-            <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee $' type='text' pattern="[\.0-9]+"/>
-            <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+"/>
+                <GetInt init={bubbleAvoidFactor} callBack={setBubbleAvoidFactor} title='bubbleAvoidFactor' type='Number' pattern="[0-9]+"/>
+                <GetInt init={accountValueInit} callBack={setAccountValue} title='accountValue $' type='Number' pattern="[0-9]+"/>
+                <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
+                <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='threshold %' type='text' pattern="[\\.0-9]+"/>
+                <GetInt init={interestRate} callBack={setInterestRate} title='interestRate %' type='Number' pattern="[0-9]+"/>
+                <GetInt init={transactionFee} callBack={setTransactionFee} title='transactionFee $' type='text' pattern="[\.0-9]+"/>
+                <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+"/>
             </div>
             <div> &nbsp;</div>
 
