@@ -85,9 +85,9 @@ export function AuthProvider ({ children }) {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user);
       if (user) {
-        if (user.email === 'eli.shagam@gmail.com' 
-        || user.email === 'j321111@gmail.com' 
-        || user.email === 'dina146@bezeqint.net') {
+        if (user.email === 'process.env.REACT_APP_eli' 
+        || user.email === 'process.env.REACT_APP_j321' 
+        ) {
           setAdmin(true)
           console.log ('logged email:', user.email, ' (admin)', ) 
         }
