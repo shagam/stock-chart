@@ -35,8 +35,8 @@ const Simulate = (props) => {
     const [thresholdPercent, setThresholdPercent] = useState (0.8);
     const [interestRate, setInterestRate] = useState (5);
     const [transactionFee, setTransactionFee] = useState (0);
-    const [bubbleAvoidFactor, setBubbleAvoidFactor] = useState (0);
-
+    const [bubbleAvoidFactor, setBubbleAvoidFactor] = useState (1.1); // defailt neutral
+    const [optimize, setOptimize] = useState (true);
 
     const [results, setResults] =  useState ();
     const [counters, setCounters] =  useState ();
@@ -54,8 +54,6 @@ const Simulate = (props) => {
 //   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
 
     function simulateTrade(XValues, YValues) {
-
-        const bubbleLine = props.gainMap.bubbleLine;
 
         var price = YValues[YValues.length - 1 - startWeek]  // begining price // default oldest
         const priceInit = price
@@ -99,8 +97,26 @@ const Simulate = (props) => {
         var buyMin;
         var sellMin;
 
+
         for (let i = oldestIndex; i > 0; i--) {
             try {
+
+                //** search date in bubbleLine */
+                const bubbleLine = props.gainMap.bubbleLine;
+                var portionFactor = 1; // default neutral
+                if (bubbleLine && optimize) {
+                    portionFactor = bubbleAvoidFactor
+                    const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
+                    const symVal = YValues[i]; 
+                    var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
+                    if (bubbleIndex!== -1) {
+                        const bubblePriceDivPrice = YValues[i] / bubbleLine.y[bubbleIndex];
+                        portionFactor /= Math.sqrt(bubblePriceDivPrice)
+
+                        if (log)
+                            console.log(symdate, i, 'bubble/price=', bubblePriceDivPrice.toFixed(3), 'portionFactor=',portionFactor.toFixed(3))
+                    }
+                }
             const pricePrev = price;
             price = YValues[i] 
         
@@ -111,13 +127,14 @@ const Simulate = (props) => {
             //     console.log ('accountVal diff', accountValPrev, accountVal)
             // }
             // const tradeCount =  thresholdPercent / 100 * stockCount;  
-
-            const portionDiff = price*stockCount / accountVal - portionPercent / 100; 
+            const targetPortion = (portionPercent / 100) * portionFactor ;
+            const portionDiff = price*stockCount / accountVal - targetPortion; 
             // if (Math.abs(portionDiff) > accountVal / 5000) {
             //     console.log (accountVal, portionDiff)
             // }
 
-            if (tradeFlag && Math.abs(portionDiff) > thresholdPercent / 100 && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
+            if (tradeFlag && Math.abs(portionDiff) > (thresholdPercent / 100)
+                 && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
                 //** If up sell */
                 stockToTrade = Math.abs(stockCount * portionDiff);
                 const tradeSum = (stockToTrade * price);
@@ -151,9 +168,11 @@ const Simulate = (props) => {
                 // const portionPer = price*stockCount / (price*stockCount + moneyMarket)
 
                 //** log first 10 */
-                if (log)
-                    console.log (props.symbol, 'i=', YValues.length - i, 'accountVal=', accountVal.toFixed(2), 'stockVal=',
-                 (price*stockCount).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price)
+                if (log) {
+                    console.log (props.symbol, 'i=', YValues.length - i, 'accountVal=', accountVal.toFixed(2), 'portionFactor=',
+                     (portionFactor).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 
+                     'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price, 'targetPortion=', targetPortion)
+                }
 
                 //** Check out of range */
                 // const currentPercent = price*stockCount /  accountVal;
@@ -185,7 +204,7 @@ const Simulate = (props) => {
         setResults (
             {
                 gainOfAccount: gain, 
-                gainOfStock: stockGainDuringPeriod.toFixed(2),
+                rawGainOfStock: stockGainDuringPeriod.toFixed(2),
 
                 accountValueEnd_$: accountVal.toFixed(2),
                 accountValInit_$: accountValueInit.toFixed(2),
@@ -204,12 +223,19 @@ const Simulate = (props) => {
                 totalWeeksBack: oldestIndex,
             })
 
+            // avoid exceptions when no trade
+            if (! buyMin) 
+                buyMin = 0;
+            if (! sellMin)
+                sellMin = 0;
+            const buyAverage = buyCount === 0 ? 0 : (buySumTotal/buyCount).toFixed(2);
+            const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
             setCounters({
                 buyCount: buyCount,
-                buyAverage_$: (buySumTotal/buyCount).toFixed(2), 
+                buyAverage_$: buyAverage, 
                 buyMin_$: buyMin.toFixed(2),
                 sellCount: sellCount,
-                sellAverage_$: (sellSumTotal/sellCount).toFixed(2),
+                sellAverage_$: sellAverage,
                 sellMin_$: sellMin.toFixed(2),
                 tradeSkipCount: tradeSkipCount,
             })
@@ -223,15 +249,17 @@ const Simulate = (props) => {
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
             </div>
+            {props.gainMap.bubbleLine && <h6  style={{color: 'red' }}> Optimize, decrease aggressive portion when near bubbleLine (and vice versa)</h6>}
 
             {/* <h4>Simulate trade (keep portion)</h4> */}
             {/* <div> &nbsp;</div> */}
             <div>
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
                 <input  type="checkbox" checked={log}  onChange={() => setLog (! log)} /> log &nbsp;
+                <input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} /> optimize (price/bubble) &nbsp;
             </div>  
             <div style = {{width: '70vw'}}>
-                <GetInt init={bubbleAvoidFactor} callBack={setBubbleAvoidFactor} title='bubbleAvoidFactor' type='Number' pattern="[0-9]+"/>
+                <GetInt init={bubbleAvoidFactor} callBack={setBubbleAvoidFactor} title='bubbleAvoidFactor' type='text' pattern="[\\.0-9]+"/>
                 <GetInt init={accountValueInit} callBack={setAccountValue} title='accountValue $' type='Number' pattern="[0-9]+"/>
                 <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
                 <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='threshold %' type='text' pattern="[\\.0-9]+"/>
