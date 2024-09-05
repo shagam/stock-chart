@@ -25,10 +25,11 @@ const Simulate = (props) => {
   // logFlags
   // weekly
 
-    //** for symulate */
+    //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
+    const [allowMargin, setAllowMargin] = useState (false);
 
     const [accountValueInit, setAccountValue] = useState (1000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
@@ -116,9 +117,18 @@ const Simulate = (props) => {
                     const symVal = YValues[i]; 
                     var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
                     if (bubbleIndex!== -1) {
+
+                        //** optimize according to bubbleLine */
                         const bubblePriceDivPrice = YValues[i] / bubbleLine.y[bubbleIndex];
                         portionFactor /= Math.sqrt(bubblePriceDivPrice)
                         targetPortion *= portionFactor
+
+                        if (targetPortion > 0.98) {
+                            if (! allowMargin)
+                                continue;
+                            else
+                                console.log ('margin')
+                        }
 
                         if (logOptimize)
                             console.log(props.symbol, 'optimize', symdate, ' i=', i, 'bubble/price=', bubblePriceDivPrice.toFixed(3), 'portionFactor=', 
@@ -143,18 +153,8 @@ const Simulate = (props) => {
                 stockToTrade = Math.abs(stockCount * portionDiff);
                 const tradeSum = (stockToTrade * price);
 
-                if (portionDiff > 0) { // sell stocks
-                    stockCount -= stockToTrade;
-                    moneyMarket += tradeSum;
-                    moneyMarket -= transactionFee; // for stocks trade only
-                    sellCount ++;
-                    sellSumTotal += tradeSum;
-                    if (sellMin === undefined || tradeSum < sellMin)
-                        sellMin = tradeSum;
-                }
-
-                //** if down buy */
-                else { // buy stocks.
+                if (portionDiff < 0) {
+                    // buy stocks.
                     stockCount += stockToTrade;
                     moneyMarket -= tradeSum;
                     moneyMarket -= transactionFee;
@@ -164,32 +164,35 @@ const Simulate = (props) => {
                         buyMin = tradeSum;
                 }
 
+                else {
+                     // sell stocks
+                     stockCount -= stockToTrade;
+                     moneyMarket += tradeSum;
+                     moneyMarket -= transactionFee; // for stocks trade only
+                     sellCount ++;
+                     sellSumTotal += tradeSum;
+                     if (sellMin === undefined || tradeSum < sellMin)
+                         sellMin = tradeSum;
+                }
+
                 if (moneyMarket < moneyMarketMin)
                     moneyMarketMin = moneyMarket;
                 if (moneyMarket > moneyMarketMax)
                     moneyMarketMax = moneyMarket;
 
-                //** Trade should not change account value */
+                //** verify transaction does not change account value. */
                 accountVal = price*stockCount + moneyMarket;
                 if (Math.abs(accountValBeforeTrade - accountVal) >  2*transactionFee + 0.01) {
                     console.log ('accountVal trade diff, before=', accountValPrev.toFixed(2), ' after=', accountVal.toFixed(2))
                 }
-                // const portionPer = price*stockCount / (price*stockCount + moneyMarket)
 
-                //** log first 10 */
+                //** log transaction */
                 if (logTrade) {
                     console.log (props.symbol, 'tradeInfo, i=', YValues.length - i, 'accountVal=', accountVal.toFixed(2), 'portionFactor=',
                      (portionFactor).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 
                      'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price, 'targetPortion=', targetPortion.toFixed(3))
                 }
 
-                //** Check out of range */
-                // const currentPercent = price*stockCount /  accountVal;
-                // const EPICS = 1.02;
-                // if (currentPercent * EPICS < portionPercent / 100 || currentPercent / EPICS > portionPercent / 100) // portion 3% off
-                //     console.log(props.symbol, 'out of range, index=', i, 'percentage=', (currentPercent * 100).toFixed(2), 'portionPercent', portionPercent,
-                // // 'stocksVal=', (price*stockCount).toFixed(2),  'moneyMarket', moneyMarket.toFixed(2)
-                // )    
             }
             else
             tradeSkipCount ++;
@@ -255,7 +258,7 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '600px'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue', width: '650px'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
@@ -266,9 +269,11 @@ const Simulate = (props) => {
             {/* <div> &nbsp;</div> */}
             <div>
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
+                <input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} /> optimize (price/bubble) &nbsp;
+                <input  type="checkbox" checked={allowMargin}  onChange={() => setAllowMargin  (! allowMargin)} /> allowMargin &nbsp;
+                
                 <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;
                 <input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;
-                <input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} /> optimize (price/bubble) &nbsp;
             </div>  
             <div style = {{width: '70vw'}}>
                 <GetInt init={bubbleAvoidFactor} callBack={setBubbleAvoidFactor} title='bubbleAvoidFactor' type='text' pattern="[\\.0-9]+"/>
