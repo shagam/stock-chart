@@ -27,6 +27,8 @@ const Simulate = (props) => {
 
     //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
+    const [optimize, setOptimize] = useState (props.gainMap.bubbleLine ? true : false);
+
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
     const [allowMargin, setAllowMargin] = useState (false);
@@ -38,11 +40,14 @@ const Simulate = (props) => {
     const [thresholdPercent, setThresholdPercent] = useState (0.8);
     const [interestRate, setInterestRate] = useState (3.2);
     const [transactionFee, setTransactionFee] = useState (0);
-    const [scale, setScale] = useState (1.05); // defailt neutral
-    const [optimize, setOptimize] = useState (true);
+    const [optimizeScale, setOptimizeScale] = useState (1.05); // defailt neutral
+
 
     const [results, setResults] =  useState ();
     const [counters, setCounters] =  useState ();
+
+    const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
+
 
     const historyLength = props.stockChartXValues.length;
 
@@ -101,7 +106,7 @@ const Simulate = (props) => {
         var buySumTotal = 0;
         var buyMin;
         var sellMin;
-        var moneyMarketMin = 0;
+        var moneyMarketMin = accountValueInit;
         var moneyMarketMax = 0;        
 
 
@@ -114,7 +119,7 @@ const Simulate = (props) => {
                 const bubbleLine = props.gainMap.bubbleLine;
                 var portionFactor = 1; // default neutral
                 if (bubbleLine && optimize) {
-                    portionFactor = scale; // defaut setup
+                    portionFactor = optimizeScale; // defaut setup
                     const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
                     const symVal = YValues[i]; 
                     var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
@@ -122,7 +127,7 @@ const Simulate = (props) => {
 
                         //** optimize according to bubbleLine */
                         const priceDivBbubblePrice = YValues[i] / bubbleLine.y[bubbleIndex];
-                        targetPortion = 1 - ((1-targetPortion) * priceDivBbubblePrice / scale)
+                        targetPortion = 1 - ((1-targetPortion) * priceDivBbubblePrice / optimizeScale)
 
 
                         if (logOptimize)
@@ -218,22 +223,8 @@ const Simulate = (props) => {
 
         setResults (
             {
-                gainOfAccount: gain, 
-                rawGainOfStock: stockGainDuringPeriod.toFixed(2),
-
-                accountValueEnd_$: accountVal.toFixed(2),
-                accountValInit_$: accountValueInit.toFixed(2),
-
-                stockCountEnd: stockCount.toFixed(2),
-                stockCountInit: stockCountInit.toFixed(2),
-
-                moneyMarketEnd_$: moneyMarket.toFixed(2),
-                moneyMarketInit_$: moneyMarketInit.toFixed(2),
-
                 priceEnd_$: price.toFixed(2),
                 priceInit_$: priceInit,
-
-
                 dateStart: XValues[oldestIndex],
                 totalWeeksBack: oldestIndex,
 
@@ -248,7 +239,96 @@ const Simulate = (props) => {
                 moneyMarketMax: moneyMarketMax.toFixed(2),
 
             })
-        
+
+
+            //** results */
+
+            
+            if (! resultsArray.gainOfAccount)
+                resultsArray.gainOfAccount = []
+            resultsArray.gainOfAccount.push(gain)
+
+            if (! resultsArray.rawGainOfStock)
+                resultsArray.rawGainOfStock = []
+            resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
+
+
+
+
+            //** input params */
+            if (! resultsArray.params)
+                resultsArray.params = [];
+            resultsArray.params.push('=====')
+
+            if (! resultsArray.tradeFlag)
+                resultsArray.tradeFlag = []
+            resultsArray.tradeFlag.push('' + tradeFlag)
+
+            if (! resultsArray.optimize)
+                resultsArray.optimize = []
+            resultsArray.optimize.push ('' + optimize)
+
+            if (! resultsArray.portionPercent)
+                resultsArray.portionPercent = [];
+            resultsArray.portionPercent.push(portionPercent)
+
+            if (! resultsArray.optimizeScale)
+                resultsArray.optimizeScale = [];
+            resultsArray.optimizeScale.push(optimizeScale)
+
+            if (! resultsArray.thresholdPercent)
+                resultsArray.thresholdPercent =[];
+            resultsArray.thresholdPercent.push(thresholdPercent)
+
+            if (! resultsArray.interestRate)
+                resultsArray.interestRate = [];
+            resultsArray.interestRate.push(interestRate)
+
+            if (! resultsArray.transactionFee)
+                resultsArray.transactionFee = [];
+            resultsArray.transactionFee.push(transactionFee)
+
+            // if (! resultsArray.accountValueEnd_$)
+            //     resultsArray.accountValueEnd_$ = []
+            // resultsArray.accountValueEnd_$.push(accountVal.toFixed(2))
+
+            // if (! resultsArray.accountValInit_$)
+            //     resultsArray.accountValInit_$ = [];
+            // resultsArray.accountValInit_$.push(accountValueInit.toFixed(2))
+
+            //** more info */
+            if (! resultsArray.info)
+                resultsArray.info = [];
+            resultsArray.info.push('=====')
+
+            if (! resultsArray.stockCountEnd)
+                resultsArray.stockCountEnd = []
+            resultsArray.stockCountEnd.push (stockCount.toFixed(2))
+
+            if (! resultsArray.stockCountInit)
+                resultsArray.stockCountInit = [];
+            resultsArray.stockCountInit.push(stockCountInit.toFixed(2))
+
+            if (!resultsArray.moneyMarketEnd_$)
+                resultsArray.moneyMarketEnd_$ = [];
+            resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(2))
+
+            if (! resultsArray.moneyMarketInit_$)
+                resultsArray.moneyMarketInit_$ = [];
+            resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(2))
+
+
+
+            // if (! resultsArray.priceEnd_$)
+            //     resultsArray.priceEnd_$ = [];
+            // resultsArray.priceEnd_$.push( price.toFixed(2))
+
+            // if (!resultsArray.priceInit_$)
+            //     resultsArray.priceInit_$ = [];
+            // resultsArray.priceInit_$.push(priceInit)
+
+
+
     }
 
 
@@ -274,19 +354,40 @@ const Simulate = (props) => {
             <div style = {{width: '70vw'}}>
                 <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value-init $' type='Number' pattern="[0-9]+"/>
                 <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
-                <GetInt init={scale} callBack={setScale} title='optimize-scale (0.7 .. 1.5) ' type='text' pattern="[\\.0-9]+"/>
+                <GetInt init={optimizeScale} callBack={setOptimizeScale} title='optimize-scale (0.7 .. 1.5) ' type='text' pattern="[\\.0-9]+"/>
                 <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+"/>
-                <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='Number' pattern="[0-9]+"/>
+                <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+"/>
                 <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+"/>
                 <GetInt init={startWeek} callBack={setStartWeek} title='startWeek (0 .. ~1000)' type='Number' pattern="[0-9]+"/>
             </div>
             <div> &nbsp;</div>
 
             {<button style={{background: 'lightGreen'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
-            {results && <div> Values &nbsp;</div>}
-            <pre>{JSON.stringify(results, null, 2)}</pre>
-            {results && <div> Counters &nbsp;</div>}
-            <pre>{JSON.stringify(counters, null, 2)}</pre>
+
+  
+            <table>
+                <thead>
+
+                </thead>
+                <tbody>
+                    {Object.keys(resultsArray).map((s, s1) =>{
+                        return (
+                        <tr key={s1}>
+                            <td style={{width: '8px'}}>{s}</td>                 
+                            {resultsArray[s].map((k,n)=>{
+                            return (
+                                <td key={n}> {k} </td>
+                            )
+                            })
+                        }
+                        </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            
+            {results && <div> Last simulation info &nbsp;</div>}
+             <pre>{JSON.stringify(results, null, 2)}</pre>
          </div>
     )
  }
