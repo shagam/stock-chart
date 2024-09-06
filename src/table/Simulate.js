@@ -76,6 +76,9 @@ const Simulate = (props) => {
         const moneyMarketInit = accountValueInit * (1 -  aggressivePortionInit) // initial moneyMarket 
         var moneyMarket = moneyMarketInit
 
+        var portionMin = aggressivePortionInit;
+        var portionMax = aggressivePortionInit;
+
         //** log initial data */
         const tradeInitInfo = {
             'trade_start_value_$': accountVal.toFixed(2),
@@ -129,6 +132,11 @@ const Simulate = (props) => {
                         const priceDivBbubblePrice = YValues[i] / bubbleLine.y[bubbleIndex];
                         targetPortion = 1 - ((1-targetPortion) * priceDivBbubblePrice / optimizeScale)
 
+                        // save portion min/max
+                        if (portionMin > targetPortion)
+                            portionMin = targetPortion
+                        if (portionMax < targetPortion)
+                            portionMax = targetPortion
 
                         if (logOptimize)
                             console.log(props.symbol, 'optimize', symdate, ' i=', i, 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
@@ -252,9 +260,16 @@ const Simulate = (props) => {
                 resultsArray.rawGainOfStock = []
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
+            if (! resultsArray.portionMax)
+                resultsArray.portionMax = [];
+            resultsArray.portionMax.push(portionMax.toFixed(3))
+
+            if (! resultsArray.portionMin)
+                resultsArray.portionMin = [];
+            resultsArray.portionMin.push(portionMin.toFixed(3))
 
 
-
+            
             //** input params */
             if (! resultsArray.params)
                 resultsArray.params = [];
@@ -344,12 +359,12 @@ const Simulate = (props) => {
             {/* <div> &nbsp;</div> */}
             <div style={{display: 'flex'}}>
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
-                {props.gainMap.bubbleLine&& <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
+                {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
                      optimize (price/bubble) &nbsp;</div>}
                 {/* <input  type="checkbox" checked={allowMargin}  onChange={() => setAllowMargin  (! allowMargin)} /> allowMargin &nbsp; */}
                 
                 <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;
-                <input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;
+                {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
             <div style = {{width: '70vw'}}>
                 <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value-init $' type='Number' pattern="[0-9]+"/>
