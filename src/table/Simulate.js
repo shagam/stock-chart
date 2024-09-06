@@ -208,6 +208,14 @@ const Simulate = (props) => {
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
         console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
 
+        // avoid exceptions when no trade
+        if (! buyMin) 
+            buyMin = 0;
+        if (! sellMin)
+            sellMin = 0;
+        const buyAverage = buyCount === 0 ? 0 : (buySumTotal/buyCount).toFixed(2);
+        const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
+
         setResults (
             {
                 gainOfAccount: gain, 
@@ -228,16 +236,7 @@ const Simulate = (props) => {
 
                 dateStart: XValues[oldestIndex],
                 totalWeeksBack: oldestIndex,
-            })
 
-            // avoid exceptions when no trade
-            if (! buyMin) 
-                buyMin = 0;
-            if (! sellMin)
-                sellMin = 0;
-            const buyAverage = buyCount === 0 ? 0 : (buySumTotal/buyCount).toFixed(2);
-            const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
-            setCounters({
                 buyCount: buyCount,
                 buyAverage_$: buyAverage, 
                 buyMin_$: buyMin.toFixed(2),
@@ -247,6 +246,7 @@ const Simulate = (props) => {
                 tradeSkipCount: tradeSkipCount,
                 moneyMarketMin: moneyMarketMin.toFixed(2),
                 moneyMarketMax: moneyMarketMax.toFixed(2),
+
             })
         
     }
