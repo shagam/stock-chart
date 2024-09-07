@@ -33,6 +33,13 @@ const Simulate = (props) => {
     const [logOptimize, setLogOptimize] = useState (false);
     const [allowMargin, setAllowMargin] = useState (false);
 
+    // bubbleLine aggressive level optimize Params
+    const [LEVEL_LOW, set_LEVEL_LOW] = useState(0.65)
+    const [LEVEL_HIGH, set_LEVEL_HIGH] = useState(1.1)
+    const [PORTION_HIGH, set_PORTION_HIGH] = useState(0.9)
+    const [PORTION_LOW, set_PORTION_LOW] = useState(0.5)
+
+
     const [accountValueInit, setAccountValue] = useState (1000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (200); // default oldest 
@@ -56,6 +63,7 @@ const Simulate = (props) => {
     useEffect(() => {
         setResults()
         setCounters()
+        // resultsArray()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
@@ -129,8 +137,17 @@ const Simulate = (props) => {
                     if (bubbleIndex!== -1) {
 
                         //** optimize according to bubbleLine */
-                        const priceDivBbubblePrice = YValues[i] / bubbleLine.y[bubbleIndex];
-                        targetPortion = 1 - ((1-targetPortion) * priceDivBbubblePrice / optimizeScale)
+                        var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex] * 2);
+                        if (priceDivBbubblePrice > 1) {
+                            console.log ('price above bubble')
+                        }
+
+                        if (priceDivBbubblePrice <= LEVEL_LOW)  // low level set high portion
+                            targetPortion = Number(PORTION_HIGH) ;
+                        else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
+                            targetPortion = Number(PORTION_LOW);
+                        else // interpolate
+                            targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
 
                         // save portion min/max
                         if (portionMin > targetPortion)
@@ -271,6 +288,23 @@ const Simulate = (props) => {
 
             
             //** input params */
+            if (! resultsArray.LEVEL_HIGH)
+                resultsArray.LEVEL_HIGH = [];
+            resultsArray.LEVEL_HIGH.push(LEVEL_HIGH)
+
+            if (! resultsArray.LEVEL_LOW)
+                resultsArray.LEVEL_LOW = [];
+            resultsArray.LEVEL_LOW.push(LEVEL_LOW);
+
+            if (! resultsArray.PORTION_HIGH)
+                resultsArray.PORTION_HIGH = [];
+            resultsArray.PORTION_HIGH.push(PORTION_HIGH)
+            
+            if (! resultsArray.PORTION_LOW)
+                resultsArray.PORTION_LOW = [];
+            resultsArray.PORTION_LOW.push(PORTION_LOW);
+
+
             if (! resultsArray.params)
                 resultsArray.params = [];
             resultsArray.params.push('=====')
@@ -348,7 +382,7 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '650px'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue', width: '700px'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
@@ -366,7 +400,15 @@ const Simulate = (props) => {
                 <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;
                 {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
-            <div style = {{width: '70vw'}}>
+            <div style = {{display:'flex'}}>
+                &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='levelHigh' type='text' pattern="[\\.0-9]+"/>&nbsp; 
+                <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='levelLow' type='text' pattern="[\\.0-9]+"/>&nbsp; 
+            {/* </div>  
+            <div style = {{display:'flex'}}> */}
+                <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portionHigh' type='text' pattern="[\.0-9]+"/>&nbsp; 
+                <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+"/>
+            </div>
+            <div style = {{width: '80vw'}}>
                 <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value-init $' type='Number' pattern="[0-9]+"/>
                 <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
                 <GetInt init={optimizeScale} callBack={setOptimizeScale} title='optimize-scale (0.7 .. 1.5) ' type='text' pattern="[\\.0-9]+"/>
