@@ -31,27 +31,23 @@ const Simulate = (props) => {
 
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
-    const [allowMargin, setAllowMargin] = useState (false);
 
     // bubbleLine aggressive level optimize Params
     const [LEVEL_LOW, set_LEVEL_LOW] = useState(0.65)
-    const [LEVEL_HIGH, set_LEVEL_HIGH] = useState(1.1)
-    const [PORTION_HIGH, set_PORTION_HIGH] = useState(0.9)
+    const [LEVEL_HIGH, set_LEVEL_HIGH] = useState(0.9)
+    const [PORTION_HIGH, set_PORTION_HIGH] = useState(1.0)
     const [PORTION_LOW, set_PORTION_LOW] = useState(0.5)
 
 
     const [accountValueInit, setAccountValue] = useState (1000); //
     const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (200); // default oldest 
-    // const [stockCountInit, setStockCount] =  useState (100);
     const [thresholdPercent, setThresholdPercent] = useState (0.8);
     const [interestRate, setInterestRate] = useState (3.2);
     const [transactionFee, setTransactionFee] = useState (0);
-    const [optimizeScale, setOptimizeScale] = useState (1.05); // defailt neutral
 
 
     const [results, setResults] =  useState ();
-    const [counters, setCounters] =  useState ();
 
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
@@ -62,7 +58,6 @@ const Simulate = (props) => {
 
     useEffect(() => {
         setResults()
-        setCounters()
         // resultsArray()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
@@ -119,25 +114,26 @@ const Simulate = (props) => {
         var sellMin;
         var moneyMarketMin = accountValueInit;
         var moneyMarketMax = 0;        
-
+        var portionPriv // updated in loop
+        var targetPortion =  aggressivePortionInit; // user param default, without optimize
 
         for (let i = oldestIndex; i > 0; i--) {
             try {
 
-                var targetPortion =  aggressivePortionInit; // user param default, without optimize
+                portionPriv = targetPortion; //save for log
+
 
                 //** search date in bubbleLine */
                 const bubbleLine = props.gainMap.bubbleLine;
-                var portionFactor = 1; // default neutral
+
                 if (bubbleLine && optimize) {
-                    portionFactor = optimizeScale; // defaut setup
                     const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
                     const symVal = YValues[i]; 
                     var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
                     if (bubbleIndex!== -1) {
 
                         //** optimize according to bubbleLine */
-                        var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex] * 2);
+                        var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
                         if (priceDivBbubblePrice > 1) {
                             console.log ('price above bubble')
                         }
@@ -146,9 +142,10 @@ const Simulate = (props) => {
                             targetPortion = Number(PORTION_HIGH) ;
                         else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
                             targetPortion = Number(PORTION_LOW);
-                        else // interpolate
+                        else {// interpolate
                             targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
-
+                        }
+                        
                         // save portion min/max
                         if (portionMin > targetPortion)
                             portionMin = targetPortion
@@ -156,8 +153,8 @@ const Simulate = (props) => {
                             portionMax = targetPortion
 
                         if (logOptimize)
-                            console.log(props.symbol, 'optimize', symdate, ' i=', i, 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
-                         'aggresssivePortion=', targetPortion.toFixed(3))
+                            console.log(props.symbol, 'optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
+                         'portion=', targetPortion.toFixed(3), 'portionPriv=', portionPriv.toFixed(3))
                     }
                 }
             const pricePrev = price;
@@ -213,9 +210,10 @@ const Simulate = (props) => {
 
                 //** log transaction */
                 if (logTrade) {
-                    console.log (props.symbol, 'tradeInfo, i=', YValues.length - i, 'accountVal=', accountVal.toFixed(2), 'portionFactor=',
-                     (portionFactor).toFixed(2), 'moneyMarkt=', moneyMarket.toFixed(2), 
-                     'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price, 'targetPortion=', targetPortion.toFixed(3))
+                    console.log (props.symbol, 'tradeInfo, i=', YValues.length - i, 'portion=', targetPortion.toFixed(3),
+                    'accountVal=', accountVal.toFixed(2),
+                    //   'stockValue=', stockCount * price, 'moneyMarkt=', moneyMarket.toFixed(2),
+                     'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price.toFixed(2))
                 }
 
             }
@@ -260,8 +258,8 @@ const Simulate = (props) => {
                 sellAverage_$: sellAverage,
                 sellMin_$: sellMin.toFixed(2),
                 tradeSkipCount: tradeSkipCount,
-                moneyMarketMin: moneyMarketMin.toFixed(2),
-                moneyMarketMax: moneyMarketMax.toFixed(2),
+                // moneyMarketMin: moneyMarketMin.toFixed(2),
+                // moneyMarketMax: moneyMarketMax.toFixed(2),
 
             })
 
@@ -277,17 +275,31 @@ const Simulate = (props) => {
                 resultsArray.rawGainOfStock = []
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
-            if (! resultsArray.portionMax)
-                resultsArray.portionMax = [];
-            resultsArray.portionMax.push(portionMax.toFixed(3))
+            // if (! resultsArray.portionMax)
+            //     resultsArray.portionMax = [];
+            // resultsArray.portionMax.push(portionMax.toFixed(3))
 
-            if (! resultsArray.portionMin)
-                resultsArray.portionMin = [];
-            resultsArray.portionMin.push(portionMin.toFixed(3))
+            // if (! resultsArray.portionMin)
+            //     resultsArray.portionMin = [];
+            // resultsArray.portionMin.push(portionMin.toFixed(3))
 
 
             
             //** input params */
+            if (! resultsArray.params)
+                resultsArray.params = [];
+            resultsArray.params.push('=====')
+
+
+            if (! resultsArray.tradeFlag)
+                resultsArray.tradeFlag = []
+            resultsArray.tradeFlag.push('' + tradeFlag)
+
+            if (! resultsArray.optimize)
+                resultsArray.optimize = []
+            resultsArray.optimize.push ('' + optimize)
+
+
             if (! resultsArray.LEVEL_HIGH)
                 resultsArray.LEVEL_HIGH = [];
             resultsArray.LEVEL_HIGH.push(LEVEL_HIGH)
@@ -305,25 +317,14 @@ const Simulate = (props) => {
             resultsArray.PORTION_LOW.push(PORTION_LOW);
 
 
-            if (! resultsArray.params)
-                resultsArray.params = [];
-            resultsArray.params.push('=====')
-
-            if (! resultsArray.tradeFlag)
-                resultsArray.tradeFlag = []
-            resultsArray.tradeFlag.push('' + tradeFlag)
-
-            if (! resultsArray.optimize)
-                resultsArray.optimize = []
-            resultsArray.optimize.push ('' + optimize)
 
             if (! resultsArray.portionPercent)
                 resultsArray.portionPercent = [];
             resultsArray.portionPercent.push(portionPercent)
 
-            if (! resultsArray.optimizeScale)
-                resultsArray.optimizeScale = [];
-            resultsArray.optimizeScale.push(optimizeScale)
+            // if (! resultsArray.optimizeScale)
+            //     resultsArray.optimizeScale = [];
+            // resultsArray.optimizeScale.push(optimizeScale)
 
             if (! resultsArray.thresholdPercent)
                 resultsArray.thresholdPercent =[];
@@ -382,40 +383,41 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '700px'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue', width: '750px'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
             </div>
             {props.gainMap.bubbleLine && optimize && <h6  style={{color: 'red' }}> Optimize, decrease aggressive portion when near bubbleLine (and vice versa)</h6>}
 
-            {/* <h4>Simulate trade (keep portion)</h4> */}
-            {/* <div> &nbsp;</div> */}
             <div style={{display: 'flex'}}>
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
                 {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
-                     optimize (price/bubble) &nbsp;</div>}
-                {/* <input  type="checkbox" checked={allowMargin}  onChange={() => setAllowMargin  (! allowMargin)} /> allowMargin &nbsp; */}
+                     optimize (price/bubble) &nbsp;</div>}  &nbsp;
+
                 
-                <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;
+                <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;  
                 {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
-            <div style = {{display:'flex'}}>
-                &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='levelHigh' type='text' pattern="[\\.0-9]+"/>&nbsp; 
-                <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='levelLow' type='text' pattern="[\\.0-9]+"/>&nbsp; 
+            {optimize && <div style = {{display:'flex'}}>
+                &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='levelHigh' type='text' pattern="[\\.0-9]+"/>
+                &nbsp; <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='levelLow' type='text' pattern="[\\.0-9]+"/> 
             {/* </div>  
             <div style = {{display:'flex'}}> */}
-                <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portionHigh' type='text' pattern="[\.0-9]+"/>&nbsp; 
-                <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+"/>
+                &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portionHigh' type='text' pattern="[\.0-9]+"/>
+                &nbsp; <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+"/>
+            </div>}
+            <div style = {{display:'flex', width: '800px'}}>
+                &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+"/>
+                &nbsp; {props.gainMap.bubbleLine && optimize && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+"/>}
             </div>
-            <div style = {{width: '80vw'}}>
-                <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value-init $' type='Number' pattern="[0-9]+"/>
-                <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive-portion %' type='Number' pattern="[0-9]+"/>
-                <GetInt init={optimizeScale} callBack={setOptimizeScale} title='optimize-scale (0.7 .. 1.5) ' type='text' pattern="[\\.0-9]+"/>
-                <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+"/>
-                <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+"/>
-                <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+"/>
-                <GetInt init={startWeek} callBack={setStartWeek} title='startWeek (0 .. ~1000)' type='Number' pattern="[0-9]+"/>
+            <div style = {{display:'flex', width: '800px'}}>
+                &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+"/>
+                &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+"/>
+            </div>
+            <div style = {{display:'flex', width: '800px'}}>
+                &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+"/>
+                &nbsp; <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+"/>
             </div>
             <div> &nbsp;</div>
 
