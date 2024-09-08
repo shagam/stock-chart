@@ -379,7 +379,7 @@ const Simulate = (props) => {
 
     }
 
-    const title = 'simulate_trade: buy/sell function'
+    const title = 'trade_portion: buy/sell function'
     const chartData =
       [{
         name: title,
@@ -470,7 +470,7 @@ const Simulate = (props) => {
             {results && <div> Last simulation info &nbsp;</div>}
              <pre>{JSON.stringify(results, null, 2)}</pre>
 
-             {/* priceDivBbubblePrice   vs  aggressivePortion */}
+             {/* https://plotly.com/javascript/figure-labels/ */}
 
             {optimize && <Plot  data={chartData} layout={{ width: 700, height: 400, title: title, staticPlot: true,
                  xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} />}
