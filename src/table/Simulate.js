@@ -456,8 +456,8 @@ const Simulate = (props) => {
             </div>
             <div> &nbsp;</div>
 
-            {<button style={{background: 'lightGreen'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
-
+            {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
+            <div> &nbsp;</div>
   
             <table>
                 <thead>
