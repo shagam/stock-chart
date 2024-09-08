@@ -418,7 +418,7 @@ const Simulate = (props) => {
             </div>}
             <div style = {{display:'flex', width: '800px'}}>
                 &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+"/>
-                &nbsp; {props.gainMap.bubbleLine && optimize && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+"/>}
+                &nbsp; {! optimize && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+"/>}
             </div>
             <div style = {{display:'flex', width: '800px'}}>
                 &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+"/>
