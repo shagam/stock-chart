@@ -8,8 +8,8 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
 import transitions from '@material-ui/core/styles/transitions';
-import monthsToYears from 'date-fns/esm/fp/monthsToYears';
-
+// import monthsToYears from 'date-fns/esm/fp/monthsToYears';
+import Plot from 'react-plotly.js';
 
 const Simulate = (props) => {
 
@@ -379,6 +379,19 @@ const Simulate = (props) => {
 
     }
 
+    const title = 'simulate_trade: buy/sell function'
+    const chartData =
+      [{
+        name: title,
+        nameSingle: title,
+        x: [0, LEVEL_LOW, LEVEL_HIGH, 1],
+        y:  [PORTION_HIGH, PORTION_HIGH, PORTION_LOW, PORTION_LOW],
+        type: 'scatter',
+        mode: 'lines+markers',
+        marker: { color: 'green' },
+      
+      }]
+
     // color header if arr values differ
     function colorfield (arr) {
         if (arr.length === 0)
@@ -456,6 +469,12 @@ const Simulate = (props) => {
             
             {results && <div> Last simulation info &nbsp;</div>}
              <pre>{JSON.stringify(results, null, 2)}</pre>
+
+             {/* priceDivBbubblePrice   vs  aggressivePortion */}
+
+            {optimize && <Plot  data={chartData} layout={{ width: 700, height: 400, title: title, staticPlot: true,
+                 xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} />}
+
          </div>
     )
  }
