@@ -251,13 +251,13 @@ const Simulate = (props) => {
                 dateStart: XValues[oldestIndex],
                 totalWeeksBack: oldestIndex,
 
-                buyCount: buyCount,
+                // buyCount: buyCount,
                 buyAverage_$: buyAverage, 
                 buyMin_$: buyMin.toFixed(2),
-                sellCount: sellCount,
+                // sellCount: sellCount,
                 sellAverage_$: sellAverage,
                 sellMin_$: sellMin.toFixed(2),
-                tradeSkipCount: tradeSkipCount,
+                // tradeSkipCount: tradeSkipCount,
                 // moneyMarketMin: moneyMarketMin.toFixed(2),
                 // moneyMarketMax: moneyMarketMax.toFixed(2),
 
@@ -366,6 +366,19 @@ const Simulate = (props) => {
             if (! resultsArray.moneyMarketInit_$)
                 resultsArray.moneyMarketInit_$ = [];
             resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(2))
+
+            
+            if (! resultsArray.buyCount)
+                resultsArray.buyCount = [];
+            resultsArray.buyCount.push(buyCount);
+
+            if (! resultsArray.sellCount)
+                resultsArray.sellCount = []
+            resultsArray.sellCount.push(sellCount);
+
+            if (! resultsArray.tradeSkipCount)
+                resultsArray.tradeSkipCount = [];
+            resultsArray.tradeSkipCount.push(tradeSkipCount)
 
 
 
