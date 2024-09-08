@@ -145,7 +145,7 @@ const Simulate = (props) => {
                         else {// interpolate
                             targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
                         }
-                        
+
                         // save portion min/max
                         if (portionMin > targetPortion)
                             portionMin = targetPortion
@@ -375,10 +375,19 @@ const Simulate = (props) => {
 
             // if (!resultsArray.priceInit_$)
             //     resultsArray.priceInit_$ = [];
-            // resultsArray.priceInit_$.push(priceInit)
+            // resultsArray.priceInit_$.push(priceInit) 
 
+    }
 
-
+    // color header if arr values differ
+    function colorfield (arr) {
+        if (arr.length === 0)
+            return 'white';
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] !== arr[0]) {
+                return 'pink'
+            }
+        }
     }
 
 
@@ -432,7 +441,7 @@ const Simulate = (props) => {
                     {Object.keys(resultsArray).map((s, s1) =>{
                         return (
                         <tr key={s1}>
-                            <td style={{width: '8px'}}>{s}</td>                 
+                            <td style={{width: '8px', background: colorfield(resultsArray[s])}}>{s}</td>                 
                             {resultsArray[s].map((k,n)=>{
                             return (
                                 <td key={n}> {k} </td>
