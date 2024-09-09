@@ -149,7 +149,7 @@ export default function ContactGet (props)  {
           {/* <br/> */}
           <div>
     
-            <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+"/>    
+            <GetInt init={count} callBack={setCount} title='getCount' type='Number' pattern="[0-9]+" width = '15%'/>    
 
             <div style={{display: 'flex'}}>
               <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> &nbsp;  &nbsp;&nbsp;

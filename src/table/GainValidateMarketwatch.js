@@ -288,7 +288,7 @@ function VerifyGain (props) {
       {eliHome && <div> <input style={{height: '7%', marginTop: '8px'}} type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
       <div style={{display:'flex'}}>
           <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button>  &nbsp;
-          <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+"/>
+          <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+" width = '15%'/>
       </div> 
 
       <button style={{background: 'aqua'}} type="button" onClick={()=>verify (false)}>verify   </button>  &nbsp;

@@ -30,7 +30,7 @@ function IpSearchGui () {
           <h5>ip geoLocation</h5>
           <div style={{display:'flex'}}>    
           {/* <div>&nbsp; </div> */}
-            {eliHome && <GetInt style={{marginright: '0px'}} init={null} callBack={setIpSearch} title='ipSearch' type='Text' pattern="[0-9\\.]+"/>} &nbsp; &nbsp;
+            {eliHome && <GetInt style={{marginright: '0px'}} init={null} callBack={setIpSearch} title='ipSearch' type='Text' pattern="[0-9\\.]+" width = '55%'/>} &nbsp; &nbsp;
             {eliHome &&  <div> &nbsp; <button style={{marginTop: '15px', background: 'aqua'}} onClick={getIpInfoClick} > ipInfo </button> &nbsp; </div>}
           </div>
           {eliHome && city_ && <div style={{marginTop: '15px'}}> &nbsp; city={city_}  &nbsp; region={region_}  &nbsp; country={country_}  </div>} 

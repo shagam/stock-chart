@@ -116,7 +116,7 @@ function TargetPriceGui (props) {
 
             <div style={{color: 'red'}}> {status} </div>
             <div style = {{display: 'flex'}}>
-                {targetInfoOne && <GetInt init={targetBase} callBack={setTargetBase} title='targetBase' type='Number' pattern="[0-9]+"/>} &nbsp; &nbsp;
+                {targetInfoOne && <GetInt init={targetBase} callBack={setTargetBase} title='targetBase' type='Number' pattern="[0-9]+" width = '35%'/>} &nbsp; &nbsp;
                 {targetInfoOne && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }
             </div>
 

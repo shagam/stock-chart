@@ -961,7 +961,7 @@ function CommonDatabase (props) {
 
         <div style={{display:'flex'}}>
           <GetInt title='Gain_above_QQQ' placeHolder={factor} init={factor} value={factor} pattern={undefined}
-           type='Real' callBack={setFactor}/> &nbsp;&nbsp;
+           type='Real' callBack={setFactor} width = '15%'/> &nbsp;&nbsp;
         </div>
 
         {/* ====== Buttons */} 

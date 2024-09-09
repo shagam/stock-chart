@@ -20,7 +20,7 @@ return (
 
   <form  style={{display:'flex'}} onSubmit = {flexSubmit}>
     <div> {props.title}&nbsp; </div>
-    <input  style={{ 'width': '35%'}}
+    <input  style={{ 'width': props.width}}
       type={props.type}
       pattern={props.pattern}
       name={props.title}
