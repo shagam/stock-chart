@@ -141,7 +141,7 @@ const BasicTable = (props) => {
   // const gainRef = collection(db, "stock-gain_")
 
     // var flexConfig = localStorage.getItem('flex');
-
+  const [monthGainData, setMonthGainData] = useState ({});
 
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   // const [searchDeepDate, setSearchDeepDate] = useState()
@@ -867,10 +867,10 @@ const BasicTable = (props) => {
          
             {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
-                 errorAdd={props.errorAdd} saveTable={props.saveTable}/>}
+                 errorAdd={props.errorAdd} saveTable={props.saveTable} monthGainData={monthGainData}/>}
 
             {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
-                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd}/>}
+                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} />}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
 

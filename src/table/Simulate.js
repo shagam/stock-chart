@@ -29,6 +29,7 @@ const Simulate = (props) => {
     //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
     const [optimize, setOptimize] = useState (props.gainMap.bubbleLine ? true : false);
+    const [optimizeMonthGain, setOptimizeMonthGain] = useState (false) // (props.monthGainData.monthGainArray ? true : false);
 
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
@@ -426,12 +427,14 @@ const Simulate = (props) => {
             </div>
  
             <div style={{display: 'flex'}}>
-                <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
+                <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
                 {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
-                     optimize (price/bubble) &nbsp;</div>}  &nbsp;
+                    &nbsp;optimize (price/bubble) &nbsp;</div>}&nbsp;
+                {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeMonthGain}  onChange={() => setOptimizeMonthGain (! optimizeMonthGain)} />
+                    &nbsp;optimize (monthGain) &nbsp;</div>}  &nbsp;
 
                 
-                <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;  
+                <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />&nbsp;log_trade&nbsp;  
                 {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  

@@ -195,6 +195,13 @@ function MonthGain (props) {
   // compensate for month shift
 
     setYearGain (yearlyGain)
+
+    if (props.setMonthGainData) {
+      props.setMonthGainData ({
+        monthGainArray:  monthGainShift,
+        monthNames: monthNames
+      })
+    }
   }
 
   return (
