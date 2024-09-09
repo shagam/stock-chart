@@ -56,7 +56,7 @@ import  {CommonDatabase} from './CommonDatabase'
 import {useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 
 import Simulate from './Simulate'
-
+import {MonthGain} from './MonthGain'
 import Tools from './Tools'
 
 import Config from './Config'
@@ -659,7 +659,8 @@ const BasicTable = (props) => {
     StockGainRaw: 'StockGainRaw',
     StockInfoRaw: 'StockInfoRaw', 
     Tools: 'Tools',
-    SimulateTrade: 'SimulateTrade'
+    SimulateTrade: 'SimulateTrade',
+    MonthGain: 'MonthGain'
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState()
@@ -810,6 +811,8 @@ const BasicTable = (props) => {
 
         <StockLists ip={ip} rows = {rows} logFlags = {props.logFlags} saveTable={saveTable}
          errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>
+
+         {/* pans for chartSymbol */}
         {chartSymbol && <div>
           <div>&nbsp;</div>
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
@@ -836,8 +839,9 @@ const BasicTable = (props) => {
             <div style={{display:'flex'}}>
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}/>  
                 <div style={{color:'blue'}}> simulateTrade   </div> 
-
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='7' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}/>  
+                <div style={{color:'blue'}}> monthGain   </div> 
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='8' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
                 {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
 
@@ -864,6 +868,9 @@ const BasicTable = (props) => {
             {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
                  errorAdd={props.errorAdd} saveTable={props.saveTable}/>}
+
+            {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
+                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd}/>}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
 

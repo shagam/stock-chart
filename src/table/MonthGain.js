@@ -199,7 +199,11 @@ function MonthGain (props) {
 
   return (
     <div>
-       <h5>Month gain </h5>
+        <div style = {{display: 'flex'}}>
+          <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+          <h6  style={{color: 'blue' }}> MonthGain </h6>
+        </div>
+
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 

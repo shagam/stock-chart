@@ -12,11 +12,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import logFlags from '../utils/LogFlags'
 import {MonthGain} from './MonthGain'
 import {IpContext} from '../contexts/IpContext';
-import { TargetPriceGui } from './TargetPriceGui';
+import {TargetPriceGui } from './TargetPriceGui';
 import {VerifyGain} from './GainValidateMarketwatch'
 import {Splits} from './StockSplits'
 import {Spikes} from './Spikes'
-import { IpSearchGui } from '../utils/IpSearchGui';
+import {IpSearchGui } from '../utils/IpSearchGui';
 
 // import axios from 'axios'
 // import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
