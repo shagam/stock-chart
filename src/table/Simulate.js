@@ -7,13 +7,14 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
+import {IpContext} from '../contexts/IpContext';
 import transitions from '@material-ui/core/styles/transitions';
 // import monthsToYears from 'date-fns/esm/fp/monthsToYears';
 import Plot from 'react-plotly.js';
 
 const Simulate = (props) => {
 
-
+    const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip, os} = IpContext();
   // props.symbol
   // props.rows
   // props.startDate
@@ -421,10 +422,9 @@ const Simulate = (props) => {
         <div style = {{border: '2px solid blue', width: '750px'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-              <h5 style={{color: 'blue'}}> Simulate-trade (keep aggressive percentage) &nbsp;  </h5>
+              <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
             </div>
-            {props.gainMap.bubbleLine && optimize && <h6  style={{color: 'red' }}> Optimize, decrease aggressive portion when near bubbleLine (and vice versa)</h6>}
-
+ 
             <div style={{display: 'flex'}}>
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} /> tradeFlag &nbsp;  
                 {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
@@ -434,6 +434,10 @@ const Simulate = (props) => {
                 <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> log_trade &nbsp;  
                 {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
+ 
+            {optimize && <h6  style={{color: 'green' }}> Optimize, decrease aggressive portion when near bubbleLine (and vice versa)</h6>}
+            {! optimize && <h6  style={{color: 'green' }}> keep aggressive portion </h6>}
+
             {optimize && <div style = {{display:'flex'}}>
                 &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='levelHigh' type='text' pattern="[\\.0-9]+"/>
                 &nbsp; <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='levelLow' type='text' pattern="[\\.0-9]+"/> 
@@ -485,10 +489,10 @@ const Simulate = (props) => {
 
              {/* https://plotly.com/javascript/figure-labels/ */}
 
-            {optimize && <Plot  data={chartData} layout={{ width: 700, height: 400, title: title, staticPlot: true,
-                 xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} />}
+            {optimize && <Plot  data={chartData} layout={{ width: 650, height: 400, title: title, staticPlot: true,
+                 xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
 
-         </div>
+        </div>
     )
  }
 
