@@ -29,7 +29,7 @@ const Simulate = (props) => {
     //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
     const [optimize, setOptimize] = useState (props.gainMap.bubbleLine ? true : false);
-    const [optimizeMonthGain, setOptimizeMonthGain] = useState (false) // (props.monthGainData.monthGainArray ? true : false);
+    const [optimizeMonthGain, setOptimizeMonthGain] = useState (props.monthGainData.monthGainArray ? true : false);
 
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
@@ -153,6 +153,13 @@ const Simulate = (props) => {
                             portionMin = targetPortion
                         if (portionMax < targetPortion)
                             portionMax = targetPortion
+
+
+                        if (optimizeMonthGain && props.monthGainData.monthGainArray) {
+                            if (i === 0)
+                            console.log ('optimizeMonthGain', i, props.monthGainData.monthGainArray[0].x[props.monthGainData.monthGainArray-1])
+
+                        }
 
                         if (logOptimize)
                             console.log(props.symbol, 'optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
@@ -438,7 +445,7 @@ const Simulate = (props) => {
                 {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
-            {optimize && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near bubbleLine (and vice versa)</div>}
+            {optimize && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
             {! optimize && <div  style={{color: 'green' }}> keep aggressive portion </div>}
 
             {optimize && <div style = {{display:'flex'}}>
@@ -450,9 +457,10 @@ const Simulate = (props) => {
                 &nbsp; <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+" width = '25%'/>
             </div>}
             <div style = {{display:'flex', width: '800px'}}>
-                &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>
                 &nbsp; {! optimize && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
+                &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>
             </div>
+
             <div style = {{display:'flex', width: '800px'}}>
                 &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+" width = '15%'/>
                 &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/>
