@@ -5,7 +5,24 @@ import "react-datepicker/dist/react-datepicker.css";
 import {IpContext} from '../contexts/IpContext';
 import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
+import { beep2 } from '../utils/ErrorList';
 
+
+//** estimated week number in the year */
+function getWeekNumber(d) {
+    // Copy date so don't modify original
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    // Set to nearest Thursday: current date + 4 - current day number
+    // Make Sunday's day number 7
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+    // Get first day of year
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+    // Return array of year and week number
+    return [d.getUTCFullYear(), weekNo];
+}
+  
 
 function MonthGain (props) {
   const [status, setStatus] = useState (); 
@@ -44,10 +61,32 @@ function MonthGain (props) {
     return -1; // error
   }
 
+  function weekOfYearGet (array, i) {
+    if (i + 52 > array.lngth)
+      return -1; // fail
+    const startDate = array[i].split('-')
+      for (let j = i; j < 53; j++) {
+        const date = array[j].split('-')
+        if (startDate[0] !== date[0]) {
+          return j - i
+        }
+      }
+      return -1; // not found
+    // if (i > array.length)
+  }
+
   var stockCount_ = -1
 
   // collect month gain over the history
   function monthGainCalc (gainMap, mGainObj, setMgainObj, setYearGain, logFlags, startDate) {    
+
+    const stocks = Object.keys (gainMap);
+    if (stocks.length === 0) {
+      setStatus ('wait a few seconds for gain data')
+      beep2()
+      return;
+    }
+
 
     // const n = 1.05;
     // const l = Math.log(n) // natural log
@@ -57,8 +96,75 @@ function MonthGain (props) {
 
     const LOG = logFlags.includes('month')
 
+
+
+
+    //* week gain arrays
+    const weekGainArrayCollect = new Array(52).fill(1);
+    const weekGainArrayCount = new Array(52).fill(0);
+
+    if (false) // temp by pass
+    for (var symm_ in gainMap) {
+      
+      const gainMapSym = gainMap[symm_];
+      const xArray = gainMapSym.x;
+      const yArray = gainMapSym.y;
+      const startDateSplit = rawDateSplit (startDate) 
+      let oldestIndex = searchDateInArray (xArray, startDateSplit, symm_);
+      
+      if (oldestIndex === -1) {
+        oldestIndex = xArray.length; // use shorter array
+        console.log (symm_, 'Date not found')
+        continue;
+      }
+
+      for (let i = 0; i < oldestIndex; i++) { // index into weekly x (date) y (price) arrays 
+        if (i === 52)
+          break;
+
+        const week_ = weekOfYearGet (xArray[i], i) 
+        if (week_ === -1) // fail
+          continue;
+        // const weekNumber = new Date(xArray[i]).isoWeek();
+        const dateSplit = xArray[i].split('-')
+        const days = (dateSplit[1] - 1) * 30.41 + (dateSplit[2] - 1) // month and day need to subtract 1
+        var week = days / 7;
+        week = Math.round(week)
+        week = week_;
+
+        //collect week of year gain
+        let dateOfInfo = new Date (xArray[i])
+        // let onejan = new Date(dateOfInfo.getFullYear(), 0, 1);
+        // let weekOfYear = Math.ceil((((dateOfInfo.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
+      
+        //  var getWeek = new Date(xArray[i]).getWeekNumber()// get WeekIn year
+         var weekOfYear = getWeekNumber(new Date (xArray[i])) - 1;
+        if (weekOfYear === 52) {
+          weekOfYear -= 1
+          setStatus('weekOfYear=', weekOfYear)
+        }
+        if (weekOfYear > 52) {
+          setStatus('weekOfYear=', weekOfYear)
+          return;
+        }
+
+        if (i < 55)
+          console.log(xArray[i], weekOfYear)
+
+        if (weekOfYear === 0) {
+          setStatus('weekOfYear=', weekOfYear)
+        }
+
+        var nextWeekNum = (weekOfYear + 1) % 52;
+        weekGainArrayCollect[weekOfYear] *= (yArray[nextWeekNum] / yArray[weekOfYear]);
+        weekGainArrayCount[weekOfYear] ++;            
+      }
+    }
+
+
+
+    //** monthly gain */
     const mGain = [1,1,1,1,1,1, 1,1,1,1,1,1] // init value for gains
-    const stocks = Object.keys (gainMap);
 
     stockCount_ = stocks.length;
     var arrayLen = 0; // collect average length in weeks
@@ -77,6 +183,7 @@ function MonthGain (props) {
       if (oldestIndex === -1) {
         oldestIndex = xArray.length; // use shorter array
         console.log (symm, 'Date not found')
+        continue;
       }
       arrayLen += oldestIndex;
       if (oldestIndex >= xArray.length) // verify range
@@ -87,11 +194,15 @@ function MonthGain (props) {
 
       for (; i < oldestIndex; ) { // index into weekly x (date) y (price) arrays 
         var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
-        if (weekOfNextMonth < 0) // if not end of array
+        if (weekOfNextMonth < 0) { // if not end of array
+          setStatus('error', weekOfNextMonth, i)
+          beep2()
           break;
-
-        if (weekOfNextMonth >= oldestIndex) // avoid overflow array
-          break
+        }
+        if (weekOfNextMonth >= oldestIndex) {// avoid overflow array
+          i++;
+          continue;
+        }
 
         const date = xArray[i];
         const dateSplit_ = dateSplit (date); // [year,mon,day]
@@ -192,14 +303,24 @@ function MonthGain (props) {
     mGainObj.Nov = monthGainShift[10]
     mGainObj.Dec = monthGainShift[11]
 
-  // compensate for month shift
-
     setYearGain (yearlyGain)
+
+
+    // calculate week gain average
+    const weekGainArray = [];
+    var yearGain = 1;
+    for (let i = 0; i < 52; i++) {
+        weekGainArray[i] = Math.pow(weekGainArrayCollect[i], (1/weekGainArrayCount[i]))
+        yearGain *= weekGainArray[i];
+    }
+
+    console.log ('yeearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount)
 
     if (props.setMonthGainData) {
       props.setMonthGainData ({
         monthGainArray:  monthGainShift,
-        monthNames: monthNames
+        monthNames: monthNames,
+        weekGainArray: weekGainArray
       })
     }
   }
