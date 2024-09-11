@@ -340,29 +340,26 @@ function MonthGain (props) {
         {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
         <br></br> 
 
-        <div style={{height:'25px', overflow:'auto'}}>
+        {weekGainArray_.length > 0  && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
         <table>
           <thead>
-
+            <tr>
+              <th>week #</th>
+              <th>week gain</th>
+            </tr>
           </thead>
           <tbody>
               {weekGainArray_.map((s, s1) =>{
                   return (
                   <tr key={s1}>
-                      <td style={{width: '8px'}}>{s1}  </td> 
-                      <td> {s.toFixed(4)} </td>                
-                      {/* {weekGainArray_[s].map((k,n)=>{
-                        return (
-                            <td key={n}> {k} </td>
-                        )
-                      })
-                    } */}
+                      <td style={{width: '80px'}}>{s1}  </td> 
+                      <td> {s.toFixed(4)} </td>
                   </tr>
                 )
               })}
           </tbody>
       </table>
-      </div>  
+      </div>}  
     </div>
   )
 
