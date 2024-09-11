@@ -325,6 +325,20 @@ function MonthGain (props) {
     }
   }
 
+  //* color gain numbers according to gain
+  function gainColor (gain) {
+    if (gain > 1.02) {
+      const diff = gain -1;
+      return '#00dd00' // diff * 40 
+    }
+    else if (gain < 0.98) {
+      const diff = (1 - gain)
+      return '#dd0000'// + diff * 256 * 40 
+    }
+    else
+     return '#0'  // black
+  }
+
   return (
     <div>
         <div style = {{display: 'flex'}}>
@@ -342,7 +356,8 @@ function MonthGain (props) {
         {/* <br></br>  */}
         { Object.keys(mGainObj).map((oneKey,i)=>{
           return (
-              <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}:  </div> &nbsp; &nbsp; {mGainObj[oneKey]}</div>
+              <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}: </div>
+                &nbsp; &nbsp; <div style={{color: gainColor (mGainObj[oneKey])}} > {mGainObj[oneKey]}</div> </div>
             )
         })}
 
@@ -363,7 +378,7 @@ function MonthGain (props) {
                   return (
                   <tr key={s1}>
                       <td style={{width: '80px'}}>{s1}  </td> 
-                      <td> {s.toFixed(4)} </td>
+                      <td style= {{color: gainColor (s)}} color> {s.toFixed(4)} </td>
                       <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>
                   </tr>
                 )
