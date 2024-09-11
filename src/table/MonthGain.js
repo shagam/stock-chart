@@ -62,15 +62,20 @@ function MonthGain (props) {
   }
 
   function weekOfYearGet (array, i) {
-    if (i + 52 > array.lngth)
+    if (i + 52 > array.length){
+        console.log ('near oldest i=', i, 'date=', array[i])
       return -1; // fail
+    }
     const startDate = array[i].split('-')
-      for (let j = i; j < 53; j++) {
-        const date = array[j].split('-')
+      for (let j = 0; j < 54; j++) {
+        const date = array[i + j].split('-')
         if (startDate[0] !== date[0]) {
-          return j - i
+          return j - 1;
         }
+        if (j >= 52)
+          console.log ('search over 51, j >= 52', 'i=', i, 'j=', j, 'start=', startDate, 'date=', date)
       }
+      console.log ('overRun i=', 'start=', startDate)
       return -1; // not found
     // if (i > array.length)
   }
@@ -103,7 +108,7 @@ function MonthGain (props) {
     const weekGainArrayCollect = new Array(52).fill(1);
     const weekGainArrayCount = new Array(52).fill(0);
 
-    if (false) // temp by pass
+    // if (false) // temp by pass
     for (var symm_ in gainMap) {
       
       const gainMapSym = gainMap[symm_];
@@ -117,42 +122,20 @@ function MonthGain (props) {
         console.log (symm_, 'Date not found')
         continue;
       }
-
+      var errCount = 0;
       for (let i = 0; i < oldestIndex; i++) { // index into weekly x (date) y (price) arrays 
-        if (i === 52)
-          break;
 
-        const week_ = weekOfYearGet (xArray[i], i) 
-        if (week_ === -1) // fail
+        var weekOfYear = weekOfYearGet (xArray, i) 
+        if (weekOfYear === -1) {// fail
           continue;
-        // const weekNumber = new Date(xArray[i]).isoWeek();
-        const dateSplit = xArray[i].split('-')
-        const days = (dateSplit[1] - 1) * 30.41 + (dateSplit[2] - 1) // month and day need to subtract 1
-        var week = days / 7;
-        week = Math.round(week)
-        week = week_;
-
-        //collect week of year gain
-        let dateOfInfo = new Date (xArray[i])
-        // let onejan = new Date(dateOfInfo.getFullYear(), 0, 1);
-        // let weekOfYear = Math.ceil((((dateOfInfo.getTime() - onejan.getTime()) / 86400000) + onejan.getDay() + 1) / 7);
-      
-        //  var getWeek = new Date(xArray[i]).getWeekNumber()// get WeekIn year
-         var weekOfYear = getWeekNumber(new Date (xArray[i])) - 1;
-        if (weekOfYear === 52) {
-          weekOfYear -= 1
-          setStatus('weekOfYear=', weekOfYear)
-        }
-        if (weekOfYear > 52) {
-          setStatus('weekOfYear=', weekOfYear)
-          return;
         }
 
-        if (i < 55)
-          console.log(xArray[i], weekOfYear)
-
-        if (weekOfYear === 0) {
-          setStatus('weekOfYear=', weekOfYear)
+        if ( weekOfYear >= 52) {
+          console.log ('weekOfYear=52', 'i=', i, 'weekOfYear', weekOfYear, 'date=', xArray[weekOfYear])
+          // errCount ++;
+          // weekOfYear %= 52;
+          errCount++
+          continue
         }
 
         var nextWeekNum = (weekOfYear + 1) % 52;
@@ -314,7 +297,7 @@ function MonthGain (props) {
         yearGain *= weekGainArray[i];
     }
 
-    console.log ('yeearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount)
+    console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
     if (props.setMonthGainData) {
       props.setMonthGainData ({
