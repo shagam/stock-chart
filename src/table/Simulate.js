@@ -8,6 +8,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
 import {IpContext} from '../contexts/IpContext';
+import MobileContext from '../contexts/MobileContext'
 
 // import monthsToYears from 'date-fns/esm/fp/monthsToYears';
 import {MonthGain, weekOfYearGet} from './MonthGain'
@@ -16,6 +17,7 @@ import Plot from 'react-plotly.js';
 const Simulate = (props) => {
 
     const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip, os} = IpContext();
+    const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   // props.symbol
   // props.rows
   // props.startDate
@@ -63,10 +65,8 @@ const Simulate = (props) => {
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
-  // style={{display:'flex'}}
 
-//   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
-
+    //** SIMULATE TRADE */
     function simulateTrade(XValues, YValues) {
 
         var price = YValues[YValues.length - 1 - startWeek]  // begining price // default oldest
@@ -118,9 +118,12 @@ const Simulate = (props) => {
         var portionPriv // updated in loop
         var targetPortion =  aggressivePortionInit; // user param default, without optimize
 
-        for (let i = oldestIndex; i > 0; i--) {
 
-            const bubbleLine = props.gainMap.bubbleLine;
+        const bubbleLine = props.gainMap.bubbleLine;
+
+
+        //** WEEK GAIN: optimize trade on week gain */
+        for (let i = oldestIndex; i > 0; i--) {
 
             try {
                 //* monthGain weekGain optimize */
@@ -424,15 +427,16 @@ const Simulate = (props) => {
             </div>
  
             <div style={{display: 'flex'}}>
+                {/* Optimize checkboxes */}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
                 {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
                     &nbsp;optimize (price/bubble) &nbsp;</div>}&nbsp;
                 {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeMonthGain}  onChange={() => setOptimizeMonthGain (! optimizeMonthGain)} />
                     &nbsp;optimize (monthGain) &nbsp;</div>}  &nbsp;
 
-                
-                <input  type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />&nbsp;log_trade&nbsp;  
-                {props.gainMap.bubbleLine && optimize && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
+                {/* log checkboxes */}
+                {! props.isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
+                {! props.isMobile && (optimize || optimizeMonthGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
             {optimize && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
