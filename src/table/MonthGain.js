@@ -56,6 +56,10 @@ function MonthGain (props) {
   const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
   const [startDate, setStartDate] = useState (new Date(2002, 9, 15));
 
+  //** needed for disolay date in weekGain table */
+  const symbols = Object.keys(props.gainMap)
+  const [gainMapSym, setGainMapSym] = useState (symbols[0])
+  const [weekNumberForDate_0, setWeekNumberForDate_0] = useState ();
 
   useEffect(() => {
     setStatus()
@@ -112,6 +116,11 @@ function MonthGain (props) {
     //* week gain arrays
     const weekGainArrayCollect = new Array(52).fill(1);
     const weekGainArrayCount = new Array(52).fill(0);
+
+    //** used to display daste in weekgain table */
+    const weekNumOfDate_temp = weekOfYearGet (props.gainMap[gainMapSym].x, 0); // get week num of first date
+    setWeekNumberForDate_0 (weekNumOfDate_temp)
+
 
     // if (false) // temp by pass
     for (var symm_ in gainMap) {
@@ -346,6 +355,7 @@ function MonthGain (props) {
             <tr>
               <th>week #</th>
               <th>week gain</th>
+              <th>last date of week number</th>
             </tr>
           </thead>
           <tbody>
@@ -354,6 +364,7 @@ function MonthGain (props) {
                   <tr key={s1}>
                       <td style={{width: '80px'}}>{s1}  </td> 
                       <td> {s.toFixed(4)} </td>
+                      <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>
                   </tr>
                 )
               })}
