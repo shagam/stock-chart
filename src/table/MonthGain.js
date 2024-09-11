@@ -9,18 +9,40 @@ import { beep2 } from '../utils/ErrorList';
 
 
 //** estimated week number in the year */
-function getWeekNumber(d) {
-    // Copy date so don't modify original
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-    // Get first day of year
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    // Calculate full weeks to nearest Thursday
-    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-    // Return array of year and week number
-    return [d.getUTCFullYear(), weekNo];
+// function getWeekNumber(d) {
+//     // Copy date so don't modify original
+//     d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+//     // Set to nearest Thursday: current date + 4 - current day number
+//     // Make Sunday's day number 7
+//     d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+//     // Get first day of year
+//     var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+//     // Calculate full weeks to nearest Thursday
+//     var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+//     // Return array of year and week number
+//     return [d.getUTCFullYear(), weekNo];
+// }
+  
+
+
+ //** search for week number */
+ function weekOfYearGet (array, i) {
+  if (i + 52 > array.length){
+      console.log ('near oldest i=', i, 'date=', array[i])
+    return -1; // fail
+  }
+  const startDate = array[i].split('-')
+    for (let j = 0; j < 54; j++) {
+      const date = array[i + j].split('-')
+      if (startDate[0] !== date[0]) {
+        return j - 1;
+      }
+      if (j >= 52)
+        console.log ('search over 51, j >= 52', 'i=', i, 'j=', j, 'start=', startDate, 'date=', date)
+    }
+    console.log ('overRun i=', 'start=', startDate)
+    return -1; // not found
+  // if (i > array.length)
 }
   
 
@@ -61,24 +83,6 @@ function MonthGain (props) {
     return -1; // error
   }
 
-  function weekOfYearGet (array, i) {
-    if (i + 52 > array.length){
-        console.log ('near oldest i=', i, 'date=', array[i])
-      return -1; // fail
-    }
-    const startDate = array[i].split('-')
-      for (let j = 0; j < 54; j++) {
-        const date = array[i + j].split('-')
-        if (startDate[0] !== date[0]) {
-          return j - 1;
-        }
-        if (j >= 52)
-          console.log ('search over 51, j >= 52', 'i=', i, 'j=', j, 'start=', startDate, 'date=', date)
-      }
-      console.log ('overRun i=', 'start=', startDate)
-      return -1; // not found
-    // if (i > array.length)
-  }
 
   var stockCount_ = -1
 
@@ -297,13 +301,15 @@ function MonthGain (props) {
         yearGain *= weekGainArray[i];
     }
 
-    console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
+    if (LOG)
+      console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
     if (props.setMonthGainData) {
       props.setMonthGainData ({
         monthGainArray:  monthGainShift,
         monthNames: monthNames,
-        weekGainArray: weekGainArray
+        weekGainArray: weekGainArray,
+        weekGainArrayCount: weekGainArrayCount
       })
     }
   }
@@ -336,4 +342,4 @@ function MonthGain (props) {
 
 }
 
-export {MonthGain}
+export {MonthGain, weekOfYearGet}

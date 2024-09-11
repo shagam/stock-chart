@@ -8,8 +8,9 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
 import {IpContext} from '../contexts/IpContext';
-import transitions from '@material-ui/core/styles/transitions';
+
 // import monthsToYears from 'date-fns/esm/fp/monthsToYears';
+import {MonthGain, weekOfYearGet} from './MonthGain'
 import Plot from 'react-plotly.js';
 
 const Simulate = (props) => {
@@ -49,8 +50,6 @@ const Simulate = (props) => {
     const [transactionFee, setTransactionFee] = useState (0);
 
 
-    const [results, setResults] =  useState ();
-
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
 
@@ -59,7 +58,7 @@ const Simulate = (props) => {
     const LOG = props.logFlags && props.logFlags.includes('simulateTrade');
 
     useEffect(() => {
-        setResults()
+
         // resultsArray()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
@@ -120,13 +119,31 @@ const Simulate = (props) => {
         var targetPortion =  aggressivePortionInit; // user param default, without optimize
 
         for (let i = oldestIndex; i > 0; i--) {
+
+            const bubbleLine = props.gainMap.bubbleLine;
+
             try {
+                //* monthGain weekGain optimize */
+                if (optimizeMonthGain && props.monthGainData.weekGainArray) {
+                    const weekNum = weekOfYearGet (XValues, i) 
+                    var a = ((52 - 3) % 52)
+                    // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
+                    var weekGainFactor = props.monthGainData.weekGainArray[weekNum]
+                    weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 1) % 52]  // future gain
+                    weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 2) % 52]
+                    weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 3) % 52]
 
+                    targetPortion /= weekGainFactor; // higher price prediction => reduce targetPortion
+
+                    if (LOG)
+                        console.log ('weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor, 'price=', price)
+                }
+
+
+                //** optimize bubbleLine */
                 portionPriv = targetPortion; //save for log
-
-
                 //** search date in bubbleLine */
-                const bubbleLine = props.gainMap.bubbleLine;
+
 
                 if (bubbleLine && optimize) {
                     const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
@@ -153,13 +170,6 @@ const Simulate = (props) => {
                             portionMin = targetPortion
                         if (portionMax < targetPortion)
                             portionMax = targetPortion
-
-
-                        if (optimizeMonthGain && props.monthGainData.monthGainArray) {
-                            if (i === 0)
-                            console.log ('optimizeMonthGain', i, props.monthGainData.monthGainArray[0].x[props.monthGainData.monthGainArray-1])
-
-                        }
 
                         if (logOptimize)
                             console.log(props.symbol, 'optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
@@ -253,28 +263,8 @@ const Simulate = (props) => {
         const buyAverage = buyCount === 0 ? 0 : (buySumTotal/buyCount).toFixed(2);
         const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
 
-        setResults (
-            {
-                priceEnd_$: price.toFixed(2),
-                priceInit_$: priceInit,
-                dateStart: XValues[oldestIndex],
-                totalWeeksBack: oldestIndex,
-
-                // buyCount: buyCount,
-                buyAverage_$: buyAverage, 
-                buyMin_$: buyMin.toFixed(2),
-                // sellCount: sellCount,
-                sellAverage_$: sellAverage,
-                sellMin_$: sellMin.toFixed(2),
-                // tradeSkipCount: tradeSkipCount,
-                // moneyMarketMin: moneyMarketMin.toFixed(2),
-                // moneyMarketMax: moneyMarketMax.toFixed(2),
-
-            })
-
 
             //** results */
-
             
             if (! resultsArray.gainOfAccount)
                 resultsArray.gainOfAccount = []
@@ -495,9 +485,6 @@ const Simulate = (props) => {
                 </tbody>
             </table>
             
-            {results && <div> Last simulation info &nbsp;</div>}
-             <pre>{JSON.stringify(results, null, 2)}</pre>
-
              {/* https://plotly.com/javascript/figure-labels/ */}
 
             {optimize && <Plot  data={chartData} layout={{ width: 650, height: 400, title: title, staticPlot: true,
