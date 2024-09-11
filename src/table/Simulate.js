@@ -52,6 +52,8 @@ const Simulate = (props) => {
     const [transactionFee, setTransactionFee] = useState (0);
 
 
+    const [results, setResults] =  useState ();
+
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
 
@@ -60,7 +62,7 @@ const Simulate = (props) => {
     const LOG = props.logFlags && props.logFlags.includes('simulateTrade');
 
     useEffect(() => {
-
+        setResults()
         // resultsArray()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
@@ -116,7 +118,7 @@ const Simulate = (props) => {
         var moneyMarketMin = accountValueInit;
         var moneyMarketMax = 0;        
         var portionPriv // updated in loop
-        var targetPortion =  aggressivePortionInit; // user param default, without optimize
+        var targetPortion; // user param default, without optimize
 
 
         const bubbleLine = props.gainMap.bubbleLine;
@@ -124,7 +126,8 @@ const Simulate = (props) => {
 
         //** WEEK GAIN: optimize trade on week gain */
         for (let i = oldestIndex; i > 0; i--) {
-
+            portionPriv = targetPortion; //save for log
+            targetPortion =  aggressivePortionInit; 
             try {
                 //* monthGain weekGain optimize */
                 if (optimizeMonthGain && props.monthGainData.weekGainArray) {
@@ -138,15 +141,13 @@ const Simulate = (props) => {
 
                     targetPortion /= weekGainFactor; // higher price prediction => reduce targetPortion
 
-                    if (LOG)
-                        console.log ('weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor, 'price=', price)
+                    if (logOptimize)
+                        console.log (props.symbol, 'weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor.toFixed(3), 'targetPortion=', targetPortion.toFixed(3), 'price=', price)
                 }
 
-
                 //** optimize bubbleLine */
-                portionPriv = targetPortion; //save for log
-                //** search date in bubbleLine */
 
+                //** search date in bubbleLine */
 
                 if (bubbleLine && optimize) {
                     const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
@@ -175,7 +176,7 @@ const Simulate = (props) => {
                             portionMax = targetPortion
 
                         if (logOptimize)
-                            console.log(props.symbol, 'optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
+                            console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
                          'portion=', targetPortion.toFixed(3), 'portionPriv=', portionPriv.toFixed(3))
                     }
                 }
@@ -267,7 +268,26 @@ const Simulate = (props) => {
         const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
 
 
-            //** results */
+        //** results */         
+        setResults (
+            {
+                priceEnd_$: price.toFixed(2),
+                priceInit_$: priceInit,
+                dateStart: XValues[oldestIndex],
+                totalWeeksBack: oldestIndex,
+
+                // buyCount: buyCount,
+                buyAverage_$: buyAverage, 
+                buyMin_$: buyMin.toFixed(2),
+                // sellCount: sellCount,
+                sellAverage_$: sellAverage,
+                sellMin_$: sellMin.toFixed(2),
+                // tradeSkipCount: tradeSkipCount,
+                // moneyMarketMin: moneyMarketMin.toFixed(2),
+                // moneyMarketMax: moneyMarketMax.toFixed(2),
+
+            })
+
             
             if (! resultsArray.gainOfAccount)
                 resultsArray.gainOfAccount = []
@@ -488,6 +508,9 @@ const Simulate = (props) => {
                     })}
                 </tbody>
             </table>
+            
+            {results && <div> Last simulation info &nbsp;</div>}
+            <pre>{JSON.stringify(results, null, 2)}</pre>
             
              {/* https://plotly.com/javascript/figure-labels/ */}
 
