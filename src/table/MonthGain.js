@@ -51,6 +51,7 @@ function MonthGain (props) {
   const {localIp, localIpv4, eliHome} = IpContext();
 
   const [mGainObj, setMgainObj] = useState ({});
+  const [weekGainArray_, setWeekGainArray] = useState ([]);
   const [yearGain, setYearGain] = useState ();
   const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
   const [startDate, setStartDate] = useState (new Date(2002, 9, 15));
@@ -304,6 +305,7 @@ function MonthGain (props) {
     if (LOG)
       console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
+    setWeekGainArray (weekGainArray)
     if (props.setMonthGainData) {
       props.setMonthGainData ({
         monthGainArray:  monthGainShift,
@@ -336,7 +338,31 @@ function MonthGain (props) {
         })}
 
         {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
-        <br></br>           
+        <br></br> 
+
+        <div style={{height:'25px', overflow:'auto'}}>
+        <table>
+          <thead>
+
+          </thead>
+          <tbody>
+              {weekGainArray_.map((s, s1) =>{
+                  return (
+                  <tr key={s1}>
+                      <td style={{width: '8px'}}>{s1}  </td> 
+                      <td> {s.toFixed(4)} </td>                
+                      {/* {weekGainArray_[s].map((k,n)=>{
+                        return (
+                            <td key={n}> {k} </td>
+                        )
+                      })
+                    } */}
+                  </tr>
+                )
+              })}
+          </tbody>
+      </table>
+      </div>  
     </div>
   )
 
