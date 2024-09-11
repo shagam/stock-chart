@@ -118,8 +118,9 @@ function MonthGain (props) {
     const weekGainArrayCount = new Array(52).fill(0);
 
     //** used to display daste in weekgain table */
-    const weekNumOfDate_temp = weekOfYearGet (props.gainMap[gainMapSym].x, 0); // get week num of first date
-    setWeekNumberForDate_0 (weekNumOfDate_temp)
+    const weekNumOfDate_temp = (gainMapSym && props.gainMap[gainMapSym]) ?  weekOfYearGet (props.gainMap[gainMapSym].x, 0) : null // get week num of first date
+    if (weekNumOfDate_temp)
+      setWeekNumberForDate_0 (weekNumOfDate_temp)
 
 
     // if (false) // temp by pass
