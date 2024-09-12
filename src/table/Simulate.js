@@ -98,13 +98,7 @@ const Simulate = (props) => {
 
 
     function optimizeMonGain_calc (XValues, i, aggressivePortionInit, price) {
-     
-        //** calc today portion */
-        const weekNumToday = weekOfYearGet (XValues, 0);
-        const weekGainFactorToday = props.monthGainData.weekGainArray[weekNumToday]
-        setPortionWeekGain (aggressivePortionInit * weekGainFactorToday)
-  
-     
+       
         var targetPortion =  aggressivePortionInit; 
         const weekNum = weekOfYearGet (XValues, i) 
 
@@ -135,10 +129,7 @@ const Simulate = (props) => {
 
 
     function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
-        //** calc today portion */
-        const portion = YValues[0] / bubbleLine.y[0]
-        setPortionBubbleLine (portionBubble_calc(portion))
-
+    
 
 
         var targetPortion =  aggressivePortionInit; 
@@ -180,6 +171,21 @@ const Simulate = (props) => {
 
         const moneyMarketInit = accountValueInit * (1 -  aggressivePortionInit) // initial moneyMarket 
         var moneyMarket = moneyMarketInit
+        const bubbleLine = props.gainMap.bubbleLine;
+
+
+        //** calc today portion  bubble*/
+        if (bubbleLine) {
+            const portion = YValues[0] / bubbleLine.y[0]
+            setPortionBubbleLine (portionBubble_calc(portion))
+        }
+
+        //** calc today portion  weekGain */
+        if (props.monthGainData) {
+            const weekNumToday = weekOfYearGet (XValues, 0);
+            const weekGainFactorToday = props.monthGainData.weekGainArray[weekNumToday]
+            setPortionWeekGain (aggressivePortionInit * weekGainFactorToday)
+        }
 
         //** log initial data */
         const tradeInitInfo = {
@@ -215,9 +221,6 @@ const Simulate = (props) => {
         var moneyMarketMax = 0;        
         var portionPriv // updated in loop
         var targetPortion; // user param default, without optimize
-
-
-        const bubbleLine = props.gainMap.bubbleLine;
 
 
         //** WEEK GAIN: optimize trade on week gain */
@@ -508,7 +511,9 @@ const Simulate = (props) => {
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
             </div>
  
-            <div>Today calc portion:    bubleGain={portionBubbleLine.toFixed(3)}   weekGain={portionWeekGain.toFixed(3)}  </div>
+            <div style={{display: 'flex'}}> Aggressive-Portion defined=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionPercent/100}</div> &nbsp; Today calc, &nbsp;
+                bubbleGain=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(3)}</div> &nbsp;
+                weekGain=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(3)}</div>  </div>
 
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
