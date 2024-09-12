@@ -54,6 +54,9 @@ const Simulate = (props) => {
     const [portionWeekGain, setPortionWeekGain] = useState (-1);
     const [portionBubbleLine, setPortionBubbleLine] = useState (-1);
 
+    const [weekGainScale, setWeekGainScale] = useState (1.4);
+    const [weekGainForward, setWeekGainForward] = useState (2);
+
     const [results, setResults] =  useState ();
 
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
@@ -103,12 +106,15 @@ const Simulate = (props) => {
         const weekNum = weekOfYearGet (XValues, i) 
 
         // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
-        var weekGainFactor = props.monthGainData.weekGainArray[weekNum]
-        weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 1) % 52]  // future gain
-        weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 2) % 52]
-        weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 3) % 52]
-
-        targetPortion /= weekGainFactor; // higher price prediction => reduce targetPortion
+        var weekGainFactor = 1;
+        for (let j = 0; j < weekGainForward; j++) {
+            const index = (52 + weekNum - j) % 52
+            if (index >= 0 && index < props.monthGainData.weekGainArray) {
+                const weeklyGain = props.monthGainData.weekGainArray[index];  // look forward closer to 0
+                weekGainFactor *= Math.pow (weeklyGain, weekGainScale) 
+                targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
+            }
+        }
 
         if (logOptimize)
             console.log (props.symbol, 'weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor.toFixed(3), 'targetPortion=', targetPortion.toFixed(3), 'price=', price)
@@ -293,7 +299,7 @@ const Simulate = (props) => {
 
                 //** log transaction */
                 if (logTrade) {
-                    console.log (props.symbol, 'tradeInfo, i=', YValues.length - i, 'portion=', targetPortion.toFixed(3),
+                    console.log (props.symbol, 'tradeInfo, i=', YValues.length - i, XValues[i], 'portion=', targetPortion.toFixed(3),
                     'accountVal=', accountVal.toFixed(2),
                     //   'stockValue=', stockCount * price, 'moneyMarkt=', moneyMarket.toFixed(2),
                      'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price.toFixed(2))
@@ -385,6 +391,15 @@ const Simulate = (props) => {
             if (! resultsArray.optimizeWeekGain)
                 resultsArray.optimizeWeekGain = []
             resultsArray.optimizeWeekGain.push ('' + optimizeWeekGain)
+
+
+            if (! resultsArray.weekGainScale)
+                resultsArray.weekGainScale = [];
+            resultsArray.weekGainScale.push (weekGainScale)
+
+            if (! resultsArray.weekGainForward)
+                resultsArray.weekGainForward = [];
+            resultsArray.weekGainForward.push (weekGainForward)
 
 
             if (! resultsArray.LEVEL_HIGH)
@@ -548,6 +563,13 @@ const Simulate = (props) => {
                 &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portionHigh' type='text' pattern="[\.0-9]+" width = '25%'/>
                 &nbsp; <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+" width = '25%'/>
             </div>}
+            
+            {/* week gain params */}
+            <div style = {{display:'flex', width: '800px'}}>
+                &nbsp; {optimizeWeekGain && <GetInt init={weekGainScale} callBack={setWeekGainScale} title='weekGainScale' type='text' pattern="[\.0-9]+" width = '20%'/>}
+                &nbsp; {optimizeWeekGain && <GetInt init={weekGainForward} callBack={setWeekGainForward} title='weekGainForward' type='Number' pattern="[0-9]+" width = '20%'/>}
+            </div>
+
             <div style = {{display:'flex', width: '800px'}}>
                 &nbsp; {! optimizeBubble && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
                 &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>
