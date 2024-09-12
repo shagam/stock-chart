@@ -31,7 +31,7 @@ const Simulate = (props) => {
 
     //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
-    const [optimize, setOptimize] = useState (props.gainMap.bubbleLine ? true : false);
+    const [optimizeBubble, setOptimizeBubble] = useState (props.gainMap.bubbleLine ? true : false);
     const [optimizeMonthGain, setOptimizeMonthGain] = useState (props.monthGainData.monthGainArray ? true : false);
 
     const [logTrade, setLogTrade] = useState (false);
@@ -67,6 +67,24 @@ const Simulate = (props) => {
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
+
+    function optimizeMonGain_calc (XValues, i, aggressivePortionInit, price) {
+        var targetPortion =  aggressivePortionInit; 
+        const weekNum = weekOfYearGet (XValues, i) 
+        var a = ((52 - 3) % 52)
+        // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
+        var weekGainFactor = props.monthGainData.weekGainArray[weekNum]
+        weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 1) % 52]  // future gain
+        weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 2) % 52]
+        weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 3) % 52]
+
+        targetPortion /= weekGainFactor; // higher price prediction => reduce targetPortion
+
+        if (logOptimize)
+            console.log (props.symbol, 'weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor.toFixed(3), 'targetPortion=', targetPortion.toFixed(3), 'price=', price)
+        return targetPortion;
+    }
+
 
     //** SIMULATE TRADE */
     function simulateTrade(XValues, YValues) {
@@ -131,25 +149,14 @@ const Simulate = (props) => {
             try {
                 //* monthGain weekGain optimize */
                 if (optimizeMonthGain && props.monthGainData.weekGainArray) {
-                    const weekNum = weekOfYearGet (XValues, i) 
-                    var a = ((52 - 3) % 52)
-                    // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
-                    var weekGainFactor = props.monthGainData.weekGainArray[weekNum]
-                    weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 1) % 52]  // future gain
-                    weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 2) % 52]
-                    weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 3) % 52]
-
-                    targetPortion /= weekGainFactor; // higher price prediction => reduce targetPortion
-
-                    if (logOptimize)
-                        console.log (props.symbol, 'weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor.toFixed(3), 'targetPortion=', targetPortion.toFixed(3), 'price=', price)
+                    targetPortion = optimizeMonGain_calc (props.stockChartXValues, i, aggressivePortionInit, price)         
                 }
 
                 //** optimize bubbleLine */
 
                 //** search date in bubbleLine */
 
-                if (bubbleLine && optimize) {
+                if (bubbleLine && optimizeBubble) {
                     const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
                     const symVal = YValues[i]; 
                     var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
@@ -319,7 +326,7 @@ const Simulate = (props) => {
 
             if (! resultsArray.optimize)
                 resultsArray.optimize = []
-            resultsArray.optimize.push ('' + optimize)
+            resultsArray.optimize.push ('' + optimizeBubble)
 
 
             if (! resultsArray.LEVEL_HIGH)
@@ -449,20 +456,20 @@ const Simulate = (props) => {
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
-                {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimize}  onChange={() => setOptimize (! optimize)} />
-                    &nbsp;optimize (price/bubble) &nbsp;</div>}&nbsp;
+                {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} />
+                    &nbsp;optimize_bubble) &nbsp;</div>}&nbsp;
                 {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeMonthGain}  onChange={() => setOptimizeMonthGain (! optimizeMonthGain)} />
-                    &nbsp;optimize (monthGain) &nbsp;</div>}  &nbsp;
+                    &nbsp;optimize_monthGain) &nbsp;</div>}  &nbsp;
 
                 {/* log checkboxes */}
                 {! props.isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
-                {! props.isMobile && (optimize || optimizeMonthGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
+                {! props.isMobile && (optimizeBubble || optimizeMonthGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
-            {optimize && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
-            {! optimize && <div  style={{color: 'green' }}> keep aggressive portion </div>}
+            {optimizeBubble && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
+            {! optimizeBubble && <div  style={{color: 'green' }}> keep aggressive portion </div>}
 
-            {optimize && <div style = {{display:'flex'}}>
+            {optimizeBubble && <div style = {{display:'flex'}}>
                 &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='levelHigh' type='text' pattern="[\\.0-9]+" width = '25%'/>
                 &nbsp; <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='levelLow' type='text' pattern="[\\.0-9]+" width = '25%'/> 
             {/* </div>  
@@ -471,7 +478,7 @@ const Simulate = (props) => {
                 &nbsp; <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+" width = '25%'/>
             </div>}
             <div style = {{display:'flex', width: '800px'}}>
-                &nbsp; {! optimize && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
+                &nbsp; {! optimizeBubble && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
                 &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>
             </div>
 
@@ -514,7 +521,7 @@ const Simulate = (props) => {
             
              {/* https://plotly.com/javascript/figure-labels/ */}
 
-            {optimize && <Plot  data={chartData} layout={{ width: 650, height: 400, title: title, staticPlot: true,
+            {optimizeBubble && <Plot  data={chartData} layout={{ width: 650, height: 400, title: title, staticPlot: true,
                  xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
 
         </div>
