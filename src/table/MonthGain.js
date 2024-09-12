@@ -103,7 +103,7 @@ function MonthGain (props) {
 
   // collect month gain over the history
   function monthGainCalc (gainMap, mGainObj, setMgainObj, setYearGain, logFlags, startDate) {    
-
+    setStatus()
     const stocks = Object.keys (gainMap);
     if (stocks.length === 0) {
       setStatus ('wait a few seconds for gain data')
@@ -394,7 +394,7 @@ function MonthGain (props) {
                       <td style={{width: '80px'}}>{s1}  </td> 
                       <td style= {{color: gainColor (s)}} color> {s.toFixed(4)} </td>
                       <td>{yearsCollectedForAverage[s1]}</td>
-                      <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>
+                      {props.gainMap && props.gainMap[gainMapSym] && <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
                   </tr>
                 )
               })}
