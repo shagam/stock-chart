@@ -26,19 +26,28 @@ import { beep2 } from '../utils/ErrorList';
 
 
  //** search for week number */
- function weekOfYearGet (array, i) {
-  if (i + 52 > array.length){
-      console.log ('near oldest i=', i, 'date=', array[i])
+ function weekOfYearGet (Xarray, i) {
+  if (i + 52 > Xarray.length){
+      console.log ('near oldest i=', i, 'date=', Xarray[i])
     return -1; // fail
   }
-  const startDate = array[i].split('-')
+  const startDate = Xarray[i].split('-')
     for (let j = 0; j < 54; j++) {
-      const date = array[i + j].split('-')
+      const date = Xarray[i + j].split('-')
       if (startDate[0] !== date[0]) {
-        return j - 1;
+        if (j === 0) {
+          console.log ('weekNum === -1  j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
+        }
+        if (j === 1) {
+          console.log ('weekNum === 51  j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
+        }
+
+        return (52 + j - 1) % 52;
       }
-      if (j >= 52)
-        console.log ('search over 51, j >= 52', 'i=', i, 'j=', j, 'start=', startDate, 'date=', date)
+      if (j === 52) {
+        console.log ('search over 51, j === 52', 'i=', i, 'j=', j, 'start=', Xarray[i], 'date=', Xarray[i + j])
+        return (52 + j - 1) % 52;
+      }
     }
     console.log ('overRun i=', 'start=', startDate)
     return -1; // not found
@@ -108,7 +117,7 @@ function MonthGain (props) {
     // console.log (n, l, r)
     // const LOG = logFlags.includes('month')
 
-    const LOG = logFlags.includes('month')
+    const LOG_MONTH = logFlags.includes('month')
 
 
 
@@ -227,7 +236,7 @@ function MonthGain (props) {
 
 
       // average yearly  mon gain 
-      if (LOG)
+      if (LOG_MONTH)
       console.log(symm, 'mult array', mGainForSymm, mCountForSymm)
       if (mCountForSymm[0] === 0) {
           console.log (symm, 'NaN', mCountForSymm);
@@ -246,7 +255,7 @@ function MonthGain (props) {
       // console.log(symm, debug)
 
       // add symbol to other
-      // if (LOG)
+      if (LOG_MONTH)
         console.log (symm, 'yearly', mGainForSymmShift, mCountForSymm) // syngle sym 
       for (let j = 0; j < 12; j++) {
         if (! isNaN(mGainForSymmShift[j]))
@@ -272,7 +281,7 @@ function MonthGain (props) {
         monthGain[i] = Number(Math.pow(Number(mGain[i]), 1 / stockCount_).toFixed(3))
         yearGain_ *= monthGain[i]
     }
-    // if (LOG)
+    if (LOG_MONTH)
         console.log(symm, 'agregate gainShiftBefore', ' yearlyGain', yearGain_.toFixed(3), monthGain)
 
     // shift gain from next month
@@ -283,7 +292,7 @@ function MonthGain (props) {
         yearlyGain *= monthGainShift[i];
 
     }
-    // if (LOG)
+    if (LOG_MONTH)
         console.log(symm,'agregate gainShiftAfter', ' yearlyGain', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
 
     // resultArray   monthGainShift
@@ -314,7 +323,7 @@ function MonthGain (props) {
         yearsCollectedForAverage[i] = weekGainArrayCount[i] / symbols.length // calc years
     }
 
-    if (LOG)
+    // if (LOG)
       console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
     setWeekGainArray (weekGainArray)
