@@ -55,7 +55,7 @@ function MonthGain (props) {
   const [yearGain, setYearGain] = useState ();
   const [monthNames, setMonthNames] = useState(['Jan','Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
   const [startDate, setStartDate] = useState (new Date(2002, 9, 15));
-
+  const [yearsCollectedForAverage, setYearsCollectedForAverage] = useState(new Array(52).fill(0)) // calc years of average
   //** needed for disolay date in weekGain table */
   const symbols = Object.keys(props.gainMap)
   const [gainMapSym, setGainMapSym] = useState (symbols[0])
@@ -113,7 +113,7 @@ function MonthGain (props) {
 
 
 
-    //* week gain arrays
+    //* week gain arrays for all syms
     const weekGainArrayCollect = new Array(52).fill(1);
     const weekGainArrayCount = new Array(52).fill(0);
 
@@ -157,7 +157,7 @@ function MonthGain (props) {
         weekGainArrayCollect[weekOfYear] *= (yArray[nextWeekNum] / yArray[weekOfYear]);
         weekGainArrayCount[weekOfYear] ++;            
       }
-    }
+    } // end of week loop one sym
 
 
 
@@ -221,7 +221,7 @@ function MonthGain (props) {
         }
         mCountForSymm[mon] ++;
         i = weekOfNextMonth; // next month
-      } // end of one sym loop
+      } // end of one sym loop for months
 
 
 
@@ -257,7 +257,7 @@ function MonthGain (props) {
         }
       }
    
-    } 
+    } // end loop for sym
 
 
 
@@ -306,10 +306,12 @@ function MonthGain (props) {
 
     // calculate week gain average
     const weekGainArray = [];
+
     var yearGain = 1;
     for (let i = 0; i < 52; i++) {
         weekGainArray[i] = Math.pow(weekGainArrayCollect[i], (1/weekGainArrayCount[i]))
         yearGain *= weekGainArray[i];
+        yearsCollectedForAverage[i] = weekGainArrayCount[i] / symbols.length // calc years
     }
 
     if (LOG)
@@ -321,7 +323,7 @@ function MonthGain (props) {
         monthGainArray:  monthGainShift,
         monthNames: monthNames,
         weekGainArray: weekGainArray,
-        weekGainArrayCount: weekGainArrayCount
+        yearsCollectedForAverage: yearsCollectedForAverage
       })
     }
   }
@@ -371,6 +373,7 @@ function MonthGain (props) {
             <tr>
               <th>week #</th>
               <th>week gain</th>
+              <th>years</th>
               <th>last date of week number</th>
             </tr>
           </thead>
@@ -380,6 +383,7 @@ function MonthGain (props) {
                   <tr key={s1}>
                       <td style={{width: '80px'}}>{s1}  </td> 
                       <td style= {{color: gainColor (s)}} color> {s.toFixed(4)} </td>
+                      <td>{yearsCollectedForAverage[s1]}</td>
                       <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>
                   </tr>
                 )
