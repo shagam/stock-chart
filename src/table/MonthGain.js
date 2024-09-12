@@ -27,27 +27,28 @@ import { beep2 } from '../utils/ErrorList';
 
  //** search for week number */
  function weekOfYearGet (Xarray, i) {
-  if (i + 52 > Xarray.length){
-      console.log ('near oldest i=', i, 'date=', Xarray[i])
-    return -1; // fail
-  }
-  const startDate = Xarray[i].split('-')
-    for (let j = 0; j < 54; j++) {
+    if (i + 52 > Xarray.length){
+        console.log ('near oldest i=', i, 'date=', Xarray[i])
+      return -1; // fail
+    }
+    const startDate = Xarray[i].split('-')
+    for (let j = 0; j <= 54; j++) {
       const date = Xarray[i + j].split('-')
       if (startDate[0] !== date[0]) {
-        if (j === 0) {
-          console.log ('weekNum === -1  j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
+        if (j > 52) {
+          console.log ('weekNum=', 51, 'j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
+          return 51
         }
-        if (j === 1) {
-          console.log ('weekNum === 51  j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
-        }
+        // if (j === 1) {
+        //   console.log ('weekNum === 0  j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
+        // }
 
         return (52 + j - 1) % 52;
       }
-      if (j === 52) {
-        console.log ('search over 51, j === 52', 'i=', i, 'j=', j, 'start=', Xarray[i], 'date=', Xarray[i + j])
-        return (52 + j - 1) % 52;
-      }
+      // if (j >= 52) {
+      //   console.log ('search over 51, j === 52', 'i=', i, 'j=', j, 'start=', Xarray[i], 'date=', Xarray[i + j])
+      //   return (52 + j - 1) % 52;
+      // }
     }
     console.log ('overRun i=', 'start=', startDate)
     return -1; // not found
@@ -118,7 +119,7 @@ function MonthGain (props) {
     // const LOG = logFlags.includes('month')
 
     const LOG_MONTH = logFlags.includes('month')
-
+    const LOG_WEEK = logFlags.includes('month')
 
 
 
@@ -323,7 +324,7 @@ function MonthGain (props) {
         yearsCollectedForAverage[i] = weekGainArrayCount[i] / symbols.length // calc years
     }
 
-    // if (LOG)
+    if (LOG_WEEK)
       console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
     setWeekGainArray (weekGainArray)
