@@ -841,7 +841,7 @@ const BasicTable = (props) => {
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}/>  
                 <div style={{color:'blue'}}> simulateTrade   </div> 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}/>  
-                <div style={{color:'blue'}}> monthGain   </div> 
+                <div style={{color:'blue'}}> weekGain   </div> 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='8' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
                 {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
