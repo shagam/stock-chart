@@ -67,6 +67,10 @@ const Simulate = (props) => {
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
+    const aggressivePortionInit = portionPercent/100; // between 0 to 1
+    var portionMin = aggressivePortionInit;
+    var portionMax = aggressivePortionInit;
+
 
     function optimizeMonGain_calc (XValues, i, aggressivePortionInit, price) {
         var targetPortion =  aggressivePortionInit; 
@@ -85,6 +89,38 @@ const Simulate = (props) => {
         return targetPortion;
     }
 
+    function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
+        var targetPortion =  aggressivePortionInit; 
+        const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
+        const symVal = YValues[i]; 
+        var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
+        if (bubbleIndex!== -1) {
+
+            //** optimize according to bubbleLine */
+            var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
+            if (priceDivBbubblePrice > 1) {
+                console.log ('price above bubble')
+            }
+
+            if (priceDivBbubblePrice <= LEVEL_LOW)  // low level set high portion
+                targetPortion = Number(PORTION_HIGH) ;
+            else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
+                targetPortion = Number(PORTION_LOW);
+            else {// interpolate
+                targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
+            }
+
+            // save portion min/max
+            if (portionMin > targetPortion)
+                portionMin = targetPortion
+            if (portionMax < targetPortion)
+                portionMax = targetPortion
+
+            if (logOptimize)
+                console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
+             'portion=', targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
+        }
+    }
 
     //** SIMULATE TRADE */
     function simulateTrade(XValues, YValues) {
@@ -93,15 +129,12 @@ const Simulate = (props) => {
         const priceInit = price
 
         var accountVal =  accountValueInit;
-        const aggressivePortionInit = portionPercent/100; // between 0 to 1
+
         const stockCountInit = accountValueInit *  aggressivePortionInit / price;
         var stockCount = stockCountInit;
 
         const moneyMarketInit = accountValueInit * (1 -  aggressivePortionInit) // initial moneyMarket 
         var moneyMarket = moneyMarketInit
-
-        var portionMin = aggressivePortionInit;
-        var portionMax = aggressivePortionInit;
 
         //** log initial data */
         const tradeInitInfo = {
@@ -149,7 +182,7 @@ const Simulate = (props) => {
             try {
                 //* monthGain weekGain optimize */
                 if (optimizeMonthGain && props.monthGainData.weekGainArray) {
-                    targetPortion = optimizeMonGain_calc (props.stockChartXValues, i, aggressivePortionInit, price)         
+                    targetPortion =  optimizeMonGain_calc (props.stockChartXValues, i, aggressivePortionInit, price)         
                 }
 
                 //** optimize bubbleLine */
@@ -157,35 +190,7 @@ const Simulate = (props) => {
                 //** search date in bubbleLine */
 
                 if (bubbleLine && optimizeBubble) {
-                    const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
-                    const symVal = YValues[i]; 
-                    var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
-                    if (bubbleIndex!== -1) {
-
-                        //** optimize according to bubbleLine */
-                        var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
-                        if (priceDivBbubblePrice > 1) {
-                            console.log ('price above bubble')
-                        }
-
-                        if (priceDivBbubblePrice <= LEVEL_LOW)  // low level set high portion
-                            targetPortion = Number(PORTION_HIGH) ;
-                        else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
-                            targetPortion = Number(PORTION_LOW);
-                        else {// interpolate
-                            targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
-                        }
-
-                        // save portion min/max
-                        if (portionMin > targetPortion)
-                            portionMin = targetPortion
-                        if (portionMax < targetPortion)
-                            portionMax = targetPortion
-
-                        if (logOptimize)
-                            console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
-                         'portion=', targetPortion.toFixed(3), 'portionPriv=', portionPriv.toFixed(3))
-                    }
+                    targetPortion =  optimizeBubble_calc (props.stockChartXValues, props.stockChartYValues, i, aggressivePortionInit, price, bubbleLine) 
                 }
             const pricePrev = price;
             price = YValues[i] 
