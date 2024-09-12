@@ -511,7 +511,8 @@ const Simulate = (props) => {
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
             </div>
  
-            <div style={{display: 'flex'}}> Aggressive-Portion defined=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionPercent/100}</div> &nbsp; Today calc, &nbsp;
+            <div style={{display: 'flex'}}> <div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Aggressive-Portion</div> &nbsp;
+                defined=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionPercent/100}</div> &nbsp; Today calc, &nbsp;
                 bubbleGain=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(3)}</div> &nbsp;
                 weekGain=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(3)}</div>  </div>
 
