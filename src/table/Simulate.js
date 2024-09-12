@@ -31,8 +31,8 @@ const Simulate = (props) => {
 
     //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
-    const [optimizeBubble, setOptimizeBubble] = useState (props.gainMap.bubbleLine ? true : false);
-    const [optimizeMonthGain, setOptimizeMonthGain] = useState (props.monthGainData.monthGainArray ? true : false);
+    const [optimizeBubble, setOptimizeBubble] = useState (false) // (props.gainMap.bubbleLine ? true : false);
+    const [optimizeWeekGain, setOptimizeWeekthGain] = useState (false) // (props.monthGainData.monthGainArray ? true : false);
 
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
@@ -51,6 +51,8 @@ const Simulate = (props) => {
     const [interestRate, setInterestRate] = useState (3.2);
     const [transactionFee, setTransactionFee] = useState (0);
 
+    const [portionWeekGain, setPortionWeekGain] = useState (-1);
+    const [portionBubbleLine, setPortionBubbleLine] = useState (-1);
 
     const [results, setResults] =  useState ();
 
@@ -87,18 +89,25 @@ const Simulate = (props) => {
         else
             setOptimizeBubble(false)
         if (tool === 'WEEK_GAIN')
-            setOptimizeMonthGain(true)
+            setOptimizeWeekthGain(true)
         else
-            setOptimizeMonthGain(false)
+            setOptimizeWeekthGain(false)
         console.log(tool)
       }
     
 
 
     function optimizeMonGain_calc (XValues, i, aggressivePortionInit, price) {
+     
+        //** calc today portion */
+        const weekNumToday = weekOfYearGet (XValues, 0);
+        const weekGainFactorToday = props.monthGainData.weekGainArray[weekNumToday]
+        setPortionWeekGain (aggressivePortionInit * weekGainFactorToday)
+  
+     
         var targetPortion =  aggressivePortionInit; 
         const weekNum = weekOfYearGet (XValues, i) 
-        var a = ((52 - 3) % 52)
+
         // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
         var weekGainFactor = props.monthGainData.weekGainArray[weekNum]
         weekGainFactor *= props.monthGainData.weekGainArray[(52 + weekNum - 1) % 52]  // future gain
@@ -112,7 +121,26 @@ const Simulate = (props) => {
         return targetPortion;
     }
 
+    function portionBubble_calc (priceDivBbubblePrice) {
+        var targetPortion = -1;
+        if (priceDivBbubblePrice <= LEVEL_LOW)  // low level set high portion
+            targetPortion = Number(PORTION_HIGH) ;
+        else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
+            targetPortion = Number(PORTION_LOW);
+        else {// interpolate
+            targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
+        }
+        return targetPortion
+    }
+
+
     function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
+        //** calc today portion */
+        const portion = YValues[0] / bubbleLine.y[0]
+        setPortionBubbleLine (portionBubble_calc(portion))
+
+
+
         var targetPortion =  aggressivePortionInit; 
         const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
         const symVal = YValues[i]; 
@@ -125,13 +153,7 @@ const Simulate = (props) => {
                 console.log ('price above bubble')
             }
 
-            if (priceDivBbubblePrice <= LEVEL_LOW)  // low level set high portion
-                targetPortion = Number(PORTION_HIGH) ;
-            else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
-                targetPortion = Number(PORTION_LOW);
-            else {// interpolate
-                targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
-            }
+            targetPortion = portionBubble_calc (priceDivBbubblePrice)
 
             // save portion min/max
             if (portionMin > targetPortion)
@@ -204,7 +226,7 @@ const Simulate = (props) => {
             targetPortion =  aggressivePortionInit; 
             try {
                 //* monthGain weekGain optimize */
-                if (optimizeMonthGain && props.monthGainData.weekGainArray) {
+                if (optimizeWeekGain && props.monthGainData.weekGainArray) {
                     targetPortion =  optimizeMonGain_calc (props.stockChartXValues, i, aggressivePortionInit, price)         
                 }
 
@@ -352,9 +374,14 @@ const Simulate = (props) => {
                 resultsArray.tradeFlag = []
             resultsArray.tradeFlag.push('' + tradeFlag)
 
-            if (! resultsArray.optimize)
-                resultsArray.optimize = []
-            resultsArray.optimize.push ('' + optimizeBubble)
+
+            if (! resultsArray.optimizeBubble)
+                resultsArray.optimizeBubble = []
+            resultsArray.optimizeBubble.push ('' + optimizeBubble)
+
+            if (! resultsArray.optimizeWeekGain)
+                resultsArray.optimizeWeekGain = []
+            resultsArray.optimizeWeekGain.push ('' + optimizeWeekGain)
 
 
             if (! resultsArray.LEVEL_HIGH)
@@ -481,6 +508,8 @@ const Simulate = (props) => {
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
             </div>
  
+            <div>Today calc portion:    bubleGain={portionBubbleLine.toFixed(3)}   weekGain={portionWeekGain.toFixed(3)}  </div>
+
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
@@ -499,7 +528,7 @@ const Simulate = (props) => {
               
                   {/* log checkboxes */}
                 {! props.isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
-                {! props.isMobile && (optimizeBubble || optimizeMonthGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
+                {! props.isMobile && (optimizeBubble || optimizeWeekGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
             {optimizeBubble && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
