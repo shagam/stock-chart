@@ -550,7 +550,7 @@ const Simulate = (props) => {
             </div>}
             <div style = {{display:'flex', width: '800px'}}>
                 &nbsp; {! optimizeBubble && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
-                &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>
+                &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
 
             <div style = {{display:'flex', width: '800px'}}>
@@ -559,7 +559,7 @@ const Simulate = (props) => {
             </div>
             <div style = {{display:'flex', width: '800px'}}>
                 &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+" width = '15%'/>
-                &nbsp; <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+" width = '15%'/>
+                &nbsp; <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
             <div> &nbsp;</div>
 
