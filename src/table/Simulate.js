@@ -109,7 +109,7 @@ const Simulate = (props) => {
         var weekGainFactor = 1;
         for (let j = 0; j < weekGainForward; j++) {
             const index = (52 + weekNum - j) % 52
-            if (index >= 0 && index < props.monthGainData.weekGainArray) {
+            if (index >= 0 && index < props.monthGainData.weekGainArray.length) {
                 const weeklyGain = props.monthGainData.weekGainArray[index];  // look forward closer to 0
                 weekGainFactor *= Math.pow (weeklyGain, weekGainScale) 
                 targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
@@ -528,8 +528,8 @@ const Simulate = (props) => {
  
             <div style={{display: 'flex'}}> <div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Aggressive-Portion</div> &nbsp;
                 defined=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionPercent/100}</div> &nbsp; Today calc, &nbsp;
-                bubbleGain=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(3)}</div> &nbsp;
-                weekGain=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(3)}</div>  </div>
+                bubble-proximity-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(3)}</div> &nbsp;
+                weekGain-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(3)}</div>  </div>
 
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
