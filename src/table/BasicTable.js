@@ -848,8 +848,9 @@ const BasicTable = (props) => {
                 {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
 
+            <hr/> 
             {/* pans  */}
-            <div> &nbsp; </div>
+            {/* <div> &nbsp; </div> */}
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={weekly}/>}
