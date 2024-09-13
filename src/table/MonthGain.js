@@ -351,11 +351,11 @@ function MonthGain (props) {
   function gainColor (gain, week) {
     if ((week && gain > 1.007) || (!week && gain > 1.02)) { // for month color for hiegher gain
       const diff = gain -1;
-      return '#00dd00' // diff * 40 
+      return '#00ff00' // diff * 40 green
     }
     else if ((week && gain < 0.993) || (!week &&  gain < 0.98) ) {
       const diff = (1 - gain)
-      return '#dd0000'// + diff * 256 * 40 
+      return '#ff0000'// + diff * 256 * 40 red
     }
     else
      return '#0'  // black
@@ -365,14 +365,14 @@ function MonthGain (props) {
     <div>
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}> MonthGain </h6>
+          <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>
         </div>
 
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style = {{display: 'flex'}}>
           {props.symbol && <button style={{background: 'aqua'}}  type="button" 
-            onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>monthGain</button>}
+            onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>week-month-gain</button>}
             &nbsp; &nbsp;
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
               dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp;  </div>
