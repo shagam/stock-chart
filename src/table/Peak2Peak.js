@@ -116,6 +116,8 @@ const Peak2PeakGui = (props) => {
 
               {results && ! props.bubleLine && <button style={{background: 'aqua'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
               {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
+              {/* <div> Click </div> &nbsp;&nbsp;
+              <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
            </div>
            
            {results && <div>

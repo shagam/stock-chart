@@ -69,7 +69,9 @@ function MonthGain (props) {
   //** needed for disolay date in weekGain table */
   const symbols = Object.keys(props.gainMap)
   const [gainMapSym, setGainMapSym] = useState (symbols[0])
+
   const [weekNumberForDate_0, setWeekNumberForDate_0] = useState ();
+  const [weekNumYearGain, setWeekNumYearGain] = useState(1);
 
   useEffect(() => {
     setStatus()
@@ -148,7 +150,7 @@ function MonthGain (props) {
         continue;
       }
       var errCount = 0;
-      for (let i = 0; i < oldestIndex; i++) { // index into weekly x (date) y (price) arrays 
+      for (let i = 1; i < oldestIndex -1; i++) { // index into weekly x (date) y (price) arrays 
 
         var weekOfYear = weekOfYearGet (xArray, i) 
         if (weekOfYear === -1) {// fail
@@ -163,9 +165,15 @@ function MonthGain (props) {
           continue
         }
 
-        var nextWeekNum = (weekOfYear + 1) % 52;
-        weekGainArrayCollect[weekOfYear] *= (yArray[nextWeekNum] / yArray[weekOfYear]);
-        weekGainArrayCount[weekOfYear] ++;            
+        var totalGain = 1;
+        const weekGain = (yArray[i] / yArray[i + 1])
+        weekGainArrayCollect[weekOfYear] *= weekGain;
+        weekGainArrayCount[weekOfYear] ++;
+        totalGain *= weekGain;
+        if (weekOfYear === 51) {
+          console.log ('debug 51,', xArray[i], 'weekOfYear=', weekOfYear, 'lastGain=', weekGain.toFixed(3),
+           'GainOfWeekNum=', weekGainArrayCollect[weekOfYear].toFixed(3), 'totalGain=', totalGain.toFixed(3) )
+        }
       }
     } // end of week loop one sym
 
@@ -323,9 +331,10 @@ function MonthGain (props) {
         yearGain *= weekGainArray[i];
         yearsCollectedForAverage[i] = weekGainArrayCount[i] / symbols.length // calc years
     }
+    setWeekNumYearGain (yearGain)
 
-    if (LOG_WEEK)
-      console.log ('yearGain=', yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
+    // if (LOG_WEEK)
+      console.log ('yearGain=',  yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
     setWeekGainArray (weekGainArray)
     if (props.setMonthGainData) {
@@ -339,12 +348,12 @@ function MonthGain (props) {
   }
 
   //* color gain numbers according to gain
-  function gainColor (gain) {
-    if (gain > 1.02) {
+  function gainColor (gain, week) {
+    if ((week && gain > 1.002) || (!week && gain > 1.02)) { // for month color for hiegher gain
       const diff = gain -1;
       return '#00dd00' // diff * 40 
     }
-    else if (gain < 0.98) {
+    else if ((week && gain < 0.998) || (!week &&  gain < 0.98) ) {
       const diff = (1 - gain)
       return '#dd0000'// + diff * 256 * 40 
     }
@@ -370,13 +379,14 @@ function MonthGain (props) {
         { Object.keys(mGainObj).map((oneKey,i)=>{
           return (
               <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}: </div>
-                &nbsp; &nbsp; <div style={{color: gainColor (mGainObj[oneKey])}} > {mGainObj[oneKey]}</div> </div>
+                &nbsp; &nbsp; <div style={{color: gainColor (mGainObj[oneKey], false)}} > {mGainObj[oneKey]}</div> </div>
             )
         })}
 
         {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
         <br></br> 
-
+        
+        <div> weekNumYearGain={weekNumYearGain.toFixed(3)}</div>
         {weekGainArray_.length > 0  && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
         <table>
           <thead>
@@ -392,7 +402,7 @@ function MonthGain (props) {
                   return (
                   <tr key={s1}>
                       <td style={{width: '80px'}}>{s1}  </td> 
-                      <td style= {{color: gainColor (s)}} color> {s.toFixed(4)} </td>
+                      <td style= {{color: gainColor (s, true)}} color> {s.toFixed(4)} </td>
                       <td>{yearsCollectedForAverage[s1]}</td>
                       {props.gainMap && props.gainMap[gainMapSym] && <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
                   </tr>
