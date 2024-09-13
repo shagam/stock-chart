@@ -349,11 +349,11 @@ function MonthGain (props) {
 
   //* color gain numbers according to gain
   function gainColor (gain, week) {
-    if ((week && gain > 1.002) || (!week && gain > 1.02)) { // for month color for hiegher gain
+    if ((week && gain > 1.007) || (!week && gain > 1.02)) { // for month color for hiegher gain
       const diff = gain -1;
       return '#00dd00' // diff * 40 
     }
-    else if ((week && gain < 0.998) || (!week &&  gain < 0.98) ) {
+    else if ((week && gain < 0.993) || (!week &&  gain < 0.98) ) {
       const diff = (1 - gain)
       return '#dd0000'// + diff * 256 * 40 
     }
@@ -389,7 +389,7 @@ function MonthGain (props) {
         {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
         <br></br> 
         
-        <div> weekNumYearGain={weekNumYearGain.toFixed(3)}</div>
+        {weekNumYearGain !== 1 && <div> weekNumYearGain={weekNumYearGain.toFixed(3)}</div>}
         {weekGainArray_.length > 0  && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
         <table>
           <thead>
