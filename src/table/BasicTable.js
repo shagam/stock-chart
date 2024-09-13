@@ -791,7 +791,7 @@ const BasicTable = (props) => {
       </tbody>
     </table>
     {! chartSymbol && <div style={{display: 'flex'}}>Press &nbsp;
-      <div style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>gain</div> &nbsp; for at least one symbol</div>}  
+      <div style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>gain</div> &nbsp; for one or more symbols</div>}  
     <div id='trailer_id'>
       {showUrl &&  <h4 style={{'color':'green'}}>stocks-compare.netlify.app</h4>}
         {chartSymbol && stockChartXValues.length > 0 && 
