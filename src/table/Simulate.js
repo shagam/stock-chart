@@ -107,17 +107,31 @@ const Simulate = (props) => {
 
         // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
         var weekGainFactor = 1;
-        for (let j = 0; j < weekGainForward; j++) {
-            const index = (52 + weekNum - j) % 52
+        for (let j = 1; j < weekGainForward; j++) {
+            const index = (52 + weekNum - j) % 52  // look in future
             if (index >= 0 && index < props.monthGainData.weekGainArray.length) {
                 const weeklyGain = props.monthGainData.weekGainArray[index];  // look forward closer to 0
                 weekGainFactor *= Math.pow (weeklyGain, weekGainScale) 
-                targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
+                if (targetPortion * weekGainFactor > 0.98) {
+                    console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor)                 
+                    break;
+                }
+
+                if (targetPortion > 1) {
+                    console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3))
+                }
+               if (isNaN (weekGainFactor)) {
+                    console.log ('NaN')
+                }
             }
+            else
+                console.log ('Date not found index=', index, 'weekNum', weekNum)
+
         }
+        targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
 
         if (logOptimize)
-            console.log (props.symbol, 'weekGain optimize  i=', i, 'date=', XValues[i], 'factor=', weekGainFactor.toFixed(3), 'targetPortion=', targetPortion.toFixed(3), 'price=', price)
+            console.log (props.symbol, 'weekOptmz  i='+ i, XValues[i], 'price=' + price.toFixed(2), 'targetPortion=' + targetPortion.toFixed(3), 'factor=' + weekGainFactor.toFixed(3))
         return targetPortion;
     }
 
@@ -252,38 +266,41 @@ const Simulate = (props) => {
             const accountValPrev  = accountVal;
             accountVal = price*stockCount + moneyMarket;
             const accountValBeforeTrade = accountVal
-
-            const portionDiff = price*stockCount / accountVal - targetPortion; 
-            // if (Math.abs(portionDiff) > accountVal / 5000) {
-            //     console.log (accountVal, portionDiff)
-            // }
-
+            const portionCurrent = price*stockCount / accountVal // actual
+            const portionDiff = targetPortion - portionCurrent;  //  recomended - actual 
+            var buySell;
             if (tradeFlag && Math.abs(portionDiff) > (thresholdPercent / 100)
                  && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
                 //** If up sell */
-                stockToTrade = Math.abs(stockCount * portionDiff);
+                stockToTrade = (stockCount * portionDiff);
                 const tradeSum = (stockToTrade * price);
 
-                if (portionDiff < 0) {
+                if (portionDiff > 0) {
                     // buy stocks.
+                    buySell = 'buy'
+                    if (moneyMarket - tradeSum < 0) {
+                        console.log ('error tradeSum=', tradeSum, ' more than moneyMarket', moneyMarket, 'targetPortion', targetPortion)
+                        continue;
+                    }
                     stockCount += stockToTrade;
                     moneyMarket -= tradeSum;
                     moneyMarket -= transactionFee;
                     buyCount ++
                     buySumTotal += tradeSum;
-                    if (buyMin === undefined || tradeSum < buyMin)
-                        buyMin = tradeSum;
                 }
 
                 else {
                      // sell stocks
-                     stockCount -= stockToTrade;
-                     moneyMarket += tradeSum;
+                    buySell = 'sell'
+                    if ((stockCount + stockToTrade ) < 0) {
+                        console.log ('error', 'stockToTrade=', stockToTrade, 'is more than stockCount=', stockCount, 'targetPortion', targetPortion)
+                        continue;
+                    }
+                     stockCount += stockToTrade; // negastive or 
+                     moneyMarket -= tradeSum;
                      moneyMarket -= transactionFee; // for stocks trade only
                      sellCount ++;
-                     sellSumTotal += tradeSum;
-                     if (sellMin === undefined || tradeSum < sellMin)
-                         sellMin = tradeSum;
+                     sellSumTotal -= tradeSum;
                 }
 
                 if (moneyMarket < moneyMarketMin)
@@ -299,10 +316,13 @@ const Simulate = (props) => {
 
                 //** log transaction */
                 if (logTrade) {
-                    console.log (props.symbol, 'tradeInfo, i=', YValues.length - i, XValues[i], 'portion=', targetPortion.toFixed(3),
-                    'accountVal=', accountVal.toFixed(2),
-                    //   'stockValue=', stockCount * price, 'moneyMarkt=', moneyMarket.toFixed(2),
-                     'tradeSum=', (stockCount * portionDiff * price).toFixed(2), 'price=', price.toFixed(2))
+                    console.log (props.symbol, 'tradeInfo, i=' + i, XValues[i], 'price=' + price.toFixed(2), 'targetPortion=' + targetPortion.toFixed(3),
+                     'portion=' + portionCurrent.toFixed(3),
+                    
+                    'accountVal='+ accountVal.toFixed(2),
+                    //  'stockValue=', stockCount * price,
+                    //  'moneyMarkt=', moneyMarket.toFixed(2),
+                    ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2))
                 }
 
             }
