@@ -31,8 +31,8 @@ const Simulate = (props) => {
 
     //** checkBoxes */
     const [tradeFlag, setTradeFlag] = useState (true);
-    const [optimizeBubble, setOptimizeBubble] = useState (false) // (props.gainMap.bubbleLine ? true : false);
-    const [optimizeWeekGain, setOptimizeWeekthGain] = useState (false) // (props.monthGainData.monthGainArray ? true : false);
+    const [optimizeBubble, setOptimizeBubble] = useState (props.gainMap.bubbleLine ? true : false);
+    const [optimizeWeekGain, setOptimizeWeekthGain] = useState (props.monthGainData.monthGainArray ? true : false);
 
     const [logTrade, setLogTrade] = useState (false);
     const [logOptimize, setLogOptimize] = useState (false);
@@ -77,26 +77,26 @@ const Simulate = (props) => {
     var portionMax = aggressivePortionInit;
 
     //** for optimize radio buttons */
-    const toolEnum = {
-        None: 'optimize_None',
-        BUBBLE_LINE: 'BUBBLE_LINE',
-        MONTH_GAIN:  'WEEK_GAIN',
-      };
+    // const toolEnum = {
+    //     None: 'optimize_None',
+    //     BUBBLE_LINE: 'BUBBLE_LINE',
+    //     MONTH_GAIN:  'WEEK_GAIN',
+    //   };
 
-      const [optimizeTool, setOptimizeTool] = useState('optimize_None')
-      const onOptionChange = e => {
-        const tool = e.target.value;
-        setOptimizeTool(tool)
-        if (tool === 'BUBBLE_LINE')
-            setOptimizeBubble(true)
-        else
-            setOptimizeBubble(false)
-        if (tool === 'WEEK_GAIN')
-            setOptimizeWeekthGain(true)
-        else
-            setOptimizeWeekthGain(false)
-        console.log(tool)
-      }
+    //   const [optimizeTool, setOptimizeTool] = useState('optimize_None')
+    //   const onOptionChange = e => {
+    //     const tool = e.target.value;
+    //     setOptimizeTool(tool)
+    //     if (tool === 'BUBBLE_LINE')
+    //         setOptimizeBubble(true)
+    //     else
+    //         setOptimizeBubble(false)
+    //     if (tool === 'WEEK_GAIN')
+    //         setOptimizeWeekthGain(true)
+    //     else
+    //         setOptimizeWeekthGain(false)
+    //     console.log(tool)
+    //   }
     
 
 
@@ -557,14 +557,10 @@ const Simulate = (props) => {
        
                 <div style={{display:'flex', color:'magenta'}}>
                     {/* <div style={{color:'magenta'}}> Optimize: &nbsp;   </div>  */}
-                    {<div style={{display:'flex'}}><input style={{marginLeft: '5px'}}  type="radio" name="opt" value='optimize_None' id='2' checked={optimizeTool==='optimize_None'} onChange={onOptionChange}/> 
-                        No_optimize </div>}
-
-                    {props.gainMap.bubbleLine && <div style={{display:'flex'}}><input style={{marginLeft: '5px'}}  type="radio" name="opt" value='BUBBLE_LINE' id='0' checked={optimizeTool==='BUBBLE_LINE'} onChange={onOptionChange}/>
-                        <div > Bubble_Line  </div> </div>}
-
-                    {props.monthGainData.monthGainArray && <div style={{display:'flex'}}><input style={{marginLeft: '5px'}}  type="radio" name="opt" value='WEEK_GAIN' id='1' checked={optimizeTool==='WEEK_GAIN'} onChange={onOptionChange}/>         
-                        <div > Week_Gain   </div> </div>} &nbsp;&nbsp;&nbsp;
+                    {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} />
+                    &nbsp;optimize_bubble &nbsp;</div>}&nbsp;
+                    {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeWeekGain}  onChange={() => setOptimizeWeekthGain (! optimizeWeekGain)} />
+                    &nbsp;optimize_weekGain &nbsp;</div>}  &nbsp;
                 </div>
               
                   {/* log checkboxes */}
