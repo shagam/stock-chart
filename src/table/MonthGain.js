@@ -59,6 +59,8 @@ import { beep2 } from '../utils/ErrorList';
 function MonthGain (props) {
   const [status, setStatus] = useState (); 
   const {localIp, localIpv4, eliHome} = IpContext();
+  const [LOG_Week, setLOG_Week] = useState (false);
+  const [LOG_Month, setLOG_Month] = useState (false);
 
   const [mGainObj, setMgainObj] = useState ({});
   const [weekGainArray_, setWeekGainArray] = useState ([]);
@@ -78,7 +80,12 @@ function MonthGain (props) {
     setMgainObj({})
   },[props.symbol]) 
 
-
+    function setLog_toggle_week () {
+      setLOG_Week (! LOG_Week)
+    }
+    function setLog_toggle_month () {
+      setLOG_Month (! LOG_Month)
+    }
 
  // loop through months
   function nextMonthWeek (i, xArray) {
@@ -120,10 +127,6 @@ function MonthGain (props) {
     // console.log (n, l, r)
     // const LOG = logFlags.includes('month')
 
-    const LOG_MONTH = logFlags.includes('month')
-    const LOG_WEEK = logFlags.includes('month')
-
-
 
     //* week gain arrays for all syms
     const weekGainArrayCollect = new Array(52).fill(1);
@@ -136,6 +139,7 @@ function MonthGain (props) {
 
 
     // if (false) // temp by pass
+    // week gain
     for (var symm_ in gainMap) {
       
       const gainMapSym = gainMap[symm_];
@@ -157,7 +161,7 @@ function MonthGain (props) {
           continue;
         }
 
-        if ( weekOfYear >= 52) {
+        if ( weekOfYear >= 52 && LOG_Week) {
           console.log ('weekOfYear=52', 'i=', i, 'weekOfYear', weekOfYear, 'date=', xArray[weekOfYear])
           // errCount ++;
           // weekOfYear %= 52;
@@ -170,7 +174,7 @@ function MonthGain (props) {
         weekGainArrayCollect[weekOfYear] *= weekGain;
         weekGainArrayCount[weekOfYear] ++;
         totalGain *= weekGain;
-        if (weekOfYear === 51) {
+        if (weekOfYear === 51 && LOG_Week) {
           console.log ('debug 51,', xArray[i], 'weekOfYear=', weekOfYear, 'lastGain=', weekGain.toFixed(3),
            'GainOfWeekNum=', weekGainArrayCollect[weekOfYear].toFixed(3), 'totalGain=', totalGain.toFixed(3) )
         }
@@ -245,7 +249,7 @@ function MonthGain (props) {
 
 
       // average yearly  mon gain 
-      if (LOG_MONTH)
+      if (LOG_Month)
       console.log(symm, 'mult array', mGainForSymm, mCountForSymm)
       if (mCountForSymm[0] === 0) {
           console.log (symm, 'NaN', mCountForSymm);
@@ -264,7 +268,7 @@ function MonthGain (props) {
       // console.log(symm, debug)
 
       // add symbol to other
-      if (LOG_MONTH)
+      if (LOG_Month)
         console.log (symm, 'yearly', mGainForSymmShift, mCountForSymm) // syngle sym 
       for (let j = 0; j < 12; j++) {
         if (! isNaN(mGainForSymmShift[j]))
@@ -290,7 +294,7 @@ function MonthGain (props) {
         monthGain[i] = Number(Math.pow(Number(mGain[i]), 1 / stockCount_).toFixed(3))
         yearGain_ *= monthGain[i]
     }
-    if (LOG_MONTH)
+    if (LOG_Month)
         console.log(symm, 'agregate gainShiftBefore', ' yearlyGain', yearGain_.toFixed(3), monthGain)
 
     // shift gain from next month
@@ -301,7 +305,7 @@ function MonthGain (props) {
         yearlyGain *= monthGainShift[i];
 
     }
-    if (LOG_MONTH)
+    if (LOG_Month)
         console.log(symm,'agregate gainShiftAfter', ' yearlyGain', yearlyGain.toFixed(3), monthGainShift, 'averageArrayLen=', (arrayLen/stockCount_).toFixed(1))
 
     // resultArray   monthGainShift
@@ -333,7 +337,7 @@ function MonthGain (props) {
     }
     setWeekNumYearGain (yearGain)
 
-    // if (LOG_WEEK)
+    if (LOG_Week)
       console.log ('yearGain=',  yearGain, 'weekGainArray=', weekGainArray, weekGainArrayCount, errCount)
 
     setWeekGainArray (weekGainArray)
@@ -376,6 +380,8 @@ function MonthGain (props) {
             &nbsp; &nbsp;
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
               dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp;  </div>
+              {eliHome &&  <input type="checkbox" checked={LOG_Week}  onChange={setLog_toggle_week}  />} &nbsp;LOG_week &nbsp; &nbsp;
+              {eliHome &&  <input type="checkbox" checked={LOG_Month}  onChange={setLog_toggle_month}  />} &nbsp;LOG_month &nbsp; &nbsp;
         </div>
 
         {/* <br></br>  */}
