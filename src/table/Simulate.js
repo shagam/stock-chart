@@ -150,8 +150,6 @@ const Simulate = (props) => {
 
     function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
     
-
-
         var targetPortion =  aggressivePortionInit; 
         const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
         const symVal = YValues[i]; 
@@ -160,9 +158,9 @@ const Simulate = (props) => {
 
             //** optimize according to bubbleLine */
             var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
-            if (priceDivBbubblePrice > 1) {
-                console.log ('price above bubble')
-            }
+            // if (priceDivBbubblePrice > 1 && logOptimize) {
+            //     console.log ('price above bubble')
+            // }
 
             targetPortion = portionBubble_calc (priceDivBbubblePrice)
 
@@ -176,6 +174,7 @@ const Simulate = (props) => {
                 console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
              'portion=', targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
         }
+        return targetPortion;
     }
 
     //** SIMULATE TRADE */
@@ -201,7 +200,7 @@ const Simulate = (props) => {
         }
 
         //** calc today portion  weekGain */
-        if (props.monthGainData) {
+        if (props.monthGainData.monthGainArray) {
             const weekNumToday = weekOfYearGet (XValues, 0);
             const weekGainFactorToday = props.monthGainData.weekGainArray[weekNumToday]
             setPortionWeekGain (aggressivePortionInit * weekGainFactorToday)
@@ -311,7 +310,7 @@ const Simulate = (props) => {
                 //** verify transaction does not change account value. */
                 accountVal = price*stockCount + moneyMarket;
                 if (Math.abs(accountValBeforeTrade - accountVal) >  2*transactionFee + 0.01) {
-                    console.log ('accountVal trade diff, before=', accountValPrev.toFixed(2), ' after=', accountVal.toFixed(2))
+                    console.log ('accountVal trade diff, before=', accountValBeforeTrade.toFixed(2), ' after=', accountVal.toFixed(2))
                 }
 
                 //** log transaction */
