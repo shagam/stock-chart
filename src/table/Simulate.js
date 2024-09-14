@@ -9,7 +9,7 @@ import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
 import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
-
+import {ErrorList, errorAdd, beep, beep2} from '../utils/ErrorList'
 // import monthsToYears from 'date-fns/esm/fp/monthsToYears';
 import {MonthGain, weekOfYearGet} from './MonthGain'
 import Plot from 'react-plotly.js';
@@ -57,8 +57,8 @@ const Simulate = (props) => {
     const [weekGainScale, setWeekGainScale] = useState (1.4);
     const [weekGainForward, setWeekGainForward] = useState (2);
 
-    const [results, setResults] =  useState ();
-
+    const [results, setResults] = useState ();
+    const [err, setErr] =  useState ();
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
 
@@ -68,6 +68,7 @@ const Simulate = (props) => {
 
     useEffect(() => {
         setResults()
+        setErr()
         // resultsArray()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
@@ -179,6 +180,12 @@ const Simulate = (props) => {
 
     //** SIMULATE TRADE */
     function simulateTrade(XValues, YValues) {
+        setErr()
+        if (optimizeBubble && optimizeWeekGain) {
+            setErr ('error, cannot optimize for both (buble-proximety and weelGain) turn off either ')
+            beep2()
+            return;
+        }
 
         var price = YValues[YValues.length - 1 - startWeek]  // begining price // default oldest
         const priceInit = price
@@ -544,7 +551,9 @@ const Simulate = (props) => {
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
             </div>
- 
+            <div style={{color: 'red'}}> {err} </div>
+            <div> &nbsp;</div>
+
             <div style={{display: 'flex'}}> <div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Aggressive-Portion</div> &nbsp;
                 defined=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionPercent/100}</div> &nbsp; Today calc, &nbsp;
                 bubble-proximity-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(3)}</div> &nbsp;
@@ -563,8 +572,8 @@ const Simulate = (props) => {
                 </div>
               
                   {/* log checkboxes */}
-                {! props.isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
-                {! props.isMobile && (optimizeBubble || optimizeWeekGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
+                {! props.isMobile && ! isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
+                {! props.isMobile && ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
             {optimizeBubble && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
