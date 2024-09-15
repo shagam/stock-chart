@@ -580,12 +580,12 @@ const Simulate = (props) => {
             {! optimizeBubble && <div  style={{color: 'green' }}> keep aggressive portion </div>}
 
             {optimizeBubble && <div style = {{display:'flex'}}>
-                &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='levelHigh' type='text' pattern="[\\.0-9]+" width = '25%'/>
-                &nbsp; <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='levelLow' type='text' pattern="[\\.0-9]+" width = '25%'/> 
-            {/* </div>  
-            <div style = {{display:'flex'}}> */}
-                &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portionHigh' type='text' pattern="[\.0-9]+" width = '25%'/>
-                &nbsp; <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='portionLow' type='text' pattern="[\.0-9]+" width = '25%'/>
+                &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='bubbleProximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
+                <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
+            </div>}  
+            {optimizeBubble && <div style = {{display:'flex'}}>
+                &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portion:  &nbsp; &nbsp; High' type='text' pattern="[\.0-9]+" width = '25%'/>
+                <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='Low' type='text' pattern="[\.0-9]+" width = '25%'/>
             </div>}
             
             {/* week gain params */}
