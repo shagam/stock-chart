@@ -395,12 +395,8 @@ const BasicTable = (props) => {
       delete gainMap['bubbleLine']
     }
 
-    try {
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
-    } catch (e) {
-      console.log ('communibcation error, gain', e.messgage)
-    }
 
       if (singleSym)
         saveTable(sym);

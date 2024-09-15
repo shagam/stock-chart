@@ -450,6 +450,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
         .catch(error => {
           // Do something on error 
           alert (sym + ' gain ' + error.message)
+          console.log (sym, 'gain', error.message)
       })
 
 
