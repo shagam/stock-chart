@@ -254,7 +254,8 @@ const BasicTable = (props) => {
 
     //console.log(`Overview info (${symbol})`);
     if (LOG_API)
-      console.log (`${API_Call}`);        
+      console.log (`${API_Call}`);
+    
     fetch(API_Call)
         .then(
             function(response) {
@@ -297,7 +298,10 @@ const BasicTable = (props) => {
                 }
             }
         )
-    
+        .catch(error => {
+          // Do something on error 
+          console.log(symbol + ' info ' + error.message)
+      })
   }
 
   
@@ -391,9 +395,12 @@ const BasicTable = (props) => {
       delete gainMap['bubbleLine']
     }
 
-
+    try {
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
+    } catch (e) {
+      console.log ('communibcation error, gain', e.messgage)
+    }
 
       if (singleSym)
         saveTable(sym);

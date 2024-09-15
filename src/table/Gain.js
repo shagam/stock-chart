@@ -106,7 +106,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
       API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY}`;
     else
       API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY}`;
-    
+
     fetch(API_Call)
         .then(
             function(response) {
@@ -447,4 +447,10 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
             
             }
         )
+        .catch(error => {
+          // Do something on error 
+          alert (sym + ' gain ' + error.message)
+      })
+
+
   }

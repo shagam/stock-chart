@@ -41,12 +41,14 @@ function IpContext  () {
   var eliHome_ = false;
 
   const getIp = async () => {
+    try {
     const res = await axios.get("https://api.ipify.org/?format=json");
     // console.log(res.data);
 
     setIp(res.data.ip);
     setEliHome (res.data.ip === ELI_HOME_IP || admin);
     eliHome_ = res.data.ip === ELI_HOME_IP
+  } catch (e) {console.log ('getIp, ' + e.message)}
   };
 
 
