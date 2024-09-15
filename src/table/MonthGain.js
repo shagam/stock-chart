@@ -380,9 +380,10 @@ function MonthGain (props) {
             &nbsp; &nbsp;
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
               dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp;  </div>
-              {eliHome &&  <input type="checkbox" checked={LOG_Week}  onChange={setLog_toggle_week}  />} &nbsp;LOG_week &nbsp; &nbsp;
-              {eliHome &&  <input type="checkbox" checked={LOG_Month}  onChange={setLog_toggle_month}  />} &nbsp;LOG_month &nbsp; &nbsp;
         </div>
+        <div> &nbsp;</div>
+        {eliHome &&  <input type="checkbox" checked={LOG_Week}  onChange={setLog_toggle_week}  />} &nbsp;LOG_week &nbsp; &nbsp;
+        {eliHome &&  <input type="checkbox" checked={LOG_Month}  onChange={setLog_toggle_month}  />} &nbsp;LOG_month &nbsp; &nbsp;
 
         {/* <br></br>  */}
         { Object.keys(mGainObj).map((oneKey,i)=>{
