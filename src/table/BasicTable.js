@@ -280,7 +280,14 @@ const BasicTable = (props) => {
                     // errorAdd([` ${symbol} etf or invalid symbol (has no info) data="${dataStr}" PE=-2 `])
                     return;
                   }
-                  const index =  (dataStr.search('API call frequency is 5 calls per minute'))
+
+                  var index =  (dataStr.search('API rate limit is 25 requests per day.'))
+                  if (index !== -1) {
+                    errorAdd([symbol, 'AlphaVantage error', dataStr])
+                    return;
+                  }
+
+                  index =  (dataStr.search('API call frequency is 5 calls per minute'))
                   if (index !== -1) {
                     errorAdd([symbol, dataStr])
                     // alert (dataStr + `\n\n${API_Call}`);
