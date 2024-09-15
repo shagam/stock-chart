@@ -3,6 +3,8 @@ import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 import {IpContext} from '../contexts/IpContext';
+import MobileContext from '../contexts/MobileContext'
+
 import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import { beep2 } from '../utils/ErrorList';
@@ -57,6 +59,7 @@ import { beep2 } from '../utils/ErrorList';
   
 
 function MonthGain (props) {
+  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const [status, setStatus] = useState (); 
   const {localIp, localIpv4, eliHome} = IpContext();
   const [LOG_Week, setLOG_Week] = useState (false);
@@ -381,9 +384,11 @@ function MonthGain (props) {
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
               dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> &nbsp; &nbsp;  </div>
         </div>
-        <div> &nbsp;</div>
-        {eliHome &&  <input type="checkbox" checked={LOG_Week}  onChange={setLog_toggle_week}  />} &nbsp;LOG_week &nbsp; &nbsp;
-        {eliHome &&  <input type="checkbox" checked={LOG_Month}  onChange={setLog_toggle_month}  />} &nbsp;LOG_month &nbsp; &nbsp;
+
+        {! isMobile && eliHome &&  <div> &nbsp;
+          <input type="checkbox" checked={LOG_Week}  onChange={setLog_toggle_week}  /> &nbsp;LOG_week &nbsp; &nbsp;
+          <input type="checkbox" checked={LOG_Month}  onChange={setLog_toggle_month}  /> &nbsp;LOG_month &nbsp; &nbsp;
+        </div>}
 
         {/* <br></br>  */}
         { Object.keys(mGainObj).map((oneKey,i)=>{
