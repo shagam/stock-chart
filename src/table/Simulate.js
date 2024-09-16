@@ -44,8 +44,12 @@ const Simulate = (props) => {
     const [PORTION_LOW, set_PORTION_LOW] = useState(0.5)
 
 
+    const [portionPercent, setPortionPercent] = useState (90); // default 80%
+    const [weekGainEnhance, setWeekGainEnhance] = useState (6);
+    const [weekGainAhead, setWeekGainAhead] = useState (6);
+
+
     const [accountValueInit, setAccountValue] = useState (1000); //
-    const [portionPercent, setPortionPercent] = useState (80); // default 80%
     const [startWeek, setStartWeek] = useState (200); // default oldest 
     const [thresholdPercent, setThresholdPercent] = useState (0.8);
     const [interestRate, setInterestRate] = useState (3.2);
@@ -54,8 +58,7 @@ const Simulate = (props) => {
     const [portionWeekGain, setPortionWeekGain] = useState (-1);
     const [portionBubbleLine, setPortionBubbleLine] = useState (-1);
 
-    const [weekGainEnhance, setWeekGainEnhance] = useState (6);
-    const [weekGainAhead, setWeekGainAhead] = useState (6);
+
 
     const [results, setResults] = useState ();
     const [err, setErr] =  useState ();
@@ -581,17 +584,22 @@ const Simulate = (props) => {
                 {! props.isMobile && ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
-            {optimizeBubble && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
-            {! optimizeBubble && <div  style={{color: 'green' }}> keep aggressive portion </div>}
-            
+            {! optimizeBubble && ! optimizeWeekGain && <div style = {{display:'flex'}}>
+            <hr/> 
+                {<div  style={{color: 'green' }}> keep aggressive portion % </div>} &nbsp;&nbsp;&nbsp;
+                {<GetInt init={portionPercent} callBack={setPortionPercent} title='' type='Number' pattern="[0-9]+" width = '20%'/>}
+            </div>}
 
             {/* Bubble proximity */}
             <hr/> 
             <div style = {{ backgroundColor: '#FFE4E1'}}>
-                {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} />
-                &nbsp;optimize_bubble &nbsp;</div>}
-                {optimizeBubble && <div>               
+                {props.gainMap.bubbleLine && <div style = {{display:'flex'}}>
+                    <input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} /> &nbsp;
                     <div style={{fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>Bubble proximity optimize</div>
+                </div>}
+
+                {optimizeBubble && <div>
+                    {optimizeBubble && <div  style={{color: 'green' }}> &nbsp; Decrease aggressive portion near the bubbleLine (and vice versa)</div>}
                     <div style = {{display:'flex'}}>
                         &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='Proximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
                         <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
@@ -606,15 +614,17 @@ const Simulate = (props) => {
             <hr/> 
             {/* week gain params */}
             <div style = {{backgroundColor: '#AFEEEE'}}>
-                {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeWeekGain}  onChange={() => setOptimizeWeekthGain (! optimizeWeekGain)} />
-                        &nbsp;optimize_weekGain &nbsp;</div>} 
+                {props.monthGainData.monthGainArray && <div style = {{display:'flex'}}>
+                    <input  type="checkbox" checked={optimizeWeekGain}  onChange={() => setOptimizeWeekthGain (! optimizeWeekGain)} /> &nbsp;
+                    <div style={{fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>Week gain optimize</div>
+                </div>} 
 
                 {optimizeWeekGain && <div >
-                    <div style={{fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>Week gain optimize</div>
+
                     <div  style = {{display:'flex'}}>
                         <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '20%'/>
                         &nbsp; <GetInt init={weekGainEnhance} callBack={setWeekGainEnhance} title='Enhance' type='text' pattern="[\.0-9]+" width = '15%'/>
-                        <GetInt init={weekGainAhead} callBack={setWeekGainAhead} title='weeksAhead' type='Number' pattern="[0-9]+" width = '15%'/>
+                        <GetInt init={weekGainAhead} callBack={setWeekGainAhead} title='weeksAhead' type='Number' pattern="[0-9]+" width = '20%'/>
                     </div>
                 </div>}
             </div>
@@ -665,7 +675,7 @@ const Simulate = (props) => {
             
              {/* https://plotly.com/javascript/figure-labels/ */}
              <hr/> 
-            {optimizeBubble && <Plot  data={chartData} layout={{ width: 650, height: 400, title: title, staticPlot: true,
+            {optimizeBubble && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
                  xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
 
         </div>
