@@ -104,14 +104,15 @@ const Simulate = (props) => {
     function optimizeMonGain_calc (XValues, i, aggressivePortionInit, price) {
        
         var targetPortion =  aggressivePortionInit; 
-        const weekNum = weekOfYearGet (XValues, i) 
 
         // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
         var weekGainFactor = 1;
         for (let j = 1; j < weekGainForward; j++) {
-            const index = (52 + weekNum - j) % 52  // look in future
-            if (index >= 0 && index < props.monthGainData.weekGainArray.length) {
-                const weeklyGain = props.monthGainData.weekGainArray[index];  // look forward closer to 0
+
+            const index = i - j  // look in future
+            const date = XValues[i] // date of gain
+            const weekNum = weekOfYearGet (XValues, index) 
+                 const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
                 weekGainFactor *= Math.pow (weeklyGain, weekGainScale) 
                 if (targetPortion * weekGainFactor > 0.98) {
                     console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor)                 
@@ -125,10 +126,7 @@ const Simulate = (props) => {
                     console.log ('NaN')
                 }
             }
-            else
-                console.log ('Date not found index=', index, 'weekNum', weekNum)
-
-        }
+   
         targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
 
         if (logOptimize)
@@ -550,10 +548,10 @@ const Simulate = (props) => {
             <div style={{color: 'red'}}> {err} </div>
             <div> &nbsp;</div>
 
-            <div style={{display: 'flex'}}> <div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Aggressive-Portion</div> &nbsp;
-                defined=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionPercent/100}</div> &nbsp; Today calc, &nbsp;
-                bubble-proximity-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(3)}</div> &nbsp;
-                weekGain-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(3)}</div>  </div>
+            <div style={{display: 'flex'}}> <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Aggressive-Portion(today)</div> &nbsp;
+                bubble-proximity-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(2)}</div> &nbsp;
+                weekGain-factor=<div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(2)}</div>
+            </div>
 
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
@@ -585,13 +583,13 @@ const Simulate = (props) => {
             </div>}
             
             {/* week gain params */}
-            <div style = {{display:'flex', width: '800px'}}>
-                &nbsp; {optimizeWeekGain && <GetInt init={weekGainScale} callBack={setWeekGainScale} title='weekGainScale' type='text' pattern="[\.0-9]+" width = '20%'/>}
-                &nbsp; {optimizeWeekGain && <GetInt init={weekGainForward} callBack={setWeekGainForward} title='weekGainForward' type='Number' pattern="[0-9]+" width = '20%'/>}
-            </div>
+            {optimizeWeekGain && <div style = {{display:'flex', width: '800px'}}>
+                &nbsp; {<GetInt init={weekGainScale} callBack={setWeekGainScale} title='weekGainScale' type='text' pattern="[\.0-9]+" width = '20%'/>}
+                &nbsp; {<GetInt init={weekGainForward} callBack={setWeekGainForward} title='weekGainForward' type='Number' pattern="[0-9]+" width = '20%'/>}
+            </div>}
 
             <div style = {{display:'flex', width: '800px'}}>
-                &nbsp; {! optimizeBubble && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
+                &nbsp; {optimizeWeekGain && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
                 &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
 
