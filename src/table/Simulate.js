@@ -514,7 +514,7 @@ const Simulate = (props) => {
 
     }
 
-    const title = 'trade_portion: buy/sell function'
+    const title = 'bubbleLine proximity => portion: buy/sell trigger'
     const chartData =
       [{
         name: title,
@@ -540,7 +540,7 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '750px'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue', width: '600px'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
@@ -557,13 +557,10 @@ const Simulate = (props) => {
                 {/* Optimize checkboxes */}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
        
-                <div style={{display:'flex', color:'magenta'}}>
+                <div style={{display:'flex'}}>
                     {/* <div style={{color:'magenta'}}> Optimize: &nbsp;   </div>  */}
-                    {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} />
-                    &nbsp;optimize_bubble &nbsp;</div>}&nbsp;
-                    {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeWeekGain}  onChange={() => setOptimizeWeekthGain (! optimizeWeekGain)} />
-                    &nbsp;optimize_weekGain &nbsp;</div>}  &nbsp;
-                </div>
+
+                    </div>
               
                   {/* log checkboxes */}
                 {! props.isMobile && ! isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
@@ -572,33 +569,54 @@ const Simulate = (props) => {
  
             {optimizeBubble && <div  style={{color: 'green' }}> Optimize, decrease aggressive portion when near the bubbleLine (and vice versa)</div>}
             {! optimizeBubble && <div  style={{color: 'green' }}> keep aggressive portion </div>}
-
-            {optimizeBubble && <div style = {{display:'flex'}}>
-                &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='bubbleProximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
-                <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
-            </div>}  
-            {optimizeBubble && <div style = {{display:'flex'}}>
-                &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portion:  &nbsp; &nbsp; High' type='text' pattern="[\.0-9]+" width = '25%'/>
-                <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='Low' type='text' pattern="[\.0-9]+" width = '25%'/>
-            </div>}
             
+
+            {/* Bubble proximity */}
+            <hr/> 
+            <div style = {{ backgroundColor: '#FFE4E1'}}>
+                {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} />
+                &nbsp;optimize_bubble &nbsp;</div>}
+                {optimizeBubble && <div>               
+                    <div style={{fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>Bubble proximity optimize</div>
+                    <div style = {{display:'flex'}}>
+                        &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='Proximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
+                        <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
+                    </div> 
+                    <div style = {{display:'flex'}}>
+                        &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portion:  &nbsp; &nbsp; High' type='text' pattern="[\.0-9]+" width = '25%'/>
+                        <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='Low' type='text' pattern="[\.0-9]+" width = '25%'/>
+                    </div>
+                </div>}
+            </div>
+
+            <hr/> 
             {/* week gain params */}
-            {optimizeWeekGain && <div style = {{backgroundColor: 'lightpink', display:'flex'}}>
-                &nbsp; {<GetInt init={weekGainEnhance} callBack={setWeekGainEnhance} title='weekGainEnhance' type='text' pattern="[\.0-9]+" width = '15%'/>}
-                &nbsp; {<GetInt init={weekGainAhead} callBack={setWeekGainAhead} title='weekGainAhead' type='Number' pattern="[0-9]+" width = '15%'/>}
-                &nbsp; {<GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '20%'/>}
-            </div>}
+            <div style = {{backgroundColor: '#AFEEEE'}}>
+                {props.monthGainData.monthGainArray && <div><input  type="checkbox" checked={optimizeWeekGain}  onChange={() => setOptimizeWeekthGain (! optimizeWeekGain)} />
+                        &nbsp;optimize_weekGain &nbsp;</div>} 
+
+                {optimizeWeekGain && <div >
+                    <div style={{fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>Week gain optimize</div>
+                    <div  style = {{display:'flex'}}>
+                        <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '20%'/>
+                        &nbsp; <GetInt init={weekGainEnhance} callBack={setWeekGainEnhance} title='Enhance' type='text' pattern="[\.0-9]+" width = '15%'/>
+                        <GetInt init={weekGainAhead} callBack={setWeekGainAhead} title='weeksAhead' type='Number' pattern="[0-9]+" width = '15%'/>
+                    </div>
+                </div>}
+            </div>
+
+            <hr/> 
 
             <div style = {{display:'flex', width: '800px'}}>
 
                 &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
 
-            <div style = {{display:'flex', width: '800px'}}>
+            <div style = {{display:'flex'}}>
                 &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+" width = '15%'/>
                 &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/>
             </div>
-            <div style = {{display:'flex', width: '800px'}}>
+            <div style = {{display:'flex'}}>
                 &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+" width = '15%'/>
                 &nbsp; <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
@@ -614,11 +632,11 @@ const Simulate = (props) => {
                 <tbody>
                     {Object.keys(resultsArray).map((s, s1) =>{
                         return (
-                        <tr key={s1}>
+                        <tr key={s1} style={{ hei_ght: '10', margin: '0px',  padding: 'dense',}}>
                             <td style={{width: '8px', background: colorfield(resultsArray[s])}}>{s}</td>                 
                             {resultsArray[s].map((k,n)=>{
                             return (
-                                <td key={n} style={{hight: '10px', margin: '0px',  padding: '0px', }}> {k} </td>
+                                <td key={n}> {k} </td>
                             )
                             })
                         }
@@ -632,7 +650,7 @@ const Simulate = (props) => {
             <pre>{JSON.stringify(results, null, 2)}</pre>
             
              {/* https://plotly.com/javascript/figure-labels/ */}
-
+             <hr/> 
             {optimizeBubble && <Plot  data={chartData} layout={{ width: 650, height: 400, title: title, staticPlot: true,
                  xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
 
