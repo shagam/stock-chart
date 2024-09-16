@@ -259,10 +259,6 @@ const Simulate = (props) => {
                     targetPortion =  optimizeMonGain_calc (props.stockChartXValues, i, aggressivePortionInit, price)         
                 }
 
-                //** optimize bubbleLine */
-
-                //** search date in bubbleLine */
-
                 if (bubbleLine && optimizeBubble) {
                     targetPortion =  optimizeBubble_calc (props.stockChartXValues, props.stockChartYValues, i, aggressivePortionInit, price, bubbleLine) 
                 }

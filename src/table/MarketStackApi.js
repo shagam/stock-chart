@@ -143,6 +143,10 @@ export const MarketstackApi = (props) => {
             //const updateDate = getDate();
          }
       )
+      .catch(error => {
+        props.errorAdd([props.symbol, 'marketStack', error.message])
+        console.log(props.symbol, 'marketStack', error.message)
+    })
   }
   //searchSplits (props.symbol)
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}

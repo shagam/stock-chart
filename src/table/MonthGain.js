@@ -142,7 +142,7 @@ function MonthGain (props) {
 
 
     // if (false) // temp by pass
-    // week gain
+    // week gain  collect for all symbols
     for (var symm_ in gainMap) {
       
       const gainMapSym = gainMap[symm_];
@@ -157,7 +157,7 @@ function MonthGain (props) {
         continue;
       }
       var errCount = 0;
-      for (let i = 1; i < oldestIndex -1; i++) { // index into weekly x (date) y (price) arrays 
+      for (let i = 0; i < oldestIndex -1; i++) { // index into weekly x (date) y (price) arrays 
 
         var weekOfYear = weekOfYearGet (xArray, i) 
         if (weekOfYear === -1) {// fail
