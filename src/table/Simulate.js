@@ -111,21 +111,35 @@ const Simulate = (props) => {
 
             const index = i - j  // look in future
             const date = XValues[i] // date of gain
+            var sign_1; // used to breal loop when sign flips
             const weekNum = weekOfYearGet (XValues, index) 
-                 const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
-                weekGainFactor *= Math.pow (weeklyGain, weekGainEnhance) 
-                if (targetPortion * weekGainFactor > 0.98) {
-                    console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor)                 
-                    break;
-                }
+            const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
 
-                if (targetPortion > 1) {
-                    console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3))
-                }
-               if (isNaN (weekGainFactor)) {
-                    console.log ('NaN')
-                }
+            // break loop when growth flips direction
+            const sign = Math.sign(Math.log(weeklyGain)) 
+            if (j === 1) {
+                sign_1 = sign;
             }
+            else
+                if (sign !== sign_1) {
+                    console.log ('sign flip, j=', j,  sign_1, sign)
+                    break; // exit loop when sign flipps
+                } 
+
+            // enhance by exponent
+            weekGainFactor *= Math.pow (weeklyGain, weekGainEnhance) 
+            if (targetPortion * weekGainFactor > 0.98) {
+                console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor)                 
+                break;
+            }
+
+            if (targetPortion > 1) {
+                console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3))
+            }
+            if (isNaN (weekGainFactor)) {
+                console.log ('NaN')
+            }
+        }
    
         targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
 
@@ -247,7 +261,7 @@ const Simulate = (props) => {
         var targetPortion; // user param default, without optimize
 
 
-        //** WEEK GAIN: optimize trade on week gain */
+        //**  optimize loop */
         for (let i = oldestIndex; i > 0; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
