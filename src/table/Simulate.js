@@ -54,8 +54,8 @@ const Simulate = (props) => {
     const [portionWeekGain, setPortionWeekGain] = useState (-1);
     const [portionBubbleLine, setPortionBubbleLine] = useState (-1);
 
-    const [weekGainScale, setWeekGainScale] = useState (1.4);
-    const [weekGainForward, setWeekGainForward] = useState (2);
+    const [weekGainEnhance, setWeekGainEnhance] = useState (6);
+    const [weekGainAhead, setWeekGainAhead] = useState (6);
 
     const [results, setResults] = useState ();
     const [err, setErr] =  useState ();
@@ -107,13 +107,13 @@ const Simulate = (props) => {
 
         // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
         var weekGainFactor = 1;
-        for (let j = 1; j < weekGainForward; j++) {
+        for (let j = 1; j < weekGainAhead; j++) {
 
             const index = i - j  // look in future
             const date = XValues[i] // date of gain
             const weekNum = weekOfYearGet (XValues, index) 
                  const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
-                weekGainFactor *= Math.pow (weeklyGain, weekGainScale) 
+                weekGainFactor *= Math.pow (weeklyGain, weekGainEnhance) 
                 if (targetPortion * weekGainFactor > 0.98) {
                     console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor)                 
                     break;
@@ -413,13 +413,13 @@ const Simulate = (props) => {
             resultsArray.optimizeWeekGain.push ('' + optimizeWeekGain)
 
 
-            if (! resultsArray.weekGainScale)
-                resultsArray.weekGainScale = [];
-            resultsArray.weekGainScale.push (weekGainScale)
+            if (! resultsArray.weekGainEnhance)
+                resultsArray.weekGainEnhance = [];
+            resultsArray.weekGainEnhance.push (weekGainEnhance)
 
-            if (! resultsArray.weekGainForward)
-                resultsArray.weekGainForward = [];
-            resultsArray.weekGainForward.push (weekGainForward)
+            if (! resultsArray.weekGainAhead)
+                resultsArray.weekGainAhead = [];
+            resultsArray.weekGainAhead.push (weekGainAhead)
 
 
             if (! resultsArray.LEVEL_HIGH)
@@ -583,13 +583,14 @@ const Simulate = (props) => {
             </div>}
             
             {/* week gain params */}
-            {optimizeWeekGain && <div style = {{display:'flex', width: '800px'}}>
-                &nbsp; {<GetInt init={weekGainScale} callBack={setWeekGainScale} title='weekGainScale' type='text' pattern="[\.0-9]+" width = '20%'/>}
-                &nbsp; {<GetInt init={weekGainForward} callBack={setWeekGainForward} title='weekGainForward' type='Number' pattern="[0-9]+" width = '20%'/>}
+            {optimizeWeekGain && <div style = {{backgroundColor: 'lightpink', display:'flex'}}>
+                &nbsp; {<GetInt init={weekGainEnhance} callBack={setWeekGainEnhance} title='weekGainEnhance' type='text' pattern="[\.0-9]+" width = '15%'/>}
+                &nbsp; {<GetInt init={weekGainAhead} callBack={setWeekGainAhead} title='weekGainAhead' type='Number' pattern="[0-9]+" width = '15%'/>}
+                &nbsp; {<GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '20%'/>}
             </div>}
 
             <div style = {{display:'flex', width: '800px'}}>
-                &nbsp; {optimizeWeekGain && <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '15%'/>}
+
                 &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
 
@@ -617,7 +618,7 @@ const Simulate = (props) => {
                             <td style={{width: '8px', background: colorfield(resultsArray[s])}}>{s}</td>                 
                             {resultsArray[s].map((k,n)=>{
                             return (
-                                <td key={n}> {k} </td>
+                                <td key={n} style={{hight: '10px', margin: '0px',  padding: '0px', }}> {k} </td>
                             )
                             })
                         }
