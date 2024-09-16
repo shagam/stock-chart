@@ -176,7 +176,7 @@ function VerifyGain (props) {
       })
       .catch ((err) => {
         console.log(err, corsUrl)
-        props.errorAdd([err.message])
+        props.errorAdd([props.symbol, 'MarketWatch', err.message])
       })
 
       props.refreshByToggleColumns();

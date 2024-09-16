@@ -307,7 +307,7 @@ const BasicTable = (props) => {
         )
         .catch(error => {
           // Do something on error 
-          errorAdd (symbol, 'info', error.message)
+          errorAdd ([symbol, 'info', error.message])
           console.log(symbol + ' info ' + error.message)
       })
   }
