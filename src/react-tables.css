@@ -6,7 +6,7 @@ table, th, td {
 table {
   font-family: "Trebuchet MS", Aliel, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  /* width: 100%; */
 }
 
 table td, tble th {
