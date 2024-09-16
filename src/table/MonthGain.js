@@ -28,6 +28,7 @@ import { beep2 } from '../utils/ErrorList';
 
 
  //** search for week number */
+ const LOG_week_above_52 = false
  function weekOfYearGet (Xarray, i) {
     if (i + 52 > Xarray.length){
         console.log ('near oldest i=', i, 'date=', Xarray[i])
@@ -38,23 +39,15 @@ import { beep2 } from '../utils/ErrorList';
       const date = Xarray[i + j].split('-')
       if (startDate[0] !== date[0]) {
         if (j > 52) {
-          console.log ('weekNum=', 51, 'j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
+          if (LOG_week_above_52)
+            console.log ('weekNum=', 51, 'j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
           return 51
         }
-        // if (j === 1) {
-        //   console.log ('weekNum === 0  j=', j, 'i=', i, 'startDate=', Xarray[i], 'flipDate=', Xarray[i + j])
-        // }
-
         return (52 + j - 1) % 52;
       }
-      // if (j >= 52) {
-      //   console.log ('search over 51, j === 52', 'i=', i, 'j=', j, 'start=', Xarray[i], 'date=', Xarray[i + j])
-      //   return (52 + j - 1) % 52;
-      // }
     }
-    console.log ('overRun i=', 'start=', startDate)
+    console.log ('overRun 53 i=', 'start=', startDate)
     return -1; // not found
-  // if (i > array.length)
 }
   
 
