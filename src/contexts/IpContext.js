@@ -32,7 +32,7 @@ function IpContext  () {
   const [os, setOs] = useState()
 
   const IP_GEO_LOCATION = "ipGeolocation"
-  const ipGeoLocation = useMemo(() => JSON.parse (localStorage.getItem(IP_GEO_LOCATION)), []);
+  const ipGeoLocation_in_localStorage = useMemo(() => JSON.parse (localStorage.getItem(IP_GEO_LOCATION)), []);
   // if (ipGeoLocation && ! city)
   //   console.log(IP_GEO_LOCATION + '_', ipGeoLocation);
 
@@ -174,20 +174,20 @@ function IpContext  () {
       return;
     }
     
-    if (ipGeoLocation && ipGeoLocation.date) {
-      const geoLOcationDateSplit = ipGeoLocation.date.split(/[\s-:]+/)
-      const oldMili = (new Date(ipGeoLocation.date)).getTime();
+    if (ipGeoLocation_in_localStorage && ipGeoLocation_in_localStorage.date) {
+      const geoLOcationDateSplit = ipGeoLocation_in_localStorage.date.split(/[\s-:]+/)
+      const oldMili = (new Date(ipGeoLocation_in_localStorage.date)).getTime();
       
       //** avoid too frequent access  */
-      if (Date.now() - oldMili < 1000000) {
+      if (Date.now() - oldMili < 1000 * 3600 * 24) {  // once a day
         if (LOG_FLAG)
-          console.log ('old geolocation:', ipGeoLocation)
-        setEliHome (ipGeoLocation.ip === ELI_HOME_IP || admin);
-        setLocalIPv4 (ipGeoLocation.ip);
-        setCity (ipGeoLocation.city);
-        setCountryName(ipGeoLocation.country)
+          console.log ('old geolocation:', ipGeoLocation_in_localStorage)
+        setEliHome (ipGeoLocation_in_localStorage.ip === ELI_HOME_IP || admin);
+        setLocalIPv4 (ipGeoLocation_in_localStorage.ip);
+        setCity (ipGeoLocation_in_localStorage.city);
+        setCountryName(ipGeoLocation_in_localStorage.country)
         // setCountryCode(res.data.countryCode)
-        setRegionName(ipGeoLocation.region)
+        setRegionName(ipGeoLocation_in_localStorage.region)
         return;
       }
     }
