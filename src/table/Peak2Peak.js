@@ -32,9 +32,13 @@ const Peak2PeakGui = (props) => {
     const [displayFlag, setDisplayFlag] = useState (false); 
     // const [calcResults, setCalcResults] = useState ();
     // const [calcInfo, setCalcInfo] = useState ();
-    const [results, setResults] = useState ();
+
     const [searchPeak, setSearchPeak] = useState (true);
     const [bubbleLineFlag, setBubbleLineFlag] = useState (false); // show that bubleLine calculated
+    const [startFromPeakFlag, setStartFromPeakFlag] = useState (true); // start from oldestPeak
+
+
+    const [results, setResults] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
@@ -68,9 +72,20 @@ const Peak2PeakGui = (props) => {
     //** extrapolate value of today */
     yBubbleLine[0] = results.toValue * results.weeklyGain ** results.indexEnd // weekCount 
 
-    //** exstrapolate from 0 (latest) bubbleLine */
-    for (let i = 0; i < YValues.length - 1; i ++)
-      yBubbleLine.push(yBubbleLine[i] / results.weeklyGain);  
+    const startDateMili = startDate.getTime()
+
+    for (let i = 0; i < YValues.length - 1; i ++) {
+      if (startFromPeakFlag) {
+        const chartDateSplit = XValues[i].split('-')
+        const date = (new Date([chartDateSplit[0], chartDateSplit[1], chartDateSplit[2]])); 
+        const mili = date.getTime()
+
+        if (Math.abs(startDateMili - mili)  < 1000 * 3600 * 24 * 8) { 
+          break; // stop loop within 8 days of startDate (oldest bubble point)
+        }
+      }
+      yBubbleLine.push(yBubbleLine[i] / results.weeklyGain);
+    }  
 
     props.setBubbleLine ({x: XValues, y: yBubbleLine})
     setBubbleLineFlag(true)
@@ -109,8 +124,9 @@ const Peak2PeakGui = (props) => {
            </div>
            
            <div style={{display:'flex'}}> &nbsp; 
-              {!results && <div> <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp; </div>}
-           
+              {! results && <div> <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp; </div>}
+              {! bubbleLineFlag && <div> <input  type="checkbox" checked={startFromPeakFlag}  onChange={() => {setStartFromPeakFlag (! startFromPeakFlag)}} />  startFromPeak  &nbsp;&nbsp; </div>}
+
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
