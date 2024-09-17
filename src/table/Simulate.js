@@ -265,6 +265,9 @@ const Simulate = (props) => {
         var portionPriv // updated in loop
         var targetPortion; // user param default, without optimize
 
+        var portionMin = 2; // collect portion min, max
+        var portionMax = 0;
+
 
         //**  optimize loop */
         for (let i = oldestIndex; i > 0; i--) {
@@ -282,6 +285,11 @@ const Simulate = (props) => {
             const pricePrev = price;
             price = YValues[i] 
         
+            if (portionMax < targetPortion)
+                portionMax = targetPortion
+            if (portionMin > targetPortion)
+                portionMin = targetPortion
+
             const accountValPrev  = accountVal;
             accountVal = price*stockCount + moneyMarket;
             const accountValBeforeTrade = accountVal
@@ -383,10 +391,10 @@ const Simulate = (props) => {
 
                 // buyCount: buyCount,
                 buyAverage_$: buyAverage, 
-                buyMin_$: buyMin.toFixed(2),
+                // buyMin_$: buyMin.toFixed(2),
                 // sellCount: sellCount,
                 sellAverage_$: sellAverage,
-                sellMin_$: sellMin.toFixed(2),
+                // sellMin_$: sellMin.toFixed(2),
                 // tradeSkipCount: tradeSkipCount,
                 // moneyMarketMin: moneyMarketMin.toFixed(2),
                 // moneyMarketMax: moneyMarketMax.toFixed(2),
@@ -495,6 +503,16 @@ const Simulate = (props) => {
             if (! resultsArray.info)
                 resultsArray.info = [];
             resultsArray.info.push('=====')
+
+
+            if (! resultsArray.portionMin)
+                resultsArray.portionMin = [];
+            resultsArray.portionMin.push(portionMin.toFixed(3))
+            
+            if (! resultsArray.portionMax)
+                resultsArray.portionMax = [];
+            resultsArray.portionMax.push(portionMax.toFixed(3))
+
 
             if (! resultsArray.stockCountEnd)
                 resultsArray.stockCountEnd = []
