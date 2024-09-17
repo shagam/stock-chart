@@ -113,7 +113,7 @@ const Simulate = (props) => {
         for (let j = 1; j < weekGainAhead; j++) {
 
             const index = i - j  // look in future
-            const date = XValues[i] // date of gain
+            const date = XValues[i] // date of gain  for debug
             var sign_1; // used to breal loop when sign flips
             const weekNum = weekOfYearGet (XValues, index) 
             const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
@@ -125,14 +125,16 @@ const Simulate = (props) => {
             }
             else
                 if (sign !== sign_1) {
-                    console.log ('sign flip, j=', j,  sign_1, sign)
+                    if (logOptimize)
+                        console.log ('sign flip, j=', j,  sign_1, sign)
                     break; // exit loop when sign flipps
                 } 
 
             // enhance by exponent
             weekGainFactor *= Math.pow (weeklyGain, weekGainEnhance) 
             if (targetPortion * weekGainFactor > 0.98) {
-                console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor)                 
+                if (logOptimize)
+                    console.log ('Portion too high,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor.toFixed(3))                 
                 break;
             }
 
@@ -296,7 +298,7 @@ const Simulate = (props) => {
                     // buy stocks.
                     buySell = 'buy'
                     if (moneyMarket - tradeSum < 0) {
-                        console.log ('error tradeSum=', tradeSum, ' more than moneyMarket', moneyMarket, 'targetPortion', targetPortion)
+                        console.log (XValues[i], 'error, skipTrade,  tradeSum=', tradeSum.toFixed(2), ' is more than moneyMarket', moneyMarket.toFixed(2), 'targetPortion', targetPortion.toFixed(3))
                         continue;
                     }
                     stockCount += stockToTrade;
@@ -310,7 +312,7 @@ const Simulate = (props) => {
                      // sell stocks
                     buySell = 'sell'
                     if ((stockCount + stockToTrade ) < 0) {
-                        console.log ('error', 'stockToTrade=', stockToTrade, 'is more than stockCount=', stockCount, 'targetPortion', targetPortion)
+                        console.log (XValues[i], 'error, skipTrade, stockToTrade=', stockToTrade.toFioxed(2), 'is more than stockCount=', stockCount, 'targetPortion', targetPortion.toFixed(3))
                         continue;
                     }
                      stockCount += stockToTrade; // negastive or 
