@@ -149,6 +149,8 @@ function CommonDatabase (props) {
 
     const [nameFilter, setNameFilter] = useState ();
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
+    const [userFilter, setUserFilter] = useState ();
     // const [userInfo, setUserInfp] = useState ();
 
     useEffect (() => { 
@@ -897,6 +899,8 @@ function CommonDatabase (props) {
             corsUrl += '&LOG=1'
         if (logExtra)
             corsUrl += '&LOG_EXTRA=1'
+        if (userFilter)
+            corsUrl += '&filter=' + userFilter;
         
         setErr('users Request request sent')  
         // if (LOG)
@@ -1001,10 +1005,18 @@ function CommonDatabase (props) {
             {props.symbol && eliHome && <button type="button" onClick={()=>readOneGain()}>readOneGain ({props.symbol}) </button>}&nbsp;
             {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend-delete-One{props.symbol} </button>}&nbsp;
             {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
-            {eliHome && <button type="button" onClick={()=> users ()}>userInfo  </button>} &nbsp;&nbsp;
-            {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>}
-            {eliHome && <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>}
         </div>
+
+        <hr/>         
+        {eliHome && <div style={{display: 'flex'}}>
+            <button style={{background: 'aqua', height: '27px', marginTop: '16px'}} type="button" onClick={()=> users ()}>userInfo  </button> &nbsp;&nbsp;
+            <GlobalFilter className="stock_button_class_" filter={userFilter} setFilter={setUserFilter} name='userFilter' isMobile={isMobile}/>&nbsp; &nbsp;
+            <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
+            <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
+        </div>}
+
+
+
         <pre>{JSON.stringify(infoJson, null, 2)}</pre>
         <div>
 
