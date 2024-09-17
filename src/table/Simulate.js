@@ -131,22 +131,25 @@ const Simulate = (props) => {
                 } 
 
             // enhance by exponent
-            weekGainFactor *= Math.pow (weeklyGain, weekGainEnhance) 
-            if (targetPortion * weekGainFactor > 0.98) {
+            const weekGainFactor_temp = Math.pow (weeklyGain, weekGainEnhance) 
+            if (targetPortion * weekGainFactor_temp > 0.98) {
                 if (logOptimize)
                     console.log ('Portion too high,  targetPortion=', targetPortion.toFixed(3), 'weekGainFactor=', weekGainFactor.toFixed(3))                 
                 break;
             }
+            weekGainFactor = weekGainFactor_temp
 
-            if (targetPortion > 1) {
-                console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3))
-            }
+
             if (isNaN (weekGainFactor)) {
                 console.log ('NaN')
             }
         }
    
         targetPortion *= weekGainFactor; // higher price prediction => reduce targetPortion
+
+        if (targetPortion > 1) {
+            console.log ('non valid portion,  targetPortion=', targetPortion.toFixed(3))
+        }
 
         if (logOptimize)
             console.log (props.symbol, 'weekOptmz  i='+ i, XValues[i], 'price=' + price.toFixed(2), 'targetPortion=' + targetPortion.toFixed(3), 'factor=' + weekGainFactor.toFixed(3))
