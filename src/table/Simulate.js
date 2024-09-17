@@ -400,6 +400,10 @@ const Simulate = (props) => {
                 resultsArray.rawGainOfStock = []
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
+            if (! resultsArray.extraGain)  // calc gain obove stock
+                resultsArray.extraGain = []
+            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(2))
+
             // if (! resultsArray.portionMax)
             //     resultsArray.portionMax = [];
             // resultsArray.portionMax.push(portionMax.toFixed(3))
