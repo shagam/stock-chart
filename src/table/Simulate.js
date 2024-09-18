@@ -72,7 +72,7 @@ const Simulate = (props) => {
     useEffect(() => {
         setResults()
         setErr()
-        setResultsArray()
+        setResultsArray({})
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
