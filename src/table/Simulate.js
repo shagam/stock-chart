@@ -72,7 +72,7 @@ const Simulate = (props) => {
     useEffect(() => {
         setResults()
         setErr()
-        // resultsArray()
+        setResultsArray()
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
@@ -261,8 +261,8 @@ const Simulate = (props) => {
         var tradeSkipCount = 0;
         var sellSumTotal = 0;
         var buySumTotal = 0;
-        var buyMin;
-        var sellMin;
+        // var buyMin;
+        // var sellMin;
         var moneyMarketMin = accountValueInit;
         var moneyMarketMax = 0;        
         var portionPriv // updated in loop
@@ -376,12 +376,12 @@ const Simulate = (props) => {
         console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
 
         // avoid exceptions when no trade
-        if (! buyMin) 
-            buyMin = 0;
-        if (! sellMin)
-            sellMin = 0;
-        const buyAverage = buyCount === 0 ? 0 : (buySumTotal/buyCount).toFixed(2);
-        const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
+        // if (! buyMin) 
+        //     buyMin = 0;
+        // if (! sellMin)
+        //     sellMin = 0;
+        // // const buyAverage = buyCount === 0 ? 0 : (buySumTotal/buyCount).toFixed(2);
+        // const sellAverage = sellCount === 0 ? 0 : (sellSumTotal/sellCount).toFixed(2)
 
 
         //** results */         
@@ -393,10 +393,10 @@ const Simulate = (props) => {
                 totalWeeksBack: oldestIndex,
 
                 // buyCount: buyCount,
-                buyAverage_$: buyAverage, 
+                // buyAverage_$: buyAverage, 
                 // buyMin_$: buyMin.toFixed(2),
                 // sellCount: sellCount,
-                sellAverage_$: sellAverage,
+                // sellAverage_$: sellAverage,
                 // sellMin_$: sellMin.toFixed(2),
                 // tradeSkipCount: tradeSkipCount,
                 // moneyMarketMin: moneyMarketMin.toFixed(2),
@@ -546,6 +546,9 @@ const Simulate = (props) => {
                 resultsArray.tradeSkipCount = [];
             resultsArray.tradeSkipCount.push(tradeSkipCount)
 
+            // if (! resultsArray.dateStart)
+            //     resultsArray.dateStart = []
+            // resultsArray.dateStart.push(XValues[oldestIndex])
 
 
             // if (! resultsArray.priceEnd_$)
