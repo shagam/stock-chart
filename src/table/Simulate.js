@@ -50,7 +50,7 @@ const Simulate = (props) => {
 
 
     const [accountValueInit, setAccountValue] = useState (1000); //
-    const [startWeek, setStartWeek] = useState (200); // default oldest 
+    const [startWeek, setStartWeek] = useState (0); // default oldest 
     const [thresholdPercent, setThresholdPercent] = useState (0.8);
     const [interestRate, setInterestRate] = useState (3.2);
     const [transactionFee, setTransactionFee] = useState (0);
@@ -175,20 +175,32 @@ const Simulate = (props) => {
         const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
         const symVal = YValues[i]; 
         var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
-        if (bubbleIndex!== -1) {
-
-            //** optimize according to bubbleLine */
-            var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
-            // if (priceDivBbubblePrice > 1 && logOptimize) {
-            //     console.log ('price above bubble')
-            // }
-
-            targetPortion = portionBubble_calc (priceDivBbubblePrice)
-
-            if (logOptimize)
-                console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
-             'portion=', targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
+        if (bubbleIndex === -1) {
+            console.log (props.symbol, i, 'failed to find date in bubble line')
+            return aggressivePortionInit
         }
+
+        //** optimize according to bubbleLine */
+        var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
+        if (priceDivBbubblePrice >= 1) {
+            console.log (props.symbol, XValues[i], 'price above bubble,  i=', i, 'priceDivBbubblePrice=', priceDivBbubblePrice)
+            return PORTION_LOW; // minimum
+        }
+
+        if (false) { // experiment 
+            const bubbleOver = 1 - priceDivBbubblePrice
+            console.log (Math.pow (1 - aggressivePortionInit, bubbleOver))
+            const factor = Math.pow (1 - aggressivePortionInit, bubbleOver)
+            targetPortion *= 1 - factor;
+            return targetPortion;
+        }
+    
+        targetPortion = portionBubble_calc (priceDivBbubblePrice)
+
+        if (logOptimize)
+            console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
+            'portion=', targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
+
         return targetPortion;
     }
 
@@ -201,8 +213,12 @@ const Simulate = (props) => {
             return;
         }
 
-        var price = YValues[YValues.length - 1 - startWeek]  // begining price // default oldest
-        const priceInit = price
+        const bubbleLine = props.gainMap.bubbleLine;
+
+        const oldestIndex = optimizeBubble ? bubbleLine.y.length - 1 : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
+
+        var priceInit = YValues[oldestIndex]  // begining price // default oldest
+        var price =  priceInit
 
         var accountVal =  accountValueInit;
 
@@ -211,7 +227,6 @@ const Simulate = (props) => {
 
         const moneyMarketInit = accountValueInit * (1 -  aggressivePortionInit) // initial moneyMarket 
         var moneyMarket = moneyMarketInit
-        const bubbleLine = props.gainMap.bubbleLine;
 
 
         //** calc today portion  bubble*/
@@ -247,7 +262,6 @@ const Simulate = (props) => {
         if (LOG)
             console.log ('weeklyInterest=', weeklyInterest, 'interest=', interestRate) // on moneyMarket
 
-        const oldestIndex = YValues.length - 1 - startWeek; // startIndex == 0 means oldest
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
         var stockToTrade;
         var buyCount = 0;
