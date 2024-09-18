@@ -70,9 +70,9 @@ const Simulate = (props) => {
     const LOG = props.logFlags && props.logFlags.includes('simulateTrade');
 
     useEffect(() => {
-        setResults()
+        // setResults()
         setErr()
-        setResultsArray({})
+        // setResultsArray({})
 
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
    
@@ -215,7 +215,13 @@ const Simulate = (props) => {
 
         const bubbleLine = props.gainMap.bubbleLine;
 
-        const oldestIndex = optimizeBubble ? bubbleLine.y.length - 1 : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
+        if ((optimizeBubble && bubbleLine.y.length - 1 - startWeek <= 0) || (!optimizeBubble && YValues.length - 1 - startWeek < 0) ) {
+            setErr ('invalid start week= ', startWeek)
+            beep2()
+            return
+        }
+
+        const oldestIndex = optimizeBubble ? bubbleLine.y.length - 1 - startWeek : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
 
         var priceInit = YValues[oldestIndex]  // begining price // default oldest
         var price =  priceInit
@@ -501,6 +507,10 @@ const Simulate = (props) => {
             if (! resultsArray.transactionFee)
                 resultsArray.transactionFee = [];
             resultsArray.transactionFee.push(transactionFee)
+
+            if (! resultsArray.startWeek)
+                resultsArray.startWeek = [];
+            resultsArray.startWeek.push(startWeek)
 
             // if (! resultsArray.accountValueEnd_$)
             //     resultsArray.accountValueEnd_$ = []
