@@ -185,12 +185,6 @@ const Simulate = (props) => {
 
             targetPortion = portionBubble_calc (priceDivBbubblePrice)
 
-            // save portion min/max
-            if (portionMin > targetPortion)
-                portionMin = targetPortion
-            if (portionMax < targetPortion)
-                portionMax = targetPortion
-
             if (logOptimize)
                 console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
              'portion=', targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
