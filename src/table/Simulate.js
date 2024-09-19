@@ -38,12 +38,12 @@ const Simulate = (props) => {
     const [logOptimize, setLogOptimize] = useState (false);
 
     // bubbleLine aggressive level optimize Params
-    const [LEVEL_LOW, set_LEVEL_LOW] = useState(0.65)
-    const [LEVEL_HIGH, set_LEVEL_HIGH] = useState(0.9)
-    const [PORTION_HIGH, set_PORTION_HIGH] = useState(1.0)
-    const [PORTION_LOW, set_PORTION_LOW] = useState(0.5)
+    const [priceDivBubble_LOW, setPriceDivBubble_LOW] = useState(0.65)
+    const [priceDivBubble_HIGH, setPriceDivBubble_HIGH] = useState(0.9)
+    const [PORTION_HIGH, set_PORTION_HIGH] = useState(0.98)
+    const [PORTION_LOW, set_PORTION_LOW] = useState(0.1)
 
-
+    // weekGain params
     const [portionPercent, setPortionPercent] = useState (90); // default 80%
     const [weekGainEnhance, setWeekGainEnhance] = useState (6);
     const [weekGainAhead, setWeekGainAhead] = useState (6);
@@ -158,12 +158,12 @@ const Simulate = (props) => {
 
     function portionBubble_calc (priceDivBbubblePrice) {
         var targetPortion = -1;
-        if (priceDivBbubblePrice <= LEVEL_LOW)  // low level set high portion
+        if (priceDivBbubblePrice <= priceDivBubble_LOW)  // low level set high portion
             targetPortion = Number(PORTION_HIGH) ;
-        else if (priceDivBbubblePrice >= LEVEL_HIGH)  // high level set low portion
+        else if (priceDivBbubblePrice >= priceDivBubble_HIGH)  // high level set low portion
             targetPortion = Number(PORTION_LOW);
         else {// interpolate
-            targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (LEVEL_LOW - LEVEL_HIGH) * (priceDivBbubblePrice - LEVEL_LOW)
+            targetPortion =  Number(PORTION_HIGH) + (Number(PORTION_HIGH) - Number(PORTION_LOW)) / (priceDivBubble_LOW - priceDivBubble_HIGH) * (priceDivBbubblePrice - priceDivBubble_LOW)
         }
         return targetPortion
     }
@@ -306,7 +306,9 @@ const Simulate = (props) => {
                 portionMax = targetPortion
             if (portionMin > targetPortion)
                 portionMin = targetPortion
-
+            if (! targetPortion || ! portionMin) {
+                console.log ('err targetPortion undef')
+            }
             const accountValPrev  = accountVal;
             accountVal = price*stockCount + moneyMarket;
             const accountValBeforeTrade = accountVal
@@ -470,13 +472,13 @@ const Simulate = (props) => {
             resultsArray.weekGainAhead.push (weekGainAhead)
 
 
-            if (! resultsArray.LEVEL_HIGH)
-                resultsArray.LEVEL_HIGH = [];
-            resultsArray.LEVEL_HIGH.push(LEVEL_HIGH)
+            if (! resultsArray['price_/_bubble_HIGH'])
+                resultsArray['price_/_bubble_HIGH'] = [];
+            resultsArray['price_/_bubble_HIGH'].push(priceDivBubble_HIGH)
 
-            if (! resultsArray.LEVEL_LOW)
-                resultsArray.LEVEL_LOW = [];
-            resultsArray.LEVEL_LOW.push(LEVEL_LOW);
+            if (! resultsArray['price_/_bubble_LOW'])
+                resultsArray['price_/_bubble_LOW'] = [];
+            resultsArray['price_/_bubble_LOW'].push(priceDivBubble_LOW);
 
             if (! resultsArray.PORTION_HIGH)
                 resultsArray.PORTION_HIGH = [];
@@ -528,7 +530,7 @@ const Simulate = (props) => {
 
             if (! resultsArray.portionMin)
                 resultsArray.portionMin = [];
-            resultsArray.portionMin.push(portionMin.toFixed(3))
+            resultsArray.portionMin.push(Number(portionMin).toFixed(3))
             
             if (! resultsArray.portionMax)
                 resultsArray.portionMax = [];
@@ -584,7 +586,7 @@ const Simulate = (props) => {
       [{
         name: title,
         nameSingle: title,
-        x: [0, LEVEL_LOW, LEVEL_HIGH, 1],
+        x: [0, priceDivBubble_LOW, priceDivBubble_HIGH, 1],
         y:  [PORTION_HIGH, PORTION_HIGH, PORTION_LOW, PORTION_LOW],
         type: 'scatter',
         mode: 'lines+markers',
@@ -649,8 +651,8 @@ const Simulate = (props) => {
                 {optimizeBubble && <div>
                     {optimizeBubble && <div  style={{color: 'green' }}> &nbsp; Decrease aggressive portion near the bubbleLine (and vice versa)</div>}
                     <div style = {{display:'flex'}}>
-                        &nbsp;<GetInt init={LEVEL_HIGH} callBack={set_LEVEL_HIGH} title='Proximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
-                        <GetInt init={LEVEL_LOW} callBack={set_LEVEL_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
+                        &nbsp;<GetInt init={priceDivBubble_HIGH} callBack={setPriceDivBubble_HIGH} title='Proximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
+                        <GetInt init={priceDivBubble_LOW} callBack={setPriceDivBubble_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
                     </div> 
                     <div style = {{display:'flex'}}>
                         &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portion:  &nbsp; &nbsp; High' type='text' pattern="[\.0-9]+" width = '25%'/>
