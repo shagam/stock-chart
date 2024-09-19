@@ -328,6 +328,8 @@ function MonthGain (props) {
     var yearGain = 1;
     for (let i = 0; i < 52; i++) {
         weekGainArray[i] = Math.pow(weekGainArrayCollect[i], (1/weekGainArrayCount[i]))
+        // if (i === 0 && isNaN (weekGainArray[0]))
+        //   alert ('week gain calc fain; weekGain NaN')
         yearGain *= weekGainArray[i];
         yearsCollectedForAverage[i] = weekGainArrayCount[i] / symbols.length // calc years
     }
@@ -371,7 +373,7 @@ function MonthGain (props) {
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style = {{display: 'flex'}}>
-          {props.symbol && <button style={{background: 'aqua'}}  type="button" 
+          {props.symbol && Object.keys(props.gainMap).length > 0 && <button style={{background: 'aqua'}}  type="button" 
             onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>week-month-gain</button>}
             &nbsp; &nbsp;
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
