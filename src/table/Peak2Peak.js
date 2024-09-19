@@ -130,7 +130,8 @@ const Peak2PeakGui = (props) => {
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
-              {results && ! props.gainMap.yBubbleLine && ! props.bubleLine && <button style={{background: 'aqua'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
+              {results && ! props.gainMap.yBubbleLine && ! props.bubleLine && 
+                <button style={{background: 'pink'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
               {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
               {/* <div> Click </div> &nbsp;&nbsp;
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
