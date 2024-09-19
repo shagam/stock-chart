@@ -56,7 +56,7 @@ const Simulate = (props) => {
     const [transactionFee, setTransactionFee] = useState (0);
 
     const [portionWeekGain, setPortionWeekGain] = useState (-1);
-    const [portionBubbleLine, setPortionBubbleLine] = useState (-1);
+
 
 
 
@@ -79,6 +79,13 @@ const Simulate = (props) => {
     const aggressivePortionInit = portionPercent/100; // between 0 to 1
     var portionMin = aggressivePortionInit;
     var portionMax = aggressivePortionInit;
+
+    var bubbleLine = props.gainMap.bubbleLine;
+    var todayPriceDivBubbleLine = -1
+    if (bubbleLine) {
+        todayPriceDivBubbleLine = props.stockChartYValues[0] / props.gainMap.bubbleLine.y[0]
+    }
+
 
     //** for optimize radio buttons */
     // const toolEnum = {
@@ -213,7 +220,7 @@ const Simulate = (props) => {
             return;
         }
 
-        const bubbleLine = props.gainMap.bubbleLine;
+
 
         if ((optimizeBubble && bubbleLine.y.length - 1 - startWeek <= 0) || (!optimizeBubble && YValues.length - 1 - startWeek < 0) ) {
             setErr ('invalid start week= ', startWeek)
@@ -236,10 +243,6 @@ const Simulate = (props) => {
 
 
         //** calc today portion  bubble*/
-        if (bubbleLine) {
-            const portion = YValues[0] / bubbleLine.y[0]
-            setPortionBubbleLine (portionBubble_calc(portion))
-        }
 
         //** calc today portion  weekGain */
         if (props.monthGainData.monthGainArray) {
@@ -615,11 +618,13 @@ const Simulate = (props) => {
             <div style={{color: 'red'}}> {err} </div>
             <div> &nbsp;</div>
 
-            <div style={{display: 'flex'}}> <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Aggressive-Portion(today)</div> &nbsp;
-                bubble-proximity-factor=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionBubbleLine.toFixed(2)}</div> &nbsp;
-                weekGain-factor=<div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{portionWeekGain.toFixed(2)}</div>
-            </div>
+            {bubbleLine && <div style={{display: 'flex', background: 'antiqueWhite'}}> 
+                <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Latest site info: </div> &nbsp;
+                    price / bubblePrice=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{todayPriceDivBubbleLine.toFixed(2)}  </div> &nbsp;&nbsp;
+                Calculated portion= <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}> {portionBubble_calc(todayPriceDivBubbleLine).toFixed(2)} </div>
+            </div>}
 
+            <hr/> 
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
