@@ -349,7 +349,7 @@ function MonthGain (props) {
 
   //* color gain numbers according to gain
   function gainColor (gain, week) {
-    if ((week && gain > 1.007) || (!week && gain > 1.02)) { // for month color for hiegher gain
+    if ((week && gain > 1.007) || (!week && gain > 1.015)) { // for month color for hiegher gain
       const diff = gain -1;
       return '#00ff00' // diff * 40 green
     }
