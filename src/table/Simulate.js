@@ -635,8 +635,8 @@ const Simulate = (props) => {
                     </div>
               
                   {/* log checkboxes */}
-                {! props.isMobile && ! isMobile && <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} />} &nbsp;log_trade&nbsp;  
-                {! props.isMobile && ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input  type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
+                { ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;log_trade&nbsp;  </div>}
+                { ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
             {! optimizeBubble && ! optimizeWeekGain && <div style = {{display:'flex'}}>
@@ -686,11 +686,6 @@ const Simulate = (props) => {
 
             <hr/> 
 
-            <div style = {{display:'flex', width: '800px'}}>
-
-                &nbsp; <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>
-            </div>
-
             <div style = {{display:'flex'}}>
                 &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+" width = '15%'/>
                 &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/>
@@ -699,6 +694,7 @@ const Simulate = (props) => {
                 &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+" width = '15%'/>
                 &nbsp; <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+" width = '20%'/>
             </div>
+             <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>
             <div> &nbsp;</div>
 
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
