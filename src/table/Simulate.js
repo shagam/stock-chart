@@ -228,7 +228,7 @@ const Simulate = (props) => {
             return
         }
 
-        const oldestIndex = optimizeBubble ? bubbleLine.y.length - 1 - startWeek : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
+        const oldestIndex = bubbleLine ? bubbleLine.y.length - 1 - startWeek : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
 
         var priceInit = YValues[oldestIndex]  // begining price // default oldest
         var price =  priceInit
@@ -513,10 +513,15 @@ const Simulate = (props) => {
                 resultsArray.transactionFee = [];
             resultsArray.transactionFee.push(transactionFee)
 
+
+
             if (! resultsArray.startWeek)
                 resultsArray.startWeek = [];
             resultsArray.startWeek.push(startWeek)
 
+            if (! resultsArray.oldestIndex)
+                resultsArray.oldestIndex = [];
+            resultsArray.oldestIndex.push(oldestIndex)
             // if (! resultsArray.accountValueEnd_$)
             //     resultsArray.accountValueEnd_$ = []
             // resultsArray.accountValueEnd_$.push(accountVal.toFixed(2))
