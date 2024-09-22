@@ -87,12 +87,15 @@ const Peak2PeakGui = (props) => {
       yBubbleLine.push(yBubbleLine[i] / results.weeklyGain);
     }  
 
-    props.setBubbleLine ({x: XValues, y: yBubbleLine})
-    setBubbleLineFlag(true)
+    if (! props.gainMap.bubbleLine) {
+      props.setBubbleLine ({x: XValues, y: yBubbleLine})
+      setBubbleLineFlag(true)
 
-    if (Object.keys(props.gainMap).length > 1) {
-      props.errorAdd(['Bubble-line only for sinle stock. <reloadPage> and try again'])
+      if (Object.keys(props.gainMap).length > 1) {
+        props.errorAdd(['Bubble-line only for sinle stock. <reloadPage> and try again'])
+      }
     }
+
   
     //** calc ratio latestValue/bubbleline */
     const bubbleLineOver = (YValues[0] / yBubbleLine[0]).toFixed(3)
@@ -114,29 +117,32 @@ const Peak2PeakGui = (props) => {
             </div>
 
             <div  style={{display:'flex' }}> 
-            <div style={{ color: 'black'}}  >Start_date:   </div>
+            <div style={{ color: 'black'}}  >Start_proximity_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
            </div>
       
            <div  style={{display:'flex' }}> 
-            <div style={{ color: 'black'}}  > End_date:   </div>
+            <div style={{ color: 'black'}}  > End_proximity_date:   </div>
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
            </div>
-           
-           <div style={{display:'flex'}}> &nbsp; 
-              {!  results && <div> <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp; </div>}
-              {! bubbleLineFlag && <div> <input  type="checkbox" checked={startFromPeakFlag}  onChange={() => {setStartFromPeakFlag (! startFromPeakFlag)}} />  startFromPeak  &nbsp;&nbsp; </div>}
 
+           <div style={{display:'flex'}}> &nbsp; 
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
-              {results && ! props.gainMap.yBubbleLine && ! props.bubleLine && 
+              {results && ! bubbleLineRatio && ! props.gainMap.yBubbleLine &&  
                 <button style={{background: 'pink'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
-              {bubbleLineFlag && <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
+              {bubbleLineRatio && <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
               {/* <div> Click </div> &nbsp;&nbsp;
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
            </div>
-           
+
+           <div style={{display:'flex'}}> &nbsp; 
+              {!  results && <div> <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp; </div>}
+              {! bubbleLineFlag && <div> <input  type="checkbox" checked={startFromPeakFlag}  onChange={() => {setStartFromPeakFlag (! startFromPeakFlag)}} />  startFromPeak  &nbsp;&nbsp; </div>}
+          </div>
+
+
            {results && <div>
              <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>
              {/* <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div> */}
