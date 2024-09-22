@@ -366,7 +366,7 @@ const Simulate = (props) => {
                 //** log transaction */
                 if (logTrade) {
                     console.log (props.symbol, 'tradeInfo, i=' + i, XValues[i], 'price=' + price.toFixed(2), 'targetPortion=' + targetPortion.toFixed(3),
-                     'portion=' + portionCurrent.toFixed(3),
+                     'portionBefore=' + portionCurrent.toFixed(3),
                     
                     'accountVal='+ accountVal.toFixed(2),
                     //  'stockValue=', stockCount * price,
@@ -640,7 +640,7 @@ const Simulate = (props) => {
                     </div>
               
                   {/* log checkboxes */}
-                { ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;log_trade&nbsp;  </div>}
+                { ! isMobile && <div><input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;log_trade&nbsp;  </div>}
                 { ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
