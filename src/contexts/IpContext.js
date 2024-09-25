@@ -11,7 +11,7 @@ import {ErrorList, errorAdd, beep, beep2} from '../utils/ErrorList'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
-const ELI_HOME_IP = process.env.REACT_APP_AWS_IP_
+const ELI_HOME_IP = process.env.REACT_APP_ELI_HOME_IP
 const IPINFO_TOKEN = process.env.REACT_APP_IOINFO_TOKEN
 
 function IpContext  () {
