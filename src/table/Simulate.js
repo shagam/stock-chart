@@ -423,6 +423,9 @@ const Simulate = (props) => {
 
             })
 
+            if (! resultsArray.extraGain)  // calc gain obove stock
+                resultsArray.extraGain = []
+            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3))
             
             if (! resultsArray.gainOfAccount)
                 resultsArray.gainOfAccount = []
@@ -432,9 +435,7 @@ const Simulate = (props) => {
                 resultsArray.rawGainOfStock = []
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
-            if (! resultsArray.extraGain)  // calc gain obove stock
-                resultsArray.extraGain = []
-            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(2))
+  
 
             // if (! resultsArray.portionMax)
             //     resultsArray.portionMax = [];
@@ -449,7 +450,7 @@ const Simulate = (props) => {
             //** input params */
             if (! resultsArray.params)
                 resultsArray.params = [];
-            resultsArray.params.push('=====')
+            resultsArray.params.push('====')
 
 
             if (! resultsArray.tradeFlag)
@@ -533,7 +534,7 @@ const Simulate = (props) => {
             //** more info */
             if (! resultsArray.info)
                 resultsArray.info = [];
-            resultsArray.info.push('=====')
+            resultsArray.info.push('====')
 
 
             if (! resultsArray.portionMin)
@@ -555,11 +556,11 @@ const Simulate = (props) => {
 
             if (!resultsArray.moneyMarketEnd_$)
                 resultsArray.moneyMarketEnd_$ = [];
-            resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(2))
+            resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
 
             if (! resultsArray.moneyMarketInit_$)
                 resultsArray.moneyMarketInit_$ = [];
-            resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(2))
+            resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
 
             
             if (! resultsArray.buyCount)
@@ -615,7 +616,7 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '600px'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue', width: '68vw'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
@@ -627,9 +628,10 @@ const Simulate = (props) => {
                 <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Latest site info: </div> &nbsp;
                     price / bubblePrice=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{todayPriceDivBubbleLine.toFixed(2)}  </div> &nbsp;&nbsp;
                 Calculated portion= <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}> {portionBubble_calc(todayPriceDivBubbleLine).toFixed(2)} </div>
+                <hr/> 
             </div>}
 
-            <hr/> 
+
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
@@ -680,7 +682,6 @@ const Simulate = (props) => {
                 </div>} 
 
                 {optimizeWeekGain && <div >
-
                     <div  style = {{display:'flex'}}>
                         <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '20%'/>
                         &nbsp; <GetInt init={weekGainEnhance} callBack={setWeekGainEnhance} title='Enhance' type='text' pattern="[\.0-9]+" width = '15%'/>
@@ -704,7 +705,7 @@ const Simulate = (props) => {
 
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
-  
+            <div style={{maxWidth:'68vw', overflow:'auto'}}>
             <table>
                 <thead>
 
@@ -725,7 +726,8 @@ const Simulate = (props) => {
                     })}
                 </tbody>
             </table>
-            
+            </div>
+
             {results && <div> Last simulation info &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
             
