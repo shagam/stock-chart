@@ -28,7 +28,7 @@ function StockLists (props) {
     const [latency, setLatency] = useState()
     
     const [logBackEnd, setLogBackEnd] = useState ();
-    const [myIp, setMyIp] = useState (true);
+    const [myIp, setMyIp] = useState ();
 
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
@@ -300,7 +300,7 @@ function StockLists (props) {
             stockLists[dat.listName] = dat.stocks; //** insert in list */ 
             localStorage.setItem('stocksLists', JSON.stringify(stockLists))
             if (stockLists[dat.listName] && stockLists[dat.listName].length > 0)
-                setBackendListName(stockLists[dat.listName])
+                setBackendListName(dat.listName)
 
             const latency = Date.now() - mili
             setLatency ('stockListsSend done, latency(msec)=' + latency)
@@ -423,7 +423,7 @@ function StockLists (props) {
                         &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={backendListName} nameList={backendNameArray} setSelect={setBackendListName}
                         title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
 
-                        <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > getOne-backend </button> &nbsp; &nbsp; 
+                        <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > get </button> &nbsp; &nbsp; 
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button> &nbsp; &nbsp; 
                     </div>}
                 </div>
