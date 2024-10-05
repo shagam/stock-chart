@@ -190,9 +190,10 @@ const Simulate = (props) => {
         //** optimize according to bubbleLine */
         var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
         if (priceDivBbubblePrice > 1) {
-            console.log (props.symbol, XValues[i], 'price above bubble,  i=', i,
-                //  'priceDivBbubblePrice=', priceDivBbubblePrice,
-                 'price='+ symVal.toFixed(2), 'bubblePrice='+bubbleLine.y[bubbleIndex].toFixed(2))
+            console.log (props.symbol, 'price>bubbl i=' + i, XValues[i],
+            'price='+ symVal.toFixed(2),
+            'price/bubble=', priceDivBbubblePrice.toFixed(2),
+            'bubblePrice=' + bubbleLine.y[bubbleIndex].toFixed(2))
             return PORTION_LOW; // minimum
         }
 
