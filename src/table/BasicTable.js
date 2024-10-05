@@ -884,7 +884,7 @@ const BasicTable = (props) => {
          
             {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
-                 errorAdd={props.errorAdd} saveTable={props.saveTable} monthGainData={monthGainData}/>}
+                 errorAdd={errorAdd} saveTable={props.saveTable} monthGainData={monthGainData}/>}
 
             {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
                   stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} />}

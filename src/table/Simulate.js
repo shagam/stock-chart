@@ -189,8 +189,10 @@ const Simulate = (props) => {
 
         //** optimize according to bubbleLine */
         var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
-        if (priceDivBbubblePrice >= 1) {
-            console.log (props.symbol, XValues[i], 'price above bubble,  i=', i, 'priceDivBbubblePrice=', priceDivBbubblePrice)
+        if (priceDivBbubblePrice > 1) {
+            console.log (props.symbol, XValues[i], 'price above bubble,  i=', i,
+                //  'priceDivBbubblePrice=', priceDivBbubblePrice,
+                 'price='+ symVal.toFixed(2), 'bubblePrice='+bubbleLine.y[bubbleIndex].toFixed(2))
             return PORTION_LOW; // minimum
         }
 
@@ -205,8 +207,8 @@ const Simulate = (props) => {
         targetPortion = portionBubble_calc (priceDivBbubblePrice)
 
         if (logOptimize)
-            console.log(props.symbol, 'bubble optimize', 'i=', i, XValues[i], 'price=', price, 'price/bubble=', priceDivBbubblePrice.toFixed(3),
-            'portion=', targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
+            console.log(props.symbol, 'bubblOptm', 'i=' + i, XValues[i], 'price=' + price.toFixed(2), 'price/bubble=' + priceDivBbubblePrice.toFixed(2),
+            'portion=' + targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
 
         return targetPortion;
     }
@@ -256,8 +258,8 @@ const Simulate = (props) => {
             'trade_start_value_$': accountVal.toFixed(2),
             stocksCount: stockCount.toFixed(2),
             'moneyMarket_$': moneyMarket.toFixed(2),
-            'price_$': price,
-            'portion_%': portionPercent,
+            'price_$': price.toFixed(3),
+            'portion': (portionPercent/100).toFixed(2),
             'threshold_%': thresholdPercent,
             'interestRate_%': interestRate,
             'transactionFee_$': transactionFee,
@@ -326,7 +328,7 @@ const Simulate = (props) => {
 
                 if (portionDiff > 0) {
                     // buy stocks.
-                    buySell = 'buy'
+                    buySell = 'buy '
                     if (moneyMarket - tradeSum < 0) {
                         console.log (XValues[i], 'error, skipTrade,  tradeSum=', tradeSum.toFixed(2), ' is more than moneyMarket', moneyMarket.toFixed(2), 'targetPortion', targetPortion.toFixed(3))
                         continue;
@@ -365,10 +367,15 @@ const Simulate = (props) => {
 
                 //** log transaction */
                 if (logTrade) {
-                    console.log (props.symbol, 'tradeInfo, i=' + i, XValues[i], 'price=' + price.toFixed(2), 'targetPortion=' + targetPortion.toFixed(3),
-                     'portionBefore=' + portionCurrent.toFixed(3),
-                    
-                    'accountVal='+ accountVal.toFixed(2),
+                    var priceDivBubble = -1
+                    if (i < XValues.length && i < bubbleLine.y.length)
+                        priceDivBubble = YValues[i] / bubbleLine.y[i]
+
+                    console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
+                    //  'portionBefore=' + portionCurrent.toFixed(3),
+                        'price/bubble=' + priceDivBubble.toFixed(2),
+                        'portion=' + Number(targetPortion).toFixed(3),
+                        'accountVal='+ accountVal.toFixed(2),
                     //  'stockValue=', stockCount * price,
                     //  'moneyMarkt=', moneyMarket.toFixed(2),
                     ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2))
@@ -386,7 +393,8 @@ const Simulate = (props) => {
                 console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2),
                      'tradeCount=', stockToTrade.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
         } catch (e) {
-            console.log ('exception index=', i, e.message, ' portionPercent=', portionPercent)
+            props.errorAdd([props.symbol, 'i=' + i,  XValues[i], 'symulate exception', e.message])
+            console.log('exception i='+ i + '  %c' + e.message, 'background: #fff; color: #ee3344');
             break;
         }
         }
@@ -436,6 +444,19 @@ const Simulate = (props) => {
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
   
+
+            if (! resultsArray.buyCount)
+                resultsArray.buyCount = [];
+            resultsArray.buyCount.push(buyCount);
+
+            if (! resultsArray.sellCount)
+                resultsArray.sellCount = []
+            resultsArray.sellCount.push(sellCount);
+
+            if (! resultsArray.tradeSkipCount)
+                resultsArray.tradeSkipCount = [];
+            resultsArray.tradeSkipCount.push(tradeSkipCount)
+
 
             // if (! resultsArray.portionMax)
             //     resultsArray.portionMax = [];
@@ -563,17 +584,6 @@ const Simulate = (props) => {
             resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
 
             
-            if (! resultsArray.buyCount)
-                resultsArray.buyCount = [];
-            resultsArray.buyCount.push(buyCount);
-
-            if (! resultsArray.sellCount)
-                resultsArray.sellCount = []
-            resultsArray.sellCount.push(sellCount);
-
-            if (! resultsArray.tradeSkipCount)
-                resultsArray.tradeSkipCount = [];
-            resultsArray.tradeSkipCount.push(tradeSkipCount)
 
             // if (! resultsArray.dateStart)
             //     resultsArray.dateStart = []
@@ -616,7 +626,7 @@ const Simulate = (props) => {
 
 
     return (
-        <div style = {{border: '2px solid blue', width: '68vw'}} id='deepRecovery_id' >
+        <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
@@ -705,7 +715,7 @@ const Simulate = (props) => {
 
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
-            <div style={{maxWidth:'68vw', overflow:'auto'}}>
+            <div style={{maxWidth:'100vw', overflow:'auto'}}>
             <table>
                 <thead>
 
