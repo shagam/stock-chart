@@ -29,7 +29,7 @@ function StockLists (props) {
     
     const [logBackEnd, setLogBackEnd] = useState ();
     const [myIp, setMyIp] = useState ();
-
+    const [delOtherIp, setDelOtherIp] = useState ();  // allow to delete others
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
 
@@ -336,6 +336,8 @@ function StockLists (props) {
             corsUrl += '&admin=' + true;
         if (logBackEnd)
             corsUrl += '&LOG=1'
+        if (delOtherIp)
+            corsUrl += '&delOtherIp=true'
         // if (LOG)
         console.log (corsUrl)
         
@@ -427,6 +429,8 @@ function StockLists (props) {
 
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > get </button> &nbsp; &nbsp; 
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button> &nbsp; &nbsp; 
+                        {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={delOtherIp}  onChange={() => setDelOtherIp(! delOtherIp) }  /> &nbsp; del-other-ip &nbsp; &nbsp;</div>}
+
                     </div>}
                 </div>
                 {/* LOcal lists */}
