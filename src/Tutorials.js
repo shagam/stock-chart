@@ -55,6 +55,10 @@ function Tutorials () {
                     </tr>
 
                     <tr>
+                        <td><a href="https://youtu.be/Oe3_m3veTCo">Trade-simulator</a></td><td>Can we beat the gain of QQQ?</td> 
+                    </tr>
+
+                    <tr>
                         <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare historical price with MarketWatch</td> 
                     </tr>
                     <tr>
