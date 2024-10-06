@@ -48,8 +48,9 @@ function StockLists (props) {
     if (keys.length === 0) 
         get()
 
-
-   function get () {
+    
+    //** Get local lists from localStorage */
+    function get () {
         const listsRaw = localStorage.getItem('stocksLists')
         if (! listsRaw || listsRaw === '{}')
             return;
@@ -298,6 +299,7 @@ function StockLists (props) {
             }
             // setInfo(dat)
             stockLists[dat.listName] = dat.stocks; //** insert in list */ 
+            setNameArray (Object.keys(stockLists))
             localStorage.setItem('stocksLists', JSON.stringify(stockLists))
             if (stockLists[dat.listName] && stockLists[dat.listName].length > 0)
                 setBackendListName(dat.listName)
