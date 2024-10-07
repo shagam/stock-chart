@@ -313,9 +313,7 @@ const Simulate = (props) => {
                 portionMax = targetPortion
             if (portionMin > targetPortion)
                 portionMin = targetPortion
-            if (! targetPortion || ! portionMin) {
-                console.log ('err targetPortion undef')
-            }
+
             const accountValPrev  = accountVal;
             accountVal = price*stockCount + moneyMarket;
             const accountValBeforeTrade = accountVal
