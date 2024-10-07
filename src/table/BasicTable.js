@@ -16,6 +16,8 @@ import CheckBox from '../utils/CheckBox'
 
 import {DropRecoveryButtons} from './DropRecovery'
 import {Peak2PeakGui} from './Peak2Peak'
+import {MarketOpenPrice} from './MarketOpenPrice'
+
 
 import StockInfo from './StockInfo'
 import StockGain from './StockGain'
@@ -673,7 +675,8 @@ const BasicTable = (props) => {
     StockInfoRaw: 'StockInfoRaw', 
     Tools: 'Tools',
     SimulateTrade: 'SimulateTrade',
-    MonthGain: 'MonthGain'
+    MonthGain: 'MonthGain',
+    marketOpenPrice: 'marketOpenPrice'
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState()
@@ -857,7 +860,11 @@ const BasicTable = (props) => {
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}/>  
                 {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain   </div>} 
                 {monthGainData.weekGainArray && <div style={{color:'blue', fontWeight: "bold"}}> weekGain   </div>} 
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='8' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+                 
+                {/* <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='8' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
+                {<div style={{color:'blue'}}> marketOpenPrice  </div>}                  */}
+
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='9' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
                 {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
 
@@ -888,6 +895,11 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
                   stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} />}
+
+            {analyzeTool ==='marketOpenPrice' && <MarketOpenPrice StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
+             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={weekly}/>}
+
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
 
