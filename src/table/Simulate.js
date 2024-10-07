@@ -38,6 +38,7 @@ const Simulate = (props) => {
     const [logOptimize, setLogOptimize] = useState (false);
 
     // bubbleLine aggressive level optimize Params
+    const [chartShow, setChartShow] = useState(false)
     const [priceDivBubble_LOW, setPriceDivBubble_LOW] = useState(0.65)
     const [priceDivBubble_HIGH, setPriceDivBubble_HIGH] = useState(0.9)
     const [PORTION_HIGH, set_PORTION_HIGH] = useState(0.98)
@@ -682,6 +683,13 @@ const Simulate = (props) => {
                         <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='Low' type='text' pattern="[\.0-9]+" width = '25%'/>
                     </div>
                 </div>}
+           
+                {/* https://plotly.com/javascript/figure-labels/ */}
+                {/* <hr/> */}
+                <input  type="checkbox" checked={chartShow}  onChange={() => setChartShow (! chartShow)} /> &nbsp; Show-chart&nbsp;
+                <div>&nbsp;</div>
+                {chartShow && optimizeBubble && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
+                    xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
             </div>
 
             <hr/> 
@@ -741,12 +749,6 @@ const Simulate = (props) => {
 
             {results && <div> Last simulation info &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
-            
-             {/* https://plotly.com/javascript/figure-labels/ */}
-             <hr/> 
-            {optimizeBubble && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
-                 xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
-
         </div>
     )
  }
