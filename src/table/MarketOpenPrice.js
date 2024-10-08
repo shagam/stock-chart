@@ -188,16 +188,18 @@ function MarketOpenPrice (props) {
 
             <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button> &nbsp; Not adjusted for splits
             <div>&nbsp;</div>
+            {dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]} </div>}
+
             {<div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
-                        <th>week date</th>
-                        <th>open / prevClose</th>
+                        <th>date</th>
                         <th>open</th>
                         <th>close</th>
                         <th>dailyGain</th>
-                        <th>nextOpen</th>
+                        <th>open / prevClose</th>
+                        {/* <th>nextOpen</th> */}
 
                         </tr>
                     </thead>
@@ -206,14 +208,10 @@ function MarketOpenPrice (props) {
                             return (
                             <tr key={index}>
                                 <td style={{width: '100px'}}>{date}  </td> 
-                                <td style={{color: gainColor((gainClose(index - 1) / gainOpen(index)))}}>{(gainClose(index - 1) / gainOpen(index)).toFixed(4)}</td>
                                 <td>{gainOpen(index)}</td>
                                 <td>{gainClose(index)}</td>
-                                <td>{(gainClose(index) / gainOpen(index)).toFixed(4)}</td>
-                                <td style={{color: gainColor(gainOpen(index + 1) / gainClose(index))}}>{(gainOpen(index + 1) / gainClose(index)).toFixed(4)}</td>
-                                {/* <td style= {{color: gainColor (s, true)}} color> {s.toFixed(4)} </td> */}
-                                {/* <td>{yearsCollectedForAverage[s1]}</td> */}
-                                {/* {gainObj && <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>} */}
+                                <td style={{color: gainColor((gainClose(index) / gainOpen(index)))}}>   {(gainClose(index) / gainOpen(index)).toFixed(4)}</td>
+                                <td style={{color: gainColor((gainOpen(index) / gainClose(index - 1)))}}>   {(gainOpen(index) / gainClose(index - 1)).toFixed(4)}</td>
                             </tr>
                             )
                         })}
