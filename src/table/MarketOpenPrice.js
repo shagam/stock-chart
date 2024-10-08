@@ -186,7 +186,7 @@ function MarketOpenPrice (props) {
                 <h6 style={{color: 'blue'}}> MarketOpenPrice  </h6>
             </div>
 
-            <button style={{background: 'aqua'}} onClick={getGainArray} > getGainArray </button> &nbsp; Not adjusted for splits
+            <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button> &nbsp; Not adjusted for splits
             <div>&nbsp;</div>
             {<div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
