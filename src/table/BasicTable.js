@@ -861,8 +861,8 @@ const BasicTable = (props) => {
                 {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain   </div>} 
                 {monthGainData.weekGainArray && <div style={{color:'blue', fontWeight: "bold"}}> weekGain   </div>} 
                  
-                {/* <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='8' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
-                {<div style={{color:'blue'}}> marketOpenPrice  </div>}                  */}
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='8' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
+                {<div style={{color:'blue'}}> marketOpenPrice  </div>}
 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='9' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
                 {<div style={{color:'blue'}}>none</div>} &nbsp; 
@@ -896,10 +896,9 @@ const BasicTable = (props) => {
             {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
                   stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} />}
 
-            {analyzeTool ==='marketOpenPrice' && <MarketOpenPrice StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
-             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={weekly}/>}
-
+            {analyzeTool ==='marketOpenPrice' && <MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
+              setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+              errorAdd={errorAdd} logFlags={props.logFlags} />}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
 
