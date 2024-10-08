@@ -29,7 +29,7 @@ function MarketOpenPrice (props) {
     function gainOpen(i) {
         if (dateArray.length === 0)
             return -1 // not ready yet
-        if (i < 0 || i >= dateArray.length - 2)
+        if (i < 0 || i >= dateArray.length)
             return -1;
         const dayGainObj = gainObj[dateArray[i]];
         const open = Number(dayGainObj['1. open']);
