@@ -33,9 +33,10 @@ function MarketOpenPrice (props) {
             return -1;
         const dayGainObj = gainObj[dateArray[i]];
         const open = Number(dayGainObj['1. open']);
-        // const adjustedClose = Number(dayGainObj['5. adjusted close'])
-        // const close = Number(dayGainObj['4. close']);
-        return open.toFixed(2)
+        const adjustedClose = Number(dayGainObj['5. adjusted close'])
+        const close = Number(dayGainObj['4. close']);
+        const open_calc = open * adjustedClose / close
+        return open_calc.toFixed(2)
       }
     
     function gainHigh(i) {
@@ -43,7 +44,9 @@ function MarketOpenPrice (props) {
             return -1 // not ready yet
         const dayGainObj = gainObj[dateArray[i]];
         const high = Number(dayGainObj['2. high'])
-        return high.toFixed(2);
+        const adjustedClose = Number(dayGainObj['5. adjusted close'])
+        const close = Number(dayGainObj['4. close']);
+        return (high * adjustedClose / close).toFixed(2);
       }
   
       function gainLow(i) {
@@ -51,8 +54,8 @@ function MarketOpenPrice (props) {
             return -1 // not ready yet
         const dayGainObj = gainObj[dateArray[i]];
         const low = Number(gainObj[dateArray[i]]['3. low'])  // * 
-        //   Number(gainObj[dateArray[i]]['5. adjusted close']) / 
-        //   Number(gainObj[dateArray[i]]['4. close']) 
+        const adjustedClose = Number(gainObj[dateArray[i]]['5. adjusted close']) 
+        const close = Number(gainObj[dateArray[i]]['4. close']) 
         return low.toFixed(2);
       }
   
@@ -61,11 +64,7 @@ function MarketOpenPrice (props) {
             return -1 // not ready yet
         if (i < 0)
             return -1
-        const close = Number(gainObj[dateArray[i]]['4. close']) 
-        // else {
-        //     const dayGainObj = gainObj[dateArray[i]];
-        //     return Number(dayGainObj['5. adjusted close']).toFixed(2)
-        // }
+        const close = Number(gainObj[dateArray[i]]['5. adjusted close']) 
         return close.toFixed(2)
     }
 
@@ -108,10 +107,14 @@ function MarketOpenPrice (props) {
 
       let API_Call;
       if (props.weekly)
-        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${props.symbol}&outputsize=compact&apikey=${props.API_KEY}`;
+        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED`;
       else
-        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${props.symbol}&outputsize=full&apikey=${props.API_KEY}`;
-  
+        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED`;
+
+    API_Call += `&symbol=${props.symbol}&outputsize=full&apikey=${props.API_KEY}`
+
+    // API_Call += '&adjusted'=true 
+
       fetch(API_Call)
           .then(
               function(response) {
@@ -186,7 +189,7 @@ function MarketOpenPrice (props) {
                 <h6 style={{color: 'blue'}}> MarketOpenPrice  </h6>
             </div>
 
-            <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button> &nbsp; Not adjusted for splits
+            <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button> &nbsp;
             <div>&nbsp;</div>
             {dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]} </div>}
 
