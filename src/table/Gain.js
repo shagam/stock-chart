@@ -103,9 +103,13 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
     let API_Call;
     if (weekly)
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED&symbol=${sym}&outputsize=compact&apikey=${API_KEY}`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED`;
     else
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${sym}&outputsize=full&apikey=${API_KEY}`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY`;
+
+    API_Call += `&symbol=${sym}&outputsize=full&apikey=${API_KEY}`
+
+    API_Call += `&extended_hours=true`
 
     fetch(API_Call)
         .then(
