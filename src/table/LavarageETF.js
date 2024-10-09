@@ -3,14 +3,14 @@ import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 
 
 function LavarageETF (props) {
-    const [ratioArr, setRatioArr] = useState ([])
+    const [gainCalc, setGainCalc] = useState ({})
+    const [yearlyGainCalc, setYearlyGainCalc] = useState ({})
     const [symArray, setSymArray] = useState ([])
     const [dateArray, setDateArray] = useState([])
     const [valArrLen, setValArrLen] = useState ()
     const [pivotSym, setPivotSym] = useState ()
     const [pivotSymIndex, setPivotSymIndex] = useState ()
-
-    const symArray_ = [] // temp collection
+    const [yearlGainCalc, strYearlyGainCalc]  = useState ({})
     
     function gainClose(i) {
         // if (dateArray.length === 0)
@@ -50,10 +50,16 @@ function LavarageETF (props) {
 
         //** calc ratio */
 
-        for (let i = 0; i < lengthMin; i++) {
-            ratioArr[i] = props.gainMap[symArray_[0]].y[i] / props.gainMap[symArray_[1]].y[i]
+        for (let s = 0; s < symArray_.length; s++) {
+            var gainArr = []
+            var yearlyGainArr = []
+            for (let i = 0; i < lengthMin; i++) {
+                gainArr[i] = props.gainMap[symArray_[s]].y[i] / props.gainMap[symArray_[s]].y[lengthMin - 1]
+                yearlyGainArr[i] = Math.pow (gainArr[i], 1 / ((lengthMin - 1) / 52))
+            }
+            gainCalc[symArray_[s]] = gainArr;
+            yearlGainCalc[symArray_[s]] = yearlyGainArr;
         }
-
 
         setValArrLen (lengthMin)
         setDateArray(props.gainMap[symArray_[indexOfPivotSym]].x)
@@ -68,18 +74,19 @@ function LavarageETF (props) {
             </div>
 
             <button onClick={lavarage} > Lavarage calc</button>
-            {pivotSym && symArray.length > 1 && <div> length={valArrLen} oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
-            {pivotSym && symArray.length > 1 && ratioArr.length > 1 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
+            {pivotSym && symArray.length > 1 && <div> length={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
+            {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
                         <th style={{monWidth: '300px'}}>date</th>
-                        <th>{symArray[0]}</th>
+                        <th>{symArray[0] + ' $'}</th>
                         <th>{symArray[0]} gain</th>
+                        <th>{symArray[0]} yearlGain</th>
 
-                        <th>{symArray[1]}</th>
+                        <th>{symArray[1] + ' $'}</th>
                         <th>{symArray[1]} gain</th>
-
+                        <th>{symArray[1]} yearlGain</th>
                         {/* <th>nextOpen</th> */}
 
                         </tr>
@@ -88,11 +95,15 @@ function LavarageETF (props) {
                         {props.gainMap[pivotSym].y.map((date, index) =>{
                             return (
                             <tr key={index}>
-                                <td style={{width: '100px'}}>{props.gainMap[pivotSym].x[index]}  </td> 
+                                <td style={{width: '110px'}}>{props.gainMap[pivotSym].x[index]}  </td>
+
                                 <td>{props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
-                                <td>{(props.gainMap[symArray[0]].y[index] / props.gainMap[symArray[0]].y[valArrLen - 1]).toFixed(3)}</td>
+                                <td>{gainCalc[symArray[0]][index].toFixed(2)}</td>                                
+                                <td>{yearlGainCalc[symArray[0]][index].toFixed(2)}</td>
+
                                 <td>{props.gainMap[symArray[1]].y[index].toFixed(2)}</td>
-                                <td>{(props.gainMap[symArray[1]].y[index] / props.gainMap[symArray[1]].y[valArrLen - 1]).toFixed(3)}</td>
+                                <td>{gainCalc[symArray[1]][index].toFixed(2)}</td>  
+                                <td>{yearlGainCalc[symArray[1]][index].toFixed(2)}</td>
                             </tr>
                             )
                         })}
