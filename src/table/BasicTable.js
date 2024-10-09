@@ -72,6 +72,8 @@ import Manual from '../manual/Manual';
 
 import {polygon} from './Polygon'
 
+import { LavarageETF } from './LavarageETF'
+
 import StockChart from '../Stock-chart';
 
 // const Tools = lazy(() => import ('./Tools'))
@@ -676,7 +678,8 @@ const BasicTable = (props) => {
     Tools: 'Tools',
     SimulateTrade: 'SimulateTrade',
     MonthGain: 'MonthGain',
-    marketOpenPrice: 'marketOpenPrice'
+    marketOpenPrice: 'marketOpenPrice',
+    LavarageETF: 'lavarageETF'
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState()
@@ -860,11 +863,14 @@ const BasicTable = (props) => {
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}/>  
                 {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain   </div>} 
                 {monthGainData.weekGainArray && <div style={{color:'blue', fontWeight: "bold"}}> weekGain   </div>} 
-                 
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='8' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
+
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='lavarageETF' id='8' checked={analyzeTool==='lavarageETF'} onChange={onOptionChange}/>
+                {<div style={{color:'blue'}}> lavarageETF  </div>}
+
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
                 {<div style={{color:'blue'}}> marketOpenPrice  </div>}
 
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='9' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='10' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
                 {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
 
@@ -901,6 +907,7 @@ const BasicTable = (props) => {
               errorAdd={errorAdd} logFlags={props.logFlags} />}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
+            {analyzeTool ==='lavarageETF' && <LavarageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd} />}
 
           </div>}
         </div>}
