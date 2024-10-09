@@ -180,6 +180,9 @@ const Simulate = (props) => {
     function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
     
         var targetPortion =  aggressivePortionInit; 
+        if (i >= XValues.length) {
+            console.log ('indexByond array i=', i)
+        }
         const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
         const symVal = YValues[i]; 
         var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
