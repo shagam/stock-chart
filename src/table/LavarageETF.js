@@ -74,19 +74,20 @@ function LavarageETF (props) {
             </div>
 
             <button onClick={lavarage} > Lavarage calc</button>
+            <h6>Compare l avarage ETF (TQQQ)  with base ETF (QQQ) </h6>
             {pivotSym && symArray.length > 1 && <div> length={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
-            {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
+            {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '650px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
                         <th style={{monWidth: '300px'}}>date</th>
                         <th>{symArray[0] + ' $'}</th>
                         <th>{symArray[0]} gain</th>
-                        <th>{symArray[0]} yearlGain</th>
+                        <th>{symArray[0]} yearly gain</th>
 
                         <th>{symArray[1] + ' $'}</th>
                         <th>{symArray[1]} gain</th>
-                        <th>{symArray[1]} yearlGain</th>
+                        <th>{symArray[1]} yearly gain</th>
                         {/* <th>nextOpen</th> */}
 
                         </tr>
