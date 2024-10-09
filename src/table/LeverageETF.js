@@ -2,7 +2,7 @@ import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 
 
 
-function LavarageETF (props) {
+function LeverageETF (props) {
     const [gainCalc, setGainCalc] = useState ({})
     const [yearlyGainCalc, setYearlyGainCalc] = useState ({})
     const [symArray, setSymArray] = useState ([])
@@ -21,7 +21,7 @@ function LavarageETF (props) {
         return close.toFixed(2)
     }
 
-    function lavarage() {
+    function leverage() {
 
         console.log ('lavarage')
         console.log (props.gainMap)
@@ -73,8 +73,8 @@ function LavarageETF (props) {
                 <h6  style={{color: 'blue' }}> Lavarage ETF </h6>
             </div>
 
-            <button onClick={lavarage} > Lavarage calc</button>
-            <h6>Compare l avarage ETF (TQQQ)  with base ETF (QQQ) </h6>
+            <button onClick={leverage} > Lavarage calc</button>
+            <h6>Compare leverage ETF (like TQQQ)  with base ETF (QQQ) </h6>
             {pivotSym && symArray.length > 1 && <div> length={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
             {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '650px', overflow:'auto'}}>
                 <table>
@@ -122,4 +122,4 @@ function LavarageETF (props) {
 }
 
 
-export {LavarageETF}
+export {LeverageETF}
