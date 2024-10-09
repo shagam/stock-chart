@@ -13,7 +13,7 @@ function MarketOpenPrice (props) {
     const [gainObj, setGainObj] = useState()
     const [dateArray, setDateArray] = useState([])
     const [openDivPrevCloseAverage, setOpenDivPrevCloseAverage] = useState()
-    var openDivPrevCloseAverage_
+
     const END_OF_DAY = false;
     const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
@@ -177,7 +177,6 @@ function MarketOpenPrice (props) {
 
                 const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
                 console.log('average=', average)
-                openDivPrevCloseAverage_ = average.toFixed(6)
                 setOpenDivPrevCloseAverage(average.toFixed(6))
             }
         )
