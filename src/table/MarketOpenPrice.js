@@ -12,8 +12,8 @@ function MarketOpenPrice (props) {
 
     const [gainObj, setGainObj] = useState()
     const [dateArray, setDateArray] = useState([])
-
-
+    const [openDivPrevCloseAverage, setOpenDivPrevCloseAverage] = useState()
+    var openDivPrevCloseAverage_
     const END_OF_DAY = false;
     const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
@@ -156,7 +156,29 @@ function MarketOpenPrice (props) {
                 }
                 const obj = chartData[`${periodTag}`]; 
                 setGainObj (obj)
-                setDateArray(Object.keys(obj ))
+                const dateArr = Object.keys(obj);
+                setDateArray(dateArr)
+
+                // calc array of open vs prevClose
+                var openArray = [];
+                var closeArray = [];
+                var openDivPrevClose = [];
+                var openDivCloseMul = 1;
+                var openDivCloseCount = 0;
+                for (let i = 0; i < dateArr.length; i++) {
+                    openArray[i] = gainOpen(i)
+                    closeArray[i] = gainClose(i)
+                    if (i > 0) {
+                        openDivPrevClose[i] = openArray[i] / closeArray[i - 1];
+                        openDivCloseMul *= openDivPrevClose[i];
+                        openDivCloseCount ++;
+                    }
+                }
+
+                const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
+                console.log('average=', average)
+                openDivPrevCloseAverage_ = average.toFixed(6)
+                setOpenDivPrevCloseAverage(average.toFixed(6))
             }
         )
     }
@@ -191,9 +213,9 @@ function MarketOpenPrice (props) {
 
             <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button> &nbsp;
             <div>&nbsp;</div>
-            {dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]} </div>}
+            {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  OpenDivPrevCloseAverage={openDivPrevCloseAverage}</div>}
 
-            {<div style={{height:'450px', width: '630px', overflow:'auto'}}>
+            {openDivPrevCloseAverage && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
