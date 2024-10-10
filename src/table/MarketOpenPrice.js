@@ -9,8 +9,6 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 function MarketOpenPrice (props) {
 
-
-    const [gainObj, setGainObj] = useState()
     var gainObj_ = {}
     const [dateArray, setDateArray] = useState([])
     var dateArray_ = [];
@@ -162,7 +160,7 @@ function MarketOpenPrice (props) {
                   return;
                 }
                 const obj = chartData[`${periodTag}`]; 
-                setGainObj (obj)
+
                 gainObj_ = obj
                 const dateArr = Object.keys(obj);
                 setDateArray(dateArr)
@@ -227,7 +225,8 @@ function MarketOpenPrice (props) {
 
             {<button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button>}
             <div>&nbsp;</div>
-            {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  OpenDivPrevCloseAverage={openDivPrevCloseAverage}</div>}
+            {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; 
+                firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  open / prevClose-average={openDivPrevCloseAverage}</div>}
 
             {openDivPrevCloseAverage && openDivPrevClose.length > 0 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
@@ -243,7 +242,7 @@ function MarketOpenPrice (props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {gainObj && Object.keys(gainObj).map((date, index) =>{
+                        {dateArray && dateArray.map((date, index) =>{
                             return (
                             <tr key={index}>
                                 <td style={{width: '100px'}}>{date}  </td> 
