@@ -27,8 +27,9 @@ function MarketOpenPrice (props) {
       periodTag = "Time Series (Daily)"
   
     function gainOpen(i) {
-        if (dateArray.length === 0)
+        if (dateArray.length === 0) {
             return -1 // not ready yet
+        }
         if (i < 0 || i >= dateArray.length)
             return -1;
         const dayGainObj = gainObj[dateArray[i]];
@@ -171,12 +172,12 @@ function MarketOpenPrice (props) {
                     if (i > 0) {
                         openDivPrevClose[i] = openArray[i] / closeArray[i - 1];
                         openDivCloseMul *= openDivPrevClose[i];
-                        openDivCloseCount ++;
+                        openDivCloseCount ++;                       
                     }
                 }
 
                 const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
-                console.log('average=', average)
+                console.log('average=', average, 'openDivCloseCount', openDivCloseCount, 'openDivCloseMul', openDivCloseMul)
                 setOpenDivPrevCloseAverage(average.toFixed(6))
             }
         )
@@ -210,7 +211,9 @@ function MarketOpenPrice (props) {
                 <h6 style={{color: 'blue'}}> MarketOpenPrice  </h6>
             </div>
 
-            <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button> &nbsp;
+            <h6>Tool for revealing after hour reshuffle (Expenses) of lavarage ETF like TQQQ </h6>
+
+            {<button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button>}
             <div>&nbsp;</div>
             {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  OpenDivPrevCloseAverage={openDivPrevCloseAverage}</div>}
 
