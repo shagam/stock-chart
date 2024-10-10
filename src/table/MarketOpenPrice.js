@@ -9,7 +9,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 
 function MarketOpenPrice (props) {
 
-    var gainObj_ = {}
+    var gainObj = {}
     const [dateArray, setDateArray] = useState([])
     var dateArray_ = [];
     const [openDivPrevCloseAverage, setOpenDivPrevCloseAverage] = useState()
@@ -35,7 +35,7 @@ function MarketOpenPrice (props) {
         }
         if (i < 0 || i >= dateArray_.length)
             return -1;
-        const dayGainObj = gainObj_[dateArray_[i]];
+        const dayGainObj = gainObj[dateArray_[i]];
         const open = Number(dayGainObj['1. open']);
         const adjustedClose = Number(dayGainObj['5. adjusted close'])
         const close = Number(dayGainObj['4. close']);
@@ -46,7 +46,7 @@ function MarketOpenPrice (props) {
     function gainHigh(i) {
         if (dateArray.length === 0)
             return -1 // not ready yet
-        const dayGainObj = gainObj_[dateArray_[i]];
+        const dayGainObj = gainObj[dateArray_[i]];
         const high = Number(dayGainObj['2. high'])
         const adjustedClose = Number(dayGainObj['5. adjusted close'])
         const close = Number(dayGainObj['4. close']);
@@ -56,7 +56,7 @@ function MarketOpenPrice (props) {
       function gainLow(i) {
         if (dateArray.length === 0)
             return -1 // not ready yet
-        const dayGainObj = gainObj_[dateArray_[i]];
+        const dayGainObj = gainObj[dateArray_[i]];
         const low = Number(dayGainObj['3. low'])  // * 
         const adjustedClose = Number(dayGainObj['5. adjusted close']) 
         const close = Number(dayGainObj['4. close']) 
@@ -64,7 +64,7 @@ function MarketOpenPrice (props) {
       }
   
       function gainClose(i) {
-        const dayGainObj = gainObj_[dateArray_[i]];
+        const dayGainObj = gainObj[dateArray_[i]];
         if (dateArray_.length === 0)
             return -1 // not ready yet
         if (i < 0)
@@ -161,7 +161,7 @@ function MarketOpenPrice (props) {
                 }
                 const obj = chartData[`${periodTag}`]; 
 
-                gainObj_ = obj
+                gainObj = obj
                 const dateArr = Object.keys(obj);
                 setDateArray(dateArr)
                 dateArray_ = dateArr;
