@@ -11,8 +11,13 @@ function MarketOpenPrice (props) {
 
 
     const [gainObj, setGainObj] = useState()
+    var gainObj_ = {}
     const [dateArray, setDateArray] = useState([])
+    var dateArray_ = [];
     const [openDivPrevCloseAverage, setOpenDivPrevCloseAverage] = useState()
+    const [openDivPrevClose, setOpenDivPrevClose] = useState([])
+    const [openArr, setOpenArr] = useState([])
+    const [closeArr, setCloseArr]= useState([])
 
     const END_OF_DAY = false;
     const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
@@ -27,12 +32,12 @@ function MarketOpenPrice (props) {
       periodTag = "Time Series (Daily)"
   
     function gainOpen(i) {
-        if (dateArray.length === 0) {
+        if (dateArray_.length === 0) {
             return -1 // not ready yet
         }
-        if (i < 0 || i >= dateArray.length)
+        if (i < 0 || i >= dateArray_.length)
             return -1;
-        const dayGainObj = gainObj[dateArray[i]];
+        const dayGainObj = gainObj_[dateArray_[i]];
         const open = Number(dayGainObj['1. open']);
         const adjustedClose = Number(dayGainObj['5. adjusted close'])
         const close = Number(dayGainObj['4. close']);
@@ -43,7 +48,7 @@ function MarketOpenPrice (props) {
     function gainHigh(i) {
         if (dateArray.length === 0)
             return -1 // not ready yet
-        const dayGainObj = gainObj[dateArray[i]];
+        const dayGainObj = gainObj_[dateArray_[i]];
         const high = Number(dayGainObj['2. high'])
         const adjustedClose = Number(dayGainObj['5. adjusted close'])
         const close = Number(dayGainObj['4. close']);
@@ -53,19 +58,20 @@ function MarketOpenPrice (props) {
       function gainLow(i) {
         if (dateArray.length === 0)
             return -1 // not ready yet
-        const dayGainObj = gainObj[dateArray[i]];
-        const low = Number(gainObj[dateArray[i]]['3. low'])  // * 
-        const adjustedClose = Number(gainObj[dateArray[i]]['5. adjusted close']) 
-        const close = Number(gainObj[dateArray[i]]['4. close']) 
+        const dayGainObj = gainObj_[dateArray_[i]];
+        const low = Number(dayGainObj['3. low'])  // * 
+        const adjustedClose = Number(dayGainObj['5. adjusted close']) 
+        const close = Number(dayGainObj['4. close']) 
         return low.toFixed(2);
       }
   
       function gainClose(i) {
-        if (dateArray.length === 0)
+        const dayGainObj = gainObj_[dateArray_[i]];
+        if (dateArray_.length === 0)
             return -1 // not ready yet
         if (i < 0)
             return -1
-        const close = Number(gainObj[dateArray[i]]['5. adjusted close']) 
+        const close = Number(dayGainObj['5. adjusted close']) 
         return close.toFixed(2)
     }
 
@@ -157,25 +163,31 @@ function MarketOpenPrice (props) {
                 }
                 const obj = chartData[`${periodTag}`]; 
                 setGainObj (obj)
+                gainObj_ = obj
                 const dateArr = Object.keys(obj);
                 setDateArray(dateArr)
+                dateArray_ = dateArr;
 
                 // calc array of open vs prevClose
                 var openArray = [];
                 var closeArray = [];
-                var openDivPrevClose = [];
+
                 var openDivCloseMul = 1;
                 var openDivCloseCount = 0;
-                for (let i = 0; i < dateArr.length; i++) {
+                var openDivPrevClose_ = [];
+                openDivPrevClose_[0] = -1
+                for (let i = 0; i < dateArray_.length; i++) {
                     openArray[i] = gainOpen(i)
                     closeArray[i] = gainClose(i)
                     if (i > 0) {
-                        openDivPrevClose[i] = openArray[i] / closeArray[i - 1];
-                        openDivCloseMul *= openDivPrevClose[i];
+                        openDivPrevClose_[i] = openArray[i] / closeArray[i - 1];
+                        openDivCloseMul *= openDivPrevClose_[i];
                         openDivCloseCount ++;                       
                     }
                 }
-
+                setOpenArr (openArray)
+                setCloseArr (closeArray)
+                setOpenDivPrevClose(openDivPrevClose_)
                 const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
                 console.log('average=', average, 'openDivCloseCount', openDivCloseCount, 'openDivCloseMul', openDivCloseMul)
                 setOpenDivPrevCloseAverage(average.toFixed(6))
@@ -217,7 +229,7 @@ function MarketOpenPrice (props) {
             <div>&nbsp;</div>
             {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  OpenDivPrevCloseAverage={openDivPrevCloseAverage}</div>}
 
-            {openDivPrevCloseAverage && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
+            {openDivPrevCloseAverage && openDivPrevClose.length > 0 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
@@ -235,10 +247,10 @@ function MarketOpenPrice (props) {
                             return (
                             <tr key={index}>
                                 <td style={{width: '100px'}}>{date}  </td> 
-                                <td>{gainOpen(index)}</td>
-                                <td>{gainClose(index)}</td>
-                                <td style={{color: gainColor((gainClose(index) / gainOpen(index)))}}>   {(gainClose(index) / gainOpen(index)).toFixed(4)}</td>
-                                <td style={{color: gainColor((gainOpen(index) / gainClose(index - 1)))}}>   {(gainOpen(index) / gainClose(index - 1)).toFixed(4)}</td>
+                                <td>{openArr[index]}</td>
+                                <td>{closeArr[index]}</td>
+                                <td style={{color: gainColor((closeArr[index] / openArr[index]))}}>   {(closeArr[index] / openArr[index]).toFixed(4)}</td>
+                                <td style={{color: gainColor(openDivPrevClose[index])}}>   {openDivPrevClose[index].toFixed(5)}</td>
                             </tr>
                             )
                         })}
