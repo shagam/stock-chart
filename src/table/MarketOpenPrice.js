@@ -20,6 +20,18 @@ function MarketOpenPrice (props) {
     const END_OF_DAY = false;
     const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
 
+    useEffect (() => { 
+        setDateArray()
+        setOpenDivPrevCloseAverage()
+        // openDivPrevClose()
+        setOpenArr()
+        setCloseArr()
+    }, [props.symbol]) 
+  
+
+
+
+
     const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
     let periodCapital = period[0][0];  
 
@@ -174,20 +186,29 @@ function MarketOpenPrice (props) {
                 var openDivCloseCount = 0;
                 var openDivPrevClose_ = [];
                 openDivPrevClose_[0] = -1
+                var upCount = 0;
+                var downCnt = 0;
                 for (let i = 0; i < dateArray_.length; i++) {
                     openArray[i] = gainOpen(i)
                     closeArray[i] = gainClose(i)
                     if (i > 0) {
                         openDivPrevClose_[i] = openArray[i] / closeArray[i - 1];
                         openDivCloseMul *= openDivPrevClose_[i];
-                        openDivCloseCount ++;                       
+                        openDivCloseCount ++;
+                        
+                        if (openDivPrevClose_[i] > 1)
+                            upCount ++;
+                        else if (openDivPrevClose_[i] < 1)
+                            downCnt ++;
+
                     }
                 }
                 setOpenArr (openArray)
                 setCloseArr (closeArray)
                 setOpenDivPrevClose(openDivPrevClose_)
                 const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
-                console.log('average=', average, 'openDivCloseCount', openDivCloseCount, 'openDivCloseMul', openDivCloseMul)
+                console.log (props.symbol, 'open vs prevClose  average=', average, 'openDivCloseCount', openDivCloseCount, 'openDivCloseMul', openDivCloseMul)
+                console.log (props.symbol, 'open vs prevClose  upCnt=' + upCount, 'downCnt=', downCnt)
                 setOpenDivPrevCloseAverage(average.toFixed(6))
             }
         )
