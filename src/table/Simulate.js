@@ -119,11 +119,15 @@ const Simulate = (props) => {
         // console.log ('optimizeMonthGain', i, props.monthGainData.weekGainArray)
         var weekGainFactor = 1;
         for (let j = 1; j < weekGainAhead; j++) {
-
+            
             const index = i - j  // look in future
+            if (index < 0)
+                break; // byond array 
             const date = XValues[i] // date of gain  for debug
             var sign_1; // used to breal loop when sign flips
             const weekNum = weekOfYearGet (XValues, index) 
+            if (weekNum === -1) //** not found */
+                continue;
             const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
 
             // break loop when growth flips direction
@@ -297,9 +301,12 @@ const Simulate = (props) => {
 
 
         //**  optimize loop */
-        for (let i = oldestIndex; i > 0; i--) {
+        for (let i = oldestIndex - 53; i > 0; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
+            if (i === 2) {
+                console.log (i)
+            }
             try {
                 //* monthGain weekGain optimize */
                 if (optimizeWeekGain && props.monthGainData.weekGainArray) {

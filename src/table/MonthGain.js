@@ -31,7 +31,7 @@ import { beep2 } from '../utils/ErrorList';
  const LOG_week_above_52 = false
  function weekOfYearGet (Xarray, i) {
     if (i + 52 > Xarray.length){
-        console.log ('near oldest i=', i, 'date=', Xarray[i])
+      console.log ('near oldest i=', i, 'date=', Xarray[i], 'oldest=', Xarray[Xarray.length - 1])
       return -1; // fail
     }
     const startDate = Xarray[i].split('-')
