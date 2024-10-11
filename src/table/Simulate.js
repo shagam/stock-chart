@@ -687,7 +687,7 @@ const Simulate = (props) => {
            
                 {/* https://plotly.com/javascript/figure-labels/ */}
                 {/* <hr/> */}
-                <input  type="checkbox" checked={chartShow}  onChange={() => setChartShow (! chartShow)} /> &nbsp; Show-chart&nbsp;
+                {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={chartShow}  onChange={() => setChartShow (! chartShow)} /> &nbsp; Show-chart&nbsp;</div>}
                 <div>&nbsp;</div>
                 {chartShow && optimizeBubble && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
                     xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
