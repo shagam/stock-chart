@@ -370,6 +370,7 @@ function MonthGain (props) {
           <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>
         </div>
 
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Average gain of {props.symbol}:  &nbsp; spread accross months and week number </h6>
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style = {{display: 'flex'}}>
@@ -386,6 +387,7 @@ function MonthGain (props) {
         </div>}
 
         {/* <br></br>  */}
+        {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
         { Object.keys(mGainObj).map((oneKey,i)=>{
           return (
               <div style={{display:'flex'}} key={i}> &nbsp; &nbsp;  <div style={{'color': 'red', width: '30px'}} > {monthNames[i]}: </div>
@@ -393,7 +395,7 @@ function MonthGain (props) {
             )
         })}
 
-        {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
+ 
         <br></br> 
         
         {weekNumYearGain !== 1 && <div> weekNumYearGain={weekNumYearGain.toFixed(3)}</div>}
@@ -402,9 +404,10 @@ function MonthGain (props) {
           <thead>
             <tr>
               <th>week #</th>
+              <th>last date of &nbsp; &nbsp;  week-number</th>
               <th>week gain</th>
               <th>years</th>
-              <th>last date of week number</th>
+
             </tr>
           </thead>
           <tbody>
@@ -412,9 +415,10 @@ function MonthGain (props) {
                   return (
                   <tr key={s1}>
                       <td style={{width: '80px'}}>{s1}  </td> 
+                      {props.gainMap && props.gainMap[gainMapSym] && <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
                       <td style= {{color: gainColor (s, true)}} color> {s.toFixed(4)} </td>
                       <td>{yearsCollectedForAverage[s1]}</td>
-                      {props.gainMap && props.gainMap[gainMapSym] && <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
+
                   </tr>
                 )
               })}
