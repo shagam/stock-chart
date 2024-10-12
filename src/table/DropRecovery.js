@@ -270,6 +270,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       'latestPrice/Highest': priceDivHigh,
       deepGainLostWeeks: gainLostWeeks,
       deepIndex: deepIndex,
+      maxIndex: stockChartXValues.length,
+      oldestDate: stockChartXValues[stockChartXValues.length-1]
     })
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
@@ -280,6 +282,17 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
    // const [endDate, setEndDate] = useState(new Date(2020, 4, 15)); // may 15 2020
    //  2007, 11, 1  2008 deep
+
+   function swap_period_2001() {
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2001, 0, 1], props.StockSymbol, props.logFlags)  
+    if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
+      props.errorAdd([props.StockSymbol, '[2001, 0, 1]', 'Date before available data'])
+      return;
+    }
+
+    setDropStartDate (new Date(2001, 3, 1)); // 2001 dec 1 
+      // setEndDate (new Date(2009, 1, 1));
+  }
 
   function swap_period_2008() {
     var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2008, 0, 1], props.StockSymbol, props.logFlags)  
@@ -417,6 +430,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <div style={{display:'flex', }}> 
             <div style={{color: 'black'}}>Drop period: &nbsp; </div>
+            <button type="button" onClick={()=>swap_period_2001()}>  2001   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
