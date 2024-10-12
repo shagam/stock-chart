@@ -41,6 +41,8 @@ const Peak2PeakGui = (props) => {
     const [results, setResults] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
 
+    const [tableShowFlag, setTableShowFlag] = useState ();
+
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
     useEffect(() => {
@@ -106,6 +108,12 @@ const Peak2PeakGui = (props) => {
     // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
   }
+  
+    function colorHighRatio (ratio) {
+      if (ratio > 0.9)
+        return 'red'
+      return 'black'
+    }
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
@@ -150,9 +158,37 @@ const Peak2PeakGui = (props) => {
 
            <pre>{JSON.stringify(results, null, 2)}</pre>
            <hr/> 
+           <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
+           <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
 
+            {tableShowFlag && props.gainMap.bubbleLine && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>date </th>
+                    <th>stock price</th>
+                    <th>bubbleLine price</th>
+                    <th>ratio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {Object.keys(props.gainMap.bubbleLine.y).map((s, s1) =>{
+                        return (
+                        <tr key={s1}>
+                            <td style={{width: '120px'}}>{props.gainMap.bubbleLine.x[s1]}  </td> 
+                            {<td>{props.gainMap[props.symbol].y[s1].toFixed(2)}</td>}
+                            {<td>{props.gainMap.bubbleLine.y[s1].toFixed(2)}</td>}
+                            {<td style = {{color: colorHighRatio(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1])}}>
+                              {(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1]).toFixed(3)}</td>}
+                        </tr>
+                      )
+                    })}
+                </tbody>
+            </table>
+          </div>}  
+          <hr/> 
         </div>
-
     </div>
   )
 }
