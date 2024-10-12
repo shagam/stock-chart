@@ -59,17 +59,6 @@ const Peak2PeakGui = (props) => {
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
   
-  // results['indexFirst'] = indexFirst;
-  // results['indexEnd'] = indexEnd;
-  // results['yearlyGain'] = yearlyGain;
-  // results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
-  // results['weeklyGain'] = weeklyGain;
-  // results['gain'] = gain;
-  // results['yearsDiff'] = yearsDiff;
-  // results['from'] = stockChartXValues[indexFirst];
-  // results['to'] = stockChartXValues[indexEnd];
-  // results['fromValue'] = stockChartYValues[indexFirst];
-  // results['toValue'] = stockChartYValues[indexEnd];
 
   // temp save bubble crash baseline
   function calcBubbleLine (XValues, YValues) {  
@@ -83,7 +72,7 @@ const Peak2PeakGui = (props) => {
     var yBubbleLine = []
 
     //** extrapolate value of today */
-    yBubbleLine[0] = results.toValue * results.weeklyGain ** results.indexEnd // weekCount 
+    yBubbleLine[0] = results.v_2022_value * results.weeklyGain ** results.i_2022_index // weekCount 
 
     const startDateMili = startDate.getTime()
 
@@ -121,7 +110,7 @@ const Peak2PeakGui = (props) => {
   }
 
   function colorHighRatio (ratio) {
-    if (ratio > 0.9)
+    if (ratio >= 0.93)
       return 'red'
     return 'black'
   }

@@ -108,17 +108,17 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       results['weeklyGain'] = weeklyGain.toFixed(5);
       results['yearsDiff'] = yearsDiff;
 
-      results['oldDate'] = stockChartXValues[index2001];
-      results['oldValue'] = stockChartYValues[index2001];
-      results['indexOLd'] = index2001;
+      results['d_2001_date'] = stockChartXValues[index2001];
+      results['v_2001_value'] = stockChartYValues[index2001];
+      results['i_2001_index'] = index2001;
 
-      results['fromDate'] = stockChartXValues[index2008];
-      results['fromValue'] = stockChartYValues[index2008];
-      results['indexFirst'] = index2008;
+      results['d_2008_date'] = stockChartXValues[index2008];
+      results['v_2008_value'] = stockChartYValues[index2008];
+      results['i_2008_index'] = index2008;
 
-      results['toDate'] = stockChartXValues[index2022];
-      results['toValue'] = stockChartYValues[index2022];
-      results['indexEnd'] = index2022;
+      results['d_2022_date'] = stockChartXValues[index2022];
+      results['v_2022_value'] = stockChartYValues[index2022];
+      results['i_2022_index'] = index2022;
 
       if (setResults)
         setResults(results)
