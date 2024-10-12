@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import peak2PeakCalc from './Peak2PeakCalc'
 
 import LogFlags from '../utils/LogFlags'
-
+import {beep2} from '../utils/ErrorList'
 
 
 const Peak2PeakGui = (props) => {
@@ -39,6 +39,7 @@ const Peak2PeakGui = (props) => {
 
 
     const [results, setResults] = useState ();
+    const [err, setErr] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
 
     const [tableShowFlag, setTableShowFlag] = useState ();
@@ -47,8 +48,11 @@ const Peak2PeakGui = (props) => {
 
     useEffect(() => {
       setResults();
+      setErr()
       setBubbleLineFlag(false)
-    },[props.symbol]) 
+      setBubbleLineRatio()
+      delete props.gainMap.bubbleLine
+    },[props.symbol, props.gainMap]) 
    
   // style={{display:'flex'}}
 
@@ -67,7 +71,13 @@ const Peak2PeakGui = (props) => {
   // results['toValue'] = stockChartYValues[indexEnd];
 
   // temp save bubble crash baseline
-  function calcBaseLine (XValues, YValues) {  
+  function calcBubbleLine (XValues, YValues) {  
+
+    const stocks = Object.keys(props.gainMap)
+    if (stocks.length > 1) {
+      setErr ('Bubble line only for a single etf: ' + JSON.stringify(stocks))
+      beep2()
+    }
 
     var yBubbleLine = []
 
@@ -124,6 +134,8 @@ const Peak2PeakGui = (props) => {
               <h6 style={{color: 'blue'}}> Peak2Peak (long term gain) &nbsp;  </h6>
             </div>
 
+            <div style={{color: 'red'}}>{err}</div>
+
             <div  style={{display:'flex' }}> 
             <div style={{ color: 'black'}}  >Start_proximity_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
@@ -139,8 +151,9 @@ const Peak2PeakGui = (props) => {
                props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
               {results && ! bubbleLineRatio && ! props.gainMap.yBubbleLine &&  
-                <button style={{background: 'pink'}} type="button"  onClick={() => {calcBaseLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
-              {bubbleLineRatio && <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
+                <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
+                 type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
+              {props.gainMap.bubbleLine  &&  <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
               {/* <div> Click </div> &nbsp;&nbsp;
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
            </div>
@@ -158,10 +171,12 @@ const Peak2PeakGui = (props) => {
 
            <pre>{JSON.stringify(results, null, 2)}</pre>
            <hr/> 
-           <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
-           <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
+           {props.gainMap.bubbleLine && <div>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
+            <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
+           </div>}
 
-            {tableShowFlag && props.gainMap.bubbleLine && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
+            {tableShowFlag && props.gainMap.bubbleLine && props.gainMap[props.symbol] && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
 
               <table>
                 <thead>
