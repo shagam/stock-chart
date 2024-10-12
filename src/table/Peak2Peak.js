@@ -26,6 +26,7 @@ const Peak2PeakGui = (props) => {
   // logFlags
   // weekly
 
+    const [d_2000_date, set_2000_date] =   useState(new Date(2000, 11, 1)); // 2000 dec 1
     const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
     const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
 
@@ -118,12 +119,12 @@ const Peak2PeakGui = (props) => {
     // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
   }
-  
-    function colorHighRatio (ratio) {
-      if (ratio > 0.9)
-        return 'red'
-      return 'black'
-    }
+
+  function colorHighRatio (ratio) {
+    if (ratio > 0.9)
+      return 'red'
+    return 'black'
+  }
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
@@ -137,18 +138,23 @@ const Peak2PeakGui = (props) => {
             <div style={{color: 'red'}}>{err}</div>
 
             <div  style={{display:'flex' }}> 
-            <div style={{ color: 'black'}}  >Start_proximity_date:   </div>
+            <div style={{ color: 'black'}}  >2001_proximity_date:   </div>
+            &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={d_2000_date} onChange={(date) => set_2000_date(date)} /> 
+           </div>
+
+            <div  style={{display:'flex' }}> 
+            <div style={{ color: 'black'}}  >2008_proximity_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
            </div>
       
            <div  style={{display:'flex' }}> 
-            <div style={{ color: 'black'}}  > End_proximity_date:   </div>
+            <div style={{ color: 'black'}}  > 2022_proximity_date:   </div>
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
            </div>
 
            <div style={{display:'flex'}}> &nbsp; 
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
+               props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
               {results && ! bubbleLineRatio && ! props.gainMap.yBubbleLine &&  
                 <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}

@@ -40,7 +40,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
   export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
-     weekly, logFlags, searchPeak, startDate, endDate, errorAdd, setResults, saveTable) {
+     weekly, logFlags, searchPeak, d_2020_date, d_2008_date, d_2022_date, errorAdd, setResults, saveTable) {
       const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
 
       var results = {};
@@ -57,40 +57,47 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         return;
       }
 
-      const startYear = startDate.getFullYear();
-      const startMon = startDate.getMonth() + 1;
-      const startDay = startDate.getDate();
-  
-      const endYear = endDate.getFullYear();
-      const endMon = endDate.getMonth() + 1;
-      const endDay = endDate.getDate();
+      const d_2000_year = d_2020_date.getFullYear();
+      const d_2000_mon = d_2020_date.getMonth() + 1;
+      const d_2000_day = d_2020_date.getDate();
+      var d_2000_dateArray = [d_2000_year, d_2000_mon, d_2000_day]
+
+      const d_2008_year = d_2008_date.getFullYear();
+      const d_2008_mon = d_2008_date.getMonth() + 1;
+      const d_2008_day = d_2008_date.getDate();
+      var d_2008_dateArray = [d_2008_year, d_2008_mon, d_2008_day]
+
+      const d_2022_year = d_2022_date.getFullYear();
+      const d_2022_mon = d_2022_date.getMonth() + 1;
+      const d_2022_day = d_2022_date.getDate();
 
       // calc start day
-      var startDateArray = [startYear, startMon, startDay]
+
       const lastDate = stockChartXValues[stockChartXValues.length - 1]
       const lastDateSplit = lastDate.split('-')
-      const compDate = compareDate (startDateArray, lastDateSplit)
+      const compDate = compareDate (d_2008_dateArray, lastDateSplit)
       if (compDate === -1) {
         if (searchPeak)
-          startDateArray = lastDateSplit;
+          d_2008_dateArray = lastDateSplit;
         else {
           const err =  ' peak2Peak, date beyond range; ';
-          results['err'] = symbol + err  + ' searchFor=' + startDateArray + 'dateStart= ' + lastDateSplit;
+          results['err'] = symbol + err  + ' searchFor=' + d_2008_dateArray + 'dateStart= ' + lastDateSplit;
 
           if (errorAdd)
-            errorAdd([symbol, err, 'searchFor=', startDateArray, 'dateStarts=', lastDateSplit])
+            errorAdd([symbol, err, 'searchFor=', d_2008_dateArray, 'dateStarts=', lastDateSplit])
           console.log ('%c' + results['err'], 'color: red')
           return;            
         }
 
       }
-      const endDateArray =[endYear, endMon, endDay]
-      const indexFirst = quasiTop (symbol, startDateArray, stockChartXValues, stockChartYValues, logFlags, true)
-      const indexEnd = quasiTop (symbol, endDateArray, stockChartXValues, stockChartYValues, logFlags, true)
-
-      const weeksDiff = indexFirst - indexEnd
+      const d_2022_dateArray =[d_2022_year, d_2022_mon, d_2022_day]
+      const index2000 = quasiTop (symbol, d_2000_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+ 
+      const weeksDiff = index2008 - index2022
       const yearsDiff = Number (weeksDiff/52).toFixed (2)
-      const gain = Number (stockChartYValues[indexEnd] / stockChartYValues[indexFirst])
+      const gain = Number (stockChartYValues[index2022] / stockChartYValues[index2008])
 
       const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
       const weeklyGain = Number (gain ** (1 / weeksDiff))
@@ -100,12 +107,18 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
       results['weeklyGain'] = weeklyGain.toFixed(5);
       results['yearsDiff'] = yearsDiff;
-      results['fromDate'] = stockChartXValues[indexFirst];
-      results['toDate'] = stockChartXValues[indexEnd];
-      results['fromValue'] = stockChartYValues[indexFirst];
-      results['toValue'] = stockChartYValues[indexEnd];
-      results['indexFirst'] = indexFirst;
-      results['indexEnd'] = indexEnd;
+
+      results['oldDate'] = stockChartXValues[index2000];
+      results['oldValue'] = stockChartYValues[index2000];
+      results['indexOLd'] = index2000;
+
+      results['fromDate'] = stockChartXValues[index2008];
+      results['fromValue'] = stockChartYValues[index2008];
+      results['indexFirst'] = index2008;
+
+      results['toDate'] = stockChartXValues[index2022];
+      results['toValue'] = stockChartYValues[index2022];
+      results['indexEnd'] = index2022;
 
       if (setResults)
         setResults(results)
