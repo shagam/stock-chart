@@ -40,7 +40,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
   export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
-     weekly, logFlags, searchPeak, d_2020_date, d_2008_date, d_2022_date, errorAdd, setResults, saveTable) {
+     weekly, logFlags, searchPeak, d_2001_date, d_2008_date, d_2022_date, errorAdd, setResults, saveTable) {
       const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
 
       var results = {};
@@ -57,10 +57,10 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         return;
       }
 
-      const d_2000_year = d_2020_date.getFullYear();
-      const d_2000_mon = d_2020_date.getMonth() + 1;
-      const d_2000_day = d_2020_date.getDate();
-      var d_2000_dateArray = [d_2000_year, d_2000_mon, d_2000_day]
+      const d_2001_year = d_2001_date.getFullYear();
+      const d_2001_mon = d_2001_date.getMonth() + 1;
+      const d_2001_day = d_2001_date.getDate();
+      var d_2001_dateArray = [d_2001_year, d_2001_mon, d_2001_day]
 
       const d_2008_year = d_2008_date.getFullYear();
       const d_2008_mon = d_2008_date.getMonth() + 1;
@@ -91,7 +91,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
       }
       const d_2022_dateArray =[d_2022_year, d_2022_mon, d_2022_day]
-      const index2000 = quasiTop (symbol, d_2000_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const index2001 = quasiTop (symbol, d_2001_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
       const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
       const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
  
@@ -108,9 +108,9 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       results['weeklyGain'] = weeklyGain.toFixed(5);
       results['yearsDiff'] = yearsDiff;
 
-      results['oldDate'] = stockChartXValues[index2000];
-      results['oldValue'] = stockChartYValues[index2000];
-      results['indexOLd'] = index2000;
+      results['oldDate'] = stockChartXValues[index2001];
+      results['oldValue'] = stockChartYValues[index2001];
+      results['indexOLd'] = index2001;
 
       results['fromDate'] = stockChartXValues[index2008];
       results['fromValue'] = stockChartYValues[index2008];
