@@ -26,7 +26,7 @@ const Peak2PeakGui = (props) => {
   // logFlags
   // weekly
 
-    const [d_2000_date, set_2000_date] =   useState(new Date(2000, 11, 1)); // 2000 dec 1
+    const [d_2000_date, set_2000_date] =   useState(new Date(2000, 0, 1)); // 2000 dec 1
     const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
     const [endDate, setEndDate] =   useState(new Date(2021, 11, 1)); // 2021 dec 1
 
@@ -42,10 +42,13 @@ const Peak2PeakGui = (props) => {
     const [results, setResults] = useState ();
     const [err, setErr] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
+    const [histogram, setHistogram] = useState({})
+    var bubbleline = {}
 
     const [tableShowFlag, setTableShowFlag] = useState ();
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
+
 
     useEffect(() => {
       setResults();
@@ -56,6 +59,93 @@ const Peak2PeakGui = (props) => {
     },[props.symbol, props.gainMap]) 
    
   // style={{display:'flex'}}
+
+
+  function histogramBuild () {
+    for (let i = 0; i < bubbleline.y.length; i ++) {
+      const ratio = props.gainMap[props.symbol].y[i]  /  bubbleline.y[i]
+
+      if (ratio > 1) {
+        if (! histogram['> 1'])
+          histogram['> 1.00'] = 1
+        else {
+          histogram['> 1.00'] ++
+        }
+      }
+      else
+      if (ratio > 0.95) {
+        if (! histogram['> 0.95'])
+          histogram['> 0.95'] = 1
+        else
+          histogram['> 0.95'] ++
+      }
+      else
+      if (ratio > 0.90) {
+        if (! histogram['> 0.90'])
+          histogram['> 0.90'] = 1
+        else
+          histogram['> 0.90'] ++
+      }
+      else
+      if (ratio > 0.85) {
+        if (! histogram['> 0.85'])
+          histogram['> 0.85'] = 1
+        else
+          histogram['> 0.85'] ++
+      }
+      else
+      if (ratio > 0.80) {
+        if (! histogram['> 0.80'])
+          histogram['> 0.80'] = 1
+        else {
+          histogram['> 0.80'] ++
+        }
+      }
+      else
+      if (ratio > 0.75) {
+        if (! histogram['> 0.75'])
+          histogram['> 0.75'] = 1
+        else
+          histogram['> 0.75'] ++
+      }
+      else
+      if (ratio > 0.70) {
+        if (! histogram['> 0.70'])
+          histogram['> 0.70'] = 1
+        else
+          histogram['> 0.70'] ++
+      }
+      else
+      if (ratio > 0.65) {
+        if (! histogram['> 0.65'])
+          histogram['> 0.65'] = 1
+        else
+          histogram['> 0.65'] ++
+      }
+      else
+      if (ratio > 0.60) {
+        if (! histogram['> 0.60'])
+          histogram['> 0.60'] = 1
+        else
+          histogram['> 0.60'] ++
+      }
+      else
+      if (ratio > 0.55) {
+        if (! histogram['> 0.55'])
+          histogram['> 0.55'] = 1
+        else
+          histogram['> 0.55'] ++
+      }
+      else
+      if (ratio < 0.55) {
+        if (! histogram['< 0.55'])
+          histogram['< 0.55'] = 1
+        else
+          histogram['< 0.55'] ++
+      } 
+    }
+
+  } 
 
   const displayFlagChange = () => {setDisplayFlag ( !displayFlag)}
   
@@ -90,7 +180,8 @@ const Peak2PeakGui = (props) => {
     }  
 
     if (! props.gainMap.bubbleLine) {
-      props.setBubbleLine ({x: XValues, y: yBubbleLine})
+      bubbleline = {x: XValues, y: yBubbleLine}
+      props.setBubbleLine (bubbleline)
       setBubbleLineFlag(true)
 
       if (Object.keys(props.gainMap).length > 1) {
@@ -107,6 +198,7 @@ const Peak2PeakGui = (props) => {
     console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
     // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
+    histogramBuild ()
   }
 
   function colorHighRatio (ratio) {
@@ -165,7 +257,13 @@ const Peak2PeakGui = (props) => {
            </div>}
 
            <pre>{JSON.stringify(results, null, 2)}</pre>
-           <hr/> 
+           <hr/>
+           {Object.keys(histogram).length > 0 && <div>
+            <div>Histogram of distance from bubble</div>
+            <pre>{JSON.stringify(histogram, null, 2)}</pre>
+           </div>}
+           <hr/>
+
            {props.gainMap.bubbleLine && <div>
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
             <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
