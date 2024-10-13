@@ -284,13 +284,13 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
    //  2007, 11, 1  2008 deep
 
    function swap_period_2001() {
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2001, 0, 1], props.StockSymbol, props.logFlags)  
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2000, 0, 1], props.StockSymbol, props.logFlags)  
     if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
-      props.errorAdd([props.StockSymbol, '[2001, 0, 1]', 'Date before available data'])
+      props.errorAdd([props.StockSymbol, '[2000, 0, 1]', 'Date before available data'])
       return;
     }
 
-    setDropStartDate (new Date(2001, 3, 1)); // 2001 dec 1 
+    setDropStartDate (new Date(2000, 0, 1)); // 2001 dec 1 
       // setEndDate (new Date(2009, 1, 1));
   }
 
