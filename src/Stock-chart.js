@@ -29,7 +29,7 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
 
-  const [chartDate, setChartDate] = useState (new Date(2002, 9, 15));
+  const [chartDate, setChartDate] = useState (new Date(1999, 1, 15));
   const [endDate, setEndDate] = useState (new Date())
   const [months, setMonths] = useState();
 
@@ -399,6 +399,7 @@ const StockChart = (props) => {
           <input  type="checkbox" checked={showRanges}  onChange={() => setShowRanges (! showRanges)} /> &nbsp;ranges  &nbsp;
           {showRanges && <div>
             &nbsp; &nbsp;
+            <button onClick={() => setDateRange(new Date(1999,0,1), new Date(2008,0,1))}> 1999-2008</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2008,0,1), new Date(2011,0,1))}> 2008-2010</button>&nbsp;  
             <button onClick={() => setDateRange(new Date(2020,0,1), new Date(2020,6,1))}> 2020</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2023,0,1))}> 2022</button>&nbsp;
