@@ -62,87 +62,84 @@ const Peak2PeakGui = (props) => {
 
 
   function histogramBuild () {
+
+    histogram['> 1.00'] = 0
+    histogram['> 0.95'] = 0
+    histogram['> 0.90'] = 0
+    histogram['> 0.85'] = 0
+    histogram['> 0.80'] = 0
+    histogram['> 0.75'] = 0
+    histogram['> 0.70'] = 0
+    histogram['> 0.65'] = 0
+    histogram['> 0.60'] = 0
+    histogram['> 0.55'] = 0
+    histogram['> 0.50'] = 0 
+    histogram['> 0.45'] = 0   
+    histogram['> 0.40'] = 0   
+    histogram['> 0.35'] = 0   
+    histogram['< 0.35'] = 0
+
     for (let i = 0; i < bubbleline.y.length; i ++) {
       const ratio = props.gainMap[props.symbol].y[i]  /  bubbleline.y[i]
 
-      if (ratio > 1) {
-        if (! histogram['> 1'])
-          histogram['> 1.00'] = 1
-        else {
+      if (ratio >= 1) 
           histogram['> 1.00'] ++
-        }
-      }
       else
       if (ratio > 0.95) {
-        if (! histogram['> 0.95'])
-          histogram['> 0.95'] = 1
-        else
           histogram['> 0.95'] ++
       }
       else
       if (ratio > 0.90) {
-        if (! histogram['> 0.90'])
-          histogram['> 0.90'] = 1
-        else
           histogram['> 0.90'] ++
       }
       else
       if (ratio > 0.85) {
-        if (! histogram['> 0.85'])
-          histogram['> 0.85'] = 1
-        else
           histogram['> 0.85'] ++
       }
       else
       if (ratio > 0.80) {
-        if (! histogram['> 0.80'])
-          histogram['> 0.80'] = 1
-        else {
           histogram['> 0.80'] ++
-        }
       }
       else
       if (ratio > 0.75) {
-        if (! histogram['> 0.75'])
-          histogram['> 0.75'] = 1
-        else
           histogram['> 0.75'] ++
       }
       else
       if (ratio > 0.70) {
-        if (! histogram['> 0.70'])
-          histogram['> 0.70'] = 1
-        else
           histogram['> 0.70'] ++
       }
       else
       if (ratio > 0.65) {
-        if (! histogram['> 0.65'])
-          histogram['> 0.65'] = 1
-        else
           histogram['> 0.65'] ++
       }
       else
       if (ratio > 0.60) {
-        if (! histogram['> 0.60'])
-          histogram['> 0.60'] = 1
-        else
           histogram['> 0.60'] ++
       }
       else
       if (ratio > 0.55) {
-        if (! histogram['> 0.55'])
-          histogram['> 0.55'] = 1
-        else
           histogram['> 0.55'] ++
       }
       else
-      if (ratio < 0.55) {
-        if (! histogram['< 0.55'])
-          histogram['< 0.55'] = 1
-        else
-          histogram['< 0.55'] ++
-      } 
+      if (ratio > 0.50) {
+          histogram['> 0.50'] ++
+      }
+      else
+      if (ratio > 0.45) {
+          histogram['> 0.45'] ++
+      }
+      else
+      if (ratio > 0.40) {
+          histogram['> 0.40'] ++
+      }
+      else
+      if (ratio > 0.35) {
+          histogram['> 0.35'] ++
+      }
+
+      else
+          histogram['< 0.35'] ++
+
     }
 
   } 
@@ -259,7 +256,7 @@ const Peak2PeakGui = (props) => {
            <pre>{JSON.stringify(results, null, 2)}</pre>
            <hr/>
            {Object.keys(histogram).length > 0 && <div>
-            <div>Histogram of distance from bubble</div>
+            <div>Histogram of sym_price / bubble_price</div>
             <pre>{JSON.stringify(histogram, null, 2)}</pre>
            </div>}
            <hr/>
