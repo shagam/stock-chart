@@ -284,8 +284,10 @@ const Peak2PeakGui = (props) => {
            </div>}
 
            <hr/>
-           <div>  {props.symbol}  Bubbles info</div>
-           <pre>{JSON.stringify(results, null, 2)}</pre>
+           
+           {results && <div>  {props.symbol}  Bubbles info
+            <pre>{JSON.stringify(results, null, 2)}</pre>
+           </div>}
 
            <hr/>
            {props.gainMap.bubbleLine && <div>
