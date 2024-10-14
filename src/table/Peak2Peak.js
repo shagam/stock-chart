@@ -43,6 +43,7 @@ const Peak2PeakGui = (props) => {
     const [err, setErr] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
     const [histogram, setHistogram] = useState({})
+    const [histogramLast, setHistogramLast] = useState({})
     var bubbleline = {}
 
     const [tableShowFlag, setTableShowFlag] = useState ();
@@ -79,67 +80,69 @@ const Peak2PeakGui = (props) => {
     histogram['> 0.35'] = 0   
     histogram['< 0.35'] = 0
 
-    for (let i = 0; i < bubbleline.y.length; i ++) {
+    for (let i = bubbleline.y.length - 1; i >= 0; i --) {
       const ratio = props.gainMap[props.symbol].y[i]  /  bubbleline.y[i]
 
-      if (ratio >= 1) 
+      if (ratio >= 1) {
           histogram['> 1.00'] ++
-      else
-      if (ratio > 0.95) {
+          histogramLast['> 1.00'] = props.gainMap[props.symbol].x[i] 
+      }
+      else if (ratio > 0.95) {
           histogram['> 0.95'] ++
+          histogramLast['> 0.95'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.90) {
+      else if (ratio > 0.90) {
           histogram['> 0.90'] ++
+          histogramLast['> 0.90'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.85) {
+      else if (ratio > 0.85) {
           histogram['> 0.85'] ++
+          histogramLast['> 0.85'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.80) {
+      else if (ratio > 0.80) {
           histogram['> 0.80'] ++
+          histogramLast['> 0.80'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.75) {
+      else if (ratio > 0.75) {
           histogram['> 0.75'] ++
+          histogramLast['> 0.75'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.70) {
+      else if (ratio > 0.70) {
           histogram['> 0.70'] ++
+          histogramLast['> 0.70'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.65) {
+      else if (ratio > 0.65) {
           histogram['> 0.65'] ++
+          histogramLast['> 0.65'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.60) {
+      else if (ratio > 0.60) {
           histogram['> 0.60'] ++
+          histogramLast['> 0.60'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.55) {
+      else if (ratio > 0.55) {
           histogram['> 0.55'] ++
+          histogramLast['> 0.55'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.50) {
+      else if (ratio > 0.50) {
           histogram['> 0.50'] ++
+          histogramLast['> 0.50'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.45) {
+      else if (ratio > 0.45) {
           histogram['> 0.45'] ++
+          histogramLast['> 0.45'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.40) {
+      else if (ratio > 0.40) {
           histogram['> 0.40'] ++
+          histogramLast['> 0.40'] = props.gainMap[props.symbol].x[i] 
       }
-      else
-      if (ratio > 0.35) {
+      else if (ratio > 0.35) {
           histogram['> 0.35'] ++
+          histogramLast['> 0.35'] = props.gainMap[props.symbol].x[i] 
       }
-
-      else
+      else {
           histogram['< 0.35'] ++
-
+          histogramLast['< 0.35'] = props.gainMap[props.symbol].x[i] 
+      }
     }
 
   } 
@@ -254,9 +257,30 @@ const Peak2PeakGui = (props) => {
            </div>}
 
            <hr/>
-           {Object.keys(histogram).length > 0 && <div>
-            <div>Histogram of {props.symbol}_price / bubble_price &nbsp; : count</div>
-            <pre>{JSON.stringify(histogram, null, 2)}</pre>
+           {Object.keys(histogram).length > 0 && <div style={{width: '350px'}}>
+            <div>Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>
+            {/* <pre>{JSON.stringify(histogram, null, 2)}</pre> */}
+            <table>
+              <thead>
+                <tr>
+                  <th>range </th>
+                  <th>frequency,count</th>
+                  <th>lastDate</th>
+                </tr>
+              </thead>
+              <tbody>
+                  {Object.keys(histogram).map((s, s1) =>{
+                      return (
+                      <tr key={s1}>
+                          {/* <td style={{width: '120px'}}>{props.gainMap.bubbleLine.x[s]}  </td>  */}
+                          {<td>{s}</td>}
+                          {<td>{histogram[s]}</td>}
+                          {<td>{histogramLast[s]}</td>}
+                      </tr>
+                    )
+                  })}
+              </tbody>
+            </table>
            </div>}
 
            <hr/>
