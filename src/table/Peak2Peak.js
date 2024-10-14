@@ -52,6 +52,8 @@ const Peak2PeakGui = (props) => {
 
 
     useEffect(() => {
+      setHistogram({})
+      setHistogramLast({})
       setResults();
       setErr()
       setBubbleLineFlag(false)
@@ -63,7 +65,10 @@ const Peak2PeakGui = (props) => {
 
 
   function histogramBuild () {
-
+    histogram['> 1.20'] = 0
+    histogram['> 1.15'] = 0
+    histogram['> 1.10'] = 0
+    histogram['> 1.05'] = 0
     histogram['> 1.00'] = 0
     histogram['> 0.95'] = 0
     histogram['> 0.90'] = 0
@@ -83,9 +88,25 @@ const Peak2PeakGui = (props) => {
     for (let i = bubbleline.y.length - 1; i >= 0; i --) {
       const ratio = props.gainMap[props.symbol].y[i]  /  bubbleline.y[i]
 
-      if (ratio >= 1) {
-          histogram['> 1.00'] ++
-          histogramLast['> 1.00'] = props.gainMap[props.symbol].x[i] 
+      if (ratio >= 1.20) {
+        histogram['> 1.20'] ++
+        histogramLast['> 1.20'] = props.gainMap[props.symbol].x[i] 
+      }
+      else if (ratio >= 1.15) {
+        histogram['> 1.15'] ++
+        histogramLast['> 1.15'] = props.gainMap[props.symbol].x[i] 
+      }
+      else if (ratio >= 1.10) {
+          histogram['> 1.10'] ++
+          histogramLast['> 1.10'] = props.gainMap[props.symbol].x[i] 
+      }
+      else if (ratio >= 1.05) {
+        histogram['> 1.05'] ++
+        histogramLast['> 1.05'] = props.gainMap[props.symbol].x[i] 
+      }
+      else if (ratio >= 1) {
+        histogram['> 1.00'] ++
+        histogramLast['> 1.00'] = props.gainMap[props.symbol].x[i] 
       }
       else if (ratio > 0.95) {
           histogram['> 0.95'] ++
@@ -154,10 +175,10 @@ const Peak2PeakGui = (props) => {
   function calcBubbleLine (XValues, YValues) {  
 
     const stocks = Object.keys(props.gainMap)
-    if (stocks.length > 1) {
-      setErr ('Bubble line only for a single etf: ' + JSON.stringify(stocks))
-      beep2()
-    }
+    // if (stocks.length > 1) {
+    //   setErr ('Bubble line only for a single etf: ' + JSON.stringify(stocks))
+    //   beep2()
+    // }
 
     var yBubbleLine = []
 
