@@ -253,14 +253,17 @@ const Peak2PeakGui = (props) => {
              {/* <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div> */}
            </div>}
 
-           <pre>{JSON.stringify(results, null, 2)}</pre>
            <hr/>
            {Object.keys(histogram).length > 0 && <div>
-            <div>Histogram of sym_price / bubble_price</div>
+            <div>Histogram of {props.symbol}_price / bubble_price &nbsp; : count</div>
             <pre>{JSON.stringify(histogram, null, 2)}</pre>
            </div>}
-           <hr/>
 
+           <hr/>
+           <div>  {props.symbol}  Bubbles info</div>
+           <pre>{JSON.stringify(results, null, 2)}</pre>
+
+           <hr/>
            {props.gainMap.bubbleLine && <div>
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
             <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
