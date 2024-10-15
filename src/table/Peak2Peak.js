@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 // import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import {  useAuth, logout } from '../contexts/AuthContext';
 // import { toDate } from "date-fns";
 // import {format} from "date-fns"
 // import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
@@ -14,7 +15,8 @@ import {beep2} from '../utils/ErrorList'
 
 const Peak2PeakGui = (props) => {
 
-
+  const { currentUser, admin, logout } = useAuth();
+  
   // props.symbol
   // props.rows
   // props.startDate
@@ -230,29 +232,29 @@ const Peak2PeakGui = (props) => {
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
-          <div> 
+        <div> 
 
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-              <h6 style={{color: 'blue'}}> Peak2Peak (long term gain) &nbsp;  </h6>
+              <h6 style={{color: 'blue'}}> bubbleLine,  Peak2Peak (long term gain) &nbsp;  </h6>
             </div>
 
             <div style={{color: 'red'}}>{err}</div>
 
-            <div  style={{display:'flex' }}> 
-            <div style={{ color: 'black'}}  >2001_proximity_date:   </div>
-            &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={d_2000_date} onChange={(date) => set_2000_date(date)} /> 
-           </div>
+            {admin && <div  style={{display:'flex' }}> 
+              <div style={{ color: 'black'}}  >2001_proximity_date:   </div>
+              &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={d_2000_date} onChange={(date) => set_2000_date(date)} /> 
+           </div>}
 
-            <div  style={{display:'flex' }}> 
+          <div  style={{display:'flex' }}> 
             <div style={{ color: 'black'}}  >2008_proximity_date:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
-           </div>
+          </div>
       
-           <div  style={{display:'flex' }}> 
+          <div  style={{display:'flex' }}> 
             <div style={{ color: 'black'}}  > 2022_proximity_date:   </div>
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
-           </div>
+          </div>
 
            <div style={{display:'flex'}}> &nbsp; 
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
@@ -277,8 +279,8 @@ const Peak2PeakGui = (props) => {
              {/* <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div> */}
            </div>}
 
-           <hr/>
-           {Object.keys(histogram).length > 0 && <div style={{width: '350px'}}>
+           {Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'400px', overflow:'auto'}}>
+            <hr/>
             <div>Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>
             {/* <pre>{JSON.stringify(histogram, null, 2)}</pre> */}
             <table>
@@ -304,14 +306,8 @@ const Peak2PeakGui = (props) => {
             </table>
            </div>}
 
-           <hr/>
-           
-           {results && <div>  {props.symbol}  Bubbles info
-            <pre>{JSON.stringify(results, null, 2)}</pre>
-           </div>}
-
-           <hr/>
            {props.gainMap.bubbleLine && <div>
+            <hr/>
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
             <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
            </div>}
@@ -342,7 +338,13 @@ const Peak2PeakGui = (props) => {
                 </tbody>
             </table>
           </div>}  
-          <hr/> 
+
+           {results && <div> 
+           <hr/> 
+            {props.symbol}  Bubbles info
+            <pre>{JSON.stringify(results, null, 2)}</pre>
+           </div>}
+           <hr/>
         </div>
     </div>
   )
