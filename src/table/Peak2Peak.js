@@ -281,7 +281,7 @@ const Peak2PeakGui = (props) => {
 
            {Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'400px', overflow:'auto'}}>
             <hr/>
-            <div>Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>
+            <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>
             {/* <pre>{JSON.stringify(histogram, null, 2)}</pre> */}
             <table>
               <thead>
@@ -318,7 +318,7 @@ const Peak2PeakGui = (props) => {
                 <thead>
                   <tr>
                     <th>date </th>
-                    <th>stock price</th>
+                    <th>{props.symbol} price</th>
                     <th>bubbleLine price</th>
                     <th>ratio</th>
                   </tr>
@@ -341,7 +341,7 @@ const Peak2PeakGui = (props) => {
 
            {results && <div> 
            <hr/> 
-            {props.symbol}  Bubbles info
+            <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {props.symbol}  Bubbles list info </div>
             <pre>{JSON.stringify(results, null, 2)}</pre>
            </div>}
            <hr/>
