@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
-
+import {beep2} from '../utils/ErrorList'
 
 
 function LeverageETF (props) {
@@ -11,7 +11,9 @@ function LeverageETF (props) {
     const [pivotSym, setPivotSym] = useState ()
     const [pivotSymIndex, setPivotSymIndex] = useState ()
     const [yearlGainCalc, strYearlyGainCalc]  = useState ({})
-    
+    const [err, setErr] = useState ()
+
+
     function gainClose(i) {
         // if (dateArray.length === 0)
         //     return -1 // not ready yet
@@ -23,13 +25,17 @@ function LeverageETF (props) {
 
     function leverage() {
 
+        setErr()
         console.log ('lavarage')
         console.log (props.gainMap)
         
         const symArray_ = Object.keys(props.gainMap)
         setSymArray (symArray_)
-        if (symArray_.length < 2)
+        if (symArray_.length < 2) {
+            setErr('Err need 2 stocks, press GAIN for another symbol' )
+            beep2()
             return;
+        }
 
         //** compare only last array section  */
         var lengthMin;
@@ -73,6 +79,7 @@ function LeverageETF (props) {
                 <h6  style={{color: 'blue' }}> Lavarage ETF </h6>
             </div>
 
+            <div style={{color: 'red'}}> {err} </div>
             <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button>
             <h6>Compare leverage ETF (like TQQQ)  with base ETF (QQQ) </h6>
             {pivotSym && symArray.length > 1 && <div> length={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
