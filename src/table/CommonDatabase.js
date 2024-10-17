@@ -144,6 +144,7 @@ function CommonDatabase (props) {
     const { currentUser, admin, logout } = useAuth();
     const [logBackEnd, setLogBackEnd] = useState ();
     const [logExtra, setLogExtra] = useState ();
+    const [getAll, setGetAll] = useState ();
 
     const [period, setPeriod] = useState(1)
 
@@ -901,6 +902,8 @@ function CommonDatabase (props) {
             corsUrl += '&LOG_EXTRA=1'
         if (userFilter)
             corsUrl += '&filter=' + userFilter;
+        if (getAll)
+            corsUrl += '&getAll=true';
         
         setErr('users Request request sent')  
         // if (LOG)
@@ -923,6 +926,11 @@ function CommonDatabase (props) {
             // if (LOG)
             console.log(getDate(),  'users arrived', result.data) 
             setErr('backEnd users,  Latency(msec)=' + latency ) 
+            if (getAll) {
+                const ipList = Object.keys (result.data);
+                for (let i = 0; i < ipList.length; i++)
+                    delete result.data[ipList[i]].sec
+            }
             setInfoJson (result.data) // show in obj format
             // setInfo (JSON.stringify(result.data))
         } )
@@ -1013,13 +1021,13 @@ function CommonDatabase (props) {
             <GlobalFilter className="stock_button_class_" filter={userFilter} setFilter={setUserFilter} name='userFilter' isMobile={isMobile}/>&nbsp; &nbsp;
             <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
             <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
+            {eliHome && <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div>}
         </div>}
 
 
 
         <pre>{JSON.stringify(infoJson, null, 2)}</pre>
         <div>
-
             {/* ========= Display filtered list */} 
             <div> &nbsp;</div>
             {results && <div style={{display:'flex'}}>
