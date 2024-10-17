@@ -929,8 +929,11 @@ function CommonDatabase (props) {
             setErr('backEnd users,  Latency(msec)=' + latency ) 
             if (getAll) {
                 const ipList = Object.keys (result.data);
-                for (let i = 0; i < ipList.length; i++)
+                for (let i = 0; i < ipList.length; i++) {
                     delete result.data[ipList[i]].sec
+                    if (! result.data[ipList[i]].city)
+                        delete result.data[ipList[i]]  // missing city garble table display
+                }
                 setTbl (result.data) // show in obj format
                 return;
             }
@@ -1045,11 +1048,34 @@ function CommonDatabase (props) {
             </div>}
             {info && <div>{info}</div>}
              
-            {tbl && <div style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}>  {Object.keys(tbl).map((i,k) => {
-                return <div key={k}> {JSON.stringify(tbl[i])}  </div>
+            {Object.keys(tbl).length > 0 && <div style={{ maxHeight: '40vh', 'overflowY': 'scroll'}}> 
+                <table>
+                    <thead>
+                    <tr>
+                        <th>N</th>
+                        {Object.keys(tbl[Object.keys(tbl)[0]]).map ((h, h1) => {
+                            return (<th key={h1}>{h}</th>)
+                        }) }
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {Object.keys(tbl).map((s, s1) =>{
+                            return (
+                            <tr key={s1}>
+                                <td>{s1}</td>
+                                {Object.keys(tbl[s]).map((t, t1) => {
+                                    return (<td key={t1}>{tbl[s][t]}</td>)
+                                })}
+                            </tr>
+                        )
+                        })}
+                    </tbody>
+                </table>        
+            </div>}
+
+            {Object.keys(tbl).length > 0 && <div style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}>  {Object.keys(tbl).map((i,k) => {
+                return <div key={k}>{k} {JSON.stringify(tbl[i])}  </div>
             })}</div>}
-
-
         </div>
       </div>
     }
