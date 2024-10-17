@@ -144,8 +144,12 @@ function CommonDatabase (props) {
     const { currentUser, admin, logout } = useAuth();
     const [logBackEnd, setLogBackEnd] = useState ();
     const [logExtra, setLogExtra] = useState ();
+
     const [getAll, setGetAll] = useState ();
+    const [extra, setExtra] = useState ();
     const [tbl, setTbl] = useState ([]);
+    
+    
     const [period, setPeriod] = useState(1)
 
     const [nameFilter, setNameFilter] = useState ();
@@ -937,11 +941,13 @@ function CommonDatabase (props) {
                         date: inf[ipList[i]].date,
                         ip:   inf[ipList[i]].ip,
                         city: inf[ipList[i]].city,
-                        region: inf[ipList[i]].region,
                         country: inf[ipList[i]].country,
-                        os: inf[ipList[i]].os,
-                        sym: inf[ipList[i]].sym,
                         count: inf[ipList[i]].count,
+                    }
+                    if (extra) {
+                        tbl1[ipList[i]].region = inf[ipList[i]].region
+                        tbl1[ipList[i]].os = inf[ipList[i]].os
+                        tbl1[ipList[i]].sym = inf[ipList[i]].sym
                     }
                 }
                 setTbl (tbl1) // show in obj format
@@ -1037,7 +1043,8 @@ function CommonDatabase (props) {
             <GlobalFilter className="stock_button_class_" filter={userFilter} setFilter={setUserFilter} name='userFilter' isMobile={isMobile}/>&nbsp; &nbsp;
             <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
             <div> <input type="checkbox" checked={logExtra}  onChange={toggleLogExtra}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
-            {eliHome && <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div>}
+            {eliHome && <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div>} &nbsp;&nbsp;
+            {eliHome && <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;extra </div>}
         </div>}
 
 
