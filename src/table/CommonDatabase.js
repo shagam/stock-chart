@@ -145,7 +145,7 @@ function CommonDatabase (props) {
     const [logBackEnd, setLogBackEnd] = useState ();
     const [logExtra, setLogExtra] = useState ();
     const [getAll, setGetAll] = useState ();
-
+    const [tbl, setTbl] = useState ([]);
     const [period, setPeriod] = useState(1)
 
     const [nameFilter, setNameFilter] = useState ();
@@ -155,6 +155,7 @@ function CommonDatabase (props) {
     // const [userInfo, setUserInfp] = useState ();
 
     useEffect (() => { 
+        setTbl({})
         setErr()
         setInfo()
         setInfoJson()
@@ -930,8 +931,10 @@ function CommonDatabase (props) {
                 const ipList = Object.keys (result.data);
                 for (let i = 0; i < ipList.length; i++)
                     delete result.data[ipList[i]].sec
+                setTbl (result.data) // show in obj format
+                return;
             }
-            setInfoJson (result.data) // show in obj format
+
             // setInfo (JSON.stringify(result.data))
         } )
         .catch ((err) => {
@@ -1041,6 +1044,12 @@ function CommonDatabase (props) {
                 })}
             </div>}
             {info && <div>{info}</div>}
+             
+            {tbl && <div style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}>  {Object.keys(tbl).map((i,k) => {
+                return <div key={k}> {JSON.stringify(tbl[i])}  </div>
+            })}</div>}
+
+
         </div>
       </div>
     }
