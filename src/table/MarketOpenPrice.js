@@ -16,6 +16,8 @@ function MarketOpenPrice (props) {
     const [openDivPrevClose, setOpenDivPrevClose] = useState([])
     const [openArr, setOpenArr] = useState([])
     const [closeArr, setCloseArr]= useState([])
+    const [weekly, setWeekly] = useState()
+
 
     const END_OF_DAY = false;
     const LOG_DROP = props.logFlags && props.logFlags.includes('drop_');
@@ -29,14 +31,8 @@ function MarketOpenPrice (props) {
     }, [props.symbol]) 
   
 
-
-
-
-    const period = [['DAILY', 'Daily'],['WEEKLY', 'Weekly'],['MONTHLY', 'Monthly)']];
-    let periodCapital = period[0][0];  
-
     var periodTag;
-    if (false)
+    if (weekly)
       periodTag = 'Weekly Adjusted Time Series';
     else
       periodTag = "Time Series (Daily)"
@@ -92,10 +88,10 @@ function MarketOpenPrice (props) {
     //     console.log ('high=', gainHigh(props.stockChartXValues.length-1), 'low=', gainLow(props.stockChartXValues.length-1), 'close=', gainClose(props.stockChartXValues.length-1))
     // }
        
-      if (props.weekly)
-        periodTag = 'Weekly Adjusted Time Series';
-      else
-        periodTag = "Time Series (Daily)"
+      // if (weekly)
+      //   periodTag = 'Weekly Adjusted Time Series';
+      // else
+      //   periodTag = "Time Series (Daily)"
   
       const LOG_FLAG = props.logFlags && props.logFlags.includes('aux');
       const LOG_API = props.logFlags && props.logFlags.includes('api');
@@ -123,8 +119,8 @@ function MarketOpenPrice (props) {
     function getGainArray () {
 
       let API_Call;
-      if (props.weekly)
-        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED`;
+      if (weekly)
+        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED`;
       else
         API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED`;
 
@@ -244,7 +240,11 @@ function MarketOpenPrice (props) {
 
             <h6>Tool for revealing after hour reshuffle (Expenses) of lavarage ETF like TQQQ </h6>
 
-            {<button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button>}
+            <div>
+              <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button>  &nbsp;  &nbsp; 
+              <input type="checkbox" checked={weekly} onChange={() => setWeekly(! weekly)}  />&nbsp;weekly &nbsp; &nbsp;
+            </div>
+
             <div>&nbsp;</div>
             {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; 
                 firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  open / prevClose-average={openDivPrevCloseAverage}</div>}
