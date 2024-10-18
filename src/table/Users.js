@@ -122,18 +122,17 @@ function Users (props) {
 
     return (
         <div>
-
             {err && <div style={{color:'red'}}>{err}</div>}
 
-            {eliHome && <div style={{display: 'flex'}}>
+            <div style={{display: 'flex'}}>
                 <button style={{background: 'aqua', height: '27px', marginTop: '16px'}} type="button" onClick={()=> users ()}>userInfo  </button> &nbsp;&nbsp;
                 <GlobalFilter className="stock_button_class_" filter={userFilter} setFilter={setUserFilter} name='userFilter' isMobile={isMobile}/>&nbsp; &nbsp;
                 <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
                 <div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
-                {eliHome && <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div>} &nbsp;&nbsp;
-                {eliHome && <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os</div>}
+                <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div> &nbsp;&nbsp;
+                <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os</div>
                 <div> &nbsp; </div> 
-            </div>}
+            </div>
             {/* <hr/>      */}
 
             <div>&nbsp;</div>
