@@ -87,7 +87,7 @@ function Users (props) {
                 var tbl1 = {}
                 const inf = result.data
                 const ipList = Object.keys (result.data);
-                for (let i = 0; i < ipList.length; i++) {
+                for (let i = ipList.length - 1; i >= 0; i--) {
                     tbl1[ipList[i]] = {
                         date: inf[ipList[i]].date,
                         ip:   inf[ipList[i]].ip,
@@ -131,11 +131,12 @@ function Users (props) {
                 <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
                 <div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
                 {eliHome && <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div>} &nbsp;&nbsp;
-                {eliHome && <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;extra </div>}
+                {eliHome && <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os</div>}
                 <div> &nbsp; </div> 
             </div>}
             {/* <hr/>      */}
 
+            <div>&nbsp;</div>
             {infoJson && Object.keys(infoJson).length > 0 && <pre>{JSON.stringify(infoJson, null, 2)}</pre>}
 
             {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '45vh', 'overflowY': 'scroll'}}> 
