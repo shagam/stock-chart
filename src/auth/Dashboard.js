@@ -79,7 +79,7 @@ export default function Dashboard (props) {
         
         <div style={{display:'flex'}}>
           {currentUser && <div>{currentUser.email}</div> }
-          {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
+          {admin && <div> &nbsp; <strong style={{color: 'red'}}>(admin)</strong> </div>}
         </div>
 
         <hr/> 
