@@ -14,6 +14,8 @@ const StockInfo = (props) => {
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}> GainRaw </h6>
         </div>
+        
+        <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw gain history as recieved from AlphaVantage </h6>
 
         <div>  &nbsp; <input  type="checkbox" checked={props.gainRawDividand} 
           onChange={() => props.setGainRawDividand(! props.gainRawDividand)} />

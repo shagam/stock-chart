@@ -641,6 +641,7 @@ const Simulate = (props) => {
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h5 style={{color: 'blue'}}> Simulate-trade &nbsp;  </h5>
             </div>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Simulate optimized trade according to distance from bubbleLine </h6>
             <div style={{color: 'red'}}> {err} </div>
             <div> &nbsp;</div>
 

@@ -391,6 +391,9 @@ function StockLists (props) {
             </div>
 
             { displayFlag && <div>
+
+                <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock lists.  Save and Share  &nbsp; </h6>
+
                 {err && <div style={{color:'red'}}>{err}</div>}
                 <div style={{color: 'green'}}>{latency}</div>
 

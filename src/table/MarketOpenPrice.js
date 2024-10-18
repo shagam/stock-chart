@@ -238,7 +238,7 @@ function MarketOpenPrice (props) {
                 <h6 style={{color: 'blue'}}> MarketOpenPrice  </h6>
             </div>
 
-            <h6>Tool for revealing after hour reshuffle (Expenses) of lavarage ETF like TQQQ </h6>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Tool for revealing after hour reshuffle (Expenses) of lavarage ETF like TQQQ </h6>
 
             <div>
               <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button>  &nbsp;  &nbsp; 

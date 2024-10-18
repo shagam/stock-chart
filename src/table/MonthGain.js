@@ -370,7 +370,8 @@ function MonthGain (props) {
           <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>
         </div>
 
-        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Average gain of {props.symbol}:  &nbsp; spread accross months and week number </h6>
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Average monthly & weekly gain of {props.symbol}:  &nbsp; </h6>
+        
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style = {{display: 'flex'}}>

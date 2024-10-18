@@ -271,6 +271,8 @@ function Holdings (props) {
         <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
       </div>
 
+      <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Option to insert holdings into stock-table) </h6>
+
       <div>&nbsp; </div>
       {/* <br></br> */}
       {/* ====== Buttons */} 

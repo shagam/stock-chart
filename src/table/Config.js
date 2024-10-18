@@ -54,8 +54,13 @@ const  Config = (props) => {
         onChange={ configFlagChange }
       /> Config 
 
+
+
       { configFlag &&
         <div id = "config_id">
+
+          <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Configuration, purge table and other activity  &nbsp; </h6>
+
           <div>  &nbsp; <Link to="/dashboard" > Login Dashboard </Link>  </div>
 
           {/* ====== Filter buttons */} 

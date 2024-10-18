@@ -897,8 +897,9 @@ function CommonDatabase (props) {
         /> Common-Database
       </div>
 
-      {displayFlag && 
-      <div>
+      {displayFlag && <div>
+        
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get info from common backEnd &nbsp; </h6>
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
