@@ -28,6 +28,7 @@ function IpSearchGui () {
     return (
         <div>
           <h5>ip geoLocation</h5>
+          <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; ip geolocation for any ip  &nbsp; </h6>
           <div style={{display:'flex'}}>    
           {/* <div>&nbsp; </div> */}
             {eliHome && <GetInt style={{marginright: '0px'}} init={null} callBack={setIpSearch} title='ipSearch' type='Text' pattern="[0-9\\.]+" width = '55%'/>} &nbsp; &nbsp;

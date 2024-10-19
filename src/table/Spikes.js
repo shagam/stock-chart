@@ -114,7 +114,8 @@ function Spikes (props) {
 
   return (
       <div>
-        <h5>Spikes</h5>      
+        <h5>Spikes</h5>  
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; {props.symbol}:  &nbsp; Show spikes if any &nbsp; </h6>    
         <button style={{background: 'aqua'}}  type="button" onClick={()=>spikes ()}>Spikes  </button> 
         {spikeInfo && spikeInfo.length > 0 && renderList(spikeInfo)}
         <div>&nbsp;</div>  

@@ -108,6 +108,8 @@ function TargetPriceGui (props) {
 
             <h5>Target price history</h5>
 
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Historical analysts target-price  &nbsp; </h6>
+
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />  &nbsp;LogBackend &nbsp; </div> } 
 
             {props.symbol && <button style={{background: 'aqua'}} type="button" onClick={()=>targetGetOne ()}>targetHistoryOne </button> } &nbsp;

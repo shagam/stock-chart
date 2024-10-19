@@ -282,6 +282,7 @@ function VerifyGain (props) {
   return (
     <div>
       <h5>Verify_1 </h5>
+      <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; {props.symbol}:  &nbsp; Verify historical price by comparing to another site  &nbsp; </h6>
       {LOG && <div>{corsUrl}</div>}
       {LOG && <div>{url}</div>}
       {err && <div style={{color: 'red'}}> {err} </div>}
