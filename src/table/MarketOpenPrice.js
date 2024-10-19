@@ -245,6 +245,8 @@ function MarketOpenPrice (props) {
               <input type="checkbox" checked={weekly} onChange={() => setWeekly(! weekly)}  />&nbsp;weekly &nbsp; &nbsp;
             </div>
 
+            {/* Market open_price / Perevious_close Table */}
+
             <div>&nbsp;</div>
             {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; 
                 firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  open / prevClose-average={openDivPrevCloseAverage}</div>}

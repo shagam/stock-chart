@@ -16,9 +16,11 @@ const StockInfo = (props) => {
 
       {props.chartSymbol !== props.infoSymbol && <h6 style={{color: 'red'}}> No info or symbol misMatch (An ETF or data for a previous symbol)  </h6>}
 
+      {/* Table of symbol/stock attributes: value */}
+
       { props.stockInfo &&
         <div>
-          <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw infoy as recieved from AlphaVantage </h6>
+          <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw info as recieved from AlphaVantage </h6>
           <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp; 
             <h6 style={{color: 'blue'}}> InfoRaw  </h6>

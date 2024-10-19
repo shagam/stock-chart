@@ -87,6 +87,8 @@ function LeverageETF (props) {
             
             <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button>
 
+            {/* Yearly gain TABLE */}
+            
             {pivotSym && symArray.length > 1 && <div> weekCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
             {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '650px', overflow:'auto'}}>
                 <table>

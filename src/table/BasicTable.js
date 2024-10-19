@@ -735,6 +735,7 @@ const BasicTable = (props) => {
      
          </div>
      
+      {/* insert sym, filter */}
 
       <div style={{display:'flex'}} id="add_stock_id">
         <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
@@ -768,6 +769,8 @@ const BasicTable = (props) => {
           {hiddenColumnsSave()}
         </div>
       }
+
+      {/* stock Table */}
 
       <table style={{marginTop: '4px'}} id="stockTable" {...getTableProps()}>
       <thead>
@@ -809,6 +812,8 @@ const BasicTable = (props) => {
           })}
       </tbody>
     </table>
+
+    {/* Machanizms not for spacific sym */}
     {! chartSymbol && <div style={{display: 'flex'}}>Press &nbsp;
       <div style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>gain</div> &nbsp; for one or more symbols</div>}  
     <div id='trailer_id'>
@@ -832,7 +837,8 @@ const BasicTable = (props) => {
         <StockLists ip={ip} rows = {rows} logFlags = {props.logFlags} saveTable={saveTable}
          errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>
 
-         {/* pans for chartSymbol */}
+        {/* Machanizms  for spacific sym (chartSymbol) */}
+
         {chartSymbol && <div>
           <div>&nbsp;</div>
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 

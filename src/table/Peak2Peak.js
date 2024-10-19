@@ -245,6 +245,9 @@ const Peak2PeakGui = (props) => {
 
             <div style={{color: 'red'}}>{err}</div>
 
+            
+            {/* Choose dates for crashes 2001, 2008, 2022 */}
+
             {admin && <div  style={{display:'flex' }}> 
               <div style={{ color: 'black'}}  >2001_proximity_date:   </div>
               &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={d_2000_date} onChange={(date) => set_2000_date(date)} /> 
@@ -260,6 +263,8 @@ const Peak2PeakGui = (props) => {
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
           </div>
 
+          {/* Buttons */}
+          
            <div style={{display:'flex'}}> &nbsp; 
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
@@ -272,20 +277,26 @@ const Peak2PeakGui = (props) => {
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
            </div>
 
+            {/* config checkboxes  */}
            <div style={{display:'flex'}}> &nbsp; 
               {!  results && <div> <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp; </div>}
               {! bubbleLineFlag && <div> <input  type="checkbox" checked={startFromPeakFlag}  onChange={() => {setStartFromPeakFlag (! startFromPeakFlag)}} />  startFromPeak  &nbsp;&nbsp; </div>}
           </div>
 
+          {/* bubble info */}
 
            {results && <div>
              <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>
              {/* <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div> */}
            </div>}
 
-           {Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'400px', overflow:'auto'}}>
-            <hr/>
-            <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>
+           <hr/>
+            {/* Histogram of bubble proximity */}
+
+            {Object.keys(histogram).length > 0 &&<div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>}
+
+            {Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'300px', overflow:'auto'}}>
+
             {/* <pre>{JSON.stringify(histogram, null, 2)}</pre> */}
             <table>
               <thead>
@@ -310,14 +321,16 @@ const Peak2PeakGui = (props) => {
             </table>
            </div>}
 
+
+            {/* Historical compare price/bubble */}
+
            {props.gainMap.bubbleLine && <div>
             <hr/>
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Compare {props.symbol} price to its bubble price  &nbsp;  </h6>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Hisorical {props.symbol} price / bubble_price  &nbsp;  </h6>
             <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
            </div>}
 
-            {tableShowFlag && props.gainMap.bubbleLine && props.gainMap[props.symbol] && <div style={{height:'450px', width: '400px', overflow:'auto'}}>
-
+            {tableShowFlag && props.gainMap.bubbleLine && props.gainMap[props.symbol] && <div style={{height:'300px', width: '400px', overflow:'auto'}}>
               <table>
                 <thead>
                   <tr>
@@ -331,10 +344,10 @@ const Peak2PeakGui = (props) => {
                     {Object.keys(props.gainMap.bubbleLine.y).map((s, s1) =>{
                         return (
                         <tr key={s1}>
-                            <td style={{width: '120px'}}>{props.gainMap.bubbleLine.x[s1]}  </td> 
-                            {<td>{props.gainMap[props.symbol].y[s1].toFixed(2)}</td>}
-                            {<td>{props.gainMap.bubbleLine.y[s1].toFixed(2)}</td>}
-                            {<td style = {{color: colorHighRatio(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1])}}>
+                            <td style={{padding: '2px', margin: '2px', width: '120px'}}>{props.gainMap.bubbleLine.x[s1]}  </td> 
+                            {<td style={{padding: '2px', margin: '2px'}}> {props.gainMap[props.symbol].y[s1].toFixed(2)}</td>}
+                            {<td style={{padding: '2px', margin: '2px'}}>{props.gainMap.bubbleLine.y[s1].toFixed(2)}</td>}
+                            {<td style = {{padding: '2px', margin: '2px', color: colorHighRatio(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1])}}>
                               {(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1]).toFixed(3)}</td>}
                         </tr>
                       )
@@ -343,6 +356,7 @@ const Peak2PeakGui = (props) => {
             </table>
           </div>}  
 
+          {/* Bubble info */}
            {results && <div> 
            <hr/> 
             <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {props.symbol}  Bubbles list info </div>

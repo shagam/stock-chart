@@ -126,6 +126,7 @@ function TargetPriceGui (props) {
 
             {/* <br></br>            */}
 
+            {/* Tareget price history TABLE */}
             {targetPriceHist && Object.keys(targetPriceHist).length > 0 &&
             <div  style={{display: 'flex'}}>count={Object.keys(targetPriceHist).length} &nbsp; &nbsp; &nbsp; <div style={{color: 'lightGreen'}}>(targetNew &nbsp;/ targetOld)</div> </div>}
 

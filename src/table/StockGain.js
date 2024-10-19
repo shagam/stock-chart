@@ -22,6 +22,8 @@ const StockInfo = (props) => {
             &nbsp; filterVolume (Require pressing gain button) </div>
       </div>
       
+      {/* Stock gain list */}
+
       <div id="textarea_id"> 
       {props.stockGain &&
         <div>
