@@ -951,7 +951,7 @@ function CommonDatabase (props) {
             <div> &nbsp; </div> 
         </div>}
 
-        {/* <br></br>  */}
+        {/* Active id sym gain selected */}
         <div style={{display: 'flex'}}>
             {props.symbol && eliHome && <button type="button" onClick={()=>readOneGain()}>readOneGain ({props.symbol}) </button>}&nbsp;
             {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend-delete-One{props.symbol} </button>}&nbsp;
@@ -960,6 +960,23 @@ function CommonDatabase (props) {
 
         <hr/>         
 
+        <div> &nbsp;</div>
+
+        {/* Display filtered symbols info  */}
+        {results && <div style={{display:'flex'}}>
+            <div> filteredSymbols ({results.length})</div>
+            {next && results.length > 0 && <div> &nbsp; Prepared for: </div>}
+            <div style={{color:'red'}}>&nbsp;&nbsp;{next} &nbsp; </div>
+        </div>} 
+
+        {/* Display filtered symbols */}
+        {results &&  <div  style={{width: '400px', maxHeight: '30vh', 'overflowY': 'scroll'}}>
+            {results.map((r,k)=>{
+                return <div key={k}>&nbsp; {r}&nbsp;&nbsp;</div>
+            })}
+        </div>}
+
+        {/* readOneSym info admin only */}
         <pre>{JSON.stringify(infoJson, null, 2)}</pre>
 
         {admin && <Users  logFlags = {props.logFlags} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd} corsServer={props.corsServer}/>}
