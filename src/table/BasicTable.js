@@ -797,7 +797,7 @@ const BasicTable = (props) => {
                   // if (cell.column.id === 'year') {
                   //   console.log ('render', row.values.symbol, cell.value)
                   // }
-                  return <td {...cell.getCellProps({style: {margin: '0px',  padding: '3px', color: getColor(cell.value, cell.column, row.values.symbol)}})}>{cell.render('Cell')}</td>
+                  return <td {...cell.getCellProps({style: {margin: '1px',  padding: '1px', color: getColor(cell.value, cell.column, row.values.symbol)}})}>{cell.render('Cell')}</td>
                 })}
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>

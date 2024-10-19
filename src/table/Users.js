@@ -119,6 +119,7 @@ function Users (props) {
   
     }
 
+    const ROW_SPACING = {padding: '2px', margin: '2px'}
 
     return (
         <div>
@@ -138,7 +139,7 @@ function Users (props) {
             <div>&nbsp;</div>
             {infoJson && Object.keys(infoJson).length > 0 && <pre>{JSON.stringify(infoJson, null, 2)}</pre>}
 
-            {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '45vh', 'overflowY': 'scroll'}}> 
+            {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}> 
                 <table>
                     <thead>
                     <tr>
@@ -152,9 +153,9 @@ function Users (props) {
                         {Object.keys(tbl).map((s, s1) =>{
                             return (
                             <tr key={s1}>
-                                <td>{s1}</td>
+                                <td style={ROW_SPACING}>{s1}</td>
                                 {Object.keys(tbl[s]).map((t, t1) => {
-                                    return (<td key={t1}>{tbl[s][t]}</td>)
+                                    return (<td style={ROW_SPACING} key={t1}>{tbl[s][t]}</td>)
                                 })}
                             </tr>
                         )

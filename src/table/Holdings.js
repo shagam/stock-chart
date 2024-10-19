@@ -262,6 +262,8 @@ function Holdings (props) {
     setSaveInFile (! saveInFile)
   }
 
+  const ROW_SPACING = {padding: '1px', margin: '1px'}
+
   return (
     <div style={{ border: '2px solid blue'}}> 
 
@@ -329,10 +331,10 @@ function Holdings (props) {
           {Object.keys(heldMasterObj).map((s, s1) =>{
             return (
             <tr key={s1}>
-              <td style={{width: '8px'}}>{s}</td>
+              <td style={{padding: '2px', margin: '1px', width: '8px'}}>{s}</td>
                 {etfArr.map((k,n)=>{
                   return (
-                    <td key={n}>
+                    <td key={n} style={{padding: '2px', margin: '1px'}}>
                       {heldMasterObj[s][k]}
                     </td>
                   )

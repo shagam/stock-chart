@@ -72,6 +72,8 @@ function LeverageETF (props) {
 
     }
 
+    const ROW_SPACING = {padding: '2px', margin: '2px'}
+
     return (
         <div>
             <div style = {{display: 'flex'}}>
@@ -106,15 +108,15 @@ function LeverageETF (props) {
                         {props.gainMap[pivotSym].y.map((date, index) =>{
                             return (
                             <tr key={index}>
-                                <td style={{width: '110px'}}>{props.gainMap[pivotSym].x[index]}  </td>
+                                <td style={{padding: '2px', margin: '2px', width:'120px'}} >{props.gainMap[pivotSym].x[index]}  </td>
 
-                                <td>{props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
-                                <td>{gainCalc[symArray[0]][index].toFixed(2)}</td>                                
-                                <td>{yearlGainCalc[symArray[0]][index].toFixed(2)}</td>
+                                <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
+                                <td style={ROW_SPACING}> {gainCalc[symArray[0]][index].toFixed(2)}</td>                                
+                                <td style={ROW_SPACING}> {yearlGainCalc[symArray[0]][index].toFixed(2)}</td>
 
-                                <td>{props.gainMap[symArray[1]].y[index].toFixed(2)}</td>
-                                <td>{gainCalc[symArray[1]][index].toFixed(2)}</td>  
-                                <td>{yearlGainCalc[symArray[1]][index].toFixed(2)}</td>
+                                <td style={ROW_SPACING}> {props.gainMap[symArray[1]].y[index].toFixed(2)}</td>
+                                <td style={ROW_SPACING}> {gainCalc[symArray[1]][index].toFixed(2)}</td>  
+                                <td style={ROW_SPACING}> {yearlGainCalc[symArray[1]][index].toFixed(2)}</td>
                             </tr>
                             )
                         })}

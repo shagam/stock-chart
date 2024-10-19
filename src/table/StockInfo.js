@@ -32,8 +32,8 @@ const StockInfo = (props) => {
                 Object.keys(props.stockInfo).map((infoName,i)=>{
                   return (
                       <tr  key={i}>
-                        <td style={{'color': 'ForestGreen', minWidth: '14rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
-                        <td style={{ border: `none`}} > {props.stockInfo[infoName]} </td> 
+                        <td style={{padding: '2px', margin: '2px', color: 'ForestGreen', minWidth: '14rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
+                        <td style={{padding: '2px', margin: '2px', border: `none`}} > {props.stockInfo[infoName]} </td> 
                       </tr>
                   )
                 })

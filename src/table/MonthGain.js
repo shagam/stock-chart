@@ -363,6 +363,8 @@ function MonthGain (props) {
      return '#0'  // black
   }
 
+  const ROW_SPACING = {padding: '2px', margin: '2px'}
+
   return (
     <div>
         <div style = {{display: 'flex'}}>
@@ -371,7 +373,7 @@ function MonthGain (props) {
         </div>
 
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Average monthly & weekly gain of {props.symbol}:  &nbsp; </h6>
-        
+
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style = {{display: 'flex'}}>
@@ -415,10 +417,10 @@ function MonthGain (props) {
               {weekGainArray_.map((s, s1) =>{
                   return (
                   <tr key={s1}>
-                      <td style={{width: '80px'}}>{s1}  </td> 
-                      {props.gainMap && props.gainMap[gainMapSym] && <td>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
-                      <td style= {{color: gainColor (s, true)}} color> {s.toFixed(4)} </td>
-                      <td>{yearsCollectedForAverage[s1]}</td>
+                      <td style={{padding: '2px', margin: '2px', width: '80px'}}>{s1}  </td> 
+                      {props.gainMap && props.gainMap[gainMapSym] && <td  style={{padding: '2px', margin: '2px'}}>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
+                      <td style= {{padding: '2px', margin: '2px', color: gainColor (s, true)}} color> {s.toFixed(4)} </td>
+                      <td style={{padding: '2px', margin: '2px'}}>{yearsCollectedForAverage[s1]}</td>
 
                   </tr>
                 )

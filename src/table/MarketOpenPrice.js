@@ -266,11 +266,11 @@ function MarketOpenPrice (props) {
                         {dateArray && dateArray.map((date, index) =>{
                             return (
                             <tr key={index}>
-                                <td style={{width: '100px'}}>{date}  </td> 
-                                <td>{openArr[index]}</td>
-                                <td>{closeArr[index]}</td>
-                                <td style={{color: gainColor((closeArr[index] / openArr[index]))}}>   {(closeArr[index] / openArr[index]).toFixed(4)}</td>
-                                <td style={{color: gainColor(openDivPrevClose[index])}}>   {openDivPrevClose[index].toFixed(5)}</td>
+                                <td style={{padding: '2px', margin: '2px', width: '100px'}}>{date}  </td> 
+                                <td style={{padding: '2px', margin: '2px'}}> {openArr[index]}</td>
+                                <td style={{padding: '2px', margin: '2px'}}> {closeArr[index]}</td>
+                                <td style={{padding: '2px', margin: '2px', color: gainColor((closeArr[index] / openArr[index]))}}>   {(closeArr[index] / openArr[index]).toFixed(4)}</td>
+                                <td style={{padding: '2px', margin: '2px', color: gainColor(openDivPrevClose[index])}}>   {openDivPrevClose[index].toFixed(5)}</td>
                             </tr>
                             )
                         })}

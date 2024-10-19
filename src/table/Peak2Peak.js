@@ -230,6 +230,8 @@ const Peak2PeakGui = (props) => {
     return 'black'
   }
 
+  const ROW_SPACING = {padding: '2px', margin: '2px'}
+
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
         <div> 
@@ -298,9 +300,9 @@ const Peak2PeakGui = (props) => {
                       return (
                       <tr key={s1}>
                           {/* <td style={{width: '120px'}}>{props.gainMap.bubbleLine.x[s]}  </td>  */}
-                          {<td>{s}</td>}
-                          {<td>{histogram[s]}</td>}
-                          {<td>{histogramLast[s]}</td>}
+                          {<td style={ROW_SPACING}>{s}</td>}
+                          {<td style={ROW_SPACING}>{histogram[s]}</td>}
+                          {<td style={ROW_SPACING}>{histogramLast[s]}</td>}
                       </tr>
                     )
                   })}

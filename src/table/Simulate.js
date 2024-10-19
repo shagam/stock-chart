@@ -742,10 +742,10 @@ const Simulate = (props) => {
                     {Object.keys(resultsArray).map((s, s1) =>{
                         return (
                         <tr key={s1} style={{ hei_ght: '10', margin: '0px',  padding: 'dense',}}>
-                            <td style={{width: '8px', background: colorfield(resultsArray[s])}}>{s}</td>                 
+                            <td style={{padding: '2px', margin: '2px', width: '8px', background: colorfield(resultsArray[s])}}>{s}</td>                 
                             {resultsArray[s].map((k,n)=>{
                             return (
-                                <td key={n}> {k} </td>
+                                <td key={n} style={{padding: '2px', margin: '2px'}}> {k} </td>
                             )
                             })
                         }
@@ -755,7 +755,7 @@ const Simulate = (props) => {
                 </tbody>
             </table>
             </div>
-
+            <hr/> 
             {results && <div> Last simulation info &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
         </div>
