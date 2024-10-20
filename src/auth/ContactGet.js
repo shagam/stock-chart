@@ -57,6 +57,8 @@ export default function ContactGet (props)  {
         // console.log (form.current)
         // console.log (localIpv4, city, countryName, countryCode)
     
+        localStorage.setItem('contactGet', Date.now()); // turn off reminder for 24 hours
+
         const ssl = true
         const PORT = 5000
         const corsServer = props.server //'dinagold.net'

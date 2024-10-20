@@ -180,6 +180,9 @@ const BasicTable = (props) => {
   else 
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
+  //** read last reminder mili */
+  const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGet')), []);
+
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
     const currentTime = getDateSec();
@@ -699,7 +702,7 @@ const BasicTable = (props) => {
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
-
+        {eliHome && Date.now() - contactGetMili > 1000 * 3600 * 24 && <div style={{color:'red'}}>ContactGet reminder</div>} 
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {<Link to="/generalLinks">Auxilary links</Link>} &nbsp;
         {eliHome && <Link to="/contactGet">ContactGet</Link>}
