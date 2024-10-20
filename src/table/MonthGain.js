@@ -389,7 +389,9 @@ function MonthGain (props) {
           <input type="checkbox" checked={LOG_Month}  onChange={setLog_toggle_month}  /> &nbsp;LOG_month &nbsp; &nbsp;
         </div>}
 
-        {/* <br></br>  */}
+        {/* Month gain average */}
+
+        <div>&nbsp;</div>
         {Object.keys(mGainObj).length > 0 && <div>stockCount={Object.keys(props.gainMap).length} yearlyGain={yearGain.toFixed(3)} </div>}
         { Object.keys(mGainObj).map((oneKey,i)=>{
           return (
