@@ -181,7 +181,7 @@ const BasicTable = (props) => {
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
   //** read last reminder mili */
-  const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGet')), []);
+  const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
@@ -697,12 +697,15 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
+
+        {eliHome && Date.now() - contactGetMili > 1000 * 3600 * 24 && <div style={{color:'red'}}>ContactGet reminder</div>} 
+
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
         <Link to="/about">About</Link>&nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
-        {eliHome && Date.now() - contactGetMili > 1000 * 3600 * 24 && <div style={{color:'red'}}>ContactGet reminder</div>} 
+
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {<Link to="/generalLinks">Auxilary links</Link>} &nbsp;
         {eliHome && <Link to="/contactGet">ContactGet</Link>}
