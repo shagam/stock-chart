@@ -9,7 +9,7 @@ import "./StockChart.css";
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './utils/Date';
 import { keys } from '@material-ui/core/styles/createBreakpoints';
-
+import {IpContext, getIpInfo} from './contexts/IpContext';
 import Plot from 'react-plotly.js';
 // const Plot = lazy(() => import('react-plotly.js').then((module) => ({default: module.Plot})))
 
@@ -22,6 +22,7 @@ const StockChart = (props) => {
 
   var first = false;
 
+  const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
   const [chartFlag, setChartFlag] = useState(first); // hide / show page
   const [multi, setMulti] = useState(true);
   const [showRanges, setShowRanges] = useState();
@@ -412,7 +413,7 @@ const StockChart = (props) => {
         <div id = 'chart_id'>
         {/* yaxis={'title': 'x-axis','fixedrange':True, 'autorange': false},
        yaxis={'title': 'y-axis','fixedrange':True}) */}
-          {props.isMobile && <Plot  data={gainChart} 
+          {(os==='iPhone' || os ==='Android') && <Plot  data={gainChart} 
             layout={{ width: 700, height: 350, title: title, staticPlot: true, yaxis: {fixedrange: false}  }}
              config={{staticPlot: true, 'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
           {! props.isMobile && <Plot  data={gainChart} 

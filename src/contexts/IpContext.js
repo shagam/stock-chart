@@ -91,8 +91,11 @@ function IpContext  () {
       setOs('Linux')
     else if (userAgent.includes('Windows'))
       setOs('Windows')
+    else if (userAgent.includes('iPhone'))
+      setOs ('iPhone')
     else if (/iPhone|iPad|iPod/i.test(userAgent))
       setOs ('iOS')
+
   }
 
   // const getIp_geolocation = async () => {
