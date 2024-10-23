@@ -454,20 +454,6 @@ const Simulate = (props) => {
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
   
-
-            if (! resultsArray.buyCount)
-                resultsArray.buyCount = [];
-            resultsArray.buyCount.push(buyCount);
-
-            if (! resultsArray.sellCount)
-                resultsArray.sellCount = []
-            resultsArray.sellCount.push(sellCount);
-
-            if (! resultsArray.tradeSkipCount)
-                resultsArray.tradeSkipCount = [];
-            resultsArray.tradeSkipCount.push(tradeSkipCount)
-
-
             // if (! resultsArray.portionMax)
             //     resultsArray.portionMax = [];
             // resultsArray.portionMax.push(portionMax.toFixed(3))
@@ -593,7 +579,20 @@ const Simulate = (props) => {
                 resultsArray.moneyMarketInit_$ = [];
             resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
 
-            
+
+            if (! resultsArray.buyCount)
+                resultsArray.buyCount = [];
+            resultsArray.buyCount.push(buyCount);
+
+            if (! resultsArray.sellCount)
+                resultsArray.sellCount = []
+            resultsArray.sellCount.push(sellCount);
+
+            if (! resultsArray.tradeSkipCount)
+                resultsArray.tradeSkipCount = [];
+            resultsArray.tradeSkipCount.push(tradeSkipCount)
+
+
 
             // if (! resultsArray.dateStart)
             //     resultsArray.dateStart = []
