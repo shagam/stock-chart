@@ -301,7 +301,7 @@ const Simulate = (props) => {
 
 
         //**  optimize loop */
-        for (let i = oldestIndex - 53; i > 0; i--) {
+        for (let i = oldestIndex; i > 0; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
             if (i === 2) {
