@@ -58,8 +58,8 @@ const Simulate = (props) => {
 
     const [portionWeekGain, setPortionWeekGain] = useState (-1);
 
-
-
+    const [logRecords, setLogRecords] = useState({}) // log of trades
+    const [logRecordsKeys, setLogRecordsKeys] = useState([]) 
 
     const [results, setResults] = useState ();
     const [err, setErr] =  useState ();
@@ -381,14 +381,27 @@ const Simulate = (props) => {
                     if (i < XValues.length && i < bubbleLine.y.length)
                         priceDivBubble = YValues[i] / bubbleLine.y[i]
 
-                    console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
-                    //  'portionBefore=' + portionCurrent.toFixed(3),
-                        'price/bubble=' + priceDivBubble.toFixed(2),
-                        'portion=' + Number(targetPortion).toFixed(3),
-                        'accountVal='+ accountVal.toFixed(2),
-                    //  'stockValue=', stockCount * price,
-                    //  'moneyMarkt=', moneyMarket.toFixed(2),
-                    ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2))
+                //     console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
+                //     //  'portionBefore=' + portionCurrent.toFixed(3),
+                //         'price/bubble=' + priceDivBubble.toFixed(2),
+                //         'portion=' + Number(targetPortion).toFixed(3),
+                //         'accountVal='+ accountVal.toFixed(2),
+                //     //  'stockValue=', stockCount * price,
+                //     //  'moneyMarkt=', moneyMarket.toFixed(2),
+                //     ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2),
+                //     'stockCount=' + stockCount.toFixed(2)
+                // )
+                logRecords[Number(i)] = {
+                    date:  XValues[i],
+                    price:  price.toFixed(2),
+                    'price/bubble': priceDivBubble.toFixed(2),
+                    portion: Number(targetPortion).toFixed(3),
+                    accountVal: accountVal.toFixed(2),
+                    buySell: buySell,
+                    stockToTrade: stockToTrade.toFixed(2),
+                    // tradeSum: (stockCount * portionDiff * price).toFixed(2),
+                    stockCount: stockCount.toFixed(2)
+                }
                 }
 
             }
@@ -408,6 +421,7 @@ const Simulate = (props) => {
             break;
         }
         }
+        setLogRecordsKeys(Object.keys(logRecords))
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
         console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
@@ -757,6 +771,36 @@ const Simulate = (props) => {
             <hr/> 
             {results && <div> Last simulation info &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
+
+            {/* Disply trade log */}
+            {logRecordsKeys.length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
+                <table>
+                    <thead>
+                        <tr>
+                            {Object.keys(logRecords[logRecordsKeys[0]]).map((h,h1) => {
+                                return (
+                                    <th key={h1}>{h}</th>
+                                )
+                            })}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {logRecordsKeys.map((s, s1) =>{
+                            return (
+                            <tr key={s1}>
+                                {Object.keys(logRecords[s]).map((a,a1) => {
+                                    return (
+                                        <td key={a1} style={{padding: '2px', margin: '2px'}} >{logRecords[s][a]}</td>
+                                    )
+                                })}
+                            </tr>
+                            )
+                        })}
+                    </tbody>
+
+                </table>
+            </div>
+            }
         </div>
     )
  }
