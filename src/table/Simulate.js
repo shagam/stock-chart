@@ -306,7 +306,7 @@ const Simulate = (props) => {
         for (let i = oldestIndex; i > 0; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
-            try {
+            // try {
                 //* monthGain weekGain optimize */
                 if (optimizeWeekGain && props.monthGainData.weekGainArray) {
                     targetPortion =  optimizeMonGain_calc (props.stockChartXValues, i, aggressivePortionInit, price)         
@@ -389,18 +389,39 @@ const Simulate = (props) => {
                 //     ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2),
                 //     'stockCount=' + stockCount.toFixed(2)
                 // )
-                logRecords[XValues[i]] = {
+
+
+                //** calc weekGain for week */
+                var weekGain = -1
+                if (optimizeWeekGain) {
+                    const weekNum = weekOfYearGet (XValues, i) 
+                    if (weekNum !== -1) //** not found */
+                        weekGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
+                }
+
+                const rec = {
                     date:  XValues[i].replace(/-/g,'.'),
                     price:  price.toFixed(2),
                     'price / bubble': priceDivBubble.toFixed(2),
+                    weekGain: weekGain.toFixed(4),
                     portion: Number(targetPortion).toFixed(3),
                     'account Value': accountVal.toFixed(2),
                     'buy Sell': buySell,
                     'stocks after': stockCount.toFixed(3),
                     'stocks Traded': stockToTrade.toFixed(3),
+
                     index: i,
                     // tradeSum: (stockCount * portionDiff * price).toFixed(2),   
                 }
+                
+                // remove non relevant attributes from log
+                if (! optimizeBubble)
+                    delete rec['price / bubble']
+                if (! optimizeWeekGain)
+                    delete rec.weekGain
+
+                logRecords[XValues[i]] = rec;
+                
             }
             else
             tradeSkipCount ++;
@@ -412,11 +433,11 @@ const Simulate = (props) => {
             if (LOG &&  i > YValues.length - startWeek && i < YValues.length - startWeek - 10)
                 console.log (props.symbol, 'middle i=', i, 'value=', accountVal.toFixed(2 ), 'count=', stockCount.toFixed(2),
                      'tradeCount=', stockToTrade.toFixed(2), 'price=', price, 'moneyMarket=', moneyMarket.toFixed(2))
-        } catch (e) {
-            props.errorAdd([props.symbol, 'i=' + i,  XValues[i], 'symulate exception', e.message])
-            console.log('exception i='+ i + '  %c' + e.message, 'background: #fff; color: #ee3344');
-            break;
-        }
+        // } catch (e) {
+        //     props.errorAdd([props.symbol, 'i=' + i,  XValues[i], 'symulate exception', e.message])
+        //     console.log('exception i='+ i + '  %c' + e.message, 'background: #fff; color: #ee3344');
+        //     break;
+        // }
         }
         setLogRecordsKeys(Object.keys(logRecords))
 
