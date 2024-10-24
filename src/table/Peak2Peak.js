@@ -301,13 +301,13 @@ const Peak2PeakGui = (props) => {
 
             {Object.keys(histogram).length > 0 && <div><input type="checkbox" checked={histogramShow}  onChange={() => setHistogramShow (! histogramShow)} /> &nbsp;histogram&nbsp;</div> }
 
-            {histogramShow && Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'300px', overflow:'auto'}}>
+            {histogramShow && Object.keys(histogram).length > 0 && <div style={{width: '450px', height:'300px', overflow:'auto'}}>
 
             {/* <pre>{JSON.stringify(histogram, null, 2)}</pre> */}
             <table>
               <thead>
                 <tr>
-                  <th>range </th>
+                  <th>price / bubblePrice </th>
                   <th>frequency,count</th>
                   <th>lastDate</th>
                 </tr>
