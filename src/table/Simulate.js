@@ -239,7 +239,7 @@ const Simulate = (props) => {
             return
         }
 
-        const oldestIndex = bubbleLine ? bubbleLine.y.length - 1 - startWeek : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
+        var oldestIndex = bubbleLine ? bubbleLine.y.length - 1 - startWeek : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
 
         var priceInit = YValues[oldestIndex]  // begining price // default oldest
         var price =  priceInit
@@ -300,13 +300,12 @@ const Simulate = (props) => {
         var portionMax = 0;
 
 
-        //**  optimize loop */
+        //**  optimize loop from oldest towards latest */
+        if (optimizeWeekGain)
+            oldestIndex -= 53 // skip first year
         for (let i = oldestIndex; i > 0; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
-            if (i === 2) {
-                console.log (i)
-            }
             try {
                 //* monthGain weekGain optimize */
                 if (optimizeWeekGain && props.monthGainData.weekGainArray) {
@@ -375,10 +374,9 @@ const Simulate = (props) => {
                     console.log ('accountVal trade diff, before=', accountValBeforeTrade.toFixed(2), ' after=', accountVal.toFixed(2))
                 }
 
-                //** log transaction */
-                
+                //** log transaction */                   
                 var priceDivBubble = -1
-                if (i < XValues.length && i < bubbleLine.y.length)
+                if (optimizeBubble && i < XValues.length && i < bubbleLine.y.length)
                     priceDivBubble = YValues[i] / bubbleLine.y[i]
 
                 //     console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
