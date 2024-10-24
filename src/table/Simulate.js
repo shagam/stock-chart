@@ -393,14 +393,14 @@ const Simulate = (props) => {
                 // )
                 logRecords[XValues[i]] = {
                     date:  XValues[i].replace(/-/g,'.'),
-                    index: i,
                     price:  price.toFixed(2),
                     'price / bubble': priceDivBubble.toFixed(2),
                     portion: Number(targetPortion).toFixed(3),
                     'account Value': accountVal.toFixed(2),
                     'buy Sell': buySell,
                     'stocks after': stockCount.toFixed(3),
-                    'stocks Trade': stockToTrade.toFixed(3),
+                    'stocks Traded': stockToTrade.toFixed(3),
+                    index: i,
                     // tradeSum: (stockCount * portionDiff * price).toFixed(2),   
                 }
             }
@@ -767,13 +767,15 @@ const Simulate = (props) => {
                 </tbody>
             </table>
             </div>
+
             <hr/> 
-            {results && <div> Last simulation info &nbsp;</div>}
-            <pre>{JSON.stringify(results, null, 2)}</pre>
+
+            {/* {eliHome && results && <div> Last simulation info &nbsp;</div>}
+            {eliHome && <pre>{JSON.stringify(results, null, 2)}</pre>} */}
 
 
             {/* Disply trade log */}
-            <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;log_trade&nbsp; 
+            {logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;trade_log&nbsp; </div>}
 
             {logTrade && logRecordsKeys.length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
                 <table>
@@ -792,7 +794,7 @@ const Simulate = (props) => {
                             <tr key={s1}>
                                 {Object.keys(logRecords[s]).map((a,a1) => {
                                     return (
-                                        <td key={a1} style={{padding: '2px', margin: '2px'}} >{logRecords[s][a]}</td>
+                                        <td key={a1} style={{padding: '3px', margin: '3px'}} >{logRecords[s][a]}</td>
                                     )
                                 })}
                             </tr>
