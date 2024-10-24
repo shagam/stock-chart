@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {  useAuth, logout } from '../contexts/AuthContext';
+import {IpContext} from '../contexts/IpContext';
 // import { toDate } from "date-fns";
 // import {format} from "date-fns"
 // import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
@@ -16,7 +17,7 @@ import {beep2} from '../utils/ErrorList'
 const Peak2PeakGui = (props) => {
 
   const { currentUser, admin, logout } = useAuth();
-  
+  const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip, os} = IpContext();
   // props.symbol
   // props.rows
   // props.startDate
@@ -45,6 +46,9 @@ const Peak2PeakGui = (props) => {
     const [err, setErr] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
     const [histogram, setHistogram] = useState({})
+    const [histogramShow, setHistogramShow] = useState ();
+    const [peaksShow, setPeaksShow] = useState ();
+
     const [histogramLast, setHistogramLast] = useState({})
     var bubbleline = {}
 
@@ -293,9 +297,11 @@ const Peak2PeakGui = (props) => {
            <hr/>
             {/* Histogram of bubble proximity */}
 
-            {Object.keys(histogram).length > 0 &&<div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>}
+            {Object.keys(histogram).length > 0 &&<div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Bubble proximity Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>}
 
-            {Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'300px', overflow:'auto'}}>
+            {Object.keys(histogram).length > 0 && <div><input type="checkbox" checked={histogramShow}  onChange={() => setHistogramShow (! histogramShow)} /> &nbsp;histogram&nbsp;</div> }
+
+            {histogramShow && Object.keys(histogram).length > 0 && <div style={{width: '350px', height:'300px', overflow:'auto'}}>
 
             {/* <pre>{JSON.stringify(histogram, null, 2)}</pre> */}
             <table>
@@ -357,7 +363,9 @@ const Peak2PeakGui = (props) => {
           </div>}  
 
           {/* Bubble info */}
-           {results && <div> 
+          <hr/>
+          {eliHome && results && <div><input type="checkbox" checked={peaksShow}  onChange={() => setPeaksShow (! peaksShow)} /> &nbsp;peaks list&nbsp; </div>}
+          {eliHome && peaksShow && results && <div> 
            <hr/> 
             <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {props.symbol}  Bubbles list info </div>
             <pre>{JSON.stringify(results, null, 2)}</pre>
