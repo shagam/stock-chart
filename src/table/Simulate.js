@@ -376,10 +376,10 @@ const Simulate = (props) => {
                 }
 
                 //** log transaction */
-                if (logTrade) {
-                    var priceDivBubble = -1
-                    if (i < XValues.length && i < bubbleLine.y.length)
-                        priceDivBubble = YValues[i] / bubbleLine.y[i]
+                
+                var priceDivBubble = -1
+                if (i < XValues.length && i < bubbleLine.y.length)
+                    priceDivBubble = YValues[i] / bubbleLine.y[i]
 
                 //     console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
                 //     //  'portionBefore=' + portionCurrent.toFixed(3),
@@ -391,19 +391,18 @@ const Simulate = (props) => {
                 //     ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2),
                 //     'stockCount=' + stockCount.toFixed(2)
                 // )
-                logRecords[Number(i)] = {
-                    date:  XValues[i],
+                logRecords[XValues[i]] = {
+                    date:  XValues[i].replace(/-/g,'.'),
+                    index: i,
                     price:  price.toFixed(2),
-                    'price/bubble': priceDivBubble.toFixed(2),
+                    'price / bubble': priceDivBubble.toFixed(2),
                     portion: Number(targetPortion).toFixed(3),
-                    accountVal: accountVal.toFixed(2),
-                    buySell: buySell,
-                    stockToTrade: stockToTrade.toFixed(2),
-                    // tradeSum: (stockCount * portionDiff * price).toFixed(2),
-                    stockCount: stockCount.toFixed(2)
+                    'account Value': accountVal.toFixed(2),
+                    'buy Sell': buySell,
+                    'stocks after': stockCount.toFixed(3),
+                    'stocks Trade': stockToTrade.toFixed(3),
+                    // tradeSum: (stockCount * portionDiff * price).toFixed(2),   
                 }
-                }
-
             }
             else
             tradeSkipCount ++;
@@ -676,7 +675,7 @@ const Simulate = (props) => {
                     </div>
               
                   {/* log checkboxes */}
-                { ! isMobile && <div><input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;log_trade&nbsp;  </div>}
+
                 { ! isMobile && (optimizeBubble || optimizeWeekGain) && <div><input type="checkbox" checked={logOptimize}  onChange={() => setLogOptimize (! logOptimize)} /> log_optimize &nbsp;</div>}
             </div>  
  
@@ -772,8 +771,11 @@ const Simulate = (props) => {
             {results && <div> Last simulation info &nbsp;</div>}
             <pre>{JSON.stringify(results, null, 2)}</pre>
 
+
             {/* Disply trade log */}
-            {logRecordsKeys.length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
+            <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;log_trade&nbsp; 
+
+            {logTrade && logRecordsKeys.length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
                 <table>
                     <thead>
                         <tr>
@@ -799,8 +801,8 @@ const Simulate = (props) => {
                     </tbody>
 
                 </table>
-            </div>
-            }
+            </div> }
+            <hr/> 
         </div>
     )
  }
