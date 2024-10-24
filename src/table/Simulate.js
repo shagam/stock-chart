@@ -65,6 +65,8 @@ const Simulate = (props) => {
     const [err, setErr] =  useState ();
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
+    const [tradeInfoShow, setTradeInfoShow] = useState (true);
+
 
     const historyLength = props.stockChartXValues.length;
 
@@ -764,7 +766,12 @@ const Simulate = (props) => {
 
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
-            <div style={{maxWidth:'100vw', overflow:'auto'}}>
+
+            {/* Simulation results */}
+            {/* tradeInfoShow */}
+
+            {Object.keys(resultsArray).length > 0 && <div> <input type="checkbox" checked={tradeInfoShow}  onChange={() => setTradeInfoShow (! tradeInfoShow)} /> &nbsp;tradeInfoShow &nbsp; </div>}
+            {tradeInfoShow && <div style={{maxWidth:'100vw', overflow:'auto'}}>
             <table>
                 <thead>
 
@@ -785,7 +792,7 @@ const Simulate = (props) => {
                     })}
                 </tbody>
             </table>
-            </div>
+            </div>}
 
             <hr/> 
 
