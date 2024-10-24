@@ -46,8 +46,8 @@ const Simulate = (props) => {
 
     // weekGain params
     const [portionPercent, setPortionPercent] = useState (90); // default 80%
-    const [weekGainEnhance, setWeekGainEnhance] = useState (6);
-    const [weekGainAhead, setWeekGainAhead] = useState (6);
+    const [weekGainEnhance, setWeekGainEnhance] = useState (7);
+    const [weekGainAhead, setWeekGainAhead] = useState (3);
 
 
     const [accountValueInit, setAccountValue] = useState (1000); //
