@@ -114,7 +114,12 @@ const  Config = (props) => {
           {eliHome && <div>ip={ip}  &nbsp; os={os}</div>}
           {eliHome && <div>Browser:  {userAgent} </div>}
           <div style={{color: 'red'}}> {err} </div>
-
+          
+          <div>&nbsp; </div>
+          <p>Platform:  {navigator.platform} </p> 
+          <p>Browser CodeName: { navigator.appCodeName}</p>
+          <p>Browser Language: {navigator.language} </p> 
+          {/* <p> User-agent header:  {navigator.userAgent} </p> */}
         </div>
       }
 
