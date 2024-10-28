@@ -527,21 +527,21 @@ const Simulate = (props) => {
             resultsArray.weekGainAhead.push (weekGainAhead)
 
 
-            if (! resultsArray['price_/_bubble_HIGH'])
-                resultsArray['price_/_bubble_HIGH'] = [];
-            resultsArray['price_/_bubble_HIGH'].push(priceDivBubble_HIGH)
+            if (! resultsArray['price_/_bubble_high'])
+                resultsArray['price_/_bubble_high'] = [];
+            resultsArray['price_/_bubble_high'].push(priceDivBubble_HIGH)
 
-            if (! resultsArray['price_/_bubble_LOW'])
-                resultsArray['price_/_bubble_LOW'] = [];
-            resultsArray['price_/_bubble_LOW'].push(priceDivBubble_LOW);
+            if (! resultsArray['price_/_bubble_low'])
+                resultsArray['price_/_bubble_low'] = [];
+            resultsArray['price_/_bubble_low'].push(priceDivBubble_LOW);
 
-            if (! resultsArray.PORTION_HIGH)
-                resultsArray.PORTION_HIGH = [];
-            resultsArray.PORTION_HIGH.push(PORTION_HIGH)
+            if (! resultsArray.portion_high)
+                resultsArray.portion_high = [];
+            resultsArray.portion_high.push(PORTION_HIGH)
             
-            if (! resultsArray.PORTION_LOW)
-                resultsArray.PORTION_LOW = [];
-            resultsArray.PORTION_LOW.push(PORTION_LOW);
+            if (! resultsArray.portion_low)
+                resultsArray.portion_low = [];
+            resultsArray.portion_low.push(PORTION_LOW);
 
 
 
