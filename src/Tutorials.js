@@ -34,7 +34,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/-K2cdzIoJeQ">Bubble-line </a></td><td>Stock market bubble & crash prediction </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops of 2008, 2020, 2022 </td> 
+                        <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/nWgoumPzsRs">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
@@ -44,7 +44,7 @@ function Tutorials () {
                              stocks that gains more than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/0sZ0QK1nwHo">Month-gain</a></td><td>Months with highest gain</td> 
+                        <td><a href="https://youtu.be/rH_4gEgvw2A">Month-gain</a></td><td>Is there a systematic difference months gain</td> 
                     </tr>
                                
                     <tr>
@@ -55,7 +55,7 @@ function Tutorials () {
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/Oe3_m3veTCo">Trade-simulator</a></td><td>Can we beat the gain of QQQ?</td> 
+                        <td><a href="https://youtu.be/W3ky1y4mYeM">Trade-simulator</a></td><td>Can we beat the gain of QQQ?</td> 
                     </tr>
 
                     <tr>
