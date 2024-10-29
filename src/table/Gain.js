@@ -105,7 +105,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
     if (weekly)
       API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_${periodCapital}_ADJUSTED`;
     else
-      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY`;
+      API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED`;
 
     API_Call += `&symbol=${sym}&outputsize=full&apikey=${API_KEY}`
 
@@ -281,6 +281,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 console.log (chartData)
               } 
           
+              // if ( weekly)
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
                   weekly, logFlags, true, new Date(2000, 1, 1),  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, false)  //setCalcResults, setCalcInfo
 

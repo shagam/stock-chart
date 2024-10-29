@@ -51,12 +51,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           results['err'] = 'symbol Undefined. click <gain> for some symbol'
         return;
       }
-      if (! weekly) {
-          results['err'] = 'calc only for weekly mode '
-        alert('calc only for weekly mode ')
-        return;
-      }
-
+    
       const d_2001_year = d_2001_date.getFullYear();
       const d_2001_mon = d_2001_date.getMonth() + 1;
       const d_2001_day = d_2001_date.getDate();
@@ -94,8 +89,15 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const index2001 = quasiTop (symbol, d_2001_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
       const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
       const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
- 
-      const weeksDiff = index2008 - index2022
+
+      //** calc yearlyGain for daily as well */
+      const peak_2008_DateStr = stockChartXValues[index2008].split('-')
+      const peak_2022_DateStr = stockChartXValues[index2022].split('-')
+
+      const peak_2008_mili = new Date(peak_2008_DateStr[0], peak_2008_DateStr[1], peak_2008_DateStr[2]).getTime()
+      const peak_2022_mili = new Date(peak_2022_DateStr[0], peak_2022_DateStr[1], peak_2022_DateStr[2]).getTime()
+      const weeksDiff = (peak_2022_mili - peak_2008_mili) / (1000 * 3600 * 24 * 7)
+
       const yearsDiff = Number (weeksDiff/52).toFixed (2)
       const gain = Number (stockChartYValues[index2022] / stockChartYValues[index2008])
 

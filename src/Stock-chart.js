@@ -194,7 +194,12 @@ const StockChart = (props) => {
     const oldest = yAfterClip[yAfterClip.length - 1] 
     oldestValArray[symbol] = oldest;
 
-    const weeksDiff = yAfterClip.length
+    const oldestDateStr = xAfterClip[xAfterClip.length - 1]
+    const oldestDateSplit = oldestDateStr.split('-')
+    const oldestDate = new Date(oldestDateSplit[0], oldestDateSplit[1], oldestDateSplit[2])
+    const oldestMili = oldestDate.getTime()
+
+    const weeksDiff = (Date.now() - oldestMili) / (1000 * 3600 * 24 * 7)
     const gainSingle = newest / oldest;
     const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
     title = symbol + ' (' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
@@ -217,10 +222,9 @@ const StockChart = (props) => {
   
   const singleChart = [buildOneChart (props.stockChartXValues, props.stockChartYValues, props.StockSymbol)];
 
- 
+  
+  //** calc yearlyGain for daily as well */
   function yearlyGain (gain, weeksDiff) {
-    if (! props.weekly)
-      return -1
     const yearsDiff = Number (weeksDiff/52).toFixed (2)
     const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
     return yearlyGain;

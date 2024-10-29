@@ -738,7 +738,7 @@ const BasicTable = (props) => {
           &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
-     
+          {eliHome && <div> &nbsp; <input  type="checkbox" checked={weekly}  onChange={()=> setWeekly(! weekly)} /> weekly &nbsp;&nbsp;</div>}
          </div>
      
       {/* insert sym, filter */}
