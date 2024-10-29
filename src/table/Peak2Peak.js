@@ -189,7 +189,7 @@ const Peak2PeakGui = (props) => {
     var yBubbleLine = []
 
     //** extrapolate value of today */
-    yBubbleLine[0] = results.v_2022_value * results.weeklyGain ** results.i_2022_index // weekCount 
+    yBubbleLine[0] = results.v_2022_value * results.timeUnitGain ** results.i_2022_index // weekCount 
 
     const startDateMili = startDate.getTime()
 
@@ -203,7 +203,8 @@ const Peak2PeakGui = (props) => {
           break; // stop loop within 8 days of startDate (oldest bubble point)
         }
       }
-      yBubbleLine.push(yBubbleLine[i] / results.weeklyGain);
+
+      yBubbleLine.push(yBubbleLine[i] / results.timeUnitGain);
     }  
 
     if (! props.gainMap.bubbleLine) {
