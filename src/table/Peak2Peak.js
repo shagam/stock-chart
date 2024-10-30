@@ -213,7 +213,8 @@ const Peak2PeakGui = (props) => {
       setBubbleLineFlag(true)
 
       if (Object.keys(props.gainMap).length > 1) {
-        props.errorAdd(['Bubble-line only for sinle stock. <reloadPage> and try again'])
+        setErr('Bubble-line only for single stock. <reloadPage> and try again')
+        // props.errorAdd(['Bubble-line only for single stock. <reloadPage> and try again'])
       }
     }
 
