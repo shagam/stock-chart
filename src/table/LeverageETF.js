@@ -89,6 +89,7 @@ function LeverageETF (props) {
             </div>
 
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Compare leverage ETF (like TQQQ)  with base ETF (QQQ) </h6>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> gain === price / oldest price</h6>
 
             <div style={{color: 'red'}}> {err} </div>
             
