@@ -1,5 +1,5 @@
 import React, {useState, } from 'react'
-import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
+import {yearsDifference, todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
 
 
 
@@ -91,16 +91,9 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
 
       //** calc yearlyGain for daily as well */
-      const peak_2008_DateStr = stockChartXValues[index2008].split('-')
-      const peak_2022_DateStr = stockChartXValues[index2022].split('-')
-
-      const peak_2008_mili = new Date(peak_2008_DateStr[0], peak_2008_DateStr[1], peak_2008_DateStr[2]).getTime()
-      const peak_2022_mili = new Date(peak_2022_DateStr[0], peak_2022_DateStr[1], peak_2022_DateStr[2]).getTime()
-      const weeksDiff = (peak_2022_mili - peak_2008_mili) / (1000 * 3600 * 24 * 7)
-
-      const yearsDiff = Number (weeksDiff/52).toFixed (2)
+      const yearsDiff = yearsDifference(stockChartXValues[index2008], stockChartXValues[index2022] )
+      const weeksDiff = yearsDiff * 52.3
       const gain = Number (stockChartYValues[index2022] / stockChartYValues[index2008])
-
       const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
       const weeklyGain = Number (gain ** (1 / weeksDiff))
       const timeUnitGain = Number(gain ** (1 / (index2008 - index2022)))
