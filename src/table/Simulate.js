@@ -491,18 +491,18 @@ const Simulate = (props) => {
                 resultsArray.gainOfAccount = []
             resultsArray.gainOfAccount.push(gain)
 
-            if (! resultsArray.yearlyGain)
-                resultsArray.yearlyGain = [] 
-            resultsArray.yearlyGain.push(yearlyGainDuringPeriod.toFixed(2))
+            // if (! resultsArray.yearlyGain)
+            //     resultsArray.yearlyGain = [] 
+            // resultsArray.yearlyGain.push(yearlyGainDuringPeriod.toFixed(2))
 
 
             if (! resultsArray.rawGainOfStock)
                 resultsArray.rawGainOfStock = []
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
-            if (! resultsArray.stockGainYearly)
-                resultsArray.stockGainYearly = []
-            resultsArray.stockGainYearly.push(stockGainYearly.toFixed(2))
+            // if (! resultsArray.stockGainYearly)
+            //     resultsArray.stockGainYearly = []
+            // resultsArray.stockGainYearly.push(stockGainYearly.toFixed(2))
   
             // if (! resultsArray.portionMax)
             //     resultsArray.portionMax = [];
