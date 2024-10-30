@@ -138,7 +138,7 @@ const BasicTable = (props) => {
 
   const [stockInfo, setStockInfo] = useState ('');
 
-  const [weekly, setWeekly] = useState (true);
+  const [daily, setDaily] = useState (false);
   const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
 
@@ -187,7 +187,7 @@ const BasicTable = (props) => {
   useEffect (() => { 
     // setGainMap([]);
     // setChartSymbol()
-  }, [weekly]) 
+  }, [daily]) 
 
 
       // const cafeList = document.querySelector("#gain-history")
@@ -419,7 +419,7 @@ const BasicTable = (props) => {
       delete gainMap['bubbleLine']
     }
 
-    gain (sym, rows, errorAdd, props.logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
+    gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
 
       if (singleSym)
@@ -739,13 +739,12 @@ const BasicTable = (props) => {
         {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>}
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
-          {/* {admin && <div> <input  type="checkbox" checked={weekly} onChange={() => {setWeekly(!weekly)}} /> weekly &nbsp;&nbsp; </div>  } */}
 
           {<div> <button onClick={gainAll} > gainAll </button> </div>}
           &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
-          {<div>&nbsp;<input  type="checkbox" checked={weekly}  onChange={()=> setWeekly(! weekly)} /> weekly &nbsp;&nbsp;</div>}
+          {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily &nbsp;&nbsp;</div>}
          </div>
      
       {/* insert sym, filter */}
@@ -833,7 +832,7 @@ const BasicTable = (props) => {
       {showUrl &&  <h4 style={{'color':'green'}}>stocks-compare.netlify.app</h4>}
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {weekly}
+          gainMap = {gainMap} isMobile = {isMobile} weekly = {! daily}
            logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
@@ -898,10 +897,10 @@ const BasicTable = (props) => {
             {/* <div> &nbsp; </div> */}
             {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={weekly}/>}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={! daily}/>}
 
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={weekly} setBubbleLine={setBubbleLine}  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
+                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
 
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}

@@ -42,7 +42,7 @@ const Simulate = (props) => {
     const [chartShow, setChartShow] = useState(false)
     const [priceDivBubble_LOW, setPriceDivBubble_LOW] = useState(0.65)
     const [priceDivBubble_HIGH, setPriceDivBubble_HIGH] = useState(0.9)
-    const [PORTION_HIGH, set_PORTION_HIGH] = useState(0.98)
+    const [PORTION_HIGH, set_PORTION_HIGH] = useState(1)
     const [PORTION_LOW, set_PORTION_LOW] = useState(0.1)
 
     // weekGain params
@@ -286,7 +286,8 @@ const Simulate = (props) => {
             console.log ('weeklyInterest=', weeklyInterest, 'interest=', interestRate) // on moneyMarket
 
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
-        // const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
+        const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
+        const stockGainYearly = stockGainDuringPeriod ** (1 / yearsDiff)
 
         var stockToTrade;
         var buyCount = 0;
@@ -447,7 +448,7 @@ const Simulate = (props) => {
         setLogRecordsKeys(Object.keys(logRecords))
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
-        const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
+        // const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
         const yearlyGainDuringPeriod = gain ** (1/yearsDiff)
 
         console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
@@ -483,7 +484,8 @@ const Simulate = (props) => {
 
             if (! resultsArray.extraGain)  // calc gain obove stock
                 resultsArray.extraGain = []
-            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3))
+            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3)) //** extra gain */
+
 
             if (! resultsArray.gainOfAccount)
                 resultsArray.gainOfAccount = []
@@ -493,10 +495,14 @@ const Simulate = (props) => {
                 resultsArray.yearlyGain = [] 
             resultsArray.yearlyGain.push(yearlyGainDuringPeriod.toFixed(2))
 
+
             if (! resultsArray.rawGainOfStock)
                 resultsArray.rawGainOfStock = []
             resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
+            if (! resultsArray.stockGainYearly)
+                resultsArray.stockGainYearly = []
+            resultsArray.stockGainYearly.push(stockGainYearly.toFixed(2))
   
             // if (! resultsArray.portionMax)
             //     resultsArray.portionMax = [];
