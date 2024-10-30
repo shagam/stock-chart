@@ -194,78 +194,9 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
               // collect compensation vars
               var splitsIndexArray = [];
+              var chartIndex;
 
-              // compensate for splits
-              if (! isAdjusted ()) {// high limit no need for compensation
-                console.log ('adjustSplits')
-                for (let splitNum = 0; splitNum < splitArrayList.length; splitNum++) {
-                  var jump = splitArrayList[splitNum].ratio;
-                  // console.log (JSON.stringify (splitArrayList[splitNum]));
-                  const splitDate = dateSplit (splitArrayList[splitNum].date);
-                  if (splitArrayList[splitNum].date == null)
-                    alert (sym, 'wrong split info', splitNum)
-                  var chartIndex = searchDateInArray (stockChartXValuesFunction, splitDate, sym, logFlags)
-                  if (chartIndex < 1) {// error not fount
-                    if (LOG_SPLITS)
-                      console.log (sym, "Split drop/jump date not found", splitNum, JSON.stringify (splitArrayList[splitNum]), chartIndex)
-                    continue;
-                  }
-                  // find max jump of split index
-                  if (true || chartIndex < stockChartXValuesFunction.length - 5) {
-                    var maxJump = 1;
-                    var maxJumpWeekNum = chartIndex;
-                    const chartIndexOrg = chartIndex;
-                    var m = chartIndex >= 4 ?  chartIndex - 4 : 0;
-                    const maxEnd = chartIndex + 5 < stockChartYValuesFunction.length - 2 ? chartIndex + 5 : stockChartYValuesFunction.length - 2
-                    for (; m <  chartIndex + 5; m ++) {
-                      var jump_ = Math.abs (stockChartYValuesFunction[m] / stockChartYValuesFunction[m + 1]);
-                      if (jump_ > maxJump) {
-                        maxJump = jump_;
-                        maxJumpWeekNum = m + 1; // adjust maxJumpWeekNum (add 1 for the first need to change)
-                      }
-                      if (1 / jump_ > maxJump ) {
-                        maxJump = 1 / jump_;
-                        maxJumpWeekNum = m + 1;
-                      }
-                    }
 
-                    if (chartIndexOrg !== maxJumpWeekNum && LOG_SPLITS)
-                      console.log (sym, 'index corrected org=', chartIndexOrg, ' changed to=', maxJumpWeekNum);
-
-                    var valuesBefore='';
-                    for (var j = chartIndex - 3; j < chartIndex + 3; j++) {
-                      valuesBefore += stockChartYValuesFunction[j] + ' '
-                    }
-                    // console.log ('SplitIndex corrected=', weekNum, 'uncorrected=', chartIndex, stockChartYValuesFunction[weekNum])
-                    if (LOG_SPLITS) {
-                      console.log(sym, 'Max Jump weekMum=', maxJumpWeekNum, 'dateAtJmp=', stockChartXValuesFunction[maxJumpWeekNum], 'priceAtJmp=', stockChartYValuesFunction[maxJumpWeekNum])
-                      console.log(sym, 'before compensation (' + chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesBefore);
-                    }
-
-                  }
-                  else
-                    console.log ('wrong dislay index, split close to end', chartIndex, stockChartXValuesFunction.length)
-                  splitsIndexArray.push (chartIndex);
-
-                  // compensation calc
-                  if (LOG_SPLITS)
-                    console.log (sym, 'compensate split', splitNum, splitArrayList[splitNum])
-                  if (splitsCalcFlag) {  // if flag is off do not compensate
-                    for ( let k = maxJumpWeekNum; k < stockChartYValuesFunction.length; k++) {
-                        (stockChartYValuesFunction[k] = Number (Number (Number (stockChartYValuesFunction[k]) / jump).toFixed(3)));
-                    }
-                  } else
-                     if (LOG_SPLITS) console.log ('no compensation')
-                  // print after compensation
-                  var valuesAfter='';
-                  for (var l = chartIndex - 3; l < chartIndex + 3; l++) {
-                    valuesAfter += stockChartYValuesFunction[l] + ' '
-                  }
-                  if (LOG_SPLITS)
-                    console.log (sym, 'after compensation (', chartIndex + ', ' + stockChartYValuesFunction[chartIndex] + ') ' + valuesAfter)
-                  // console.log ('loop end ', splitNum);
-                }            
-              }
               if (stockChartXValuesFunction.length === 0) {
                 console.log (sym, 'stockChartXValuesFunction  empty')
                 return;
