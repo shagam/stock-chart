@@ -4,7 +4,8 @@ import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-    searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
+    searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr, yearsDifference} from '../utils/Date'
+
 import LogFlags from '../utils/LogFlags'
 import GetInt from '../utils/GetInt'
 import {IpContext} from '../contexts/IpContext';
@@ -285,6 +286,8 @@ const Simulate = (props) => {
             console.log ('weeklyInterest=', weeklyInterest, 'interest=', interestRate) // on moneyMarket
 
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
+        // const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
+
         var stockToTrade;
         var buyCount = 0;
         var sellCount = 0;
@@ -444,6 +447,9 @@ const Simulate = (props) => {
         setLogRecordsKeys(Object.keys(logRecords))
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
+        const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
+        const yearlyGainDuringPeriod = gain ** (1/yearsDiff)
+
         console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
 
         // avoid exceptions when no trade
@@ -478,10 +484,14 @@ const Simulate = (props) => {
             if (! resultsArray.extraGain)  // calc gain obove stock
                 resultsArray.extraGain = []
             resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3))
-            
+
             if (! resultsArray.gainOfAccount)
                 resultsArray.gainOfAccount = []
             resultsArray.gainOfAccount.push(gain)
+
+            if (! resultsArray.yearlyGain)
+                resultsArray.yearlyGain = [] 
+            resultsArray.yearlyGain.push(yearlyGainDuringPeriod.toFixed(2))
 
             if (! resultsArray.rawGainOfStock)
                 resultsArray.rawGainOfStock = []
