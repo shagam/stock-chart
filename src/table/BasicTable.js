@@ -183,6 +183,13 @@ const BasicTable = (props) => {
   //** read last reminder mili */
   const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
 
+
+  useEffect (() => { 
+    // setGainMap([]);
+    // setChartSymbol()
+  }, [weekly]) 
+
+
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err) {
     const currentTime = getDateSec();
