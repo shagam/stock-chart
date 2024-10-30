@@ -4,6 +4,18 @@ import {format} from "date-fns"
 
 const LOG = false;
 
+
+//** date format YYYY-MM-DD */
+function yearsDifference (date0, date1) {
+  const dateStartSplit = date0.split('-')
+  const dateLastSplit = date1.split('-')
+  const dateStartMili = new Date(dateStartSplit[0], dateStartSplit[1], dateStartSplit[2]).getTime()
+  const dateLastMili = new Date(dateLastSplit[0], dateLastSplit[1], dateLastSplit[2]).getTime()
+  const yearsDiff = (dateLastMili - dateStartMili) / (1000 * 3600 * 24 * 365)   // calc years between 2 values
+  return yearsDiff;
+}
+
+
 const todayDate = () => {
   const date = new Date();
   const formattedDate = format(date, "yyyy-MM-dd");
@@ -319,5 +331,5 @@ function dateToArray (date) {
   return [year,mon,day]
 }
 
-export {getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
+export {yearsDifference, getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
    compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray}

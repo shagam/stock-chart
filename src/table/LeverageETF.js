@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import {beep2} from '../utils/ErrorList'
+import {yearsDifference} from '../utils/Date'
 
 
 function LeverageETF (props) {
@@ -62,11 +63,7 @@ function LeverageETF (props) {
             for (let i = 0; i < lengthMin; i++) {
                 //**  gain between i date to oldest date */
                 gainArr[i] = props.gainMap[symArray_[s]].y[i] / props.gainMap[symArray_[s]].y[lengthMin - 1]
-                const dateStartSplit = props.gainMap[symArray_[s]].x[lengthMin - 1].split('-')
-                const dateLastSplit = props.gainMap[symArray_[s]].x[i].split('-')
-                const dateStartMili = new Date(dateStartSplit[0], dateStartSplit[1], dateStartSplit[2]).getTime()
-                const dateLastMili = new Date(dateLastSplit[0], dateLastSplit[1], dateLastSplit[2]).getTime()
-                const yearsDiff = (dateLastMili - dateStartMili) / (1000 * 3600 * 24 * 365)   // calc years between 2 values
+                const yearsDiff = yearsDifference(props.gainMap[symArray_[s]].x[lengthMin - 1], props.gainMap[symArray_[s]].x[i])
                 yearlyGainArr[i] = Math.pow (gainArr[i], 1 / yearsDiff)
                 const a = 2 // just for debug breakpoint
             }
