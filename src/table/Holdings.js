@@ -140,14 +140,15 @@ function Holdings (props) {
     if (saveInFile)
       corsUrl += '&saveInFile=true';
     if (percentRegex)
-      corsUrl += '&percentSelect=' + percentRegex;
+      corsUrl += '&percentRegex=' + percentRegex;
 
     else if (srcNum === 2) {
         corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
         // setUrlCors('https://finance.yahoo.com/quote/' + props.chartSymbol  
     }
 
-
+    if (logBackEnd)
+      console.log (corsUrl)
 
     setUrlLast(corsUrl)
     setErr('request sent to server')
@@ -289,7 +290,7 @@ function Holdings (props) {
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={setSave}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
-            {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[.]+" width = '15%'/>}
+            {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '15%'/>}
             <div>&nbsp; </div>
           </div>
 
