@@ -28,7 +28,7 @@ function Tutorials () {
                     </tr>
         
                     <tr>
-                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>Long term yearly gain </td> 
+                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>How to measure long term yearly gain of an ETF</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/-K2cdzIoJeQ">Bubble-line </a></td><td>Stock market bubble & crash prediction </td> 
@@ -44,7 +44,7 @@ function Tutorials () {
                              stocks that gains more than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/rH_4gEgvw2A">Month-gain</a></td><td>Is there a systematic difference months gain</td> 
+                        <td><a href="https://youtu.be/rH_4gEgvw2A">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
                     </tr>
                                
                     <tr>
@@ -55,17 +55,17 @@ function Tutorials () {
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/W3ky1y4mYeM">Trade-simulator</a></td><td>Can we beat the gain of QQQ?</td> 
+                        <td><a href="https://youtu.be/IG7rc-0JHMM">Trade-simulator</a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/IR3TBJlqM_g">Verify</a></td><td>Compare historical price with MarketWatch</td> 
+                        <td><a href="https://youtu.be/IR3TBJlqM_g">Verify_1</a></td><td>Verify historical price. Compare with another site</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/IElQqHTVPnE">Analyst-target-price</a></td><td>History of target-price</td> 
+                        <td><a href="https://youtu.be/IElQqHTVPnE">Analyst-target-price</a></td><td>History of target-price prediction</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/n_NXoU5ce-A">Raw data</a></td><td>Show raw data, as received from AlphaVantage</td> 
+                        <td><a href="https://youtu.be/n_NXoU5ce-A">Raw data</a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/cVxKLW3pPB0">Persistance</a></td><td>Stock info saved in localStorage</td> 
@@ -89,7 +89,7 @@ function Tutorials () {
                        <div>&nbsp;</div>
                     </tr>                    
                     <tr>
-                        <td><a href="https://stocks-compare.netlify.app">Portfolio Stocks compare</a></td><td>Link for the tool</td> 
+                        <td><a href="https://stocks-compare.netlify.app">Stocks-compare</a></td><td>Link for the tool</td> 
                     </tr>
 
                 </tbody>
