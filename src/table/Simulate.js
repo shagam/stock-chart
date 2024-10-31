@@ -695,7 +695,7 @@ const Simulate = (props) => {
             <div> &nbsp;</div>
 
             {bubbleLine && <div style={{display: 'flex', background: 'antiqueWhite'}}> 
-                <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Latest site info: </div> &nbsp;
+                <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Proximity --- Portion: </div> &nbsp;&nbsp;&nbsp;
                     price / bubblePrice=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{todayPriceDivBubbleLine.toFixed(2)}  </div> &nbsp;&nbsp;
                 Calculated portion= <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}> {portionBubble_calc(todayPriceDivBubbleLine).toFixed(2)} </div>
                 <hr/> 
