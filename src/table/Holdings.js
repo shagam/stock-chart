@@ -28,6 +28,8 @@ function Holdings (props) {
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [logBackEnd, setLogBackEnd] = useState ();
   const [saveInFile, setSaveInFile] = useState ();
+  const [percentRegex, setPercentRegex] = useState ();
+
 
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
@@ -137,6 +139,8 @@ function Holdings (props) {
       corsUrl += '&LOG=true';
     if (saveInFile)
       corsUrl += '&saveInFile=true';
+    if (percentRegex)
+      corsUrl += '&percentSelect=' + percentRegex;
 
     else if (srcNum === 2) {
         corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
@@ -273,7 +277,7 @@ function Holdings (props) {
         <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
       </div>
 
-      <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Option to insert holdings into stock-table) </h6>
+      <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Allow to insert holdings into stock-table) </h6>
 
       <div>&nbsp; </div>
       {/* <br></br> */}
@@ -285,6 +289,8 @@ function Holdings (props) {
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={setSave}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
+            {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[.]+" width = '15%'/>}
+            <div>&nbsp; </div>
           </div>
 
           <div>  
