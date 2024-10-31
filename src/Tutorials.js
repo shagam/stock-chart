@@ -31,7 +31,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>How to measure long term yearly gain of an ETF</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/-K2cdzIoJeQ">Bubble-line </a></td><td>Stock market bubble & crash prediction </td> 
+                        <td><a href="https://youtu.be/-K2cdzIoJeQ">Bubble-line </a></td><td>Stock market bubble. Can we predict future crash? </td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
@@ -41,7 +41,7 @@ function Tutorials () {
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/_ONG8fc7kdM">Common DataBase  </a></td><td>
-                             stocks that gains more than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
+                             Stocks gains higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/rH_4gEgvw2A">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
