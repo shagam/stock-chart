@@ -396,7 +396,7 @@ const BasicTable = (props) => {
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
 
-    var avoidTooFrequentLimit = eliHome ? 2*1000 : 3600*1000 //** allowed frequency of 2 sec */
+    var avoidTooFrequentLimit = eliHome ? 2*1000 : 2*1000 //** allowed frequency of 2 sec */
     const lastGainMili = rows[row_index].values.gain_mili; //** save before change */
 
     var diff = lastGainMili ? Date.now() - lastGainMili : avoidTooFrequentLimit * 2; //** empty => assume more than limit*/ 
