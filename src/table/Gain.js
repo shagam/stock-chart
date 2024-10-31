@@ -150,7 +150,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 //setChartData ('');
                 return;
               }
-              setChartData(chartData); // needed for dropRecovery
+              setChartData(chartData[periodTag]); 
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
       

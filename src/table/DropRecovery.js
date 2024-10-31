@@ -442,7 +442,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           </div>
 
           <button type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
-            dropStartDate, props.logFlags, props.weekly, props.chartData[`${periodTag}`], props.errorAdd)}>  DropRecoveryCalc    </button>
+            dropStartDate, props.logFlags, props.weekly, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
    
           <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
 

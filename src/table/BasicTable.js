@@ -105,7 +105,7 @@ const BasicTable = (props) => {
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
 
-  const [chartData, setChartData] = useState("");  //needed for dropREcovery
+  const [chartData, setChartData] = useState({});  //needed for dropREcovery
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [gainData, setGainData] = useState();
@@ -909,7 +909,8 @@ const BasicTable = (props) => {
             stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
             servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
 
-            {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand} />}
+            {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
+            daily={daily} chartData={chartData}/>}
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          

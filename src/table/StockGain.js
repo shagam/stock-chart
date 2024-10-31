@@ -2,9 +2,12 @@ import React, {useState} from 'react'
 
 const StockInfo = (props) => {
 
-  const [gainFlag, setGainFlag] = useState(false);
-
-  const gainFlagChange = () => {setGainFlag (! gainFlag)}
+ 
+  function isZero (s) {
+    if (s == 0)
+      return '';
+    else return s
+  }
 
   return (
     <div style={{border:'2px solid blue'}}>
@@ -17,22 +20,42 @@ const StockInfo = (props) => {
         
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw gain history as recieved from AlphaVantage </h6>
 
-        <div>  &nbsp; <input  type="checkbox" checked={props.gainRawDividand} 
-          onChange={() => props.setGainRawDividand(! props.gainRawDividand)} />
-            &nbsp; filterVolume (Require pressing gain button) </div>
       </div>
       
       {/* Stock gain list */}
 
-      <div id="textarea_id"> 
-      {props.stockGain &&
-        <div>
-          <textarea type='text' name='stockInfo' cols={props.gainRawDividand ? 125 : 180} rows='15' readOnly
-            value={props.stockGain}  >
-          </textarea>
-        </div>
-      }
-      </div>
+      {Object.keys(props.chartData).length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
+          <table>
+              <thead>
+                  <tr>
+                  <th style={{width: '100px'}}>date</th>
+                      {Object.keys(props.chartData[Object.keys(props.chartData)[0]]).map((h,h1) => {
+                          return (
+                            <th style={{width: '80px'}} key={h1}>{h}</th>
+                          )
+                      })}
+                  </tr>
+              </thead>
+              <tbody>
+                  {Object.keys(props.chartData).map((s, s1) =>{
+                      return (
+                      <tr key={s1}>
+                        <td  style={{padding: '3px', margin: '3px'}} >{s}</td>
+                          {Object.keys(props.chartData[s]).map((a,a1) => {
+                              return (
+                                <td key={a1} style={{padding: '3px', margin: '3px'}} >{isZero(props.chartData[s][a])}</td>
+                              )
+                          })}
+                      </tr>
+                      )
+                  })}
+              </tbody>
+
+          </table>
+      </div> }
+
+
+
     </div>
   )
 }
