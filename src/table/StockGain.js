@@ -28,7 +28,7 @@ const StockInfo = (props) => {
           <table>
               <thead>
                   <tr>
-                  <th style={{width: '100px'}}>date</th>
+                  <th style={{width: '110px'}}>date</th>
                       {Object.keys(props.chartData[Object.keys(props.chartData)[0]]).map((h,h1) => {
                           return (
                             <th style={{width: '80px'}} key={h1}>{h}</th>
@@ -40,7 +40,7 @@ const StockInfo = (props) => {
                   {Object.keys(props.chartData).map((s, s1) =>{
                       return (
                       <tr key={s1}>
-                        <td  style={{padding: '3px', margin: '3px'}} >{s}</td>
+                        <td  style={{padding: '3px', margin: '3px', width: '110px'}} >{s}</td>
                           {Object.keys(props.chartData[s]).map((a,a1) => {
                               return (
                                 <td key={a1} style={{padding: '3px', margin: '3px'}} >{isZero(props.chartData[s][a])}</td>
