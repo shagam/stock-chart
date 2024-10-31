@@ -451,7 +451,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
           <h5>TodayGainWeeksLost</h5>
           <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
-          <h6>  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>
+          {gainLostWeeks && <h6>  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
         </div>
     </div>
   )
