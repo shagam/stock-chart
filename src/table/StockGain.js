@@ -4,7 +4,7 @@ const StockInfo = (props) => {
 
  
   function isZero (s) {
-    if (s == 0)
+    if (s === '0.0000')
       return '';
     else return s
   }
@@ -24,7 +24,7 @@ const StockInfo = (props) => {
       
       {/* Stock gain list */}
 
-      {Object.keys(props.chartData).length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
+      {Object.keys(props.chartData).length > 0 && <div  style={{height:'400px', overflow:'auto'}}> 
           <table>
               <thead>
                   <tr>
