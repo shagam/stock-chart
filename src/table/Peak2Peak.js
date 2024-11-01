@@ -279,9 +279,9 @@ const Peak2PeakGui = (props) => {
           
            <div style={{display:'flex'}}> &nbsp; 
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
-               props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
+               props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable, setErr)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
-              {results && ! bubbleLineRatio && ! props.gainMap.yBubbleLine &&  
+              {results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine &&  
                 <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
                  type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
               {props.gainMap.bubbleLine  &&  <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
@@ -292,13 +292,13 @@ const Peak2PeakGui = (props) => {
             {/* config checkboxes  */}
            <div style={{display:'flex'}}> &nbsp; 
               {!  results && <div> <input  type="checkbox" checked={searchPeak}  onChange={() => {setSearchPeak (! searchPeak)}} />  searchPeak &nbsp;&nbsp; </div>}
-              {! bubbleLineFlag && <div> <input  type="checkbox" checked={startFromPeakFlag}  onChange={() => {setStartFromPeakFlag (! startFromPeakFlag)}} />  startFromPeak  &nbsp;&nbsp; </div>}
+              {! bubbleLineFlag && props.gainMap.bubbleLine && <div> <input  type="checkbox" checked={startFromPeakFlag}  onChange={() => {setStartFromPeakFlag (! startFromPeakFlag)}} />  startFromPeak  &nbsp;&nbsp; </div>}
           </div>
 
           {/* bubble info */}
 
            {results && <div>
-             <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>
+             {results.yearlyGainPercent && <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>}
              {/* <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div> */}
            </div>}
 

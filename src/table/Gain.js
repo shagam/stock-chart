@@ -214,7 +214,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
           
               // if ( weekly)
               peak2PeakCalc (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction,
-                  weekly, logFlags, true, new Date(2000, 1, 1),  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, false)  //setCalcResults, setCalcInfo
+                  weekly, logFlags, true, new Date(2000, 1, 1),  new Date(2007, 10, 1), new Date(2021, 11, 1), errorAdd, null, false, null)  //setCalcResults, setCalcInfo
 
               const updateMili = Date.now();
               const updateDate = getDate();

@@ -6,6 +6,8 @@ import {yearsDifference, todayDate, dateSplit, monthsBack, daysBack, compareDate
 const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak) => {
     const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
     var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
+    if (dateIndex === -1)
+      return -1; // not found
     if(LOG_FLAG)
       console.log ( symbol, 'P2P quasyTop begin search', initDate, ' index=', dateIndex, 'price=', stockChartYValues[dateIndex], stockChartXValues[dateIndex])
     const range = 35;
@@ -40,7 +42,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
   function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
-     weekly, logFlags, searchPeak, d_2001_date, d_2008_date, d_2022_date, errorAdd, setResults, saveTable) {
+     weekly, logFlags, searchPeak, d_2001_date, d_2008_date, d_2022_date, errorAdd, setResults, saveTable, setErr) {
       const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
 
       var results = {};
@@ -70,63 +72,82 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
       const lastDate = stockChartXValues[stockChartXValues.length - 1]
       const lastDateSplit = lastDate.split('-')
-      const compDate = compareDate (d_2008_dateArray, lastDateSplit)
-      if (compDate === -1) {
-        if (searchPeak)
-          d_2008_dateArray = lastDateSplit;
-        else {
-          const err =  ' peak2Peak, date beyond range; ';
-          results['err'] = symbol + err  + ' searchFor=' + d_2008_dateArray + 'dateStart= ' + lastDateSplit;
+      // const compDate = compareDate (d_2008_dateArray, lastDateSplit)
+      // if (compDate === -1) {
+      //   if (searchPeak)
+      //     d_2008_dateArray = lastDateSplit;
+      //   else {
+      //     const err =  ' peak2Peak, date beyond range; ';
+      //     if (setErr)
+      //       setErr (symbol + err  + ' searchFor=' + d_2008_dateArray + ' dateStart= ' + lastDateSplit)
+      //     results['err'] = symbol + err  + ' searchFor=' + d_2008_dateArray + ' dateStart= ' + lastDateSplit;
 
-          if (errorAdd)
-            errorAdd([symbol, err, 'searchFor=', d_2008_dateArray, 'dateStarts=', lastDateSplit])
-          console.log ('%c' + results['err'], 'color: red')
-          return;            
-        }
+      //     if (errorAdd && ! setErr)
+      //       errorAdd([symbol, err, 'searchFor=', d_2008_dateArray, 'dateStarts=', lastDateSplit])
+      //     console.log ('%c' + results['err'], 'color: red')
+      //     return;            
+      //   }
 
-      }
+      // }
+
+
       const d_2022_dateArray =[d_2022_year, d_2022_mon, d_2022_day]
       const index2001 = quasiTop (symbol, d_2001_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      if (index2001 !== -1) {
+        results['d_2001_date'] = stockChartXValues[index2001];
+        results['v_2001_value'] = stockChartYValues[index2001];
+        results['i_2001_index'] = index2001;
+      }
+
       const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      if (index2008 !== -1) {
+        results['d_2008_date'] = stockChartXValues[index2008];
+        results['v_2008_value'] = stockChartYValues[index2008];
+        results['i_2008_index'] = index2008;
+      }
+      if (index2008 === -1 && setErr) {
+        const err =  ' peak2Peak, date beyond range; ';
+        setErr (symbol + err  + ' searchFor=' + d_2008_dateArray + ' dateStart= ' + lastDateSplit)
+      }
+
+
       const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      if (index2022 !== -1) {
+        results['d_2022_date'] = stockChartXValues[index2022];
+        results['v_2022_value'] = stockChartYValues[index2022];
+        results['i_2022_index'] = index2022;
+      }
+
 
       //** calc yearlyGain for daily as well */
-      const yearsDiff = yearsDifference(stockChartXValues[index2008], stockChartXValues[index2022] )
-      const weeksDiff = yearsDiff * 52.3
-      const gain = Number (stockChartYValues[index2022] / stockChartYValues[index2008])
-      const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
-      const weeklyGain = Number (gain ** (1 / weeksDiff))
-      const timeUnitGain = Number(gain ** (1 / (index2008 - index2022)))
-      
-      results['daily'] = ! weekly;
-      results['gain'] = gain.toFixed(3);
-      results['yearlyGain'] = yearlyGain;
-      results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
-      results['weeklyGain'] = weeklyGain.toFixed(5);
-      results['timeUnitGain'] = timeUnitGain;  // weekly or daily
-      results['yearsDiff'] = yearsDiff;
+      if (index2008 !== -1 && index2022 !== -1) {
+        const yearsDiff = yearsDifference(stockChartXValues[index2008], stockChartXValues[index2022] )
+        const weeksDiff = yearsDiff * 52.3
+        const gain = Number (stockChartYValues[index2022] / stockChartYValues[index2008])
+        const yearlyGain = Number (gain ** (1 / yearsDiff)).toFixed(3)
+        const weeklyGain = Number (gain ** (1 / weeksDiff))
+        const timeUnitGain = Number(gain ** (1 / (index2008 - index2022)))
+        
+        results['daily'] = ! weekly;
+        results['gain'] = gain.toFixed(3);
+        results['yearlyGain'] = yearlyGain;
+        results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
+        results['weeklyGain'] = weeklyGain.toFixed(5);
+        results['timeUnitGain'] = timeUnitGain;  // weekly or daily
+        results['yearsDiff'] = yearsDiff;
 
-      results['d_2001_date'] = stockChartXValues[index2001];
-      results['v_2001_value'] = stockChartYValues[index2001];
-      results['i_2001_index'] = index2001;
-
-      results['d_2008_date'] = stockChartXValues[index2008];
-      results['v_2008_value'] = stockChartYValues[index2008];
-      results['i_2008_index'] = index2008;
-
-      results['d_2022_date'] = stockChartXValues[index2022];
-      results['v_2022_value'] = stockChartYValues[index2022];
-      results['i_2022_index'] = index2022;
+        const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+        if (row_index !== -1) {
+          rows[row_index].values.peak2Peak = yearlyGain;
+          if (saveTable)
+            saveTable(symbol);
+        }
+      }
 
       if (setResults)
         setResults(results)
 
-      const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
-      if (row_index !== -1) {
-        rows[row_index].values.peak2Peak = yearlyGain;
-        if (saveTable)
-          saveTable(symbol);
-      }
+
     }    
 
     export  {peak2PeakCalc, quasiTop};
