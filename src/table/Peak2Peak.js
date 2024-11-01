@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 // import Picker from 'react-month-picker'
-import DatePicker, {moment} from 'react-datepicker';
+import DatePicker, {moment} from 'react-datepicker'
+import GetInt from '../utils/GetInt';
 import "react-datepicker/dist/react-datepicker.css";
 import {  useAuth, logout } from '../contexts/AuthContext';
 import {IpContext} from '../contexts/IpContext';
@@ -36,6 +37,9 @@ const Peak2PeakGui = (props) => {
     const [displayFlag, setDisplayFlag] = useState (false); 
     // const [calcResults, setCalcResults] = useState ();
     // const [calcInfo, setCalcInfo] = useState ();
+
+    const [bubbleCalcSinglePeak, setBubbleCalcSinglePeak] = useState (false)
+    const [yearlyGainSinglePeak, setYearlyGainSinglePeak] = useState (1.16)  // manual estimate of yearl gain
 
     const [searchPeak, setSearchPeak] = useState (true);
     const [bubbleLineFlag, setBubbleLineFlag] = useState (false); // show that bubleLine calculated
@@ -189,10 +193,22 @@ const Peak2PeakGui = (props) => {
     var yBubbleLine = []
 
     //** extrapolate value of today */
-    yBubbleLine[0] = results.v_2022_value * results.timeUnitGain ** results.i_2022_index // weekCount 
+    if (bubbleCalcSinglePeak) {
+      var timeUnitGain;
+      if (props.weekly)
+        timeUnitGain = yearlyGainSinglePeak ** (1 / 52.2)  // calc weekly gain, from yearly gain by user
+      else
+        timeUnitGain = yearlyGainSinglePeak ** (1/ 365.25) // calc daily gain, from yearly gain by user
+    }
+    else 
+      timeUnitGain = results.timeUnitGain 
+
+    // calc estimate latest bubble value
+    yBubbleLine[0] = results.v_2022_value * timeUnitGain ** results.i_2022_index // weekCount 
 
     const startDateMili = startDate.getTime()
 
+    // fill in bubble value from lates to oldest
     for (let i = 0; i < YValues.length - 1; i ++) {
       if (startFromPeakFlag) {
         const chartDateSplit = XValues[i].split('-')
@@ -204,7 +220,10 @@ const Peak2PeakGui = (props) => {
         }
       }
 
-      yBubbleLine.push(yBubbleLine[i] / results.timeUnitGain);
+      if (bubbleCalcSinglePeak)
+        yBubbleLine.push(yBubbleLine[i] / timeUnitGain);  // slope according to user number
+      else
+        yBubbleLine.push(yBubbleLine[i] / results.timeUnitGain);  // slope according to 2 peaks 2008 2022
     }  
 
     if (! props.gainMap.bubbleLine) {
@@ -270,18 +289,24 @@ const Peak2PeakGui = (props) => {
           </div>
 
 
-          {/*  */}
+          {/* Single peak bubble  */}
+          {/* <div> &nbsp;</div> */}
+          <hr/>
+          {eliHome && results && ! results.timeUnitGain && <div style={{display: 'flex'}}>
+
+            <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
+            <input  type="checkbox" checked={bubbleCalcSinglePeak}  onChange={() => {setBubbleCalcSinglePeak (! bubbleCalcSinglePeak)}} /> 
+            <div style={{paddingTop: '6px'}}> &nbsp; Bubble-calc-single-Peak &nbsp;&nbsp; </div>
+          </div>}
 
 
-
-
-          {/* Buttons */}
+          {/* Buttons peak2PeakCalc  */}
           
            <div style={{display:'flex'}}> &nbsp; 
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable, setErr)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
-              {results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine &&  
+              {(bubbleCalcSinglePeak || (results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine) ) &&  
                 <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
                  type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
               {props.gainMap.bubbleLine  &&  <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
