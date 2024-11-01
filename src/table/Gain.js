@@ -2,7 +2,7 @@ import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
   
-import peak2PeakCalc from './Peak2PeakCalc'
+import {peak2PeakCalc} from './Peak2PeakCalc'
 // import {dropRecovery, DropRecoveryButtons} from './DropRecovery'
 import searchURL from '../utils/SearchURL'
 import {targetPriceAdd} from './TargetPrice'

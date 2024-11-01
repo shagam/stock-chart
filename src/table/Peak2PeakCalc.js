@@ -39,7 +39,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
 
-  export function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
+  function peak2PeakCalc (symbol, rows, stockChartXValues, stockChartYValues,
      weekly, logFlags, searchPeak, d_2001_date, d_2008_date, d_2022_date, errorAdd, setResults, saveTable) {
       const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
 
@@ -129,4 +129,4 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       }
     }    
 
-    export default peak2PeakCalc;
+    export  {peak2PeakCalc, quasiTop};

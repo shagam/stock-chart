@@ -8,7 +8,7 @@ import {IpContext} from '../contexts/IpContext';
 // import {format} from "date-fns"
 // import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 // import { columnIsLastLeftSticky } from 'react-table-sticky';
-import peak2PeakCalc from './Peak2PeakCalc'
+import {peak2PeakCalc} from './Peak2PeakCalc'
 
 import LogFlags from '../utils/LogFlags'
 import {beep2} from '../utils/ErrorList'
@@ -268,6 +268,12 @@ const Peak2PeakGui = (props) => {
             <div style={{ color: 'black'}}  > 2022_proximity_date:   </div>
             &nbsp; &nbsp;  <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />
           </div>
+
+
+          {/*  */}
+
+
+
 
           {/* Buttons */}
           
