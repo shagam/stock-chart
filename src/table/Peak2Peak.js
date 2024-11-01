@@ -308,9 +308,11 @@ const Peak2PeakGui = (props) => {
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable, setErr)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
-              {(bubbleCalcSinglePeak || (results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine) ) &&  
-                <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
-                 type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>}
+              {(bubbleCalcSinglePeak || (results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine) ) && ! props.gainMap.bubbleLine &&
+                  <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
+                  type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>
+              }
+
               {props.gainMap.bubbleLine  &&  <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
               {/* <div> Click </div> &nbsp;&nbsp;
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
