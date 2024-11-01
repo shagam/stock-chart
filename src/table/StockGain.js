@@ -2,7 +2,12 @@ import React, {useState} from 'react'
 
 const StockInfo = (props) => {
 
- 
+  //** replace dash by underscore so date in header doex not split in 2 lines */
+  function dateReplaceDash (date) {
+    return date.replace(/[-]/g,'_')
+  }
+
+  //** clear dividand if zero, so non zero stick out */
   function isZero (s) {
     if (s === '0.0000')
       return '';
@@ -40,7 +45,7 @@ const StockInfo = (props) => {
                   {Object.keys(props.chartData).map((s, s1) =>{
                       return (
                       <tr key={s1}>
-                        <td  style={{padding: '3px', margin: '3px', width: '110px'}} >{s}</td>
+                        <td  style={{padding: '3px', margin: '3px', width: '110px'}} >{dateReplaceDash(s)}</td>
                           {Object.keys(props.chartData[s]).map((a,a1) => {
                               return (
                                 <td key={a1} style={{padding: '3px', margin: '3px'}} >{isZero(props.chartData[s][a])}</td>
