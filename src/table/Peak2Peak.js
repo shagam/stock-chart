@@ -266,7 +266,7 @@ const Peak2PeakGui = (props) => {
               <h6 style={{color: 'blue'}}> bubbleLine,  Peak2Peak (long term gain) &nbsp;  </h6>
             </div>
             
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Calc {props.symbol} long-term-gain, and BubbleLine, according to 2008 & 2022 crashes  &nbsp;  </h6>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Calc {props.symbol} long-term-gain, and BubbleLine, according to 2008 & 2022 bubbles &nbsp;  </h6>
 
             <div style={{color: 'red'}}>{err}</div>
 
@@ -292,11 +292,13 @@ const Peak2PeakGui = (props) => {
           {/* Single peak bubble  */}
           {/* <div> &nbsp;</div> */}
           <hr/>
-          {eliHome && results && ! results.timeUnitGain && <div style={{display: 'flex'}}>
-
-            <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
-            <input  type="checkbox" checked={bubbleCalcSinglePeak}  onChange={() => {setBubbleCalcSinglePeak (! bubbleCalcSinglePeak)}} /> 
-            <div style={{paddingTop: '6px'}}> &nbsp; Bubble-calc-single-Peak &nbsp;&nbsp; </div>
+          {eliHome && results && ! results.timeUnitGain && <div>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {props.symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
+            <div style={{display: 'flex'}}>
+              <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
+              <input  type="checkbox" checked={bubbleCalcSinglePeak}  onChange={() => {setBubbleCalcSinglePeak (! bubbleCalcSinglePeak)}} /> 
+              <div style={{paddingTop: '6px'}}> &nbsp; Bubble-calc-single-Peak &nbsp;&nbsp; </div>
+            </div>
           </div>}
 
 
