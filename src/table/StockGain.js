@@ -9,7 +9,7 @@ const StockInfo = (props) => {
 
   //** clear dividand if zero, so non zero stick out */
   function isZero (s) {
-    if (s === '0.0000')
+    if (Number(s) === 0)
       return '';
     else return s
   }
