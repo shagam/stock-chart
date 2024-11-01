@@ -60,6 +60,15 @@ const Peak2PeakGui = (props) => {
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
 
+    function clear () {
+      setHistogram({})
+      bubbleline = {}
+      setHistogramLast({})
+      setErr()
+      setBubbleLineFlag(false)
+      setBubbleLineRatio()
+      delete props.gainMap.bubbleLine
+    }
 
     useEffect(() => {
       setHistogram({})
@@ -75,6 +84,8 @@ const Peak2PeakGui = (props) => {
 
 
   function histogramBuild () {
+    // if (! bubbleline.y)
+    //   return;
     histogram['> 1.20'] = 0
     histogram['> 1.15'] = 0
     histogram['> 1.10'] = 0
@@ -183,7 +194,7 @@ const Peak2PeakGui = (props) => {
 
   // temp save bubble crash baseline
   function calcBubbleLine (XValues, YValues) {  
-    setErr()
+    clear()
     const stocks = Object.keys(props.gainMap)
     // if (stocks.length > 1) {
     //   setErr ('Bubble line only for a single etf: ' + JSON.stringify(stocks))
@@ -289,10 +300,9 @@ const Peak2PeakGui = (props) => {
           </div>
 
 
-          {/* Single peak bubble  */}
-          {/* <div> &nbsp;</div> */}
+          {/* Single peak and estimate yearly gaiin bubble  */}
           <hr/>
-          {eliHome && results && ! results.timeUnitGain && <div>
+          {results && ! results.timeUnitGain && <div>
             <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {props.symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
             <div style={{display: 'flex'}}>
               <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
@@ -308,7 +318,7 @@ const Peak2PeakGui = (props) => {
               {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
                props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable, setErr)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
-              {(bubbleCalcSinglePeak || (results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine) ) && ! props.gainMap.bubbleLine &&
+              {(bubbleCalcSinglePeak || (results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine) ) && 
                   <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
                   type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>
               }
