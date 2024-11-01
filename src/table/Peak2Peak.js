@@ -183,7 +183,7 @@ const Peak2PeakGui = (props) => {
 
   // temp save bubble crash baseline
   function calcBubbleLine (XValues, YValues) {  
-
+    setErr()
     const stocks = Object.keys(props.gainMap)
     // if (stocks.length > 1) {
     //   setErr ('Bubble line only for a single etf: ' + JSON.stringify(stocks))
