@@ -750,7 +750,7 @@ const BasicTable = (props) => {
       {/* insert sym, filter */}
 
       <div style={{display:'flex'}} id="add_stock_id">
-        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search' isMobile={isMobile}/>
+        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile}/>
           &nbsp;&nbsp;
 
         <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
