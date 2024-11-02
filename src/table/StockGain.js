@@ -54,11 +54,11 @@ const StockInfo = (props) => {
                   {Object.keys(props.chartData).map((s, s1) =>{
                       return (
                       <tr key={s1}>
-                        <td  style={{padding: '3px', margin: '3px', width: '110px'}} >{dateReplaceDash(s)}</td>
-                        <td>{s1}</td>
+                        <td  style={{padding: '2px', margin: '2px', width: '110px'}} >{dateReplaceDash(s)}</td>
+                        <td style={{padding: '2px', margin: '2px'}}>{s1}</td>
                           {Object.keys(props.chartData[s]).map((a,a1) => {
                               return (
-                                <td key={a1} style={{padding: '3px', margin: '3px'}} >{isZero(props.chartData[s][a])}</td>
+                                <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[s][a])}</td>
                               )
                           })}
                       </tr>
