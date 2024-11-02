@@ -28,6 +28,8 @@ function Holdings (props) {
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [logBackEnd, setLogBackEnd] = useState ();
   const [saveInFile, setSaveInFile] = useState ();
+  const [ignoreMismatch, setIgnoreMismatch] = useState ();
+
   const [percentRegex, setPercentRegex] = useState ();
 
 
@@ -133,6 +135,9 @@ function Holdings (props) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
       setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
     }
+
+    corsUrl += '&count=' + count;
+
     if (ignoreSaved)
       corsUrl += '&ignoreSaved=true';
     if (logBackEnd)
@@ -141,6 +146,8 @@ function Holdings (props) {
       corsUrl += '&saveInFile=true';
     if (percentRegex)
       corsUrl += '&percentRegex=' + percentRegex;
+    if (ignoreMismatch)
+      corsUrl += '&ignoreMismatch=' + ignoreMismatch;
 
     else if (srcNum === 2) {
         corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
@@ -289,6 +296,8 @@ function Holdings (props) {
             {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={setSave}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  } &nbsp;IignoreMismatch &nbsp; &nbsp; 
+                  
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
             {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '15%'/>}
             <div>&nbsp; </div>
@@ -298,7 +307,7 @@ function Holdings (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
             { <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
-            {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table column&nbsp; {props.chartSymbol} </button> } &nbsp;
+            {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
           </div> 
           <div>&nbsp; </div>
         </div>
