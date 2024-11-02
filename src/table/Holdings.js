@@ -174,7 +174,8 @@ function Holdings (props) {
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr(result.data)
-        return;
+        if (! ignoreMismatch)
+          return;
       }
 
     // Check for err
@@ -185,9 +186,10 @@ function Holdings (props) {
         return;
       }
     
+      const MIS_MATCH_MAX = ignoreMismatch ? 50 : 3
       const etf = result.data.sym;
       const holdArr = result.data.holdArr;
-      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < 4) {
+      if (Math.abs (holdArr[0].sym - holdArr[0].perc) < MIS_MATCH_MAX) {
 
         if (! etfArr.includes(etf)) {
           etfArr.push (etf)
@@ -260,20 +262,6 @@ function Holdings (props) {
       return array.map((item) => <li key={item.sym}>{JSON.stringify(item)}</li>);  
   }
 
-  // avoid loop
-  function setIgnore () {
-    setIgnoreSaved (!ignoreSaved)
-  }
-
-  // avoid loop
-  function setLog () {
-    setLogBackEnd (! logBackEnd)
-  }
-
-  function setSave() {
-    setSaveInFile (! saveInFile)
-  }
-
   const ROW_SPACING = {padding: '1px', margin: '1px'}
 
   return (
@@ -293,11 +281,11 @@ function Holdings (props) {
       {props.chartSymbol && <div>
           <div stype={{display: 'flex'}}>
             <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={setLog}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={setSave}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  } &nbsp;IignoreMismatch &nbsp; &nbsp; 
-                  
+            {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  } &nbsp;IgnoreMismatch &nbsp; &nbsp; 
+
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
             {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '15%'/>}
             <div>&nbsp; </div>
