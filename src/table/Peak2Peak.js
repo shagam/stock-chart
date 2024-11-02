@@ -10,6 +10,7 @@ import {IpContext} from '../contexts/IpContext';
 // import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from './Date'
 // import { columnIsLastLeftSticky } from 'react-table-sticky';
 import {peak2PeakCalc} from './Peak2PeakCalc'
+import {miliDifferenceFromToday} from '../utils/Date'
 
 import LogFlags from '../utils/LogFlags'
 import {beep2} from '../utils/ErrorList'
@@ -201,15 +202,17 @@ const Peak2PeakGui = (props) => {
     //   beep2()
     // }
 
+    //** calc gain in a time unit (week or day) */
+    const miliDiff = Date.now() - miliDifferenceFromToday(XValues[XValues.length - 1])
+    const yearsDiff = miliDiff / (1000 * 3600 * 24 * 365.25)
+    const timeUnitInYear = XValues.length / yearsDiff 
+
     var yBubbleLine = []
 
     //** extrapolate value of today */
+    var timeUnitGain;
     if (bubbleCalcSinglePeak) {
-      var timeUnitGain;
-      if (props.weekly)
-        timeUnitGain = yearlyGainSinglePeak ** (1 / 52.2)  // calc weekly gain, from yearly gain by user
-      else
-        timeUnitGain = yearlyGainSinglePeak ** (1/ 365.25) // calc daily gain, from yearly gain by user
+      timeUnitGain = yearlyGainSinglePeak ** (1 / timeUnitInYear)  // calc weekly or daily gain, from yearly gain by user
     }
     else 
       timeUnitGain = results.timeUnitGain 

@@ -14,6 +14,14 @@ const StockInfo = (props) => {
     else return s
   }
 
+  const VOLUME = '6. volume'
+  const SPLIT_COEFFICIENT = '8. split coefficient'
+  const keys = Object.keys(props.chartData)
+  for (let i = 0; i < keys.length; i++) {
+    delete props.chartData[keys[i]][VOLUME]
+    delete props.chartData[keys[i]][SPLIT_COEFFICIENT]
+  }
+
   return (
     <div style={{border:'2px solid blue'}}>
       <div> 
@@ -34,6 +42,7 @@ const StockInfo = (props) => {
               <thead>
                   <tr>
                   <th style={{width: '110px'}}>date</th>
+                  <th>n</th>
                       {Object.keys(props.chartData[Object.keys(props.chartData)[0]]).map((h,h1) => {
                           return (
                             <th style={{width: '80px'}} key={h1}>{h}</th>
@@ -46,6 +55,7 @@ const StockInfo = (props) => {
                       return (
                       <tr key={s1}>
                         <td  style={{padding: '3px', margin: '3px', width: '110px'}} >{dateReplaceDash(s)}</td>
+                        <td>{s1}</td>
                           {Object.keys(props.chartData[s]).map((a,a1) => {
                               return (
                                 <td key={a1} style={{padding: '3px', margin: '3px'}} >{isZero(props.chartData[s][a])}</td>
