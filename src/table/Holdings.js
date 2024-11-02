@@ -279,8 +279,10 @@ function Holdings (props) {
       {/* <br></br> */}
       {/* ====== Buttons */} 
       {props.chartSymbol && <div>
+        <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
+        <div>&nbsp; </div>
           <div stype={{display: 'flex'}}>
-            <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
+      
             {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
