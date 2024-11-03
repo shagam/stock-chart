@@ -745,7 +745,7 @@ const BasicTable = (props) => {
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
           {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily &nbsp;&nbsp;</div>}
-          {eliHome && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} /> URL &nbsp;</div>}
+          {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} /> URL &nbsp;</div>}
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
          </div>
      
