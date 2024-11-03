@@ -745,6 +745,8 @@ const BasicTable = (props) => {
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
           {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily &nbsp;&nbsp;</div>}
+          {eliHome && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} /> Show_URL &nbsp;&nbsp;</div>}
+          {showUrl &&  <h4 style={{'color':'green'}}>stocks-compare.netlify.app</h4>}
          </div>
      
       {/* insert sym, filter */}
@@ -829,7 +831,6 @@ const BasicTable = (props) => {
     {! chartSymbol && <div style={{display: 'flex'}}>Press &nbsp;
       <div style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>gain</div> &nbsp; for one or more symbols</div>}  
     <div id='trailer_id'>
-      {showUrl &&  <h4 style={{'color':'green'}}>stocks-compare.netlify.app</h4>}
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} weekly = {! daily}
