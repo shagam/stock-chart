@@ -289,10 +289,24 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 
               //** calc short term yearly gain. latest val given higher wieght, because they are moredense */
-              var count = 3;
-              const mon3_ = Number(mon3) ** 4; //** calc yearly gain */
-              const mon6_ = Number(mon6) ** 2; //** calc yearly gain */
-              const year_ = Number(year)
+              var count = 0;
+              var mon3_ = 1;
+              if (mon3 != -1) {
+                mon3_ = Number(mon3) ** 4; //** calc yearly gain */
+                count ++;
+              }
+
+              var mon6_ = 1;
+              if (mon6 != -1) {
+                const mon6_ = Number(mon6) ** 2; //** calc yearly gain */
+                count ++
+              }
+
+              var year_ = 1
+              if (year != -1) {
+                year_ = Number(year)
+                count ++;
+              }
 
               var year2_ = 1;   // if missing use netral '1'
               if (year2 !== -1) {
@@ -317,8 +331,13 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 year20_ = Number (year20) ** (1/20) //** calc yearly gain */
                 count ++;
               }
-              var short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/count)
 
+              var short
+              if (count !== 0)
+                short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/count)
+              else
+                short = -1
+              
               if (LOG_FLAG)
               console.log ('sym short gain,  agrgate=', short.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
                '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3), 'count=', count)
