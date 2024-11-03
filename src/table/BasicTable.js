@@ -633,7 +633,7 @@ const BasicTable = (props) => {
   }
 
   function getColor(val, column, sym) {
-    if (val === undefined || val === -1 || val === '-1.00')
+    if (val === undefined || Number(val) === -1 || val === '-1.00')
       return 'Black'
     if (column.id === 'symbol' || column.id === 'sym') 
         return 'magenta';
@@ -705,7 +705,7 @@ const BasicTable = (props) => {
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
 
-        {eliHome && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
+        {eliHome && isMobile && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
 
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
         <Link to="/about">About</Link>&nbsp; 
