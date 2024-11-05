@@ -319,7 +319,7 @@ function Holdings (props) {
 
 
       {/* ====== Display filtered held list */} 
-      {<div  style={{ maxHeight: '40vh', overflowY: 'scroll'}}>
+      {Object.keys(heldMasterObj).length > 0 && <div  style={{ maxHeight: '40vh', overflowY: 'scroll'}}>
       <table>
         <thead>
           <tr>
