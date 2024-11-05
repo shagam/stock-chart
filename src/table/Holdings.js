@@ -323,6 +323,7 @@ function Holdings (props) {
       <table>
         <thead>
           <tr>
+            <th>N</th>
             {etfArr_ && etfArr_.length > 1 && etfArr_.map((e, index) => {
               return (
                 <th key={index} scope="col">
@@ -337,6 +338,7 @@ function Holdings (props) {
           {Object.keys(heldMasterObj).map((s, s1) =>{
             return (
             <tr key={s1}>
+              <td style={{padding: '2px', margin: '1px', width: '12px'}}>{s1}</td>
               <td style={{padding: '2px', margin: '1px', width: '8px'}}>{s}</td>
                 {etfArr.map((k,n)=>{
                   return (
