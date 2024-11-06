@@ -275,12 +275,11 @@ function Holdings (props) {
 
       <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Allow to insert holdings into stock-table) </h6>
 
-      <div>&nbsp; </div>
+      {/* <div>&nbsp; </div> */}
       {/* <br></br> */}
       {/* ====== Buttons */} 
       {props.chartSymbol && <div>
-        <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
-        <div>&nbsp; </div>
+        {/* <div>&nbsp; </div> */}
           <div stype={{display: 'flex'}}>
       
             {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />}&nbsp;IgnoreSaved &nbsp; &nbsp;
@@ -289,7 +288,10 @@ function Holdings (props) {
             {<input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  }&nbsp;get-even-when-mismatch &nbsp; &nbsp; 
 
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
-            {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '15%'/>}
+            <div style={{display: 'flex', marginTop: '10px'}}>
+              {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '15%'/>}
+              <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
+            </div>
             <div>&nbsp; </div>
           </div>
 
