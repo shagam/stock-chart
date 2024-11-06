@@ -283,10 +283,10 @@ function Holdings (props) {
         <div>&nbsp; </div>
           <div stype={{display: 'flex'}}>
       
-            {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />} &nbsp;IgnoreSaved &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />} &nbsp;LogBackEnd &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  } &nbsp;SaveInFile &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  } &nbsp;IgnoreMismatch &nbsp; &nbsp; 
+            {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />}&nbsp;IgnoreSaved &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />}&nbsp;LogBackEnd &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  }&nbsp;SaveInFile &nbsp; &nbsp;
+            {<input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  }&nbsp;get-even-when-mismatch &nbsp; &nbsp; 
 
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
             {eliHome && <GetInt init={percentRegex} callBack={setPercentRegex} title='price regex  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '15%'/>}
@@ -319,7 +319,7 @@ function Holdings (props) {
 
 
       {/* ====== Display filtered held list */} 
-      {Object.keys(heldMasterObj).length > 0 && <div  style={{ maxHeight: '40vh', overflowY: 'scroll'}}>
+      {Object.keys(heldMasterObj).length > 0 && <div  style={{ maxHeight: '50vh', overflowY: 'scroll'}}>
       <table>
         <thead>
           <tr>
