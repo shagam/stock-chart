@@ -33,19 +33,30 @@ function VerifyGain (props) {
 
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   const [updateDate, setUpdateDate] = useState ();
-
+  
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
   const { currentUser, admin, logout } = useAuth();
 
   const LOG = props.logFlags.includes("verify_1");
-    
+  
+  var futureSymNum = 1;
+
+  const futuresSymList = 
+  {
+    NQZ24: 'Dec 24',
+    NQH25: 'Mar 25',
+    NQM25: 'Jun 25',
+    NQU25: 'Sep 25',
+    NQZ25: 'Dec 25',
+    NQH26: 'Mar 26'
+  }
   function nasdaqFutures() {
     var url
     if (props.ssl) 
       url = "https://";
     else 
     url = "http://"; 
-    url += props.servSelect + ":" + props.PORT + "/futures?stock=" + 'NQZ24'
+    url += props.servSelect + ":" + props.PORT + "/futures?stock=" + Object.keys(futuresSymList)[futureSymNum]
     if (saveInFile)
       url += '&saveInFile=true';
     if (logBackEnd)
@@ -55,6 +66,9 @@ function VerifyGain (props) {
       // console.log (getDate(), corsUrl)     
       if (ignoreSaved)
         url += '&ignoreSaved=true';
+
+      if (logBackEnd)
+        console.log (url) // log the url
 
       axios.get (url)
       .then ((result) => {
@@ -347,10 +361,11 @@ function VerifyGain (props) {
       {updateDate && <div>Update: {updateDate}</div>}
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
-      
+
       <div>&nbsp;</div>
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-      {futuresTxt && <pre> futures NQZ24 {JSON.stringify(futuresTxt, null, 2)}</pre>}
+      {futuresTxt && <div> futures {Object.keys(futuresSymList)[futureSymNum]} {futuresSymList[Object.keys(futuresSymList)[futureSymNum]]}
+          <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
       {/* nasdaqFutures */}
     </div>
   )
