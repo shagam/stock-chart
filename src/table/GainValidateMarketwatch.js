@@ -7,7 +7,7 @@ import {IpContext} from '../contexts/IpContext';
 import {  useAuth, logout } from '../contexts/AuthContext';
 
 import GetInt from '../utils/GetInt'
-
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
   function reverseSplit (splits) {
     if (! splits)
@@ -38,9 +38,8 @@ function VerifyGain (props) {
   const { currentUser, admin, logout } = useAuth();
 
   const LOG = props.logFlags.includes("verify_1");
-  
-  var futureSymNum = 1;
 
+  //** selevt future sym */
   const futuresSymList = 
   {
     NQZ24: 'Dec 24',
@@ -50,13 +49,21 @@ function VerifyGain (props) {
     NQZ25: 'Dec 25',
     NQH26: 'Mar 26'
   }
+
+  const symList = Object.keys(futuresSymList)
+  var dateList = [];
+  for (let i = 0; i < symList.length; i++)
+    dateList.push(symList[i] + '_' + futuresSymList[symList[i]])
+
+  const [futureSym, setFutureSym]  = useState(symList[0]);
+
   function nasdaqFutures() {
     var url
     if (props.ssl) 
       url = "https://";
     else 
     url = "http://"; 
-    url += props.servSelect + ":" + props.PORT + "/futures?stock=" + Object.keys(futuresSymList)[futureSymNum]
+    url += props.servSelect + ":" + props.PORT + "/futures?stock=" + futureSym
     if (saveInFile)
       url += '&saveInFile=true';
     if (logBackEnd)
@@ -363,8 +370,10 @@ function VerifyGain (props) {
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
 
       <div>&nbsp;</div>
+      {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
+ 
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-      {futuresTxt && <div> futures {Object.keys(futuresSymList)[futureSymNum]} {futuresSymList[Object.keys(futuresSymList)[futureSymNum]]}
+      {futuresTxt && <div> futures {futureSym} &nbsp;&nbsp; {futuresSymList[futureSym]} 
           <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
       {/* nasdaqFutures */}
     </div>
