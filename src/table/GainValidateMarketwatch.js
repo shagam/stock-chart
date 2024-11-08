@@ -25,6 +25,7 @@ function VerifyGain (props) {
   const [url, setUrl] = useState ();
   const [err, setErr] = useState ();
   const [verifyTxt, setVerifyText] = useState ({});
+  const [futuresTxt, setFuturesText] = useState ({});
   const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [logBackEnd, setLogBackEnd] = useState ();
@@ -71,7 +72,7 @@ function VerifyGain (props) {
 
           ver['sym'] = props.symbol;
           ver['futures'] = result.data   
-          setVerifyText(result.data)
+          setFuturesText(result.data)
 
          }
       })
@@ -245,6 +246,7 @@ function VerifyGain (props) {
 
   useEffect(() => {
     setVerifyText()
+    setFuturesText()
     setVerifyNasdaqText()
     setUrl()
     setCorsUrl()
@@ -345,6 +347,7 @@ function VerifyGain (props) {
       {updateDate && <div>Update: {updateDate}</div>}
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
+      {futuresTxt && <pre> futures NQZ24 {JSON.stringify(futuresTxt, null, 2)}</pre>}
       <div>&nbsp;</div>
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
 
