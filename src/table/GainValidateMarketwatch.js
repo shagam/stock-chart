@@ -277,6 +277,10 @@ function VerifyGain (props) {
   },[props.symbol]) 
 
 
+  useEffect (() => {
+    setFuturesText()
+  }, [futureSym])
+
  // swap first, and force others columns in group to follow
  function toggleverifyColumns ()  {
   var ind = props.allColumns.findIndex((column)=> column.Header === 'alphaDate');
@@ -369,12 +373,15 @@ function VerifyGain (props) {
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
 
-      <div>&nbsp;</div>
+      {/* <div>&nbsp;</div> */}
+      
+      <hr/> 
+      <h5>Nasdaq futures  </h5>
+      <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6>
       {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
  
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-      {futuresTxt && <div> futures {futureSym} &nbsp;&nbsp; {futuresSymList[futureSym]} 
-          <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+      {futuresTxt && <div> futures  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
       {/* nasdaqFutures */}
     </div>
   )
