@@ -347,10 +347,10 @@ function VerifyGain (props) {
       {updateDate && <div>Update: {updateDate}</div>}
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
-      {futuresTxt && <pre> futures NQZ24 {JSON.stringify(futuresTxt, null, 2)}</pre>}
+      
       <div>&nbsp;</div>
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-
+      {futuresTxt && <pre> futures NQZ24 {JSON.stringify(futuresTxt, null, 2)}</pre>}
       {/* nasdaqFutures */}
     </div>
   )
