@@ -420,7 +420,8 @@ const BasicTable = (props) => {
     }
 
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
-      splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
+      splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
+      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
 
       if (singleSym)
         saveTable(sym);
