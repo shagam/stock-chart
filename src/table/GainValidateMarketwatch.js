@@ -28,6 +28,8 @@ function VerifyGain (props) {
   const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [logBackEnd, setLogBackEnd] = useState ();
+  const [saveInFile, setSaveInFile] = useState ();
+
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   const [updateDate, setUpdateDate] = useState ();
 
@@ -43,13 +45,16 @@ function VerifyGain (props) {
     else 
     url = "http://"; 
     url += props.servSelect + ":" + props.PORT + "/futures?stock=" + 'NQZ24'
-    url += '&saveInFile=true'
+    if (saveInFile)
+      url += '&saveInFile=true';
+    if (logBackEnd)
+      url += '&LOG=true';
 
       //corsUrl = "http://localhost:5000/price?stock=" + sym
       // console.log (getDate(), corsUrl)     
       if (ignoreSaved)
         url += '&ignoreSaved=true';
-      
+
       axios.get (url)
       .then ((result) => {
         setErr()
@@ -128,6 +133,8 @@ function VerifyGain (props) {
       
       if (ignoreSaved)
         corsUrl += '&ignoreSaved=true';
+      if (logBackEnd)
+        corsUrl += '&LOG=true';
 
     if (LOG)
     console.log (props.symbol, corsUrl)
@@ -324,8 +331,9 @@ function VerifyGain (props) {
       {err && <div style={{color: 'red'}}> {err} </div>}
 
       <div style={{display:'flex'}}>
-        {eliHome && <div> <input style={{height: '7%', marginTop: '8px'}} type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
+        {eliHome && <div>  &nbsp; <input  type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
         {eliHome &&  <div> <input type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd( !logBackEnd)}  />  &nbsp;LogBackend &nbsp; &nbsp; </div>}
+        {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  }&nbsp;SaveInFile &nbsp; &nbsp;
       </div>
 
       <div style={{display:'flex'}}>
@@ -337,7 +345,7 @@ function VerifyGain (props) {
       {updateDate && <div>Update: {updateDate}</div>}
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
-
+      <div>&nbsp;</div>
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
 
       {/* nasdaqFutures */}
