@@ -27,6 +27,7 @@ function VerifyGain (props) {
   const [verifyTxt, setVerifyText] = useState ({});
   const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
   const [ignoreSaved, setIgnoreSaved] = useState ();
+  const [logBackEnd, setLogBackEnd] = useState ();
   const [verifyDateOffset, setVerifyDateOffset ] = useState(Number(-1));  // last entry by default
   const [updateDate, setUpdateDate] = useState ();
 
@@ -35,6 +36,41 @@ function VerifyGain (props) {
 
   const LOG = props.logFlags.includes("verify_1");
     
+  function nasdaqFutures() {
+    var url
+    if (props.ssl) 
+      url = "https://";
+    else 
+    url = "http://"; 
+    url += props.servSelect + ":" + props.PORT + "/futures?stock=" + 'NQZ24'
+    url += '&saveInFile=true'
+
+      //corsUrl = "http://localhost:5000/price?stock=" + sym
+      // console.log (getDate(), corsUrl)     
+      if (ignoreSaved)
+        url += '&ignoreSaved=true';
+      
+      axios.get (url)
+      .then ((result) => {
+        setErr()
+        if (result.data) {
+          console.log (result.data)
+        }
+        const ver = {}
+        if (result.data.err === "No data") {
+          props.stockChartXValues([props.symbol, 'verify marketwatch', result.data.err])
+          return;
+        }
+
+        if ((result.data !== '') && ! result.data.err) {
+
+          ver['sym'] = props.symbol;
+          ver['futures'] = result.data   
+          setVerifyText(result.data)
+
+         }
+      })
+  }
 
   function marketwatchGainValidate (nasdaq) {
 
@@ -286,7 +322,12 @@ function VerifyGain (props) {
       {LOG && <div>{corsUrl}</div>}
       {LOG && <div>{url}</div>}
       {err && <div style={{color: 'red'}}> {err} </div>}
-      {eliHome && <div> <input style={{height: '7%', marginTop: '8px'}} type="checkbox" checked={ignoreSaved}  onChange={setIgnore}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
+
+      <div style={{display:'flex'}}>
+        {eliHome && <div> <input style={{height: '7%', marginTop: '8px'}} type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
+        {eliHome &&  <div> <input type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd( !logBackEnd)}  />  &nbsp;LogBackend &nbsp; &nbsp; </div>}
+      </div>
+
       <div style={{display:'flex'}}>
           <button style={{height: '7%', marginTop: '6px'}} type="button" className="CompareColumns" onClick={()=>toggleverifyColumns()}>toggleVerifyColumns</button>  &nbsp;
           <GetInt init={verifyDateOffset} callBack={setVerifyDateOffset} title='verifyOffset' type='Number' pattern="[-]?[0-9]+" width = '15%'/>
@@ -296,6 +337,10 @@ function VerifyGain (props) {
       {updateDate && <div>Update: {updateDate}</div>}
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
+
+      <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
+
+      {/* nasdaqFutures */}
     </div>
   )
 }
