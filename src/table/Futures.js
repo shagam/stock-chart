@@ -118,7 +118,7 @@ function Futures (props) {
       const serverUrl = 'https://www.barchart.com/futures/quotes/' + futureSym
       // const pattern = '"lastPrice\\\\":\\\\"([0-9\\.,]+)'
       var pattern = '"symbolName":"Nasdaq 100 E-Mini","lastPrice":"([0-9\\.,]+)","symbol":'
-      pattern = '"lastPrice":"([0-9\\.,]\\+)'
+      pattern = '"lastPrice":"([0-9\\.,]~~)'
       url += props.servSelect + ":" + props.PORT + "/urlGetParse?stock=" + futureSym + '&url=' + serverUrl + '&pattern=' + pattern
 
       if (saveInFile)
@@ -134,7 +134,9 @@ function Futures (props) {
 
       const mili = Date.now()
       if(LOG)  
-        setUrl('https://www.barchart.com/futures/quotes/' + futureSym)  // save url for debug
+        setUrl(url)  // save url for debug
+
+      setLatency('request sent to server')
 
       axios.get (url)
       .then ((result) => {
