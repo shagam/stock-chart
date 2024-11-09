@@ -112,19 +112,16 @@ function Futures (props) {
 
       const urlPatternPair = {
         NDX:    {u: 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
+        IXIC:   {u: 'https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
         NQZ24:  {u: 'https://www.barchart.com/futures/quotes/' + futureSym, p: '"lastPrice":"([0-9\\.,]~~)'},
 
       }
-      const ticker = Object.keys(urlPatternPair)[0] // select pait of {url,pattern}
 
-      var serverUrl = 'https://www.barchart.com/futures/quotes/' + futureSym
-      serverUrl = 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ'
-      serverUrl  = urlPatternPair[ticker].u
-      
-      var pattern
-      pattern = '"lastPrice":"([0-9\\.,]~~)'
-      pattern = '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'
-      pattern = urlPatternPair[ticker].p
+      const pairNum = 1
+      const ticker = Object.keys(urlPatternPair)[pairNum] // select pait of {url,pattern}
+
+      var serverUrl  = urlPatternPair[ticker].u
+      var pattern = urlPatternPair[ticker].p
 
       var url
       if (props.ssl) 
@@ -195,9 +192,9 @@ function Futures (props) {
             {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
         
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-            <button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;
+            { eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;</div>}
 
-            {futuresTxt && <div>futures  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+            {futuresTxt && <div> url-info <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
         </div>
     )
 }
