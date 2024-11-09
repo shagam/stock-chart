@@ -107,6 +107,58 @@ function Futures (props) {
         })
     }
 
+    //** test function */
+    function urlGetParse () {
+      var url
+      if (props.ssl) 
+        url = "https://";
+      else 
+      url = "http://"; 
+
+      const serverUrl = 'https://www.barchart.com/futures/quotes/' + futureSym
+      // const pattern = '"lastPrice\\\\":\\\\"([0-9\\.,]+)'
+      var pattern = '"symbolName":"Nasdaq 100 E-Mini","lastPrice":"([0-9\\.,]+)","symbol":'
+      pattern = '"lastPrice":"([0-9\\.,]\\+)'
+      url += props.servSelect + ":" + props.PORT + "/urlGetParse?stock=" + futureSym + '&url=' + serverUrl + '&pattern=' + pattern
+
+      if (saveInFile)
+        url += '&saveInFile=true';
+      if (logBackEnd)
+        url += '&LOG=true';
+     
+      if (ignoreSaved)
+        url += '&ignoreSaved=true';
+
+      if (logBackEnd)
+        console.log (url) // log the url
+
+      const mili = Date.now()
+      if(LOG)  
+        setUrl('https://www.barchart.com/futures/quotes/' + futureSym)  // save url for debug
+
+      axios.get (url)
+      .then ((result) => {
+        setErr()
+        if (result.data) {
+          console.log (result.data)
+        }
+        const ver = {}
+        if (result.data.err === "No data") {
+          props.stockChartXValues([props.symbol, 'verify marketwatch', result.data.err])
+          return;
+        }
+
+        const latency = Date.now() - mili
+        setLatency('futures done, latency(msec)=' + latency)
+
+        if ((result.data !== '') && ! result.data.err) {
+
+          // result.data['a'] = 'b'
+          setFuturesText(result.data)
+
+          }
+      })
+    }
 
     return (
         <div>
@@ -128,6 +180,8 @@ function Futures (props) {
             {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
         
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;
+
             {futuresTxt && <div>futures  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
         </div>
     )
