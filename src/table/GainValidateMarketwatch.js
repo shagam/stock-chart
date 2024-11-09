@@ -25,7 +25,6 @@ function VerifyGain (props) {
   const [url, setUrl] = useState ();
   const [err, setErr] = useState ();
   const [verifyTxt, setVerifyText] = useState ({});
-  const [futuresTxt, setFuturesText] = useState ({});
   const [verifyNasdaqTxt, setVerifyNasdaqText] = useState ({});
   const [ignoreSaved, setIgnoreSaved] = useState ();
   const [logBackEnd, setLogBackEnd] = useState ();
@@ -39,74 +38,7 @@ function VerifyGain (props) {
 
   const LOG = props.logFlags.includes("verify_1");
 
-  //** selevt future sym */
-  const futuresSymList = 
-  {
-    // NQ: 'today',
-    // MNQ: 'today',
-    // '$NDX': 'today',
-    // '$IXIC': 'today',
-
-    NQZ24: 'Dec 24',
-    NQH25: 'Mar 25',
-    NQM25: 'Jun 25',
-    NQU25: 'Sep 25',
-    NQZ25: 'Dec 25',
-    NQH26: 'Mar 26',
-    '$IUXX': 'today',
-  }
-
-  const symList = Object.keys(futuresSymList)
-  var dateList = [];
-  for (let i = 0; i < symList.length; i++)
-    dateList.push(symList[i] + '_' + futuresSymList[symList[i]])
-
-  const [futureSym, setFutureSym]  = useState(symList[0]);
-
-
-  //** Get nasdaq futures contract */
-  // https://www.barchart.com/futures/quotes/
-  function nasdaqFutures() {
-    var url
-    if (props.ssl) 
-      url = "https://";
-    else 
-    url = "http://"; 
-    url += props.servSelect + ":" + props.PORT + "/futures?stock=" + futureSym
-    if (saveInFile)
-      url += '&saveInFile=true';
-    if (logBackEnd)
-      url += '&LOG=true';
-
-      //corsUrl = "http://localhost:5000/price?stock=" + sym
-      // console.log (getDate(), corsUrl)     
-      if (ignoreSaved)
-        url += '&ignoreSaved=true';
-
-      if (logBackEnd)
-        console.log (url) // log the url
-
-      axios.get (url)
-      .then ((result) => {
-        setErr()
-        if (result.data) {
-          console.log (result.data)
-        }
-        const ver = {}
-        if (result.data.err === "No data") {
-          props.stockChartXValues([props.symbol, 'verify marketwatch', result.data.err])
-          return;
-        }
-
-        if ((result.data !== '') && ! result.data.err) {
-
-          // result.data['a'] = 'b'
-          setFuturesText(result.data)
-
-         }
-      })
-  }
-
+ 
   function marketwatchGainValidate (nasdaq) {
 
     // setError();
@@ -275,9 +207,7 @@ function VerifyGain (props) {
 
   useEffect(() => {
     setVerifyText()
-    setFuturesText()
     setVerifyNasdaqText()
-    setUrl()
     setCorsUrl()
     setErr()
     setUpdateDate()
@@ -285,10 +215,7 @@ function VerifyGain (props) {
   },[props.symbol]) 
 
 
-  useEffect (() => {
-    setFuturesText()
-  }, [futureSym])
-
+ 
  // swap first, and force others columns in group to follow
  function toggleverifyColumns ()  {
   var ind = props.allColumns.findIndex((column)=> column.Header === 'alphaDate');
@@ -362,7 +289,6 @@ function VerifyGain (props) {
       <h5>Verify_1 </h5>
       <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; {props.symbol}:  &nbsp; Verify historical price by comparing to another site  &nbsp; </h6>
       {LOG && <div>{corsUrl}</div>}
-      {LOG && <div>{url}</div>}
       {err && <div style={{color: 'red'}}> {err} </div>}
 
       <div style={{display:'flex'}}>
@@ -380,18 +306,6 @@ function VerifyGain (props) {
       {updateDate && <div>Update: {updateDate}</div>}
       {/* <div  style={{display:'flex' }}>  {JSON.stringify(verifyTxt)}  </div>  */}
       {verifyTxt && <pre> verify {JSON.stringify(verifyTxt, null, 2)}</pre>}
-
-      {/* <div>&nbsp;</div> */}
-      
-      <hr/> 
-      <h5>Nasdaq futures  </h5>
-
-      <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6>
-      {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
- 
-      <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-      {futuresTxt && <div>futures  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
-      {/* nasdaqFutures */}
     </div>
   )
 }

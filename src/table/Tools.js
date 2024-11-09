@@ -14,9 +14,11 @@ import {MonthGain} from './MonthGain'
 import {IpContext} from '../contexts/IpContext';
 import {TargetPriceGui } from './TargetPriceGui';
 import {VerifyGain} from './GainValidateMarketwatch'
+import {Futures} from './Futures'
 import {Splits} from './StockSplits'
 import {Spikes} from './Spikes'
 import {IpSearchGui } from '../utils/IpSearchGui';
+
 
 // import axios from 'axios'
 // import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -48,7 +50,13 @@ function Tools (props) {
             <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                   stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
-            
+
+            <hr/> 
+            <Futures symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
+                  stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} 
+                    logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
+
+
             <hr/> 
             {/* <br></br>  */}
             <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
