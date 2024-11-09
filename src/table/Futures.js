@@ -109,16 +109,29 @@ function Futures (props) {
 
     //** test function */
     function urlGetParse () {
+
+      const urlPatternPair = {
+        NDX:    {u: 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
+        NQZ24:  {u: 'https://www.barchart.com/futures/quotes/' + futureSym, p: '"lastPrice":"([0-9\\.,]~~)'},
+
+      }
+      const ticker = Object.keys(urlPatternPair)[0] // select pait of {url,pattern}
+
+      var serverUrl = 'https://www.barchart.com/futures/quotes/' + futureSym
+      serverUrl = 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ'
+      serverUrl  = urlPatternPair[ticker].u
+      
+      var pattern
+      pattern = '"lastPrice":"([0-9\\.,]~~)'
+      pattern = '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'
+      pattern = urlPatternPair[ticker].p
+
       var url
       if (props.ssl) 
         url = "https://";
       else 
       url = "http://"; 
 
-      const serverUrl = 'https://www.barchart.com/futures/quotes/' + futureSym
-      // const pattern = '"lastPrice\\\\":\\\\"([0-9\\.,]+)'
-      var pattern = '"symbolName":"Nasdaq 100 E-Mini","lastPrice":"([0-9\\.,]+)","symbol":'
-      pattern = '"lastPrice":"([0-9\\.,]~~)'
       url += props.servSelect + ":" + props.PORT + "/urlGetParse?stock=" + futureSym + '&url=' + serverUrl + '&pattern=' + pattern
 
       if (saveInFile)
