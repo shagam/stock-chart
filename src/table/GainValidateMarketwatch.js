@@ -42,12 +42,18 @@ function VerifyGain (props) {
   //** selevt future sym */
   const futuresSymList = 
   {
+    // NQ: 'today',
+    // MNQ: 'today',
+    // '$NDX': 'today',
+    // '$IXIC': 'today',
+
     NQZ24: 'Dec 24',
     NQH25: 'Mar 25',
     NQM25: 'Jun 25',
     NQU25: 'Sep 25',
     NQZ25: 'Dec 25',
-    NQH26: 'Mar 26'
+    NQH26: 'Mar 26',
+    '$IUXX': 'today',
   }
 
   const symList = Object.keys(futuresSymList)
@@ -57,6 +63,9 @@ function VerifyGain (props) {
 
   const [futureSym, setFutureSym]  = useState(symList[0]);
 
+
+  //** Get nasdaq futures contract */
+  // https://www.barchart.com/futures/quotes/
   function nasdaqFutures() {
     var url
     if (props.ssl) 
@@ -91,8 +100,7 @@ function VerifyGain (props) {
 
         if ((result.data !== '') && ! result.data.err) {
 
-          ver['sym'] = props.symbol;
-          ver['futures'] = result.data   
+          // result.data['a'] = 'b'
           setFuturesText(result.data)
 
          }
@@ -377,11 +385,12 @@ function VerifyGain (props) {
       
       <hr/> 
       <h5>Nasdaq futures  </h5>
+
       <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6>
       {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
  
       <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-      {futuresTxt && <div> futures  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+      {futuresTxt && <div>futures  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
       {/* nasdaqFutures */}
     </div>
   )
