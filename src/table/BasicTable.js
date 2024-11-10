@@ -789,8 +789,10 @@ const BasicTable = (props) => {
 
       <table style={{marginTop: '4px'}} id="stockTable" {...getTableProps()}>
       <thead>
+
         {headerGroups.map ((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
+              <th>N</th>
               {headerGroup.headers.map((column) => (
                   <th {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
                   <span>
@@ -804,13 +806,15 @@ const BasicTable = (props) => {
     
       <tbody id="tableBodyId" {...getTableBodyProps()}>
         {
-          rows.map(row => {
+          rows.map((row, i) => {
             // {style: (row.verify_1 > 1.1 || row.verify_1 < 0.9) ? {background: red}}
+
             prepareRow(row)
             return (
               <tr id='stock_row_id'
               // <tr id='stock_row_id' key={row.id} onClick={() => clickedRow (row)}
                 {...row.getRowProps()}>
+                <td style= {{margin: '1px',  padding: '1px',}}>{i}</td>
                 {row.cells.map((cell) => {
                   // if (cell.column.id === 'year') {
                   //   console.log ('render', row.values.symbol, cell.value)
