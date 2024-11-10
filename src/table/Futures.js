@@ -33,16 +33,28 @@ function Futures (props) {
       // MNQ: 'today',
       // '$NDX': 'today',
       // '$IXIC': 'today',
-  
+
+
       NQZ24: 'Dec 24',
       NQH25: 'Mar 25',
+      NQI25: "????",
       NQM25: 'Jun 25',
       NQU25: 'Sep 25',
       NQZ25: 'Dec 25',
       NQH26: 'Mar 26',
       '$IUXX': 'today',
+      NQW00: '????',
+
     }
   
+    const googFinance = {
+      'INDEXNASDAQ: NDX': 'Nasdaq 100 biggest', // today
+      'INDEXNASDAQ: .IXIC': 'Nasdaq All',
+      // NQ: 'Future of nasdaq QQQ',
+      'CME_EMINIS: NQW00': 'QQQ_future', // NQ=F
+    }
+
+
     const symList = Object.keys(futuresSymList)
     var dateList = [];
     for (let i = 0; i < symList.length; i++)
