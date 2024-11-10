@@ -128,7 +128,7 @@ const Simulate = (props) => {
                 break; // byond array 
             const date = XValues[i] // date of gain  for debug
             var sign_1; // used to breal loop when sign flips
-            const weekNum = weekOfYearGet (XValues, index) 
+            const weekNum = weekOfYearGet (XValues, index, props.logFlags) 
             if (weekNum === -1) //** not found */
                 continue;
             const weeklyGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
@@ -260,7 +260,7 @@ const Simulate = (props) => {
 
         //** calc today portion  weekGain */
         if (props.monthGainData.monthGainArray) {
-            const weekNumToday = weekOfYearGet (XValues, 0);
+            const weekNumToday = weekOfYearGet (XValues, 0, props.logFlags);
             const weekGainFactorToday = props.monthGainData.weekGainArray[weekNumToday]
             setPortionWeekGain (aggressivePortionInit * weekGainFactorToday)
         }
@@ -400,7 +400,7 @@ const Simulate = (props) => {
                 //** calc weekGain for week */
                 var weekGain = -1
                 if (optimizeWeekGain) {
-                    const weekNum = weekOfYearGet (XValues, i) 
+                    const weekNum = weekOfYearGet (XValues, i, props.logFlags) 
                     if (weekNum !== -1) //** not found */
                         weekGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
                 }

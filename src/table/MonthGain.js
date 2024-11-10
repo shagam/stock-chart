@@ -29,7 +29,8 @@ import { beep2 } from '../utils/ErrorList';
 
  //** search for week number */
  const LOG_week_above_52 = false
- function weekOfYearGet (Xarray, i) {
+ function weekOfYearGet (Xarray, i, logFlags) {
+    const LOG = logFlags.includes('month')
     if (i + 52 > Xarray.length){
       console.log ('near oldest i=', i, 'date=', Xarray[i], 'oldest=', Xarray[Xarray.length - 1])
       return -1; // fail
@@ -46,7 +47,8 @@ import { beep2 } from '../utils/ErrorList';
         return (52 + j - 1) % 52;
       }
     }
-    console.log ('overRun 53 i=', 'start=', startDate)
+    if(LOG)
+      console.log ('weekAbove 52 i=', 'start=', startDate)
     return -1; // not found
 }
   
@@ -129,7 +131,7 @@ function MonthGain (props) {
     const weekGainArrayCount = new Array(52).fill(0);
 
     //** used to display daste in weekgain table */
-    const weekNumOfDate_temp = (gainMapSym && props.gainMap[gainMapSym]) ?  weekOfYearGet (props.gainMap[gainMapSym].x, 0) : null // get week num of first date
+    const weekNumOfDate_temp = (gainMapSym && props.gainMap[gainMapSym]) ?  weekOfYearGet (props.gainMap[gainMapSym].x, 0, props.logFlags) : null // get week num of first date
     if (weekNumOfDate_temp)
       setWeekNumberForDate_0 (weekNumOfDate_temp)
 
@@ -152,7 +154,7 @@ function MonthGain (props) {
       var errCount = 0;
       for (let i = 0; i < oldestIndex -1; i++) { // index into weekly x (date) y (price) arrays 
 
-        var weekOfYear = weekOfYearGet (xArray, i) 
+        var weekOfYear = weekOfYearGet (xArray, i, props.logFlags) 
         if (weekOfYear === -1) {// fail
           continue;
         }
