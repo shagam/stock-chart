@@ -795,7 +795,8 @@ const Simulate = (props) => {
                     {Object.keys(resultsArray).map((s, s1) =>{
                         return (
                         <tr key={s1} style={{ hei_ght: '10', margin: '0px',  padding: 'dense',}}>
-                            <td style={{padding: '2px', margin: '2px', width: '8px', background: colorfield(resultsArray[s])}}>{s}</td>                 
+                            <td  style={{padding: '2px', margin: '2px', width: '8px'}}>{s1}</td>   
+                            <td style={{padding: '2px', margin: '2px', width: '8px', background: colorfield(resultsArray[s])}}>{s}</td> 
                             {resultsArray[s].map((k,n)=>{
                             return (
                                 <td key={n} style={{padding: '2px', margin: '2px'}}> {k} </td>
