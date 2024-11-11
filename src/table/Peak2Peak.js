@@ -390,6 +390,7 @@ const Peak2PeakGui = (props) => {
               <table>
                 <thead>
                   <tr>
+                    <th>N</th>
                     <th>date </th>
                     <th>{props.symbol} price</th>
                     <th>bubbleLine price</th>
@@ -400,6 +401,7 @@ const Peak2PeakGui = (props) => {
                     {Object.keys(props.gainMap.bubbleLine.y).map((s, s1) =>{
                         return (
                         <tr key={s1}>
+                          <td style={{padding: '2px', margin: '2px'}}>{s1}</td>
                             <td style={{padding: '2px', margin: '2px', width: '120px'}}>{props.gainMap.bubbleLine.x[s1]}  </td> 
                             {<td style={{padding: '2px', margin: '2px'}}> {props.gainMap[props.symbol].y[s1].toFixed(2)}</td>}
                             {<td style={{padding: '2px', margin: '2px'}}>{props.gainMap.bubbleLine.y[s1].toFixed(2)}</td>}
