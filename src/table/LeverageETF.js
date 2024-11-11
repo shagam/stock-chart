@@ -99,15 +99,16 @@ function LeverageETF (props) {
                 <table>
                     <thead>
                         <tr>
-                        <th style={{monWidth: '300px'}}>date</th>
-                        <th>{symArray[0] + ' $'}</th>
-                        <th>{symArray[0]} gain</th>
-                        <th>{symArray[0]} yearly gain</th>
+                            <th>N</th>
+                            <th style={{monWidth: '300px'}}>date</th>
+                            <th>{symArray[0] + ' $'}</th>
+                            <th>{symArray[0]} gain</th>
+                            <th>{symArray[0]} yearly gain</th>
 
-                        <th>{symArray[1] + ' $'}</th>
-                        <th>{symArray[1]} gain</th>
-                        <th>{symArray[1]} yearly gain</th>
-                        {/* <th>nextOpen</th> */}
+                            <th>{symArray[1] + ' $'}</th>
+                            <th>{symArray[1]} gain</th>
+                            <th>{symArray[1]} yearly gain</th>
+                            {/* <th>nextOpen</th> */}
 
                         </tr>
                     </thead>
@@ -115,6 +116,7 @@ function LeverageETF (props) {
                         {props.gainMap[pivotSym].y.map((date, index) =>{
                             return (
                             <tr key={index}>
+                                <td style={{padding: '2px', margin: '2px'}}>{index}</td>
                                 <td style={{padding: '2px', margin: '2px', width:'120px'}} >{props.gainMap[pivotSym].x[index]}  </td>
 
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
