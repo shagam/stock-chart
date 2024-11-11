@@ -822,6 +822,7 @@ const Simulate = (props) => {
                 <table>
                     <thead>
                         <tr>
+                            <th>N</th>
                             {Object.keys(logRecords[logRecordsKeys[0]]).map((h,h1) => {
                                 return (
                                     <th key={h1}>{h}</th>
@@ -833,6 +834,7 @@ const Simulate = (props) => {
                         {logRecordsKeys.map((s, s1) =>{
                             return (
                             <tr key={s1}>
+                                <td style={{padding: '3px', margin: '3px'}}>{s1}</td>
                                 {Object.keys(logRecords[s]).map((a,a1) => {
                                     return (
                                         <td key={a1} style={{padding: '3px', margin: '3px'}} >{logRecords[s][a]}</td>
