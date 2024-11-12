@@ -958,7 +958,7 @@ function CommonDatabase (props) {
             {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
         </div>
 
-        <hr/>         
+        {/* <hr/>          */}
 
         {/* <div> &nbsp;</div> */}
 
@@ -970,7 +970,7 @@ function CommonDatabase (props) {
         </div>} 
 
         {/* Display filtered symbols */}
-        {results &&  <div  style={{width: '400px', maxHeight: '30vh', 'overflowY': 'scroll'}}>
+        {results &&  <div  style={{width: '250px', height: '35vh', 'overflowY': 'scroll'}}>
             {results.map((r,k)=>{
                 return <div key={k}>&nbsp; {k}  &nbsp;  &nbsp;  {r}&nbsp;&nbsp;</div>
             })}
