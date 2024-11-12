@@ -268,7 +268,7 @@ function MarketOpenPrice (props) {
                         {dateArray && dateArray.map((date, index) =>{
                             return (
                             <tr key={index}>
-                                <td style={{padding: '2px', margin: '2px', width: '30px'}}>{index}  </td> 
+                                <td style={{padding: '2px', margin: '2px', width: '50px'}}>{index}  </td> 
                                 <td style={{padding: '2px', margin: '2px', width: '100px'}}>{date}  </td> 
                                 <td style={{padding: '2px', margin: '2px'}}> {openArr[index]}</td>
                                 <td style={{padding: '2px', margin: '2px'}}> {closeArr[index]}</td>
