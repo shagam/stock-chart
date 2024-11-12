@@ -929,7 +929,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='marketOpenPrice' && <MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
               setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} />}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily} />}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
             {analyzeTool ==='leveragaETF' && <LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd} />}

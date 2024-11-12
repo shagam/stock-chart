@@ -17,6 +17,8 @@ function MarketOpenPrice (props) {
     const [openArr, setOpenArr] = useState([])
     const [closeArr, setCloseArr]= useState([])
 
+    const PERCENT_DIFF = 1
+    const [colorPercentDiff, setPERCENT_DIFF] = useState (PERCENT_DIFF)
 
 
     const END_OF_DAY = false;
@@ -28,7 +30,7 @@ function MarketOpenPrice (props) {
         // openDivPrevClose()
         setOpenArr()
         setCloseArr()
-    }, [props.symbol]) 
+    }, [props.symbol, props.daily]) 
    
     function gainOpen(i) {
         if (dateArray_.length === 0) {
@@ -99,14 +101,12 @@ function MarketOpenPrice (props) {
     // const openOrCloseText = openMarketFlag ? '1. open' : '4. close';
     function getGainArray () {
 
-        const dataStr = JSON.stringify(props.chartData);
-        if (dataStr === "{}") {
-            props.errorAdd([props.symbol, 'Invalid symbol'])
-          // alert (`Invalid symbol: (${sym})`)
-          return;
-        }
-        if (LOG_API) {
+        if (! props.daily)
+            setPERCENT_DIFF (colorPercentDiff * 3)  //  weekly expects heigher differences toi be RED
 
+        const dataStr = JSON.stringify(props.chartData);
+
+        if (LOG_API) {
           console.dir (props.chartData)
           // console.log (dataStr.substring(0,150));
         }
@@ -159,12 +159,12 @@ function MarketOpenPrice (props) {
 
        //* color gain numbers according to gain
     function gainColor (gain) {
-        const PERCENT_DIFF = 1;
-        if (gain > 1 + PERCENT_DIFF / 100) { // for month color for hiegher gain
+
+        if (gain > 1 + colorPercentDiff / 100) { // for month color for hiegher gain
             const diff = gain -1;
             return '#00ff00' // diff * 40 green
         }
-        else if (gain < 1 - PERCENT_DIFF / 100) {
+        else if (gain < 1 - colorPercentDiff / 100) {
             const diff = (1 - gain)
             return '#ff0000'// + diff * 256 * 40 red
         }
@@ -190,6 +190,7 @@ function MarketOpenPrice (props) {
             {/* Market open_price / Perevious_close Table */}
 
             <div>&nbsp;</div>
+            <div>Color % threshold={colorPercentDiff}</div>
             {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; 
                 firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  open / prevClose-average={openDivPrevCloseAverage}</div>}
 
