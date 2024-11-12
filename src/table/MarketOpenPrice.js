@@ -16,7 +16,7 @@ function MarketOpenPrice (props) {
     const [openDivPrevClose, setOpenDivPrevClose] = useState([])
     const [openArr, setOpenArr] = useState([])
     const [closeArr, setCloseArr]= useState([])
-    const [weekly, setWeekly] = useState()
+
 
 
     const END_OF_DAY = false;
@@ -29,14 +29,7 @@ function MarketOpenPrice (props) {
         setOpenArr()
         setCloseArr()
     }, [props.symbol]) 
-  
-
-    var periodTag;
-    if (weekly)
-      periodTag = 'Weekly Adjusted Time Series';
-    else
-      periodTag = "Time Series (Daily)"
-  
+   
     function gainOpen(i) {
         if (dateArray_.length === 0) {
             return -1 // not ready yet
@@ -80,18 +73,6 @@ function MarketOpenPrice (props) {
         const close = Number(dayGainObj['5. adjusted close']) 
         return close.toFixed(2)
     }
-
-
-
-    // if (LOG_DROP) {
-    //     console.log (gainObj[props.stockChartXValues[props.stockChartXValues.length-1]])
-    //     console.log ('high=', gainHigh(props.stockChartXValues.length-1), 'low=', gainLow(props.stockChartXValues.length-1), 'close=', gainClose(props.stockChartXValues.length-1))
-    // }
-       
-      // if (weekly)
-      //   periodTag = 'Weekly Adjusted Time Series';
-      // else
-      //   periodTag = "Time Series (Daily)"
   
       const LOG_FLAG = props.logFlags && props.logFlags.includes('aux');
       const LOG_API = props.logFlags && props.logFlags.includes('api');
@@ -118,96 +99,58 @@ function MarketOpenPrice (props) {
     // const openOrCloseText = openMarketFlag ? '1. open' : '4. close';
     function getGainArray () {
 
-      let API_Call;
-      if (weekly)
-        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY_ADJUSTED`;
-      else
-        API_Call = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED`;
+        const dataStr = JSON.stringify(props.chartData);
+        if (dataStr === "{}") {
+            props.errorAdd([props.symbol, 'Invalid symbol'])
+          // alert (`Invalid symbol: (${sym})`)
+          return;
+        }
+        if (LOG_API) {
 
-    API_Call += `&symbol=${props.symbol}&outputsize=full&apikey=${props.API_KEY}`
+          console.dir (props.chartData)
+          // console.log (dataStr.substring(0,150));
+        }
+        
+        const obj = props.chartData; 
 
-    // API_Call += '&adjusted'=true 
+        gainObj = obj
+        const dateArr = Object.keys(obj);
+        setDateArray(dateArr)
+        dateArray_ = dateArr;
 
-      fetch(API_Call)
-          .then(
-              function(response) {
-                  const respStr = JSON.stringify (response);
-                  if (response.status !== 200 || ! response.ok)
-                      console.log(response);
-                  return response.json();
-              }
-          )
-          .then(
-              (chartData) => {
-                const dataStr = JSON.stringify(chartData);
-                if (dataStr === "{}") {
-                    props.errorAdd([props.symbol, 'Invalid symbol'])
-                  // alert (`Invalid symbol: (${sym})`)
-                  return;
-                }
-                if (LOG_API) {
-                  console.log (API_Call);
-                  console.dir (chartData)
-                  // console.log (dataStr.substring(0,150));
-                }
+        // calc array of open vs prevClose
+        var openArray = [];
+        var closeArray = [];
+
+        var openDivCloseMul = 1;
+        var openDivCloseCount = 0;
+        var openDivPrevClose_ = [];
+        openDivPrevClose_[0] = -1
+        var upCount = 0;
+        var downCnt = 0;
+        for (let i = 0; i < dateArray_.length; i++) {
+            openArray[i] = gainOpen(i)
+            closeArray[i] = gainClose(i)
+            if (i > 0) {
+                openDivPrevClose_[i] = openArray[i] / closeArray[i - 1];
+                openDivCloseMul *= openDivPrevClose_[i];
+                openDivCloseCount ++;
                 
-                // too frequent AlphaVantage api calls
-                if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                    alert (`${dataStr} (${props.symbol}) \n\n${API_Call} ${props.API_KEY}  `);
-                    //setChartData ('');
-                    return;
-                }
-                const limit_100_PerDay = 'You have reached the 100 requests/day limit for your free API key'
-                if (dataStr.indexOf (limit_100_PerDay) !== -1) {
-                  alert (`${limit_100_PerDay} (${props.symbol}) \n\n${API_Call}  ${props.API_KEY} ` );
-                  return;
-                }              
-                if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                  alert (dataStr.substring(0, 35) + ` symbol(${props.symbol}) \n\n${API_Call}`);
-                  //setChartData ('');
-                  return;
-                }
-                const obj = chartData[`${periodTag}`]; 
+                if (openDivPrevClose_[i] > 1)
+                    upCount ++;
+                else if (openDivPrevClose_[i] < 1)
+                    downCnt ++;
 
-                gainObj = obj
-                const dateArr = Object.keys(obj);
-                setDateArray(dateArr)
-                dateArray_ = dateArr;
-
-                // calc array of open vs prevClose
-                var openArray = [];
-                var closeArray = [];
-
-                var openDivCloseMul = 1;
-                var openDivCloseCount = 0;
-                var openDivPrevClose_ = [];
-                openDivPrevClose_[0] = -1
-                var upCount = 0;
-                var downCnt = 0;
-                for (let i = 0; i < dateArray_.length; i++) {
-                    openArray[i] = gainOpen(i)
-                    closeArray[i] = gainClose(i)
-                    if (i > 0) {
-                        openDivPrevClose_[i] = openArray[i] / closeArray[i - 1];
-                        openDivCloseMul *= openDivPrevClose_[i];
-                        openDivCloseCount ++;
-                        
-                        if (openDivPrevClose_[i] > 1)
-                            upCount ++;
-                        else if (openDivPrevClose_[i] < 1)
-                            downCnt ++;
-
-                    }
-                }
-                setOpenArr (openArray)
-                setCloseArr (closeArray)
-                setOpenDivPrevClose(openDivPrevClose_)
-                const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
-                console.log (props.symbol, 'open vs prevClose  average=', average, 'openDivCloseCount', openDivCloseCount, 'openDivCloseMul', openDivCloseMul)
-                console.log (props.symbol, 'open vs prevClose  upCnt=' + upCount, 'downCnt=', downCnt)
-                setOpenDivPrevCloseAverage(average.toFixed(6))
             }
-        )
+        }
+        setOpenArr (openArray)
+        setCloseArr (closeArray)
+        setOpenDivPrevClose(openDivPrevClose_)
+        const average = Math.pow (openDivCloseMul, (1/openDivCloseCount))
+        console.log (props.symbol, 'open vs prevClose  average=', average, 'openDivCloseCount', openDivCloseCount, 'openDivCloseMul', openDivCloseMul)
+        console.log (props.symbol, 'open vs prevClose  upCnt=' + upCount, 'downCnt=', downCnt)
+        setOpenDivPrevCloseAverage(average.toFixed(6))
+        
     }
 
 
@@ -241,8 +184,7 @@ function MarketOpenPrice (props) {
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Tool for revealing after hour reshuffle (Expenses) of lavarage ETF like TQQQ </h6>
 
             <div>
-              <button style={{background: 'aqua'}} onClick={getGainArray} > getPriceHistory </button>  &nbsp;  &nbsp; 
-              <input type="checkbox" checked={weekly} onChange={() => setWeekly(! weekly)}  />&nbsp;weekly &nbsp; &nbsp;
+              <button style={{background: 'aqua'}} onClick={getGainArray} > calcPriceHistory </button>  &nbsp;  &nbsp; 
             </div>
 
             {/* Market open_price / Perevious_close Table */}
@@ -251,7 +193,7 @@ function MarketOpenPrice (props) {
             {openDivPrevCloseAverage && dateArray.length > 0 && <div> count={dateArray.length} &nbsp; &nbsp; 
                 firstDate={dateArray[dateArray.length - 1]}  &nbsp; &nbsp;  open / prevClose-average={openDivPrevCloseAverage}</div>}
 
-            {openDivPrevCloseAverage && openDivPrevClose.length > 0 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
+            {openDivPrevCloseAverage && openDivPrevClose.length > 0 && <div style={{height:'400px', width: '500px', overflow:'auto'}}>
                 <table>
                     <thead>
                       <tr>
