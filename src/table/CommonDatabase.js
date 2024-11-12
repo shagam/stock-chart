@@ -960,7 +960,7 @@ function CommonDatabase (props) {
 
         <hr/>         
 
-        <div> &nbsp;</div>
+        {/* <div> &nbsp;</div> */}
 
         {/* Display filtered symbols info  */}
         {results && <div style={{display:'flex'}}>
@@ -972,10 +972,10 @@ function CommonDatabase (props) {
         {/* Display filtered symbols */}
         {results &&  <div  style={{width: '400px', maxHeight: '30vh', 'overflowY': 'scroll'}}>
             {results.map((r,k)=>{
-                return <div key={k}>&nbsp; {r}&nbsp;&nbsp;</div>
+                return <div key={k}>&nbsp; {k}  &nbsp;  &nbsp;  {r}&nbsp;&nbsp;</div>
             })}
         </div>}
-
+        <hr/>     
         {/* readOneSym info admin only */}
         <pre>{JSON.stringify(infoJson, null, 2)}</pre>
 
