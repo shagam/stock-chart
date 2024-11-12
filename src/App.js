@@ -40,7 +40,7 @@ const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', 'holdings', "fireb
 function App() {
   const [count, setCount] = useState (0);
   const [logFlags, setLogFlags] = useState([]);
-  const [server, setServer] = useState('dinagold.net')
+  const [server, setServer] = useState(process.env.REACT_APP_AWS_IP)
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
   const nowStr = getDateSec()
