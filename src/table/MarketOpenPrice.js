@@ -254,20 +254,21 @@ function MarketOpenPrice (props) {
             {openDivPrevCloseAverage && openDivPrevClose.length > 0 && <div style={{height:'450px', width: '630px', overflow:'auto'}}>
                 <table>
                     <thead>
-                        <tr>
+                      <tr>
+                        <th>N</th>
                         <th>date</th>
                         <th>open</th>
                         <th>close</th>
                         <th>dailyGain</th>
                         <th>open / prevClose</th>
                         {/* <th>nextOpen</th> */}
-
-                        </tr>
+                      </tr>
                     </thead>
                     <tbody>
                         {dateArray && dateArray.map((date, index) =>{
                             return (
                             <tr key={index}>
+                                <td style={{padding: '2px', margin: '2px', width: '30px'}}>{index}  </td> 
                                 <td style={{padding: '2px', margin: '2px', width: '100px'}}>{date}  </td> 
                                 <td style={{padding: '2px', margin: '2px'}}> {openArr[index]}</td>
                                 <td style={{padding: '2px', margin: '2px'}}> {closeArr[index]}</td>
