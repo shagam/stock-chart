@@ -24,6 +24,8 @@ function Futures (props) {
     const [saveInFile, setSaveInFile] = useState ();
     const [latency, setLatency] = useState ();
   
+    const [NQ, set_NQ] = useState();
+
     const LOG = props.logFlags.includes("futures");
 
     //** selevt future sym */
@@ -44,24 +46,28 @@ function Futures (props) {
       NQH26: 'Mar 26',
       '$IUXX': 'today',
       NQW00: '????',
-
     }
-  
+    const symList = Object.keys(futuresSymList)
+    
+    
+
     const googFinance = {
       'INDEXNASDAQ: NDX': 'Nasdaq 100 biggest', // today
       'INDEXNASDAQ: .IXIC': 'Nasdaq All',
       // NQ: 'Future of nasdaq QQQ',
       'CME_EMINIS: NQW00': 'QQQ_future', // NQ=F
     }
+    const googFinanceSymList = Object.keys(googFinance)
 
 
-    const symList = Object.keys(futuresSymList)
     var dateList = [];
     for (let i = 0; i < symList.length; i++)
       dateList.push(symList[i] + '_' + futuresSymList[symList[i]])
   
     const [futureSym, setFutureSym]  = useState(symList[0]);
-  
+    const [urlGetSym, setUrlGetSym]  = useState(googFinanceSymList[0]);
+
+
     useEffect (() => {
         setFuturesText()
         setLatency()
@@ -178,7 +184,8 @@ function Futures (props) {
         if ((result.data !== '') && ! result.data.err) {
 
           // result.data['a'] = 'b'
-          setFuturesText(result.data)
+          // setFuturesText(result.data)
+          set_NQ(result.data)  
 
           }
       })
@@ -201,12 +208,18 @@ function Futures (props) {
 
 
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6>
-            {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}
-        
+            {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} 
+              title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-            { eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;</div>}
-
+            <div>{futureSym}</div>
             {futuresTxt && <div> url-info <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+
+            <hr/> 
+            {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={urlGetSym} nameList={googFinanceSymList} setSelect={setUrlGetSym} 
+              title='urlGetSym' options={googFinanceSymList} defaultValue={urlGetSym}/> </div>}   {/* Select urlGetSym */}
+            { eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;</div>}
+            {urlGetSym && <div>{urlGetSym}</div>}
+            {NQ && <div>{NQ}</div>}
         </div>
     )
 }
