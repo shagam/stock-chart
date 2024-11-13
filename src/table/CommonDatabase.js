@@ -890,15 +890,8 @@ function CommonDatabase (props) {
    
   return (
     <div style = {{ border: '2px solid green'}}>
-      <div>
-        <input
-          type="checkbox" checked={displayFlag}
-          onChange={() => {setDisplayFlag (! displayFlag)}}
-        /> Common-Database
-      </div>
-
-      {displayFlag && <div>
-        
+      {<div>
+        <h6 style={{color: 'blue'}}> CommonDatabase &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get info from common backEnd &nbsp; </h6>
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 

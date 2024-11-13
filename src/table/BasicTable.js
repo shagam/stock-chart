@@ -849,7 +849,7 @@ const BasicTable = (props) => {
            logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
-
+        <hr/> 
         <div style={{display:'flex'}}>
           <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
           <div style={{color:'blue'}}> commonDatabase  </div>   
@@ -868,7 +868,6 @@ const BasicTable = (props) => {
         </div>
 
            {/* select non sym tool */}
-
         {nonSymTool ==='commonDatabase' && <CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
@@ -886,9 +885,9 @@ const BasicTable = (props) => {
 
 
         {/* Machanizms  for spacific sym (chartSymbol) */}
-
+        <hr/> 
         {chartSymbol && <div>
-          <div>&nbsp;</div>
+          {/* <div>&nbsp;</div> */}
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
             <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; Analyze &nbsp;
             <div style={{color: 'blue'}}> (Choose):</div>

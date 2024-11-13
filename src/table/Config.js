@@ -48,15 +48,9 @@ const  Config = (props) => {
 
     <div style = {{border: '2px solid maroon'}}>
 
-      {/* ====== Displasy/hide checkbox */} 
-      <input
-        type="checkbox" checked={configFlag}
-        onChange={ configFlagChange }
-      /> Config 
-
-
-
-      { configFlag &&
+      <h6 style={{color: 'blue'}}> Config &nbsp;  </h6>
+    
+      {
         <div id = "config_id">
 
           <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Configuration, purge table and other activity  &nbsp; </h6>

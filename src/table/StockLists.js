@@ -386,13 +386,9 @@ function StockLists (props) {
     return (
         <div style={{border:'2px solid blue'}}>
 
-            <div>
-                <input type="checkbox" checked={displayFlag} onChange={() => {setDisplayFlag (! displayFlag)}}  /> stock-lists-share
-            </div>
-
-            { displayFlag && <div>
-
-                <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock lists.  Save and Share  &nbsp; </h6>
+            {<div>
+                <h6 style={{color: 'blue'}}> Stock-lists.  &nbsp;  </h6>
+                <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock lists.  Save and Share lists &nbsp; </h6>
 
                 {err && <div style={{color:'red'}}>{err}</div>}
                 <div style={{color: 'green'}}>{latency}</div>

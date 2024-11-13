@@ -192,10 +192,12 @@ function Futures (props) {
     }
 
     return (
-        <div>
+        <div style = {{ border: '2px solid green'}}>
+          
             {/* <hr/>  */}
-            <h5>Nasdaq futures  </h5>
 
+            <h6 style={{color: 'blue'}}> Futures contract &nbsp;  </h6>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Future contracts (Get last price of Nasdaq futures ) &nbsp; </h6>
             {LOG && <div>{url}</div>}
             {err && <div style={{color: 'red'}}> {err} </div>}
             {latency && <div style={{color: 'red'}}> {latency} </div>}
@@ -207,7 +209,7 @@ function Futures (props) {
             </div>
 
 
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6>
+            {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6> */}
             {<div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} 
               title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
@@ -215,6 +217,7 @@ function Futures (props) {
             {futuresTxt && <div> url-info <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
             <hr/> 
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get today NDX nasdaq 100  &nbsp; </h6>
             {<div style={{display:'flex'}}> <ComboBoxSelect serv={urlGetSym} nameList={googFinanceSymList} setSelect={setUrlGetSym} 
               title='urlGetSym' options={googFinanceSymList} defaultValue={urlGetSym}/> </div>}   {/* Select urlGetSym */}
             { eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;</div>}
