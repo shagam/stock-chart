@@ -978,7 +978,7 @@ const BasicTable = (props) => {
 
           </div>}
         </div>}
-         <hr/>
+         {/* <hr/> */}
     </div> 
     </>
     </Suspense>

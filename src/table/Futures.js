@@ -100,6 +100,7 @@ function Futures (props) {
         const mili = Date.now()
         if(LOG)  
           setUrl('https://www.barchart.com/futures/quotes/' + futureSym)  // save url for debug
+        setLatency('request sent to server')
 
         axios.get (url)
         .then ((result) => {
@@ -214,7 +215,7 @@ function Futures (props) {
               title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
             <div>{futureSym}</div>
-            {futuresTxt && <div> url-info <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+            {futuresTxt && <div>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
             <hr/> 
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get today NDX nasdaq 100  &nbsp; </h6>
