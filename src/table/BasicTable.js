@@ -75,17 +75,8 @@ import {polygon} from './Polygon'
 import { LeverageETF } from './LeverageETF'
 
 import StockChart from '../Stock-chart';
+import {MovingAverage } from './MovingAverage'
 
-// const Tools = lazy(() => import ('./Tools'))
-
-// const Config = lazy(() => import ('./Config'))
-
-// const polygon = lazy(() => import('./Polygon').then((module) => ({default: module.polygon})))
-// const Manual = lazy(() => import ('../manual/Manual'))
-
-// const StockChart = lazy(() => import ('../Stock-chart'));
-
-// const MarketStackApi = lazy(() => import ('./MarketStackApi'))
 
 const BasicTable = (props) => {
 
@@ -690,7 +681,8 @@ const BasicTable = (props) => {
     SimulateTrade: 'SimulateTrade',
     MonthGain: 'MonthGain',
     marketOpenPrice: 'marketOpenPrice',
-    leveragaETF: 'leveragaETF'
+    leveragaETF: 'leveragaETF',
+    MovingAverage: 'movingAverage'
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState()
@@ -869,6 +861,7 @@ const BasicTable = (props) => {
               <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/>
               {! gainMap.bubbleLine && <div style={{color:'blue'}}> bubbleLine  </div>} 
               {gainMap.bubbleLine && <div style={{color:'blue', fontWeight: "bold"}}> peak2peak  </div>} 
+              
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/>         
               <div style={{color:'blue'}}>  dropRecovery   </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> 
@@ -879,11 +872,13 @@ const BasicTable = (props) => {
               <div style={{color:'blue'}}> gainRaw  </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}> infoRaw   </div> 
+   
             </div>
               
             <div style={{display:'flex'}}>
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}/>  
                 <div style={{color:'blue'}}> simulateTrade   </div> 
+                
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}/>  
                 {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain   </div>} 
                 {monthGainData.weekGainArray && <div style={{color:'blue', fontWeight: "bold"}}> weekGain   </div>} 
@@ -893,11 +888,17 @@ const BasicTable = (props) => {
 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
                 {<div style={{color:'blue'}}> marketOpenPrice  </div>}
+                
+              </div>
 
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='10' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
-                {<div style={{color:'blue'}}>none</div>} &nbsp; 
+            <div style={{display:'flex'}}>
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
+              <div style={{color:'blue'}}> movAverage  </div>
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='11' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+              {<div style={{color:'blue'}}>none</div>} &nbsp; 
             </div>
-
+            
             <hr/> 
             {/* pans  */}
             {/* <div> &nbsp; </div> */}
@@ -933,6 +934,10 @@ const BasicTable = (props) => {
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
             {analyzeTool ==='leveragaETF' && <LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd} />}
+
+            {analyzeTool ==='movingAverage' && <MovingAverage StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
+             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={! daily}/>}
 
           </div>}
         </div>}
