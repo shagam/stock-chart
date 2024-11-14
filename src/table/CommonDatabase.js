@@ -155,7 +155,7 @@ function CommonDatabase (props) {
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
     const row_index_eeee = props.rows.findIndex((row)=> row.values.symbol === process.env.REACT_APP_ELI_HOME_S);
-    // console.log (process.env)
+    //* console.log (process.env)
 
     // const [userInfo, setUserInfp] = useState ();
 
