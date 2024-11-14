@@ -894,7 +894,7 @@ function CommonDatabase (props) {
     <div style = {{ border: '2px solid green'}}>
       {<div>
         <h6 style={{color: 'blue'}}> CommonDatabase &nbsp;  </h6>
-        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get info from common backEnd &nbsp; </h6>
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get stock symbols according to GAIN from common backEnd &nbsp; </h6>
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
