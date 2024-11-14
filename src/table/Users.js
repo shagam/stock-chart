@@ -79,7 +79,7 @@ function Users (props) {
             if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
                 props.errorAdd([getDate(),  ' users', result.data])
             }
-            // if (LOG)
+            if (LOG || logBackEnd)
             console.log(getDate(),  'users arrived', result.data) 
             setErr('backEnd users,  Latency(msec)=' + latency ) 
 
