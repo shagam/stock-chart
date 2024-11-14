@@ -34,7 +34,8 @@ const DropRecoveryButtons = (props) => {
     setDropRecoveryInfo()
     setGainLostWeeks()
     setDateOfEqualVal()
-  }, [props.StockSymbol, dropStartDate]) 
+    setDropRecoveryInfo()
+  }, [props.StockSymbol, dropStartDate,props.weekly]) 
 
 
 
@@ -262,7 +263,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       return;
     } 
 
-    setDropRecoveryInfo ({
+     var info = {
       symbol: StockSymbol,
       'deepPrice/BubblePrice': deep,
       recoverYears: (recoverPeriod/52).toFixed(2),
@@ -273,7 +274,16 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       deepIndex: deepIndex,
       maxIndex: stockChartXValues.length,
       oldestDate: stockChartXValues[stockChartXValues.length-1]
-    })
+    }
+
+    if (! props.weekly) {
+      info.recoverWeeks = (recoverPeriod / 5).toFixed(2);
+      info.recoverYears= (recoverPeriod / 52 / 5).toFixed(2)
+    }
+    setDropRecoveryInfo(info)
+
+
+
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
     // rows[index].values.deepDate = deepDate;
