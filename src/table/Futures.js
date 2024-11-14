@@ -111,7 +111,7 @@ function Futures (props) {
           const ver = {}
           if (result.data.err === "No data") {
             props.stockChartXValues([props.symbol, 'verify marketwatch', result.data.err])
-            return;
+            return; 
           }
   
           const latency = Date.now() - mili
@@ -133,7 +133,13 @@ function Futures (props) {
         NDX:    {u: 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
         IXIC:   {u: 'https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
         NQZ24:  {u: 'https://www.barchart.com/futures/quotes/' + futureSym, p: '"lastPrice":"([0-9\\.,]~~)'},
+        // SPDR_put_call:    {u: 'https://www.alphaquery.com/stock/SPY/volatility-option-statistics/30-day/',
+        //    p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">1.2686</div></a>'},
+        SPDR_put_call:    {u: 'https://www.alphaquery.com/stock/SPY/volatility-option-statistics/30-day/',
+          p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">([0-9\\.]~~)</div></a>'},
 
+        put_call: {u: 'https://www.barchart.com/etfs-funds/quotes/SPY/put-call-ratios', p:''},
+        put_call_fintel: {u:'https://fintel.io/sopt/us/spy', p:''}
       }
 
       const pairNum = 1
