@@ -101,7 +101,7 @@ function Users (props) {
                         tbl1[ipList[i]].sym = inf[ipList[i]].sym
                     }
                 }
-                setTbl (tbl1) // show in obj format
+                setTbl (tbl1.sort()) // show in obj format
                 return;
             }
 
@@ -123,6 +123,8 @@ function Users (props) {
 
     return (
         <div>
+            <h6 style={{color: 'blue'}}> Users &nbsp;  </h6>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Count number of users  &nbsp; </h6>
             {err && <div style={{color:'red'}}>{err}</div>}
 
             <div style={{display: 'flex'}}>
@@ -144,7 +146,7 @@ function Users (props) {
             {infoJson && Object.keys(infoJson).length > 0 && <pre>{JSON.stringify(infoJson, null, 2)}</pre>}
 
             <div>count={Object.keys(tbl).length} </div>
-            {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}> 
+            {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '45vh', 'overflowY': 'scroll'}}> 
                 <table>
                     <thead>
                     <tr>
@@ -168,12 +170,6 @@ function Users (props) {
                     </tbody>
                 </table>        
             </div>}
-
-            {/* {Object.keys(tbl).length > 0 && <div style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}>  {Object.keys(tbl).map((i,k) => {
-                return <div key={k}>{k} {JSON.stringify(tbl[i])}  </div>
-            })}</div>} */}
-
-
         </div>
     )
     
