@@ -18,7 +18,7 @@ const DropRecoveryButtons = (props) => {
   // 
   const [gainLostWeeks, setGainLostWeeks] = useState()
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
-  const [dropStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
+  const [dropStartDate, setDropStartDate] = useState(new Date(2021, 8, 1 ));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  Date(2024, 6, 1))
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
    const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
