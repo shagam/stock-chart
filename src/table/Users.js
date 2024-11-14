@@ -126,19 +126,24 @@ function Users (props) {
             {err && <div style={{color:'red'}}>{err}</div>}
 
             <div style={{display: 'flex'}}>
-                <button style={{background: 'aqua', height: '27px', marginTop: '16px'}} type="button" onClick={()=> users ()}>userInfo  </button> &nbsp;&nbsp;
-                <GlobalFilter className="stock_button_class_" filter={userFilter} setFilter={setUserFilter} name='userFilter' isMobile={isMobile}/>&nbsp; &nbsp;
-                <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
-                <div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
+            <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
+            &nbsp;<div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
                 <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div> &nbsp;&nbsp;
                 <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os</div>
-                <div> &nbsp; </div> 
+            </div>
+
+
+            <div style={{display: 'flex'}}>
+                <button style={{background: 'aqua', height: '27px', marginTop: '16px'}} type="button" onClick={()=> users ()}>userInfo  </button> &nbsp;&nbsp;
+                <GlobalFilter className="stock_button_class_" filter={userFilter} setFilter={setUserFilter} name='userFilter' isMobile={isMobile}/>&nbsp; &nbsp;
+            <div> &nbsp; </div> 
             </div>
             {/* <hr/>      */}
 
-            <div>&nbsp;</div>
+            {/* <div>&nbsp;</div> */}
             {infoJson && Object.keys(infoJson).length > 0 && <pre>{JSON.stringify(infoJson, null, 2)}</pre>}
 
+            <div>count={Object.keys(tbl).length} </div>
             {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '35vh', 'overflowY': 'scroll'}}> 
                 <table>
                     <thead>
