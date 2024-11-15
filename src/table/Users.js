@@ -85,7 +85,6 @@ function Users (props) {
             setErr('backEnd users,  Latency(msec)=' + latency ) 
 
             if (getAll) {
-                var tbl1 = {}
                 var arr = []
                 const inf = result.data
                 const ipList = Object.keys (result.data);
@@ -107,7 +106,6 @@ function Users (props) {
                 }
                 arr = arr.sort((a, b) => b.date > a.date)
                 setUserArray(arr)
-                // setTbl (tbl1) // show in obj format
                 return;
             }
 
