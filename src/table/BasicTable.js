@@ -692,7 +692,7 @@ const BasicTable = (props) => {
     futures:       'futures',
   };
   // marginLeft: '3px', marginRight: '3px', 
-  const [analyzeTool, setAnalyzeTool] = useState()
+  const [analyzeTool, setAnalyzeTool] = useState('none')
 
   const onOptionChange = e => {
     const tool = e.target.value;
@@ -700,7 +700,7 @@ const BasicTable = (props) => {
     // console.log(tool)
   }
 
- const [nonSymTool, setNonSymTool] = useState()
+ const [nonSymTool, setNonSymTool] = useState('none')
   const nonSymChange = e => {
     const tool = e.target.value;
     setNonSymTool(tool)
@@ -861,6 +861,9 @@ const BasicTable = (props) => {
 
           {<div>
             <div style={{display:'flex'}}>
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='11' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
+              {<div style={{color:'blue'}}>none</div>} &nbsp; 
+
               <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/>
               {! gainMap.bubbleLine && <div style={{color:'blue'}}> bubbleLine  </div>} 
               {gainMap.bubbleLine && <div style={{color:'blue', fontWeight: "bold"}}> peak2peak  </div>} 
@@ -869,8 +872,6 @@ const BasicTable = (props) => {
               <div style={{color:'blue'}}>  dropRecovery   </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> 
               <div style={{color:'blue'}}> holdings  </div> 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='3' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
-              <div style={{color:'blue'}}>  tools       </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockGain' id='4' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> 
               <div style={{color:'blue'}}> gainRaw  </div> 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/>  
@@ -892,14 +893,14 @@ const BasicTable = (props) => {
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
                 {<div style={{color:'blue'}}> marketOpenPrice  </div>}
                 
-              </div>
+            </div>
 
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}> movAverage  </div>
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='11' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
-              {<div style={{color:'blue'}}>none</div>} &nbsp; 
+              
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='3' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
+              <div style={{color:'blue'}}>  tools       </div> 
             </div>
             
             {/* <hr/>  */}
@@ -946,6 +947,9 @@ const BasicTable = (props) => {
           </div>}        
           <hr/> 
         <div style={{display:'flex'}}>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> none  </div> 
+
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
           <div style={{color:'#9932CC'}}> commonDatabase  </div>   
         
@@ -956,10 +960,7 @@ const BasicTable = (props) => {
           <div style={{color:'#9932CC'}}> stockLists </div>   
 
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> futures  </div>           
-        
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> none  </div>   
+          <div style={{color:'#9932CC'}}> futures  </div>             
         </div>
 
            {/* select non sym tool */}
