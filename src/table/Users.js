@@ -18,7 +18,7 @@ function Users (props) {
     const [err, setErr] = useState()
     const [userFilter, setUserFilter] = useState ();
 
-    const [getAll, setGetAll] = useState ();
+    const [getAll, setGetAll] = useState (true);
     const [extra, setExtra] = useState ();
     const [tbl, setTbl] = useState ({});
     const [logExtra, setLogExtra] = useState ();
@@ -128,9 +128,9 @@ function Users (props) {
             {err && <div style={{color:'red'}}>{err}</div>}
 
             <div style={{display: 'flex'}}>
-            <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
-            &nbsp;<div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>
-                <div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div> &nbsp;&nbsp;
+                &nbsp;<div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div> &nbsp;&nbsp;
+                <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
+                <div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>            
                 <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os</div>
             </div>
 
