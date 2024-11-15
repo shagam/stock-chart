@@ -21,6 +21,7 @@ function Users (props) {
     const [getAll, setGetAll] = useState (true);
     const [extra, setExtra] = useState ();
     const [tbl, setTbl] = useState ({});
+    const [userArray, setUserArray] = useState([]);
     const [logExtra, setLogExtra] = useState ();
     const [results, setResults] = useState()
     const [infoJson, setInfoJson] = useState({})
@@ -34,10 +35,10 @@ function Users (props) {
         setTbl({})
     }
 
-    function error(arr) {
+    function error(e) {
         clear()
-        setErr (JSON.stringify(arr))
-        props.errorAdd(arr)
+        setErr (JSON.stringify(e))
+        props.errorAdd(e)
 
     }
 
@@ -85,10 +86,11 @@ function Users (props) {
 
             if (getAll) {
                 var tbl1 = {}
+                var arr = []
                 const inf = result.data
                 const ipList = Object.keys (result.data);
                 for (let i = ipList.length - 1; i >= 0; i--) {
-                    tbl1[ipList[i]] = {
+                    var obj = {
                         date: inf[ipList[i]].date,
                         ip:   inf[ipList[i]].ip,
                         city: inf[ipList[i]].city,
@@ -96,11 +98,16 @@ function Users (props) {
                         count: inf[ipList[i]].count,
                     }
                     if (extra) {
-                        tbl1[ipList[i]].region = inf[ipList[i]].region
-                        tbl1[ipList[i]].os = inf[ipList[i]].os
-                        tbl1[ipList[i]].sym = inf[ipList[i]].sym
+                        obj[ipList[i]].region = inf[ipList[i]].region
+                        obj[ipList[i]].os = inf[ipList[i]].os
+                        obj[ipList[i]].sym = inf[ipList[i]].sym
                     }
+
+                    tbl1[ipList[i]] = obj;
+                    arr.push (obj)
                 }
+                arr = arr.sort((a, b) => b.date > a.date)
+                setUserArray(arr)
                 setTbl (tbl1) // show in obj format
                 return;
             }
