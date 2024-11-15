@@ -157,7 +157,7 @@ function Users (props) {
                     </tr>
                     </thead>
                     <tbody>
-                        {Object.keys(tbl).map((s, s1) =>{
+                        {Object.keys(tbl).sort((a, b) => b.date > a.date).map((s, s1) =>{
                             return (
                             <tr key={s1}>
                                 <td style={ROW_SPACING}>{s1}</td>
