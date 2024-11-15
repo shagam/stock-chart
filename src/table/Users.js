@@ -88,34 +88,47 @@ function Users (props) {
                 var arr = []
                 const inf = result.data
                 const ipList = Object.keys (result.data);
+                if (LOG)
+                    console.log (result.data)
                 for (let i = ipList.length - 1; i >= 0; i--) {
                     var obj = {
                         date: inf[ipList[i]].date,
                         ip:   inf[ipList[i]].ip,
                         city: inf[ipList[i]].city,
+                        region: inf[ipList[i]].region,
                         country: inf[ipList[i]].country,
                         count: inf[ipList[i]].count,
+                        mili: inf[ipList[i]].sec, // add mili for sort on date
                     }
                     if (extra) {
-                        obj[ipList[i]].region = inf[ipList[i]].region
-                        obj[ipList[i]].os = inf[ipList[i]].os
-                        obj[ipList[i]].sym = inf[ipList[i]].sym
+                        obj.os = inf[ipList[i]].os
+                        obj.sym = inf[ipList[i]].sym
                     }
 
                     arr.push (obj)
                 }
-                arr = arr.sort((a, b) => b.date > a.date)
+
+                //** a.localeCompare(b) */
+                arr = arr.sort((a, b) => b.mili - a.mili)  
+
+                //** delete mili */
+                for (let i = 0; i < arr.length; i++) {
+                    if (!arr[i].region)
+                        console.log ('missing region', arr[i])
+                    delete arr[i].mili
+                }
+
                 setUserArray(arr)
                 return;
             }
 
             setInfoJson (result.data)
         } )
-        .catch ((err) => {
-        clear()
-        error([getDate(), 'backEnd users', err.message])
-        console.log(getDate(), 'backEnd users', err.message)
-    }) 
+        // .catch ((err) => {
+        //     clear()
+        //     error([getDate(), 'backEnd users', err.message])
+        //     console.log(getDate(), 'backEnd users', err.message)
+        // }) 
 
     const latency = Date.now() - mili
     setErr('usrs list done, latency(msec)=' + latency)
