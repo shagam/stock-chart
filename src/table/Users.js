@@ -101,7 +101,7 @@ function Users (props) {
                         tbl1[ipList[i]].sym = inf[ipList[i]].sym
                     }
                 }
-                setTbl (tbl1.sort()) // show in obj format
+                setTbl (tbl1) // show in obj format
                 return;
             }
 
