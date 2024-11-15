@@ -20,7 +20,7 @@ function Users (props) {
 
     const [getAll, setGetAll] = useState (true);
     const [extra, setExtra] = useState ();
-    const [tbl, setTbl] = useState ({});
+    // const [tbl, setTbl] = useState ({});
     const [userArray, setUserArray] = useState([]);
     const [logExtra, setLogExtra] = useState ();
     const [results, setResults] = useState()
@@ -32,7 +32,7 @@ function Users (props) {
         setResults()
         setErr()
         setInfoJson({})
-        setTbl({})
+        setUserArray({})
     }
 
     function error(e) {
@@ -103,12 +103,11 @@ function Users (props) {
                         obj[ipList[i]].sym = inf[ipList[i]].sym
                     }
 
-                    tbl1[ipList[i]] = obj;
                     arr.push (obj)
                 }
                 arr = arr.sort((a, b) => b.date > a.date)
                 setUserArray(arr)
-                setTbl (tbl1) // show in obj format
+                // setTbl (tbl1) // show in obj format
                 return;
             }
 
@@ -152,24 +151,27 @@ function Users (props) {
             {/* <div>&nbsp;</div> */}
             {infoJson && Object.keys(infoJson).length > 0 && <pre>{JSON.stringify(infoJson, null, 2)}</pre>}
 
-            <div>count={Object.keys(tbl).length} </div>
-            {tbl && Object.keys(tbl).length > 0 && <div style={{ maxHeight: '45vh', 'overflowY': 'scroll'}}> 
+            <div>count={userArray.length} </div>
+            {userArray && userArray.length > 0 && <div style={{ maxHeight: '45vh', 'overflowY': 'scroll'}}> 
                 <table>
                     <thead>
                     <tr>
                         <th>N</th>
-                        {Object.keys(tbl[Object.keys(tbl)[0]]).map ((h, h1) => {
+                          {/* loop on attributes  */}
+                        {Object.keys(userArray[0]).map ((h, h1) => {  
                             return (<th key={h1}>{h}</th>)
                         }) }
                     </tr>
                     </thead>
                     <tbody>
-                        {Object.keys(tbl).sort((a, b) => b.date > a.date).map((s, s1) =>{
+                        {/* loop on usrs  */}
+                        {userArray.map((s, s1) =>{ 
                             return (
                             <tr key={s1}>
                                 <td style={ROW_SPACING}>{s1}</td>
-                                {Object.keys(tbl[s]).map((t, t1) => {
-                                    return (<td style={ROW_SPACING} key={t1}>{tbl[s][t]}</td>)
+                                {/* loop on attributes  */}
+                                {Object.keys(s).map((t, t1) => {  
+                                    return (<td style={ROW_SPACING} key={t1}>{s[t]}</td>)
                                 })}
                             </tr>
                         )
