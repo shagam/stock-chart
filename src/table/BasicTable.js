@@ -950,12 +950,12 @@ const BasicTable = (props) => {
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}/>
           <div style={{color:'#9932CC'}}> none  </div> 
 
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> commonDatabase  </div>   
-        
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='config' id='1' checked={nonSymTool==='config'} onChange={nonSymChange}/>
           <div style={{color:'#9932CC'}}> config  </div>   
 
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> commonDatabase  </div>   
+        
           <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}/>
           <div style={{color:'#9932CC'}}> stockLists </div>   
 
