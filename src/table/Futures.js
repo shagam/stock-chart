@@ -46,7 +46,7 @@ function Futures (props) {
       NQU25: 'Sep 25',
       NQZ25: 'Dec 25',
       NQH26: 'Mar 26',
-      '$IUXX': 'today',
+      '$IUXX': '',
       // NQW00: '????',
     }
     const symList = Object.keys(futuresSymList)
