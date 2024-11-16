@@ -12,7 +12,7 @@ const StockInfo = (props) => {
     <div style = {{ border: '2px solid blue'}} >
       <div id="textarea_id"> 
       {/* {! props.stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
-      <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock technical info. (etf not Supported)  &nbsp; </h6>
+      <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock technical raw info. (etf not Supported)  &nbsp; </h6>
 
       {props.chartSymbol !== props.infoSymbol && <h6 style={{color: 'red'}}> No info or symbol misMatch (An ETF or data for a previous symbol)  </h6>}
 
@@ -20,7 +20,6 @@ const StockInfo = (props) => {
 
       { props.stockInfo &&
         <div>
-          <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw info as recieved from AlphaVantage </h6>
           <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp; 
             <h6 style={{color: 'blue'}}> InfoRaw  </h6>

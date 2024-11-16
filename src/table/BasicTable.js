@@ -918,7 +918,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
             stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
-            servSelect={servSelect} ssl={ssl} PORT={PORT}  /> }
+            servSelect={servSelect} ssl={ssl} PORT={PORT} daily={daily} /> }
 
             {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
             daily={daily} chartData={chartData}/>}
@@ -927,17 +927,17 @@ const BasicTable = (props) => {
          
             {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
-                 errorAdd={errorAdd} saveTable={props.saveTable} monthGainData={monthGainData}/>}
+                 errorAdd={errorAdd} saveTable={props.saveTable} monthGainData={monthGainData} daily={daily}/>}
 
             {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
-                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} />}
+                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} daily={daily}/>}
 
             {analyzeTool ==='marketOpenPrice' && <MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
               setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily} />}
 
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
-            {analyzeTool ==='leveragaETF' && <LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd} />}
+            {analyzeTool ==='leveragaETF' && <LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd}  daily={daily} />}
 
             {analyzeTool ==='movingAverage' && <MovingAverage StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}

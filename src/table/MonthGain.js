@@ -368,10 +368,11 @@ function MonthGain (props) {
   const ROW_SPACING = {padding: '2px', margin: '2px'}
 
   return (
-    <div>
+    <div style={{border:'2px solid blue'}}>
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>
+          <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>  &nbsp; &nbsp;
+          <div>{props.daily? '(daily)' : '(weekly)'}</div>
         </div>
 
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; {props.symbol}:  &nbsp; Average monthly & weekly gain  &nbsp; </h6>

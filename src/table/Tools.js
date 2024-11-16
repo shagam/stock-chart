@@ -37,12 +37,9 @@ function Tools (props) {
 
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
-              <h6 style={{color: 'blue'}}> Tools </h6>
-            </div>             
-            <br></br>       
-
-            <MonthGain symbol = {props.symbol}  gainMap = {props.gainMap}  stockChartXValues = {props.stockChartXValues} 
-                  stockChartYValues = {props.stockChartYValues} logFlags = {props.logFlags} errorAdd={props.errorAdd}/>
+              <h6 style={{color: 'blue'}}> Tools </h6> &nbsp;  &nbsp; 
+              <div>{props.daily? '(daily)' : '(weekly)'}</div>
+            </div>               
 
             <hr/> 
             {/* <br></br> */}

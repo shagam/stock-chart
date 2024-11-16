@@ -29,7 +29,15 @@ function MovingAverage (props) {
 
 
     return (
-        <div>
+        <div style={{border:'2px solid blue'}}>
+
+            <div style = {{display: 'flex'}}>
+              <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+              <h6 style={{color: 'blue'}}> Noving average &nbsp;  </h6> &nbsp; &nbsp;
+              <div>{ ! props.weekly? '(daily)' : '(weekly)'}</div>
+            </div>
+
+
             <GetInt init={averageLength} callBack={setAverageLength} title='getCount' type='Number' pattern="[0-9]+" width = '15%'/>   
 
             <button type="button" onClick={()=>calc()}>  calc   </button> &nbsp;    
