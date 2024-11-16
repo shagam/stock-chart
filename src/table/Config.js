@@ -17,6 +17,7 @@ const  Config = (props) => {
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
 
+  const [serviceInfo, setServiceInfo] = useState()
 
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
@@ -69,7 +70,12 @@ const  Config = (props) => {
               &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
           </div>
 
-          {/* <hr/>  */}
+
+
+          <hr/> 
+          <button onClick={()=> {setServiceInfo(! serviceInfo)}} > service-info </button>
+
+          {serviceInfo && <div>
 
           <div> &nbsp; </div>
           {/* {isMobile && <div> &nbsp; </div>}  */}
@@ -114,6 +120,7 @@ const  Config = (props) => {
           <p>Browser CodeName: { navigator.appCodeName}</p>
           <p>Browser Language: {navigator.language} </p> 
           {/* <p> User-agent header:  {navigator.userAgent} </p> */}
+        </div>}   {/* end of service info  */}
         </div>
       }
 
