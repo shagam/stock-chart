@@ -73,7 +73,7 @@ const  Config = (props) => {
 
 
           <hr/> 
-          <button onClick={()=> {setServiceInfo(! serviceInfo)}} > service-info </button>
+          {eliHome && <button onClick={()=> {setServiceInfo(! serviceInfo)}} > service-info </button>}
 
           {serviceInfo && <div>
 
