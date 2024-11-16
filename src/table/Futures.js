@@ -230,7 +230,7 @@ function Futures (props) {
             {<div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} 
               title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-            <div>{futureSym}</div>
+            <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div>
             {futuresTxt && <div>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(2)}  </div>}
