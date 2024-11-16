@@ -233,7 +233,7 @@ function Futures (props) {
             <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div>
             {futuresTxt && <div>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
-            {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(2)}  </div>}
+            {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
 
 
             <hr/> 
