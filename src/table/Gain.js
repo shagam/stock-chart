@@ -146,7 +146,6 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 return;
               }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                // alert (dataStr.substring(0, 35) + ` symbol(${sym}) \n\n${API_Call}`);
                 errorAdd([sym, 'Invalid API call or wrong symbol']);
                 //setChartData ('');
                 return;

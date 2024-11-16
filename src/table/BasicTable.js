@@ -435,7 +435,7 @@ const BasicTable = (props) => {
       if (useData) { // avoid unclean access to rows
         const index = data.findIndex((row)=> row.symbol === symbol);
         if (index === -1) {
-          alert ('symbol not found, delete ', symbol);
+          errorAdd([symbol, 'symbol not found, delete '])
           return;
         } 
         data.splice(index, 1);
