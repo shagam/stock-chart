@@ -358,7 +358,7 @@ const StockChart = (props) => {
 
 
   return (
-    <div>
+    <div style = {{border: '2px solid blue'}}>
       <div>
           <input
             type="checkbox" checked={chartFlag}
