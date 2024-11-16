@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-// import cors from 'cors'
+// import cors from 'cors' 
 // import {dateSplit, formatDate} from '../utils/Date'
 // import {format} from "date-fns"
 import {IpContext} from '../contexts/IpContext';
@@ -18,6 +18,8 @@ function Futures (props) {
     const [err, setErr] = useState ();
 
     const [futuresTxt, setFuturesText] = useState ({});
+    const [futuresArray, setFuturesArray] = useState ([]);
+    const [futureArrLastVal, setVutureArrLastVal] = useState ();
 
     const [ignoreSaved, setIgnoreSaved] = useState ();
     const [logBackEnd, setLogBackEnd] = useState ();
@@ -39,13 +41,13 @@ function Futures (props) {
 
       NQZ24: 'Dec 24',
       NQH25: 'Mar 25',
-      NQI25: "????",
+      // NQI25: "????",
       NQM25: 'Jun 25',
       NQU25: 'Sep 25',
       NQZ25: 'Dec 25',
       NQH26: 'Mar 26',
       '$IUXX': 'today',
-      NQW00: '????',
+      // NQW00: '????',
     }
     const symList = Object.keys(futuresSymList)
     
@@ -121,7 +123,15 @@ function Futures (props) {
   
             // result.data['a'] = 'b'
             setFuturesText(result.data)
-  
+            const keys = Object.keys(result.data)
+            const arr = []
+            for (let i = 0; i < keys.length; i++) {
+              // arr.push({date:result.data[keys[keys.length - 1 - i]], val:})
+              arr.push({date: keys[i], value: result.data[keys[i]] })
+            }
+            setFuturesArray (arr)
+            setVutureArrLastVal(arr[arr.length-1].value.replace(/,/,''))
+            console.log (arr)
            }
         })
     }
@@ -222,6 +232,9 @@ function Futures (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
             <div>{futureSym}</div>
             {futuresTxt && <div>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+
+            {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(2)}  </div>}
+
 
             <hr/> 
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get today NDX nasdaq 100  &nbsp; </h6>
