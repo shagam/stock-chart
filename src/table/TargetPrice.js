@@ -112,8 +112,15 @@ async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, log
              errorAdd([symbol, getDate(), 'target',result.data])
              return;
          }
-         console.log(getDate(), symbol, 'targetPrice arrived', result.data,)  
+         console.log(getDate(), symbol, 'targetPrice arrived', dat,)  
          setStatus() // clear msg sent
+         if (! logBackEnd) {
+            for (let i = 0; i < dat.length; i++) { // remove clutter info
+                delete dat[i].dateMili;
+                dat[i].date= dat[i].date.replace (/  [0-9]+:[0-9]+/,'')
+            }
+         }
+
          setTargetInfoOne(dat) 
          setTargetHistAll();       
      } )
