@@ -75,17 +75,13 @@ function MovingAverage (props) {
               <h6 style={{color: 'blue'}}> Noving average &nbsp;  </h6> &nbsp; &nbsp;
               <div>{ ! props.weekly? '(daily)' : '(weekly)'}</div>
             </div>
-
+            <div> &nbsp;</div>
+            <button type="button" onClick={()=>calc()}>  calc-chart   </button> 
 
             <GetInt init={averageLength} callBack={setAverageLength} title='average-length' type='Number' pattern="[0-9]+" width = '15%'/>   
-
-            <button type="button" onClick={()=>calc()}>  calc-chart   </button> &nbsp;    
-            
-            {! isMobile && chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
-                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: false, 'modeBarButtonsToRemove': []}}  />}
-            {isMobile && chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
-                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
-
+    
+            {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title,
+                xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
         </div>
     )
 }
