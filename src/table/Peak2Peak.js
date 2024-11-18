@@ -60,6 +60,7 @@ const Peak2PeakGui = (props) => {
     const [tableShowFlag, setTableShowFlag] = useState ();
 
     const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
+    const row_index_eeee = props.rows.findIndex((row)=> row.values.symbol === process.env.REACT_APP_ELI_HOME_S)
 
     function clear () {
       setHistogram({})
@@ -306,7 +307,7 @@ const Peak2PeakGui = (props) => {
 
           {/* Single peak and estimate yearly gaiin bubble override gain */}
           <hr/>
-          {(eliHome || (results && ! results.timeUnitGain)) && <div>
+          {((eliHome &&  row_index_eeee !== -1) || (results && ! results.timeUnitGain)) && <div>
             <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {props.symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
             <div style={{display: 'flex'}}>
               <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
