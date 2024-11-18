@@ -13,6 +13,12 @@ function MovingAverage (props) {
     const [chartData, setChartData] = useState()
     const title = 'moving-average'
 
+    useEffect (() => { 
+        setChartData()
+    }, [props.symbol]) 
+  
+
+
     function calc () {
 
         //** calc first average  */
