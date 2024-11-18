@@ -117,7 +117,7 @@ async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, log
          if (! logBackEnd) {
             for (let i = 0; i < dat.length; i++) { // remove clutter info
                 delete dat[i].dateMili;
-                dat[i].date= dat[i].date.replace (/  [0-9]+:[0-9]+/,'')
+                dat[i].date= dat[i].date.replace (/[ ]{2}[0-9]+:[0-9]+/,'')
             }
          }
 
