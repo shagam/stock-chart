@@ -939,7 +939,7 @@ const BasicTable = (props) => {
             {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
             {analyzeTool ==='leveragaETF' && <LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd}  daily={daily} />}
 
-            {analyzeTool ==='movingAverage' && <MovingAverage StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
+            {analyzeTool ==='movingAverage' && <MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={! daily}/>}
 
