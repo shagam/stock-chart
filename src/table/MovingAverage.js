@@ -15,28 +15,34 @@ function MovingAverage (props) {
 
     useEffect (() => { 
         setChartData()
-    }, [props.symbol]) 
+        // setAveragePointsY([])
+        // setAveragePointsX([])
+    }, [props.symbol, averageLength]) 
   
 
 
     function calc () {
-
         //** calc first average  */
+
+        setAveragePointsY([])
+        setAveragePointsX([])
+
         var sumForAverage = 0;
-        for (let j = 0; j < averageLength; j++) {
+        const averageLength_ = Number(averageLength)
+        for (let j = 0; j < averageLength_; j++) {
             sumForAverage += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
         }
 
-        for (let i = 0; i < props.stockChartXValues.length - averageLength; i++) {
-            const index = props.stockChartXValues.length - 1 - i - averageLength;
-            averagePointsY[index] = sumForAverage / averageLength
+        for (let i = 0; i < props.stockChartXValues.length - averageLength_; i++) {
+            const index = props.stockChartXValues.length - 1 - i - averageLength_;
+            averagePointsY[index] = sumForAverage / averageLength_
             averagePointsX[index] = props.stockChartXValues[index]
 
-            const i_rem = index + averageLength;
-            const i_add = index;
+            // const i_rem = index + averageLength;
+            // const i_add = index;
 
-            sumForAverage -= props.stockChartYValues[i_rem]
-            sumForAverage += props.stockChartYValues[i_add]
+            sumForAverage -= props.stockChartYValues[index + averageLength_]
+            sumForAverage += props.stockChartYValues[index]
         }
 
         const dat =
