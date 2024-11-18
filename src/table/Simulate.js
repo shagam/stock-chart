@@ -787,7 +787,7 @@ const Simulate = (props) => {
             {/* Simulation results */}
 
             {Object.keys(resultsArray).length > 0 && <div> <input type="checkbox" checked={tradeInfoShow}  onChange={() => setTradeInfoShow (! tradeInfoShow)} /> &nbsp;tradeInfoShow &nbsp; </div>}
-            {tradeInfoShow && <div style={{maxHeight:'300px', maxWidth:'100vw', overflow:'auto'}}>
+            {tradeInfoShow && <div style={{maxHeight:'300px', maxWidth:'100%', overflow:'auto'}}>
             <table>
                 <thead>
 
