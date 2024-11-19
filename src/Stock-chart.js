@@ -31,7 +31,8 @@ const StockChart = (props) => {
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
 
-  const [chartDate, setChartDate] = useState (new Date(1999, 1, 15));
+  // const [chartDate, setChartDate] = useState (new Date(1999, 1, 15));
+  const [chartDate, setChartDate] = useState (new Date(2007, 6, 15));
   const [endDate, setEndDate] = useState (new Date())
   const [months, setMonths] = useState();
 
