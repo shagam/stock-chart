@@ -24,6 +24,7 @@ export default function ContactUs (props)  {
   const [loading, setLoading] = useState(false);
   const [stat, setStat] = useState()
   const [info, setInfo] = useState()
+  const [latency, setLatency] = useState ();
 
   const navigate = useNavigate();
   const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
@@ -75,7 +76,7 @@ export default function ContactUs (props)  {
         corsUrl += '&LOG=true';
       console.log (corsUrl)
       const miliStart =  Date.now();
-      setInfo(getDate() + ' msg sent to server')
+      setLatency(getDate() + ' msg sent to server')
       const mili = Date.now();
 
       setStat()
@@ -88,7 +89,7 @@ export default function ContactUs (props)  {
         console.log (getDate() +  ' msg from=' + emailRef.current.value )
         const latency = miliEnd - miliStart
         setInfo()
-        setStat(getDate() + ' msg reeived (latency=' + latency + ')')
+        setLatency(getDate() + ' msg reeived (latency=' + latency + ')')
 
         const response = Date.now() - mili
         setError()// 'delay(msec)=' + response)
@@ -104,7 +105,7 @@ export default function ContactUs (props)  {
 
   return (
     <div style={{width:'120%', fontSize: '18px'}}>
-
+      {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
     <Card>
     <Card.Body>
       <h2 className='text-center mb-4'>Contact Us</h2>

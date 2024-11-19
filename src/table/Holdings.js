@@ -16,6 +16,7 @@ function Holdings (props) {
   const [arr, setArr] = useState();
   const [dat, setDat] = useState();
 
+  const [latency, setLatency] = useState ();
   const [etfArr, setEtfArr] = useState([])
   const [etfArr_, setEtfArr_] = useState([''])  // for table header
   const [holdingsRawObj, setHoldingsArray] = useState({}) // Raw received data
@@ -158,7 +159,7 @@ function Holdings (props) {
       console.log (corsUrl)
 
     setUrlLast(corsUrl)
-    setErr('request sent to server')
+    setLatency('holdings request sent to server')
     const mili = Date.now()
 
     axios.get (corsUrl)
@@ -244,7 +245,7 @@ function Holdings (props) {
       console.log (Object.keys(holdingsRawObj))
 
       const latency = Date.now() - mili
-      setErr('get holdings done,  Latency(msec)=' + latency)    
+      setLatency ('get holdings done,  Latency(msec)=' + latency)    
       setArr(result.data.holdArr)
       setDat(result.data)
          
@@ -271,6 +272,7 @@ function Holdings (props) {
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div> &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
+        {eliHome && <div style={{color: 'blue'}}> {latency}</div>}
       </div>
 
       <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Allow to insert holdings into stock-table) </h6>
