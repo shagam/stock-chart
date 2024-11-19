@@ -129,7 +129,6 @@ function LeverageETF (props) {
             indexes.lowestIndex =  lowest_index
             highLowIndex[symArray_[s]] = indexes
         }
-        // setHighLowIndex(indexes)
     }
 
     const ROW_SPACING = {padding: '2px', margin: '2px'}
