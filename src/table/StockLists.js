@@ -391,7 +391,7 @@ function StockLists (props) {
                 <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock lists.  Save and Share lists &nbsp; </h6>
 
                 {err && <div style={{color:'red'}}>{err}</div>}
-                <div style={{color: 'green'}}>{latency}</div>
+                {eliHome && latency && <div style={{color: 'green'}}>{latency}</div>}
 
                 {/* Local lists  */}
                 <h5 style={{color: 'blue'}}> Local stock lists </h5>

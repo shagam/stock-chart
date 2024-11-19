@@ -217,7 +217,7 @@ function Futures (props) {
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Future contracts (Get last price of Nasdaq futures ) &nbsp; </h6>
             {LOG && <div>{url}</div>}
             {err && <div style={{color: 'red'}}> {err} </div>}
-            {latency && <div style={{color: 'red'}}> {latency} </div>}
+            {eliHome && latency && <div style={{color: 'red'}}> {latency} </div>}
 
             <div style={{display:'flex'}}>
                 {eliHome && <div>  &nbsp; <input  type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
