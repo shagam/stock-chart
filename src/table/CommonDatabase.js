@@ -141,6 +141,7 @@ function CommonDatabase (props) {
     const [displayFlag, setDisplayFlag] = useState(false);
     const [next, setNext] = useState()
     const [err,setErr] = useState()
+    const [latency, setLatency] = useState()
     const [info, setInfo] = useState()
     const {localIp, localIpv4, eliHome} = IpContext();
     const { currentUser, admin, logout } = useAuth();
@@ -223,6 +224,7 @@ function CommonDatabase (props) {
         }         
 
         const mili = Date.now()
+        setLatency('filter gain request sent')
         var corsUrl;
         // if (corsServer === 'serv.dinagold.org')
         if (props.ssl)
@@ -254,7 +256,7 @@ function CommonDatabase (props) {
 
             setNext('insert')
             const latency = Date.now() - mili
-            setErr('filtered list done, latency(msec)=' + latency)
+            setLatency('filtered list done, latency(msec)=' + latency)
             // beep2();
         }).catch ((err) => {
             clear()
@@ -280,7 +282,7 @@ function CommonDatabase (props) {
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=getAll'
         if (logBackEnd)
             corsUrl += '&LOG=1'
-        setResults(['Request sent'])
+        setLatency('filter front end request sent')
         axios.get (corsUrl)
         // getDate()
         .then ((result) => {
@@ -301,6 +303,8 @@ function CommonDatabase (props) {
             if (! filter) {
                 setResults(keys)
                 setNext('insert')
+                const latency = Date.now() - mili
+                setLatency('filtered list done, latency(msec)=' + latency)
                 return;
             }
             for (let i = 0; i < keys.length; i++) {
@@ -363,7 +367,7 @@ function CommonDatabase (props) {
                 setNext('')
 
             const latency = Date.now() - mili
-            setErr('filtered list done, latency(msec)=' + latency)
+            setLatency('filtered list done, latency(msec)=' + latency)
             // beep2();
     
         }).catch ((err) => {
@@ -386,7 +390,7 @@ function CommonDatabase (props) {
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=betterThanQQQ_1_2_5_10' + '&factor=' + factor 
         if (logBackEnd)
             corsUrl += '&LOG=1'
-        setResults(['Request sent'])
+        setLatency('1 2 5 10 Request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -415,7 +419,7 @@ function CommonDatabase (props) {
             setResults(resArray)
             setNext('insert')
             const latency = Date.now() - mili
-            setErr('filtered list done, latency(msec)=' + latency)
+            setLatency('filtered list done, latency(msec)=' + latency)
             // beep2();
     
         }).catch ((err) => {
@@ -437,7 +441,7 @@ function CommonDatabase (props) {
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=etf'
         if (logBackEnd)
             corsUrl += '&LOG=1'
-        setResults(['Request sent'])
+        setLatency('ETF equest sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -458,7 +462,7 @@ function CommonDatabase (props) {
             setResults(dat)
             setNext('insert')
             const latency = Date.now() - mili
-            setErr('etf list done, latency(msec)=' + latency)
+            setLatency('etf list done, latency(msec)=' + latency)
             // beep2();
 
         }).catch ((err) => {
@@ -480,7 +484,7 @@ function CommonDatabase (props) {
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=readOne' + '&stock=' + props.symbol
         if (logBackEnd)
             corsUrl += '&LOG=1'
-        setResults(['Request sent'])
+        setLatency('Read one gain request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -501,7 +505,7 @@ function CommonDatabase (props) {
             setInfoJson(dat)
 
             const latency = Date.now() - mili
-            setErr('readone done, latency(msec)=' + latency)
+            setLatency('readone done, latency(msec)=' + latency)
             // beep2();
 
         }).catch ((err) => {
@@ -526,7 +530,7 @@ function CommonDatabase (props) {
         if (logBackEnd)
             corsUrl += '&LOG=1'
 
-        setResults(['Request sent'])
+        setLatency('filter for remove request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -556,7 +560,7 @@ function CommonDatabase (props) {
             setNext('del')
 
             const latency = Date.now() - mili
-            setErr('Filtered list done, latency(msec)=' + latency)
+            setLatency('Filtered list done, latency(msec)=' + latency)
             // beep2();
     
         }).catch ((err) => {
@@ -617,7 +621,7 @@ function CommonDatabase (props) {
         if (logBackEnd)
             corsUrl += '&LOG=1'
 
-        setResults(['Request sent'])
+        setLatency('search name request sent')
         const mili = Date.now()
 
         axios.get (corsUrl)
@@ -647,7 +651,7 @@ function CommonDatabase (props) {
             setNext()
 
             const latency = Date.now() - mili
-            setErr('Filtered list done, latency(msec)=' + latency)
+            setLatency('Filtered list done, latency(msec)=' + latency)
             // beep2();
     
         }).catch ((err) => {
@@ -719,7 +723,7 @@ function CommonDatabase (props) {
         if (logBackEnd)
             corsUrl += '&LOG=1'
 
-        setErr('BackEnd Flush request')  
+        setLatency('BackEnd Flush request')  
         if (LOG)
         console.log (corsUrl)
         const mili = Date.now()
@@ -742,7 +746,7 @@ function CommonDatabase (props) {
             }
             const latency = Date.now() - mili
             console.log(getDate(), 'BackEnd Flush', result.data, 'responseTime(msec)=', latency) 
-            setErr('BackEnd Flush done,  Latency(msec)=' + latency)         
+            setLatency('BackEnd Flush done,  Latency(msec)=' + latency)         
         } )
         .catch ((err) => {
             clear()
@@ -767,6 +771,7 @@ function CommonDatabase (props) {
     if (LOG)
     console.log (corsUrl)
     const mili = Date.now()
+    setLatency('verify all sent')
 
     axios.get (corsUrl)
     // getDate()
@@ -786,7 +791,7 @@ function CommonDatabase (props) {
         }
         const latency = Date.now() - mili
         console.log(getDate(), 'verify', result.data, 'responseTime(msec)=', latency) 
-        setErr('verify done,  Latency(msec)=' + latency)         
+        setLatency('verify done,  Latency(msec)=' + latency)         
     } )
     .catch ((err) => {
         clear()
@@ -812,7 +817,7 @@ function CommonDatabase (props) {
           if (logBackEnd)
             corsUrl += '&LOG=1'
 
-          setErr(delCommands[i] + ' delRequest request sent')  
+          setLatency(delCommands[i] + ' delRequest request sent')  
           // if (LOG)
           console.log (corsUrl)
 
@@ -840,7 +845,7 @@ function CommonDatabase (props) {
         }
         const latency = Date.now() - mili
         // error([getDate(), 'del sym', 'response(msec)=', latency])
-        setErr('backEnd del sym done,  Latency(msec)=' + latency)    
+        setLatency('backEnd del sym done,  Latency(msec)=' + latency)    
       }
   
 
@@ -848,6 +853,7 @@ function CommonDatabase (props) {
         setNext()
         setResults()
         setErr()
+        setLatency()
         setInfoJson()
     }
 
@@ -861,7 +867,7 @@ function CommonDatabase (props) {
           corsUrl += props.corsServer + ':' + 5000 + '/ping'
         //   corsUrl += 'localhost:' + 5001 + '/ping'
           
-          setErr(' ping request sent')  
+          setLatency(' ping request sent')  
           // if (LOG)
           console.log (corsUrl)
           const mili = Date.now()
@@ -878,7 +884,7 @@ function CommonDatabase (props) {
                   console.log (JSON.stringify(result.data))
               const latency = Date.now() - mili
               console.log(getDate(), ' arrived', result.data, latency) 
-              setErr('Ping  done, latency(msec)=' + latency) 
+              setLatency('Ping  done, latency(msec)=' + latency) 
               beep(10,300,50)        // (vol, freq, duration)
           } )
           .catch ((err) => {
@@ -898,6 +904,7 @@ function CommonDatabase (props) {
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
+        {eliHome && latency && <div style={{color: '#aa3333'}}>{latency}</div>}
         {/* <hr/> */}
 
         {/* ====== Filters list */} 
