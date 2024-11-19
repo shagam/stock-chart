@@ -60,7 +60,7 @@ function LeverageETF (props) {
         
         const symArray_ = Object.keys(props.gainMap)
         setSymArray (symArray_)
-        if (symArray_.length < 2) {
+        if (symArray_.length !== 2) {
             setErr('Err need 2 stocks, press GAIN for another symbol' )
             beep2()
             return;
