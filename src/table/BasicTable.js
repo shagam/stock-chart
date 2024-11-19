@@ -845,7 +845,7 @@ const BasicTable = (props) => {
     <div id='trailer_id'>
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
-          gainMap = {gainMap} isMobile = {isMobile} weekly = {! daily}
+          gainMap = {gainMap} isMobile = {isMobile} daily = {daily}
            logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
@@ -941,7 +941,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='movingAverage' && <MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={! daily}/>}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
 
           </div>}
           </div>}        

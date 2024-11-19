@@ -359,11 +359,9 @@ const StockChart = (props) => {
 
   return (
     <div style = {{border: '2px solid blue'}}>
-      <div>
-          <input
-            type="checkbox" checked={chartFlag}
-            onChange={ chartFlagChange}
-          /> Chart
+      <div style={{display: 'flex'}}>
+          <input type="checkbox" checked={chartFlag}  onChange={ chartFlagChange} /> Chart    &nbsp; &nbsp;
+        <div>{props.daily? '(daily)' : '(weekly)'}</div>
       </div>
 
       {chartFlag && <div>
