@@ -121,8 +121,8 @@ function LeverageETF (props) {
                 dropFromHigh[i] = (y[i] / y[highest_index]).toFixed(3)
             }
             props.gainMap[symArray_[s]].dropFromHigh = dropFromHigh
-            props.gainMap[symArray_[s]].highest_ndex = highest_index;
-            props.gainMap[symArray_[s]].lowest_ndex = lowest_index;
+            // props.gainMap[symArray_[s]].highest_ndex = highest_index;
+            // props.gainMap[symArray_[s]].lowest_index = lowest_index;
             // highLowText_ += highLowText + ' sym=' + symArray_[s] + "  highest=" + highest_index + '  lowest=' + lowest_index;
             const indexes = {}
             indexes.highestIndex =  highest_index
@@ -131,7 +131,21 @@ function LeverageETF (props) {
         }
     }
 
-    const ROW_SPACING = {padding: '2px', margin: '2px'}
+    // color high / low lines
+    function colorIndex (index) {
+        if (highLowIndex[symArray[0]].highestIndex === index ||
+            highLowIndex[symArray[0]].lowestIndex === index) {
+            return 'red'
+        }
+        if (highLowIndex[symArray[1]].highestIndex === index ||
+            highLowIndex[symArray[1]].lowestIndex === index) {
+            return 'red'
+            }
+
+        return 'black'
+    }
+
+    const ROW_SPACING = {padding: '0px', margin: '0px'}
 
     return (
         <div style = {{ border: '2px solid blue'}}>
@@ -152,8 +166,8 @@ function LeverageETF (props) {
             
             {/* Yearly gain TABLE */}
             
-            {pivotSym && symArray.length > 1 && <div> weekCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
-            {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '650px', overflow:'auto'}}>
+            {pivotSym && symArray.length > 1 && <div> lineCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
+            {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '550px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
@@ -174,8 +188,8 @@ function LeverageETF (props) {
                         {props.gainMap[pivotSym].y.map((date, index) =>{
                             return (
                             <tr key={index}>
-                                <td style={{padding: '2px', margin: '2px'}}>{index}</td>
-                                <td style={{padding: '2px', margin: '2px', width:'120px'}} >{props.gainMap[pivotSym].x[index]}  </td>
+                                <td style={{padding: '0px', margin: '0px'}}>{index}</td>
+                                <td style={{padding: '0px', margin: '0px', width:'120px', color: colorIndex(index)}} >{props.gainMap[pivotSym].x[index]}  </td>
 
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
                                 {/* <td style={ROW_SPACING}> {gainCalc[symArray[0]][index].toFixed(2)}</td>                                 */}
