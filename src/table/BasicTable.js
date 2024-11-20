@@ -130,6 +130,7 @@ const BasicTable = (props) => {
   const [stockInfo, setStockInfo] = useState ('');
 
   const [daily, setDaily] = useState (false);
+  const [yearlyPercent, setYearlyPercent] = useState(false);
   const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
 
@@ -707,7 +708,17 @@ const BasicTable = (props) => {
     // console.log(tool)
   }
 
- 
+  function purgeStockTable () {
+    for (let index = rows.length -1; index >= 0; index--)
+      rows.splice(index, 1);
+      saveTable();
+    window.location.reload(false);
+  }
+  
+  function setYearlyPercent_wrapper () {
+    setYearlyPercent(! yearlyPercent)
+    purgeStockTable ()
+  }
 
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
@@ -731,7 +742,7 @@ const BasicTable = (props) => {
         </div>
         {errors.length > 0 && <ErrorList errorList={errors}/> }
 
-        <div id="buttons_id" style={{display:'flex'}}>
+        <div id="buttons_id" style={{display:'flex'}}> 
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
           {/* {admin && <div> &nbsp; <input  type="checkbox" checked={marketwatch}  onChange={marketwatchToggle} />  marketwatchVerify &nbsp;</div>} */}
           {/* {admin && <GlobalFilter className="stock_button_class" filter={verifyDateOffset} setFilter={setVerifyDateOffset} name='VerifyDateOffset'  />} */}
@@ -753,6 +764,7 @@ const BasicTable = (props) => {
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
           {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily &nbsp;&nbsp;</div>}
+          {<div>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent &nbsp;&nbsp;</div>}
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} /> URL &nbsp;</div>}
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
          </div>
