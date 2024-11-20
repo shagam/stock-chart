@@ -171,9 +171,6 @@ function CommonDatabase (props) {
         // console.log(tool)
     }
     
-    function setLog () {
-        setLogBackEnd (! logBackEnd)
-    }
     // function toggleLogExtra () {
     //     setLogExtra (! logExtra)
     // }
@@ -197,7 +194,7 @@ function CommonDatabase (props) {
             beep2()
             return;
         }
-        if (props.rows[row_index].values.year === undefined) {
+        if (props.QQQ_gain.year === undefined) { // props.rows[row_index].values.year === undefined) {
             setErr ('Need to click <gain> on QQQ')
             beep2()
             return;
@@ -206,16 +203,16 @@ function CommonDatabase (props) {
         var qqqValue;
         switch (period){
             case 1:
-                qqqValue = props.rows[row_index].values.year;
+                qqqValue = props.QQQ_gain.year; // props.rows[row_index].values.year;
                 break;
             case 2:
-                qqqValue = props.rows[row_index].values.year2;
+                qqqValue = props.QQQ_gain.year2; // props.rows[row_index].values.year2;
                 break;
             case 5:
-                qqqValue = props.rows[row_index].values.year5;
+                qqqValue = props.QQQ_gain.year5; // props.rows[row_index].values.year5;
                 break;
             case 10:
-                qqqValue = props.rows[row_index].values.year10;
+                qqqValue = props.QQQ_gain.year10; // props.rows[row_index].values.year10;
                 break;
             default: {
                 error(['gainFilter ', 'invalidPeriod'])
@@ -249,9 +246,13 @@ function CommonDatabase (props) {
                 setResults([])
                 return;
             }
+            if (logBackEnd) {
+                console.log('list', result.data)
+            }
+
             const symbols = Object.keys(result.data)
-            // if (LOG)
-            console.log (symbols)
+            if (logBackEnd)
+                console.log ('symbols', symbols)
             setResults(symbols)
 
             setNext('insert')
@@ -290,6 +291,10 @@ function CommonDatabase (props) {
                 return;
 
             const dat = result.data
+            if (logBackEnd) {
+                console.log('allList', dat)
+            }
+
             if (! dat['QQQ']) {
                 error(['missing QQQ'])
                 return;          
@@ -359,7 +364,8 @@ function CommonDatabase (props) {
                 
             // if (LOG)
             console.log (Object.keys(res).length, res)
-            console.log (resArray)
+            if (logBackEnd)
+                console.log (resArray)
             setResults(resArray)
             if (filter)
                 setNext('insert')
@@ -907,6 +913,7 @@ function CommonDatabase (props) {
         {eliHome && latency && <div style={{color: '#aa3333'}}>{latency}</div>}
         {/* <hr/> */}
 
+        {eliHome && <div><input  type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd(! logBackEnd)} />  logBackend </div>}
         {/* ====== Filters list */} 
         <div style={{display:'flex'}}>
           Period: &nbsp;&nbsp;
@@ -926,7 +933,7 @@ function CommonDatabase (props) {
         <div>
           <div>Get stocks gain heigher than QQQ </div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
-          <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>&nbsp;
+          {!props.yearlyPercent && <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>}&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>&nbsp;
           {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}&nbsp;
           {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf-list </button>}

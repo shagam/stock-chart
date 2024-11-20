@@ -14,7 +14,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-     os, ip, city, countryName, countryCode, regionName, setChartData) {
+     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -360,6 +360,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                
               rows[row_index].values.gain_mili = updateMili;
               // rows[row_index].values.gain_date = updateDate;
+
+              //** if (yearlyGain) then will be overiden */
               rows[row_index].values.mon3 = mon3;
               rows[row_index].values.mon6 = mon6; 
               rows[row_index].values.year = year; 
@@ -367,6 +369,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               rows[row_index].values.year5 = year5; 
               rows[row_index].values.year10 = year10;
               rows[row_index].values.year20 = year20;
+  
               // rows[row_index].values.peak2Peak = peak2Peak;
               rows[row_index].values.price = price;
               rows[row_index].values.priceDivHigh = priceDivHigh;
@@ -375,6 +378,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               rows[row_index].values.splits_list = splitArray;
               // console.log (splits)
               
+              set_QQQ_gain({mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5}) // save gain for commonDatabase gain filter
               targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
             
               try {
@@ -397,6 +401,17 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
             
               GainWrite (sym, rows, errorAdd, servSelect, PORT, ssl, logFlags, os, ip, city, countryName, countryCode, regionName)
             
+              //** Overide  */
+              if (yearlyPercent) {
+                rows[row_index].values.mon3 = ((mon3 ** 4 -1) * 100).toFixed(1);
+                rows[row_index].values.mon6 = ((mon6 ** 2 -1) * 100).toFixed(1);
+                rows[row_index].values.year = ((year - 1) * 100).toFixed(1); 
+                rows[row_index].values.year2 = ((year2 ** (1/2) -1) * 100).toFixed(1); 
+                rows[row_index].values.year5 = ((year5 ** (1/5) - 1) * 100).toFixed(1); 
+                rows[row_index].values.year10 = ((year10 ** (1/10) - 1) * 100).toFixed(1);
+                rows[row_index].values.year20 = ((year20 ** (1/20) - 1) * 100).toFixed(1);
+              }
+
               if (saveTabl)
                 saveTable(sym);
             

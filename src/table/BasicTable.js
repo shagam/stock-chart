@@ -42,7 +42,7 @@ import {addStock} from './AddStock'
 
 import { Link, useNavigate } from 'react-router-dom'
 
-import { FaArrowDown, FaArrowUp, FaSlideshare } from 'react-icons/fa'
+import { FaArrowDown, FaArrowUp, FaSlideshare, FaVenusMars } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
@@ -130,7 +130,7 @@ const BasicTable = (props) => {
   const [stockInfo, setStockInfo] = useState ('');
 
   const [daily, setDaily] = useState (false);
-  const [yearlyPercent, setYearlyPercent] = useState(false);
+  const [QQQ_gain, set_QQQ_gain] = useState({})
   const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
 
@@ -175,6 +175,11 @@ const BasicTable = (props) => {
   //** read last reminder mili */
   const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
 
+  var  yearlyPercent = useMemo(() => (localStorage.getItem('yearlyPercent')), []);
+  // if (yearlyPercent_temp)
+  //   setYearlyPercent(true)
+  // else
+  //   setYearlyPercent(false)
 
   useEffect (() => { 
     // setGainMap([]);
@@ -397,7 +402,7 @@ const BasicTable = (props) => {
       return;
     }
 
-    rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
+     rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
 
     if (singleSym)
       console.log(sym, getDate(), 'handleGainClick  singleSym=', singleSym)
@@ -413,7 +418,7 @@ const BasicTable = (props) => {
 
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
-      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData)
+      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain)
 
       if (singleSym)
         saveTable(sym);
@@ -638,13 +643,17 @@ const BasicTable = (props) => {
     }
     if (isNaN (val)) {
       return 'black'
-  }
-    if (val < '1.00') {
-      return 'orange'
     }
-    else {
-      return 'black'//RGBA(170,214,136,0.4)';
+    if (! yearlyPercent) {
+      if (val < '1.00')
+        return 'orange'
+    } else {
+      if (val < 0)
+        return 'orange'
     }
+
+    return 'black'//RGBA(170,214,136,0.4)';
+
   }
 
   function clickedRow (row) {
@@ -669,6 +678,14 @@ const BasicTable = (props) => {
     if (sym === chartSymbol)
       col['background'] = 'pink'
     return col;
+  }
+
+  function yearlyPercentColor () {
+    if (yearlyPercent) {
+      return 'orange'
+    }
+    else
+      return 'black'
   }
 
   const toolEnum = {
@@ -716,8 +733,13 @@ const BasicTable = (props) => {
   }
   
   function setYearlyPercent_wrapper () {
-    setYearlyPercent(! yearlyPercent)
+    // setYearlyPercent(! yearlyPercent)
+    yearlyPercent = ! yearlyPercent
     purgeStockTable ()
+    if (yearlyPercent)
+      localStorage.setItem('yearlyPercent',yearlyPercent)
+    else
+      localStorage.removeItem('yearlyPercent')
   }
 
   return (
@@ -764,7 +786,7 @@ const BasicTable = (props) => {
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
           {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily &nbsp;&nbsp;</div>}
-          {<div>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent &nbsp;&nbsp;</div>}
+          {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent &nbsp;&nbsp;</div>}
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} /> URL &nbsp;</div>}
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
          </div>
@@ -978,7 +1000,8 @@ const BasicTable = (props) => {
            {/* select non sym tool */}
         {nonSymTool ==='commonDatabase' && <CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
-         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect}/>}
+         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
+         yearlyPercent={yearlyPercent} QQQ_gain={QQQ_gain}/>}
 
         {nonSymTool ==='config' && <Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
         smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
