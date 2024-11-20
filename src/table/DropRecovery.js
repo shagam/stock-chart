@@ -452,7 +452,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           </div>
 
-          <button type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
+          <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
             dropStartDate, props.logFlags, props.weekly, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
    
           <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
@@ -461,7 +461,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <hr/> 
 
           <h5>TodayGainWeeksLost</h5>
-          <button type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
+          <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
           {gainLostWeeks && <h6>  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
         </div>
     </div>

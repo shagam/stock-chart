@@ -76,7 +76,7 @@ function MovingAverage (props) {
               <div>{ ! props.weekly? '(daily)' : '(weekly)'}</div>
             </div>
             <div> &nbsp;</div>
-            <button type="button" onClick={()=>calc()}>  calc-chart   </button> 
+            <button style={{background: 'aqua'}} type="button" onClick={()=>calc()}>  calc-chart   </button> 
 
             <GetInt init={averageLength} callBack={setAverageLength} title='average-length' type='Number' pattern="[0-9]+" width = '15%'/>   
     
