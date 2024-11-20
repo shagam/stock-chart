@@ -109,7 +109,7 @@ function Users (props) {
                 }
 
                 //** a.localeCompare(b) */
-                arr = arr.sort((a, b) => b.mili - a.mili)  
+                arr = arr.sort((a, b) => b.mili > a.mili)  
 
                 //** delete mili */
                 for (let i = 0; i < arr.length; i++) {
@@ -135,8 +135,8 @@ function Users (props) {
 
   
     }
-
-    const ROW_SPACING = {padding: '2px', margin: '2px'}
+    //** top, right, bottom ,right*/
+    const ROW_SPACING = {padding: "0px 5px 2px 8px", margin: '0px'}
 
     return (
         <div>
