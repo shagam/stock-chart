@@ -175,11 +175,12 @@ const BasicTable = (props) => {
   //** read last reminder mili */
   const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
 
-  var  yearlyPercent = useMemo(() => (localStorage.getItem('yearlyPercent')), []);
-  // if (yearlyPercent_temp)
-  //   setYearlyPercent(true)
-  // else
-  //   setYearlyPercent(false)
+  var  yearlyPercent_temp = useMemo(() => (localStorage.getItem('yearlyPercent')), []);
+  var yearlyPercent;
+  if (yearlyPercent_temp)
+    yearlyPercent = true
+  else
+    yearlyPercent = false
 
   useEffect (() => { 
     // setGainMap([]);
