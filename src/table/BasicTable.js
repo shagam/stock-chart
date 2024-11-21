@@ -725,7 +725,7 @@ const BasicTable = (props) => {
     // console.log(tool)
   }
 
-  function purgeStockTable () {
+  function purgeRestoreStockTable () {
     const symbols = [] // get stock list
     const keys = Object.keys(rows);
     // collect stock list
@@ -748,7 +748,7 @@ const BasicTable = (props) => {
   function setYearlyPercent_wrapper () {
     // setYearlyPercent(! yearlyPercent)
     yearlyPercent = ! yearlyPercent
-    purgeStockTable ()
+    purgeRestoreStockTable ()
     if (yearlyPercent)
       localStorage.setItem('yearlyPercent',yearlyPercent)
     else
