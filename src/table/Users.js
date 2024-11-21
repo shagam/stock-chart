@@ -109,7 +109,9 @@ function Users (props) {
                 }
 
                 //** a.localeCompare(b) */
-                arr = arr.sort((a, b) => b.mili > a.mili)  
+                arr = arr.sort((a, b) => b.mili > a.mili ? 1 : -1)  
+                if (logBackEnd)
+                    console.log ('users', arr)
 
                 //** delete mili */
                 for (let i = 0; i < arr.length; i++) {
