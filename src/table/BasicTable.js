@@ -726,9 +726,22 @@ const BasicTable = (props) => {
   }
 
   function purgeStockTable () {
-    for (let index = rows.length -1; index >= 0; index--)
-      rows.splice(index, 1);
-      saveTable();
+    const symbols = [] // get stock list
+    const keys = Object.keys(rows);
+    // collect stock list
+    for (let i = 0; i < keys.length; i++)
+      symbols.push(rows[i].values.symbol); 
+
+    // empty table 
+    for (let i = keys.length -1; i >= 0; i--)
+      rows.splice(i, 1);
+    
+    // put back symbols
+    for (let i = 0; i < keys.length; i++){
+      addStock (rows, symbols[i], false)
+      prepareRow(rows[i]);
+    }
+    saveTable();
     window.location.reload(false);
   }
   
