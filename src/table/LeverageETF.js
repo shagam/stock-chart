@@ -179,14 +179,16 @@ function LeverageETF (props) {
 
     // color high / low lines
     function colorIndex (index) {
-        if (highLowIndex[symArray[0]].highestIndex === index ||
-            highLowIndex[symArray[0]].lowestIndex === index) {
+        if (highLowIndex[symArray[0]].highestIndex === index)
+            return '#feb236'
+        if (highLowIndex[symArray[0]].lowestIndex === index)
             return 'red'
-        }
-        if (highLowIndex[symArray[1]].highestIndex === index ||
-            highLowIndex[symArray[1]].lowestIndex === index) {
-            return 'red'
-            }
+        
+        if (highLowIndex[symArray[1]].highestIndex === index)
+            return '#ff7b25'
+        if (highLowIndex[symArray[1]].lowestIndex === index)
+            return 'magenta'
+            
         return colorStep (index) 
         // return 'black'
     }
@@ -232,7 +234,7 @@ function LeverageETF (props) {
                     <thead>
                         <tr>
                             <th>N</th>
-                            <th style={{width: '60px'}}>date</th>
+                            <th style={{width: '60px'}}>date</th> 
                             <th style={ROW_SPACING}> {symArray[0] + ' $'}</th>
                             <th style={ROW_SPACING}>{symArray[0]} drop</th>
 
