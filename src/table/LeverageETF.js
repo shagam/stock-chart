@@ -19,6 +19,10 @@ function LeverageETF (props) {
     const [dateAfterDrop, setDateAfterDrop] = useState (new Date(2023, 8, 1 )) // sep
     const [steps, setSteps] = useState([]);
 
+    const [stepsArr, setStepsArr] = useState({});
+    const [valueTblShow, setValueTblShow] = useState ()
+    const [listShow, setListShow] = useState ()
+
     //** git index of heigest value */
     function getHighestValue (yArray, startIndex) {
         var highest = 0; // oldest 
@@ -132,6 +136,8 @@ function LeverageETF (props) {
             var dropFromHigh  = []
             for (let i = 0; i < historyArrLength; i++) {
                 dropFromHigh[i] = (y[i] / y[highest_index]).toFixed(3)
+                // if (dropFromHigh[i] > 1)
+                //     dropFromHigh[i] = '-'
             }
             props.gainMap[symArray_[s]].dropFromHigh = dropFromHigh
 
@@ -145,16 +151,30 @@ function LeverageETF (props) {
             const STEP = 0.05;
             var stepCount = 1;
 
-            if (symArray_[s] === 'QQQ')
-            for (let i = highest_index; i >= lowest_index; i--) {
-                if (dropFromHigh[i] < (1 - stepCount * STEP)) {
-                    console.log (symArray_[s], dropFromHigh[i], stepCount, 1 - stepCount * STEP)
-                    steps[i] = symArray_[s] + '_' + dropFromHigh[i];
-                    stepCount ++;
+            // calc steps 
+            var stepsArr_ = [];
+            if (symArray_[s] === 'QQQ') {
+                for (let i = highest_index; i >= lowest_index; i--) {
+                    if (dropFromHigh[i] < (1 - stepCount * STEP)) {
+                        console.log (symArray_[s], dropFromHigh[i], stepCount, 1 - stepCount * STEP)
+                        steps[i] = symArray_[s] + '_' + dropFromHigh[i];
+                        stepCount ++;
+                        stepsArr_.push ({drop: dropFromHigh[i], index: i, date: x[i]})
+                    }
                 }
+                stepsArr[symArray_[s]] = stepsArr_
             }
-
         }
+    }
+
+    function colorStep (index) {
+        const len = stepsArr['QQQ'].length
+        for (let i = 0; i < len; i++) {
+            if (stepsArr['QQQ'][i].index === index) {
+                return 'lightgreen';
+            }
+        }
+        return 'black'
     }
 
     // color high / low lines
@@ -167,8 +187,8 @@ function LeverageETF (props) {
             highLowIndex[symArray[1]].lowestIndex === index) {
             return 'red'
             }
-
-        return 'black'
+        return colorStep (index) 
+        // return 'black'
     }
 
     const ROW_SPACING = {padding: "0px 5px 0px 5px", margin: '0px'}
@@ -196,25 +216,30 @@ function LeverageETF (props) {
                 <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
             </div>
 
-            {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
-            
+            <input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> stepListShow   &nbsp;  &nbsp;
+            {listShow && <div>
+            highLow info {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
+            stepsArray { <pre>{JSON.stringify(stepsArr, null, 2)}</pre>}
+            </div>}
             {/* Yearly gain TABLE */}
-            
+            <input  type="checkbox" checked={valueTblShow}   onChange={()=> setValueTblShow(! valueTblShow)} /> historical-value-table
+
+            <div>&nbsp;</div>
+
             {pivotSym && symArray.length > 1 && <div> lineCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
-            {pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '550px', overflow:'auto'}}>
+            {valueTblShow && pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '550px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
                             <th>N</th>
-                            <th style={{ROW_SPACING, width: '60px'}}>date</th>
+                            <th style={{width: '60px'}}>date</th>
                             <th style={ROW_SPACING}> {symArray[0] + ' $'}</th>
-                            {/* <th>{symArray[0]} gain</th> */}
                             <th style={ROW_SPACING}>{symArray[0]} drop</th>
 
                             <th style={ROW_SPACING}>{symArray[1] + ' $'}</th>
-                            {/* <th>{symArray[1]} gain</th> */}
                             <th style={ROW_SPACING}>{symArray[1]} drop</th>
-                            <th style={ROW_SPACING}> steps</th>
+                            <th> QQQ-drop ** 3</th>
+                            {/* <th style={ROW_SPACING}> steps</th> */}
                             {/* <th>nextOpen</th> */}
 
                         </tr>
@@ -224,20 +249,17 @@ function LeverageETF (props) {
                             return (
                             <tr key={index}>
                                 <td style={{padding: '1px', margin: '0px'}}>{index}</td>
-                                <td style={{padding: '1px', margin: '0px', width:'100px', color: colorIndex(index)}} >{props.gainMap[pivotSym].x[index]}  </td>
+                                <td style={{padding: "0px 5px 0px 5px", margin: '0px', width:'100px', color: colorIndex(index)}} >{props.gainMap[pivotSym].x[index]}  </td>
 
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
-                                {/* <td style={ROW_SPACING}> {gainCalc[symArray[0]][index].toFixed(2)}</td>                                 */}
-                                {/* <td style={ROW_SPACING}> {yearlGainCalc[symArray[0]][index].toFixed(2)}</td> */}
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[0]].dropFromHigh[index]}</td>
-
-                               
+                              
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[1]].y[index].toFixed(2)}</td>
-                                {/* <td style={ROW_SPACING}> {gainCalc[symArray[1]][index].toFixed(2)}</td>   */}
-                                {/* <td style={ROW_SPACING}> {yearlGainCalc[symArray[1]][index].toFixed(2)}</td> */}
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[1]].dropFromHigh[index]}</td>
 
-                                {<td style={ROW_SPACING}> {steps[index]}</td>}
+                                <td style={ROW_SPACING}> {(props.gainMap['QQQ'].dropFromHigh[index] ** 3).toFixed(3)}</td>
+
+                                {/* {<td style={ROW_SPACING}> {steps[index]}</td>} */}
                             </tr>
                             )
                         })}
