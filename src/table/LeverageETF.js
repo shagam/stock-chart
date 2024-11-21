@@ -17,6 +17,7 @@ function LeverageETF (props) {
     const [highLowText, setHighLowText] = useState ('')
     const [highLowIndex, setHighLowIndex] = useState ({})
     const [dateAfterDrop, setDateAfterDrop] = useState (new Date(2023, 8, 1 )) // sep
+    const [steps, setSteps] = useState([]);
 
     //** git index of heigest value */
     function getHighestValue (yArray, startIndex) {
@@ -133,13 +134,26 @@ function LeverageETF (props) {
                 dropFromHigh[i] = (y[i] / y[highest_index]).toFixed(3)
             }
             props.gainMap[symArray_[s]].dropFromHigh = dropFromHigh
-            // props.gainMap[symArray_[s]].highest_ndex = highest_index;
-            // props.gainMap[symArray_[s]].lowest_index = lowest_index;
-            // highLowText_ += highLowText + ' sym=' + symArray_[s] + "  highest=" + highest_index + '  lowest=' + lowest_index;
+
             const indexes = {}
             indexes.highestIndex =  highest_index
+            indexes.highestDate = x[highest_index]
             indexes.lowestIndex =  lowest_index
+            indexes.lowestDate = x[lowest_index]
             highLowIndex[symArray_[s]] = indexes
+
+            const STEP = 0.05;
+            var stepCount = 1;
+
+            if (symArray_[s] === 'QQQ')
+            for (let i = highest_index; i >= lowest_index; i--) {
+                if (dropFromHigh[i] < (1 - stepCount * STEP)) {
+                    console.log (symArray_[s], dropFromHigh[i], stepCount, 1 - stepCount * STEP)
+                    steps[i] = symArray_[s] + '_' + dropFromHigh[i];
+                    stepCount ++;
+                }
+            }
+
         }
     }
 
@@ -200,6 +214,7 @@ function LeverageETF (props) {
                             <th style={ROW_SPACING}>{symArray[1] + ' $'}</th>
                             {/* <th>{symArray[1]} gain</th> */}
                             <th style={ROW_SPACING}>{symArray[1]} drop</th>
+                            <th style={ROW_SPACING}> steps</th>
                             {/* <th>nextOpen</th> */}
 
                         </tr>
@@ -221,6 +236,8 @@ function LeverageETF (props) {
                                 {/* <td style={ROW_SPACING}> {gainCalc[symArray[1]][index].toFixed(2)}</td>   */}
                                 {/* <td style={ROW_SPACING}> {yearlGainCalc[symArray[1]][index].toFixed(2)}</td> */}
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[1]].dropFromHigh[index]}</td>
+
+                                {<td style={ROW_SPACING}> {steps[index]}</td>}
                             </tr>
                             )
                         })}
