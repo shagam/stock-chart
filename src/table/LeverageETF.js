@@ -1,7 +1,8 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import {beep2} from '../utils/ErrorList'
 import {yearsDifference} from '../utils/Date'
-
+import DatePicker, {moment} from 'react-datepicker';
+import { searchDateInArray} from '../utils/Date'
 
 function LeverageETF (props) {
     const [gainCalc, setGainCalc] = useState ({})
@@ -15,12 +16,13 @@ function LeverageETF (props) {
     const [err, setErr] = useState ()
     const [highLowText, setHighLowText] = useState ('')
     const [highLowIndex, setHighLowIndex] = useState ({})
+    const [dateAfterDrop, setDateAfterDrop] = useState (new Date(2023, 8, 1 )) // sep
 
     //** git index of heigest value */
-    function getHighestValue ( yArray) {
-        var highest = yArray[0];
+    function getHighestValue (yArray, startIndex) {
+        var highest = 0; // oldest 
         var highIndex = 0;
-        for (let i = 0; i < yArray.length; i++) {
+        for (let i = startIndex; i < yArray.length; i++) {
             if (highest < yArray[i]) {
                 highest = yArray[i];
                 highIndex = i;
@@ -57,7 +59,6 @@ function LeverageETF (props) {
         setErr()
         console.log ('lavarage')
         console.log (props.gainMap)
-        
         const symArray_ = Object.keys(props.gainMap)
         setSymArray (symArray_)
         if (symArray_.length !== 2) {
@@ -104,15 +105,26 @@ function LeverageETF (props) {
         setDateArray(props.gainMap[symArray_[indexOfPivotSym]].x)
 
 
-
         /** calc drop from high, and add to gainMap */
 
         var highLowText_ = 'High/low indexes '
         for (let s = 0; s < symArray_.length; s++) {
             const x = props.gainMap[symArray_[s]].x;
             const y = props.gainMap[symArray_[s]].y;
+
+            const startYear = dateAfterDrop.getFullYear();
+            const startMon = dateAfterDrop.getMonth() + 1;
+            const startDay = dateAfterDrop.getDate();    
+            const startDateArray = [startYear, startMon, startDay]
+
+            var startAfterDropIndex = searchDateInArray (x, startDateArray, symArray_[s], props.logFlags)
+            if (startAfterDropIndex === -1) {
+                setErr(symArray_[s], 'fail to find start date, after drop')
+                return;
+            }
+
             const historyArrLength = y.length
-            const highest_index = getHighestValue (y);
+            const highest_index = getHighestValue (y, startAfterDropIndex);
             const lowest_index =  getLowestAfterHigh (y, highest_index)
             console.log (symArray_[s], 'high ind=', highest_index, props.gainMap[symArray_[s]].x[highest_index], props.gainMap[symArray_[s]].y[highest_index])
             // props.gainMap[symArray_[s]].drop = []
@@ -160,8 +172,15 @@ function LeverageETF (props) {
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> gain === price / oldest price</h6>
 
             <div style={{color: 'red'}}> {err} </div>
-            
-            <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button>
+
+
+
+
+            <div style={{display: 'flex'}}>
+                <div>Date after drop</div>
+                &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={dateAfterDrop} onChange={(date) => setDateAfterDrop(date)} />  &nbsp; &nbsp;
+                <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
+            </div>
 
             {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
             
