@@ -145,7 +145,8 @@ function LeverageETF (props) {
         return 'black'
     }
 
-    const ROW_SPACING = {padding: '0px', margin: '0px'}
+    const ROW_SPACING = {padding: "0px 5px 0px 5px", margin: '0px'}
+    //** top, right, bottom, left*/
 
     return (
         <div style = {{ border: '2px solid blue'}}>
@@ -172,7 +173,7 @@ function LeverageETF (props) {
                     <thead>
                         <tr>
                             <th>N</th>
-                            <th style={{monWidth: '300px'}}>date</th>
+                            <th style={{ROW_SPACING, width: '60px'}}>date</th>
                             <th style={ROW_SPACING}> {symArray[0] + ' $'}</th>
                             {/* <th>{symArray[0]} gain</th> */}
                             <th style={ROW_SPACING}>{symArray[0]} drop</th>
@@ -188,8 +189,8 @@ function LeverageETF (props) {
                         {props.gainMap[pivotSym].y.map((date, index) =>{
                             return (
                             <tr key={index}>
-                                <td style={{padding: '0px', margin: '0px'}}>{index}</td>
-                                <td style={{padding: '0px', margin: '0px', width:'120px', color: colorIndex(index)}} >{props.gainMap[pivotSym].x[index]}  </td>
+                                <td style={{padding: '1px', margin: '0px'}}>{index}</td>
+                                <td style={{padding: '1px', margin: '0px', width:'100px', color: colorIndex(index)}} >{props.gainMap[pivotSym].x[index]}  </td>
 
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
                                 {/* <td style={ROW_SPACING}> {gainCalc[symArray[0]][index].toFixed(2)}</td>                                 */}
