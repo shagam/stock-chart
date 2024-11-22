@@ -137,7 +137,7 @@ function LeverageETF (props) {
             const historyArrLength = y.length
             const highest_index = getHighestValue (y, startAfterDropIndex);
             const lowest_index =  getLowestAfterHigh (y, highest_index)
-            console.log (symArray_[s], 'high ind=', highest_index, props.gainMap[symArray_[s]].x[highest_index], props.gainMap[symArray_[s]].y[highest_index])
+            console.log (symArray_[s], 'high ind=', highest_index, props.gainMap[symArray_[s]].x[highest_index], props.gainMap[symArray_[s]].y[highest_index].toFixed(2))
             // props.gainMap[symArray_[s]].drop = []
             var dropFromHigh  = []
             for (let i = 0; i < historyArrLength; i++) {
@@ -164,8 +164,8 @@ function LeverageETF (props) {
                     if (dropFromHigh[i] < (1 - stepCount * STEP)) {
                         console.log (symArray_[s], dropFromHigh[i], stepCount, 1 - stepCount * STEP)
                         steps[i] = symArray_[s] + '_' + dropFromHigh[i];
+                        stepsArr_.push ({index: i, date: x[i], step: (1 - stepCount * STEP).toFixed(2), drop: dropFromHigh[i]})
                         stepCount ++;
-                        stepsArr_.push ({drop: dropFromHigh[i], index: i, date: x[i]})
                     }
                 }
                 stepsArr[symArray_[s]] = stepsArr_
@@ -226,12 +226,13 @@ function LeverageETF (props) {
             <input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> stepListShow   &nbsp;  &nbsp;
             {listShow && <div>
             highLow info {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
-            {/* stepsArray { <pre>{JSON.stringify(stepsArr, null, 2)}</pre>} */}
-            stepsArray {stepsArr['QQQ'].map((s,i)=>{
+
+            stepsArray {Object.keys(stepsArr).map((sym,symi)=>{
                 return (
-                    <div>{JSON.stringify(stepsArr['QQQ'][i])}</div>
+                    <div> {sym}  &nbsp; &nbsp; {JSON.stringify(stepsArr[sym])}</div>
                 )
             } )}
+
             </div>}
             {/* Yearly gain TABLE */}
             <input  type="checkbox" checked={valueTblShow}   onChange={()=> setValueTblShow(! valueTblShow)} /> historical-value-table
