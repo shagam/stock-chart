@@ -76,11 +76,11 @@ function LeverageETF (props) {
         //     symArray_ =  ['TQQQ','QQQ']
         // }
         setSymArray (symArray_)
-        // if (symArray_.length !== 2) {
-        //     setErr('Err need 2 stocks, press GAIN for another symbol' )
-        //     beep2()
-        //     return;
-        // }
+        if (symArray_.length > 2) {
+            setErr('max 2 symbols' )
+            beep2()
+            return;
+        }
 
         //** compare only last array section  */
         var lengthMin;
@@ -238,7 +238,7 @@ function LeverageETF (props) {
             {listShow && <div>
             highLow info {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
 
-            stepsArray {stepsArr[symArray[0]].length}
+            stepsArray
             <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>   
 
             <table>
@@ -293,7 +293,7 @@ function LeverageETF (props) {
  
                             {symArray.length > 1 && <th style={ROW_SPACING}>{symArray[1] + ' $'}</th>}
                             {symArray.length > 1 && <th style={ROW_SPACING}>{symArray[1]} drop</th>}
-                            {symArray.length > 1 &&<th> QQQ-drop ** 3</th>}
+                            {/* {symArray.length > 1 &&<th> QQQ-drop ** 3</th>} */}
                             {/* <th style={ROW_SPACING}> steps</th> */}
                             {/* <th>nextOpen</th> */}
 
@@ -312,7 +312,7 @@ function LeverageETF (props) {
                                 {symArray.length > 1 && <td style={ROW_SPACING}> {props.gainMap[symArray[1]].y[index].toFixed(2)}</td>}
                                 {symArray.length > 1 && <td style={ROW_SPACING}> {props.gainMap[symArray[1]].dropFromHigh[index]}</td>}
 
-                                {symArray.length > 1 && <td style={ROW_SPACING}> {(props.gainMap[symArray[0]].dropFromHigh[index] ** 3).toFixed(3)}</td>}
+                                {/* {symArray.length > 1 && <td style={ROW_SPACING}> {(props.gainMap[symArray[0]].dropFromHigh[index] ** 3).toFixed(3)}</td>} */}
 
                                 {/* {<td style={ROW_SPACING}> {steps[index]}</td>} */}
                             </tr>
