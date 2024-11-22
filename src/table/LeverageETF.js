@@ -159,17 +159,16 @@ function LeverageETF (props) {
 
             // calc steps 
             var stepsArr_ = [];
-            if (symArray_[s] === 'QQQ') {
-                for (let i = highest_index; i >= lowest_index; i--) {
-                    if (dropFromHigh[i] < (1 - stepCount * STEP)) {
-                        console.log (symArray_[s], dropFromHigh[i], stepCount, 1 - stepCount * STEP)
-                        steps[i] = symArray_[s] + '_' + dropFromHigh[i];
-                        stepsArr_.push ({index: i, date: x[i], step: (1 - stepCount * STEP).toFixed(2), drop: dropFromHigh[i]})
-                        stepCount ++;
-                    }
+
+            for (let i = highest_index; i >= lowest_index; i--) {
+                if (dropFromHigh[i] < (1 - stepCount * STEP)) {
+                    console.log (symArray_[s], dropFromHigh[i], stepCount, (1 - stepCount * STEP).toFixed(2))
+                    steps[i] = symArray_[s] + '_' + dropFromHigh[i];
+                    stepsArr_.push ({sym: symArray_[s], i: i, date: x[i], step: (1 - stepCount * STEP).toFixed(2), drop: dropFromHigh[i]})
+                    stepCount ++;
                 }
-                stepsArr[symArray_[s]] = stepsArr_
             }
+            stepsArr[symArray_[s]] = stepsArr_
         }
     }
 
@@ -229,12 +228,13 @@ function LeverageETF (props) {
 
             stepsArray {Object.keys(stepsArr).map((sym,symi)=>{
                 return (
-                    <div> {sym}  &nbsp; &nbsp; {JSON.stringify(stepsArr[sym])}</div>
+                    <div>  {JSON.stringify(stepsArr[sym])}</div>
                 )
             } )}
 
             </div>}
             {/* Yearly gain TABLE */}
+            <div>&nbsp;</div>
             <input  type="checkbox" checked={valueTblShow}   onChange={()=> setValueTblShow(! valueTblShow)} /> historical-value-table
 
             <div>&nbsp;</div>
