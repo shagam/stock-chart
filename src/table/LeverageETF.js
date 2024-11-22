@@ -238,12 +238,40 @@ function LeverageETF (props) {
             {listShow && <div>
             highLow info {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
 
-            <div style={{maxHeight:'250px', overflow:'auto'}}>   
-                stepsArray {Object.keys(stepsArr).map((sym,symi)=>{
+            stepsArray {stepsArr[symArray[0]].length}
+            <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>   
+
+            <table>
+                <thead>
+                    <td>N</td>
+                    {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
+                        return (
+                            <th>{h}</th>
+                        )
+                    })}
+                </thead>
+                <tbody>
+                     {/* loop on {syms} [lines] {attr} */}
+                     {Object.keys(stepsArr).map((sym,symi)=>{ 
                     return (
-                        <div key={symi}>  {JSON.stringify(stepsArr[sym])}</div>
-                    )
-                } )}
+                        stepsArr[sym].map((line,linei)=>{  
+                        return(
+                            <tr key={linei}> 
+                                <td  style={ROW_SPACING}>{linei}</td>
+                                {Object.keys(stepsArr[sym][linei]).map ((f,fi)=>{
+                                return (
+                                    <td  style={ROW_SPACING} key={fi}>{stepsArr[sym][linei][f]}</td> 
+                                )
+                                })
+                                }
+                            </tr>
+                        )                            
+                    })
+
+                    )}
+                    )}                 
+                </tbody>
+            </table>
             </div>
 
             </div>}
@@ -254,7 +282,7 @@ function LeverageETF (props) {
             <div>&nbsp;</div>
 
             {pivotSym && <div> lineCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
-            {valueTblShow && pivotSym && <div style={{height:'450px', width: '550px', overflow:'auto'}}>
+            {valueTblShow && pivotSym && <div style={{height:'300px', width: '550px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
