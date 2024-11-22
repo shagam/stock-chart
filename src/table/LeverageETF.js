@@ -22,8 +22,8 @@ function LeverageETF (props) {
     const [steps, setSteps] = useState([]);
 
     const [stepsArr, setStepsArr] = useState({});
-    const [valueTblShow, setValueTblShow] = useState ()
-    const [listShow, setListShow] = useState ()
+    const [valueTblShow, setValueTblShow] = useState (false)
+    const [listShow, setListShow] = useState (false)
     const [log, setLog] = useState ();
 
     //** git index of heigest value */
@@ -243,12 +243,14 @@ function LeverageETF (props) {
 
             <table>
                 <thead>
-                    <td>N</td>
-                    {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
-                        return (
-                            <th>{h}</th>
-                        )
-                    })}
+                    <tr>
+                        <th>N</th>
+                        {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
+                            return (
+                                <th key={hi}>{h}</th>
+                            )
+                        })}
+                    </tr>
                 </thead>
                 <tbody>
                      {/* loop on {syms} [lines] {attr} */}
