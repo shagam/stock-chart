@@ -59,12 +59,18 @@ function LeverageETF (props) {
         return close.toFixed(2)
     }
 
+
+
+
+    //** lavarage calc entry */
     function leverage() {
 
         setErr()
-        console.log ('lavarage')
-        console.log (props.gainMap)
-        const symArray_ = Object.keys(props.gainMap)
+        console.log ('lavarage=', props.gainMap)
+        var symArray_ = Object.keys(props.gainMap)
+        // if (symArray_ === ['QQQ','TQQQ']) {
+        //     symArray_ =  ['TQQQ','QQQ']
+        // }
         setSymArray (symArray_)
         if (symArray_.length !== 2) {
             setErr('Err need 2 stocks, press GAIN for another symbol' )
@@ -204,13 +210,12 @@ function LeverageETF (props) {
                 <div>{props.daily? '(daily)' : '(weekly)'}</div>
             </div>
 
-            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Compare leverage ETF (like TQQQ)  with base ETF (QQQ) </h6>
-            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> gain === price / oldest price</h6>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Support strategy for trading leverage ETF (like TQQQ)  using QQQ </h6>
 
             <div style={{color: 'red'}}> {err} </div>
 
 
-
+            {symArray.length > 0 && <div>  symArray= {JSON.stringify(symArray)} </div>}
 
             <div style={{display: 'flex'}}>
                 <div>Date after drop</div>
@@ -221,7 +226,12 @@ function LeverageETF (props) {
             <input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> stepListShow   &nbsp;  &nbsp;
             {listShow && <div>
             highLow info {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
-            stepsArray { <pre>{JSON.stringify(stepsArr, null, 2)}</pre>}
+            {/* stepsArray { <pre>{JSON.stringify(stepsArr, null, 2)}</pre>} */}
+            stepsArray {stepsArr['QQQ'].map((s,i)=>{
+                return (
+                    <div>{JSON.stringify(stepsArr['QQQ'][i])}</div>
+                )
+            } )}
             </div>}
             {/* Yearly gain TABLE */}
             <input  type="checkbox" checked={valueTblShow}   onChange={()=> setValueTblShow(! valueTblShow)} /> historical-value-table
