@@ -124,7 +124,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
             (chartData) => {
               const dataStr = JSON.stringify(chartData);
               if (dataStr === "{}") {
-                errorAdd([sym, 'Invalid symbol'])
+                errorAdd([sym, 'Invalid symbol, or fail to fetch historical data'])
                 // alert (`Invalid symbol: (${sym})`)
                 return;
               }
