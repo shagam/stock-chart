@@ -85,6 +85,7 @@ function LeverageETF (props) {
         //** Find pivot sym, min history length  */
         lengthMin = yArray.length
         var indexOfPivotSym = 0;
+        setPivotSym(symArray_[0]) // default first sym
         for (let i = 0; i < symArray_.length; i++) {
             yArray = props.gainMap[symArray_[i]].y
             if (yArray.length <= lengthMin) {
@@ -184,16 +185,18 @@ function LeverageETF (props) {
 
     // color high / low lines
     function colorIndex (index) {
-        if (highLowIndex[symArray[0]].highestIndex === index)
-            return '#feb236'
-        if (highLowIndex[symArray[0]].lowestIndex === index)
-            return 'red'
-        
-        if (highLowIndex[symArray[1]].highestIndex === index)
-            return '#ff7b25'
-        if (highLowIndex[symArray[1]].lowestIndex === index)
-            return 'magenta'
-            
+        for (let i = 0; i < symArray.length; i++) {
+            if (i === 0) { // first sym
+                if (highLowIndex[symArray[i]].highestIndex === index)
+                    return '#feb236'
+                if (highLowIndex[symArray[i]].lowestIndex === index)
+                    return 'red'
+            }
+            if (highLowIndex[symArray[i]].highestIndex === index)
+                return '#ff7b25'
+            if (highLowIndex[symArray[i]].lowestIndex === index)
+                return 'magenta'
+        }      
         return colorStep (index) 
         // return 'black'
     }
@@ -239,8 +242,8 @@ function LeverageETF (props) {
 
             <div>&nbsp;</div>
 
-            {pivotSym && symArray.length > 1 && <div> lineCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
-            {valueTblShow && pivotSym && symArray.length > 1 && <div style={{height:'450px', width: '550px', overflow:'auto'}}>
+            {pivotSym && <div> lineCount={valArrLen} &nbsp;&nbsp; oldestDate={props.gainMap[pivotSym].x[valArrLen - 1]} </div>}
+            {valueTblShow && pivotSym && <div style={{height:'450px', width: '550px', overflow:'auto'}}>
                 <table>
                     <thead>
                         <tr>
