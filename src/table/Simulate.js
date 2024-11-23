@@ -281,9 +281,11 @@ const Simulate = (props) => {
           
              
         
-        const weeklyInterest = Math.pow(1 + interestRate / 100, 1/52)
+        var timeUnitInterest = Math.pow(1 + interestRate / 100, 1/52)
+        if (props.daily)
+            timeUnitInterest = Math.pow(1 + interestRate / 100, 1/260)
         if (LOG)
-            console.log ('weeklyInterest=', weeklyInterest, 'interest=', interestRate) // on moneyMarket
+            console.log ('weeklyInterest=', timeUnitInterest, 'interest=', interestRate) // on moneyMarket
 
         const stockGainDuringPeriod = YValues[0] / YValues[oldestIndex]// raw stock gain
         const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
@@ -436,7 +438,7 @@ const Simulate = (props) => {
             tradeSkipCount ++;
 
             // //** weekly interest of money market */
-            moneyMarket *= weeklyInterest; 
+            moneyMarket *= timeUnitInterest; 
        
             //** LOG loop start info */
             if (LOG &&  i > YValues.length - startWeek && i < YValues.length - startWeek - 10)
