@@ -250,11 +250,11 @@ function LeverageETF (props) {
             <table>
                 <thead>
                     <tr>
-                        <th>N</th>
-                        <th>sym</th>
+                        <th style={ROW_SPACING}>N</th>
+                        <th style={ROW_SPACING}>sym</th>
                         {Object.keys(highLowIndex[Object.keys(highLowIndex)[0]]).map((atr,atri) => {
                             return (
-                                <th key={atri}>{atr}</th>
+                                <th  style={ROW_SPACING} key={atri}>{atr}</th>
                             )
                         })}
                     </tr>
@@ -263,11 +263,11 @@ function LeverageETF (props) {
                     {Object.keys(highLowIndex).map((s, s1) =>{
                         return (
                         <tr key={s1}>
-                            <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
-                            <td style={{padding: '1px', margin: '1px'}}>{s}</td>
+                            <td style={ROW_SPACING}>{s1}</td>
+                            <td style={ROW_SPACING}>{s}</td>
                             {Object.keys(highLowIndex[s]).map((a,a1) => {
                                 return (
-                                    <td key={a1} style={{padding: '1px', margin: '1px'}} >{highLowIndex[s][a]}</td>
+                                    <td key={a1} style={ROW_SPACING} >{highLowIndex[s][a]}</td>
                                 )
                             })}
                         </tr>
