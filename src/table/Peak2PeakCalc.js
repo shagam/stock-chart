@@ -1,6 +1,6 @@
 import React, {useState, } from 'react'
 import {yearsDifference, todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
-
+import {ErrorList, beep, beep2} from '../utils/ErrorList'
 
 
 const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak, setErr) => {
@@ -107,7 +107,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       }
       if (index2008 === -1 && setErr) {
         const err =  ' peak2Peak, date beyond range; ';
-        setErr (symbol + err  + ' searchFor=' + d_2008_dateArray + ' dateStart= ' + lastDateSplit)
+        setErr (symbol + err  + ' searchFor=' + d_2008_dateArray + ' dateStart= ' + lastDateSplit + ';  use single-peak')
+        beep2()
       }
 
 

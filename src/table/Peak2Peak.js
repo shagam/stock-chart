@@ -312,7 +312,7 @@ const Peak2PeakGui = (props) => {
             <div style={{display: 'flex'}}>
               <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
               <input  type="checkbox" checked={bubbleCalcSinglePeak}  onChange={() => {setBubbleCalcSinglePeak (! bubbleCalcSinglePeak)}} /> 
-              <div style={{paddingTop: '6px'}}> &nbsp; Bubble-calc-single-Peak &nbsp;&nbsp; </div>
+              <div style={{paddingTop: '6px'}}> &nbsp; single-Peak &nbsp;&nbsp; </div>
             </div>
           </div>}
 

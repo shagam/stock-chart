@@ -309,6 +309,9 @@ const Simulate = (props) => {
         //**  optimize loop from oldest towards latest */
         if (optimizeWeekGain)
             oldestIndex -= 53 // skip first year
+
+
+        // trade loop start
         for (let i = oldestIndex; i > 0; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
@@ -444,7 +447,8 @@ const Simulate = (props) => {
         //     console.log('exception i='+ i + '  %c' + e.message, 'background: #fff; color: #ee3344');
         //     break;
         // }
-        }
+        } // loopEnd
+
         setLogRecordsKeys(Object.keys(logRecords))
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
@@ -683,6 +687,8 @@ const Simulate = (props) => {
         }
     }
 
+    const ROW_SPACING = {padding: "0px 3px 0px 5px", margin: '0px'}
+    //** top, right, bottom, left*/
 
     return (
         <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
@@ -815,8 +821,8 @@ const Simulate = (props) => {
 
             <hr/> 
 
-            {/* {eliHome && results && <div> Last simulation info &nbsp;</div>}
-            {eliHome && <pre>{JSON.stringify(results, null, 2)}</pre>} */}
+            {eliHome && results && <div> Last simulation info &nbsp;</div>}
+            {eliHome && <pre>{JSON.stringify(results, null, 2)}</pre>}
 
 
             {/* Disply trade log */}
@@ -838,10 +844,10 @@ const Simulate = (props) => {
                         {logRecordsKeys.map((s, s1) =>{
                             return (
                             <tr key={s1}>
-                                <td style={{padding: '3px', margin: '3px'}}>{s1}</td>
+                                <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
                                 {Object.keys(logRecords[s]).map((a,a1) => {
                                     return (
-                                        <td key={a1} style={{padding: '3px', margin: '3px'}} >{logRecords[s][a]}</td>
+                                        <td key={a1} style={{padding: '1px', margin: '1px'}} >{logRecords[s][a]}</td>
                                     )
                                 })}
                             </tr>
