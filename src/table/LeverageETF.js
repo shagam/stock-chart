@@ -24,7 +24,7 @@ function LeverageETF (props) {
     const [stepsArr, setStepsArr] = useState({});
     const [valueTblShow, setValueTblShow] = useState (false)
     const [listShow, setListShow] = useState (false)
-    const [log, setLog] = useState ();
+    const [log, setLog] = useState (false);
 
     //** git index of heigest value */
     function getHighestValue (yArray, startIndex) {
@@ -141,8 +141,11 @@ function LeverageETF (props) {
 
             const historyArrLength = y.length
             const highest_index = getHighestValue (y, startAfterDropIndex);
+            if (log)
+                console.log (symArray_[s], '  highest ind=' + highest_index, '  date=' + props.gainMap[symArray_[s]].x[highest_index], '  val=' + props.gainMap[symArray_[s]].y[highest_index].toFixed(2))
             const lowest_index =  getLowestAfterHigh (y, highest_index)
-            console.log (symArray_[s], 'high ind=', highest_index, props.gainMap[symArray_[s]].x[highest_index], props.gainMap[symArray_[s]].y[highest_index].toFixed(2))
+            if (log)
+                console.log (symArray_[s], '  lowest ind=' + lowest_index, '  date=' + props.gainMap[symArray_[s]].x[lowest_index], '  val=' + props.gainMap[symArray_[s]].y[lowest_index].toFixed(2))
             // props.gainMap[symArray_[s]].drop = []
             var dropFromHigh  = []
             for (let i = 0; i < historyArrLength; i++) {
@@ -168,7 +171,7 @@ function LeverageETF (props) {
             for (let i = highest_index; i >= lowest_index; i--) {
                 if (dropFromHigh[i] < (1 - stepCount * STEP)) {
                     if (log)
-                    console.log (symArray_[s], dropFromHigh[i], stepCount, (1 - stepCount * STEP).toFixed(2))
+                    console.log (symArray_[s], ' ', stepCount, ' step=' + (1 - stepCount * STEP).toFixed(2), ' drop=' + dropFromHigh[i])
                     steps[i] = symArray_[s] + '_' + dropFromHigh[i];
                     stepsArr_.push ({sym: symArray_[s], i: i, date: x[i], step: (1 - stepCount * STEP).toFixed(2), drop: dropFromHigh[i]})
                     stepCount ++;
