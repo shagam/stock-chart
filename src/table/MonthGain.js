@@ -144,7 +144,7 @@ function MonthGain (props) {
       const xArray = gainMapSym.x;
       const yArray = gainMapSym.y;
       const startDateSplit = rawDateSplit (startDate) 
-      let oldestIndex = searchDateInArray (xArray, startDateSplit, symm_);
+      let oldestIndex = searchDateInArray (xArray, startDateSplit, symm_, props.logFlags, setStatus);
       
       if (oldestIndex === -1) {
         oldestIndex = xArray.length; // use shorter array
@@ -197,7 +197,7 @@ function MonthGain (props) {
       const yArray = gainMapSym.y;
 
       const startDateSplit = rawDateSplit (startDate) 
-      var oldestIndex = searchDateInArray (xArray, startDateSplit, null);
+      var oldestIndex = searchDateInArray (xArray, startDateSplit, null, props.logFlags, setStatus);
       if (oldestIndex === -1) {
         oldestIndex = xArray.length; // use shorter array
         console.log (symm, 'Date not found')

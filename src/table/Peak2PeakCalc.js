@@ -3,9 +3,9 @@ import {yearsDifference, todayDate, dateSplit, monthsBack, daysBack, compareDate
 
 
 
-const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak) => {
+const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFlags, searchPeak, setErr) => {
     const LOG_FLAG = logFlags && logFlags.includes('peak2Peak');
-    var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags)
+    var dateIndex = searchDateInArray (stockChartXValues, initDate, symbol, logFlags, setErr)
     if (dateIndex === -1)
       return -1; // not found
     if(LOG_FLAG)
@@ -92,14 +92,14 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
 
 
       const d_2022_dateArray =[d_2022_year, d_2022_mon, d_2022_day]
-      const index2001 = quasiTop (symbol, d_2001_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const index2001 = quasiTop (symbol, d_2001_dateArray, stockChartXValues, stockChartYValues, logFlags, true, setErr)
       if (index2001 !== -1) {
         results['d_2001_date'] = stockChartXValues[index2001];
         results['v_2001_value'] = stockChartYValues[index2001];
         results['i_2001_index'] = index2001;
       }
 
-      const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true, setErr)
       if (index2008 !== -1) {
         results['d_2008_date'] = stockChartXValues[index2008];
         results['v_2008_value'] = stockChartYValues[index2008];
@@ -111,7 +111,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       }
 
 
-      const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true)
+      const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true, setErr)
       if (index2022 !== -1) {
         results['d_2022_date'] = stockChartXValues[index2022];
         results['v_2022_value'] = stockChartYValues[index2022];

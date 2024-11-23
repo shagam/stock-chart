@@ -133,7 +133,7 @@ function LeverageETF (props) {
             const startDay = dateAfterDrop.getDate();    
             const startDateArray = [startYear, startMon, startDay]
 
-            var startAfterDropIndex = searchDateInArray (x, startDateArray, symArray_[s], props.logFlags)
+            var startAfterDropIndex = searchDateInArray (x, startDateArray, symArray_[s], props.logFlags, setErr)
             if (startAfterDropIndex === -1) {
                 setErr(symArray_[s], 'fail to find start date, after drop')
                 return;

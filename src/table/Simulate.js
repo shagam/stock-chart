@@ -67,7 +67,7 @@ const Simulate = (props) => {
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
-
+    const [startDate, setStartDate] = useState(new Date(2005, 8, 1 )) // sep 1
 
     const historyLength = props.stockChartXValues.length;
 
@@ -192,7 +192,7 @@ const Simulate = (props) => {
         }
         const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
         const symVal = YValues[i]; 
-        var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags)
+        var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags, setErr)
         if (bubbleIndex === -1) {
             console.log (props.symbol, i, 'failed to find date in bubble line')
             return aggressivePortionInit
@@ -234,7 +234,7 @@ const Simulate = (props) => {
             return;
         }
 
-
+        var startDateIndex = searchDateInArray (bubbleLine.x, startDate, props.symbol, props.logFlags, setErr)
 
         if ((optimizeBubble && bubbleLine.y.length - 1 - startWeek <= 0) || (!optimizeBubble && YValues.length - 1 - startWeek < 0) ) {
             setErr ('invalid start week= ', startWeek)
@@ -242,7 +242,7 @@ const Simulate = (props) => {
             return
         }
 
-        var oldestIndex = bubbleLine ? bubbleLine.y.length - 1 - startWeek : YValues.length - 1 - startWeek; // startIndex == 0 means oldest
+        var oldestIndex = startDateIndex !== -1 ? startDateIndex : bubbleLine.y.length - 1; // if valid => startDateIndex means oldest
 
         var priceInit = YValues[oldestIndex]  // begining price // default oldest
         var price =  priceInit
@@ -270,7 +270,7 @@ const Simulate = (props) => {
             'trade_start_value_$': accountVal.toFixed(2),
             stocksCount: stockCount.toFixed(2),
             'moneyMarket_$': moneyMarket.toFixed(2),
-            'price_$': price.toFixed(3),
+            'price_$': price? price.toFixed(3) : -1,
             'portion': (portionPercent/100).toFixed(2),
             'threshold_%': thresholdPercent,
             'interestRate_%': interestRate,
@@ -776,9 +776,11 @@ const Simulate = (props) => {
             </div>
             <div style = {{display:'flex'}}>
                 &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+" width = '15%'/>
-                &nbsp; <GetInt init={startWeek} callBack={setStartWeek} title='startWeek' type='Number' pattern="[0-9]+" width = '20%'/>
+                <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>               
             </div>
-             <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>
+
+            <div> &nbsp;</div>
+             &nbsp;startDate <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} />  &nbsp; &nbsp;
             <div> &nbsp;</div>
 
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;

@@ -273,7 +273,7 @@ const daysFrom1970 = (dateArray) => {
 // }
 
 // return index of dataArray closest
-function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFlags) {
+function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFlags, setErr) {
 
   if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
     return -2;
@@ -327,9 +327,13 @@ function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFla
 
   }
   const log = 'searchDateInArray loop newest=' + newestIndx + ' oldest=' + oldestIndx + ' i=' + i + ' loopLimit=' + loopLimit + 
-  ' movingDate=' + movingDate + ' ' + sym + ' length=' + stockChartXValuesFunction.length + collectedLog;
-  console.log(log);
-  alert(log);
+  ' movingDate=' + movingDate + ' ' + sym + ' length=' + stockChartXValuesFunction.length ;
+  console.log(log + collectedLog);
+  if (setErr)
+    setErr(log)
+  else
+    alert(log);
+  return -1; // not found
 }
 
 function dateToArray (date) {
