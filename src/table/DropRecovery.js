@@ -22,7 +22,7 @@ const DropRecoveryButtons = (props) => {
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
    const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
-
+  const [err, setErr] = useState();
   //** used by dropRecovery */
   var periodTag;
   if (props.weekly)
@@ -116,7 +116,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     // startBeforeDropWeek = Math.round(startBeforeDropWeek);
 
     const startDateArray = [startYear, startMon, startDay]
-    var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol, logFlags)  
+    var startBeforeDropIndex = searchDateInArray (stockChartXValues, startDateArray, StockSymbol, logFlags, setErr)  
     var highPriceBeforeDeep = 0;
     var highPriceDateBeforeDeep = '';
     var highPriceBeforeDeepIndex = 0;
@@ -295,7 +295,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
    //  2007, 11, 1  2008 deep
 
    function swap_period_2001() {
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2000, 0, 1], props.StockSymbol, props.logFlags)  
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2000, 0, 1], props.StockSymbol, props.logFlags, setErr)  
     if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
       props.errorAdd([props.StockSymbol, '[2000, 0, 1]', 'Date before available data'])
       return;
@@ -306,7 +306,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
   function swap_period_2008() {
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2008, 0, 1], props.StockSymbol, props.logFlags)  
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2008, 0, 1], props.StockSymbol, props.logFlags, setErr)  
     if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
       props.errorAdd([props.StockSymbol, '[2008, 0, 1]', 'Date before available data'])
       return;
@@ -317,7 +317,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
   function swap_period_2020() {
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2020, 0, 1], props.StockSymbol, props.logFlags)  
+    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2020, 0, 1], props.StockSymbol, props.logFlags, setErr)  
     if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
       props.errorAdd([props.StockSymbol, '[2020, 0, 1]', 'Date before available data'])
       return;
@@ -434,6 +434,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           </div>
           
           <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Calc drop from high before market crash. Calc weeks number to recover </h6>
+          
+          <div style={{color: 'red'}}>{err}</div>
 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
@@ -462,7 +464,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
           <h5>TodayGainWeeksLost</h5>
           <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
-          {gainLostWeeks && <h6>  GainWeeksLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
+          {gainLostWeeks && <h6>  GainTimeUnitLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
         </div>
     </div>
   )
