@@ -222,7 +222,8 @@ function LeverageETF (props) {
                 <div>{props.daily? '(daily)' : '(weekly)'}</div>
             </div>
 
-            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Support strategy for trading leverage ETF (like TQQQ)  using QQQ </h6>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Support strategy for trading leverage ETF (like TQQQ)  </h6>
+            <h6 style={{color:'#993333', fontWeight: 'bold', fontStyle: "italic"}}>The tool searches date of highest before the initial date  (like TQQQ)</h6>
 
             <div style={{color: 'red'}}> {err} </div>
 
