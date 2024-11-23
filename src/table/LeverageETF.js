@@ -238,11 +238,47 @@ function LeverageETF (props) {
             </div>
 
             {/* Step array */}
+            <div>&nbsp;</div>
             <input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> stepListShow   &nbsp;  &nbsp;
-            {listShow && <div>
-            highLow info {highLowIndex !== '{}' && <pre>{JSON.stringify(highLowIndex, null, 2)}</pre>}
 
-            stepsArray
+            {listShow && <div>
+            high low info table
+
+            {/* {Object.keys(highLowIndex) > 0 && */}
+            {/* High low info table  */}
+            {
+            <table>
+                <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>sym</th>
+                        {Object.keys(highLowIndex[Object.keys(highLowIndex)[0]]).map((atr,atri) => {
+                            return (
+                                <th key={atri}>{atr}</th>
+                            )
+                        })}
+                    </tr>
+                </thead>
+                <tbody>
+                    {Object.keys(highLowIndex).map((s, s1) =>{
+                        return (
+                        <tr key={s1}>
+                            <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
+                            <td style={{padding: '1px', margin: '1px'}}>{s}</td>
+                            {Object.keys(highLowIndex[s]).map((a,a1) => {
+                                return (
+                                    <td key={a1} style={{padding: '1px', margin: '1px'}} >{highLowIndex[s][a]}</td>
+                                )
+                            })}
+                        </tr>
+                        )
+                    })}
+                </tbody>
+            </table>}
+
+
+            <div>&nbsp;</div>
+            stepsArray table
             <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>   
 
             <table>
