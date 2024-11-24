@@ -165,9 +165,9 @@ function LeverageETF (props) {
             const STEP = 0.05;
             var stepCount = 1;
 
-            // calc steps 
+            
+            // calc step table 
             var stepsArr_ = [];
-
             for (let i = highest_index; i >= lowest_index; i--) {
                 if (dropFromHigh[i] < (1 - stepCount * STEP)) {
                     if (log)
