@@ -36,7 +36,7 @@ import {format} from "date-fns"
 
 import {addStock} from './AddStock'
 //import cloneDeep from 'lodash/cloneDeep';
-
+import {ServerSelect, server, PORT, ssl} from  '../utils/Server'
 
 // import {db} from '../firebaseConfig'
 
@@ -791,6 +791,7 @@ const BasicTable = (props) => {
 
           {/* {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>} */}
         </div>
+        {/* {eliHome && <ServerSelect />} */}
         {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>}
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
