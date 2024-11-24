@@ -799,12 +799,12 @@ const BasicTable = (props) => {
           &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
-          {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily &nbsp;&nbsp;</div>}
-          {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent &nbsp;&nbsp;</div>}
-          {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} /> URL &nbsp;</div>}
-          {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
+          {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily&nbsp;&nbsp;</div>}
+          {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent&nbsp;&nbsp;</div>}
+          {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
          </div>
-     
+         {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
+
       {/* insert sym, filter */}
 
       <div style={{display:'flex'}} id="add_stock_id">
