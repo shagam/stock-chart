@@ -797,12 +797,14 @@ const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
 
-          {<div> <button onClick={gainAll} > gainAll </button> </div>}
-          &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
-          &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;column-select &nbsp; </div>
+          {<div> <button onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>}
+          &nbsp; &nbsp; <button onClick={reloadPage} title='clear table, and load default symbols' > Clear-table </button>                          
+          &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
+                title='select which columns are visible and which are hidden'/> &nbsp;column-select &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
-          {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily&nbsp;&nbsp;</div>}
-          {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent&nbsp;&nbsp;</div>}
+          {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)}  title='daily vs weekly' /> daily&nbsp;&nbsp;</div>}
+          {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()}
+               title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/> yearlyPercent&nbsp;&nbsp;</div>}
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
          </div>
          {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
@@ -914,30 +916,41 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='11' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
               {<div style={{color:'blue'}}>none</div>} &nbsp; 
 
-              <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}/>
+              <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}
+                 title='calc line that connect major stock market bubbles (2008,2022)'/>
               {! gainMap.bubbleLine && <div style={{color:'blue'}}> bubbleLine  </div>} 
               {gainMap.bubbleLine && <div style={{color:'blue', fontWeight: "bold"}}> peak2peak  </div>} 
               
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}/>         
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}
+                  title='calc value drop of a symbol during market crash, and the recovery time (weeks or dayes) '/>         
               <div style={{color:'blue'}}>  dropRecovery   </div> 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}/> 
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}
+                title='Get ETF holdings '/> 
               <div style={{color:'blue'}}> holdings  </div> 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockGain' id='4' checked={analyzeTool==='stockGain'} onChange={onOptionChange}/> 
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockGain' id='4' checked={analyzeTool==='stockGain'} onChange={onOptionChange}
+                title='Raw gain data as fetched by provider' /> 
               <div style={{color:'blue'}}> gainRaw  </div> 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}/>  
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}
+                title='Raw basic company data as fetched by provider'/>  
               <div style={{color:'blue'}}> infoRaw   </div> 
    
             </div>
               
             <div style={{display:'flex'}}>
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}/>  
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}
+                   title='simulate optimized trade based on week gain or bubble-line proximety'/>  
                 <div style={{color:'blue'}}> simulateTrade   </div> 
                 
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}/>  
-                {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain   </div>} 
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
+                    title='Calc average month and week gain over the last 24 years'/>  
+                {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain</div>} 
                 {monthGainData.weekGainArray && <div style={{color:'blue', fontWeight: "bold"}}> weekGain   </div>} 
 
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}/>
+                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}
+                title='Strategy for Lavarage ETF like TQQQ (tripple QQQ)'/>
                 {<div style={{color:'blue'}}> leveragaETF  </div>}
 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
@@ -947,10 +960,10 @@ const BasicTable = (props) => {
 
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
-              <div style={{color:'blue'}}> movAverage  </div>
+              <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
               
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='3' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
-              <div style={{color:'blue'}}>  tools       </div> 
+              <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div> 
             </div>
             
             {/* <hr/>  */}
@@ -998,19 +1011,24 @@ const BasicTable = (props) => {
           <hr/> 
            
           <div style={{display:'flex'}}>
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}/>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}
+            title='turn off other pans on line'/>
           <div style={{color:'#9932CC'}}> none  </div> 
 
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='config' id='1' checked={nonSymTool==='config'} onChange={nonSymChange}/>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='config' id='1' checked={nonSymTool==='config'} onChange={nonSymChange}
+             title='maintenance functios like purge table or default column selected'/>
           <div style={{color:'#9932CC'}}> config  </div>   
 
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}
+             title='get symbols with heigher than the hi-tech ETD QQQ'/>
           <div style={{color:'#9932CC'}}> commonDatabase  </div>   
         
-          <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}/>
+          <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}
+             title='Share stock-lists with other users of the tool'/>
           <div style={{color:'#9932CC'}}> stockLists </div>   
 
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}/>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}
+             title='ETF futures contracts'/>
           <div style={{color:'#9932CC'}}> futures  </div>             
         </div>
 
