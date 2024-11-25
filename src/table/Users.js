@@ -12,17 +12,17 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import GlobalFilter from '../utils/GlobalFilter'  
 
 function Users (props) {
-    const [logBackEnd, setLogBackEnd] = useState ();
+    const [logBackEnd, setLogBackEnd] = useState (false);
     const {localIp, localIpv4, eliHome} = IpContext();
-    const { currentUser, admin, logout } = useAuth();
+    const {currentUser, admin, logout } = useAuth();
     const [err, setErr] = useState()
     const [userFilter, setUserFilter] = useState ();
 
     const [getAll, setGetAll] = useState (true);
-    const [extra, setExtra] = useState ();
+    const [extra, setExtra] = useState (false);
     // const [tbl, setTbl] = useState ({});
     const [userArray, setUserArray] = useState([]);
-    const [logExtra, setLogExtra] = useState ();
+    const [logExtra, setLogExtra] = useState (false);
     const [results, setResults] = useState()
     const [infoJson, setInfoJson] = useState({})
 
@@ -44,7 +44,7 @@ function Users (props) {
 
     async function users () {
         clear();
-        const LOG = props.logFlags.includes('gain');  
+
         const mili = Date.now()
 
         var corsUrl = ''
@@ -63,7 +63,7 @@ function Users (props) {
             corsUrl += '&getAll=true';
         
         setErr('users Request request sent')  
-        // if (LOG)
+        if (logBackEnd)
         console.log (corsUrl)
 
         axios.get (corsUrl)
@@ -74,13 +74,13 @@ function Users (props) {
                 console.log (getDate(), 'status=', result)
                 return;
             }
-            if (LOG)
+            if (logBackEnd)
                 console.log (JSON.stringify(result.data))
     
             if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
                 props.errorAdd([getDate(),  ' users', result.data])
             }
-            if (LOG || logBackEnd)
+            if (logBackEnd)
             console.log(getDate(),  'users arrived', result.data) 
             setErr('backEnd users,  Latency(msec)=' + latency ) 
 
@@ -88,7 +88,7 @@ function Users (props) {
                 var arr = []
                 const inf = result.data
                 const ipList = Object.keys (result.data);
-                if (LOG)
+                if (logBackEnd)
                     console.log (result.data)
                 for (let i = ipList.length - 1; i >= 0; i--) {
                     var obj = {
@@ -116,7 +116,8 @@ function Users (props) {
                 //** delete mili */
                 for (let i = 0; i < arr.length; i++) {
                     if (!arr[i].region)
-                        console.log ('missing region', arr[i])
+                        if (logBackEnd)
+                            console.log ('missing region', arr[i])
                     delete arr[i].mili
                 }
 
