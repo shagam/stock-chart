@@ -827,7 +827,7 @@ const BasicTable = (props) => {
       </div>
 
       {columnHideFlag && 
-        <div id="columnToggle">
+        <div id="columnToggle" style={{width: '550px'}}>
           {
           allColumns.map(column => (
             <div key={column.id}>
