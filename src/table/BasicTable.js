@@ -798,7 +798,7 @@ const BasicTable = (props) => {
 
           {<div> <button onClick={gainAll} > gainAll </button> </div>}
           &nbsp; &nbsp; <button onClick={reloadPage} > reloadPage </button>                          
-          &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;columnHide &nbsp; </div>
+          &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} /> &nbsp;column-select &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
           {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)} /> daily&nbsp;&nbsp;</div>}
           {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()} /> yearlyPercent&nbsp;&nbsp;</div>}
