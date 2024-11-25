@@ -89,38 +89,38 @@ export const COLUMNS = [
     accessor: 'price'
   },
   {
-    Header: '3mn',
-    Footer: '3mn',    
+    Header: '3Mn',
+    Footer: '3Mn',    
     accessor: 'mon3'
   },
   {
-    Header: '6mn',
-    Footer: '6mn',   
+    Header: '6Mn',
+    Footer: '6Mn',   
     accessor: 'mon6'
   },
   {
-    Header: 'yr',
-    Footer: 'yr',
+    Header: 'Yr',
+    Footer: 'Yr',
     accessor: 'year'
   },
   {
-    Header: '2yr',
-    Footer: '2yr',
+    Header: '2Yr',
+    Footer: '2Yr',
     accessor: 'year2',
   },
   {
-    Header: '5yr',
-    Footer: '5yr',    
+    Header: '5Yr',
+    Footer: '5Yr',    
     accessor: 'year5'
   },
   {
-    Header: '10yr',
-    Footer: '10yr',    
+    Header: '10Yr',
+    Footer: '10Yr',    
     accessor: 'year10'
   },
   {
-    Header: '20yr',
-    Footer: '20yr',    
+    Header: '20Yr',
+    Footer: '20Yr',    
     accessor: 'year20'
   },
   {
@@ -294,38 +294,38 @@ export const GROUPED_COLUMNS = [
         accessor: 'price'
       },      
       {
-        Header: '3mn',
-        Footer: '3mn',    
+        Header: '3Mn',
+        Footer: '3Mn',    
         accessor: 'mon3'
       },
       {
-        Header: '6mn',
-        Footer: '6mn',   
+        Header: '6Mn',
+        Footer: '6Mn',   
         accessor: 'mon6'
       },
       {
-        Header: 'yr',
-        Footer: 'yr',
+        Header: 'Yr',
+        Footer: 'Yr',
         accessor: 'year'
       },
       {
-        Header: '2yr',
-        Footer: '2yr',
+        Header: '2Yr',
+        Footer: '2Yr',
         accessor: 'year2',
       },
       {
-        Header: '5yr',
-        Footer: '5yr',    
+        Header: '5Yr',
+        Footer: '5Yr',    
         accessor: 'year5'
       },
       {
-        Header: '10yr',
-        Footer: '10yr',    
+        Header: '10Yr',
+        Footer: '10Yr',    
         accessor: 'year10'
       },
       {
-        Header: '20yr',
-        Footer: '20yr',    
+        Header: '20Yr',
+        Footer: '20Yr',    
         accessor: 'year20'
       },
       {
