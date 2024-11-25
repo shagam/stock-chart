@@ -5,6 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { toDate } from "date-fns";
 import {format} from "date-fns"
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
+import {IpContext, getIpInfo} from '../contexts/IpContext';
+
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
 //import './DropRecovery.css'
 
@@ -23,6 +25,8 @@ const DropRecoveryButtons = (props) => {
 
    const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
   const [err, setErr] = useState();
+  const {eliHome} = IpContext();
+
   //** used by dropRecovery */
   var periodTag;
   if (props.weekly)
@@ -271,8 +275,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       deepDate:    deepDate,
       'latestPrice/Highest': priceDivHigh,
       deepGainLostWeeks: gainLostWeeks,
-      deepIndex: deepIndex,
-      maxIndex: stockChartXValues.length,
       oldestDate: stockChartXValues[stockChartXValues.length-1]
     }
 
@@ -280,9 +282,13 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       info.recoverWeeks = (recoverPeriod / 5).toFixed(2);
       info.recoverYears= (recoverPeriod / 52 / 5).toFixed(2)
     }
+
+    if (eliHome){
+      info.deepIndex = deepIndex;
+      info.maxIndex = stockChartXValues.length;
+    }
+
     setDropRecoveryInfo(info)
-
-
 
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
