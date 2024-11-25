@@ -156,11 +156,18 @@ function LeverageETF (props) {
             props.gainMap[symArray_[s]].dropFromHigh = dropFromHigh
 
             const indexes = {}
+
+            indexes.drop = (y[lowest_index] / y[highest_index]).toFixed(3)
+            console.log ('levarage drop', indexes.drop, y[lowest_index], y[highest_index], highest_index)
+            if (isNaN(indexes.drop))
+                indexes.drop = -1;
+
+            highLowIndex[symArray_[s]] = indexes
             indexes.highestIndex =  highest_index
             indexes.highestDate = x[highest_index]
             indexes.lowestIndex =  lowest_index
             indexes.lowestDate = x[lowest_index]
-            highLowIndex[symArray_[s]] = indexes
+
 
             const STEP = 0.05;
             var stepCount = 1;
