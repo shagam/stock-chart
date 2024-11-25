@@ -237,89 +237,87 @@ function LeverageETF (props) {
                 <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
             </div>
 
-            {/* Step array */}
-            <div>&nbsp;</div>
-            <input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> stepListShow   &nbsp;  &nbsp;
-
-            {listShow && <div>
-            high low info table
-
-            {/* {Object.keys(highLowIndex) > 0 && */}
-            {/* High low info table  */}
-            {
-            <table>
-                <thead>
-                    <tr>
-                        <th style={ROW_SPACING}>N</th>
-                        <th style={ROW_SPACING}>sym</th>
-                        {Object.keys(highLowIndex[Object.keys(highLowIndex)[0]]).map((atr,atri) => {
-                            return (
-                                <th  style={ROW_SPACING} key={atri}>{atr}</th>
-                            )
-                        })}
-                    </tr>
-                </thead>
-                <tbody>
-                    {Object.keys(highLowIndex).map((s, s1) =>{
-                        return (
-                        <tr key={s1}>
-                            <td style={ROW_SPACING}>{s1}</td>
-                            <td style={ROW_SPACING}>{s}</td>
-                            {Object.keys(highLowIndex[s]).map((a,a1) => {
+ 
+            {Object.keys(highLowIndex).length > 0 &&
+            <div>high-low table 
+                <table>
+                    <thead>
+                        <tr>
+                            <th style={ROW_SPACING}>N</th>
+                            <th style={ROW_SPACING}>sym</th>
+                            {Object.keys(highLowIndex[Object.keys(highLowIndex)[0]]).map((atr,atri) => {
                                 return (
-                                    <td key={a1} style={ROW_SPACING} >{highLowIndex[s][a]}</td>
+                                    <th  style={ROW_SPACING} key={atri}>{atr}</th>
                                 )
                             })}
                         </tr>
-                        )
-                    })}
-                </tbody>
-            </table>}
-
-
-            <div>&nbsp;</div>
-            stepsArray table
-            <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>   
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>N</th>
-                        {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
+                    </thead>
+                    <tbody>
+                        {Object.keys(highLowIndex).map((s, s1) =>{
                             return (
-                                <th key={hi}>{h}</th>
+                            <tr key={s1}>
+                                <td style={ROW_SPACING}>{s1}</td>
+                                <td style={ROW_SPACING}>{s}</td>
+                                {Object.keys(highLowIndex[s]).map((a,a1) => {
+                                    return (
+                                        <td key={a1} style={ROW_SPACING} >{highLowIndex[s][a]}</td>
+                                    )
+                                })}
+                            </tr>
                             )
                         })}
-                    </tr>
-                </thead>
-                <tbody>
-                     {/* loop on {syms} [lines] {attr} */}
-                     {Object.keys(stepsArr).map((sym,symi)=>{ 
-                    return (
-                        stepsArr[sym].map((line,linei)=>{  
-                        return(
-                            <tr key={linei}> 
-                                <td  style={ROW_SPACING}>{linei}</td>
-                                {Object.keys(stepsArr[sym][linei]).map ((f,fi)=>{
-                                return (
-                                    <td  style={ROW_SPACING} key={fi}>{stepsArr[sym][linei][f]}</td> 
-                                )
-                                })
-                                }
-                            </tr>
-                        )                            
-                    })
+                    </tbody>
+                </table>
+            </div>}
 
-                    )}
-                    )}                 
-                </tbody>
-            </table>
+            {/* Step array */}
+            <div>&nbsp;</div>
+            {Object.keys(stepsArr).length > 0 && <div><input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> drop-steps-table   &nbsp;  &nbsp;</div>}
+
+            {listShow && <div>
+            {/* <div>&nbsp;</div> */}
+
+            <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>   
+
+                {Object.keys(stepsArr).length > 0 && <table>
+                    <thead>
+                        <tr>
+                            <th>N</th>
+                            {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
+                                return (
+                                    <th key={hi}>{h}</th>
+                                )
+                            })}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* loop on {syms} [lines] {attr} */}
+                        {Object.keys(stepsArr).map((sym,symi)=>{ 
+                        return (
+                            stepsArr[sym].map((line,linei)=>{  
+                            return(
+                                <tr key={linei}> 
+                                    <td  style={ROW_SPACING}>{linei}</td>
+                                    {Object.keys(stepsArr[sym][linei]).map ((f,fi)=>{
+                                    return (
+                                        <td  style={ROW_SPACING} key={fi}>{stepsArr[sym][linei][f]}</td> 
+                                    )
+                                    })
+                                    }
+                                </tr>
+                            )                            
+                        })
+
+                        )}
+                        )}                 
+                    </tbody>
+                </table>}
             </div>
 
             </div>}
             {/* Yearly gain TABLE */}
             <div>&nbsp;</div>
-            <input  type="checkbox" checked={valueTblShow}   onChange={()=> setValueTblShow(! valueTblShow)} /> historical-value-table
+            {symArray.length > 0 && <div><input  type="checkbox" checked={valueTblShow}   onChange={()=> setValueTblShow(! valueTblShow)} /> drop-table</div>}
 
             <div>&nbsp;</div>
 
@@ -330,10 +328,10 @@ function LeverageETF (props) {
                         <tr>
                             <th>N</th>
                             <th style={{width: '60px'}}>date</th> 
-                            <th style={ROW_SPACING}> {symArray[0] + ' $'}</th>
+                            {/* <th style={ROW_SPACING}> {symArray[0] + ' $'}</th> */}
                             <th style={ROW_SPACING}>{symArray[0]} drop</th>
  
-                            {symArray.length > 1 && <th style={ROW_SPACING}>{symArray[1] + ' $'}</th>}
+                            {/* {symArray.length > 1 && <th style={ROW_SPACING}>{symArray[1] + ' $'}</th>} */}
                             {symArray.length > 1 && <th style={ROW_SPACING}>{symArray[1]} drop</th>}
                             {/* {symArray.length > 1 &&<th> QQQ-drop ** 3</th>} */}
                             {/* <th style={ROW_SPACING}> steps</th> */}
@@ -348,10 +346,10 @@ function LeverageETF (props) {
                                 <td style={{padding: '1px', margin: '0px'}}>{index}</td>
                                 <td style={{padding: "0px 5px 0px 5px", margin: '0px', width:'100px', color: colorIndex(index,symArray[0])}} >{props.gainMap[pivotSym].x[index]}  </td>
 
-                                <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td>
+                                {/* <td style={ROW_SPACING}> {props.gainMap[symArray[0]].y[index].toFixed(2)}</td> */}
                                 <td style={ROW_SPACING}> {props.gainMap[symArray[0]].dropFromHigh[index]}</td>
                               
-                                {symArray.length > 1 && <td style={ROW_SPACING}> {props.gainMap[symArray[1]].y[index].toFixed(2)}</td>}
+                                {/* {symArray.length > 1 && <td style={ROW_SPACING}> {props.gainMap[symArray[1]].y[index].toFixed(2)}</td>} */}
                                 {symArray.length > 1 && <td style={ROW_SPACING}> {props.gainMap[symArray[1]].dropFromHigh[index]}</td>}
 
                                 {/* {symArray.length > 1 && <td style={ROW_SPACING}> {(props.gainMap[symArray[0]].dropFromHigh[index] ** 3).toFixed(3)}</td>} */}
