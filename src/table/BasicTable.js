@@ -778,40 +778,6 @@ const BasicTable = (props) => {
         </div>
         {errors.length > 0 && <ErrorList errorList={errors}/> }
 
-        <div style={{display:'flex'}}>
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> none  </div> 
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='config' id='1' checked={nonSymTool==='config'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> config  </div>   
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> commonDatabase  </div>   
-        
-          <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> stockLists </div>   
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}/>
-          <div style={{color:'#9932CC'}}> futures  </div>             
-        </div>
-
-           {/* select non sym tool */}
-        {nonSymTool ==='commonDatabase' && <CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
-         admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
-         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
-         yearlyPercent={yearlyPercent} QQQ_gain={QQQ_gain}/>}
-
-        {nonSymTool ==='config' && <Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
-        smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
-         servSelect={servSelect} ssl={ssl} PORT={PORT}/>}
-
-        {nonSymTool ==='stockLists' && <StockLists ip={ip} rows = {rows} logFlags = {props.logFlags} saveTable={saveTable}
-         errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>}
-
-        {nonSymTool ==='futures' && <Futures symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} 
-          logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}        
-
         {/* <div>&nbsp;</div> */}
         <div id="buttons_id" style={{display:'flex'}}> 
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
@@ -1031,6 +997,39 @@ const BasicTable = (props) => {
           </div>}        
           <hr/> 
            
+          <div style={{display:'flex'}}>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> none  </div> 
+
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='config' id='1' checked={nonSymTool==='config'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> config  </div>   
+
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> commonDatabase  </div>   
+        
+          <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> stockLists </div>   
+
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}/>
+          <div style={{color:'#9932CC'}}> futures  </div>             
+        </div>
+
+           {/* select non sym tool */}
+        {nonSymTool ==='commonDatabase' && <CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
+         admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
+         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
+         yearlyPercent={yearlyPercent} QQQ_gain={QQQ_gain}/>}
+
+        {nonSymTool ==='config' && <Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
+        smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
+         servSelect={servSelect} ssl={ssl} PORT={PORT}/>}
+
+        {nonSymTool ==='stockLists' && <StockLists ip={ip} rows = {rows} logFlags = {props.logFlags} saveTable={saveTable}
+         errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>}
+
+        {nonSymTool ==='futures' && <Futures symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} 
+          logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}        
 
          {/* <hr/> */}
     </div> 
