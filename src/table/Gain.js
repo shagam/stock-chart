@@ -362,12 +362,19 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               // rows[row_index].values.gain_date = updateDate;
 
               //** if (yearlyGain) then will be overiden */
+              if (mon3 !== -1)
               rows[row_index].values.mon3 = mon3;
+              if (mon3 !== -1)
               rows[row_index].values.mon6 = mon6; 
-              rows[row_index].values.year = year; 
+              if (year !== -1)
+              rows[row_index].values.year = year;
+              if (year2 !== -1) 
               rows[row_index].values.year2 = year2; 
+              if (year5 !== -1)
               rows[row_index].values.year5 = year5; 
+              if (year10 !== -1)
               rows[row_index].values.year10 = year10;
+              if (year20 !== -1)
               rows[row_index].values.year20 = year20;
   
               // rows[row_index].values.peak2Peak = peak2Peak;
@@ -403,19 +410,19 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
             
               //** Overide  */
               if (yearlyPercent) {
-                if (rows[row_index].values.mon3 !== -1)
+                if (mon3 !== -1)
                 rows[row_index].values.mon3 = ((mon3 ** 4 -1) * 100).toFixed(1);
-                if (rows[row_index].values.mon6 !== -1)
+                if (mon6 !== -1)
                 rows[row_index].values.mon6 = ((mon6 ** 2 -1) * 100).toFixed(1);
-                if (rows[row_index].values.year !== -1)
+                if (year !== -1)
                 rows[row_index].values.year = ((year - 1) * 100).toFixed(1);
-                if (rows[row_index].values.year2 !== -1) 
+                if (year2 !== -1) 
                 rows[row_index].values.year2 = ((year2 ** (1/2) -1) * 100).toFixed(1); 
-                if (rows[row_index].values.year5 !== -1)
+                if (year5 !== -1)
                 rows[row_index].values.year5 = ((year5 ** (1/5) - 1) * 100).toFixed(1); 
-                if (rows[row_index].values.year10 !== -1)
+                if (year10 !== -1)
                 rows[row_index].values.year10 = ((year10 ** (1/10) - 1) * 100).toFixed(1);
-                if (rows[row_index].values.year20 !== -1)
+                if (year20 !== -1)
                 rows[row_index].values.year20 = ((year20 ** (1/20) - 1) * 100).toFixed(1);
               }
 
