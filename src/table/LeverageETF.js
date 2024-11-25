@@ -4,6 +4,7 @@ import {yearsDifference} from '../utils/Date'
 import DatePicker, {moment} from 'react-datepicker';
 import { searchDateInArray} from '../utils/Date'
 import {IpContext} from '../contexts/IpContext';
+import GetInt from '../utils/GetInt'
 
 function LeverageETF (props) {
     const {localIp, localIpv4, eliHome} = IpContext();
@@ -19,6 +20,9 @@ function LeverageETF (props) {
     const [highLowText, setHighLowText] = useState ('')
     const [highLowIndex, setHighLowIndex] = useState ({})
     const [dateAfterDrop, setDateAfterDrop] = useState (new Date(2023, 8, 1 )) // sep
+
+
+    const [searchRange, setSearchRange] = useState (100)
     const [steps, setSteps] = useState([]);
 
     const [stepsArr, setStepsArr] = useState({});
@@ -27,10 +31,10 @@ function LeverageETF (props) {
     const [log, setLog] = useState (false);
 
     //** git index of heigest value */
-    function getHighestValue (yArray, startIndex) {
+    function getHighestValue (yArray, startIndex, range) {
         var highest = 0; // oldest 
         var highIndex = 0;
-        for (let i = startIndex; i < yArray.length; i++) {
+        for (let i = startIndex; i < yArray.length && i < range; i++) {
             if (highest < yArray[i]) {
                 highest = yArray[i];
                 highIndex = i;
@@ -140,7 +144,7 @@ function LeverageETF (props) {
             }
 
             const historyArrLength = y.length
-            const highest_index = getHighestValue (y, startAfterDropIndex);
+            const highest_index = getHighestValue (y, startAfterDropIndex, searchRange);
             if (log)
                 console.log (symArray_[s], '  highest ind=' + highest_index, '  date=' + props.gainMap[symArray_[s]].x[highest_index], '  val=' + props.gainMap[symArray_[s]].y[highest_index].toFixed(2))
             const lowest_index =  getLowestAfterHigh (y, highest_index)
@@ -218,7 +222,7 @@ function LeverageETF (props) {
         // return 'black'
     }
 
-    const ROW_SPACING = {padding: "0px 5px 0px 5px", margin: '0px'}
+    const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px'}
     //** top, right, bottom, left*/
 
     return (
@@ -241,8 +245,9 @@ function LeverageETF (props) {
             <div style={{display: 'flex'}}>
                 <div>Date after drop</div>
                 &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={dateAfterDrop} onChange={(date) => setDateAfterDrop(date)} />  &nbsp; &nbsp;
-                <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
-            </div>
+                <GetInt init={searchRange} callBack={setSearchRange} title='searchRange' type='Number' pattern="[0-9]+" width = '15%'/>
+              </div>
+            <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
 
  
             {Object.keys(highLowIndex).length > 0 &&
