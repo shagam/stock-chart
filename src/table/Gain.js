@@ -374,7 +374,9 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               if (year10 !== -1)
               rows[row_index].values.year10 = year10;
               if (year20 !== -1)
-              rows[row_index].values.year20 = year20;
+                rows[row_index].values.year20 = year20;
+              else
+                delete rows[row_index].values.year20
   
               // rows[row_index].values.peak2Peak = peak2Peak;
               rows[row_index].values.price = price;
