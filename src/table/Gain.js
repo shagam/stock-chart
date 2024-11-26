@@ -416,14 +416,26 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 rows[row_index].values.mon6 = ((mon6 ** 2 -1) * 100).toFixed(1);
                 if (year !== -1)
                 rows[row_index].values.year = ((year - 1) * 100).toFixed(1);
-                if (year2 !== -1) 
-                rows[row_index].values.year2 = ((year2 ** (1/2) -1) * 100).toFixed(1); 
-                if (year5 !== -1)
+              
+                if (year2 !== -1) {
+                  rows[row_index].values.year2 = ((year2 ** (1/2) -1) * 100).toFixed(1); 
+                } else
+                  delete rows[row_index].values.year2
+
+                if (year5 !== -1) {
                 rows[row_index].values.year5 = ((year5 ** (1/5) - 1) * 100).toFixed(1); 
-                if (year10 !== -1)
-                rows[row_index].values.year10 = ((year10 ** (1/10) - 1) * 100).toFixed(1);
-                if (year20 !== -1)
-                rows[row_index].values.year20 = ((year20 ** (1/20) - 1) * 100).toFixed(1);
+                } else 
+                  delete rows[row_index].values.year5
+
+                if (year10 !== -1) {
+                  rows[row_index].values.year10 = ((year10 ** (1/10) - 1) * 100).toFixed(1);
+                } else
+                  delete rows[row_index].values.year10
+
+                if (year20 !== -1){
+                  rows[row_index].values.year20 = ((year20 ** (1/20) - 1) * 100).toFixed(1);
+                } else
+                  delete rows[row_index].values.year20
               }
 
               if (saveTabl)
