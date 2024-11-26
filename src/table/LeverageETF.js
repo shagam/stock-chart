@@ -267,6 +267,7 @@ function LeverageETF (props) {
                 {eliHome && <div> <input type="checkbox" checked={log}  onChange={() => setLog(! log)}  /> &nbsp;log &nbsp; &nbsp;</div>}
             </div>
 
+            <div>&nbsp;</div>
             {highLowIndex && Object.keys(highLowIndex).length > 0 && Object.keys(highLowIndex)[0].length > 0 && 
             <div>high-low table 
                 <table>
