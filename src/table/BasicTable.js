@@ -805,7 +805,7 @@ const BasicTable = (props) => {
 
           <Toggle names={['weekly','daily',]} colors={['gray','red']} state={daily} setState={setDaily} title='daily vs weekly'/> &nbsp;
 
-          <Toggle names={['gain-factor','yearly-ercent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
+          <Toggle names={['gain-factor','yearly-percent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
            title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>
 
             {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
