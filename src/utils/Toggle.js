@@ -22,12 +22,12 @@ export function Toggle(props) {
     // }
         // 'background-color': state ? props.colors[1]: props.colors[0], 
     // const [stateIntern, setStateIntern] = useState(false)
-
+    // 'backgroundColor': props.state ? 'white': 'khaky', 
     return (
         <div>
             <button  title= {props.title} onClick={()=>{props.setState(! props.state)}} 
-                style={{fontWeight: props.state? "bold" : 'normal',
-
+                style={{fontWeight: props.state? "700" : '400',
+                    backgroundColor: props.state? 'white' : '#f1f1f1' 
                  }}>
                 {/* */}
                 {props.state ? props.names[1]: props.names[0]}
