@@ -11,7 +11,7 @@ import { COLUMNS, GROUPED_COLUMNS } from './columns'
 import './table.css'
 import GlobalFilter from '../utils/GlobalFilter'
 import CheckBox from '../utils/CheckBox'
-
+import Toggle from '../utils/Toggle'
 // import Splits from '../splits/Splits'
 
 import {DropRecoveryButtons} from './DropRecovery'
@@ -802,10 +802,13 @@ const BasicTable = (props) => {
           &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
                 title='select which columns are visible and which are hidden'/> &nbsp;column-select &nbsp; </div>
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
-          {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)}  title='daily vs weekly' /> daily&nbsp;&nbsp;</div>}
-          {<div style={{color: yearlyPercentColor()}}>&nbsp;<input  type="checkbox" checked={yearlyPercent}  onChange={()=> setYearlyPercent_wrapper()}
-               title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/> yearlyPercent&nbsp;&nbsp;</div>}
-          {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
+
+          <Toggle names={['weekly','daily',]} colors={['gray','red']} state={daily} setState={setDaily} title='daily vs weekly'/> &nbsp;
+
+          <Toggle names={['gain-factor','yearly-ercent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
+           title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>
+
+            {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
          </div>
          {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
 
@@ -1020,7 +1023,7 @@ const BasicTable = (props) => {
           <div style={{color:'#9932CC'}}> config  </div>   
 
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}
-             title='get symbols with heigher than the hi-tech ETD QQQ'/>
+             title='get symbols with heigher than the hi-tech ETF QQQ'/>
           <div style={{color:'#9932CC'}}> commonDatabase  </div>   
         
           <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}
