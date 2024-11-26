@@ -72,9 +72,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
     else
       periodTag = "Time Series (Daily)"
 
-    const LOG_FLAG = logFlags && logFlags.includes('aux');
+    const LOG_FLAG = logFlags && logFlags.includes('gain');
     const LOG_API = logFlags && logFlags.includes('api');
-    const LOG_SPLITS = logFlags && logFlags.includes('splits');
 
     const LOG_DROP = logFlags && logFlags.includes('drop_');
 
@@ -309,25 +308,25 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               }
 
               var year2_ = 1;   // if missing use netral '1'
-              if (year2 !== -1) {
+              if (year2 && year2 !== -1) {
                 year2_ = Number(year2) ** (1/2); //** calc yearly gain */
                 count ++;
               }
 
               var year5_ = 1;
-              if (year5 !== -1) {
+              if (year5 && year5 !== -1) {
                 year5_ = Number (year5) ** (1/5); //** calc yearly gain */
                 count ++;
               }
 
               var year10_ = 1;
-                if (year10 !== -1){
+                if (year10 && year10 !== -1){
                   year10_ = Number (year10) ** (1/10); //** calc yearly gain */
-                  count ++;
+                   count ++;
                 }
 
               var year20_ = 1;
-              if (year20 !== -1) {
+              if (year20 && year20 !== -1) {
                 year20_ = Number (year20) ** (1/20) //** calc yearly gain */
                 count ++;
               }
