@@ -22,7 +22,7 @@ function LeverageETF (props) {
     const [dateAfterDrop, setDateAfterDrop] = useState (new Date(2023, 8, 1 )) // sep
 
 
-    const [searchRange, setSearchRange] = useState (100)
+    const [searchRange, setSearchRange] = useState (props.daily? 300: 80)
     const [steps, setSteps] = useState([]);
 
     const [stepsArr, setStepsArr] = useState({});
@@ -30,11 +30,20 @@ function LeverageETF (props) {
     const [listShow, setListShow] = useState (false)
     const [log, setLog] = useState (false);
 
+
+    useEffect (() => { 
+        setSymArray([])
+        setStepsArr ({})
+        setHighLowIndex ({}) 
+    }, [props.daily]) 
+
+    
+
     //** git index of heigest value */
     function getHighestValue (yArray, startIndex, range) {
         var highest = 0; // oldest 
         var highIndex = 0;
-        for (let i = startIndex; i < yArray.length && i < range; i++) {
+        for (let i = startIndex; i < yArray.length && i < startIndex + range; i++) {
             if (highest < yArray[i]) {
                 highest = yArray[i];
                 highIndex = i;
@@ -181,14 +190,20 @@ function LeverageETF (props) {
             var stepsArr_ = [];
             for (let i = highest_index; i >= lowest_index; i--) {
                 if (dropFromHigh[i] < (1 - stepCount * STEP)) {
-                    if (log)
-                    console.log (symArray_[s], ' ', stepCount, ' step=' + (1 - stepCount * STEP).toFixed(2), ' drop=' + dropFromHigh[i])
+                    // if (log)
+                    //     console.log (symArray_[s], ' ', stepCount, ' step=' + (1 - stepCount * STEP).toFixed(2), ' drop=' + dropFromHigh[i])
                     steps[i] = symArray_[s] + '_' + dropFromHigh[i];
                     stepsArr_.push ({sym: symArray_[s], i: i, date: x[i], step: (1 - stepCount * STEP).toFixed(2), drop: dropFromHigh[i]})
                     stepCount ++;
                 }
             }
-            stepsArr[symArray_[s]] = stepsArr_
+            if (stepsArr_.length > 0) {
+                stepsArr[symArray_[s]] = stepsArr_
+            }
+        }
+        if (log) {
+            console.log ('stepsArr', stepsArr)
+            console.log ('highLowIndex', highLowIndex)
         }
     }
 
@@ -234,23 +249,25 @@ function LeverageETF (props) {
             </div>
 
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Support strategy for trading leverage ETF (like TQQQ)  </h6>
+
+
+   
             <h6 style={{color:'#993333', fontWeight: 'bold', fontStyle: "italic"}}>The tool searches date of highest before the initial date  (like TQQQ)</h6>
 
             <div style={{color: 'red'}}> {err} </div>
-
-            {/* SymArray */}
-            {symArray.length > 0 && <div>  symArray= {JSON.stringify(symArray)} </div>}
-            {eliHome && <div> <input type="checkbox" checked={log}  onChange={() => setLog(! log)}  /> &nbsp;log &nbsp; &nbsp;</div>}
 
             <div style={{display: 'flex'}}>
                 <div>Date after drop</div>
                 &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={dateAfterDrop} onChange={(date) => setDateAfterDrop(date)} />  &nbsp; &nbsp;
                 <GetInt init={searchRange} callBack={setSearchRange} title='searchRange' type='Number' pattern="[0-9]+" width = '15%'/>
               </div>
-            <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
 
- 
-            {Object.keys(highLowIndex).length > 0 &&
+            <div style={{display: 'flex'}}>
+                <button  style={{background: 'aqua'}}  onClick={leverage} > Lavarage calc</button> &nbsp; &nbsp;
+                {eliHome && <div> <input type="checkbox" checked={log}  onChange={() => setLog(! log)}  /> &nbsp;log &nbsp; &nbsp;</div>}
+            </div>
+
+            {highLowIndex && Object.keys(highLowIndex).length > 0 && Object.keys(highLowIndex)[0].length > 0 && 
             <div>high-low table 
                 <table>
                     <thead>
@@ -284,48 +301,49 @@ function LeverageETF (props) {
 
             {/* Step array */}
             <div>&nbsp;</div>
-            {Object.keys(stepsArr).length > 0 && <div><input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> drop-steps-table   &nbsp;  &nbsp;</div>}
+            {stepsArr && Object.keys(stepsArr).length > 0 && <div><input  type="checkbox" checked={listShow}   onChange={()=> setListShow(! listShow)} /> drop-steps-table   &nbsp;  &nbsp;</div>}
 
-            {listShow && <div>
-            {/* <div>&nbsp;</div> */}
+            {listShow && symArray && symArray.length > 0 && stepsArr && Object.keys(stepsArr).length > 0 && 
+            <div>
 
-            <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>   
+                <div> steps symArray= {JSON.stringify(symArray)}</div>
+                {/* <div>&nbsp;</div> */}
 
-                {Object.keys(stepsArr).length > 0 && <table>
-                    <thead>
-                        <tr>
-                            <th>N</th>
-                            {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
-                                return (
-                                    <th key={hi}>{h}</th>
-                                )
-                            })}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* loop on {syms} [lines] {attr} */}
-                        {Object.keys(stepsArr).map((sym,symi)=>{ 
-                        return (
-                            stepsArr[sym].map((line,linei)=>{  
-                            return(
-                                <tr key={linei}> 
-                                    <td  style={ROW_SPACING}>{linei}</td>
-                                    {Object.keys(stepsArr[sym][linei]).map ((f,fi)=>{
+                <div style={{maxHeight:'250px', width: '450px', overflow:'auto'}}>                      
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>N</th>
+                                {Object.keys(stepsArr[symArray[0]][0]).map((h,hi)=>{
                                     return (
-                                        <td  style={ROW_SPACING} key={fi}>{stepsArr[sym][linei][f]}</td> 
+                                        <th key={hi}>{h}</th>
                                     )
-                                    })
-                                    }
-                                </tr>
-                            )                            
-                        })
+                                })}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {/* loop on {syms} [lines] {attr} */}
+                            {Object.keys(stepsArr).map((sym,symi)=>{ 
+                            return (
+                                stepsArr[sym].map((line,linei)=>{  
+                                return(
+                                    <tr key={linei}> 
+                                        <td  style={ROW_SPACING}>{linei}</td>
+                                        {Object.keys(stepsArr[sym][linei]).map ((f,fi)=>{
+                                        return (
+                                            <td  style={ROW_SPACING} key={fi}>{stepsArr[sym][linei][f]}</td> 
+                                        )
+                                        })
+                                        }
+                                    </tr>
+                                )                            
+                            })
 
-                        )}
-                        )}                 
-                    </tbody>
-                </table>}
-            </div>
-
+                            )}
+                            )}                 
+                        </tbody>
+                    </table>
+                </div>
             </div>}
             {/* Yearly gain TABLE */}
             <div>&nbsp;</div>
