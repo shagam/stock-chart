@@ -921,8 +921,7 @@ const BasicTable = (props) => {
 
               <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}
                  title='calc line that connect major stock market bubbles (2008,2022)'/>
-              {! gainMap.bubbleLine && <div style={{color:'blue'}}> bubbleLine  </div>} 
-              {gainMap.bubbleLine && <div style={{color:'blue', fontWeight: "bold"}}> peak2peak  </div>} 
+              {<div style={{color:'blue', fontWeight: gainMap.bubbleLine? "bolder": 'normal'}}> peak2peak  </div>} 
               
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}
                   title='calc value drop of a symbol during market crash, and the recovery time (weeks or dayes) '/>         
@@ -949,8 +948,8 @@ const BasicTable = (props) => {
                 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
                     title='Calc average month and week gain over the last 24 years'/>  
-                {! monthGainData.weekGainArray && <div style={{color:'blue'}}> weekGain</div>} 
-                {monthGainData.weekGainArray && <div style={{color:'blue', fontWeight: "bold"}}> weekGain   </div>} 
+
+                <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> weekGain   </div>
 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}
                 title='Strategy for Lavarage ETF like TQQQ (tripple QQQ)'/>
