@@ -71,9 +71,10 @@ const  Config = (props) => {
           </div>
 
 
+          <hr/>
+          <div style={{display: 'flex'}}>Url:  &nbsp;  <div style={{color: '#0077ff'}}> {window.location.href} </div> </div>
 
-          <hr/> 
-          {eliHome && <button onClick={()=> {setServiceInfo(! serviceInfo)}} > service-info </button>}
+          {eliHome && <div><input  type="checkbox" checked={serviceInfo}  onChange={() => setServiceInfo(! serviceInfo)} />  service-info </div>}
 
           {serviceInfo && <div>
 
@@ -109,7 +110,7 @@ const  Config = (props) => {
 
           {/* ====== Location info */} 
           <div>&nbsp; </div>
-          <div>Url: {window.location.href} </div>
+
           {/* {eliHome && <div>Global-ip: {localIpv4} </div>} */}
           {eliHome && <div>ip={ip}  &nbsp; os={os}</div>}
           {eliHome && <div>Browser:  {userAgent} </div>}
