@@ -289,8 +289,8 @@ export const GROUPED_COLUMNS = [
     ]
   },
   {
-    Header: 'gain: (factor or yearly-percent)',
-    Footer: 'gain:  (factor or yearly-percent)',
+    Header: 'gain: (factor or yearPercent)',
+    Footer: 'gain: (factor or yearPercent)',
     accessor: 'gain',   
     columns: [
       {
