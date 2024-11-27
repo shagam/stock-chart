@@ -22,6 +22,11 @@ export const COLUMNS = [
     accessor: 'Industry'
   },
   {
+    Header: "Sector",
+    Footer: "Sector",    
+    accessor: "Sector"
+  },
+  {
     Header: 'Cap',
     Footer: 'Cap',    
     accessor: 'Cap'
@@ -219,6 +224,11 @@ export const GROUPED_COLUMNS = [
         accessor: 'Industry'
       },
       {
+        Header: "Sector",
+        Footer: "Sector",    
+        accessor: "Sector"
+      },    
+      {
         Header: 'Cap',
         Footer: 'Cap',    
         accessor: 'Cap'
@@ -279,8 +289,8 @@ export const GROUPED_COLUMNS = [
     ]
   },
   {
-    Header: 'gain-factor',
-    Footer: 'gain-factor',
+    Header: 'gain: (factor or yearly-percent)',
+    Footer: 'gain:  (factor or yearly-percent)',
     accessor: 'gain',   
     columns: [
       {

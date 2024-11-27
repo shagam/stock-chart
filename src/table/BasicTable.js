@@ -338,6 +338,7 @@ const BasicTable = (props) => {
 
     rows[index].values.Exchange = childData["Exchange"].substring(0,4);
     rows[index].values.Industry = childData["Industry"];
+    rows[index].values.Sector = childData["Sector"];
     const PE = childData["PERatio"];
     // if (PE === 'None') {
     //   console.log (symbol)
@@ -477,6 +478,22 @@ const BasicTable = (props) => {
     saveTable(addFormData.symbol);
     //window.location.reload();
     event.target.reset(); // clear input field
+  }
+
+  function title (titleName) {
+    const cols = ["symbol", "percent","Exchange","Industry","Sector","Cap","PE","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
+      "EVToEBITDA","EVToRevenue","price","mon3","year10","year20",'short',"splits_list","splits",
+      "target","info_date","gap","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"]
+
+    const cols_title = ["symbol ticker","holdings percent","Exchange","Industry","Sector","Cap","PE","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
+      "EVToEBITDA","EVToRevenue","price","mon3","year10","year20",'short',"splits_list","splits",
+      "target","info_date","gap","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"]
+
+      for (let i = 0; i < cols_title.length; i++) {
+        if (titleName === cols[i])
+          return cols_title[i]
+      }
+      return 'title_missing';
   }
 
   const {
@@ -678,6 +695,8 @@ const BasicTable = (props) => {
       col['color'] = '#00cc00'   
     if (sym === chartSymbol)
       col['background'] = 'pink'
+    col['margin'] = '1px'
+    col['padding'] = '1px'
     return col;
   }
 
@@ -797,15 +816,15 @@ const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
 
-          {<div> <button onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>}
-          &nbsp; &nbsp; <button onClick={reloadPage} title='clear table, and load default symbols' > Clear-table </button>                          
-          &nbsp;&nbsp; <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
-                title='select which columns are visible and which are hidden'/> &nbsp;column-select &nbsp; </div>
+          {<div> <button onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>} &nbsp;
+          <button onClick={reloadPage} title='clear table, and load default symbols' > Clear_table </button> &nbsp;                         
+          <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
+                title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp;
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
 
           <Toggle names={['weekly','daily',]} colors={['gray','red']} state={daily} setState={setDaily} title='daily vs weekly'/> &nbsp;
 
-          <Toggle names={['gain-factor','yearly-percent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
+          <Toggle names={['gain_factor','year_percent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
            title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>
 
             {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
@@ -836,7 +855,7 @@ const BasicTable = (props) => {
           {
           allColumns.map(column => (
             <div key={column.id}>
-              <label id="column_Label_id" style={{'color': getCheckBoxColor(column.Header) }}>
+              <label id="column_Label_id" style={{'color': getCheckBoxColor(column.Header) }} title={title(column.id)}>
                 <input   type='checkbox' {...column.getToggleHiddenProps()}  />
                 &nbsp;{column.Header}   &nbsp; &nbsp;
               </label>
