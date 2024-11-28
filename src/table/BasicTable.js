@@ -825,6 +825,7 @@ const BasicTable = (props) => {
                 title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp;
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
 
+          {/* {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)}  title='daily vs weekly' /> daily&nbsp;&nbsp;</div>} */}
           <Toggle names={['weekly','daily',]} colors={['gray','red']} state={daily} setState={setDaily} title='daily vs weekly'/> &nbsp;
 
           <Toggle names={['gain_factor','year_percent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
