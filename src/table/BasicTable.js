@@ -749,21 +749,20 @@ const BasicTable = (props) => {
   }
 
   function purgeRestoreStockTable () {
-    const symbols = [] // get stock list
     const keys = Object.keys(rows);
-    // collect stock list
-    for (let i = 0; i < keys.length; i++)
-      symbols.push(rows[i].values.symbol); 
-
     // empty table 
-    for (let i = keys.length -1; i >= 0; i--)
-      rows.splice(i, 1);
-    
-    // put back symbols
-    for (let i = 0; i < keys.length; i++){
-      addStock (rows, symbols[i], false)
-      prepareRow(rows[i]);
+    for (let i = keys.length -1; i >= 0; i--) {
+      delete rows[i].values.mon
+      delete rows[i].values.mon3
+      delete rows[i].values.mon6
+      delete rows[i].values.year
+      delete rows[i].values.year2
+      delete rows[i].values.year5
+      delete rows[i].values.year10
+      delete rows[i].values.year20
     }
+    setGainMap([]);
+    setChartSymbol()
     saveTable();
     window.location.reload(false);
   }
