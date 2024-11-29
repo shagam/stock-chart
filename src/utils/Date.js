@@ -275,9 +275,10 @@ const daysFrom1970 = (dateArray) => {
 // return index of dataArray closest
 function searchDateInArray(stockChartXValuesFunction, testDateArray, sym, logFlags, setErr) {
 
-  if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0)
+  if (stockChartXValuesFunction === undefined || stockChartXValuesFunction.length === 0) {
+    console.log (sym, 'xArtray invalid')
     return -2;
-
+  }
   //var testDateArray = [2020, 11, 1];
   let i = 0;
   var newestIndx = 0;

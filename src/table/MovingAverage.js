@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import Plot from 'react-plotly.js';
 import GetInt from '../utils/GetInt'
+import DatePicker, {moment} from 'react-datepicker';
+import {searchDateInArray} from '../utils/Date'
 import MobileContext from '../contexts/MobileContext'
 
 function MovingAverage (props) {
@@ -11,8 +13,16 @@ function MovingAverage (props) {
 
     const [average_long_Y, setAverage_long_Y] = useState([])
     const [average_short_Y, setAverage_short_Y] = useState([])
+    const [startDate, setStartDate] = useState(new Date(2021, 8, 1 )); 
+    const [err, setErr] = useState();
 
     const [chartData, setChartData] = useState()
+
+
+    const startYear = startDate.getFullYear();
+    const startMon = startDate.getMonth();
+    const startDay = startDate.getDate();
+    
 
 
     useEffect (() => { 
@@ -22,14 +32,14 @@ function MovingAverage (props) {
     }, [props.symbol, average_long_length, average_short_length, props.daily]) 
   
 
-    function calc_one_average(len, average_Y) {
+    function calc_one_average(len, average_Y, startDateIndex) {
         var sum = 0;
         for (let j = 0; j < len; j++) {
-            sum += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
+            sum += props.stockChartYValues[startDateIndex - 1 - j]  // start from oldest
         }
 
-        for (let i = 0; i < props.stockChartXValues.length - len; i++) {
-            const index = props.stockChartXValues.length - 1 - i - len;
+        for (let i = 0; i < startDateIndex - len; i++, i < startDateIndex) {
+            const index = startDateIndex - 1 - i - len;
             average_Y[index] = sum / len
             sum -= props.stockChartYValues[index + len]
             sum += props.stockChartYValues[index]
@@ -40,41 +50,42 @@ function MovingAverage (props) {
     
     
     function calc () {
-        //** calc first average  */
 
-        // setAverage_long_Y([])
 
-        // var sumForAverageLong = 0;
-        // const average_long_length_ = Number(len)
-        // for (let j = 0; j < average_long_length_; j++) {
-        //     sumForAverageLong += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
-        // }
+        var startDateIndex = searchDateInArray (props.stockChartXValues, [startYear, startMon, startDay], props.symbol, props.logFlags, setErr)  
+        if (startDateIndex < 0) {
+            setErr('invalid startDate')
+            return;
+        }
+        var dateArray_x = [];
+        var priceArray_y = []
+        for  (let i = 0; i < startDateIndex; i++) {
+            dateArray_x[i] = props.stockChartXValues[i] // copy x_array (dates)
+            priceArray_y[i] = props.stockChartYValues[i] 
+        }
 
-        // for (let i = 0; i < props.stockChartXValues.length - average_long_length_; i++) {
-        //     const index = props.stockChartXValues.length - 1 - i - average_long_length_;
-        //     average_long_Y[index] = sumForAverageLong / average_long_length_
-        //     sumForAverageLong -= props.stockChartYValues[index + average_long_length_]
-        //     sumForAverageLong += props.stockChartYValues[index]
-        // }
+
+        //** calc averages (long, short)  */
         setAverage_long_Y([])
-        calc_one_average(average_long_length, average_long_Y) 
+        calc_one_average(average_long_length, average_long_Y, startDateIndex) 
         setAverage_short_Y([])
-        calc_one_average(average_short_length, average_short_Y) 
+        calc_one_average(average_short_length, average_short_Y, startDateIndex) 
 
-        
+
+
         const dat =
           [
             {
                 name: props.symbol,
-                x: props.stockChartXValues,
-                y: props.stockChartYValues,
+                x: dateArray_x,
+                y: priceArray_y,
                 type: 'scatter',
                 mode: 'lines+markers',
                 marker: { color: 'green' },           
             },
             {
                 name: 'average_' + average_long_length,
-                x: props.stockChartXValues,
+                x: dateArray_x,
                 y: average_long_Y,
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -103,10 +114,13 @@ function MovingAverage (props) {
               <div>{ props.daily? '(daily)' : '(weekly)'}</div>
             </div>
             <div> &nbsp;</div>
+            <div style={{color: 'red'}}>{err}</div>
 
             <GetInt init={average_long_length} callBack={setAverage_long_length} title='average-long-length' type='Number' pattern="[0-9]+" width = '15%'/>   
-            <GetInt init={average_short_length} callBack={setAverage_short_length} title='average-short-length' type='Number' pattern="[0-9]+" width = '15%'/>   
-            
+            <GetInt init={average_short_length} callBack={setAverage_short_length} title='average-short-length' type='Number' pattern="[0-9]+" width = '15%'/> 
+            <div> &nbsp;</div>
+            &nbsp;Start-date <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+            <div> &nbsp;</div>
             <div><button style={{background: 'aqua'}} type="button" onClick={()=>calc()}>  calc-chart   </button> </div>
 
             {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'moving-average',
