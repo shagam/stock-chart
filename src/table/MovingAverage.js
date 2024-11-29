@@ -9,42 +9,59 @@ function MovingAverage (props) {
     const [average_long_length, setAverage_long_length] = useState(26)
     const [average_short_length, setAverage_short_length] = useState(12)
 
-    const [average_Y, setAverage_Y] = useState([])
+    const [average_long_Y, setAverage_long_Y] = useState([])
     const [average_short_Y, setAverage_short_Y] = useState([])
 
     const [chartData, setChartData] = useState()
-    const title = 'moving-average'
+
 
     useEffect (() => { 
         setChartData()
         // setAveragePointsY([])
         // setAveragePointsX([])
-    }, [props.symbol, average_long_length, average_short_length]) 
+    }, [props.symbol, average_long_length, average_short_length, props.daily]) 
   
 
+    function calc_one_average(len, average_Y) {
+        var sum = 0;
+        for (let j = 0; j < len; j++) {
+            sum += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
+        }
 
+        for (let i = 0; i < props.stockChartXValues.length - len; i++) {
+            const index = props.stockChartXValues.length - 1 - i - len;
+            average_Y[index] = sum / len
+            sum -= props.stockChartYValues[index + len]
+            sum += props.stockChartYValues[index]
+        }
+    }
+    
+    
+    
+    
     function calc () {
         //** calc first average  */
 
-        setAverage_Y([])
+        // setAverage_long_Y([])
 
-        var sumForAverage = 0;
-        const averageLength_ = Number(average_long_length)
-        for (let j = 0; j < averageLength_; j++) {
-            sumForAverage += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
-        }
+        // var sumForAverageLong = 0;
+        // const average_long_length_ = Number(len)
+        // for (let j = 0; j < average_long_length_; j++) {
+        //     sumForAverageLong += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
+        // }
 
-        for (let i = 0; i < props.stockChartXValues.length - averageLength_; i++) {
-            const index = props.stockChartXValues.length - 1 - i - averageLength_;
-            average_Y[index] = sumForAverage / averageLength_
+        // for (let i = 0; i < props.stockChartXValues.length - average_long_length_; i++) {
+        //     const index = props.stockChartXValues.length - 1 - i - average_long_length_;
+        //     average_long_Y[index] = sumForAverageLong / average_long_length_
+        //     sumForAverageLong -= props.stockChartYValues[index + average_long_length_]
+        //     sumForAverageLong += props.stockChartYValues[index]
+        // }
+        setAverage_long_Y([])
+        calc_one_average(average_long_length, average_long_Y) 
+        setAverage_short_Y([])
+        calc_one_average(average_short_length, average_short_Y) 
 
-            // const i_rem = index + averageLength;
-            // const i_add = index;
-
-            sumForAverage -= props.stockChartYValues[index + averageLength_]
-            sumForAverage += props.stockChartYValues[index]
-        }
-
+        
         const dat =
           [
             {
@@ -58,11 +75,21 @@ function MovingAverage (props) {
             {
                 name: 'average_' + average_long_length,
                 x: props.stockChartXValues,
-                y: average_Y,
+                y: average_long_Y,
                 type: 'scatter',
                 mode: 'lines+markers',
                 marker: { color: 'red' },       
-          }]
+            },
+            {
+                name: 'average_' + average_short_length,
+                x: props.stockChartXValues,
+                y: average_short_Y,
+                type: 'scatter',
+                mode: 'lines+markers',
+                marker: { color: 'blue' },       
+            },
+        
+        ]
           setChartData(dat)
     } 
 
@@ -73,7 +100,7 @@ function MovingAverage (props) {
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h6 style={{color: 'blue'}}> Noving average &nbsp;  </h6> &nbsp; &nbsp;
-              <div>{ ! props.weekly? '(daily)' : '(weekly)'}</div>
+              <div>{props.daily? '(daily)' : '(weekly)'}</div>
             </div>
             <div> &nbsp;</div>
 
@@ -82,7 +109,7 @@ function MovingAverage (props) {
             
             <div><button style={{background: 'aqua'}} type="button" onClick={()=>calc()}>  calc-chart   </button> </div>
 
-            {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title,
+            {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'moving-average',
                 xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
         </div>
     )
