@@ -5,11 +5,13 @@ import MobileContext from '../contexts/MobileContext'
 
 function MovingAverage (props) {
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
-    const [averageLength, setAverageLength] = useState(30)
-
-    const [averagePointsY, setAveragePointsY] = useState([])
-    const [averagePointsX, setAveragePointsX] = useState([])
     
+    const [average_long_length, setAverage_long_length] = useState(26)
+    const [average_short_length, setAverage_short_length] = useState(12)
+
+    const [average_Y, setAverage_Y] = useState([])
+    const [average_short_Y, setAverage_short_Y] = useState([])
+
     const [chartData, setChartData] = useState()
     const title = 'moving-average'
 
@@ -17,26 +19,24 @@ function MovingAverage (props) {
         setChartData()
         // setAveragePointsY([])
         // setAveragePointsX([])
-    }, [props.symbol, averageLength]) 
+    }, [props.symbol, average_long_length, average_short_length]) 
   
 
 
     function calc () {
         //** calc first average  */
 
-        setAveragePointsY([])
-        setAveragePointsX([])
+        setAverage_Y([])
 
         var sumForAverage = 0;
-        const averageLength_ = Number(averageLength)
+        const averageLength_ = Number(average_long_length)
         for (let j = 0; j < averageLength_; j++) {
             sumForAverage += props.stockChartYValues[props.stockChartYValues.length - 1 - j]  // start from oldest
         }
 
         for (let i = 0; i < props.stockChartXValues.length - averageLength_; i++) {
             const index = props.stockChartXValues.length - 1 - i - averageLength_;
-            averagePointsY[index] = sumForAverage / averageLength_
-            averagePointsX[index] = props.stockChartXValues[index]
+            average_Y[index] = sumForAverage / averageLength_
 
             // const i_rem = index + averageLength;
             // const i_add = index;
@@ -56,9 +56,9 @@ function MovingAverage (props) {
                 marker: { color: 'green' },           
             },
             {
-                name: 'mov_aver',
-                x: averagePointsX,
-                y: averagePointsY,
+                name: 'average_' + average_long_length,
+                x: props.stockChartXValues,
+                y: average_Y,
                 type: 'scatter',
                 mode: 'lines+markers',
                 marker: { color: 'red' },       
@@ -76,10 +76,12 @@ function MovingAverage (props) {
               <div>{ ! props.weekly? '(daily)' : '(weekly)'}</div>
             </div>
             <div> &nbsp;</div>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>calc()}>  calc-chart   </button> 
 
-            <GetInt init={averageLength} callBack={setAverageLength} title='average-length' type='Number' pattern="[0-9]+" width = '15%'/>   
-    
+            <GetInt init={average_long_length} callBack={setAverage_long_length} title='average-long-length' type='Number' pattern="[0-9]+" width = '15%'/>   
+            <GetInt init={average_short_length} callBack={setAverage_short_length} title='average-short-length' type='Number' pattern="[0-9]+" width = '15%'/>   
+            
+            <div><button style={{background: 'aqua'}} type="button" onClick={()=>calc()}>  calc-chart   </button> </div>
+
             {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title,
                 xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
         </div>
