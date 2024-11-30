@@ -491,11 +491,13 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     for (let i = 0; i < 100; i++) {
       if (i % 2 === 0) {
         nextIndex = searchLow (searchIndex, searchRange)
-        console.log ('searchLow', searchIndex, nextIndex)
+        if (LOG)
+          console.log ('searchLow', searchIndex, nextIndex)
       }
       else {
         nextIndex = searchHigh (searchIndex, searchRange)
-        console.log ('searchHigh', searchIndex, nextIndex)
+        if (LOG)
+          console.log ('searchHigh', searchIndex, nextIndex)
       }
       if (nextIndex === -1)
         break;
@@ -508,7 +510,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         startIndex: searchIndex,
         endIndex: nextIndex
       }
-      // if (LOG)
+      if (LOG)
         console.log (dropObj, searchIndex, nextIndex)
       
       // if (dropRatio < dropThreshold / 100)
