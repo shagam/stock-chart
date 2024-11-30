@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-// import Picker from 'react-month-picker'
 import DatePicker, {moment} from 'react-datepicker';
+import {beep2} from '../utils/ErrorList'
 import "react-datepicker/dist/react-datepicker.css";
 import { toDate } from "date-fns";
 import {format} from "date-fns"
@@ -28,8 +28,8 @@ const DropRecoveryButtons = (props) => {
 
    //** for counting drops */
   const [dropThreshold, setDropThreshold] = useState(85) // drop percentage, used for count number of drops
-  const [dropsArray, setDrops] = useState([])
-  const [highIndex, setHighIndex] = useState([])
+  const [dropsArray, setDropsArray] = useState([])
+  const [highIndex, setHighIndex] = useState()
   const [searchRange, setSearchRange] = useState(props.daily? 300:50) // default a year search range
 
 
@@ -459,29 +459,29 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   function countDrops () {
     console.log ('Count drops', dropThreshold)
 
-    const startYear = dropStartDate.getFullYear();
-    const startMon = dropStartDate.getMonth();
-    const startDay = dropStartDate.getDate();
-
-    var startIndex = searchDateInArray (props.stockChartXValues, [startYear, startMon, startDay], props.StockSymbol, props.logFlags, setErr)
-    if (startIndex === -1 ) {
-      setErr([props.StockSymbol,  'Count drops Date invalid'])
+    if (! highIndex) {
+      setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
+      beep2()
       return;
     }
+    var dropsArray_ = []
 
-    // first high before drop calc by dropRecovery
-    console.log ('start index=', startIndex, 'highndex=', highIndex)  // found by dropRecovery
+    // first high before drop calc by dropRecovery    
+    if (LOG)
+      console.log ('highndex=', highIndex)  // found by dropRecovery
 
-    const lowIndex = virtualLowSearch (startIndex, 200)
+    const lowIndex = virtualLowSearch (highIndex, 200)
     
     const dropRatio = props.stockChartYValues[lowIndex] / props.stockChartYValues[highIndex];
-    const dropObj = {drop: dropRatio.toFixed(3)}
+
+    const dropObj = {date: props.stockChartXValues[lowIndex], change: dropRatio.toFixed(3), startIndex: highIndex, endIndex: lowIndex}
+    
     console.log (dropRatio, dropObj, dropThreshold/100, dropRatio < dropThreshold / 100)
     if (dropRatio < dropThreshold / 100) {
-      dropsArray.push (dropObj)
+      dropsArray_.push (dropObj)
       console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
     }
-
+    setDropsArray(dropsArray_)
 
   }
 
