@@ -49,6 +49,7 @@ const DropRecoveryButtons = (props) => {
     setGainLostWeeks()
     setDateOfEqualVal()
     setDropRecoveryInfo()
+    setDropsArray([])
   }, [props.StockSymbol, dropStartDate,props.daily]) 
 
 
@@ -442,7 +443,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
 
-  function virtualLowSearch (highIndex, searchRange) {
+  function searchLow (highIndex, searchRange) {
     // today is index 0
     var lowValue = props.stockChartYValues[highIndex] // start from high value
     var lowIndex = -1;
@@ -456,6 +457,20 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     return lowIndex;
   }
 
+  function searchHigh (startIndex, searchRange) {
+    // today is index 0
+    var value = props.stockChartYValues[startIndex] // start from high value
+    var foundIndex = -1;
+    const limit =  startIndex - searchRange <= 0 ? 0:  startIndex - searchRange;
+    for (let i = startIndex; i > limit; i --) {
+      if (value < props.stockChartYValues[i]) {
+        value = props.stockChartYValues[i]
+        foundIndex = i;
+      }
+    }
+    return foundIndex;
+  }
+
   function countDrops () {
     console.log ('Count drops', dropThreshold)
 
@@ -464,29 +479,46 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       beep2()
       return;
     }
-    var dropsArray_ = []
 
     // first high before drop calc by dropRecovery    
     if (LOG)
       console.log ('highndex=', highIndex)  // found by dropRecovery
 
-    const lowIndex = virtualLowSearch (highIndex, 200)
-    
-    const dropRatio = props.stockChartYValues[lowIndex] / props.stockChartYValues[highIndex];
+    var searchIndex = highIndex;
+    var nextIndex; 
+    var dropsArray_ = []
 
-    const dropObj = {
-      date: props.stockChartXValues[lowIndex],
-      change: dropRatio.toFixed(3),
-      startIndex: highIndex,
-      endIndex: lowIndex
+    for (let i = 0; i < 100; i++) {
+      if (i % 2 === 0) {
+        nextIndex = searchLow (searchIndex, searchRange)
+        console.log ('searchLow', searchIndex, nextIndex)
+      }
+      else {
+        nextIndex = searchHigh (searchIndex, searchRange)
+        console.log ('searchHigh', searchIndex, nextIndex)
+      }
+      if (nextIndex === -1)
+        break;
+
+      const dropRatio = props.stockChartYValues[searchIndex] / props.stockChartYValues[nextIndex];
+
+      const dropObj = {
+        date: props.stockChartXValues[nextIndex],
+        change: dropRatio.toFixed(3),
+        startIndex: searchIndex,
+        endIndex: nextIndex
+      }
+      // if (LOG)
+        console.log (dropObj, searchIndex, nextIndex)
+      
+      // if (dropRatio < dropThreshold / 100)
+
+        dropsArray_.push (dropObj)
+        // console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
+
+      searchIndex = nextIndex; 
     }
-    if (LOG)
-      console.log (dropRatio, dropObj)
-    
-    if (dropRatio < dropThreshold / 100) {
-      dropsArray_.push (dropObj)
-      console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
-    }
+
     setDropsArray(dropsArray_)
 
   }
@@ -518,8 +550,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp;
-            <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns    </button>
           </div>
+          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns  </button> &nbsp;
 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
             dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
@@ -533,17 +565,22 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
           {gainLostWeeks && <h6>  GainTimeUnitLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
 
-
-
+          
+          {/* Drop count  */}
           <hr/> 
-          {eliHome && <div>            
+          {eliHome && dropRecoveryInfo && <div>            
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
             <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
             <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div>&nbsp;</div>
             <button type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
           </div>}
-          length={dropsArray.length} {dropsArray.length > 0 && <pre>{JSON.stringify(dropsArray)}</pre>}
+          length={dropsArray.length}
+            { dropsArray.length > 0 &&
+              dropsArray.map ((f,fi) => {
+                return <div key={fi}> {JSON.stringify(dropsArray[fi])} </div>
+              })
+            }
         </div>
     </div>
   )
