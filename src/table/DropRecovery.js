@@ -488,7 +488,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     var nextIndex; 
     var dropsArray_ = []
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 300; i++) {
       if (i % 2 === 0) {
         nextIndex = searchLow (searchIndex, searchRange)
         if (LOG)
@@ -502,13 +502,14 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       if (nextIndex === -1)
         break;
 
-      const dropRatio = props.stockChartYValues[searchIndex] / props.stockChartYValues[nextIndex];
+      const dropRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
 
       const dropObj = {
         endDate: props.stockChartXValues[nextIndex],
         change: dropRatio.toFixed(3),
         startIndex: searchIndex,
-        endIndex: nextIndex
+        endIndex: nextIndex,
+        endPrice: props.stockChartYValues[nextIndex].toFixed(2),
       }
       if (LOG)
         console.log (dropObj, searchIndex, nextIndex)
