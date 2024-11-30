@@ -574,13 +574,36 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div>&nbsp;</div>
             <button type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
+
+            length={dropsArray.length}
+
+            {dropsArray.length > 0 && <table>
+                <thead>
+                  <tr>
+                    <th>N</th>
+                    {Object.keys(dropsArray[0]).map((h,h1) => {
+                        return (
+                            <th key={h1}>{h}</th>
+                        )
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                    {dropsArray.map((s, s1) =>{
+                        return (
+                        <tr key={s1}>
+                            <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
+                            {Object.keys(dropsArray[s1]).map((a,a1) => {
+                                return (
+                                    <td key={a1} style={{padding: '1px', margin: '1px'}} >{dropsArray[s1][a]}</td>
+                                )
+                            })}
+                        </tr>
+                        )
+                    })}
+                </tbody>
+            </table>}
           </div>}
-          length={dropsArray.length}
-            { dropsArray.length > 0 &&
-              dropsArray.map ((f,fi) => {
-                return <div key={fi}> {JSON.stringify(dropsArray[fi])} </div>
-              })
-            }
         </div>
     </div>
   )
