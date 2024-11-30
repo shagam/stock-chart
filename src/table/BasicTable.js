@@ -1028,7 +1028,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='movingAverage' && <MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} weekly={!daily}/>}
 
           </div>}
           </div>}        

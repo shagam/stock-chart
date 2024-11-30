@@ -6,6 +6,7 @@ import { toDate } from "date-fns";
 import {format} from "date-fns"
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
 import {IpContext, getIpInfo} from '../contexts/IpContext';
+import GetInt from '../utils/GetInt'
 
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
 //import './DropRecovery.css'
@@ -18,12 +19,21 @@ const DropRecoveryButtons = (props) => {
   // props.deepStartDate
   // props.setDropStartDate
   // 
+
+  const [LOG, setLOG] = useState ();
   const [gainLostWeeks, setGainLostWeeks] = useState()
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
   const [dropStartDate, setDropStartDate] = useState(new Date(2021, 8, 1 ));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  Date(2024, 6, 1))
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
-   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
+   //** for counting drops */
+  const [dropThreshold, setDropThreshold] = useState(85) // drop percentage, used for count number of drops
+  const [dropsArray, setDrops] = useState([])
+  const [highIndex, setHighIndex] = useState([])
+  const [searchRange, setSearchRange] = useState(props.weekly? 50: 300) // default a year search range
+
+
+  const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
   const [err, setErr] = useState();
   const {eliHome} = IpContext();
 
@@ -226,7 +236,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
         console.log (StockSymbol, 'highBeforeDeep=' + highPriceBeforeDeep.toFixed(2) + ' ('+ highPriceDateBeforeDeep +')', ' index=' +  highPriceBeforeDeepIndex)
         console.log (StockSymbol + ' highAfterDeep=' + highPriceAfterDeep.toFixed(2) + ' ('+ recoverDate +') %c' + recoverText + '=' + recoverPeriod , 'background: #fff; color: #f53df3', ' index=' + recoverIndex);
-      }  
+      }
+      setHighIndex(highPriceBeforeDeepIndex) // save for drop count  
     }
 
 
@@ -275,7 +286,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       deepDate:    deepDate,
       'latestPrice/Highest': priceDivHigh,
       deepGainLostWeeks: gainLostWeeks,
-      oldestDate: stockChartXValues[stockChartXValues.length-1]
+      oldestDate: stockChartXValues[stockChartXValues.length-1],
+      highBeforeDropIndex: highPriceBeforeDeepIndex
     }
 
     if (! props.weekly) {
@@ -430,6 +442,49 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
 
+  function virtualLowSearch (highIndex, searchRange) {
+    // today is index 0
+    var lowValue = props.stockChartYValues[highIndex] // start from high value
+    var lowIndex = -1;
+    const limit =  highIndex - searchRange <= 0 ? 0:  highIndex - searchRange;
+    for (let i = highIndex; i > limit; i --) {
+      if (lowValue > props.stockChartYValues[i]) {
+        lowValue = props.stockChartYValues[i]
+        lowIndex = i;
+      }
+    }
+    return lowIndex;
+  }
+
+  function countDrops () {
+    console.log ('Count drops', dropThreshold)
+
+    const startYear = dropStartDate.getFullYear();
+    const startMon = dropStartDate.getMonth();
+    const startDay = dropStartDate.getDate();
+
+    var startIndex = searchDateInArray (props.stockChartXValues, [startYear, startMon, startDay], props.StockSymbol, props.logFlags, setErr)
+    if (startIndex === -1 ) {
+      setErr([props.StockSymbol,  'Count drops Date invalid'])
+      return;
+    }
+
+    // first high before drop calc by dropRecovery
+    console.log ('start index=', startIndex, 'highndex=', highIndex)  // found by dropRecovery
+
+    const lowIndex = virtualLowSearch (startIndex, 200)
+    
+    const dropRatio = props.stockChartYValues[lowIndex] / props.stockChartYValues[highIndex];
+    const dropObj = {drop: dropRatio.toFixed(3)}
+    console.log (dropRatio, dropObj, dropThreshold/100, dropRatio < dropThreshold / 100)
+    if (dropRatio < dropThreshold / 100) {
+      dropsArray.push (dropObj)
+      console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
+    }
+
+
+  }
+
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
         <div>
@@ -446,7 +501,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={dropStartDate} onChange={(date) => setDropStartDate(date)} /> 
-
+            &nbsp; log &nbsp; <input  type="checkbox" checked={LOG}  onChange={setLOG} /> &nbsp;
           </div>
 
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
@@ -471,6 +526,18 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <h5>TodayGainWeeksLost</h5>
           <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
           {gainLostWeeks && <h6>  GainTimeUnitLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
+
+
+
+          <hr/> 
+          {eliHome && <div>            
+            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
+            <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
+            <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
+            <div>&nbsp;</div>
+            <button type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
+          </div>}
+          length={dropsArray.length} {dropsArray.length > 0 && <pre>{JSON.stringify(dropsArray)}</pre>}
         </div>
     </div>
   )
