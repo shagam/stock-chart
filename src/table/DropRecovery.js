@@ -474,9 +474,15 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     
     const dropRatio = props.stockChartYValues[lowIndex] / props.stockChartYValues[highIndex];
 
-    const dropObj = {date: props.stockChartXValues[lowIndex], change: dropRatio.toFixed(3), startIndex: highIndex, endIndex: lowIndex}
+    const dropObj = {
+      date: props.stockChartXValues[lowIndex],
+      change: dropRatio.toFixed(3),
+      startIndex: highIndex,
+      endIndex: lowIndex
+    }
+    if (LOG)
+      console.log (dropRatio, dropObj)
     
-    console.log (dropRatio, dropObj, dropThreshold/100, dropRatio < dropThreshold / 100)
     if (dropRatio < dropThreshold / 100) {
       dropsArray_.push (dropObj)
       console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
