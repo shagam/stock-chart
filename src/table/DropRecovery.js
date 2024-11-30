@@ -30,7 +30,7 @@ const DropRecoveryButtons = (props) => {
   const [dropThreshold, setDropThreshold] = useState(85) // drop percentage, used for count number of drops
   const [dropsArray, setDrops] = useState([])
   const [highIndex, setHighIndex] = useState([])
-  const [searchRange, setSearchRange] = useState(props.weekly? 50: 300) // default a year search range
+  const [searchRange, setSearchRange] = useState(props.daily? 300:50) // default a year search range
 
 
   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
@@ -39,7 +39,7 @@ const DropRecoveryButtons = (props) => {
 
   //** used by dropRecovery */
   var periodTag;
-  if (props.weekly)
+  if (! props.daily)
     periodTag = 'Weekly Adjusted Time Series';
   else
     periodTag = "Time Series (Daily)"
@@ -49,7 +49,7 @@ const DropRecoveryButtons = (props) => {
     setGainLostWeeks()
     setDateOfEqualVal()
     setDropRecoveryInfo()
-  }, [props.StockSymbol, dropStartDate,props.weekly]) 
+  }, [props.StockSymbol, dropStartDate,props.daily]) 
 
 
 
@@ -290,7 +290,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       highBeforeDropIndex: highPriceBeforeDeepIndex
     }
 
-    if (! props.weekly) {
+    if (props.daily) {
       info.recoverWeeks = (recoverPeriod / 5).toFixed(2);
       info.recoverYears= (recoverPeriod / 52 / 5).toFixed(2)
     }
@@ -491,7 +491,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>  &nbsp; &nbsp;
             <h6 style={{color: 'blue'}}> DropRecovery  </h6>  &nbsp; &nbsp;
-            <div>{ ! props.weekly? '(daily)' : '(weekly)'}</div>
+            <div>{ props.daily? '(daily)' : '(weekly)'}</div>
           </div>
           
           <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Calc drop from high before market crash. Calc weeks number to recover </h6>
@@ -516,7 +516,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           </div>
 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
-            dropStartDate, props.logFlags, props.weekly, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
+            dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
    
           <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
 
