@@ -30,7 +30,7 @@ const DropRecoveryButtons = (props) => {
   const [dropThreshold, setDropThreshold] = useState(85) // drop percentage, used for count number of drops
   const [dropsArray, setDropsArray] = useState([])
   const [highIndex, setHighIndex] = useState()
-  const [searchRange, setSearchRange] = useState(props.daily? 300:50) // default a year search range
+  const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
 
 
   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
@@ -505,7 +505,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       const dropRatio = props.stockChartYValues[searchIndex] / props.stockChartYValues[nextIndex];
 
       const dropObj = {
-        date: props.stockChartXValues[nextIndex],
+        endDate: props.stockChartXValues[nextIndex],
         change: dropRatio.toFixed(3),
         startIndex: searchIndex,
         endIndex: nextIndex
@@ -575,9 +575,9 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
             <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div>&nbsp;</div>
-            <button type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
+            <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
 
-            length={dropsArray.length}
+            length={dropsArray.length}  highIndex={highIndex}  startDate={props.stockChartXValues[highIndex]}
 
             {dropsArray.length > 0 && <table>
                 <thead>
