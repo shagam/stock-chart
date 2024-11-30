@@ -502,11 +502,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       if (nextIndex === -1)
         break;
 
-      const dropRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
+      const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
 
       const dropObj = {
         endDate: props.stockChartXValues[nextIndex],
-        change: dropRatio.toFixed(3),
+        change: changeRatio.toFixed(3),
         startIndex: searchIndex,
         endIndex: nextIndex,
         endPrice: props.stockChartYValues[nextIndex].toFixed(2),
@@ -573,7 +573,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <hr/> 
           {eliHome && dropRecoveryInfo && <div>            
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
-            <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
+            {/* <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/>  */}
             <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div>&nbsp;</div>
             <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
