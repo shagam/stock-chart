@@ -45,10 +45,10 @@ const DropRecoveryButtons = (props) => {
   var bigDropCount_ = 0;
   var bigRiseCount_ = 0;
 
-  const [chartx, setChartx] = useState([])
-  const [charty, setCharty] = useState([])
   var chartx_temp = []
   var charty_temp = []
+
+
 
   //** used by dropRecovery */
   var periodTag;
@@ -457,7 +457,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
 
 
-
+//** countDrops */
 
   function searchLow (highIndex, searchRange) {
     // today is index 0
@@ -503,6 +503,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     var searchIndex = highIndex;
     var nextIndex; 
     var dropsArray_ = []
+
 
     for (let i = 0; i < 300; i++) {
       if (i % 2 === 0) {
@@ -552,15 +553,21 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     setBigDropsCount(bigDropCount_)
     setBigRiseCount(bigRiseCount_)
 
-    setChartx(chartx_temp)
-    setCharty(charty_temp)
-  
+    //** clipp main chart */
+    var chartClippedX_temp = [];
+    var chartClippedY_temp = [];
+    for (let i = 0; i < highIndex; i++) {
+      chartClippedX_temp[i] = props.stockChartXValues[i];
+      chartClippedY_temp[i] = props.stockChartYValues[i];
+    }
+
+
     const dat =
     [
       {
           name: props.StockSymbol,
-          x: props.stockChartXValues,
-          y: props.stockChartYValues,
+          x: chartClippedX_temp,
+          y: chartClippedY_temp,
           type: 'scatter',
           mode: 'lines+markers',
           marker: { color: 'green' },           
@@ -571,16 +578,13 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           y: charty_temp,
           type: 'scatter',
           mode: 'lines+markers',
-
           // type: 'bar',
-
           marker: { color: 'blue' },       
       },
-  
-  ]
+    ]
     setChartData(dat)
   
-  
+
   }
 
   function colorChange (col, change) {
