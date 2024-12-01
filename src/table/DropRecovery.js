@@ -526,6 +526,17 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
   }
 
+  function colorChange (col, change) {
+    if (col !== 'change')
+      return 'black'
+    if (change < dropThreshold/100)
+      return 'red'
+    const thresh = 1/(dropThreshold/100)
+    if (change >  thresh )
+      return 'lightGreen'
+    return 'black'
+  }
+
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
         <div>
@@ -573,7 +584,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <hr/> 
           {eliHome && dropRecoveryInfo && <div>            
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
-            {/* <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/>  */}
+            <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
             <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div>&nbsp;</div>
             <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
@@ -583,10 +594,10 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             {dropsArray.length > 0 && <table>
                 <thead>
                   <tr>
-                    <th>N</th>
+                    <th style={{padding: '1px', margin: '1px'}}>N</th>
                     {Object.keys(dropsArray[0]).map((h,h1) => {
                         return (
-                            <th key={h1}>{h}</th>
+                            <th style={{padding: '1px', margin: '1px'}} key={h1}>{h}</th>
                         )
                     })}
                   </tr>
@@ -598,7 +609,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
                             <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
                             {Object.keys(dropsArray[s1]).map((a,a1) => {
                                 return (
-                                    <td key={a1} style={{padding: '1px', margin: '1px'}} >{dropsArray[s1][a]}</td>
+                                    <td key={a1} style={{padding: '1px', margin: '1px', color: colorChange(a,dropsArray[s1][a])}} >{dropsArray[s1][a]}</td>
                                 )
                             })}
                         </tr>
