@@ -27,7 +27,7 @@ const DropRecoveryButtons = (props) => {
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
 
    //** for counting drops */
-  const [dropThreshold, setDropThreshold] = useState(85) // drop percentage, used for count number of drops
+  const [changeThreshold, setChangeThreshold] = useState(85) // drop percentage, used for count number of drops
   const [dropsArray, setDropsArray] = useState([])
   const [highIndex, setHighIndex] = useState()
   const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
@@ -36,6 +36,11 @@ const DropRecoveryButtons = (props) => {
   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
   const [err, setErr] = useState();
   const {eliHome} = IpContext();
+
+  const [bigDropCount, setBigDropsCount] = useState()
+  const [bigRiseCount, setBigRiseCount] = useState();
+  var bigDropCount_ = 0;
+  var bigRiseCount_ = 0;
 
   //** used by dropRecovery */
   var periodTag;
@@ -472,7 +477,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
   function countDrops () {
-    console.log ('Count drops', dropThreshold)
+    console.log ('Count drops', changeThreshold)
 
     if (! highIndex) {
       setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
@@ -503,7 +508,13 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         break;
 
       const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
-
+      if (changeRatio < changeThreshold/100) {
+        bigDropCount_ ++
+      }
+      const thresh = 1/(changeThreshold/100)
+      if (changeRatio >  thresh ){
+        bigRiseCount_ ++
+      }
       const dropObj = {
         endDate: props.stockChartXValues[nextIndex],
         change: changeRatio.toFixed(3),
@@ -523,17 +534,20 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     setDropsArray(dropsArray_)
-
+    setBigDropsCount(bigDropCount_)
+    setBigRiseCount(bigRiseCount_)
   }
 
   function colorChange (col, change) {
     if (col !== 'change')
       return 'black'
-    if (change < dropThreshold/100)
+    if (change < changeThreshold/100) {
       return 'red'
-    const thresh = 1/(dropThreshold/100)
-    if (change >  thresh )
+    }
+    const thresh = 1/(changeThreshold/100)
+    if (change >  thresh ){
       return 'lightGreen'
+    }
     return 'black'
   }
 
@@ -575,21 +589,22 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {/* <br></br>   */}
           <hr/> 
 
-          <h5>TodayGainWeeksLost</h5>
+          {/* <h5>TodayGainWeeksLost</h5>
           <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
-          {gainLostWeeks && <h6>  GainTimeUnitLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>}
+          {gainLostWeeks && <h6>  GainTimeUnitLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>} */}
 
           
           {/* Drop count  */}
           <hr/> 
           {eliHome && dropRecoveryInfo && <div>            
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
-            <GetInt init={dropThreshold} callBack={setDropThreshold} title='Drop percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
+            <GetInt init={changeThreshold} callBack={setChangeThreshold} title='Change percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
             <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div>&nbsp;</div>
             <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
 
-            length={dropsArray.length}  highIndex={highIndex}  startDate={props.stockChartXValues[highIndex]}
+            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[highIndex]}</div>
+            {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount}</div>}
 
             {dropsArray.length > 0 && <table>
                 <thead>
