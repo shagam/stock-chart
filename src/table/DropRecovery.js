@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import DatePicker, {moment} from 'react-datepicker';
+import Plot from 'react-plotly.js';
 import {beep2} from '../utils/ErrorList'
 import "react-datepicker/dist/react-datepicker.css";
 import { toDate } from "date-fns";
 import {format} from "date-fns"
 import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
 import {IpContext, getIpInfo} from '../contexts/IpContext';
+import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
 
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
@@ -21,6 +23,10 @@ const DropRecoveryButtons = (props) => {
   // 
 
   const [LOG, setLOG] = useState ();
+  const [err, setErr] = useState();
+  const {eliHome} = IpContext();
+  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
   const [gainLostWeeks, setGainLostWeeks] = useState()
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
   const [dropStartDate, setDropStartDate] = useState(new Date(2021, 8, 1 ));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  Date(2024, 6, 1))
@@ -32,15 +38,17 @@ const DropRecoveryButtons = (props) => {
   const [highIndex, setHighIndex] = useState()
   const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
 
-
   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
-  const [err, setErr] = useState();
-  const {eliHome} = IpContext();
-
+  const [chartData, setChartData] = useState()
   const [bigDropCount, setBigDropsCount] = useState()
   const [bigRiseCount, setBigRiseCount] = useState();
   var bigDropCount_ = 0;
   var bigRiseCount_ = 0;
+
+  const [chartx, setChartx] = useState([])
+  const [charty, setCharty] = useState([])
+  var chartx_temp = []
+  var charty_temp = []
 
   //** used by dropRecovery */
   var periodTag;
@@ -448,6 +456,9 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
 
+
+
+
   function searchLow (highIndex, searchRange) {
     // today is index 0
     var lowValue = props.stockChartYValues[highIndex] // start from high value
@@ -524,7 +535,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       }
       if (LOG)
         console.log (dropObj, searchIndex, nextIndex)
-      
+    
+      //** build arrays for the chart */
+      chartx_temp.push(props.stockChartXValues[nextIndex])
+      charty_temp.push(changeRatio * 100)
+
       // if (dropRatio < dropThreshold / 100)
 
         dropsArray_.push (dropObj)
@@ -536,6 +551,36 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     setDropsArray(dropsArray_)
     setBigDropsCount(bigDropCount_)
     setBigRiseCount(bigRiseCount_)
+
+    setChartx(chartx_temp)
+    setCharty(charty_temp)
+  
+    const dat =
+    [
+      {
+          name: props.StockSymbol,
+          x: props.stockChartXValues,
+          y: props.stockChartYValues,
+          type: 'scatter',
+          mode: 'lines+markers',
+          marker: { color: 'green' },           
+      },
+      {
+          name: 'drop_rise',
+          x: chartx_temp,
+          y: charty_temp,
+          type: 'scatter',
+          mode: 'lines+markers',
+
+          // type: 'bar',
+
+          marker: { color: 'blue' },       
+      },
+  
+  ]
+    setChartData(dat)
+  
+  
   }
 
   function colorChange (col, change) {
@@ -606,32 +651,41 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[highIndex]}</div>
             {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount}</div>}
 
-            {dropsArray.length > 0 && <table>
-                <thead>
-                  <tr>
-                    <th style={{padding: '1px', margin: '1px'}}>N</th>
-                    {Object.keys(dropsArray[0]).map((h,h1) => {
-                        return (
-                            <th style={{padding: '1px', margin: '1px'}} key={h1}>{h}</th>
-                        )
-                    })}
-                  </tr>
-                </thead>
-                <tbody>
-                    {dropsArray.map((s, s1) =>{
-                        return (
-                        <tr key={s1}>
-                            <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
-                            {Object.keys(dropsArray[s1]).map((a,a1) => {
-                                return (
-                                    <td key={a1} style={{padding: '1px', margin: '1px', color: colorChange(a,dropsArray[s1][a])}} >{dropsArray[s1][a]}</td>
-                                )
-                            })}
-                        </tr>
-                        )
-                    })}
-                </tbody>
-            </table>}
+            {dropsArray.length > 0 && 
+            <div>
+              <div style={{width: '450px', height: '45vh', 'overflowY': 'scroll'}}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th style={{padding: '1px', margin: '1px'}}>N</th>
+                      {Object.keys(dropsArray[0]).map((h,h1) => {
+                          return (
+                              <th style={{padding: '1px', margin: '1px'}} key={h1}>{h}</th>
+                          )
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {dropsArray.map((s, s1) =>{
+                          return (
+                          <tr key={s1}>
+                              <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
+                              {Object.keys(dropsArray[s1]).map((a,a1) => {
+                                  return (
+                                      <td key={a1} style={{padding: '1px', margin: '1px', color: colorChange(a,dropsArray[s1][a])}} >{dropsArray[s1][a]}</td>
+                                  )
+                              })}
+                          </tr>
+                          )
+                      })}
+                  </tbody>
+              </table>
+            </div>
+
+            {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'moving-average',
+                xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
+
+            </div>}
           </div>}
         </div>
     </div>
