@@ -9,6 +9,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 import {IpContext, getIpInfo} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
+import {DropsCount} from './DropsCount'
 
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
 //import './DropRecovery.css'
@@ -25,30 +26,14 @@ const DropRecoveryButtons = (props) => {
   const [LOG, setLOG] = useState ();
   const [err, setErr] = useState();
   const {eliHome} = IpContext();
-  const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+
 
   const [gainLostWeeks, setGainLostWeeks] = useState()
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
   const [dropStartDate, setDropStartDate] = useState(new Date(2021, 8, 1 ));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  Date(2024, 6, 1))
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
-
-   //** for counting drops */
-  const [changeThreshold, setChangeThreshold] = useState(85) // drop percentage, used for count number of drops
-  const [dropsArray, setDropsArray] = useState([])
-  const [highIndex, setHighIndex] = useState()
-  const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
-
-  const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
-  const [chartData, setChartData] = useState()
-  const [bigDropCount, setBigDropsCount] = useState()
-  const [bigRiseCount, setBigRiseCount] = useState();
-  var bigDropCount_ = 0;
-  var bigRiseCount_ = 0;
-
-  var chartx_temp = []
-  var charty_temp = []
-
-
+   const [highIndex, setHighIndex] = useState()
+   const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
 
   //** used by dropRecovery */
   var periodTag;
@@ -62,7 +47,6 @@ const DropRecoveryButtons = (props) => {
     setGainLostWeeks()
     setDateOfEqualVal()
     setDropRecoveryInfo()
-    setDropsArray([])
   }, [props.StockSymbol, dropStartDate,props.daily]) 
 
 
@@ -456,150 +440,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
 
-
-//** countDrops */
-
-  function searchLow (highIndex, searchRange) {
-    // today is index 0
-    var lowValue = props.stockChartYValues[highIndex] // start from high value
-    var lowIndex = -1;
-    const limit =  highIndex - searchRange <= 0 ? 0:  highIndex - searchRange;
-    for (let i = highIndex; i > limit; i --) {
-      if (lowValue > props.stockChartYValues[i]) {
-        lowValue = props.stockChartYValues[i]
-        lowIndex = i;
-      }
-    }
-    return lowIndex;
-  }
-
-  function searchHigh (startIndex, searchRange) {
-    // today is index 0
-    var value = props.stockChartYValues[startIndex] // start from high value
-    var foundIndex = -1;
-    const limit =  startIndex - searchRange <= 0 ? 0:  startIndex - searchRange;
-    for (let i = startIndex; i > limit; i --) {
-      if (value < props.stockChartYValues[i]) {
-        value = props.stockChartYValues[i]
-        foundIndex = i;
-      }
-    }
-    return foundIndex;
-  }
-
-  function countDrops () {
-    console.log ('Count drops', changeThreshold)
-
-    if (! highIndex) {
-      setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
-      beep2()
-      return;
-    }
-
-    // first high before drop calc by dropRecovery    
-    if (LOG)
-      console.log ('highndex=', highIndex)  // found by dropRecovery
-
-    var searchIndex = highIndex;
-    var nextIndex; 
-    var dropsArray_ = []
-
-
-    for (let i = 0; i < 300; i++) {
-      if (i % 2 === 0) {
-        nextIndex = searchLow (searchIndex, searchRange)
-        if (LOG)
-          console.log ('searchLow', searchIndex, nextIndex)
-      }
-      else {
-        nextIndex = searchHigh (searchIndex, searchRange)
-        if (LOG)
-          console.log ('searchHigh', searchIndex, nextIndex)
-      }
-      if (nextIndex === -1)
-        break;
-
-      const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
-      if (changeRatio < changeThreshold/100) {
-        bigDropCount_ ++
-      }
-      const thresh = 1/(changeThreshold/100)
-      if (changeRatio >  thresh ){
-        bigRiseCount_ ++
-      }
-      const dropObj = {
-        endDate: props.stockChartXValues[nextIndex],
-        change: changeRatio.toFixed(3),
-        startIndex: searchIndex,
-        endIndex: nextIndex,
-        endPrice: props.stockChartYValues[nextIndex].toFixed(2),
-      }
-      if (LOG)
-        console.log (dropObj, searchIndex, nextIndex)
-    
-      //** build arrays for the chart */
-      chartx_temp.push(props.stockChartXValues[nextIndex])
-      charty_temp.push(changeRatio * 100)
-
-      // if (dropRatio < dropThreshold / 100)
-
-        dropsArray_.push (dropObj)
-        // console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
-
-      searchIndex = nextIndex; 
-    }
-
-    setDropsArray(dropsArray_)
-    setBigDropsCount(bigDropCount_)
-    setBigRiseCount(bigRiseCount_)
-
-    //** clipp main chart */
-    var chartClippedX_temp = [];
-    var chartClippedY_temp = [];
-    for (let i = 0; i < highIndex; i++) {
-      chartClippedX_temp[i] = props.stockChartXValues[i];
-      chartClippedY_temp[i] = props.stockChartYValues[i];
-    }
-
-
-    const dat =
-    [
-      {
-          name: props.StockSymbol,
-          x: chartClippedX_temp,
-          y: chartClippedY_temp,
-          type: 'scatter',
-          mode: 'lines+markers',
-          marker: { color: 'green' },           
-      },
-      {
-          name: 'drop_rise',
-          x: chartx_temp,
-          y: charty_temp,
-          type: 'scatter',
-          mode: 'lines+markers',
-          // type: 'bar',
-          marker: { color: 'blue' },       
-      },
-    ]
-    setChartData(dat)
-  
-
-  }
-
-  function colorChange (col, change) {
-    if (col !== 'change')
-      return 'black'
-    if (change < changeThreshold/100) {
-      return 'red'
-    }
-    const thresh = 1/(changeThreshold/100)
-    if (change >  thresh ){
-      return 'lightGreen'
-    }
-    return 'black'
-  }
-
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
         <div>
@@ -611,7 +451,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           
           <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Calc drop from high before market crash. Calc weeks number to recover </h6>
           
-          <div style={{color: 'red'}}>{err}</div>
 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
@@ -646,50 +485,15 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {/* Drop count  */}
           <hr/> 
           {eliHome && dropRecoveryInfo && <div>            
-            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
-            <GetInt init={changeThreshold} callBack={setChangeThreshold} title='Change percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
-            <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
-            <div>&nbsp;</div>
-            <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
-
-            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[highIndex]}</div>
-            {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount}</div>}
-
-            {dropsArray.length > 0 && 
+          
+            {
             <div>
-              <div style={{width: '450px', height: '45vh', 'overflowY': 'scroll'}}>
-                <table>
-                  <thead>
-                    <tr>
-                      <th style={{padding: '1px', margin: '1px'}}>N</th>
-                      {Object.keys(dropsArray[0]).map((h,h1) => {
-                          return (
-                              <th style={{padding: '1px', margin: '1px'}} key={h1}>{h}</th>
-                          )
-                      })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                      {dropsArray.map((s, s1) =>{
-                          return (
-                          <tr key={s1}>
-                              <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
-                              {Object.keys(dropsArray[s1]).map((a,a1) => {
-                                  return (
-                                      <td key={a1} style={{padding: '1px', margin: '1px', color: colorChange(a,dropsArray[s1][a])}} >{dropsArray[s1][a]}</td>
-                                  )
-                              })}
-                          </tr>
-                          )
-                      })}
-                  </tbody>
-              </table>
-            </div>
 
-            {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'moving-average',
-                xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
-
+            {<DropsCount StockSymbol = {props.chartSymbol}  highIndex={highIndex} LOG={LOG} 
+              setDropStartDate={setDropStartDate}  stockChartXValues = {props.stockChartXValues} stockChartYValues = {props.stockChartYValues}
+              errorAdd={props.errorAdd} daily={props.daily}/>}
             </div>}
+
           </div>}
         </div>
     </div>
