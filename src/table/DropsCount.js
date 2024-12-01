@@ -33,7 +33,7 @@ function DropsCount (props) {
 
     useEffect (() => { 
         setDropsArray([])
-      }, [props.StockSymbol,  props.daily]) 
+      }, [props.symbol,  props.daily]) 
 
 
 
@@ -145,7 +145,7 @@ function DropsCount (props) {
         const dat =
         [
         {
-            name: props.StockSymbol,
+            name: props.symbol,
             x: chartClippedX_temp,
             y: chartClippedY_temp,
             type: 'scatter',
@@ -185,12 +185,12 @@ function DropsCount (props) {
         <div>
     {/* <hr/>  */}
         <div style = {{display: 'flex'}}>
-            <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>  &nbsp; &nbsp;
-            <h6 style={{color: 'blue'}}> DropRecovery  </h6>  &nbsp; &nbsp;
+            <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp; &nbsp;
+            <h6 style={{color: 'blue'}}> DropsCount  </h6>  &nbsp; &nbsp;
             <div>{ props.daily? '(daily)' : '(weekly)'}</div>
           </div>
 
-        <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops more than specified percentage</h6>
+        <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops and rises</h6>
         <div style={{color: 'red'}}>{err}</div>
 
         <GetInt init={changeThreshold} callBack={setChangeThreshold} title='Change percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
@@ -235,7 +235,7 @@ function DropsCount (props) {
             </table>
         </div>
 
-        {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'moving-average',
+        {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'drop-rise-count',
             xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
         </div>}

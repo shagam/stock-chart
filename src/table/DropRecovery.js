@@ -251,7 +251,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     const gainLostWeeks = gainLostWeeksIfSoldOnDeep (StockSymbol, stockChartYValues, deepIndex, deepPrice, )
-    console.log (StockSymbol, 'gainLostWeeks-IfSoldOnDeep=', gainLostWeeks)
+    console.log (StockSymbol, 'gainLostWeeks-IfSoldOnDeep=', gainLostWeeks,
+       'date=', stockChartYValues[highPriceBeforeDeepIndex], 'indx=', highPriceBeforeDeepIndex)
 
     highistBeforeDeep(errorAdd);
     recoveryWeeks(errorAdd);
@@ -285,7 +286,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       'latestPrice/Highest': priceDivHigh,
       deepGainLostWeeks: gainLostWeeks,
       oldestDate: stockChartXValues[stockChartXValues.length-1],
-      highBeforeDropIndex: highPriceBeforeDeepIndex
+      highBeforeDropIndex: highPriceBeforeDeepIndex,
+      highBeforeDropPrice: stockChartXValues[highPriceBeforeDeepIndex],
     }
 
     if (props.daily) {
@@ -489,7 +491,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             {
             <div>
 
-            {<DropsCount StockSymbol = {props.chartSymbol}  highIndex={highIndex} LOG={LOG} 
+            {<DropsCount symbol = {props.chartSymbol}  highIndex={highIndex} LOG={LOG} 
               setDropStartDate={setDropStartDate}  stockChartXValues = {props.stockChartXValues} stockChartYValues = {props.stockChartYValues}
               errorAdd={props.errorAdd} daily={props.daily}/>}
             </div>}
