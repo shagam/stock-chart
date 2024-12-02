@@ -183,15 +183,19 @@ function DropsCount (props) {
             x: chartClippedX_temp,
             y: chartClippedY_temp,
             type: 'scatter',
-            mode: 'lines+markers',
-            marker: { color: 'green' },           
+            mode: 'lines',
+            // marker: { color: 'green' }, 
+            line: {
+                color: 'green',
+                width: 1 
+            }         
         },
         {
-            name: 'zigzag',
+            name: 'rise_drop',
             x: zigzagx,
             y: zigzagy,
             type: 'scatter',
-            mode: 'lines+markers',
+            mode: 'markers',
             marker: { color: 'red' },       
         },
         // {
