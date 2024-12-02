@@ -217,7 +217,7 @@ function Futures (props) {
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Future contracts (Get last price of Nasdaq futures ) &nbsp; </h6>
             {LOG && <div>{url}</div>}
             {err && <div style={{color: 'red'}}> {err} </div>}
-            {eliHome && latency && <div style={{color: 'red'}}> {latency} </div>}
+            {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
 
             <div style={{display:'flex'}}>
                 {eliHome && <div>  &nbsp; <input  type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
@@ -231,7 +231,7 @@ function Futures (props) {
               title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
             <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div>
-            {futuresTxt && <div>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+            {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
 
