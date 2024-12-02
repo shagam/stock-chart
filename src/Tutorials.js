@@ -69,7 +69,7 @@ function Tutorials () {
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/-AFWK_7RK1s">Future-comtracts</a></td><td> Can they hint on market trend</td> 
+                        <td><a href="https://youtu.be/-AFWK_7RK1s">Future-contracts</a></td><td> Can they hint on market trend</td> 
                     </tr>         
 
 
