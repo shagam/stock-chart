@@ -27,9 +27,10 @@ function DropsCount (props) {
     var bigDropCount_ = 0;
     var bigRiseCount_ = 0;
 
-    var chartx_temp = []
-    var charty_temp = []
-
+    var dropRiseRatioX = []
+    var dropRiseRatioY = []
+    var zigzagx = []
+    var zigzagy = []
 
     useEffect (() => { 
         setDropsArray([])
@@ -118,8 +119,12 @@ function DropsCount (props) {
             console.log (dropObj, searchIndex, nextIndex)
         
         //** build arrays for the chart */
-        chartx_temp.push(props.stockChartXValues[nextIndex])
-        charty_temp.push(changeRatio * 100)
+        dropRiseRatioX.push(props.stockChartXValues[nextIndex])
+        dropRiseRatioY.push(changeRatio * 100)
+
+        zigzagx.push(props.stockChartXValues[nextIndex])
+        zigzagy.push(props.stockChartYValues[nextIndex])
+
 
         // if (dropRatio < dropThreshold / 100)
 
@@ -154,12 +159,20 @@ function DropsCount (props) {
         },
         {
             name: 'drop_rise',
-            x: chartx_temp,
-            y: charty_temp,
+            x: dropRiseRatioX,
+            y: dropRiseRatioY,
             type: 'scatter',
             mode: 'lines+markers',
             // type: 'bar',
             marker: { color: 'blue' },       
+        },
+        {
+            name: 'zigzag',
+            x: zigzagx,
+            y: zigzagy,
+            type: 'scatter',
+            mode: 'lines+markers',
+            marker: { color: 'red' },       
         },
         ]
         setChartData(dat)

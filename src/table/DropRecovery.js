@@ -488,7 +488,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <hr/> 
           {eliHome && dropRecoveryInfo && <div>            
             {<div>
-              <DropsCount symbol = {props.chartSymbol}  highIndex={highIndex} LOG={LOG} 
+              <DropsCount symbol = {props.StockSymbol}  highIndex={highIndex} LOG={LOG} 
                 setDropStartDate={setDropStartDate}  stockChartXValues = {props.stockChartXValues} stockChartYValues = {props.stockChartYValues}
                 errorAdd={props.errorAdd} daily={props.daily}/>
             </div>}
