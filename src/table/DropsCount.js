@@ -149,7 +149,7 @@ function DropsCount (props) {
             
             //** build arrays for the chart */
             dropRiseRatioX.push(props.stockChartXValues[nextIndex])
-            dropRiseRatioY.push(changeRatio * 100)
+            dropRiseRatioY.push((1-changeRatio) * 200 + 200)
 
             zigzagx.push(props.stockChartXValues[nextIndex])
             zigzagy.push(props.stockChartYValues[nextIndex])
@@ -194,15 +194,15 @@ function DropsCount (props) {
             mode: 'lines+markers',
             marker: { color: 'red' },       
         },
-        {
-            name: 'drop_rise_ratio',
-            x: dropRiseRatioX,
-            y: dropRiseRatioY,
-            type: 'scatter',
-            mode: 'lines+markers',
-            // type: 'bar',
-            marker: { color: 'blue' },       
-        },
+        // {
+        //     name: 'drop_rise_ratio',
+        //     x: dropRiseRatioX,
+        //     y: dropRiseRatioY,
+        //     type: 'scatter',
+        //     mode: 'lines+markers',
+        //     // type: 'bar',
+        //     marker: { color: 'blue' },       
+        // },
         ]
         setChartData(dat)
     }
