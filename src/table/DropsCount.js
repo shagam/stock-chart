@@ -188,7 +188,7 @@ function DropsCount (props) {
             line: {
                 color: 'green',
                 width: 1 
-            }         
+            }
         },
         {
             name: 'rise_drop',
@@ -196,7 +196,7 @@ function DropsCount (props) {
             y: zigzagy,
             type: 'scatter',
             mode: 'markers',
-            marker: { color: 'red' },       
+            marker: { color: 'red', size: 3 },       
         },
         // {
         //     name: 'drop_rise_ratio',

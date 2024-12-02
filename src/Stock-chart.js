@@ -214,7 +214,12 @@ const StockChart = (props) => {
         x: xAfterClip,
         y: yAfterLog,
         type: 'scatter',
-        mode: 'lines+markers',
+        mode: 'lines',
+        // marker: { color: 'green' }, 
+        line: {
+            width: 1 
+        }
+
         //    marker: { color: 'green' },
       }
   
