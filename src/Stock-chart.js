@@ -26,7 +26,7 @@ const StockChart = (props) => {
   const [chartFlag, setChartFlag] = useState(first); // hide / show page
   const [multi, setMulti] = useState(true);
   const [showRanges, setShowRanges] = useState();
-  const [static_, setStatic] = useState(true);
+  const [static_, setStatic] = useState(props.isMobile);
 
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
