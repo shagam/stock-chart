@@ -27,6 +27,7 @@ const DropRecoveryButtons = (props) => {
   const [err, setErr] = useState();
   const {eliHome} = IpContext();
 
+  const [summeryShow, setSummeryShow] = useState(false)
 
   const [gainLostWeeks, setGainLostWeeks] = useState()
   const [dateOfEqualVal, setDateOfEqualVal] = useState()
@@ -474,7 +475,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
             dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
    
-          <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
+          <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; summeryShow </div>
+          {summeryShow && <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>}
 
           {/* <br></br>   */}
           <hr/> 
