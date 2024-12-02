@@ -89,15 +89,15 @@ function DropsCount (props) {
     //** main */ 
     function countDrops () {
         if (changeThreshold >= 100 || changeThreshold < 0) {
-            setErr('Change threashold between 0 to 100')
+            setErr('Change threashold should be between 0 to 100')
             beep2()
             return;            
         }
 
         if (! props.highIndex) {
-        setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
-        beep2()
-        return;
+            setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
+            beep2()
+            return;
         }
 
         // first high before drop calc by dropRecovery    
