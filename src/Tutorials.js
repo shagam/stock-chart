@@ -50,6 +50,9 @@ function Tutorials () {
                         <td><a href="https://youtu.be/Y4swf-8x7ZQ">Leverage_ETF</a></td><td>Strategy for short term gain of Leverage_ETF like TQQQ</td> 
                     </tr>
                     <tr>
+                        <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
+                    </tr>
+                    <tr>
                         <td><a href="https://youtu.be/faEcqp7PIfw">Table-view</a></td><td>Compare many stocks & ETF</td> 
                     </tr>
                     <tr>
