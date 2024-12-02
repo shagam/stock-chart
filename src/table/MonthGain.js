@@ -148,8 +148,8 @@ function MonthGain (props) {
       
       if (oldestIndex === -1) {
         oldestIndex = xArray.length; // use shorter array
-        console.log (symm_, 'Date not found')
-        continue;
+        console.log (symm_, 'Week gain, Date not found')
+        oldestIndex = xArray.length;
       }
       var errCount = 0;
       for (let i = 0; i < oldestIndex -1; i++) { // index into weekly x (date) y (price) arrays 
@@ -200,8 +200,8 @@ function MonthGain (props) {
       var oldestIndex = searchDateInArray (xArray, startDateSplit, null, props.logFlags, setStatus);
       if (oldestIndex === -1) {
         oldestIndex = xArray.length; // use shorter array
-        console.log (symm, 'Date not found')
-        continue;
+        console.log (symm, 'Month gain Date not found')
+        oldestIndex = xArray.length
       }
       arrayLen += oldestIndex;
       if (oldestIndex >= xArray.length) // verify range
@@ -213,7 +213,7 @@ function MonthGain (props) {
       for (; i < oldestIndex; ) { // index into weekly x (date) y (price) arrays 
         var weekOfNextMonth = nextMonthWeek(i, xArray); // 0..11
         if (weekOfNextMonth < 0) { // if not end of array
-          setStatus('error', weekOfNextMonth, i)
+          setStatus('error, weekOfNextMonth=' + weekOfNextMonth + ' index=' + i + ' oldest=' + oldestIndex)
           beep2()
           break;
         }
