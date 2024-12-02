@@ -80,24 +80,24 @@ function MovingAverage (props) {
                 x: dateArray_x,
                 y: priceArray_y,
                 type: 'scatter',
-                mode: 'lines+markers',
-                marker: { color: 'green' },           
+                mode: 'lines', 
+                line: {color: 'green', width: 1 }           
             },
             {
                 name: 'average_' + average_long_length,
                 x: dateArray_x,
                 y: average_long_Y,
                 type: 'scatter',
-                mode: 'lines+markers',
-                marker: { color: 'red' },       
+                mode: 'lines',
+                line: { color: 'red', width: 1 },       
             },
             {
                 name: 'average_' + average_short_length,
                 x: props.stockChartXValues,
                 y: average_short_Y,
                 type: 'scatter',
-                mode: 'lines+markers',
-                marker: { color: 'blue' },       
+                mode: 'lines',
+                line: { color: 'blue', width: 1 },       
             },
         
         ]
