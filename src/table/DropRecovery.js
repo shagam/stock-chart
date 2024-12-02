@@ -470,11 +470,13 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp;
           </div>
-          <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns  </button> &nbsp;
+     
 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
-            dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button>
-   
+            dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button> &nbsp;
+          {dropRecoveryInfo && <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns  </button>}
+
+
           <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; summeryShow </div>
           {summeryShow && <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>}
 
