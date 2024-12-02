@@ -229,7 +229,7 @@ function DropsCount (props) {
         <div style={{color: 'red'}}>{err}</div>
 
         <Toggle names={['range','threshold',]} colors={['gray','red']} state={searchMode} setState={setSearchMode} title='searchMode: range vs threshold'/>
-        <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold percent' type='Number' pattern="[0-9]+" width = '15%'/> 
+        <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold %' type='Number' pattern="[0-9]+" width = '15%'/> 
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
 
@@ -239,14 +239,15 @@ function DropsCount (props) {
         {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount}</div>}
         
         <div>&nbsp;</div>
-        <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={props.highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[props.highIndex]}</div>
 
         {<div>       
         {dropsArray.length > 0 && 
         <div>
-            <div>&nbsp;</div>
+            {/* <div>&nbsp;</div> */}
             <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
+
             {tableShow && <div style={{width: '450px', height: '45vh', 'overflowY': 'scroll'}}>
+            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={props.highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[props.highIndex]}</div>
             <table>
                 <thead>
                 <tr>
