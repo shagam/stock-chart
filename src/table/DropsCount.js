@@ -18,7 +18,7 @@ function DropsCount (props) {
     const [err, setErr] = useState();
 
     //** input */
-    const [changeThreshold, setChangeThreshold] = useState(15) // drop percentage, used for count number of drops
+    const [changeThreshold, setChangeThreshold] = useState(10) // drop percentage, used for count number of drops
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
