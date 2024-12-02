@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react'
+
 import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 import Plot from 'react-plotly.js';
 import {beep2} from '../utils/ErrorList'
-import "react-datepicker/dist/react-datepicker.css";
-import { toDate } from "date-fns";
-import {format} from "date-fns"
-import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, searchDateInArray} from '../utils/Date'
-import {IpContext, getIpInfo} from '../contexts/IpContext';
+
 import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
+import Toggle from '../utils/Toggle'
 
 
 
@@ -16,13 +16,17 @@ function DropsCount (props) {
       //** for counting drops */
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
     const [err, setErr] = useState();
+
+    //** input */
     const [changeThreshold, setChangeThreshold] = useState(85) // drop percentage, used for count number of drops
-    const [dropsArray, setDropsArray] = useState([])
-
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
-    const [chartData, setChartData] = useState()
-    const [tableShow, setTableShow] = useState(false)
+    const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
+    const [tableShow, setTableShow] = useState(false)
+    const [chartData, setChartData] = useState()
+
+    //** output display */
+    const [dropsArray, setDropsArray] = useState([])
     const [bigDropCount, setBigDropsCount] = useState()
     const [bigRiseCount, setBigRiseCount] = useState();
     var bigDropCount_ = 0;
@@ -40,7 +44,7 @@ function DropsCount (props) {
 
 
     //** countDrops */
-    function searchLow (highIndex, searchRange) {
+    function searchLow (highIndex) {
         // today is index 0
         var lowValue = props.stockChartYValues[highIndex] // start from high value
         var lowIndex = -1;
@@ -54,7 +58,7 @@ function DropsCount (props) {
         return lowIndex;
     }
 
-    function searchHigh (startIndex, searchRange) {
+    function searchHigh (startIndex) {
         // today is index 0
         var value = props.stockChartYValues[startIndex] // start from high value
         var foundIndex = -1;
@@ -68,6 +72,21 @@ function DropsCount (props) {
         return foundIndex;
     }
 
+    function bigChange (startIndex) {
+        var startValue = props.stockChartYValues[startIndex] // start from high value
+        for (let i = startIndex; i >= 0; i --) {
+            const ratio = startValue / props.stockChartYValues[i];
+            if (ratio < changeThreshold/100 || ratio > 1/(changeThreshold/100) ) {
+                return i;
+            }
+        }
+        return -1 // npt found   
+    }
+
+
+
+
+    //** main */ 
     function countDrops () {
 
         if (! props.highIndex) {
@@ -86,53 +105,57 @@ function DropsCount (props) {
 
 
         for (let i = 0; i < 300; i++) {
-        if (i % 2 === 0) {
-            nextIndex = searchLow (searchIndex, searchRange)
+            if (searchMode) { // big Chanhe
+                nextIndex = bigChange(searchIndex)
+            } else {
+                if (i % 2 === 0) {
+                    nextIndex = searchLow (searchIndex)
+                    if (props.LOG)
+                    console.log ('searchLow', searchIndex, nextIndex)
+                }
+                else {
+                    nextIndex = searchHigh (searchIndex)
+                    if (props.LOG)
+                    console.log ('searchHigh', searchIndex, nextIndex)
+                }
+            }
+            if (nextIndex === -1)
+                break;
+
+            const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
+            if (changeRatio < changeThreshold/100) {
+                bigDropCount_ ++
+            }
+            const thresh = 1/(changeThreshold/100)
+            if (changeRatio >  thresh ){
+                bigRiseCount_ ++
+            }
+
+            //* prepare for table
+            const dropObj = {
+                endDate: props.stockChartXValues[nextIndex],
+                change: changeRatio.toFixed(3),
+                startIndex: searchIndex,
+                endIndex: nextIndex,
+                endPrice: props.stockChartYValues[nextIndex].toFixed(2),
+            }
             if (props.LOG)
-            console.log ('searchLow', searchIndex, nextIndex)
-        }
-        else {
-            nextIndex = searchHigh (searchIndex, searchRange)
-            if (props.LOG)
-            console.log ('searchHigh', searchIndex, nextIndex)
-        }
-        if (nextIndex === -1)
-            break;
+                console.log (dropObj, searchIndex, nextIndex)
+            
+            //** build arrays for the chart */
+            dropRiseRatioX.push(props.stockChartXValues[nextIndex])
+            dropRiseRatioY.push(changeRatio * 100)
 
-        const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
-        if (changeRatio < changeThreshold/100) {
-            bigDropCount_ ++
-        }
-        const thresh = 1/(changeThreshold/100)
-        if (changeRatio >  thresh ){
-            bigRiseCount_ ++
-        }
-
-        //* prepare for table
-        const dropObj = {
-            endDate: props.stockChartXValues[nextIndex],
-            change: changeRatio.toFixed(3),
-            startIndex: searchIndex,
-            endIndex: nextIndex,
-            endPrice: props.stockChartYValues[nextIndex].toFixed(2),
-        }
-        if (props.LOG)
-            console.log (dropObj, searchIndex, nextIndex)
-        
-        //** build arrays for the chart */
-        dropRiseRatioX.push(props.stockChartXValues[nextIndex])
-        dropRiseRatioY.push(changeRatio * 100)
-
-        zigzagx.push(props.stockChartXValues[nextIndex])
-        zigzagy.push(props.stockChartYValues[nextIndex])
+            zigzagx.push(props.stockChartXValues[nextIndex])
+            zigzagy.push(props.stockChartYValues[nextIndex])
 
 
-        // if (dropRatio < dropThreshold / 100)
+            // if (dropRatio < dropThreshold / 100)
 
             dropsArray_.push (dropObj)
             // console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
 
-        searchIndex = nextIndex; 
+            searchIndex = nextIndex; 
         }
 
         setDropsArray(dropsArray_)
@@ -143,8 +166,8 @@ function DropsCount (props) {
         var chartClippedX_temp = [];
         var chartClippedY_temp = [];
         for (let i = 0; i < props.highIndex; i++) {
-        chartClippedX_temp[i] = props.stockChartXValues[i];
-        chartClippedY_temp[i] = props.stockChartYValues[i];
+            chartClippedX_temp[i] = props.stockChartXValues[i];
+            chartClippedY_temp[i] = props.stockChartYValues[i];
         }
 
 
@@ -177,8 +200,6 @@ function DropsCount (props) {
         },
         ]
         setChartData(dat)
-    
-
     }
 
     function colorChange (col, change) {
@@ -207,17 +228,20 @@ function DropsCount (props) {
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops and rises</h6>
         <div style={{color: 'red'}}>{err}</div>
 
-        <GetInt init={changeThreshold} callBack={setChangeThreshold} title='Change percentage' type='Number' pattern="[0-9]+" width = '15%'/> 
-        <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> 
+        <Toggle names={['range','threshold',]} colors={['gray','red']} state={searchMode} setState={setSearchMode} title='searchMode: range vs threshold'/>
+        <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold percent' type='Number' pattern="[0-9]+" width = '15%'/> 
+        {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
+
+
         <div>&nbsp;</div>
+
         <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
-
-        <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={props.highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[props.highIndex]}</div>
         {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount}</div>}
+        
+        <div>&nbsp;</div>
+        <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={props.highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[props.highIndex]}</div>
 
-
-        {<div>            
-       
+        {<div>       
         {dropsArray.length > 0 && 
         <div>
             <div>&nbsp;</div>
