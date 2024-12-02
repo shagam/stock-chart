@@ -18,7 +18,7 @@ function DropsCount (props) {
     const [err, setErr] = useState();
 
     //** input */
-    const [changeThreshold, setChangeThreshold] = useState(85) // drop percentage, used for count number of drops
+    const [changeThreshold, setChangeThreshold] = useState(15) // drop percentage, used for count number of drops
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
@@ -76,7 +76,7 @@ function DropsCount (props) {
         var startValue = props.stockChartYValues[startIndex] // start from high value
         for (let i = startIndex; i >= 0; i --) {
             const ratio = startValue / props.stockChartYValues[i];
-            if (ratio < changeThreshold/100 || ratio > 1/(changeThreshold/100) ) {
+            if (ratio < (100 - changeThreshold)/100 || ratio > 1/((100 - changeThreshold)/100) ) {
                 return i;
             }
         }
@@ -88,6 +88,11 @@ function DropsCount (props) {
 
     //** main */ 
     function countDrops () {
+        if (changeThreshold >= 100 || changeThreshold < 0) {
+            setErr('Change threashold between 0 to 100')
+            beep2()
+            return;            
+        }
 
         if (! props.highIndex) {
         setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
@@ -123,10 +128,10 @@ function DropsCount (props) {
                 break;
 
             const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
-            if (changeRatio < changeThreshold/100) {
+            if (changeRatio < (100-changeThreshold)/100) {
                 bigDropCount_ ++
             }
-            const thresh = 1/(changeThreshold/100)
+            const thresh = 1/((100-changeThreshold)/100)
             if (changeRatio >  thresh ){
                 bigRiseCount_ ++
             }
@@ -182,6 +187,14 @@ function DropsCount (props) {
             marker: { color: 'green' },           
         },
         {
+            name: 'zigzag',
+            x: zigzagx,
+            y: zigzagy,
+            type: 'scatter',
+            mode: 'lines+markers',
+            marker: { color: 'red' },       
+        },
+        {
             name: 'drop_rise_ratio',
             x: dropRiseRatioX,
             y: dropRiseRatioY,
@@ -190,14 +203,6 @@ function DropsCount (props) {
             // type: 'bar',
             marker: { color: 'blue' },       
         },
-        {
-            name: 'zigzag',
-            x: zigzagx,
-            y: zigzagy,
-            type: 'scatter',
-            mode: 'lines+markers',
-            marker: { color: 'red' },       
-        },
         ]
         setChartData(dat)
     }
@@ -205,10 +210,10 @@ function DropsCount (props) {
     function colorChange (col, change) {
         if (col !== 'change')
         return 'black'
-        if (change < changeThreshold/100) {
+        if (change < (100 - changeThreshold)/100) {
         return 'red'
         }
-        const thresh = 1/(changeThreshold/100)
+        const thresh = 1/((100 - changeThreshold)/100)
         if (change >  thresh ){
         return 'lightGreen'
         }
