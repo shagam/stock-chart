@@ -21,6 +21,7 @@ function DropsCount (props) {
 
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [chartData, setChartData] = useState()
+    const [tableShow, setTableShow] = useState(false)
 
     const [bigDropCount, setBigDropsCount] = useState()
     const [bigRiseCount, setBigRiseCount] = useState();
@@ -158,7 +159,7 @@ function DropsCount (props) {
             marker: { color: 'green' },           
         },
         {
-            name: 'drop_rise',
+            name: 'drop_rise_ratio',
             x: dropRiseRatioX,
             y: dropRiseRatioY,
             type: 'scatter',
@@ -219,7 +220,9 @@ function DropsCount (props) {
        
         {dropsArray.length > 0 && 
         <div>
-            <div style={{width: '450px', height: '45vh', 'overflowY': 'scroll'}}>
+            <div>&nbsp;</div>
+            <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
+            {tableShow && <div style={{width: '450px', height: '45vh', 'overflowY': 'scroll'}}>
             <table>
                 <thead>
                 <tr>
@@ -246,7 +249,7 @@ function DropsCount (props) {
                     })}
                 </tbody>
             </table>
-        </div>
+        </div>}
 
         {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'drop-rise-count',
             xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
