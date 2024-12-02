@@ -135,7 +135,8 @@ export const MarketstackApi = (props) => {
               x: stockChartXValuesFunction,
               y: stockChartYValuesFunction,
               type: 'scatter',
-              mode: 'lines+markers',
+              mode: 'lines',
+              line: { width: 1 }
               //    marker: { color: 'green' },
             }
             setGainChart (chartObj)
