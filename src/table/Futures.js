@@ -39,13 +39,13 @@ function Futures (props) {
       // '$IXIC': 'today',
 
 
-      NQZ24: 'Dec 24',
-      NQH25: 'Mar 25',
+      NQZ24: '20 Dec 2024',
+      NQH25: '21_Mar 2025',
       // NQI25: "????",
-      NQM25: 'Jun 25',
-      NQU25: 'Sep 25',
-      NQZ25: 'Dec 25',
-      NQH26: 'Mar 26',
+      NQM25: '20 Jun 2025',
+      NQU25: '19 Sep 2025',
+      NQZ25: '19 Dec 2025',
+      NQH26: '20 Mar 2026',
       '$IUXX': '',
       // NQW00: '????',
     }
@@ -231,7 +231,7 @@ function Futures (props) {
               title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
             <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div>
-            {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+            {futuresTxt && <div style={{height:'300px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
 
