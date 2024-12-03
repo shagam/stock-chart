@@ -24,9 +24,9 @@ function Tutorials () {
             <table>
                 <tbody>              
                     <tr>
-                        <td><a href="https://youtu.be/AMrNSLRRuxY">PortFolio Check</a></td><td>Compare Stocks & ETF</td> 
-                    </tr>
-        
+                        <td><a href="https://youtu.be/jibwwWP0OVQ">Introduction </a></td><td>Compare Stocks & ETF (PortFolio Check)</td> 
+                    </tr>                 
+                    {/* "https://youtu.be/AMrNSLRRuxY" */}
                     <tr>
                         <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>How to measure long term yearly gain of an ETF</td> 
                     </tr>
