@@ -913,7 +913,7 @@ function CommonDatabase (props) {
         {eliHome && latency && <div style={{color: '#aa3333'}}>{latency}</div>}
         {/* <hr/> */}
 
-        {eliHome && <div><input  type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd(! logBackEnd)} />  logBackend </div>}
+        {eliHome && <div><input  type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd(! logBackEnd)} />  log </div>}
         {/* ====== Filters list */} 
         <div style={{display:'flex'}}>
           Period: &nbsp;&nbsp;
