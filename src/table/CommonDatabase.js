@@ -933,7 +933,7 @@ function CommonDatabase (props) {
         <div>
           <div>Get stocks gain heigher than QQQ </div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp;
-          {!props.yearlyPercent && <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>}&nbsp;
+          {<button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>}&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>&nbsp;
           {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}&nbsp;
           {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf-list </button>}
