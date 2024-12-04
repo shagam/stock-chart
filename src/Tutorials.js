@@ -16,7 +16,7 @@ function Tutorials () {
 
         <div className='w-100 text-left mt-2' style={{color:'magenta'}}>
            <h5> &nbsp; Start with The first tutorial. (lasts 2.5 minutes.) </h5>
-           <h5> &nbsp; Most other tutorials lasts around one minute </h5>
+           <h5> &nbsp; Most other tutorials lasts around 1 to 2 minute </h5>
         </div>         
 
         {/* <hr/> */}
