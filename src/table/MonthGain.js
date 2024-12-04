@@ -117,6 +117,11 @@ function MonthGain (props) {
       beep2()
       return;
     }
+    if (gainMap.bubbleLine) {
+      setStatus('error, can not calc monthGain for bubleLine, Pls clear_table and start again')
+      beep2()
+      return;
+    }
 
 
     // const n = 1.05;
