@@ -58,7 +58,8 @@ const StockChart = (props) => {
 
  
     // console.log (props.bubbleLine, props.gainMap)
-    props.gainMap['bubbleLine'] = props.bubbleLine;
+    if (props.bubbleLine)
+      props.gainMap['bubbleLine'] = props.bubbleLine;
   
 
   // if(props.gainMap['bubbleLine'])
