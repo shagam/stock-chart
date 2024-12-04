@@ -135,6 +135,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
 
 function CommonDatabase (props) {
     const [results, setResults] = useState()
+    const [resObjects, setResObjects]  = useState()
     const [infoJson, setInfoJson] = useState()
     const [factor, setFactor] = useState(1.25);
 
@@ -312,6 +313,8 @@ function CommonDatabase (props) {
                 setLatency('filtered list done, latency(msec)=' + latency)
                 return;
             }
+
+            var resObjArray = [];
             for (let i = 0; i < keys.length; i++) {
                 const sym = keys[i];
                 if (! dat[sym]) {
@@ -358,7 +361,8 @@ function CommonDatabase (props) {
                     // if (ratio < 0) {
                     //     console.log(sym, ratio)
                     // }
-                    resArray.push(sym + ': ' + ratio + ', ')               
+                    resArray.push(sym + ': ' + ratio + ', ')    
+                    resObjArray.push({sym: sym, ratio: ratio})             
                 }
             }
                 
@@ -367,6 +371,7 @@ function CommonDatabase (props) {
             if (logBackEnd)
                 console.log (resArray)
             setResults(resArray)
+            setResObjects(resObjArray)
             if (filter)
                 setNext('insert')
             else
@@ -979,11 +984,47 @@ function CommonDatabase (props) {
         </div>} 
 
         {/* Display filtered symbols */}
-        {results &&  <div  style={{width: '250px', height: '35vh', 'overflowY': 'scroll'}}>
+        {/* {results &&  <div  style={{width: '250px', height: '35vh', 'overflowY': 'scroll'}}>
             {results.map((r,k)=>{
                 return <div key={k}>&nbsp; {k}  &nbsp;  &nbsp;  {r}&nbsp;&nbsp;</div>
             })}
+        </div>} */}
+
+        <hr/>         
+        {resObjects && resObjects.length > 1 &&  <div  style={{width: '300px', height: '35vh', 'overflowY': 'scroll'}}>
+        <table>
+              <thead>
+                  <tr>
+                    <th>N</th>
+                      {Object.keys(resObjects[0]).map((h,h1) => {
+                          return (
+                            <th key={h1}>{h}</th>
+                          )
+                      })}
+                  </tr>
+              </thead>
+              <tbody>  
+                  {resObjects.map((s, s1) =>{
+                      return (
+                        <tr key={s1}>
+                            <td  style={{padding: '2px', margin: '2px'}}>{s1}</td>
+
+                            {Object.keys(resObjects[s1]).map((a,a1) => {
+                                return ( 
+                                    <td  style={{padding: '2px', margin: '2px'}} key={a1} >{resObjects[s1][a]}</td>
+                                )
+                                })
+                            }
+                      
+                        </tr>
+                      )
+                  })}
+              </tbody>
+
+          </table>
+
         </div>}
+
         <hr/>     
         {/* readOneSym info admin only */}
         <pre>{JSON.stringify(infoJson, null, 2)}</pre>
