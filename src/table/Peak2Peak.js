@@ -241,16 +241,11 @@ const Peak2PeakGui = (props) => {
         yBubbleLine.push(yBubbleLine[i] / results.timeUnitGain);  // slope according to 2 peaks 2008 2022
     }  
 
-    if (! props.gainMap.bubbleLine) {
+
       bubbleline = {x: XValues, y: yBubbleLine}
       props.setBubbleLine (bubbleline)
       setBubbleLineFlag(true)
 
-      if (Object.keys(props.gainMap).length > 1) {
-        setErr('Bubble-line only for single stock. <reloadPage> and try again')
-        // props.errorAdd(['Bubble-line only for single stock. <reloadPage> and try again'])
-      }
-    }
 
   
     //** calc ratio latestValue/bubbleline */

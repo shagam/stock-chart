@@ -56,13 +56,10 @@ const StockChart = (props) => {
   if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0)
     return null;
 
-  if (props.bubbleLine && Object.keys (props.gainMap).length === 1 && ! props.gainMap['bubbleLine']) {
+ 
     // console.log (props.bubbleLine, props.gainMap)
     props.gainMap['bubbleLine'] = props.bubbleLine;
-  }
-  if (Object.keys (props.gainMap).length > 2) {
-    delete props.gainMap.bubbleLine
-  }
+  
 
   // if(props.gainMap['bubbleLine'])
   //   setScaleFlag(false)
