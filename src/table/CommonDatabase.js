@@ -368,7 +368,7 @@ function CommonDatabase (props) {
                 }
             }
                 
-            // if (LOG)
+            if (LOG)
             console.log (Object.keys(res).length, res)
             if (logBackEnd)
                 console.log (resArray)
@@ -945,21 +945,24 @@ function CommonDatabase (props) {
         {/* ====== Buttons */} 
         <div> &nbsp; </div> 
         <div>
-          <div>Get stocks gain heigher than QQQ </div>
+          {/* <div>Get stocks gain heigher than QQQ </div> */}
           {/* <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert()}>FilterForInsert</button>&nbsp; */}
-          {<button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>FilterForInsert-frontEnd </button>}&nbsp;
+          {<button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(true)}>Filter: gain more than QQQ </button>}&nbsp;
           <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsertFrontEnd(false)}>listAll </button>&nbsp;
-          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}&nbsp;
-          {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf-list </button>}
+          {<button style={{background: 'aqua'}} type="button" onClick={()=>etfList()}>etf-list </button>}&nbsp;
+
           {/* missingYearRemove */}
         </div>
 
         <div> 
           {/* <button style={{background: 'aqua'}} type="button" onClick={()=>filterForInsert_1_2_5_10()}>filterForInsert 1_2_5_10 </button>&nbsp; */}
-          {next === 'insert' && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>insertInTable()}>insert </button>}&nbsp;
-          {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>} &nbsp;
+          {next === 'insert' && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>insertInTable()}>insert into table</button>}&nbsp;
+          {(next === 'insert' || next === 'del') && <button type="button" onClick={()=>{clear()}}>Clear</button>}
+          <div> &nbsp; </div> 
+
             <div  style={{display:'flex'}}>
                 {eliHome && <button type="button" onClick={()=>backendFlush()}>Backend flush</button>} &nbsp;&nbsp;
+                {eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>verifyAll()}>verifyAll </button>}&nbsp;
                 <button style={{background: 'aqua'}} type="button" onClick={()=>searchName(nameFilter)}>search Stock </button>&nbsp;&nbsp;
                 <GlobalFilter className="stock_button_class_" filter={nameFilter} setFilter={setNameFilter} name='searchSym' isMobile={isMobile}/>
             </div>
