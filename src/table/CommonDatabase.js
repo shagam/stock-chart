@@ -372,7 +372,7 @@ function CommonDatabase (props) {
             console.log (Object.keys(res).length, res)
             if (logBackEnd)
                 console.log (resArray)
-            setResults(resArray)
+            // setResults(resArray)
             setResObjects(resObjArray)
             if (filter)
                 setNext('insert')
@@ -996,11 +996,11 @@ function CommonDatabase (props) {
         </div>} 
 
         {/* Display filtered symbols */}
-        {/* {results &&  <div  style={{width: '250px', height: '35vh', 'overflowY': 'scroll'}}>
+        {results &&  <div  style={{width: '250px', height: '35vh', 'overflowY': 'scroll'}}>
             {results.map((r,k)=>{
                 return <div key={k}>&nbsp; {k}  &nbsp;  &nbsp;  {r}&nbsp;&nbsp;</div>
             })}
-        </div>} */}
+        </div>}
 
         <hr/>         
         {resObjects && resObjects.length > 1 &&  <div  style={{width: '300px', height: '35vh', 'overflowY': 'scroll'}}>
