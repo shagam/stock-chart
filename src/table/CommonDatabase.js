@@ -146,8 +146,8 @@ function CommonDatabase (props) {
     const [info, setInfo] = useState()
     const {localIp, localIpv4, eliHome} = IpContext();
     const { currentUser, admin, logout } = useAuth();
-    const [logBackEnd, setLogBackEnd] = useState ();
-
+    const [logBackEnd, setLogBackEnd] = useState (false);
+    const [newFormat, setNewFormat] = useState (false);
 
     
     
@@ -232,6 +232,8 @@ function CommonDatabase (props) {
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=filterBetterThanQQQ&period=' + period + '&factor=' + factor + '&qqqValue=' + qqqValue; 
         if (logBackEnd)
             corsUrl += '&LOG=1'
+        if (newFormat)
+            corsUrl += '&newFormat=1'        
 
         if (LOG)
         console.log (getDate(), 'gainFilter', corsUrl)
@@ -401,6 +403,8 @@ function CommonDatabase (props) {
         corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=betterThanQQQ_1_2_5_10' + '&factor=' + factor 
         if (logBackEnd)
             corsUrl += '&LOG=1'
+        if (newFormat)
+            corsUrl += '&newFormat=1'
         setLatency('1 2 5 10 Request sent')
         const mili = Date.now()
 
@@ -540,6 +544,10 @@ function CommonDatabase (props) {
          + '&factor=' + factor 
         if (logBackEnd)
             corsUrl += '&LOG=1'
+        if (newFormat)
+            corsUrl += '&newFormat=1'
+        if (logBackEnd)
+            console.log (corsUrl)
 
         setLatency('filter for remove request sent')
         const mili = Date.now()
@@ -918,7 +926,8 @@ function CommonDatabase (props) {
         {eliHome && latency && <div style={{color: '#aa3333'}}>{latency}</div>}
         {/* <hr/> */}
 
-        {eliHome && <div><input  type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd(! logBackEnd)} />  log </div>}
+        {eliHome && <div style={{display:'flex'}}> <input  type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd(! logBackEnd)} />  log &nbsp; 
+            <input  type="checkbox" checked={newFormat}  onChange={()=> setNewFormat(! newFormat)} />  new-format </div>}
         {/* ====== Filters list */} 
         <div style={{display:'flex'}}>
           Period: &nbsp;&nbsp;
