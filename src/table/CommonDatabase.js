@@ -135,7 +135,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
 
 function CommonDatabase (props) {
     const [results, setResults] = useState()
-    const [resObjects, setResObjects]  = useState()
+    const [resObjects, setResObjects]  = useState([])
     const [infoJson, setInfoJson] = useState()
     const [factor, setFactor] = useState(1.25);
 
@@ -364,7 +364,7 @@ function CommonDatabase (props) {
                     //     console.log(sym, ratio)
                     // }
                     resArray.push(sym + ': ' + ratio + ', ')    
-                    resObjArray.push({sym: sym, ratio: ratio})             
+                    resObjArray.push({sym: sym, 'ratio-above-qqq': ratio})             
                 }
             }
                 
@@ -1001,8 +1001,9 @@ function CommonDatabase (props) {
                 return <div key={k}>&nbsp; {k}  &nbsp;  &nbsp;  {r}&nbsp;&nbsp;</div>
             })}
         </div>}
-
-        <hr/>         
+ 
+        <hr/> 
+        <div> filteredSymbols (count={resObjects.length}) &nbsp; factor={factor} &nbsp; period-years={period} </div>        
         {resObjects && resObjects.length > 1 &&  <div  style={{width: '300px', height: '35vh', 'overflowY': 'scroll'}}>
         <table>
               <thead>
