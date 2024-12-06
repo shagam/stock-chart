@@ -77,6 +77,7 @@ import { LeverageETF } from './LeverageETF'
 import StockChart from '../Stock-chart';
 import {MovingAverage } from './MovingAverage'
 import {Futures} from './Futures'
+import {PriceAlert} from './PriceAlert'
 
 const BasicTable = (props) => {
 
@@ -143,7 +144,6 @@ const BasicTable = (props) => {
 
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   // const [searchDeepDate, setSearchDeepDate] = useState()
-  const [analyzeShow, setAnalyzeShow] = useState(false);
 
   //** default start date for drop recovery  Mon 0-11 */
   const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
@@ -183,6 +183,11 @@ const BasicTable = (props) => {
 
   //** read last reminder mili */
   const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
+  var priceAlertTable  = useMemo(() => (localStorage.getItem('priceAlert')), []);
+  if (priceAlertTable)
+    priceAlertTable = JSON.parse(priceAlertTable)
+  else
+    priceAlertTable =[{sym: 'NVDA', drop: 'true', percent: 7}]
 
   var  yearlyPercent_temp = useMemo(() => (localStorage.getItem('yearlyPercent')), []);
   var yearlyPercent;
@@ -731,6 +736,7 @@ const BasicTable = (props) => {
     config:        'config',
     stockLists:    'stockLists',
     futures:       'futures',
+    priceAlert:    'priceAlert'
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState('none')
@@ -985,8 +991,11 @@ const BasicTable = (props) => {
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
-              
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='3' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
+              <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div> 
             </div>
             
@@ -1029,6 +1038,8 @@ const BasicTable = (props) => {
             {analyzeTool ==='movingAverage' && <MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
+
+            {eliHome && analyzeTool ==='priceAlert' && <div><PriceAlert  symbol = {chartSymbol} priceAlectTable = {priceAlertTable}/> </div>}
 
           </div>}
           </div>}        
