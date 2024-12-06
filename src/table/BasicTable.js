@@ -77,7 +77,7 @@ import { LeverageETF } from './LeverageETF'
 import StockChart from '../Stock-chart';
 import {MovingAverage } from './MovingAverage'
 import {Futures} from './Futures'
-import {PriceAlert} from './PriceAlert'
+import {PriceAlert, priceAlertCheck} from './PriceAlert'
 
 const BasicTable = (props) => {
 
@@ -436,9 +436,13 @@ const BasicTable = (props) => {
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain)
 
-      if (singleSym)
-        saveTable(sym);
-      searchURL (props.logFlags)
+    const priceDivHigh = rows[row_index].values.priceDivHigh
+    if (priceDivHigh) {
+      priceAlertCheck (chartSymbol, priceAlertTable, priceDivHigh, errorAdd) 
+    }
+    if (singleSym)
+      saveTable(sym);
+    searchURL (props.logFlags)
   }
 
    // get all info for targetPrice

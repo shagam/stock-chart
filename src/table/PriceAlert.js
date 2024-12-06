@@ -4,19 +4,20 @@ import GetInt from '../utils/GetInt'
 import Toggle from '../utils/Toggle'
 import {IpContext} from '../contexts/IpContext';
 
-function priceAlertCheck (symbol, priceAlectTable, priceDivHigh, errorAdd) {
-    for (let i = 0; i < priceAlectTable.length; i++) {
-        if (priceAlectTable[i].sym !== symbol)
+function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd) {
+    for (let i = 0; i < priceAlertTable.length; i++) {
+        if (priceAlertTable[i].sym !== symbol)
             continue;
-        if (priceAlectTable[i].drop === 'true') {
-            const threshold = (1 - priceAlectTable[i].percent/100)
-            if (priceDivHigh < threshold )
-                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold, ' priceDivHigh=' +  priceDivHigh])
+        if (priceAlertTable[i].drop === 'true') {
+            const threshold = (1 - priceAlertTable[i].percent/100)
+            if (priceDivHigh < threshold ){
+                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold, ' price/High=' +  priceDivHigh])
+            }
         }
         else {
-            const threshold = (1 + priceAlectTable[i].percent/100)
+            const threshold = (1 + priceAlertTable[i].percent/100)
             if (priceDivHigh > threshold )
-                errorAdd ([symbol, ', rise_priceAlert threshold=' + threshold, ' priceDivHigh=' +  priceDivHigh])
+                errorAdd ([symbol, ', rise_priceAlert threshold=' + threshold, ' price/High=' +  priceDivHigh])
         }
     }
 }
@@ -45,7 +46,7 @@ function PriceAlert (props) {
     
     
     function del () {
-        for (let i = 0; i < props.priceAlectTable.length; i++) {
+        for (let i = props.priceAlectTable.length - 1; i >= 0; i--) {  // search from end of table
             if (props.priceAlectTable[i].sym === props.symbol) {
                 props.priceAlectTable.splice(i, 1);
                 localStorage.setItem('priceAlert', JSON.stringify(props.priceAlectTable))
@@ -74,7 +75,7 @@ function PriceAlert (props) {
             
             <div style={{display:'flex'}}>
                 <button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
-                drop=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='drop vs rise'/> &nbsp;
+                {/* drop=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='drop vs rise'/> &nbsp; */}
              </div>
              
              <div>&nbsp;</div>
