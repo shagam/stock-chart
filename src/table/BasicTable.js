@@ -187,7 +187,7 @@ const BasicTable = (props) => {
   if (priceAlertTable)
     priceAlertTable = JSON.parse(priceAlertTable)
   else
-    priceAlertTable =[{sym: 'NVDA', drop: 'true', percent: 7}]
+    priceAlertTable =[{sym: 'NVDA', drop: 'true', percent: 7, risePeriod: -1}]
 
   var  yearlyPercent_temp = useMemo(() => (localStorage.getItem('yearlyPercent')), []);
   var yearlyPercent;
@@ -1040,7 +1040,7 @@ const BasicTable = (props) => {
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
 
-            {eliHome && analyzeTool ==='priceAlert' && <div><PriceAlert  symbol = {chartSymbol} priceAlectTable = {priceAlertTable}/> </div>}
+            {eliHome && analyzeTool ==='priceAlert' && <div><PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable}/> </div>}
 
           </div>}
           </div>}        
