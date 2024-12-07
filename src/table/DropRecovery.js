@@ -23,7 +23,7 @@ const DropRecoveryButtons = (props) => {
   // props.setDropStartDate
   // 
 
-  const [LOG, setLOG] = useState ();
+  const [LOG, setLOG] = useState (false);
   const [err, setErr] = useState();
   const {eliHome} = IpContext();
 
