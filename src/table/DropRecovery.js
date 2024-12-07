@@ -35,6 +35,8 @@ const DropRecoveryButtons = (props) => {
    // const [startDate, setStartDate] = useState(new Date(2020, 1, 5)); // feb 5 2020
    const [highIndex, setHighIndex] = useState()
    const [dropRecoveryInfo, setDropRecoveryInfo] = useState()
+   const [dropRecoveryInfoExtra, setDropRecoveryInfoExtra] = useState()
+
 
   //** used by dropRecovery */
   var periodTag;
@@ -278,12 +280,18 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       return;
     } 
 
+
+
+
      var info = {
       symbol: StockSymbol,
       'deepPrice/BubblePrice': deep,
       recoverYears: (recoverPeriod/52).toFixed(2),
       recoverWeeks: recoverPeriod,
       deepDate:    deepDate,
+    }
+
+    var infoExtra = {
       'latestPrice/Highest': priceDivHigh,
       deepGainLostWeeks: gainLostWeeks,
       oldestDate: stockChartXValues[stockChartXValues.length-1],
@@ -297,11 +305,12 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     if (eliHome){
-      info.deepIndex = deepIndex;
-      info.maxIndex = stockChartXValues.length;
+      infoExtra.deepIndex = deepIndex;
+      infoExtra.maxIndex = stockChartXValues.length;
     }
 
     setDropRecoveryInfo(info)
+    setDropRecoveryInfoExtra(infoExtra)
 
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
@@ -475,10 +484,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
             dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button> &nbsp;
           {dropRecoveryInfo && <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns  </button>}
+          
+          <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
 
-
-          <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; summeryShow </div>
-          {summeryShow && <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>}
+          <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; showExtra </div>
+          {summeryShow && <pre>{JSON.stringify(dropRecoveryInfoExtra, null, 2)}</pre>}
 
           {/* <br></br>   */}
           <hr/> 
