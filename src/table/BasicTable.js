@@ -437,9 +437,12 @@ const BasicTable = (props) => {
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain)
 
     const priceDivHigh = rows[row_index].values.priceDivHigh
-    if (priceDivHigh) {
+    setTimeout(() => {
       priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd) 
-    }
+      console.log(sym, 'priceAlertCheck   priceDivHigh=', priceDivHigh);
+    }, 2000);
+
+
     if (singleSym)
       saveTable(sym);
     searchURL (props.logFlags)
