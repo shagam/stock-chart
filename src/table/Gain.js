@@ -378,7 +378,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               else
                 delete rows[row_index].values.year20
               if (isNaN (rows[row_index].values.year20))  // debug log
-                console.log ('gain year20', rows[row_index].values.year20)
+                console.log (sym, 'gain year20', rows[row_index].values.year20)
   
               // rows[row_index].values.peak2Peak = peak2Peak;
               rows[row_index].values.price = price;
@@ -440,7 +440,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 } else
                   delete rows[row_index].values.year20
                 if (isNaN (rows[row_index].values.year20))
-                  console.log ('gain year20', rows[row_index].values.year20)  // debug log
+                  console.log (sym, 'gain year20', rows[row_index].values.year20)  // debug log
               }
 
               if (saveTabl)
