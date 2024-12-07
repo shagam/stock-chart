@@ -7,6 +7,7 @@ import {peak2PeakCalc} from './Peak2PeakCalc'
 import searchURL from '../utils/SearchURL'
 import {targetPriceAdd} from './TargetPrice'
 import  {CommonDatabase, GainWrite} from './CommonDatabase'
+import {PriceAlert, priceAlertCheck} from './PriceAlert'
 
 let periodTag;
 
@@ -14,7 +15,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
   export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain) {
+     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -442,6 +443,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 if (isNaN (rows[row_index].values.year20))
                   console.log (sym, 'gain year20', rows[row_index].values.year20)  // debug log
               }
+
+              priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd, rows, row_index, stockChartXValuesFunction, stockChartYValuesFunction) 
 
               if (saveTabl)
                 saveTable(sym);

@@ -4,7 +4,7 @@ import GetInt from '../utils/GetInt'
 import Toggle from '../utils/Toggle'
 import {IpContext} from '../contexts/IpContext';
 
-function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd) {
+function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, rows, row_index, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
         if (priceAlertTable[i].sym !== symbol)
             continue;

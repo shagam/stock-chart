@@ -434,16 +434,10 @@ const BasicTable = (props) => {
 
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
-      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain)
+      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable)
 
-    const priceDivHigh = rows[row_index].values.priceDivHigh
-    setTimeout(() => {
-      priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd) 
-      console.log(sym, 'priceAlertCheck   priceDivHigh=', priceDivHigh);
-    }, 2000);
-
-
-    if (singleSym)
+ 
+     if (singleSym)
       saveTable(sym);
     searchURL (props.logFlags)
   }
