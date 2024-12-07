@@ -11,7 +11,7 @@ function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd) {
         if (priceAlertTable[i].drop === 'true') {
             const threshold = (1 - priceAlertTable[i].percent/100)
             if (priceDivHigh < threshold ){
-                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold, ' price/High=' +  priceDivHigh])
+                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold, ' > price/High=' +  priceDivHigh])
             }
         }
         else {
