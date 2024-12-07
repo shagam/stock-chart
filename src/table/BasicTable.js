@@ -438,7 +438,7 @@ const BasicTable = (props) => {
 
     const priceDivHigh = rows[row_index].values.priceDivHigh
     if (priceDivHigh) {
-      priceAlertCheck (chartSymbol, priceAlertTable, priceDivHigh, errorAdd) 
+      priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd) 
     }
     if (singleSym)
       saveTable(sym);
