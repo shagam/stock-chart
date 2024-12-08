@@ -67,7 +67,8 @@ const Simulate = (props) => {
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
-    const [startDate, setStartDate] = useState(new Date(2005, 8, 1 )) // sep 1
+    const [tradeChartShow, setTradeChartShow] = useState (false);
+    const [startDate, setStartDate] = useState(new Date(2007, 8, 1 )) // sep 1
 
     const historyLength = props.stockChartXValues.length;
 
@@ -694,6 +695,41 @@ const Simulate = (props) => {
     const ROW_SPACING = {padding: "0px 3px 0px 5px", margin: '0px'}
     //** top, right, bottom, left*/
 
+    //** Prepare logTradeChart */
+    const portionArray = [];
+    const stocksCount = [];
+    const accountValueArray = [];
+    for (let i = 0; i < logRecordsKeys.length; i++) {
+        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 100;
+        stocksCount[i] = logRecords[logRecordsKeys[i]]['stocks after'] * 100;
+        accountValueArray[i] = logRecords[logRecordsKeys[i]]['account Value']/10;
+    }
+    const a = logRecords
+    const logTradeChartData =
+    [
+    {
+        name: 'price',
+        x: props.stockChartXValues,
+        y: props.stockChartYValues,
+        type: 'scatter',
+        mode: 'lines',
+      //   marker: { color: 'green' }, 
+        line: {
+          width: 1 
+          }
+    },
+    {
+      name: 'portion',
+      x: logRecordsKeys,
+      y: accountValueArray,
+      type: 'scatter',
+      mode: 'lines',
+    //   marker: { color: 'green' }, 
+      line: {
+        width: 1 
+        }
+    }]
+
     return (
         <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
@@ -861,7 +897,14 @@ const Simulate = (props) => {
 
                 </table>
             </div> }
+
             <hr/> 
+            {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
+
+            {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 750, height: 400, title: title, staticPlot: true,
+                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'stocks portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
+
+
         </div>
     )
  }
