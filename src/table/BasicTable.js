@@ -159,9 +159,9 @@ const BasicTable = (props) => {
     "gain_date","deep","recoverWeek (how long it took to get to peak price) ","deepDate","priceDivHigh","verify_1 (compare gain with another site. close to '1' means same)",'sym (symbol)']
 
 
-  const hiddenColsDefault = ["percent","Exchange","Industry","Cap","PE","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
+  const hiddenColsDefault = ["percent","Exchange","Industry","Sector","Cap","PE","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
   "EVToEBITDA","EVToRevenue","price","mon3","year10","year20",'short',"splits_list","splits",
-  "target","info_date","gap","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"] // ,"target"
+  "target","info_date","gap","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"] 
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
   if (! hiddenCols) {
