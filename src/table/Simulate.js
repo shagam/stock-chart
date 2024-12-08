@@ -234,15 +234,17 @@ const Simulate = (props) => {
             return;
         }
 
-        var startDateIndex = searchDateInArray (bubbleLine.x, startDate, props.symbol, props.logFlags, setErr)
 
-        if ((optimizeBubble && bubbleLine.y.length - 1 - startWeek <= 0) || (!optimizeBubble && YValues.length - 1 - startWeek < 0) ) {
+        var startDateIndex = searchDateInArray (props.gainMap.bubbleLine? bubbleLine.x: props.stockChartXValues, startDate, props.symbol, props.logFlags, setErr)
+        const arrayLen = props.gainMap.bubbleLine? bubbleLine.y.length : props.stockChartXValues.length
+
+        if ((optimizeBubble && arrayLen - 1 - startWeek <= 0) || (!optimizeBubble && YValues.length - 1 - startWeek < 0) ) {
             setErr ('invalid start week= ', startWeek)
             beep2()
             return
         }
 
-        var oldestIndex = startDateIndex !== -1 ? startDateIndex : bubbleLine.y.length - 1; // if valid => startDateIndex means oldest
+        var oldestIndex = startDateIndex !== -1 ? startDateIndex : arrayLen - 1; // if valid => startDateIndex means oldest
 
         var priceInit = YValues[oldestIndex]  // begining price // default oldest
         var price =  priceInit
