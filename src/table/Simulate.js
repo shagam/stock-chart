@@ -486,7 +486,7 @@ const Simulate = (props) => {
             {
                 priceEnd_$: price.toFixed(2),
                 priceInit_$: priceInit,
-                dateStart: XValues[oldestIndex],
+                // dateStart: XValues[oldestIndex],
                 totalWeeksBack: oldestIndex,
 
                 // buyCount: buyCount,
@@ -538,6 +538,10 @@ const Simulate = (props) => {
                 resultsArray.params = [];
             resultsArray.params.push('====')
 
+            if (! resultsArray.dateStart)
+                resultsArray.dateStart = []
+            resultsArray.dateStart.push(XValues[oldestIndex]);
+
 
             if (! resultsArray.tradeFlag)
                 resultsArray.tradeFlag = []
@@ -570,14 +574,15 @@ const Simulate = (props) => {
                 resultsArray['price_/_bubble_low'] = [];
             resultsArray['price_/_bubble_low'].push(priceDivBubble_LOW);
 
-            if (! resultsArray.portion_high)
-                resultsArray.portion_high = [];
-            resultsArray.portion_high.push(PORTION_HIGH)
-            
-            if (! resultsArray.portion_low)
-                resultsArray.portion_low = [];
-            resultsArray.portion_low.push(PORTION_LOW);
-
+            if (eliHome) {
+                if (! resultsArray.portion_high)
+                    resultsArray.portion_high = [];
+                resultsArray.portion_high.push(PORTION_HIGH)
+                
+                if (! resultsArray.portion_low)
+                    resultsArray.portion_low = [];
+                resultsArray.portion_low.push(PORTION_LOW);
+            }
 
 
             if (! resultsArray.portionPercent)
@@ -601,53 +606,53 @@ const Simulate = (props) => {
             resultsArray.transactionFee.push(transactionFee)
 
 
+            if (eliHome) {
+                if (! resultsArray.startWeek)
+                    resultsArray.startWeek = [];
+                resultsArray.startWeek.push(startWeek)
 
-            if (! resultsArray.startWeek)
-                resultsArray.startWeek = [];
-            resultsArray.startWeek.push(startWeek)
+                if (! resultsArray.oldestIndex)
+                    resultsArray.oldestIndex = [];
+                resultsArray.oldestIndex.push(oldestIndex)
+                // if (! resultsArray.accountValueEnd_$)
+                //     resultsArray.accountValueEnd_$ = []
+                // resultsArray.accountValueEnd_$.push(accountVal.toFixed(2))
 
-            if (! resultsArray.oldestIndex)
-                resultsArray.oldestIndex = [];
-            resultsArray.oldestIndex.push(oldestIndex)
-            // if (! resultsArray.accountValueEnd_$)
-            //     resultsArray.accountValueEnd_$ = []
-            // resultsArray.accountValueEnd_$.push(accountVal.toFixed(2))
+                // if (! resultsArray.accountValInit_$)
+                //     resultsArray.accountValInit_$ = [];
+                // resultsArray.accountValInit_$.push(accountValueInit.toFixed(2))
 
-            // if (! resultsArray.accountValInit_$)
-            //     resultsArray.accountValInit_$ = [];
-            // resultsArray.accountValInit_$.push(accountValueInit.toFixed(2))
-
-            //** more info */
-            if (! resultsArray.info)
-                resultsArray.info = [];
-            resultsArray.info.push('====')
-
-
-            if (! resultsArray.portionMin)
-                resultsArray.portionMin = [];
-            resultsArray.portionMin.push(Number(portionMin).toFixed(3))
-            
-            if (! resultsArray.portionMax)
-                resultsArray.portionMax = [];
-            resultsArray.portionMax.push(portionMax.toFixed(3))
+                //** more info */
+                if (! resultsArray.info)
+                    resultsArray.info = [];
+                resultsArray.info.push('====')
 
 
-            if (! resultsArray.stockCountEnd)
-                resultsArray.stockCountEnd = []
-            resultsArray.stockCountEnd.push (stockCount.toFixed(2))
+                if (! resultsArray.portionMin)
+                    resultsArray.portionMin = [];
+                resultsArray.portionMin.push(Number(portionMin).toFixed(3))
+                
+                if (! resultsArray.portionMax)
+                    resultsArray.portionMax = [];
+                resultsArray.portionMax.push(portionMax.toFixed(3))
 
-            if (! resultsArray.stockCountInit)
-                resultsArray.stockCountInit = [];
-            resultsArray.stockCountInit.push(stockCountInit.toFixed(2))
 
-            if (!resultsArray.moneyMarketEnd_$)
-                resultsArray.moneyMarketEnd_$ = [];
-            resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
+                if (! resultsArray.stockCountEnd)
+                    resultsArray.stockCountEnd = []
+                resultsArray.stockCountEnd.push (stockCount.toFixed(2))
 
-            if (! resultsArray.moneyMarketInit_$)
-                resultsArray.moneyMarketInit_$ = [];
-            resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
+                if (! resultsArray.stockCountInit)
+                    resultsArray.stockCountInit = [];
+                resultsArray.stockCountInit.push(stockCountInit.toFixed(2))
 
+                if (!resultsArray.moneyMarketEnd_$)
+                    resultsArray.moneyMarketEnd_$ = [];
+                resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
+
+                if (! resultsArray.moneyMarketInit_$)
+                    resultsArray.moneyMarketInit_$ = [];
+                resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
+            }
 
             if (! resultsArray.buyCount)
                 resultsArray.buyCount = [];
@@ -714,7 +719,7 @@ const Simulate = (props) => {
     for (let i = 0; i < logRecordsKeys.length; i++) {
         clippedArrayX[i] = props.stockChartXValues[i]
         clippedArrayY[i] = props.stockChartYValues[i]
-        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 200;
+        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 1000;
         stocksCount[i] = logRecords[logRecordsKeys[i]]['stocks after'] * 100;
         accountValueArray[i] = logRecords[logRecordsKeys[i]]['account Value']/10;
 
@@ -929,7 +934,7 @@ const Simulate = (props) => {
             {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
 
             {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
-                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'stocks portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
+                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'stocks portion'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
 
         </div>
