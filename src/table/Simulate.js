@@ -322,8 +322,8 @@ const Simulate = (props) => {
 
 
         //**  optimize loop from oldest towards latest */
-        if (optimizeWeekGain)
-            oldestIndex -= 53 // skip first year
+        if (optimizeWeekGain && oldestIndex > props.stockChartXValues.length)
+            oldestIndex = props.stockChartXValues.length.lenght - 53 // skip first year
 
 
         // trade loop start
