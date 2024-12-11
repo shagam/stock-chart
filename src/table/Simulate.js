@@ -486,7 +486,7 @@ const Simulate = (props) => {
             {
                 priceEnd_$: price.toFixed(2),
                 priceInit_$: priceInit,
-                // dateStart: XValues[oldestIndex],
+                dateStart: XValues[oldestIndex],
                 totalWeeksBack: oldestIndex,
 
                 // buyCount: buyCount,
@@ -537,11 +537,6 @@ const Simulate = (props) => {
             if (! resultsArray.params)
                 resultsArray.params = [];
             resultsArray.params.push('====')
-
-            if (! resultsArray.dateStart)
-                resultsArray.dateStart = []
-            resultsArray.dateStart.push(XValues[oldestIndex]);
-
 
             if (! resultsArray.tradeFlag)
                 resultsArray.tradeFlag = []
