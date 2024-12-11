@@ -551,23 +551,29 @@ const Simulate = (props) => {
                 resultsArray.optimizeWeekGain = []
             resultsArray.optimizeWeekGain.push ('' + optimizeWeekGain)
 
+            if (optimizeWeekGain) {
+                if (! resultsArray.weekGainEnhance)
+                    resultsArray.weekGainEnhance = [];
+                resultsArray.weekGainEnhance.push (weekGainEnhance)
 
-            if (! resultsArray.weekGainEnhance)
-                resultsArray.weekGainEnhance = [];
-            resultsArray.weekGainEnhance.push (weekGainEnhance)
+                if (! resultsArray.weekGainAhead)
+                    resultsArray.weekGainAhead = [];
+                resultsArray.weekGainAhead.push (weekGainAhead)
 
-            if (! resultsArray.weekGainAhead)
-                resultsArray.weekGainAhead = [];
-            resultsArray.weekGainAhead.push (weekGainAhead)
+                if (! resultsArray.portionPercent)
+                    resultsArray.portionPercent = [];
+                resultsArray.portionPercent.push(portionPercent)
+            }
 
+            if (optimizeBubble) {
+                if (! resultsArray['price_/_bubble_high'])
+                    resultsArray['price_/_bubble_high'] = [];
+                resultsArray['price_/_bubble_high'].push(priceDivBubble_HIGH)
 
-            if (! resultsArray['price_/_bubble_high'])
-                resultsArray['price_/_bubble_high'] = [];
-            resultsArray['price_/_bubble_high'].push(priceDivBubble_HIGH)
-
-            if (! resultsArray['price_/_bubble_low'])
-                resultsArray['price_/_bubble_low'] = [];
-            resultsArray['price_/_bubble_low'].push(priceDivBubble_LOW);
+                if (! resultsArray['price_/_bubble_low'])
+                    resultsArray['price_/_bubble_low'] = [];
+                resultsArray['price_/_bubble_low'].push(priceDivBubble_LOW);
+            }
 
             if (eliHome) {
                 if (! resultsArray.portion_high)
@@ -579,10 +585,6 @@ const Simulate = (props) => {
                 resultsArray.portion_low.push(PORTION_LOW);
             }
 
-
-            if (! resultsArray.portionPercent)
-                resultsArray.portionPercent = [];
-            resultsArray.portionPercent.push(portionPercent)
 
             // if (! resultsArray.optimizeScale)
             //     resultsArray.optimizeScale = [];
