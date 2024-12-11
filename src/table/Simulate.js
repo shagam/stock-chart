@@ -235,9 +235,17 @@ const Simulate = (props) => {
             return;
         }
 
+        const startYear = startDate.getFullYear();
+        const startMon = startDate.getMonth() + 1;
+        const startDay = startDate.getDate();
+        const startDateArray = [startYear, startMon, startDay]
 
-        var startDateIndex = searchDateInArray (props.gainMap.bubbleLine? bubbleLine.x: props.stockChartXValues, startDate, props.symbol, props.logFlags, setErr)
-        const arrayLen = props.gainMap.bubbleLine? bubbleLine.y.length : props.stockChartXValues.length
+        var startDateIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, props.logFlags, setErr)
+        if (props.gainMap.bubbleLine && bubbleLine && bubbleLine.y.length < startDateIndex)
+            startDateIndex = bubbleLine.y.length;
+
+        // var startDateIndex = searchDateInArray (props.gainMap.bubbleLine? bubbleLine.x: props.stockChartXValues, startDate, props.symbol, props.logFlags, setErr)
+        const arrayLen = startDateIndex;
 
         if ((optimizeBubble && arrayLen - 1 - startWeek <= 0) || (!optimizeBubble && YValues.length - 1 - startWeek < 0) ) {
             setErr ('invalid start week= ', startWeek)
@@ -699,36 +707,53 @@ const Simulate = (props) => {
     const portionArray = [];
     const stocksCount = [];
     const accountValueArray = [];
+    const clippedArrayX = []
+    const clippedArrayY = []
     for (let i = 0; i < logRecordsKeys.length; i++) {
-        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 100;
+        clippedArrayX[i] = props.stockChartXValues[i]
+        clippedArrayY[i] = props.stockChartYValues[i]
+        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 200;
         stocksCount[i] = logRecords[logRecordsKeys[i]]['stocks after'] * 100;
         accountValueArray[i] = logRecords[logRecordsKeys[i]]['account Value']/10;
+
     }
     const a = logRecords
     const logTradeChartData =
     [
-    {
-        name: 'price',
-        x: props.stockChartXValues,
-        y: props.stockChartYValues,
-        type: 'scatter',
-        mode: 'lines',
-      //   marker: { color: 'green' }, 
-        line: {
-          width: 1 
-          }
-    },
-    {
-      name: 'portion',
-      x: logRecordsKeys,
-      y: accountValueArray,
-      type: 'scatter',
-      mode: 'lines',
-    //   marker: { color: 'green' }, 
-      line: {
-        width: 1 
+        {
+            name: 'price',
+            x: clippedArrayX,
+            y: clippedArrayY,
+            type: 'scatter',
+            mode: 'lines',
+        //   marker: { color: 'green' }, 
+            line: {
+            width: 1 
+            }
+        },
+        {
+            name: 'portion',
+            x: logRecordsKeys,
+            y: portionArray,
+            type: 'scatter',
+            mode: 'lines',
+            //   marker: { color: 'green' }, 
+            line: {
+                width: 1 
+                }
+        },
+        {
+            name: 'accountValue',
+            x: logRecordsKeys,
+            y: accountValueArray,
+            type: 'scatter',
+            mode: 'lines',
+            //   marker: { color: 'green' }, 
+            line: {
+                width: 1 
+                }
         }
-    }]
+    ]
 
     return (
         <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
@@ -901,7 +926,7 @@ const Simulate = (props) => {
             <hr/> 
             {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
 
-            {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 750, height: 400, title: title, staticPlot: true,
+            {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
                     xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'stocks portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
 
 
