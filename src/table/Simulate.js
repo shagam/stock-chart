@@ -241,6 +241,8 @@ const Simulate = (props) => {
         const startDateArray = [startYear, startMon, startDay]
 
         var startDateIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, props.logFlags, setErr)
+        if (startDateIndex === -1)
+            startDateIndex = props.stockChartXValues.length - 1 // if date beyond valid dates use array size 
         if (props.gainMap.bubbleLine && bubbleLine && bubbleLine.y.length < startDateIndex)
             startDateIndex = bubbleLine.y.length;
 
