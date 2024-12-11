@@ -231,7 +231,7 @@ function Futures (props) {
               title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
             <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
             <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div>
-            {futuresTxt && <div style={{height:'300px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+            {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
 
