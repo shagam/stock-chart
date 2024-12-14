@@ -710,33 +710,35 @@ const Simulate = (props) => {
     //** Prepare logTradeChart */
     const portionArray = [];
     const stocksCount = [];
-    const accountValueArray = [];
+    const accountGainArray = [];
+    const stockGainArray = []
     const clippedArrayX = []
     const clippedArrayY = []
     for (let i = 0; i < logRecordsKeys.length; i++) {
         clippedArrayX[i] = props.stockChartXValues[i]
         clippedArrayY[i] = props.stockChartYValues[i]
-        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 1000;
+        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 5;
         stocksCount[i] = logRecords[logRecordsKeys[i]]['stocks after'] * 100;
-        accountValueArray[i] = logRecords[logRecordsKeys[i]]['account Value']/10;
+        accountGainArray[i] = logRecords[logRecordsKeys[i]]['account-gain'];
+        stockGainArray[i] = logRecords[logRecordsKeys[i]]['stock-gain']
 
     }
     const a = logRecords
     const logTradeChartData =
     [
+        // {
+        //     name: 'price',
+        //     x: clippedArrayX,
+        //     y: clippedArrayY,
+        //     type: 'scatter',
+        //     mode: 'lines',
+        // //   marker: { color: 'green' }, 
+        //     line: {
+        //     width: 1 
+        //     }
+        // },
         {
-            name: 'price',
-            x: clippedArrayX,
-            y: clippedArrayY,
-            type: 'scatter',
-            mode: 'lines',
-        //   marker: { color: 'green' }, 
-            line: {
-            width: 1 
-            }
-        },
-        {
-            name: 'portion',
+            name: 'portion * 5',
             x: logRecordsKeys,
             y: portionArray,
             type: 'scatter',
@@ -747,16 +749,27 @@ const Simulate = (props) => {
                 }
         },
         {
-            name: 'accountValue',
+            name: 'accountGain',
             x: logRecordsKeys,
-            y: accountValueArray,
+            y: accountGainArray,
             type: 'scatter',
             mode: 'lines',
             //   marker: { color: 'green' }, 
             line: {
                 width: 1 
                 }
-        }
+        },
+        {
+            name: 'stockGain',
+            x: logRecordsKeys,
+            y: stockGainArray,
+            type: 'scatter',
+            mode: 'lines',
+            //   marker: { color: 'green' }, 
+            line: {
+                width: 1 
+                }
+        },        
     ]
 
     return (
@@ -931,7 +944,7 @@ const Simulate = (props) => {
             {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
 
             {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
-                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'stocks portion'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
+                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'gain - portion'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
 
         </div>
