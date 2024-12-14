@@ -704,7 +704,7 @@ const Simulate = (props) => {
         }
     }
 
-    const ROW_SPACING = {padding: "0px 3px 0px 5px", margin: '0px'}
+    const ROW_SPACING = {padding: "0px 5px 0px 8px", margin: '0px'}
     //** top, right, bottom, left*/
 
     //** Prepare logTradeChart */
@@ -916,7 +916,7 @@ const Simulate = (props) => {
                                 <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
                                 {Object.keys(logRecords[s]).map((a,a1) => {
                                     return (
-                                        <td key={a1} style={{padding: '1px', margin: '1px'}} >{logRecords[s][a]}</td>
+                                        <td key={a1} style={ROW_SPACING} >{logRecords[s][a]}</td>
                                     )
                                 })}
                             </tr>
