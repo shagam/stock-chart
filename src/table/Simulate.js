@@ -78,6 +78,7 @@ const Simulate = (props) => {
         setResults()
         setErr()
         setResultsArray({})
+        setLogRecords({}) 
         setLogRecordsKeys([])
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee, props.daily]) 
    
