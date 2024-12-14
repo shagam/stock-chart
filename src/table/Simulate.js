@@ -429,11 +429,11 @@ const Simulate = (props) => {
                     'price / bubble': priceDivBubble.toFixed(2),
                     weekGain: weekGain.toFixed(4),
                     portion: Number(targetPortion).toFixed(3),
-                    'account Value': accountVal.toFixed(2),
-                    'buy Sell': buySell,
-                    'stocks after': stockCount.toFixed(3),
-                    'stocks Traded': stockToTrade.toFixed(3),
-
+                    'account-gain': (accountVal / accountValueInit).toFixed(3),
+                    'stock-gain': (price / YValues[oldestIndex]).toFixed(3),
+                    'buy-Sell': buySell,
+                    'stocks-after': stockCount.toFixed(3),
+                    'stocks-traded': stockToTrade.toFixed(3),
                     index: i,
                     // tradeSum: (stockCount * portionDiff * price).toFixed(2),   
                 }
