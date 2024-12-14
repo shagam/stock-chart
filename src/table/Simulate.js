@@ -75,11 +75,11 @@ const Simulate = (props) => {
     const LOG = props.logFlags && props.logFlags.includes('simulateTrade');
 
     useEffect(() => {
-        // setResults()
+        setResults()
         setErr()
-        // setResultsArray({})
-
-    },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee]) 
+        setResultsArray({})
+        setLogRecordsKeys([])
+    },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee, props.daily]) 
    
     const aggressivePortionInit = portionPercent/100; // between 0 to 1
     var portionMin = aggressivePortionInit;
@@ -724,7 +724,7 @@ const Simulate = (props) => {
 
     }
     const a = logRecords
-    const logTradeChartData =
+    var logTradeChartData =
     [
         // {
         //     name: 'price',
@@ -943,8 +943,9 @@ const Simulate = (props) => {
             <hr/> 
             {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
 
+            {/* account-gain vs stock-gain */}
             {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
-                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'gain - portion'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
+                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'gain vs portion * 5'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
 
         </div>
