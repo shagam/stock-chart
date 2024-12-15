@@ -319,7 +319,7 @@ const Peak2PeakGui = (props) => {
                props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable, setErr)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
 
               {(bubbleCalcSinglePeak || (results && results.timeUnitGain && ! bubbleLineRatio && ! props.gainMap.yBubbleLine) ) && 
-                  <button style={{background: 'aqua', fontWeight: 'bold', textDecoration: "underline overline"}}
+                  <button style={{background: 'magenta', fontWeight: 'bold', textDecoration: "underline overline"}}
                   type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>
               }
 
