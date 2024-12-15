@@ -430,7 +430,7 @@ function MonthGain (props) {
                   <tr key={s1}>
                       <td style={{padding: '2px', margin: '2px', width: '80px'}}>{s1}  </td> 
                       {props.gainMap && props.gainMap[gainMapSym] && <td  style={{padding: '2px', margin: '2px'}}>{props.gainMap[gainMapSym].x[(52 * 30 + weekNumberForDate_0 - s1)%52]}</td>}
-                      <td style= {{padding: '2px', margin: '2px', color: gainColor (s, true)}} color> {s.toFixed(4)} </td>
+                      <td style= {{padding: '2px', margin: '2px', color: gainColor (s, true)}}> {s.toFixed(4)} </td>
                       <td style={{padding: '2px', margin: '2px'}}>{yearsCollectedForAverage[s1]}</td>
 
                   </tr>
