@@ -13,14 +13,14 @@ function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, rows,
         if (priceAlertTable[i].drop === 'true') {
             const threshold = (1 - priceAlertTable[i].percent/100)
             if (priceDivHigh < threshold ){
-                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold, ' > price/High=' +  priceDivHigh])
+                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh])
             }
         }
         else {
             const threshold = (1 + priceAlertTable[i].percent/100)
             const rise = stockChartYValues[0] / stockChartYValues[priceAlertTable[i].risePeriod] ;
             if (rise > threshold )
-                errorAdd ([symbol, ', rise_priceAlert threshold=' + threshold, ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
+                errorAdd ([symbol, ', rise_priceAlert threshold=' + threshold.toFixed(3), ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
         }
     }
 }
