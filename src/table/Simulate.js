@@ -68,7 +68,9 @@ const Simulate = (props) => {
 
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
     const [tradeChartShow, setTradeChartShow] = useState (false);
-    const [startDate, setStartDate] = useState(new Date(2007, 8, 1 )) // sep 1
+    const [startDate, setStartDate] = useState(new Date(2000, 8, 1 )) // sep 1
+    const [logTradeChartData, setLogTradeChartData] = useState ([])
+    const [log, setLog] = useState (false);
 
     const historyLength = props.stockChartXValues.length;
 
@@ -203,7 +205,8 @@ const Simulate = (props) => {
         //** optimize according to bubbleLine */
         var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
         if (priceDivBbubblePrice > 1) {
-            console.log (props.symbol, 'price>bubbl i=' + i, XValues[i],
+            if (log)
+                console.log (props.symbol, 'price>bubbl i=' + i, XValues[i],
             'price='+ symVal.toFixed(2),
             'price/bubble=', priceDivBbubblePrice.toFixed(2),
             'bubblePrice=' + bubbleLine.y[bubbleIndex].toFixed(2))
@@ -229,6 +232,12 @@ const Simulate = (props) => {
 
     //** SIMULATE TRADE */
     function simulateTrade(XValues, YValues) {
+        setResults()
+        setErr()
+        setResultsArray({})
+        setLogRecords({}) 
+        setLogRecordsKeys([])
+
         setErr()
         if (optimizeBubble && optimizeWeekGain) {
             setErr ('error, cannot optimize for both (buble-proximety and weelGain) turn off either ')
@@ -291,9 +300,8 @@ const Simulate = (props) => {
             'transactionFee_$': transactionFee,
             startWeek: startWeek
         }
-        console.log (props.symbol, getDate(), tradeInitInfo); 
-          
-             
+        if (log)
+            console.log (props.symbol, getDate(), tradeInitInfo);       
         
         var timeUnitInterest = Math.pow(1 + interestRate / 100, 1/52)
         if (props.daily)
@@ -326,6 +334,7 @@ const Simulate = (props) => {
         if (optimizeWeekGain && oldestIndex > props.stockChartXValues.length)
             oldestIndex = props.stockChartXValues.length.lenght - 53 // skip first year
 
+        const logRecords_ = []
 
         // trade loop start
         for (let i = oldestIndex; i > 0; i--) {
@@ -445,7 +454,7 @@ const Simulate = (props) => {
                 if (! optimizeWeekGain)
                     delete rec.weekGain
 
-                logRecords[XValues[i]] = rec;
+                logRecords_[XValues[i]] = rec;
                 
             }
             else
@@ -465,13 +474,15 @@ const Simulate = (props) => {
         // }
         } // loopEnd
 
-        setLogRecordsKeys(Object.keys(logRecords))
+        setLogRecords(logRecords_)
+        setLogRecordsKeys(Object.keys(logRecords_))
 
         const gain =  (accountVal/(priceInit*stockCountInit+moneyMarketInit )).toFixed(2)
         // const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
         const yearlyGainDuringPeriod = gain ** (1/yearsDiff)
 
-        console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
+        if (log)
+            console.log (props.symbol, 'trade end, ', 'acountGain=', gain, 'stockGain=', stockGainDuringPeriod.toFixed(2), 'buyCount=', buyCount, 'sellCount=', sellCount)
 
         // avoid exceptions when no trade
         // if (! buyMin) 
@@ -502,23 +513,25 @@ const Simulate = (props) => {
 
             })
 
-            if (! resultsArray.extraGain)  // calc gain obove stock
-                resultsArray.extraGain = []
-            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3)) //** extra gain */
+            const resultsArray_ = {}
+
+            if (! resultsArray_.extraGain)  // calc gain obove stock
+                resultsArray_.extraGain = []
+            resultsArray_.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3)) //** extra gain */
 
 
-            if (! resultsArray.gainOfAccount)
-                resultsArray.gainOfAccount = []
-            resultsArray.gainOfAccount.push(gain)
+            if (! resultsArray_.gainOfAccount)
+                resultsArray_.gainOfAccount = []
+            resultsArray_.gainOfAccount.push(gain)
 
             // if (! resultsArray.yearlyGain)
             //     resultsArray.yearlyGain = [] 
             // resultsArray.yearlyGain.push(yearlyGainDuringPeriod.toFixed(2))
 
 
-            if (! resultsArray.rawGainOfStock)
-                resultsArray.rawGainOfStock = []
-            resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
+            if (! resultsArray_.rawGainOfStock)
+                resultsArray_.rawGainOfStock = []
+            resultsArray_.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
             // if (! resultsArray.stockGainYearly)
             //     resultsArray.stockGainYearly = []
@@ -535,55 +548,55 @@ const Simulate = (props) => {
 
             
             //** input params */
-            if (! resultsArray.params)
-                resultsArray.params = [];
-            resultsArray.params.push('====')
+            if (! resultsArray_.params)
+                resultsArray_.params = [];
+            resultsArray_.params.push('====')
 
-            if (! resultsArray.tradeFlag)
-                resultsArray.tradeFlag = []
-            resultsArray.tradeFlag.push('' + tradeFlag)
+            if (! resultsArray_.tradeFlag)
+                resultsArray_.tradeFlag = []
+            resultsArray_.tradeFlag.push('' + tradeFlag)
 
 
-            if (! resultsArray.optimizeBubble)
-                resultsArray.optimizeBubble = []
-            resultsArray.optimizeBubble.push ('' + optimizeBubble)
+            if (! resultsArray_.optimizeBubble)
+                resultsArray_.optimizeBubble = []
+            resultsArray_.optimizeBubble.push ('' + optimizeBubble)
 
-            if (! resultsArray.optimizeWeekGain)
-                resultsArray.optimizeWeekGain = []
-            resultsArray.optimizeWeekGain.push ('' + optimizeWeekGain)
+            if (! resultsArray_.optimizeWeekGain)
+                resultsArray_.optimizeWeekGain = []
+            resultsArray_.optimizeWeekGain.push ('' + optimizeWeekGain)
 
             if (optimizeWeekGain) {
-                if (! resultsArray.weekGainEnhance)
-                    resultsArray.weekGainEnhance = [];
-                resultsArray.weekGainEnhance.push (weekGainEnhance)
+                if (! resultsArray_.weekGainEnhance)
+                    resultsArray_.weekGainEnhance = [];
+                resultsArray_.weekGainEnhance.push (weekGainEnhance)
 
-                if (! resultsArray.weekGainAhead)
-                    resultsArray.weekGainAhead = [];
-                resultsArray.weekGainAhead.push (weekGainAhead)
+                if (! resultsArray_.weekGainAhead)
+                    resultsArray_.weekGainAhead = [];
+                resultsArray_.weekGainAhead.push (weekGainAhead)
 
-                if (! resultsArray.portionPercent)
-                    resultsArray.portionPercent = [];
-                resultsArray.portionPercent.push(portionPercent)
+                if (! resultsArray_.portionPercent)
+                    resultsArray_.portionPercent = [];
+                resultsArray_.portionPercent.push(portionPercent)
             }
 
             if (optimizeBubble) {
-                if (! resultsArray['price_/_bubble_high'])
-                    resultsArray['price_/_bubble_high'] = [];
-                resultsArray['price_/_bubble_high'].push(priceDivBubble_HIGH)
+                if (! resultsArray_['price_/_bubble_high'])
+                    resultsArray_['price_/_bubble_high'] = [];
+                resultsArray_['price_/_bubble_high'].push(priceDivBubble_HIGH)
 
-                if (! resultsArray['price_/_bubble_low'])
-                    resultsArray['price_/_bubble_low'] = [];
-                resultsArray['price_/_bubble_low'].push(priceDivBubble_LOW);
+                if (! resultsArray_['price_/_bubble_low'])
+                    resultsArray_['price_/_bubble_low'] = [];
+                resultsArray_['price_/_bubble_low'].push(priceDivBubble_LOW);
             }
 
             if (eliHome) {
-                if (! resultsArray.portion_high)
-                    resultsArray.portion_high = [];
-                resultsArray.portion_high.push(PORTION_HIGH)
+                if (! resultsArray_.portion_high)
+                    resultsArray_.portion_high = [];
+                resultsArray_.portion_high.push(PORTION_HIGH)
                 
-                if (! resultsArray.portion_low)
-                    resultsArray.portion_low = [];
-                resultsArray.portion_low.push(PORTION_LOW);
+                if (! resultsArray_.portion_low)
+                    resultsArray_.portion_low = [];
+                resultsArray_.portion_low.push(PORTION_LOW);
             }
 
 
@@ -591,27 +604,27 @@ const Simulate = (props) => {
             //     resultsArray.optimizeScale = [];
             // resultsArray.optimizeScale.push(optimizeScale)
 
-            if (! resultsArray.thresholdPercent)
-                resultsArray.thresholdPercent =[];
-            resultsArray.thresholdPercent.push(thresholdPercent)
+            if (! resultsArray_.thresholdPercent)
+                resultsArray_.thresholdPercent =[];
+            resultsArray_.thresholdPercent.push(thresholdPercent)
 
-            if (! resultsArray.interestRate)
-                resultsArray.interestRate = [];
-            resultsArray.interestRate.push(interestRate)
+            if (! resultsArray_.interestRate)
+                resultsArray_.interestRate = [];
+            resultsArray_.interestRate.push(interestRate)
 
-            if (! resultsArray.transactionFee)
-                resultsArray.transactionFee = [];
-            resultsArray.transactionFee.push(transactionFee)
+            if (! resultsArray_.transactionFee)
+                resultsArray_.transactionFee = [];
+            resultsArray_.transactionFee.push(transactionFee)
 
 
             if (eliHome) {
-                if (! resultsArray.startWeek)
-                    resultsArray.startWeek = [];
-                resultsArray.startWeek.push(startWeek)
+                if (! resultsArray_.startWeek)
+                    resultsArray_.startWeek = [];
+                resultsArray_.startWeek.push(startWeek)
 
-                if (! resultsArray.oldestIndex)
-                    resultsArray.oldestIndex = [];
-                resultsArray.oldestIndex.push(oldestIndex)
+                if (! resultsArray_.oldestIndex)
+                    resultsArray_.oldestIndex = [];
+                resultsArray_.oldestIndex.push(oldestIndex)
                 // if (! resultsArray.accountValueEnd_$)
                 //     resultsArray.accountValueEnd_$ = []
                 // resultsArray.accountValueEnd_$.push(accountVal.toFixed(2))
@@ -621,50 +634,51 @@ const Simulate = (props) => {
                 // resultsArray.accountValInit_$.push(accountValueInit.toFixed(2))
 
                 //** more info */
-                if (! resultsArray.info)
-                    resultsArray.info = [];
-                resultsArray.info.push('====')
+                if (! resultsArray_.info)
+                    resultsArray_.info = [];
+                resultsArray_.info.push('====')
 
 
-                if (! resultsArray.portionMin)
-                    resultsArray.portionMin = [];
-                resultsArray.portionMin.push(Number(portionMin).toFixed(3))
+                if (! resultsArray_.portionMin)
+                    resultsArray_.portionMin = [];
+                resultsArray_.portionMin.push(Number(portionMin).toFixed(3))
                 
-                if (! resultsArray.portionMax)
-                    resultsArray.portionMax = [];
-                resultsArray.portionMax.push(portionMax.toFixed(3))
+                if (! resultsArray_.portionMax)
+                    resultsArray_.portionMax = [];
+                resultsArray_.portionMax.push(portionMax.toFixed(3))
 
 
-                if (! resultsArray.stockCountEnd)
-                    resultsArray.stockCountEnd = []
-                resultsArray.stockCountEnd.push (stockCount.toFixed(2))
+                if (! resultsArray_.stockCountEnd)
+                    resultsArray_.stockCountEnd = []
+                resultsArray_.stockCountEnd.push (stockCount.toFixed(2))
 
-                if (! resultsArray.stockCountInit)
-                    resultsArray.stockCountInit = [];
-                resultsArray.stockCountInit.push(stockCountInit.toFixed(2))
+                if (! resultsArray_.stockCountInit)
+                    resultsArray_.stockCountInit = [];
+                resultsArray_.stockCountInit.push(stockCountInit.toFixed(2))
 
-                if (!resultsArray.moneyMarketEnd_$)
-                    resultsArray.moneyMarketEnd_$ = [];
-                resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
+                if (!resultsArray_.moneyMarketEnd_$)
+                    resultsArray_.moneyMarketEnd_$ = [];
+                resultsArray_.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
 
-                if (! resultsArray.moneyMarketInit_$)
-                    resultsArray.moneyMarketInit_$ = [];
-                resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
+                if (! resultsArray_.moneyMarketInit_$)
+                    resultsArray_.moneyMarketInit_$ = [];
+                resultsArray_.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
             }
 
-            if (! resultsArray.buyCount)
-                resultsArray.buyCount = [];
-            resultsArray.buyCount.push(buyCount);
+            if (! resultsArray_.buyCount)
+                resultsArray_.buyCount = [];
+            resultsArray_.buyCount.push(buyCount);
 
-            if (! resultsArray.sellCount)
-                resultsArray.sellCount = []
-            resultsArray.sellCount.push(sellCount);
+            if (! resultsArray_.sellCount)
+                resultsArray_.sellCount = []
+            resultsArray_.sellCount.push(sellCount);
 
-            if (! resultsArray.tradeSkipCount)
-                resultsArray.tradeSkipCount = [];
-            resultsArray.tradeSkipCount.push(tradeSkipCount)
+            if (! resultsArray_.tradeSkipCount)
+                resultsArray_.tradeSkipCount = [];
+            resultsArray_.tradeSkipCount.push(tradeSkipCount)
 
 
+            setResultsArray(resultsArray_)
 
             // if (! resultsArray.dateStart)
             //     resultsArray.dateStart = []
@@ -679,7 +693,84 @@ const Simulate = (props) => {
             //     resultsArray.priceInit_$ = [];
             // resultsArray.priceInit_$.push(priceInit) 
 
-    }
+
+        //** Prepare logTradeChart */
+        if (logRecords.length === 0) {
+            setErr(props.symbol, 'logRecords empty')
+            return
+        }
+
+        const portionArray = [];
+        const stocksCount = [];
+        const accountGainArray = [];
+        const stockGainArray = []
+        const clippedArrayX = []
+        const clippedArrayY = []
+        const logRecordsKeys_ = Object.keys(logRecords_);
+        for (let i = 0; i < logRecordsKeys_.length; i++) {
+            clippedArrayX[i] = props.stockChartXValues[i]
+            clippedArrayY[i] = props.stockChartYValues[i]
+            portionArray[i] = logRecords_[logRecordsKeys_[i]].portion * 5;
+            stocksCount[i] = logRecords_[logRecordsKeys_[i]]['stocks after'] * 100;
+            accountGainArray[i] = logRecords_[logRecordsKeys_[i]]['account-gain'];
+            stockGainArray[i] = logRecords_[logRecordsKeys_[i]]['stock-gain']
+
+        }
+
+        var logTradeChartData_ =
+        [
+            // {
+            //     name: 'price',
+            //     x: clippedArrayX,
+            //     y: clippedArrayY,
+            //     type: 'scatter',
+            //     mode: 'lines',
+            // //   marker: { color: 'green' }, 
+            //     line: {
+            //     width: 1 
+            //     }
+            // },
+            {
+                name: 'portion * 5',
+                x: logRecordsKeys_,
+                y: portionArray,
+                type: 'scatter',
+                mode: 'lines',
+                //   marker: { color: 'green' }, 
+                line: {
+                    width: 1 
+                    }
+            },
+            {
+                name: 'accountGain',
+                x: logRecordsKeys_,
+                y: accountGainArray,
+                type: 'scatter',
+                mode: 'lines',
+                //   marker: { color: 'green' }, 
+                line: {
+                    width: 1 
+                    }
+            },
+            {
+                name: 'stockGain',
+                x: logRecordsKeys_,
+                y: stockGainArray,
+                type: 'scatter',
+                mode: 'lines',
+                //   marker: { color: 'green' }, 
+                line: {
+                    width: 1 
+                    }
+            },        
+        ]
+
+        setLogTradeChartData(logTradeChartData_)
+        if (log)
+            console.log ('chartDate', logTradeChartData_)
+    }  // simulateTrade
+
+
 
     const title = 'bubbleLine proximity => portion: buy/sell trigger'
     const chartData =
@@ -708,71 +799,7 @@ const Simulate = (props) => {
     const ROW_SPACING = {padding: "0px 5px 0px 8px", margin: '0px'}
     //** top, right, bottom, left*/
 
-    //** Prepare logTradeChart */
-    const portionArray = [];
-    const stocksCount = [];
-    const accountGainArray = [];
-    const stockGainArray = []
-    const clippedArrayX = []
-    const clippedArrayY = []
-    for (let i = 0; i < logRecordsKeys.length; i++) {
-        clippedArrayX[i] = props.stockChartXValues[i]
-        clippedArrayY[i] = props.stockChartYValues[i]
-        portionArray[i] = logRecords[logRecordsKeys[i]].portion * 5;
-        stocksCount[i] = logRecords[logRecordsKeys[i]]['stocks after'] * 100;
-        accountGainArray[i] = logRecords[logRecordsKeys[i]]['account-gain'];
-        stockGainArray[i] = logRecords[logRecordsKeys[i]]['stock-gain']
-
-    }
-    const a = logRecords
-    var logTradeChartData =
-    [
-        // {
-        //     name: 'price',
-        //     x: clippedArrayX,
-        //     y: clippedArrayY,
-        //     type: 'scatter',
-        //     mode: 'lines',
-        // //   marker: { color: 'green' }, 
-        //     line: {
-        //     width: 1 
-        //     }
-        // },
-        {
-            name: 'portion * 5',
-            x: logRecordsKeys,
-            y: portionArray,
-            type: 'scatter',
-            mode: 'lines',
-            //   marker: { color: 'green' }, 
-            line: {
-                width: 1 
-                }
-        },
-        {
-            name: 'accountGain',
-            x: logRecordsKeys,
-            y: accountGainArray,
-            type: 'scatter',
-            mode: 'lines',
-            //   marker: { color: 'green' }, 
-            line: {
-                width: 1 
-                }
-        },
-        {
-            name: 'stockGain',
-            x: logRecordsKeys,
-            y: stockGainArray,
-            type: 'scatter',
-            mode: 'lines',
-            //   marker: { color: 'green' }, 
-            line: {
-                width: 1 
-                }
-        },        
-    ]
-
+ 
     return (
         <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
             <div style = {{display: 'flex'}}>
@@ -794,6 +821,7 @@ const Simulate = (props) => {
 
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
+                &nbsp; {eliHome && <div><input  type="checkbox" checked={log}  onChange={() => setLog (! log)} />&nbsp;log &nbsp;</div>}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
        
                 <div style={{display:'flex'}}>
@@ -909,6 +937,9 @@ const Simulate = (props) => {
 
 
             {/* Disply trade log */}
+            
+            {log && Object.keys(logRecords).length > 0 && console.log (logRecords)}
+            {/* {logRecordsKeys.length > 0 && console.log (logRecordsKeys)} */}
             {logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;trade_log&nbsp; </div>}
 
             {logTrade && logRecordsKeys.length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
@@ -945,7 +976,9 @@ const Simulate = (props) => {
             {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
 
             {/* account-gain vs stock-gain */}
-            {logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
+
+            {log && logTradeChartData.length > 0 && console.log (logTradeChartData)}
+            {logTradeChartData.length > 0 && logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
                     xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'gain vs portion * 5'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
 
