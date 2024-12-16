@@ -344,5 +344,15 @@ function dateToArray (date) {
   return [year,mon,day]
 }
 
+function year2Date () {
+  var date =  new Date();
+  const startYear = date.getFullYear();
+  const startMon = 1;
+  const startDay = 1;
+  const y2d_date = new Date ([startYear, startMon, startDay])
+  return y2d_date;
+}
+
+
 export {yearsDifference, miliDifferenceFromToday, getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date}

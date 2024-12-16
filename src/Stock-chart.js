@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from './utils/Date';
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr, year2Date} from './utils/Date';
 import { keys } from '@material-ui/core/styles/createBreakpoints';
 import {IpContext, getIpInfo} from './contexts/IpContext';
 import Plot from 'react-plotly.js';
@@ -341,8 +341,14 @@ const StockChart = (props) => {
 
   const onOptionChange = e => {
     const mon = e.target.value;
-    setMonths(mon)
 
+    if (mon === 'ytd') {  // yeartoDate
+      const date = year2Date();
+      setChartDate(date)
+      return;
+    } 
+
+    setMonths(mon)
     var date = new Date();
     var formattedDate = format(date, "yyyy-MM-dd");
     var dateArray = formattedDate.split('-');
@@ -381,6 +387,8 @@ const StockChart = (props) => {
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 3_mon</label>
           <input style={{marginRight: '3px', width: '20px'}}  type="radio" name="mon" value='6' id='6' checked={months==='6'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 6_mon</label>
+          <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='ytd' id='ytd' checked={months==='ytd'} onChange={onOptionChange}/>
+            <label style={{marginRight:'10px', paddingRight: '1px'}}> YTD</label>
           <input style={{marginRight: '2px', width: '20px'}}  type="radio" name="mon" value='12' id='12' checked={months==='12'} onChange={onOptionChange}/>
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
 
