@@ -28,7 +28,7 @@ function Futures (props) {
   
     const [NQ, set_NQ] = useState();
 
-    const LOG = props.logFlags.includes("futures");
+    const LOG = logBackEnd; // props.logFlags.includes("futures");
 
     //** selevt future sym */
     const futuresSymList = 
@@ -96,7 +96,7 @@ function Futures (props) {
         if (ignoreSaved)
           url += '&ignoreSaved=true';
   
-        if (logBackEnd)
+        if (LOG)
           console.log (url) // log the url
 
         const mili = Date.now()
@@ -107,7 +107,7 @@ function Futures (props) {
         axios.get (url)
         .then ((result) => {
           setErr()
-          if (result.data) {
+          if (result.data && LOG) {
             console.log (result.data)
           }
           const ver = {}
@@ -131,7 +131,8 @@ function Futures (props) {
             }
             setFuturesArray (arr)
             setVutureArrLastVal(arr[arr.length-1].value.replace(/,/,''))
-            console.log (arr)
+            if (LOG)
+              console.log (arr)
            }
         })
     }
@@ -174,7 +175,7 @@ function Futures (props) {
       if (ignoreSaved)
         url += '&ignoreSaved=true';
 
-      if (logBackEnd)
+      if (LOG)
         console.log (url) // log the url
 
       const mili = Date.now()

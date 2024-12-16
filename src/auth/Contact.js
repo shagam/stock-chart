@@ -30,7 +30,7 @@ export default function ContactUs (props)  {
   const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
   const [logBackEnd, setLogBackEnd] = useState ();
 
-  const LOG = props.logFlags.includes('contact')
+  const LOG = logBackEnd// props.logFlags.includes('contact')
 
     // avoid loop
     function setLog () {

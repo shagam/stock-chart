@@ -34,7 +34,7 @@ export default function ContactGet (props)  {
     
     const [logBackEnd, setLogBackEnd] = useState ();
     
-    const LOG = props.logFlags.includes('contact')
+    const LOG = logBackEnd; // props.logFlags.includes('contact')
     // const searchYear = searchDate.getFullYear();
     // const searchMon = searchDate.getMonth() + 1; // [1..12]
     // const searchDay = searchDate.getDate(); // [1..31]

@@ -74,7 +74,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 
 // get all target Price history for one symbol  // 
 async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, logFlags, errorAdd, ssl, PORT, servSelect, setStatus, logBackEnd) {
-    const LOG = logFlags.includes('target') 
+    const LOG = logBackEnd; // logFlags.includes('target') 
 
      // home server
      var corsUrl = ''

@@ -36,7 +36,7 @@ function Holdings (props) {
 
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
-  const LOG = props.logFlags.includes('holdings')
+  const LOG = logBackEnd; // props.logFlags.includes('holdings')
 
   React.useEffect (() => {
     setErr();
