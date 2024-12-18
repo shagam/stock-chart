@@ -6,21 +6,21 @@ import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 
 
-function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, rows, row_index, stockChartXValues, stockChartYValues) {
+function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
         if (priceAlertTable[i].sym !== symbol)
             continue;
         if (priceAlertTable[i].drop === 'true') {
             const threshold = (1 - priceAlertTable[i].percent/100)
             if (priceDivHigh < threshold ){
-                errorAdd ([symbol, 'drop_priceAlert threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh])
+                errorAdd ([symbol, ', drop_priceAlert, threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh])
             }
         }
         else {
             const threshold = (1 + priceAlertTable[i].percent/100)
             const rise = stockChartYValues[0] / stockChartYValues[priceAlertTable[i].risePeriod] ;
             if (rise > threshold )
-                errorAdd ([symbol, ', rise_priceAlert threshold=' + threshold.toFixed(3), ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
+                errorAdd ([symbol, ', rise_priceAlert, threshold=' + threshold.toFixed(3), ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
         }
     }
 }
@@ -35,6 +35,32 @@ function PriceAlert (props) {
     const {isMobile} = MobileContext();
     const [risePeriod, setRisePeriod] = useState(10)
 
+
+    function checkDropAll () {
+        const sym_list = Object.keys(props.gainMap);
+        console.log (sym_list)
+        console.log (props.gainMap)
+
+        // scan all symbols
+        for (let i = 0; i < sym_list.length; i++) {
+            // calc highest
+            const symGainInfo = props.gainMap[sym_list[i]]
+            var highest = 0;
+            for (let j = 0; j < symGainInfo.y.length; j++) {
+                if (highest < symGainInfo.y[j])
+                    highest = symGainInfo.y[j]
+            }
+
+            // check drop
+            const threshold = (1 - percent/100)
+            const priceDivHigh = symGainInfo.y[0] / highest 
+
+            if (priceDivHigh < threshold)
+                props.errorAdd ([sym_list[i], ', drop_priceAlert, threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh.toFixed(3)])
+
+        }
+        // price 
+    }
 
     function add () {
         if (! percent) {
@@ -78,14 +104,19 @@ function PriceAlert (props) {
 
             {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} />LOG&nbsp;</div>}
             <GetInt init={percent} callBack={setPercent} title={drop_or_rise} type='text' pattern="[0-9\.]+" width = '15%'/> &nbsp;
-            {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>} &nbsp;            
+            {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}         
+            
+            <div>&nbsp;</div>
+            <button  style={{background: 'aqua'}} type="button" onClick={()=>checkDropAll()}> check-drop-all  &nbsp; &nbsp; {percent}% </button> &nbsp;  &nbsp;
+            <div>&nbsp;</div>
+
             <div style={{display:'flex'}}>
-                <button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
+                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
                 drop=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='drop vs rise'/> &nbsp;
 
              </div>
              
-             <div>&nbsp;</div>
+             <div>&nbsp;</div> &nbsp;
              <button  style={{background: 'aqua'}} type="button" onClick={()=>del()}> delete {props.symbol} </button>
        
 

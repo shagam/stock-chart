@@ -444,7 +444,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                   console.log (sym, 'gain year20', rows[row_index].values.year20)  // debug log
               }
 
-              priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd, rows, row_index, stockChartXValuesFunction, stockChartYValuesFunction) 
+              priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd, stockChartXValuesFunction, stockChartYValuesFunction) 
 
               if (saveTabl)
                 saveTable(sym);
