@@ -394,22 +394,23 @@ function StockLists (props) {
                 {eliHome && latency && <div style={{color: 'green'}}>{latency}</div>}
 
                 {/* Local lists  */}
-                <h5 style={{color: 'blue'}}> Local stock lists </h5>
-                <div style={{display: 'flex'}}>
-                    {/* <div style={{padding: '14px'}}>List-name</div> */}
-                    &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName_lower} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
-                    <button onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
-                </div>
+                <div style={{background: '#cceeff'}}> 
+                    <h5 style={{color: 'blue'}}> Local stock lists </h5>
+                    <div style={{display: 'flex'}}>
+                        {/* <div style={{padding: '14px'}}>List-name</div> */}
+                        &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName_lower} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
+                        <button onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
+                    </div>
 
-                <div> &nbsp; </div>
-                <div style={{display:'flex'}}>
-                &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
-                        title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
-                    <button onClick={del} > delete </button>  &nbsp; &nbsp;
-                    <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
-                    <button style={{backgroundColor: 'pink'}} onClick={backendShare} > share_to_backEnd </button> &nbsp; &nbsp; 
+                    <div> &nbsp; </div>
+                    <div style={{display:'flex'}}>
+                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
+                            title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                        <button onClick={del} > delete </button>  &nbsp; &nbsp;
+                        <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
+                        <button style={{backgroundColor: '#00eeff'}} onClick={backendShare} > share_to_backEnd </button> &nbsp; &nbsp; 
+                    </div>
                 </div>
-
 
                 <hr/> 
                 {/* shared Back-end */}
