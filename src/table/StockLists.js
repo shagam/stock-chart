@@ -399,7 +399,7 @@ function StockLists (props) {
                     <div style={{display: 'flex'}}>
                         {/* <div style={{padding: '14px'}}>List-name</div> */}
                         &nbsp; <GlobalFilter className="stock_button_class_" filter={newListName} setFilter={setNewListName_lower} name='newListName' isMobile={false}/>  &nbsp; &nbsp;
-                        <button onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
+                        <button style={{height: '28px', marginTop: '18px'}} onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
                     </div>
 
                     <div> &nbsp; </div>
