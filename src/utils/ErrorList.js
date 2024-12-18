@@ -15,14 +15,18 @@ function ErrorList (props) {
         return txt;
     }
 
+    function clear() {
+        console.log (props.errorList)
+        props.setErrors([])
+    }
+
+
     return (  
   
         <div  >   
-            <div style={{color: 'red'}}>
-                <input 
-                    type="checkbox" checked={visible}
-                    onChange={() => {setVisible (!visible)}}
-                /> errors ({props.errorList.length})
+            <div style={{display: 'flex'}}>
+                <div style={{color: 'red'}} ><input type="checkbox" checked={visible} onChange={() => {setVisible (!visible)}} /> errors ({props.errorList.length}) </div>
+                 &nbsp; &nbsp; <button type="button" onClick={()=>clear()}>Clear </button> 
             </div>
 
             <Container  className='d-flex align-items-left justify-content-left' style={{maxHeight: "25vh", padding: '0px', margin:'0px'}}  > 

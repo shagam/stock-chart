@@ -804,7 +804,7 @@ const BasicTable = (props) => {
           {admin && <div> <strong style={{color: 'red'}}>(admin)</strong>  &nbsp; </div>}
           {/* <div> <Link to="/dashboard" > Login Dashboard </Link>  </div>  */}
         </div>
-        {errors.length > 0 && <ErrorList errorList={errors}/> }
+        {errors.length > 0 && <ErrorList errorList={errors} setErrors={setErrors}/> }
 
         {/* <div>&nbsp;</div> */}
         <div id="buttons_id" style={{display:'flex'}}> 
