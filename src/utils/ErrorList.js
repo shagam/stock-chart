@@ -1,4 +1,6 @@
 import React, {useState} from 'react'
+
+
 // import ComboBox from 'react-responsive-combo-box'
 // import 'react-responsive-combo-box/dist/index.css'
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -16,8 +18,9 @@ function ErrorList (props) {
     }
 
     function clear() {
-        console.log (props.errorList)
+        console.log ('clear', props.errorList)
         props.setErrors([])
+        // beep2()
     }
 
 
