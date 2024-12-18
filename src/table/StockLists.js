@@ -27,10 +27,10 @@ function StockLists (props) {
     const [info, setInfo] = useState()
     const [latency, setLatency] = useState()
     
-    const [logBackEnd, setLogBackEnd] = useState ();
-    const [myIp, setMyIp] = useState ();
-    const [otherIp, setOtherIp] = useState ();
-    const [delOtherIp, setDelOtherIp] = useState ();  // allow to delete others
+    const [logBackEnd, setLogBackEnd] = useState (false);
+    const [myIp, setMyIp] = useState (true);
+    const [otherIp, setOtherIp] = useState (false);
+    const [delOtherIp, setDelOtherIp] = useState (false);  // allow to delete others
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
 
