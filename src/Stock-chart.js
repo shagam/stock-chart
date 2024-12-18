@@ -345,6 +345,7 @@ const StockChart = (props) => {
     if (mon === 'ytd') {  // yeartoDate
       const date = year2Date();
       setChartDate(date)
+      setMonths(mon)
       return;
     } 
 
