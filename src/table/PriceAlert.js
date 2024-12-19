@@ -13,14 +13,14 @@ function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, stock
         if (priceAlertTable[i].drop === 'true') {
             const threshold = (1 - priceAlertTable[i].percent/100)
             if (priceDivHigh < threshold ){
-                errorAdd ([symbol, ', drop_priceAlert, threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh])
+                errorAdd ([symbol, ', drop_alert, threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh])
             }
         }
         else {
             const threshold = (1 + priceAlertTable[i].percent/100)
             const rise = stockChartYValues[0] / stockChartYValues[priceAlertTable[i].risePeriod] ;
             if (rise > threshold )
-                errorAdd ([symbol, ', rise_priceAlert, threshold=' + threshold.toFixed(3), ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
+                errorAdd ([symbol, ', rise_alert, threshold=' + threshold.toFixed(3), ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
         }
     }
 }
@@ -56,7 +56,7 @@ function PriceAlert (props) {
             const priceDivHigh = symGainInfo.y[0] / highest 
 
             if (priceDivHigh < threshold)
-                props.errorAdd ([sym_list[i], ', drop_priceAlert, threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh.toFixed(3)])
+                props.errorAdd ([sym_list[i], ', drop_alert, threshold=' + threshold.toFixed(2), ' > price/High=' +  priceDivHigh.toFixed(2)])
 
         }
         // price 
