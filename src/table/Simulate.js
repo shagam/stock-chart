@@ -68,6 +68,7 @@ const Simulate = (props) => {
 
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
     const [tradeChartShow, setTradeChartShow] = useState (true);
+    const [portionShow, setPortionShow] = useState (false);
     const [startDate, setStartDate] = useState(new Date(2000, 8, 1 )) // sep 1
     const [logTradeChartData, setLogTradeChartData] = useState ([])
     const [log, setLog] = useState (false);
@@ -695,7 +696,7 @@ const Simulate = (props) => {
 
 
         //** Prepare logTradeChart */
-        if (logRecords.length === 0) {
+        if (Object.keys(logRecords_).length === 0) {
             setErr(props.symbol, 'logRecords empty')
             return
         }
@@ -731,17 +732,6 @@ const Simulate = (props) => {
             //     }
             // },
             {
-                name: 'portion * 5',
-                x: logRecordsKeys_,
-                y: portionArray,
-                type: 'scatter',
-                mode: 'lines',
-                //   marker: { color: 'green' }, 
-                line: {
-                    width: 1 
-                    }
-            },
-            {
                 name: 'accountGain=' + resultsArray_.gainOfAccount,
                 x: logRecordsKeys_,
                 y: accountGainArray,
@@ -765,6 +755,19 @@ const Simulate = (props) => {
             },        
         ]
 
+        if (portionShow) 
+            logTradeChartData_.push ( {
+                name: 'portion * 5',
+                x: logRecordsKeys_,
+                y: portionArray,
+                type: 'scatter',
+                mode: 'lines',
+                //   marker: { color: 'green' }, 
+                line: {
+                    width: 1 
+                    }
+            })
+
         // if (bubbleLine)
         //     logTradeChartData_.push ({
         //         name: 'bubbleLine',
@@ -778,7 +781,7 @@ const Simulate = (props) => {
         //             }
         //     })
         if (log)
-            console.log (chartData, logTradeChartData_)
+            console.log ('chartData', 'portionShow=', portionShow,  logTradeChartData_)
 
         setLogTradeChartData(logTradeChartData_)
         if (log)
@@ -915,12 +918,14 @@ const Simulate = (props) => {
              &nbsp;startDate <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} />  &nbsp; &nbsp;
             <div> &nbsp;</div>
 
+            <div> <input type="checkbox" checked={portionShow} onChange={() => setPortionShow (! portionShow)} />&nbsp;show-portion&nbsp; </div>
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
 
             <hr/> 
             {/* account-gain vs stock-gain */}
-            {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
+
+            {logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} />&nbsp;trade_chart&nbsp;&nbsp; </div>}
 
             {log && logTradeChartData.length > 0 && console.log (logTradeChartData)}
             {logTradeChartData.length > 0 && logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
