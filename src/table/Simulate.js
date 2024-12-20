@@ -790,7 +790,11 @@ const Simulate = (props) => {
 
 
 
-    const title = 'symulate-trade'
+    var title = 'trade gain ';
+    if (optimizeBubble)
+        title += ' (optimizeBubble)'
+    if (optimizeWeekGain)
+        title += ' (optimizeWeekGain)'
     const chartData =
       [{
         name: title,
@@ -894,22 +898,21 @@ const Simulate = (props) => {
                     <div style={{fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>Week gain optimize</div>
                 </div>} 
 
-                {optimizeWeekGain && <div >
-                    <div  style = {{display:'flex'}}>
+                {optimizeWeekGain && 
+                    <div  style = {{display:'flex', width: '600px'}}>
                         <GetInt init={portionPercent} callBack={setPortionPercent} title='aggressive %' type='Number' pattern="[0-9]+" width = '20%'/>
                         &nbsp; <GetInt init={weekGainEnhance} callBack={setWeekGainEnhance} title='Enhance' type='text' pattern="[\.0-9]+" width = '15%'/>
                         <GetInt init={weekGainAhead} callBack={setWeekGainAhead} title='weeksAhead' type='Number' pattern="[0-9]+" width = '20%'/>
-                    </div>
-                </div>}
+                    </div>}
             </div>
 
             <hr/> 
 
-            <div style = {{display:'flex'}}>
+            <div style = {{display:'flex', width: '600px'}}>
                 &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+" width = '15%'/>
                 &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/>
             </div>
-            <div style = {{display:'flex'}}>
+            <div style = {{display:'flex', width: '600px'}}>
                 &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+" width = '15%'/>
                 <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>               
             </div>
