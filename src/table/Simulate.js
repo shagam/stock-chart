@@ -67,7 +67,7 @@ const Simulate = (props) => {
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
 
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
-    const [tradeChartShow, setTradeChartShow] = useState (false);
+    const [tradeChartShow, setTradeChartShow] = useState (true);
     const [startDate, setStartDate] = useState(new Date(2000, 8, 1 )) // sep 1
     const [logTradeChartData, setLogTradeChartData] = useState ([])
     const [log, setLog] = useState (false);
@@ -765,6 +765,21 @@ const Simulate = (props) => {
             },        
         ]
 
+        // if (bubbleLine)
+        //     logTradeChartData_.push ({
+        //         name: 'bubbleLine',
+        //         x: bubbleLine.x,
+        //         y: bubbleLine.y,
+        //         type: 'scatter',
+        //         mode: 'lines',
+        //         //   marker: { color: 'green' }, 
+        //         line: {
+        //             width: 1 
+        //             }
+        //     })
+        if (log)
+            console.log (chartData, logTradeChartData_)
+
         setLogTradeChartData(logTradeChartData_)
         if (log)
             console.log ('chartDate', logTradeChartData_)
@@ -772,7 +787,7 @@ const Simulate = (props) => {
 
 
 
-    const title = 'bubbleLine proximity => portion: buy/sell trigger'
+    const title = 'symulate-trade'
     const chartData =
       [{
         name: title,
@@ -903,8 +918,17 @@ const Simulate = (props) => {
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
 
+            <hr/> 
+            {/* account-gain vs stock-gain */}
+            {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
+
+            {log && logTradeChartData.length > 0 && console.log (logTradeChartData)}
+            {logTradeChartData.length > 0 && logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
+                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'gain vs portion * 5'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
+
             {/* Simulation results */}
 
+            <hr/> 
             {Object.keys(resultsArray).length > 0 && <div> <input type="checkbox" checked={tradeInfoShow}  onChange={() => setTradeInfoShow (! tradeInfoShow)} /> &nbsp;tradeInfoShow &nbsp; </div>}
             {tradeInfoShow && <div style={{maxHeight:'300px', maxWidth:'100%', overflow:'auto'}}>
             <table>
@@ -930,14 +954,12 @@ const Simulate = (props) => {
             </table>
             </div>}
 
-            <hr/> 
 
+            <hr/> 
             {eliHome && results && <div> Last simulation info &nbsp;</div>}
             {eliHome && <pre>{JSON.stringify(results, null, 2)}</pre>}
 
-
-            {/* Disply trade log */}
-            
+            {/* Disply trade log */}            
             {log && Object.keys(logRecords).length > 0 && console.log (logRecords)}
             {/* {logRecordsKeys.length > 0 && console.log (logRecordsKeys)} */}
             {logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;trade_log&nbsp; </div>}
@@ -971,16 +993,6 @@ const Simulate = (props) => {
 
                 </table>
             </div> }
-
-            <hr/> 
-            {eliHome && logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} /> &nbsp;trade_chart&nbsp; </div>}
-
-            {/* account-gain vs stock-gain */}
-
-            {log && logTradeChartData.length > 0 && console.log (logTradeChartData)}
-            {logTradeChartData.length > 0 && logRecordsKeys.length > 0 && tradeChartShow && <Plot  data={logTradeChartData } layout={{ width: 650, height: 400, title: title, staticPlot: true,
-                    xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'gain vs portion * 5'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
-
 
         </div>
     )
