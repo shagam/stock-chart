@@ -742,7 +742,7 @@ const Simulate = (props) => {
                     }
             },
             {
-                name: 'accountGain',
+                name: 'accountGain=' + resultsArray_.gainOfAccount,
                 x: logRecordsKeys_,
                 y: accountGainArray,
                 type: 'scatter',
@@ -753,7 +753,7 @@ const Simulate = (props) => {
                     }
             },
             {
-                name: 'stockGain',
+                name: 'stockGain=' + resultsArray_.rawGainOfStock,
                 x: logRecordsKeys_,
                 y: stockGainArray,
                 type: 'scatter',
