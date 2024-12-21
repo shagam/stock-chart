@@ -720,17 +720,6 @@ const Simulate = (props) => {
 
         var logTradeChartData_ =
         [
-            // {
-            //     name: 'price',
-            //     x: clippedArrayX,
-            //     y: clippedArrayY,
-            //     type: 'scatter',
-            //     mode: 'lines',
-            // //   marker: { color: 'green' }, 
-            //     line: {
-            //     width: 1 
-            //     }
-            // },
             {
                 name: 'accountGain=' + resultsArray_.gainOfAccount,
                 x: logRecordsKeys_,
@@ -768,18 +757,6 @@ const Simulate = (props) => {
                     }
             })
 
-        // if (bubbleLine)
-        //     logTradeChartData_.push ({
-        //         name: 'bubbleLine',
-        //         x: bubbleLine.x,
-        //         y: bubbleLine.y,
-        //         type: 'scatter',
-        //         mode: 'lines',
-        //         //   marker: { color: 'green' }, 
-        //         line: {
-        //             width: 1 
-        //             }
-        //     })
         if (log)
             console.log ('chartData', 'portionShow=', portionShow,  logTradeChartData_)
 
