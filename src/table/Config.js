@@ -22,11 +22,15 @@ const  Config = (props) => {
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
+  function purgeTableLoadDefault () {
+    purgeStockTable ()
+    window.location.reload(false);
+  }
+
   function purgeStockTable () {
     for (let index = props.rows.length -1; index >= 0; index--)
       props.rows.splice(index, 1);
     props.saveTable();
-    window.location.reload(false);
   }
 
   function reloadPage() {
@@ -60,14 +64,15 @@ const  Config = (props) => {
 
           {/* ====== Filter buttons */} 
           <div  style={{display:'flex', paddingTop: '5px'}}>
-             <div> <button onClick={purgeStockTable} > Purge stock table </button> </div>
-            <div> &nbsp; <button onClick={columnsHiddenPurge} > Default Hidden columns </button> &nbsp; </div>
+              &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp;&nbsp; 
+            <button onClick={purgeTableLoadDefault} > Purge table default </button> &nbsp;&nbsp; 
+            <button onClick={columnsHiddenPurge} > Default Hidden columns </button>  &nbsp;
             {/* <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div> */}
           </div>
 
-          <div>
-              <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>
-              &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
+          <div style={{display:'flex'}}>
+            &nbsp; <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>&nbsp;
+            &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
           </div>
 
 
