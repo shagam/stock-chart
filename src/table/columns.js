@@ -94,6 +94,11 @@ export const COLUMNS = [
     accessor: 'price'
   },
   {
+    Header: 'Mon',
+    Footer: 'Mon',   
+    accessor: 'mon'
+  },
+  {
     Header: '3Mn',
     Footer: '3Mn',    
     accessor: 'mon3'
@@ -302,7 +307,12 @@ export const GROUPED_COLUMNS = [
         Header: 'price',
         Footer: 'price',    
         accessor: 'price'
-      },      
+      }, 
+      {
+        Header: 'Mon',
+        Footer: 'Mon',  
+        accessor: 'mon'
+      },
       {
         Header: '3Mn',
         Footer: '3Mn',    

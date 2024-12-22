@@ -220,7 +220,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               const updateDate = getDate();
               // var date;
               const todaySplit = todayDateSplit();
-
+              var mon = Number(-1);
               var mon3 = Number(-1);
               var mon6 = Number(-1);
               var year = Number(-1);
@@ -230,6 +230,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               var year20 = Number(-1);
 
               if (weekly) {
+                if (stockChartYValuesFunction.length > 4)
+                  mon = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
                 if (stockChartYValuesFunction.length > 13)
                   mon3 = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[13]).toFixed(2));
                 if (stockChartYValuesFunction.length > 26)
@@ -250,7 +252,12 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
                 if (chartIndex === undefined)
                   return
-              
+
+                dateBackSplit = monthsBack (todaySplit, 1, sym);
+                chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
+                if (chartIndex !== undefined)
+                  mon = ((stockChartYValuesFunction[0] / stockChartYValuesFunction[chartIndex]).toFixed(2));                
+
                 dateBackSplit = monthsBack (todaySplit, 3, sym);
                 chartIndex = searchDateInArray (stockChartXValuesFunction, dateBackSplit, sym, logFlags)
                 if (chartIndex !== undefined)
@@ -290,6 +297,11 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
               //** calc short term yearly gain. latest val given higher wieght, because they are moredense */
               var count = 0;
+              var mon_ = 1;
+              if (mon !== -1) {
+                mon_ = Number(mon) ** 12; //** calc yearly gain */
+                count ++;
+              }
               var mon3_ = 1;
               if (mon3 !== -1) {
                 mon3_ = Number(mon3) ** 4; //** calc yearly gain */
@@ -334,12 +346,12 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
               var short
               if (count !== 0)
-                short = (mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/count)
+                short = (mon_ + mon3_ * mon6_ * year_ * year2_ * year5_ * year10_ * year20_) ** (1/count)
               else
                 short = -1
 
               if (LOG_FLAG)
-              console.log ('sym short gain,  agrgate=', short.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
+              console.log ('sym short gain,  agrgate=', short.toFixed(3), 'mon=', mon_.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
                '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3), 'count=', count)
               rows[row_index].values.short = short.toFixed(3);
 
@@ -362,6 +374,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               // rows[row_index].values.gain_date = updateDate;
 
               //** if (yearlyGain) then will be overiden */
+              if (mon !== -1)
+                rows[row_index].values.mon = mon;
               if (mon3 !== -1)
               rows[row_index].values.mon3 = mon3;
               if (mon3 !== -1)
@@ -389,7 +403,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               rows[row_index].values.splits_list = splitArray;
               // console.log (splits)
               
-              set_QQQ_gain({mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5}) // save gain for commonDatabase gain filter
+              set_QQQ_gain({mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5}) // save gain for commonDatabase gain filter
               targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
             
               try {

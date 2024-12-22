@@ -151,16 +151,16 @@ const BasicTable = (props) => {
   const useData = false;
 
   const cols =      ["symbol", "percent","Exchange","Industry","Sector","Cap","PE","ForwPE","TrailPE","PEG","Div","BETA",
-    "EVToEBITDA","EVToRevenue","PriceToBookRatio",'target','info_date','gap',"price","mon3",'mon6','year','year2','year5',"year10","year20",'short','peak2Peak',"splits_list","splits",
+    "EVToEBITDA","EVToRevenue","PriceToBookRatio",'target','info_date','gap',"price","mon","mon3",'mon6','year','year2','year5',"year10","year20",'short','peak2Peak',"splits_list","splits",
     "gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1",'sym']
 
   const cols_title = ["symbol", "Holdings-percent","Exchange","Industry","Sector","Market Capetalization","Price/Earnings","ForwPE","TrailPE","PEG","Dividand(yearly) / price","BETA (volatility)",
-    "EVToEBITDA","EVToRevenue","PriceToBookRatio",'target - Analysts target price (ratio) 1.2 means expected 20% gain','info_date','gap',"price at end of last trade day","mon3",'mon6','year','year2','year5',"year10","year20",'short - yealy gain (high weight for latest)','peak2Peak (averag yearly gain between last major market crashes)',"splits_list","splits",
+    "EVToEBITDA","EVToRevenue","PriceToBookRatio",'target - Analysts target price (ratio) 1.2 means expected 20% gain','info_date','gap',"price at end of last trade day","mon","mon3",'mon6','year','year2','year5',"year10","year20",'short - yealy gain (high weight for latest)','peak2Peak (averag yearly gain between last major market crashes)',"splits_list","splits",
     "gain_date","deep","recoverWeek (how long it took to get to peak price) ","deepDate","priceDivHigh","verify_1 (compare gain with another site. close to '1' means same)",'sym (symbol)']
 
 
   const hiddenColsDefault = ["percent","Exchange","Industry","Sector","Cap","PE","PEG","TrailPE","ForwPE","ForwPE","Div","BETA","PriceToBookRatio",
-  "EVToEBITDA","EVToRevenue","price","mon3","year10","year20",'short',"splits_list","splits",
+  "EVToEBITDA","EVToRevenue","price","mon","mon3","year10","year20",'short',"splits_list","splits",
   "target","info_date","gap","gain_date","deep","recoverWeek","deepDate","priceDivHigh","verify_1"] 
 
   var hiddenCols = JSON.parse(localStorage.getItem('columnsHidden'))
