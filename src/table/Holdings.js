@@ -25,8 +25,8 @@ function Holdings (props) {
 
   const [count, setCount] =useState(25)
   const [urlLast, setUrlLast] = useState();
-  const [urlCors, setUrlCors] = useState('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/');
-  const [url_holdings_schwab, setUrl_holdings_schwab] = useState('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol );
+  const urlCors = 'https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/';
+  const url_holdings_schwab = 'https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol ;
   const [ignoreSaved, setIgnoreSaved] = useState (false);
   const [logBackEnd, setLogBackEnd] = useState (false);
   const [saveInFile, setSaveInFile] = useState (false);
