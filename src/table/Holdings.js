@@ -26,10 +26,10 @@ function Holdings (props) {
   const [count, setCount] =useState(25)
   const [urlLast, setUrlLast] = useState();
   const [urlCors, setUrlCors] = useState();
-  const [ignoreSaved, setIgnoreSaved] = useState ();
-  const [logBackEnd, setLogBackEnd] = useState ();
-  const [saveInFile, setSaveInFile] = useState ();
-  const [ignoreMismatch, setIgnoreMismatch] = useState ();
+  const [ignoreSaved, setIgnoreSaved] = useState (false);
+  const [logBackEnd, setLogBackEnd] = useState (false);
+  const [saveInFile, setSaveInFile] = useState (false);
+  const [ignoreMismatch, setIgnoreMismatch] = useState (false);
 
   const [percentRegex, setPercentRegex] = useState ();
 
@@ -136,6 +136,9 @@ function Holdings (props) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
       setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
     }
+    if (logBackEnd)
+      console.log (urlCors)
+
 
     corsUrl += '&count=' + count;
 
@@ -256,6 +259,10 @@ function Holdings (props) {
     })
   }
 
+  const openInNewTab = (url) => {
+    window.open(url, "_blank", "noreferrer");
+  };
+
   // display list (of holdings)
   function renderList(array) {
     if (array.length < 1)
@@ -285,7 +292,7 @@ function Holdings (props) {
           <div stype={{display: 'flex'}}>
       
             {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />}&nbsp;IgnoreSaved &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />}&nbsp;LogBackEnd &nbsp; &nbsp;
+            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />}&nbsp;log &nbsp; &nbsp;
             {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  }&nbsp;SaveInFile &nbsp; &nbsp;
             {<input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  }&nbsp;get-even-when-mismatch &nbsp; &nbsp; 
 
@@ -300,6 +307,9 @@ function Holdings (props) {
           <div>  
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
             { <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
+
+            {urlCors && <button onClick={() => openInNewTab(urlCors)}> holdings_tab </button>} &nbsp;
+
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
             {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
           </div> 
