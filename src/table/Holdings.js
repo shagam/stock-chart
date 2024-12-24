@@ -25,7 +25,8 @@ function Holdings (props) {
 
   const [count, setCount] =useState(25)
   const [urlLast, setUrlLast] = useState();
-  const [urlCors, setUrlCors] = useState();
+  const [urlCors, setUrlCors] = useState('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/');
+  const [url_holdings_schwab, setUrl_holdings_schwab] = useState('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol );
   const [ignoreSaved, setIgnoreSaved] = useState (false);
   const [logBackEnd, setLogBackEnd] = useState (false);
   const [saveInFile, setSaveInFile] = useState (false);
@@ -127,14 +128,12 @@ function Holdings (props) {
       corsUrl = "https://";
     else
       corsUrl = "http://";
-    
+
     if (srcNum === 0) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + props.chartSymbol;
-      setUrlCors('https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/')
     }
     else if (srcNum === 1) {
       corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
-      setUrlCors('https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol  )
     }
     if (logBackEnd)
       console.log (urlCors)
@@ -306,9 +305,10 @@ function Holdings (props) {
 
           <div>  
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
-            { <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button>} &nbsp;
+            <button onClick={() => openInNewTab(urlCors)}> holdings_tab_50 </button> &nbsp;
 
-            {urlCors && <button onClick={() => openInNewTab(urlCors)}> holdings_tab </button>} &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button> &nbsp;
+            <button onClick={() => openInNewTab(url_holdings_schwab)}> holdings_tab_20 </button> &nbsp;
 
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
             {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
