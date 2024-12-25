@@ -305,10 +305,10 @@ function Holdings (props) {
 
           <div>  
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
-            <button onClick={() => openInNewTab(urlCors)}> holdings_tab_50 </button> &nbsp;
+            {eliHome && <button onClick={() => openInNewTab(urlCors)}> holdings_tab_50 </button>} &nbsp;
 
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button> &nbsp;
-            <button onClick={() => openInNewTab(url_holdings_schwab)}> holdings_tab_20 </button> &nbsp;
+            {eliHome && <button onClick={() => openInNewTab(url_holdings_schwab)}> holdings_tab_20 </button>} &nbsp;
 
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
             {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
