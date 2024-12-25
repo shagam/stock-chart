@@ -281,6 +281,15 @@ function Holdings (props) {
         {eliHome && <div style={{color: 'blue'}}> {latency}</div>}
       </div>
 
+      <div>&nbsp;</div>
+      {<button onClick={() => openInNewTab(url_holdings_schwab)}> holdings_link ({props.chartSymbol})</button>} &nbsp;
+      {<button onClick={() => openInNewTab(urlCors)}> holdings_link_ ({props.chartSymbol}) </button>} &nbsp;
+      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + props.chartSymbol)}> holdings_link__ ({props.chartSymbol}) </button>} &nbsp;
+
+
+      
+
+      <div>&nbsp;</div>
       <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Allow to insert holdings into stock-table) </h6>
 
       {/* <div>&nbsp; </div> */}
@@ -304,11 +313,8 @@ function Holdings (props) {
           </div>
 
           <div>  
-            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  </button> &nbsp; 
-            {eliHome && <button onClick={() => openInNewTab(urlCors)}> holdings_tab_50 </button>} &nbsp;
-
-            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  </button> &nbsp;
-            {eliHome && <button onClick={() => openInNewTab(url_holdings_schwab)}> holdings_tab_20 </button>} &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  ({props.chartSymbol}) </button> &nbsp; 
+            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  ({props.chartSymbol}) </button> &nbsp;
 
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
             {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
@@ -328,8 +334,8 @@ function Holdings (props) {
         )
       })}
       
-      {LOG && props.eliHome && <div> {urlLast} </div>}
-      {LOG && props.eliHome && <div> {urlCors} </div>}
+      {/* {LOG && props.eliHome && <div> {urlLast} </div>}
+      {LOG && props.eliHome && <div> {urlCors} </div>} */}
 
 
       {/* ====== Display filtered held list */} 
