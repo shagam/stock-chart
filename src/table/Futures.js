@@ -38,7 +38,7 @@ function Futures (props) {
       // '$IXIC': 'today',
 
 
-      NQZ24: '20 Dec 2024',
+      // NQZ24: '20 Dec 2024',
       NQH25: '21_Mar 2025',
       // NQI25: "????",
       NQM25: '20 Jun 2025',
@@ -240,15 +240,20 @@ function Futures (props) {
             {/* {futuresArray.length > 0 && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
             count={futuresArray.length}
             {futuresArray.length > 0 &&
-            <div style={{height:'200px', overflow:'scroll'}}>
+            <div style={{height:'200px', width: '400px', overflow:'scroll'}}>
             <table>
-              <header>
+              <thead>
                 <tr>
                   <th>N</th>
-                  <th>date</th>
-                  <th>value</th>
-                </tr>
-              </header>
+                  {Object.keys(futuresArray[0]).map((s, ind) => {
+                    return (
+                      <th>{s}</th>
+                    )
+                  })
+                }
+              </tr>
+              </thead>
+
               <body>
                   {futuresArray.map((item, index) => {
                     return (
