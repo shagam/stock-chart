@@ -244,6 +244,7 @@ function Futures (props) {
             <table>
               <header>
                 <tr>
+                  <th>N</th>
                   <th>date</th>
                   <th>value</th>
                 </tr>
@@ -252,6 +253,7 @@ function Futures (props) {
                   {futuresArray.map((item, index) => {
                     return (
                       <tr key={index}>
+                        <td style={ROW_SPACING}>{index}</td>
                         <td style={ROW_SPACING}>{item.date}</td>
                         <td style={ROW_SPACING}>{item.value}</td>
                       </tr>
