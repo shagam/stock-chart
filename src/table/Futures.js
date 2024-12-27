@@ -210,7 +210,8 @@ function Futures (props) {
     }
 
 
-    const ROW_SPACING = {padding: "0px 5px 2px 8px", margin: '0px'}
+    const ROW_SPACING = {padding: "5px 5px 2px 8px", margin: '0px'}
+    //** top, right, bottom, left*/
 
     return (
         <div style = {{ border: '2px solid green'}}>
@@ -239,37 +240,40 @@ function Futures (props) {
             {/* {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
             {/* {futuresArray.length > 0 && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
             count={futuresArray.length}
-            {futuresArray.length > 0 &&
-            <div style={{height:'200px', width: '400px', overflow:'scroll'}}>
-            <table>
-              <thead>
-                <tr>
-                  <th>N</th>
-                  {Object.keys(futuresArray[0]).map((s, ind) => {
-                    return (
-                      <th>{s}</th>
-                    )
-                  })
-                }
-              </tr>
-              </thead>
+      
+            {futuresArray.length > 0 &&  <div style={{width: '300px', height: '20vh', 'overflowY': 'scroll'}}>
+              <table>
+                <thead>
+                    <tr>
+                      <th>N</th>
+                        {Object.keys(futuresArray[0]).map((h,h1) => {
+                            return (
+                              <th key={h1}>{h}</th>
+                            )
+                        })}
+                    </tr>
+                </thead>
+                <tbody>  
+                    {futuresArray.map((s, s1) =>{
+                        return (
+                          <tr key={s1}>
+                              <td  style={{padding: '2px', margin: '2px'}}>{s1}</td>
 
-              <body>
-                  {futuresArray.map((item, index) => {
-                    return (
-                      <tr key={index}>
-                        <td style={ROW_SPACING}>{index}</td>
-                        <td style={ROW_SPACING}>{item.date}</td>
-                        <td style={ROW_SPACING}>{item.value}</td>
-                      </tr>
-                    )
-                  })}
-              </body>
+                              {Object.keys(futuresArray[s1]).map((a,a1) => {
+                                  return ( 
+                                      <td  style={{padding: '2px', margin: '2px'}} key={a1} >{futuresArray[s1][a]}</td>
+                                  )
+                                  })
+                              }
+                        
+                          </tr>
+                        )
+                    })}
+                </tbody>
             </table>
-            </div>}
+          </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
-
 
             <hr/> 
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get today NDX nasdaq 100  &nbsp; </h6>
