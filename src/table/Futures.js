@@ -17,7 +17,6 @@ function Futures (props) {
     // const [url, setUrl] = useState ();
     const [err, setErr] = useState ();
 
-    const [futuresTxt, setFuturesText] = useState ({});
     const [futuresArray, setFuturesArray] = useState ([]);
     const [futureArrLastVal, setVutureArrLastVal] = useState ();
 
@@ -71,8 +70,8 @@ function Futures (props) {
 
 
     useEffect (() => {
-        setFuturesText()
         setLatency()
+        setFuturesArray([])
       }, [futureSym])
 
       
@@ -122,12 +121,13 @@ function Futures (props) {
           if ((result.data !== '') && ! result.data.err) {
   
             // result.data['a'] = 'b'
-            setFuturesText(result.data)
             const keys = Object.keys(result.data)
             const arr = []
+
             for (let i = 0; i < keys.length; i++) {
               // arr.push({date:result.data[keys[keys.length - 1 - i]], val:})
-              arr.push({date: keys[i], value: result.data[keys[i]] })
+              // arr.push({date: keys[i], value: result.data[keys[i]] })
+              arr.push({date: keys[keys.length - 1 - i], value: result.data[keys[keys.length -1 - i]] })
             }
             setFuturesArray (arr)
             setVutureArrLastVal(arr[arr.length-1].value.replace(/,/,''))
@@ -209,6 +209,9 @@ function Futures (props) {
       })
     }
 
+
+    const ROW_SPACING = {padding: "0px 5px 2px 8px", margin: '0px'}
+
     return (
         <div style = {{ border: '2px solid green'}}>
           
@@ -229,10 +232,34 @@ function Futures (props) {
 
             {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; Get last price of Nasdaq futures  &nbsp; </h6> */}
             {<div style={{display:'flex'}}> <ComboBoxSelect serv={futureSym} nameList={dateList} setSelect={setFutureSym} 
-              title='futureSelect' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
-            <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future  </button>  &nbsp;
-            <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div>
-            {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresTxt, null, 2)}</pre> </div>}
+              title='future-contract' options={Object.keys(futuresSymList) } defaultValue={futureSym}/> </div>}   {/* Select futureSymbol */}
+            <button style={{background: 'aqua'}} type="button" onClick={()=> nasdaqFutures()}>Nasdaq-future-cotract-get  </button>  &nbsp;
+            {/* <div>{futureSym}  &nbsp;  &nbsp;  {futuresSymList[futureSym]} </div> */}
+
+            {/* {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
+            {/* {futuresArray.length > 0 && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
+            count={futuresArray.length}
+            {futuresArray.length > 0 &&
+            <div style={{height:'200px', overflow:'scroll'}}>
+            <table>
+              <header>
+                <tr>
+                  <th>date</th>
+                  <th>value</th>
+                </tr>
+              </header>
+              <body>
+                  {futuresArray.map((item, index) => {
+                    return (
+                      <tr key={index}>
+                        <td style={ROW_SPACING}>{item.date}</td>
+                        <td style={ROW_SPACING}>{item.value}</td>
+                      </tr>
+                    )
+                  })}
+              </body>
+            </table>
+            </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
 
@@ -244,6 +271,7 @@ function Futures (props) {
             { <div><button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;</div>}
             {urlGetSym && <div>{urlGetSym}</div>}
             {NQ && <div>{NQ}</div>}
+            <div>&nbsp;</div>
         </div>
     )
 }
