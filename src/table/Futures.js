@@ -239,7 +239,7 @@ function Futures (props) {
 
             {/* {futuresTxt && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
             {/* {futuresArray.length > 0 && <div style={{height:'200px', overflow:'scroll'}}>  <pre>{JSON.stringify(futuresArray, null, 2)}</pre> </div>} */}
-            count={futuresArray.length}
+            {futuresArray.length > 0 && <div>count={futuresArray.length} </div>}
       
             {futuresArray.length > 0 &&  <div style={{width: '300px', height: '20vh', 'overflowY': 'scroll'}}>
               <table>
