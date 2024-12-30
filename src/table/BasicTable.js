@@ -661,7 +661,7 @@ const BasicTable = (props) => {
     if (val === undefined || Number(val) === -1 || val === '-1.00')
       return 'Black'
     if (column.id === 'symbol' || column.id === 'sym') 
-        return 'magenta';
+        return 'blue';
     if (column.id === 'verify_1') {
       if (val > 1.2 || val < 0.8)  // inconsistant data
         return 'rgb(250,10,0)' // red '#ff0000'
@@ -825,8 +825,8 @@ const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
 
-          {<div> <button onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>} &nbsp;
-          <button onClick={reloadPage} title='clear table, and load default symbols' > Clear_table </button> &nbsp;                         
+          {<div> <button style={{backgroundColor: '#bbffbb'}} onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>} &nbsp;
+          <button style={{backgroundColor: '#ffccff'}} onClick={reloadPage} title='clear table, and load default symbols' > Clear_table </button> &nbsp;                         
           <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
                 title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp;
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
@@ -855,7 +855,7 @@ const BasicTable = (props) => {
             placeholder="Add stock symbol ..."
             onChange={handleAddFormChange}
           />
-          <button type="submit"> Add  ({rows.length})  </button>
+          <button style={{backgroundColor: '#ff55'}} type="submit"> Add  ({rows.length})  </button>
         </form>
         
       </div>
