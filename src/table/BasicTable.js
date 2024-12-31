@@ -845,9 +845,6 @@ const BasicTable = (props) => {
       {/* insert sym, filter */}
 
       <div style={{display:'flex'}} id="add_stock_id">
-        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile}/>
-          &nbsp;&nbsp;
-
         <form className='w-00 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
           <input style={{width:'145px'}}
             type="text"
@@ -858,6 +855,10 @@ const BasicTable = (props) => {
           />
           <button style={{backgroundColor: '#ff55'}} type="submit"> Add  ({rows.length})  </button>
         </form>&nbsp;&nbsp;
+
+        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile}/>
+          &nbsp;&nbsp;
+
         <div style={{display:'flex', paddingTop: '20px'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> </div>&nbsp;
               <div style={{paddingTop: '20px'}}>column_select </div>
