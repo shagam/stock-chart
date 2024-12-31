@@ -103,7 +103,7 @@ function PriceAlert (props) {
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Price alert setting </h6>
 
             {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} />LOG&nbsp;</div>}
-            <GetInt init={percent} callBack={setPercent} title={drop_or_rise} type='text' pattern="[0-9\.]+" width = '15%'/> &nbsp;
+            <GetInt init={percent} callBack={setPercent} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
             {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}         
             
             <div>&nbsp;</div>
