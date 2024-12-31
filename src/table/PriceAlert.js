@@ -38,8 +38,10 @@ function PriceAlert (props) {
 
     function checkDropAll () {
         const sym_list = Object.keys(props.gainMap);
-        console.log (sym_list)
-        console.log (props.gainMap)
+        if (LOG)
+            console.log (sym_list)
+        if (LOG)
+            console.log (props.gainMap)
 
         // scan all symbols
         for (let i = 0; i < sym_list.length; i++) {
