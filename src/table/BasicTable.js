@@ -835,8 +835,8 @@ const BasicTable = (props) => {
 
           <Toggle names={['gain_factor','year_percent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
             title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>  &nbsp;
-          <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
-              title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp;
+          {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
+              title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
 
             {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
          </div>
@@ -848,7 +848,7 @@ const BasicTable = (props) => {
         <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile}/>
           &nbsp;&nbsp;
 
-        <form className='w-100 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
+        <form className='w-00 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
           <input style={{width:'145px'}}
             type="text"
             name="symbol"
@@ -857,8 +857,10 @@ const BasicTable = (props) => {
             onChange={handleAddFormChange}
           />
           <button style={{backgroundColor: '#ff55'}} type="submit"> Add  ({rows.length})  </button>
-        </form>
-        
+        </form>&nbsp;&nbsp;
+        <div style={{display:'flex', paddingTop: '20px'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
+              title='select which columns are visible and which are hidden'/> </div>&nbsp;
+              <div style={{paddingTop: '20px'}}>column_select </div>
       </div>
 
       {columnHideFlag && 
