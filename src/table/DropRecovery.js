@@ -38,6 +38,10 @@ const DropRecoveryButtons = (props) => {
    const [dropRecoveryInfoExtra, setDropRecoveryInfoExtra] = useState()
 
 
+   if (LOG) {
+      console.log (props)
+   }
+
   //** used by dropRecovery */
   var periodTag;
   if (! props.daily)
@@ -87,7 +91,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       return;
     }
 
-    const END_OF_DAY = false; // ignore in week high low
+    const END_OF_DAY = true; // ignore in week high low
 
     function gainHigh(i) {
       if (END_OF_DAY)
@@ -108,9 +112,9 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     function gainClose(i) {return Number(gainObj[stockChartXValues[i]]['5. adjusted close'])}
-    if (LOG) {
+    if (LOG_DROP) {
       console.log (gainObj[stockChartXValues[stockChartXValues.length-1]])
-      console.log ('high=', gainHigh(stockChartXValues.length-1), 'low=', gainLow(stockChartXValues.length-1), 'close=', gainClose(stockChartXValues.length-1))
+      console.log (StockSymbol, 'high=', gainHigh(stockChartXValues.length-1), 'low=', gainLow(stockChartXValues.length-1), 'close=', gainClose(stockChartXValues.length-1))
     }
     // console.log (gainObj[stockChartXValues[0]]['2. high'], gainObj[stockChartXValues[0]]['3. low'])
     
@@ -176,14 +180,18 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           deepDate = stockChartXValues[i];
         }
       }
-      if (LOG) {
+      if (LOG_DROP) {
         console.log (StockSymbol, 'deep search start', startBeforeDropValue, '(' + stockChartXValues[startBeforeDropIndex] +'}', 
-        'index:', startBeforeDropIndex);
+        'index:', startBeforeDropIndex, 'deepIndex=', deepIndex);
         // console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
       }
+      if (LOG)
+        console.log (StockSymbol, 'deepIndex=' + deepIndex, 'deepPrice=' + deepPrice, deepDate)
     }
 
     const recoverFactor = 0.97; // recover criteria when close enough
+    
+    
     // search for higest befor deep
     const highistBeforeDeep = (errorAdd) => {
       if (startBeforeDropIndex < 0 || deepIndex < 0) {
@@ -191,7 +199,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         // errorAdd([StockSymbol,'DroRecovery: Fail to calc highistBeforeDeep '])
         return;
       }
-      for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
+      for (let i = deepIndex; i <= startBeforeDropIndex + 100; i++) { 
         const price = Number(gainHigh(i))
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
@@ -200,6 +208,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         }
       }
       deep = Math.round (deepPrice / highPriceBeforeDeep * 1000, 3) / 1000;
+      if (LOG)
+        console.log (StockSymbol, 'highBeforeDeep, Index=' + highPriceBeforeDeepIndex, 'highPrice=' + highPriceBeforeDeep, stockChartXValues[highPriceBeforeDeepIndex])
     }
 
     // check for recovery price after deep
@@ -220,7 +230,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             break; // recovery found
         }
       }
-      recoverPeriod = (highPriceAfterDeep > (highPriceBeforeDeep * recoverFactor)) ? highPriceBeforeDeepIndex - recoverIndex : -1;
+      recoverPeriod = recoverIndex === -1 ? -1 : (highPriceAfterDeep > (highPriceBeforeDeep * recoverFactor)) ? highPriceBeforeDeepIndex - recoverIndex : -1;
 
       // avoid multiple cals of deep
       const index = rows.findIndex((row)=> row.values.symbol === StockSymbol);
@@ -248,17 +258,24 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     const startDaysSince1970 = daysFrom1970 (startDateSplit);
     // if (Math.abs (daysFrom1970 (todayDateSplit) - daysFrom1970(startDateSplit)) > 250) {  // more than 6 months
     // deep-recovery
+
+    //
+    //** sequence:   deep, highistBeforeDeep, recoveryWeeks */ 
+    //
     deep_(errorAdd);
     if (startBeforeDropIndex === -1) { // start date out of range
       return;
     }
 
     const gainLostWeeks = gainLostWeeksIfSoldOnDeep (StockSymbol, stockChartYValues, deepIndex, deepPrice, )
+    if (LOG_DROP)
     console.log (StockSymbol, 'gainLostWeeks-IfSoldOnDeep=', gainLostWeeks,
        'date=', stockChartYValues[highPriceBeforeDeepIndex], 'indx=', highPriceBeforeDeepIndex)
 
     highistBeforeDeep(errorAdd);
+    
     recoveryWeeks(errorAdd);
+
     const lastPriceHigh = Number(gainClose(0));
 
     var highestPrice = -1; // highest price
@@ -286,8 +303,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
      var info = {
       symbol: StockSymbol,
       'deepPrice/BubblePrice': deep,
-      recoverYears: (recoverPeriod/52).toFixed(2),
-      recoverWeeks: recoverPeriod,
+      recoverYears: recoverPeriod === -1 ? -1 : (recoverPeriod/52).toFixed(2),
+      recoverWeeks:  recoverPeriod === -1 ? -1 : recoverPeriod,
       deepDate:    deepDate,
     }
 
