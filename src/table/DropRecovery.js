@@ -71,7 +71,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     rows[index].values.deepDate = deepDate;
     rows[index].values.priceDivHigh = Number(priceDivHigh);
     rows[index].values.deepUpdateMili = Date.now();
-    if (LOG_DROP) {
+    if (LOG) {
       console.log(stockSymbol, 'old deep:', rows[index].values.deep, 'recoverIndx:', rows[index].values.recoverWeek,
       'deep date/val:', rows[index].values.deepDate, rows[index].values.priceDivHigh)
 
@@ -108,7 +108,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     function gainClose(i) {return Number(gainObj[stockChartXValues[i]]['5. adjusted close'])}
-    if (LOG_DROP) {
+    if (LOG) {
       console.log (gainObj[stockChartXValues[stockChartXValues.length-1]])
       console.log ('high=', gainHigh(stockChartXValues.length-1), 'low=', gainLow(stockChartXValues.length-1), 'close=', gainClose(stockChartXValues.length-1))
     }
@@ -176,7 +176,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           deepDate = stockChartXValues[i];
         }
       }
-      if (LOG_FLAG) {
+      if (LOG) {
         console.log (StockSymbol, 'deep search start', startBeforeDropValue, '(' + stockChartXValues[startBeforeDropIndex] +'}', 
         'index:', startBeforeDropIndex);
         // console.log (StockSymbol, 'deepPrice:', deepPrice, '('+ deepDate + ')', 'deepIndex:', deepIndex );
@@ -232,7 +232,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       // if (rows[index].values.deep === deep)
       //   return;
 
-      if (LOG_FLAG) {
+      if (LOG) {
         console.log (StockSymbol + ' deepPrice=' + deepPrice + ' ('+ deepDate + ')' + '%c deep=' + deep , 'background: #fff; color: #f53df3' , 'index=' + deepIndex );
         const recoverText = weekly ? 'recoveryWeeks' : 'recoveryDays'
         console.log (StockSymbol, 'highBeforeDeep=' + highPriceBeforeDeep.toFixed(2) + ' ('+ highPriceDateBeforeDeep +')', ' index=' +  highPriceBeforeDeepIndex)
@@ -268,7 +268,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     const priceDivHigh = Number(lastPriceHigh / highestPrice).toFixed(3);
-    if (LOG_FLAG)
+    if (LOG)
       console.log (StockSymbol + ' latestPrice=' + stockChartYValues[0] + ' (' + stockChartXValues[0] +') ' + ' %cprice/highBeforeDrop=' + priceDivHigh, 'background: #fff; color: #f53df3')
     // fill columns in stock table
     // if (recoverPeriod === undefined)
@@ -467,7 +467,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
             &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={dropStartDate} onChange={(date) => setDropStartDate(date)} /> 
-            &nbsp; log &nbsp; <input  type="checkbox" checked={LOG}  onChange={setLOG} /> &nbsp;
+            &nbsp; log &nbsp; <input  type="checkbox" checked={LOG}  onChange={()=>setLOG(! LOG)} /> &nbsp;
           </div>
 
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
