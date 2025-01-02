@@ -91,10 +91,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       return;
     }
 
-    const END_OF_DAY = true; // ignore in week high low
+    const END_OF_DAY = false; // ignore in week high low
 
     function gainHigh(i) {
-      if (END_OF_DAY)
+      const gainObjDate = gainObj[stockChartXValues[i]]
+      if (true) //* overcome alphvantage splits calc bug  
         return  Number(gainObj[stockChartXValues[i]]['5. adjusted close'])
       const high = Number(gainObj[stockChartXValues[i]]['2. high']) * 
         Number(gainObj[stockChartXValues[i]]['5. adjusted close']) / 
@@ -103,7 +104,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     function gainLow(i) {
-      if (END_OF_DAY)
+      if (false)
         return  Number(gainObj[stockChartXValues[i]]['5. adjusted close'])
       const low = Number(gainObj[stockChartXValues[i]]['3. low']) * 
         Number(gainObj[stockChartXValues[i]]['5. adjusted close']) / 
