@@ -981,8 +981,7 @@ const BasicTable = (props) => {
                 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
                     title='Calc average month and week gain over the last 24 years'/>  
-
-                <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> weekGain   </div>
+                <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> monthGain   </div>
 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}
                 title='Strategy for Lavarage ETF like TQQQ (tripple QQQ)'/>
