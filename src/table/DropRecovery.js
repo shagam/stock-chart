@@ -204,7 +204,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
         // errorAdd([StockSymbol,'DroRecovery: Fail to calc highistBeforeDeep '])
         return;
       }
-      for (let i = deepIndex; i <= startBeforeDropIndex + 100; i++) { 
+      for (let i = deepIndex; i <= startBeforeDropIndex; i++) { 
         const price = Number(gainHigh(i))
         if (highPriceBeforeDeep < price) {  // at least weeks to recover
           highPriceBeforeDeep  = price;
