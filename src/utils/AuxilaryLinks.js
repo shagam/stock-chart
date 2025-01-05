@@ -36,7 +36,11 @@ function AuxilaryLinks () {
             {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
             <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
             <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp;      
-            {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech </button>}
+            {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech </button>} &nbsp; 
+            {<button role="link" onClick={() => openInNewTab('https://www.quiverquant.com')}>Quiver-trade</button>}&nbsp;  
+            {<button role="link" onClick={() => openInNewTab('https://www.capitoltrades.com/trades')}> Capitol-trade</button>}
+
+            
 
         </div>
         <hr/> 
