@@ -377,7 +377,7 @@ const Simulate = (props) => {
                     // buy stocks.
                     buySell = 'buy '
                     if (moneyMarket - tradeSum < 0) {
-                        console.log (XValues[i], 'error, skipTrade,  tradeSum=', tradeSum.toFixed(2), ' is more than moneyMarket', moneyMarket.toFixed(2), 'targetPortion', targetPortion.toFixed(3))
+                        console.log (props.symbol, 'i=', i, XValues[i], 'error, skipTrade,  tradeSum=', tradeSum.toFixed(2), ' is more than moneyMarket', moneyMarket.toFixed(2), 'targetPortion', targetPortion.toFixed(3))
                         continue;
                     }
                     stockCount += stockToTrade;
@@ -391,7 +391,7 @@ const Simulate = (props) => {
                      // sell stocks
                     buySell = 'sell'
                     if ((stockCount + stockToTrade ) < 0) {
-                        console.log (XValues[i], 'error, skipTrade, stockToTrade=', stockToTrade.toFioxed(2), 'is more than stockCount=', stockCount, 'targetPortion', targetPortion.toFixed(3))
+                        console.log (props.symbol, 'i=', i, XValues[i], 'error, skipTrade, stockToTrade=', stockToTrade.toFioxed(2), 'is more than stockCount=', stockCount, 'targetPortion', targetPortion.toFixed(3))
                         continue;
                     }
                      stockCount += stockToTrade; // negastive or 
