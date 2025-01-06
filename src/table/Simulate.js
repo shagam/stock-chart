@@ -85,7 +85,7 @@ const Simulate = (props) => {
         setLogRecords({}) 
         setLogRecordsFull({}) 
         setLogRecordsKeys([])
-    },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee, props.daily]) 
+    },[props.symbol,  startWeek, props.daily]) 
    
     const aggressivePortionInit = portionPercent/100; // between 0 to 1
     var portionMin = aggressivePortionInit;
@@ -316,7 +316,7 @@ const Simulate = (props) => {
         const yearsDiff = yearsDifference (XValues[oldestIndex], XValues[0])
         const stockGainYearly = stockGainDuringPeriod ** (1 / yearsDiff)
 
-        var stockToTrade;
+        var stockToTrade = 0; // 0 for skip
         var buyCount = 0;
         var sellCount = 0;
         var tradeSkipCount = 0;
@@ -367,7 +367,7 @@ const Simulate = (props) => {
             const portionCurrent = price*stockCount / accountVal // actual
             const portionDiff = targetPortion - portionCurrent;  //  recomended - actual 
             var buySell;
-            if (tradeFlag 
+            if (tradeFlag && Math.abs(portionDiff) > (thresholdPercent / 100)
                  && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
                 //** If up sell */
                 stockToTrade = (stockCount * portionDiff);
@@ -400,69 +400,72 @@ const Simulate = (props) => {
                      sellCount ++;
                      sellSumTotal -= tradeSum;
                 }
-
-                if (moneyMarket < moneyMarketMin)
-                    moneyMarketMin = moneyMarket;
-                if (moneyMarket > moneyMarketMax)
-                    moneyMarketMax = moneyMarket;
-
-                //** verify transaction does not change account value. */
-                accountVal = price*stockCount + moneyMarket;
-                if (Math.abs(accountValBeforeTrade - accountVal) >  2*transactionFee + 0.01) {
-                    console.log ('accountVal trade diff, before=', accountValBeforeTrade.toFixed(2), ' after=', accountVal.toFixed(2))
-                }
-
-                //** log transaction */                   
-                var priceDivBubble = -1
-                if (optimizeBubble && i < XValues.length && i < bubbleLine.y.length)
-                    priceDivBubble = YValues[i] / bubbleLine.y[i]
-
-                //     console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
-                //     //  'portionBefore=' + portionCurrent.toFixed(3),
-                //         'price/bubble=' + priceDivBubble.toFixed(2),
-                //         'portion=' + Number(targetPortion).toFixed(3),
-                //         'accountVal='+ accountVal.toFixed(2),
-                //     //  'stockValue=', stockCount * price,
-                //     //  'moneyMarkt=', moneyMarket.toFixed(2),
-                //     ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2),
-                //     'stockCount=' + stockCount.toFixed(2)
-                // )
-
-
-                //** calc weekGain for week */
-                var weekGain = -1
-                if (optimizeWeekGain) {
-                    const weekNum = weekOfYearGet (XValues, i, props.logFlags) 
-                    if (weekNum !== -1) //** not found */
-                        weekGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
-                }
-
-                const rec = {
-                    date:  XValues[i].replace(/-/g,'.'),
-                    price:  price.toFixed(2),
-                    'price / bubble': priceDivBubble.toFixed(2),
-                    weekGain: weekGain.toFixed(4),
-                    portion: Number(targetPortion).toFixed(3),
-                    'account-gain': (accountVal / accountValueInit).toFixed(3),
-                    'stock-gain': (price / YValues[oldestIndex]).toFixed(3),
-                    'buy-Sell': buySell,
-                    'stocks-after': stockCount.toFixed(3),
-                    'stocks-traded': stockToTrade.toFixed(3),
-                    index: i,
-                    // tradeSum: (stockCount * portionDiff * price).toFixed(2),   
-                }
-                
-                // remove non relevant attributes from log
-                if (! optimizeBubble)
-                    delete rec['price / bubble']
-                if (! optimizeWeekGain)
-                    delete rec.weekGain
-
-                logRecords_[XValues[i]] = rec;
-                
+            } else {
+                buySell = 'skip'
+                tradeSkipCount ++; 
+                // console.log (props.symbol, 'skipTrade,  i=', i,)              
             }
-            else
-            tradeSkipCount ++;
+
+
+            if (moneyMarket < moneyMarketMin)
+                moneyMarketMin = moneyMarket;
+            if (moneyMarket > moneyMarketMax)
+                moneyMarketMax = moneyMarket;
+
+            //** verify transaction does not change account value. */
+            accountVal = price*stockCount + moneyMarket;
+            if (Math.abs(accountValBeforeTrade - accountVal) >  2*transactionFee + 0.01) {
+                console.log ('accountVal trade diff, before=', accountValBeforeTrade.toFixed(2), ' after=', accountVal.toFixed(2))
+            }
+
+            //** log transaction */                   
+            var priceDivBubble = -1
+            if (optimizeBubble && i < XValues.length && i < bubbleLine.y.length)
+                priceDivBubble = YValues[i] / bubbleLine.y[i]
+
+            //     console.log (props.symbol, 'tradeInfo i=' + i, XValues[i], 'price=' + price.toFixed(2),
+            //     //  'portionBefore=' + portionCurrent.toFixed(3),
+            //         'price/bubble=' + priceDivBubble.toFixed(2),
+            //         'portion=' + Number(targetPortion).toFixed(3),
+            //         'accountVal='+ accountVal.toFixed(2),
+            //     //  'stockValue=', stockCount * price,
+            //     //  'moneyMarkt=', moneyMarket.toFixed(2),
+            //     ' ' + buySell, 'tradeSum=' + (stockCount * portionDiff * price).toFixed(2),
+            //     'stockCount=' + stockCount.toFixed(2)
+            // )
+
+
+            //** calc weekGain for week */
+            var weekGain = -1
+            if (optimizeWeekGain) {
+                const weekNum = weekOfYearGet (XValues, i, props.logFlags) 
+                if (weekNum !== -1) //** not found */
+                    weekGain = props.monthGainData.weekGainArray[weekNum];  // look forward closer to 0
+            }
+
+            const rec = {
+                date:  XValues[i].replace(/-/g,'.'),
+                price:  price.toFixed(2),
+                'price / bubble': priceDivBubble.toFixed(2),
+                weekGain: weekGain.toFixed(4),
+                portion: Number(targetPortion).toFixed(3),
+                'account-gain': (accountVal / accountValueInit).toFixed(3),
+                'stock-gain': (price / YValues[oldestIndex]).toFixed(3),
+                'buy-Sell': buySell,
+                'stocks-after': stockCount.toFixed(3),
+                'stocks-traded': stockToTrade.toFixed(3),
+                index: i,
+                // tradeSum: (stockCount * portionDiff * price).toFixed(2),   
+            }
+            
+            // remove non relevant attributes from log
+            if (! optimizeBubble)
+                delete rec['price / bubble']
+            if (! optimizeWeekGain)
+                delete rec.weekGain
+
+            logRecords_[XValues[i]] = rec;
+
 
             // //** weekly interest of money market */
             moneyMarket *= timeUnitInterest; 
@@ -723,7 +726,7 @@ const Simulate = (props) => {
         var logTradeChartData_ =
         [
             {
-                name: 'accountGain=' + resultsArray.gainOfAccount,
+                name: 'accountGain=' + gain,
                 x: logRecordsKeys_,
                 y: accountGainArray,
                 type: 'scatter',
@@ -734,7 +737,7 @@ const Simulate = (props) => {
                     }
             },
             {
-                name: 'stockGain=' + resultsArray.rawGainOfStock,
+                name: 'stockGain=' + stockGainDuringPeriod.toFixed(2),
                 x: logRecordsKeys_,
                 y: stockGainArray,
                 type: 'scatter',
