@@ -60,12 +60,13 @@ const Simulate = (props) => {
     const [portionWeekGain, setPortionWeekGain] = useState (-1);
 
     const [logRecords, setLogRecords] = useState({}) // log of trades
+    const [logRecordsFull, setLogRecordsFull] = useState({})
     const [logRecordsKeys, setLogRecordsKeys] = useState([]) 
+    const [logFull, setLogFull] = useState(false)
 
     const [results, setResults] = useState ();
     const [err, setErr] =  useState ();
     const [resultsArray, setResultsArray] = useState({})  //** holds all results for display in table */
-
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
     const [tradeChartShow, setTradeChartShow] = useState (true);
     const [portionShow, setPortionShow] = useState (false);
@@ -82,6 +83,7 @@ const Simulate = (props) => {
         setErr()
         setResultsArray({})
         setLogRecords({}) 
+        setLogRecordsFull({}) 
         setLogRecordsKeys([])
     },[props.symbol, accountValueInit, portionPercent, startWeek, thresholdPercent, interestRate, transactionFee, props.daily]) 
    
@@ -233,9 +235,9 @@ const Simulate = (props) => {
 
     //** SIMULATE TRADE */
     function simulateTrade(XValues, YValues) {
-        setResults()
+        // setResults()
         setErr()
-        setResultsArray({})
+        // setResultsArray({})
         setLogRecords({}) 
         setLogRecordsKeys([])
 
@@ -336,6 +338,7 @@ const Simulate = (props) => {
             oldestIndex = props.stockChartXValues.length.lenght - 53 // skip first year
 
         const logRecords_ = []
+        const logRecordsFull_ = []
 
         // trade loop start
         for (let i = oldestIndex; i > 0; i--) {
@@ -364,7 +367,7 @@ const Simulate = (props) => {
             const portionCurrent = price*stockCount / accountVal // actual
             const portionDiff = targetPortion - portionCurrent;  //  recomended - actual 
             var buySell;
-            if (tradeFlag && Math.abs(portionDiff) > (thresholdPercent / 100)
+            if (tradeFlag 
                  && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
                 //** If up sell */
                 stockToTrade = (stockCount * portionDiff);
@@ -514,25 +517,25 @@ const Simulate = (props) => {
 
             })
 
-            const resultsArray_ = {}
-
-            if (! resultsArray_.extraGain)  // calc gain obove stock
-                resultsArray_.extraGain = []
-            resultsArray_.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3)) //** extra gain */
 
 
-            if (! resultsArray_.gainOfAccount)
-                resultsArray_.gainOfAccount = []
-            resultsArray_.gainOfAccount.push(gain)
+            if (! resultsArray.extraGain)  // calc gain obove stock
+                resultsArray.extraGain = []
+            resultsArray.extraGain.push ((gain / stockGainDuringPeriod).toFixed(3)) //** extra gain */
+
+
+            if (! resultsArray.gainOfAccount)
+                resultsArray.gainOfAccount = []
+            resultsArray.gainOfAccount.push(gain)
 
             // if (! resultsArray.yearlyGain)
             //     resultsArray.yearlyGain = [] 
             // resultsArray.yearlyGain.push(yearlyGainDuringPeriod.toFixed(2))
 
 
-            if (! resultsArray_.rawGainOfStock)
-                resultsArray_.rawGainOfStock = []
-            resultsArray_.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
+            if (! resultsArray.rawGainOfStock)
+                resultsArray.rawGainOfStock = []
+            resultsArray.rawGainOfStock.push (stockGainDuringPeriod.toFixed(2))
 
             // if (! resultsArray.stockGainYearly)
             //     resultsArray.stockGainYearly = []
@@ -549,55 +552,55 @@ const Simulate = (props) => {
 
             
             //** input params */
-            if (! resultsArray_.params)
-                resultsArray_.params = [];
-            resultsArray_.params.push('====')
+            if (! resultsArray.params)
+                resultsArray.params = [];
+            resultsArray.params.push('====')
 
-            if (! resultsArray_.tradeFlag)
-                resultsArray_.tradeFlag = []
-            resultsArray_.tradeFlag.push('' + tradeFlag)
+            if (! resultsArray.tradeFlag)
+                resultsArray.tradeFlag = []
+            resultsArray.tradeFlag.push('' + tradeFlag)
 
 
-            if (! resultsArray_.optimizeBubble)
-                resultsArray_.optimizeBubble = []
-            resultsArray_.optimizeBubble.push ('' + optimizeBubble)
+            if (! resultsArray.optimizeBubble)
+                resultsArray.optimizeBubble = []
+            resultsArray.optimizeBubble.push ('' + optimizeBubble)
 
-            if (! resultsArray_.optimizeWeekGain)
-                resultsArray_.optimizeWeekGain = []
-            resultsArray_.optimizeWeekGain.push ('' + optimizeWeekGain)
+            if (! resultsArray.optimizeWeekGain)
+                resultsArray.optimizeWeekGain = []
+            resultsArray.optimizeWeekGain.push ('' + optimizeWeekGain)
 
             if (optimizeWeekGain) {
-                if (! resultsArray_.weekGainEnhance)
-                    resultsArray_.weekGainEnhance = [];
-                resultsArray_.weekGainEnhance.push (weekGainEnhance)
+                if (! resultsArray.weekGainEnhance)
+                    resultsArray.weekGainEnhance = [];
+                resultsArray.weekGainEnhance.push (weekGainEnhance)
 
-                if (! resultsArray_.weekGainAhead)
-                    resultsArray_.weekGainAhead = [];
-                resultsArray_.weekGainAhead.push (weekGainAhead)
+                if (! resultsArray.weekGainAhead)
+                    resultsArray.weekGainAhead = [];
+                resultsArray.weekGainAhead.push (weekGainAhead)
 
-                if (! resultsArray_.portionPercent)
-                    resultsArray_.portionPercent = [];
-                resultsArray_.portionPercent.push(portionPercent)
+                if (! resultsArray.portionPercent)
+                    resultsArray.portionPercent = [];
+                resultsArray.portionPercent.push(portionPercent)
             }
 
             if (optimizeBubble) {
-                if (! resultsArray_['price_/_bubble_high'])
-                    resultsArray_['price_/_bubble_high'] = [];
-                resultsArray_['price_/_bubble_high'].push(priceDivBubble_HIGH)
+                if (! resultsArray['price_/_bubble_high'])
+                    resultsArray['price_/_bubble_high'] = [];
+                resultsArray['price_/_bubble_high'].push(priceDivBubble_HIGH)
 
-                if (! resultsArray_['price_/_bubble_low'])
-                    resultsArray_['price_/_bubble_low'] = [];
-                resultsArray_['price_/_bubble_low'].push(priceDivBubble_LOW);
+                if (! resultsArray['price_/_bubble_low'])
+                    resultsArray['price_/_bubble_low'] = [];
+                resultsArray['price_/_bubble_low'].push(priceDivBubble_LOW);
             }
 
             if (eliHome) {
-                if (! resultsArray_.portion_high)
-                    resultsArray_.portion_high = [];
-                resultsArray_.portion_high.push(PORTION_HIGH)
+                if (! resultsArray.portion_high)
+                    resultsArray.portion_high = [];
+                resultsArray.portion_high.push(PORTION_HIGH)
                 
-                if (! resultsArray_.portion_low)
-                    resultsArray_.portion_low = [];
-                resultsArray_.portion_low.push(PORTION_LOW);
+                if (! resultsArray.portion_low)
+                    resultsArray.portion_low = [];
+                resultsArray.portion_low.push(PORTION_LOW);
             }
 
 
@@ -605,27 +608,27 @@ const Simulate = (props) => {
             //     resultsArray.optimizeScale = [];
             // resultsArray.optimizeScale.push(optimizeScale)
 
-            if (! resultsArray_.thresholdPercent)
-                resultsArray_.thresholdPercent =[];
-            resultsArray_.thresholdPercent.push(thresholdPercent)
+            if (! resultsArray.thresholdPercent)
+                resultsArray.thresholdPercent =[];
+            resultsArray.thresholdPercent.push(thresholdPercent)
 
-            if (! resultsArray_.interestRate)
-                resultsArray_.interestRate = [];
-            resultsArray_.interestRate.push(interestRate)
+            if (! resultsArray.interestRate)
+                resultsArray.interestRate = [];
+            resultsArray.interestRate.push(interestRate)
 
-            if (! resultsArray_.transactionFee)
-                resultsArray_.transactionFee = [];
-            resultsArray_.transactionFee.push(transactionFee)
+            if (! resultsArray.transactionFee)
+                resultsArray.transactionFee = [];
+            resultsArray.transactionFee.push(transactionFee)
 
 
             if (eliHome) {
-                if (! resultsArray_.startWeek)
-                    resultsArray_.startWeek = [];
-                resultsArray_.startWeek.push(startWeek)
+                if (! resultsArray.startWeek)
+                    resultsArray.startWeek = [];
+                resultsArray.startWeek.push(startWeek)
 
-                if (! resultsArray_.oldestIndex)
-                    resultsArray_.oldestIndex = [];
-                resultsArray_.oldestIndex.push(oldestIndex)
+                if (! resultsArray.oldestIndex)
+                    resultsArray.oldestIndex = [];
+                resultsArray.oldestIndex.push(oldestIndex)
                 // if (! resultsArray.accountValueEnd_$)
                 //     resultsArray.accountValueEnd_$ = []
                 // resultsArray.accountValueEnd_$.push(accountVal.toFixed(2))
@@ -635,51 +638,50 @@ const Simulate = (props) => {
                 // resultsArray.accountValInit_$.push(accountValueInit.toFixed(2))
 
                 //** more info */
-                if (! resultsArray_.info)
-                    resultsArray_.info = [];
-                resultsArray_.info.push('====')
+                if (! resultsArray.info)
+                    resultsArray.info = [];
+                resultsArray.info.push('====')
 
 
-                if (! resultsArray_.portionMin)
-                    resultsArray_.portionMin = [];
-                resultsArray_.portionMin.push(Number(portionMin).toFixed(3))
+                if (! resultsArray.portionMin)
+                    resultsArray.portionMin = [];
+                resultsArray.portionMin.push(Number(portionMin).toFixed(3))
                 
-                if (! resultsArray_.portionMax)
-                    resultsArray_.portionMax = [];
-                resultsArray_.portionMax.push(portionMax.toFixed(3))
+                if (! resultsArray.portionMax)
+                    resultsArray.portionMax = [];
+                resultsArray.portionMax.push(portionMax.toFixed(3))
 
 
-                if (! resultsArray_.stockCountEnd)
-                    resultsArray_.stockCountEnd = []
-                resultsArray_.stockCountEnd.push (stockCount.toFixed(2))
+                if (! resultsArray.stockCountEnd)
+                    resultsArray.stockCountEnd = []
+                resultsArray.stockCountEnd.push (stockCount.toFixed(2))
 
-                if (! resultsArray_.stockCountInit)
-                    resultsArray_.stockCountInit = [];
-                resultsArray_.stockCountInit.push(stockCountInit.toFixed(2))
+                if (! resultsArray.stockCountInit)
+                    resultsArray.stockCountInit = [];
+                resultsArray.stockCountInit.push(stockCountInit.toFixed(2))
 
-                if (!resultsArray_.moneyMarketEnd_$)
-                    resultsArray_.moneyMarketEnd_$ = [];
-                resultsArray_.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
+                if (!resultsArray.moneyMarketEnd_$)
+                    resultsArray.moneyMarketEnd_$ = [];
+                resultsArray.moneyMarketEnd_$.push(moneyMarket.toFixed(0))
 
-                if (! resultsArray_.moneyMarketInit_$)
-                    resultsArray_.moneyMarketInit_$ = [];
-                resultsArray_.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
+                if (! resultsArray.moneyMarketInit_$)
+                    resultsArray.moneyMarketInit_$ = [];
+                resultsArray.moneyMarketInit_$.push(moneyMarketInit.toFixed(1))
             }
 
-            if (! resultsArray_.buyCount)
-                resultsArray_.buyCount = [];
-            resultsArray_.buyCount.push(buyCount);
+            if (! resultsArray.buyCount)
+                resultsArray.buyCount = [];
+            resultsArray.buyCount.push(buyCount);
 
-            if (! resultsArray_.sellCount)
-                resultsArray_.sellCount = []
-            resultsArray_.sellCount.push(sellCount);
+            if (! resultsArray.sellCount)
+                resultsArray.sellCount = []
+            resultsArray.sellCount.push(sellCount);
 
-            if (! resultsArray_.tradeSkipCount)
-                resultsArray_.tradeSkipCount = [];
-            resultsArray_.tradeSkipCount.push(tradeSkipCount)
+            if (! resultsArray.tradeSkipCount)
+                resultsArray.tradeSkipCount = [];
+            resultsArray.tradeSkipCount.push(tradeSkipCount)
 
 
-            setResultsArray(resultsArray_)
 
             // if (! resultsArray.dateStart)
             //     resultsArray.dateStart = []
@@ -721,7 +723,7 @@ const Simulate = (props) => {
         var logTradeChartData_ =
         [
             {
-                name: 'accountGain=' + resultsArray_.gainOfAccount,
+                name: 'accountGain=' + resultsArray.gainOfAccount,
                 x: logRecordsKeys_,
                 y: accountGainArray,
                 type: 'scatter',
@@ -732,7 +734,7 @@ const Simulate = (props) => {
                     }
             },
             {
-                name: 'stockGain=' + resultsArray_.rawGainOfStock,
+                name: 'stockGain=' + resultsArray.rawGainOfStock,
                 x: logRecordsKeys_,
                 y: stockGainArray,
                 type: 'scatter',
@@ -821,7 +823,8 @@ const Simulate = (props) => {
             <div style={{display: 'flex'}}>
                 {/* Optimize checkboxes */}
                 &nbsp; {eliHome && <div><input  type="checkbox" checked={log}  onChange={() => setLog (! log)} />&nbsp;log &nbsp;</div>}
-                <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;  
+                <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;
+                {eliHome && <div> <input type="checkbox" checked={logFull} onChange={() => setLogFull (! logFull)} />&nbsp;log-full&nbsp; </div>}
        
                 <div style={{display:'flex'}}>
                     {/* <div style={{color:'magenta'}}> Optimize: &nbsp;   </div>  */}
@@ -948,6 +951,8 @@ const Simulate = (props) => {
             {log && Object.keys(logRecords).length > 0 && console.log (logRecords)}
             {/* {logRecordsKeys.length > 0 && console.log (logRecordsKeys)} */}
             {logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={logTrade}  onChange={() => setLogTrade (! logTrade)} /> &nbsp;trade_log&nbsp; </div>}
+
+            {logRecordsKeys.length > 0 && <div>count={logRecordsKeys.length}</div>}
 
             {logTrade && logRecordsKeys.length > 0 && <div  style={{height:'300px', overflow:'auto'}}> 
                 <table>
