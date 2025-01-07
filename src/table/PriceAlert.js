@@ -1,10 +1,10 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
-
+import axios from 'axios'
 import GetInt from '../utils/GetInt'
 import Toggle from '../utils/Toggle'
 import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
-
+import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 
 function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
@@ -92,6 +92,70 @@ function PriceAlert (props) {
 
     }
 
+    function latestPrice () {
+        const nasdaq = false;
+        const ignoreSaved = true;
+        const logBackEnd = false;
+
+        const todayDateString = todayDate()
+        const oldestDateComponets = dateSplit(todayDateString) // [year, month, day]
+        const year = oldestDateComponets[0]
+        const mon = oldestDateComponets[1]
+        const day = oldestDateComponets[2]
+    
+        const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+
+        var corsUrl;
+        // if (corsServer === 'serv.dinagold.org')
+        if (props.ssl) 
+          corsUrl = "https://";
+        else 
+          corsUrl = "http://"; 
+    
+        if (! nasdaq)
+          corsUrl += props.servSelect + ":" + props.PORT + "/price?stock=" + props.symbol
+        else
+          corsUrl += props.servSelect + ":" + props.PORT + "/priceNasdaq?stock=" + props.symbol
+    
+        // var corsUrl = "http://62.0.92.49:5000/price?stock=" + sym
+          //corsUrl = "http://localhost:5000/price?stock=" + sym
+          corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
+          // console.log (getDate(), corsUrl)
+          
+          if (ignoreSaved)
+            corsUrl += '&ignoreSaved=true';
+          if (logBackEnd)
+            corsUrl += '&LOG=true';
+    
+        if (LOG)
+        console.log (props.symbol, corsUrl)
+          axios.get (corsUrl)
+          .then ((result) => {
+            // setErr()
+            if (result.data && LOG) {
+              console.log (props.symbol, 'latestPrice=' + JSON.stringify(result.data.close),)
+            //   setUpdateDate(formatDate (new Date(result.data.updateMili)))
+            }
+            
+            if ((result.data !== '' || ! props.stockChartXValues) && ! result.data.err) {
+                props.rows[row_index].values.price = result.data.close
+              const searcDate = year + '-' + mon + '-' + day;
+              props.refreshByToggleColumns()
+            }
+            else {
+
+            }
+          })
+          .catch ((err) => {
+            console.log(err, corsUrl)
+            props.errorAdd([props.symbol, 'MarketWatch', err.message])
+          })
+    
+    
+    }
+
+
+
     const drop_or_rise = drop ? 'drop % ': 'rise % '
 
     return (
@@ -104,7 +168,11 @@ function PriceAlert (props) {
             </div>
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Price alert setting </h6>
 
-            {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} />LOG&nbsp;</div>}
+            <div style={{display:'flex'}}>
+                {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> LOG&nbsp;</div>}
+                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>latest-price {props.symbol} </button>
+            </div>
+            
             <GetInt init={percent} callBack={setPercent} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
             {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}         
             
