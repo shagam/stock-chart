@@ -53,7 +53,8 @@ const Simulate = (props) => {
 
     const [accountValueInit, setAccountValue] = useState (1000); //
     const [startWeek, setStartWeek] = useState (0); // default oldest 
-    const [thresholdPercent, setThresholdPercent] = useState (0.8);
+    const [thresholdUp, setThresholdUp] = useState (0.8);
+    const [thresholdDown, setThresholdDown] = useState (10);
     const [interestRate, setInterestRate] = useState (3.2);
     const [transactionFee, setTransactionFee] = useState (0);
 
@@ -70,6 +71,7 @@ const Simulate = (props) => {
     const [tradeInfoShow, setTradeInfoShow] = useState (true);
     const [tradeChartShow, setTradeChartShow] = useState (true);
     const [portionShow, setPortionShow] = useState (false);
+    const [portionScale, setPortionScale] = useState (5); // scale portion for chart
     const [startDate, setStartDate] = useState(new Date(2000, 8, 1 )) // sep 1
     const [logTradeChartData, setLogTradeChartData] = useState ([])
     const [log, setLog] = useState (false);
@@ -298,7 +300,7 @@ const Simulate = (props) => {
             'moneyMarket_$': moneyMarket.toFixed(2),
             'price_$': price? price.toFixed(3) : -1,
             'portion': (portionPercent/100).toFixed(2),
-            'threshold_%': thresholdPercent,
+            'threshold_%': thresholdUp,
             'interestRate_%': interestRate,
             'transactionFee_$': transactionFee,
             startWeek: startWeek
@@ -367,7 +369,8 @@ const Simulate = (props) => {
             const portionCurrent = price*stockCount / accountVal // actual
             const portionDiff = targetPortion - portionCurrent;  //  recomended - actual 
             var buySell;
-            if (tradeFlag && Math.abs(portionDiff) > (thresholdPercent / 100)
+            const thresholdCondition = portionDiff > 0 ? portionDiff > thresholdUp / 100 : -1 * portionDiff > thresholdDown / 100;
+            if (tradeFlag && thresholdCondition
                  && Math.abs(portionDiff) > 5 * transactionFee) { // if less than predeined percent do not trade
                 //** If up sell */
                 stockToTrade = (stockCount * portionDiff);
@@ -611,9 +614,13 @@ const Simulate = (props) => {
             //     resultsArray.optimizeScale = [];
             // resultsArray.optimizeScale.push(optimizeScale)
 
-            if (! resultsArray.thresholdPercent)
-                resultsArray.thresholdPercent =[];
-            resultsArray.thresholdPercent.push(thresholdPercent)
+            if (! resultsArray.thresholdUp)
+                resultsArray.thresholdUp =[];
+            resultsArray.thresholdUp.push(thresholdUp)
+            if (! resultsArray.thresholdDown)
+                resultsArray.thresholdDown =[];
+            resultsArray.thresholdDown.push(thresholdDown)
+
 
             if (! resultsArray.interestRate)
                 resultsArray.interestRate = [];
@@ -716,7 +723,7 @@ const Simulate = (props) => {
         for (let i = 0; i < logRecordsKeys_.length; i++) {
             clippedArrayX[i] = props.stockChartXValues[i]
             clippedArrayY[i] = props.stockChartYValues[i]
-            portionArray[i] = logRecords_[logRecordsKeys_[i]].portion * 5;
+            portionArray[i] = logRecords_[logRecordsKeys_[i]].portion * portionScale;
             stocksCount[i] = logRecords_[logRecordsKeys_[i]]['stocks after'] * 100;
             accountGainArray[i] = logRecords_[logRecordsKeys_[i]]['account-gain'];
             stockGainArray[i] = logRecords_[logRecordsKeys_[i]]['stock-gain']
@@ -751,7 +758,7 @@ const Simulate = (props) => {
 
         if (portionShow) 
             logTradeChartData_.push ( {
-                name: 'portion * 5',
+                name: 'portion *' + portionScale,
                 x: logRecordsKeys_,
                 y: portionArray,
                 type: 'scatter',
@@ -892,19 +899,27 @@ const Simulate = (props) => {
             <hr/> 
 
             <div style = {{display:'flex', width: '600px'}}>
-                &nbsp; <GetInt init={thresholdPercent} callBack={setThresholdPercent} title='trade-threshold %' type='text' pattern="[\\.0-9]+" width = '15%'/>
-                &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/>
+                &nbsp; <GetInt init={thresholdUp} callBack={setThresholdUp} title='thresholdUp %' type='text' pattern="[\\.0-9]+" width = '15%'/>
+                &nbsp; <GetInt init={thresholdDown} callBack={setThresholdDown} title='thresholdDown %' type='text' pattern="[\\.0-9]+" width = '15%'/>
             </div>
             <div style = {{display:'flex', width: '600px'}}>
                 &nbsp; <GetInt init={transactionFee} callBack={setTransactionFee} title='transaction-fee $' type='text' pattern="[\.0-9]+" width = '15%'/>
-                <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '15%'/>               
+                <GetInt init={accountValueInit} callBack={setAccountValue} title='account-value $' type='Number' pattern="[0-9]+" width = '20%'/>               
             </div>
 
             <div> &nbsp;</div>
-             &nbsp;startDate <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} />  &nbsp; &nbsp;
+            <div  style = {{display:'flex'}}>
+                &nbsp;startDate &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} />  &nbsp; &nbsp;
+                &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/> 
+             </div>
             <div> &nbsp;</div>
 
-            <div> <input type="checkbox" checked={portionShow} onChange={() => setPortionShow (! portionShow)} />&nbsp;show-portion&nbsp; </div>
+            <div  style = {{display:'flex'}}>
+                <div> <GetInt init={portionScale} callBack={setPortionScale} title='portion-chart-scale' type='text' pattern="[0-9]+" width = '15%'/> </div>
+                <div> <input type="checkbox" checked={portionShow} onChange={() => setPortionShow (! portionShow)} />&nbsp;show-portion&nbsp; </div>
+            </div>
+            <div> &nbsp;</div>
+
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
 
