@@ -193,7 +193,7 @@ function PriceAlert (props) {
             <div>&nbsp;</div>
             {/* {<pre>{JSON.stringify(props.priceAlertTable, null, 2)}</pre>} */}
             <div>count={props.priceAlertTable.length}</div>
-            {props.priceAlertTable.length > 0 &&  <div  style={{width: '350px', height: '25vh', 'overflowY': 'scroll'}}>
+            {props.priceAlertTable.length > 0 &&  <div  style={{width: '350px', maxHeight: '35vh', 'overflowY': 'scroll'}}>
                 <table>
                     <thead>
                     <tr>
