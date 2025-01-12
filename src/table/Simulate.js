@@ -73,6 +73,7 @@ const Simulate = (props) => {
     const [portionShow, setPortionShow] = useState (false);
     const [portionScale, setPortionScale] = useState (5); // scale portion for chart
     const [startDate, setStartDate] = useState(new Date(2000, 8, 1 )) // sep 1
+    const [endDate, setEndDate] = useState(new Date()) // sep 1
     const [logTradeChartData, setLogTradeChartData] = useState ([])
     const [log, setLog] = useState (false);
 
@@ -81,6 +82,18 @@ const Simulate = (props) => {
     const LOG = props.logFlags && props.logFlags.includes('simulateTrade');
 
     useEffect(() => {
+        if (props.symbol === 'None')
+            return;
+        if (props.symbol === 'TQQQ') {
+            setStartDate(new Date(2022, 1, 1)) // feb 1
+            setThresholdUp(0.8)
+            setThresholdDown(10)
+            setInterestRate(3.2)
+            set_PORTION_HIGH(1)
+            set_PORTION_LOW(0.1)
+            setPriceDivBubble_LOW(0.65)
+            setPriceDivBubble_HIGH(0.9)
+        }
         setResults()
         setErr()
         setResultsArray({})
@@ -254,12 +267,20 @@ const Simulate = (props) => {
         const startMon = startDate.getMonth() + 1;
         const startDay = startDate.getDate();
         const startDateArray = [startYear, startMon, startDay]
+        const endYear = endDate.getFullYear();
+        const endMon = endDate.getMonth() + 1;
+        const endDay = endDate.getDate();
+        const endDateArray = [endYear, endMon, endDay]
 
         var startDateIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, props.logFlags, setErr)
         if (startDateIndex === -1)
             startDateIndex = props.stockChartXValues.length - 1 // if date beyond valid dates use array size 
         if (props.gainMap.bubbleLine && bubbleLine && bubbleLine.y.length < startDateIndex)
             startDateIndex = bubbleLine.y.length;
+
+        var endDateIndex = searchDateInArray (props.stockChartXValues, endDateArray, props.symbol, props.logFlags, setErr)
+        if (endDateIndex === -1)
+            endDateIndex = 0; // if date beyond valid dates use array size
 
         // var startDateIndex = searchDateInArray (props.gainMap.bubbleLine? bubbleLine.x: props.stockChartXValues, startDate, props.symbol, props.logFlags, setErr)
         const arrayLen = startDateIndex;
@@ -343,7 +364,7 @@ const Simulate = (props) => {
         const logRecordsFull_ = []
 
         // trade loop start
-        for (let i = oldestIndex; i > 0; i--) {
+        for (let i = oldestIndex; i >= endDateIndex; i--) {
             portionPriv = targetPortion; //save for log
             targetPortion =  aggressivePortionInit; 
             // try {
@@ -482,7 +503,7 @@ const Simulate = (props) => {
         //     console.log('exception i='+ i + '  %c' + e.message, 'background: #fff; color: #ee3344');
         //     break;
         // }
-        } // loopEnd
+        } // index loopEnd
 
         setLogRecords(logRecords_)
         setLogRecordsKeys(Object.keys(logRecords_))
@@ -834,7 +855,8 @@ const Simulate = (props) => {
                 {/* Optimize checkboxes */}
                 &nbsp; {eliHome && <div><input  type="checkbox" checked={log}  onChange={() => setLog (! log)} />&nbsp;log &nbsp;</div>}
                 <input  type="checkbox" checked={tradeFlag}  onChange={() => setTradeFlag (! tradeFlag)} />&nbsp;tradeFlag &nbsp;
-                {eliHome && <div> <input type="checkbox" checked={logFull} onChange={() => setLogFull (! logFull)} />&nbsp;log-full&nbsp; </div>}
+                {eliHome && <div> <input type="checkbox" checked={logFull} onChange={() => setLogFull (! logFull)} />&nbsp;log-full </div>} &nbsp; &nbsp;
+                <div> <input type="checkbox" checked={portionShow} onChange={() => setPortionShow (! portionShow)} />&nbsp;show-portion&nbsp; </div>
        
                 <div style={{display:'flex'}}>
                     {/* <div style={{color:'magenta'}}> Optimize: &nbsp;   </div>  */}
@@ -910,13 +932,13 @@ const Simulate = (props) => {
             <div> &nbsp;</div>
             <div  style = {{display:'flex'}}>
                 &nbsp;startDate &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} />  &nbsp; &nbsp;
-                &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/> 
+                &nbsp;endDate &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)}/>&nbsp; &nbsp;
              </div>
             <div> &nbsp;</div>
 
-            <div  style = {{display:'flex'}}>
+            <div  style = {{display:'flex', maxWidth: '600px'}}>
+                &nbsp; <GetInt init={interestRate} callBack={setInterestRate} title='interest-rate %' type='text' pattern="[0-9]+" width = '15%'/> 
                 <div> <GetInt init={portionScale} callBack={setPortionScale} title='portion-chart-scale' type='text' pattern="[0-9]+" width = '15%'/> </div>
-                <div> <input type="checkbox" checked={portionShow} onChange={() => setPortionShow (! portionShow)} />&nbsp;show-portion&nbsp; </div>
             </div>
             <div> &nbsp;</div>
 
