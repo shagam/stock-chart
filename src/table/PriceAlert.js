@@ -6,6 +6,81 @@ import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 
+
+function latestPrice (symbol, servSelect, PORT, ssl, rows, refreshByToggleColumns, errorAdd, stockChartXValues, stockChartYValues, LOG) {
+    const nasdaq = false;
+    const ignoreSaved = true;
+    const logBackEnd = false;
+
+    const todayDateString = todayDate()
+    const oldestDateComponets = dateSplit(todayDateString) // [year, month, day]
+    const year = oldestDateComponets[0]
+    const mon = oldestDateComponets[1]
+    const day = oldestDateComponets[2]
+
+    const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+
+    var corsUrl;
+    // if (corsServer === 'serv.dinagold.org')
+    if (ssl) 
+      corsUrl = "https://";
+    else 
+      corsUrl = "http://"; 
+
+    if (! nasdaq)
+      corsUrl += servSelect + ":" + PORT + "/price?stock=" + symbol
+    else
+      corsUrl += servSelect + ":" + PORT + "/priceNasdaq?stock=" + symbol
+
+    // var corsUrl = "http://62.0.92.49:5000/price?stock=" + sym
+      //corsUrl = "http://localhost:5000/price?stock=" + sym
+      corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
+      // console.log (getDate(), corsUrl)
+      
+      if (ignoreSaved)
+        corsUrl += '&ignoreSaved=true';
+      if (logBackEnd)
+        corsUrl += '&LOG=true';
+
+    if (LOG)
+    console.log (symbol, corsUrl)
+      axios.get (corsUrl)
+      .then ((result) => {
+        // setErr()
+        if (result.data && LOG) {
+          console.log (symbol, 'latestPrice=' + JSON.stringify(result.data.close),)
+        //   setUpdateDate(formatDate (new Date(result.data.updateMili)))
+        }
+        
+        // find highest price
+        var highestPrice = -1; // highest price
+        for (let i = 0; i < stockChartYValues.length; i++) {
+            const val = stockChartYValues[i];
+            if (val > highestPrice)
+              highestPrice = val;
+        }
+
+
+        const price = result.data.close;
+        if ((result.data !== '' || ! stockChartXValues) && ! result.data.err) {
+            rows[row_index].values.price = price
+            const priceDivHigh = (price/ highestPrice).toFixed(3)
+            rows[row_index].values.priceDivHigh = priceDivHigh;
+          const searcDate = year + '-' + mon + '-' + day;
+          refreshByToggleColumns()
+        }
+        else {
+
+        }
+      })
+      .catch ((err) => {
+        console.log(err, corsUrl)
+        errorAdd([symbol, 'MarketWatch', err.message])
+      })
+}
+
+
+
 function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
         if (priceAlertTable[i].sym !== symbol)
@@ -34,6 +109,11 @@ function PriceAlert (props) {
     const {eliHome} = IpContext();
     const {isMobile} = MobileContext();
     const [risePeriod, setRisePeriod] = useState(10)
+
+
+    function latestPrice__() {
+        latestPrice (props.symbol, props.servSelect, props.PORT, props.ssl, props.rows, props.refreshByToggleColumns, props.errorAdd, props.stockChartXValues, props.stockChartYValues, LOG)
+    }
 
 
     function checkDropAll () {
@@ -89,71 +169,7 @@ function PriceAlert (props) {
                 return
             }
         }
-
     }
-
-    function latestPrice () {
-        const nasdaq = false;
-        const ignoreSaved = true;
-        const logBackEnd = false;
-
-        const todayDateString = todayDate()
-        const oldestDateComponets = dateSplit(todayDateString) // [year, month, day]
-        const year = oldestDateComponets[0]
-        const mon = oldestDateComponets[1]
-        const day = oldestDateComponets[2]
-    
-        const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
-
-        var corsUrl;
-        // if (corsServer === 'serv.dinagold.org')
-        if (props.ssl) 
-          corsUrl = "https://";
-        else 
-          corsUrl = "http://"; 
-    
-        if (! nasdaq)
-          corsUrl += props.servSelect + ":" + props.PORT + "/price?stock=" + props.symbol
-        else
-          corsUrl += props.servSelect + ":" + props.PORT + "/priceNasdaq?stock=" + props.symbol
-    
-        // var corsUrl = "http://62.0.92.49:5000/price?stock=" + sym
-          //corsUrl = "http://localhost:5000/price?stock=" + sym
-          corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
-          // console.log (getDate(), corsUrl)
-          
-          if (ignoreSaved)
-            corsUrl += '&ignoreSaved=true';
-          if (logBackEnd)
-            corsUrl += '&LOG=true';
-    
-        if (LOG)
-        console.log (props.symbol, corsUrl)
-          axios.get (corsUrl)
-          .then ((result) => {
-            // setErr()
-            if (result.data && LOG) {
-              console.log (props.symbol, 'latestPrice=' + JSON.stringify(result.data.close),)
-            //   setUpdateDate(formatDate (new Date(result.data.updateMili)))
-            }
-            
-            if ((result.data !== '' || ! props.stockChartXValues) && ! result.data.err) {
-                props.rows[row_index].values.price = result.data.close
-              const searcDate = year + '-' + mon + '-' + day;
-              props.refreshByToggleColumns()
-            }
-            else {
-
-            }
-          })
-          .catch ((err) => {
-            console.log(err, corsUrl)
-            props.errorAdd([props.symbol, 'MarketWatch', err.message])
-          })
-    
-    
-    }
-
 
 
     const drop_or_rise = drop ? 'drop % ': 'rise % '
@@ -170,7 +186,7 @@ function PriceAlert (props) {
 
             <div style={{display:'flex'}}>
                 {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> LOG&nbsp;</div>}
-                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>latest-price {props.symbol} </button>
+                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice__()}>latest-price {props.symbol} </button>
             </div>
             
             <GetInt init={percent} callBack={setPercent} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
@@ -231,4 +247,4 @@ function PriceAlert (props) {
     )
 }
 
-export {PriceAlert, priceAlertCheck}
+export {PriceAlert, priceAlertCheck, latestPrice}

@@ -396,8 +396,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
                 console.log (sym, 'gain year20', rows[row_index].values.year20)
   
               // rows[row_index].values.peak2Peak = peak2Peak;
-              rows[row_index].values.price = price;
-              rows[row_index].values.priceDivHigh = priceDivHigh;
+              // rows[row_index].values.price = price;
+              // rows[row_index].values.priceDivHigh = priceDivHigh;
             
               rows[row_index].values.sym = sym; // added field
               rows[row_index].values.splits_list = splitArray;
