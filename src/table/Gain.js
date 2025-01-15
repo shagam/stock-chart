@@ -13,7 +13,79 @@ let periodTag;
 
 const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
-  export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
+
+
+
+function getLatestPrice (symbol, rows, stockChartXValues, stockChartYValues, errorAdd, API_KEY, logFlags, LOG_API) {
+
+  if (symbol === '' || symbol === undefined) {
+    alert (`bug, info sym vanished (${symbol})`); 
+    return;
+  }
+  
+  let API_Call = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}` 
+
+  //console.log(`Overview info (${symbol})`);
+  if (LOG_API)
+    console.log (`${API_Call}`);
+  
+  fetch(API_Call)
+      .then(
+          function(response) {
+              if (response != null) {
+                const respStr = JSON.stringify (response);
+                if (respStr.indexOf('redirected: false, status: 200, ok:') !== -1)
+                  console.log(response);
+                return response.json();
+              }
+          }
+      )
+      .then(
+          function (data) {
+            if (data != null) {
+                const dataStr = JSON.stringify(data);
+                if (LOG_API)
+                  console.dir(data)
+                const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+                if (dataStr === '{}') {
+                  rows[row_index].values.PE = -2  // flag non valid
+                  return;
+                }
+
+                var index =  (dataStr.search('API rate limit is 25 requests per day.'))
+                if (index !== -1) {
+                  errorAdd([symbol, 'AlphaVantage error', dataStr])
+                  return;
+                }
+
+                index =  (dataStr.search('API call frequency is 5 calls per minute'))
+                if (index !== -1) {
+                  errorAdd([symbol, dataStr])
+                  return;
+                }
+
+                // find highest price
+                var highestPrice = -1; // highest price
+                for (let i = 0; i < stockChartYValues.length; i++) {
+                    const val = stockChartYValues[i];
+                    if (val > highestPrice)
+                      highestPrice = val;
+                }
+
+                const price = Number(data['Global Quote']['05. price']);
+                rows[row_index].values.price = price.toFixed(2);
+                rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(2);
+              }
+          }
+      )
+      .catch(error => {
+        // Do something on error 
+        errorAdd ([symbol, 'latest-price', error.message])
+        console.log(symbol + 'latest-price' + error.message)
+    })
+}
+
+export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
      os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable) {
 
@@ -459,7 +531,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
               }
 
               priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd, stockChartXValuesFunction, stockChartYValuesFunction) 
-
+              getLatestPrice (sym, rows, stockChartXValuesFunction, stockChartYValuesFunction, errorAdd, API_KEY, logFlags, LOG_API)
               if (saveTabl)
                 saveTable(sym);
             
