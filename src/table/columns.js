@@ -89,11 +89,6 @@ export const COLUMNS = [
     accessor: 'gap'
   },
   {
-    Header: 'price',
-    Footer: 'price',    
-    accessor: 'price'
-  },
-  {
     Header: 'Mon',
     Footer: 'Mon',   
     accessor: 'mon'
@@ -174,6 +169,11 @@ export const COLUMNS = [
     Header: 'deepDate',
     Footer: 'deepDate',    
     accessor: 'deepDate'
+  },
+  {
+    Header: 'price',
+    Footer: 'price',    
+    accessor: 'price'
   },
   {
     Header: 'price/high',
@@ -304,11 +304,6 @@ export const GROUPED_COLUMNS = [
         accessor: 'gap'
       },
       {
-        Header: 'price',
-        Footer: 'price',    
-        accessor: 'price'
-      }, 
-      {
         Header: 'Mon',
         Footer: 'Mon',  
         accessor: 'mon'
@@ -404,6 +399,11 @@ export const GROUPED_COLUMNS = [
         Footer: 'deepDate',    
         accessor: 'deepDate'
       },
+      {
+        Header: 'price',
+        Footer: 'price',    
+        accessor: 'price'
+      }, 
       {
         Header: 'price/high',
         Footer: 'price/high',    
