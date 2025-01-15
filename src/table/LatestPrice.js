@@ -53,7 +53,7 @@ function LatestPrice (props) {
             const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
             const price = Number(dat.price)
             props.rows[row_index].values.price = price.toFixed(2);
-            props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(2); 
+            props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3); 
             props.refreshByToggleColumns()
         }).catch ((err) => {
             console.log(getDate(), err.message)
