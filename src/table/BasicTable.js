@@ -79,6 +79,7 @@ import {MovingAverage } from './MovingAverage'
 import {Futures} from './Futures'
 import {PriceAlert, priceAlertCheck} from './PriceAlert'
 import {LatestPrice} from './LatestPrice'
+import { finnhub } from './Finnhub'
 
 const BasicTable = (props) => {
 
@@ -838,7 +839,9 @@ const BasicTable = (props) => {
             title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>  &nbsp;
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
-          {eliHome && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome}  errorAdd={errorAdd} stockChartYValues = {stockChartYValues}/>}
+          {eliHome && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
+                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}/>}
+          {eliHome && chartSymbol && <button style={{backgroundColor: '#ffccff'}} onClick={() => {finnhub (chartSymbol)}} title='finnhub info' > Finnhub </button>   }
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
          </div>
          {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
