@@ -18,6 +18,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 function getLatestPrice (symbol, rows, stockChartXValues, stockChartYValues, errorAdd, API_KEY, logFlags, LOG_API) {
 
+  const LOG = logFlags && logFlags.includes('gain');
   if (symbol === '' || symbol === undefined) {
     alert (`bug, info sym vanished (${symbol})`); 
     return;
@@ -73,6 +74,8 @@ function getLatestPrice (symbol, rows, stockChartXValues, stockChartYValues, err
                 }
 
                 const price = Number(data['Global Quote']['05. price']);
+                if (LOG)
+                console.log (symbol, 'price=' + price)
                 rows[row_index].values.price = price.toFixed(2);
                 rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(2);
               }
