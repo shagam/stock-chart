@@ -21,7 +21,7 @@ import {getDate,} from '../utils/Date'
 
             const dat = result.data
 
-            console.log ('results=', dat.c)
+
 
             // find highest price
             var highestPrice = -1; // highest price
@@ -31,8 +31,11 @@ import {getDate,} from '../utils/Date'
                     highestPrice = val;
             }
 
-            const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
             const price = Number(dat.c)
+            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2))
+
+            const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+
             rows[row_index].values.price = price.toFixed(2);
             rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3); 
             refreshByToggleColumns();

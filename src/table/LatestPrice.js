@@ -21,7 +21,11 @@ function LatestPrice (props) {
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += props.corsServer+ ":" + props.PORT + '/latestPrice?stock=' + props.symbol + '&src=' + 'goog'
+        corsUrl += props.corsServer+ ":" + props.PORT + '/latestPrice?stock=' + props.symbol
+        // corsUrl += '&src=' + 'goog'
+        // corsUrl += '&src=' + 'nasdaq'
+        corsUrl += '&src=' + 'yahoo' 
+
         if (LOG)
             corsUrl += '&LOG=1'
         console.log (props.symbol + ' ' + corsUrl)  
@@ -40,7 +44,6 @@ function LatestPrice (props) {
                 return;
             }
 
-            console.log ('results' , dat)
 
             // find highest price
             var highestPrice = -1; // highest price
@@ -50,8 +53,11 @@ function LatestPrice (props) {
                     highestPrice = val;
             }
 
-            const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
             const price = Number(dat.price)
+            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2))
+
+            const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+
             props.rows[row_index].values.price = price.toFixed(2);
             props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3); 
             props.refreshByToggleColumns()
@@ -62,7 +68,7 @@ function LatestPrice (props) {
 
     return (
         <div>
-           &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>latest-price {props.symbol} </button>
+           &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>marketClosed {props.symbol} </button>
         </div>
 
     )
