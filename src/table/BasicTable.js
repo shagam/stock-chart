@@ -1047,7 +1047,7 @@ const BasicTable = (props) => {
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
 
-            {eliHome && analyzeTool ==='priceAlert' && <div> <PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} gainMap = {gainMap}
+            {analyzeTool ==='priceAlert' && <div> <PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} gainMap = {gainMap}
               errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> </div>}
 
