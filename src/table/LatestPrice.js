@@ -22,10 +22,10 @@ function LatestPrice (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/latestPrice?stock=' + props.symbol
-        corsUrl += '&src=' + 'goog'
-        // corsUrl += '&src=' + 'nasdaq'
-        // corsUrl += '&src=' + 'yahoo' 
-        // corsUrl += '&src=' + 'watch' 
+        corsUrl += '&src=' + 'goog'  // during trade hours
+        // corsUrl += '&src=' + 'nasdaq' // fails during trade hours
+        // corsUrl += '&src=' + 'yahoo'  // during trade hours
+        // corsUrl += '&src=' + 'watch' // fails during trade hours
 
         if (LOG)
             corsUrl += '&LOG=1'
