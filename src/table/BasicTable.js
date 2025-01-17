@@ -84,6 +84,7 @@ import { finnhub } from './Finnhub'
 const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
+  const[error, setErr] = useState();
   const [chartSymbol, setChartSymbol] = useState("");
   const [infoSymbol, setInfoSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
@@ -408,6 +409,7 @@ const BasicTable = (props) => {
 
   //** gain click for sym pressed. */
   const handleGainClick = (sym, singleSym) => {
+    setErr()
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
 
@@ -807,7 +809,7 @@ const BasicTable = (props) => {
           {/* <div> <Link to="/dashboard" > Login Dashboard </Link>  </div>  */}
         </div>
         {errors.length > 0 && <ErrorList errorList={errors} setErrors={setErrors}/> }
-
+        <div style={{color: 'red'}}>{error}</div>
         {/* <div>&nbsp;</div> */}
         <div id="buttons_id" style={{display:'flex'}}> 
           {/* {  <CustomSelect options={corsServerOptions} label='server' onChange={corsServerChange } defaultValue={corsServerOptions[0]} />} */}
@@ -840,7 +842,7 @@ const BasicTable = (props) => {
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
           {eliHome && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
-                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}/>} &nbsp;
+                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr}/>} &nbsp;
           {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns)}} title='finnhub info' > lastPrice {chartSymbol} </button>   }
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
          </div>

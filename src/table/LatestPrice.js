@@ -22,9 +22,10 @@ function LatestPrice (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/latestPrice?stock=' + props.symbol
-        // corsUrl += '&src=' + 'goog'
+        corsUrl += '&src=' + 'goog'
         // corsUrl += '&src=' + 'nasdaq'
-        corsUrl += '&src=' + 'yahoo' 
+        // corsUrl += '&src=' + 'yahoo' 
+        // corsUrl += '&src=' + 'watch' 
 
         if (LOG)
             corsUrl += '&LOG=1'
@@ -35,16 +36,19 @@ function LatestPrice (props) {
         axios.get (corsUrl)
 
         .then ((result) => {
-            if (result.status !== 200)
-                return;
-
-            const dat = result.data
-            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                console.log(getDate(), dat)
+            if (result.status !== 200) {
+                props.setErr(props.symbol + ' ' + result.status)
                 return;
             }
 
+            const dat = result.data
+            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
+                console.log(props.symbol, getDate(), dat)
+                props.setErr(props.symbol + ' ' +  getDate() + ' ' + dat)
+                return;
+            }
 
+            console.log (dat)
             // find highest price
             var highestPrice = -1; // highest price
             for (let i = 0; i < props.stockChartYValues.length; i++) {
@@ -54,7 +58,7 @@ function LatestPrice (props) {
             }
 
             const price = Number(dat.price)
-            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2))
+            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/Highest=' + (price / highestPrice).toFixed(3))
 
             const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
 
@@ -63,6 +67,7 @@ function LatestPrice (props) {
             props.refreshByToggleColumns()
         }).catch ((err) => {
             console.log(getDate(), err.message)
+            props.setErr(props.symbol + ' ' + err.message)
         })   
     }
 

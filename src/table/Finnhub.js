@@ -32,7 +32,7 @@ import {getDate,} from '../utils/Date'
             }
 
             const price = Number(dat.c)
-            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2))
+            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(3))
 
             const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
 
