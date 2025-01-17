@@ -12,7 +12,7 @@ import {getDate,} from '../utils/Date'
 function LatestPrice (props) {
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
-
+    const log = props.logFlags.includes('gain')
 
     function latestPrice() {
 
@@ -43,12 +43,12 @@ function LatestPrice (props) {
 
             const dat = result.data
             if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                console.log(props.symbol, getDate(), dat)
-                props.setErr(props.symbol + ' ' +  getDate() + ' ' + dat)
+                console.log(props.symbol, getDate(), 'latestPrice', dat)
+                props.setErr(props.symbol + ' ' +  getDate() + ' latestPrice ' + dat)
                 return;
             }
-
-            console.log (dat)
+            if (log)
+                console.log (dat)
             // find highest price
             var highestPrice = -1; // highest price
             for (let i = 0; i < props.stockChartYValues.length; i++) {
