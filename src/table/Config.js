@@ -64,8 +64,8 @@ const  Config = (props) => {
 
           {/* ====== Filter buttons */} 
           <div  style={{display:'flex', paddingTop: '5px'}}>
-              &nbsp; <button onClick={purgeStockTable} > Purge stock table </button> &nbsp;&nbsp; 
-            <button onClick={purgeTableLoadDefault} > Purge table default </button> &nbsp;&nbsp; 
+            &nbsp; <button onClick={purgeTableLoadDefault} > Purge table default </button> &nbsp;&nbsp; 
+            <button onClick={purgeStockTable} > Purge stock table </button> &nbsp;&nbsp; 
             <button onClick={columnsHiddenPurge} > Default Hidden columns </button>  &nbsp;
             {/* <div> &nbsp; <button onClick={reloadPage} > Reload page </button> &nbsp; </div> */}
           </div>
