@@ -5,7 +5,7 @@ import {getDate,} from '../utils/Date'
 
 // function Finnhub (props) {
 
-    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns) {
+    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr) {
 
         const url = 'https://finnhub.io/api/v1/quote?symbol=' + symbol + '&token=c4pfifqad3ifau3r1kjg'
 
@@ -21,14 +21,17 @@ import {getDate,} from '../utils/Date'
 
             const dat = result.data
 
-
-
             // find highest price
             var highestPrice = -1; // highest price
             for (let i = 0; i < stockChartYValues.length; i++) {
                 const val = stockChartYValues[i];
                 if (val > highestPrice)
                     highestPrice = val;
+            }
+            if (highestPrice === -1) {
+                console.log (symbol, 'finnhub, missing stockChartYValues, pls try again')
+                setErr (symbol + '  finnhub, missing stockChartYValues, pls try again')
+                return;
             }
 
             const price = Number(dat.c)
@@ -40,7 +43,7 @@ import {getDate,} from '../utils/Date'
             rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3); 
             refreshByToggleColumns();
         }).catch ((err) => {
-            console.log(getDate(), err.message)
+            console.log(getDate(), finnhub, err.message)
         })   
 
 
