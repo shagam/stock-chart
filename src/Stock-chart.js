@@ -424,6 +424,7 @@ const StockChart = (props) => {
             <button onClick={() => setDateRange(new Date(2023,0,1), new Date(2024,0,1))}> 2023</button>&nbsp;&nbsp;
             <button onClick={() => setDateRange(new Date(2022,0,1), new Date(2024,0,1))}> 2022-2023</button>&nbsp;
             <button onClick={() => setDateRange(new Date(2024,0,1), new Date(2025,0,1))}> 2024</button>&nbsp;
+            <button onClick={() => setDateRange(new Date(2025,0,1), new Date())}> 2025</button>&nbsp;
           </div>}
         </div>
 
