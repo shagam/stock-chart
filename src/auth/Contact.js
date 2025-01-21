@@ -29,7 +29,7 @@ export default function ContactUs (props)  {
   const navigate = useNavigate();
   const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
   const [logBackEnd, setLogBackEnd] = useState ();
-
+  const [mailingList, setMailingList] = useState (true)
   const LOG = logBackEnd// props.logFlags.includes('contact')
 
     // avoid loop
@@ -70,6 +70,8 @@ export default function ContactUs (props)  {
       '&city=' + city + '&region=' + regionName+ '&country=' + countryName + '&os=' + os
       // '&message='+txtArray;
       + '&text='+txtSplit
+      if (mailingList)
+        corsUrl += '&mailingList=true'
 
 
       if (logBackEnd)
@@ -144,8 +146,11 @@ export default function ContactUs (props)  {
 
           <hr/>
           {eliHome && <div style={{display: 'flex'}}>
-            <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} /> &nbsp;
-            <label style={{marginTop: '15px'}}>LogBackEnd </label>
+            {eliHome && <div><input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} />&nbsp;
+            <label style={{marginTop: '15px'}}>Log </label> </div>} &nbsp; &nbsp; &nbsp; 
+
+            <input style={{marginTop: '15px'}} type="checkbox" checked={mailingList}  onChange={()=>setMailingList(! mailingList)} /> &nbsp;
+            <label style={{marginTop: '15px'}}>Add-to-mailing-list </label>
             <div>&nbsp;</div>
           </div>}
           <div>&nbsp;</div>
