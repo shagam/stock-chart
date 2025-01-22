@@ -107,11 +107,15 @@ export default function ContactGet (props)  {
             
             if (mailList) {
               console.log (getDate(), 'mailList', result.data)
-              const mailRaw = JSON.stringify(result.data).replace(/["\]\[]/g, " ")
+              var mailRaw = JSON.stringify(result.data).replace(/["\][]/g, " ")
+              mailRaw = mailRaw.replace(/ , /g, ", ")
               console.log (getDate(), 'mailList stripped', mailRaw)
               setMailListResults(result.data)
               return;
             }
+            else
+            setMailListResults()
+
 
             if (beutify) {
               const txtArrModified = result.data
@@ -214,11 +218,14 @@ export default function ContactGet (props)  {
           
           <hr/> 
 
+          mailCount={mailListResult.length}
+          <div>&nbsp;</div>
           {mailListResult.length > 0 && <div>
             {mailListResult.map ((email, i) => {
               return (<div key={i}> {email} </div>)
            } )}
           </div>}
+          <div>&nbsp;</div>
 
           <div>{stat}</div>
           <div>&nbsp;</div>
