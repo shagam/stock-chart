@@ -2,19 +2,19 @@ import React, {useMemo} from 'react';
 
 
 // 
-const Disclaimer = () => {
+const Disclaimer = (props) => {
+    const log = props.logFlags.includes('aux')
     var disclaimer  = useMemo(() => localStorage.getItem('disclaimer'), []);
-    console.log ('disclaimer: ', disclaimer);
 
     if (disclaimer === null) {
         disclaimer = 0
     }
     if (disclaimer < 2) {
-
         disclaimer ++
 
-        (localStorage.setItem('disclaimer', disclaimer))
-        console.log ('disclaimer1: ', disclaimer);
+        localStorage.setItem('disclaimer', disclaimer)
+        if (log)
+            props.eliHome && console.log ('disclaimer1: ', disclaimer);
 
         if (disclaimer > 2)
             return null
