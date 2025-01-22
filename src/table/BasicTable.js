@@ -792,7 +792,7 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
-        <Disclaimer />
+        <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
         {eliHome && isMobile && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
 
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
@@ -842,7 +842,7 @@ const BasicTable = (props) => {
             title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>  &nbsp;
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
-          {admin && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
+          {eliHome && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr}/>} &nbsp;
           {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr)}} title='finnhub info' > lastPrice {chartSymbol} </button>   }
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>}
