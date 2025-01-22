@@ -23,11 +23,11 @@ const Disclaimer = () => {
                 <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
                     <h1 style={{color: 'red'}}>Disclaimer</h1>
                     <hr/>
-                    <h5>This web site is provided as is. No garentee for accuracy.</h5>
+                    <h5>This web site is provided as is. No guarantee for accuracy.</h5>
                     <h5>Please review other sites, before taking an investment decision.</h5>
                     <div>&nbsp;</div>
-                    <h5>This site uses local-storage for persistancy.</h5>
-                    <h5>This site saves info in commonbackend to facilitate some mechanisms. </h5>
+                    <h5>This site uses local-storage for persistency.</h5>
+                    <h5>This site saves info in common backend to facilitate some mechanisms. </h5>
                     <h5>Info is not shared with third parties.</h5>
                     <div>&nbsp;</div>
                     <h5 style={{color: 'green'}}>This site is free. Please share on social media.</h5>                    
