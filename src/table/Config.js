@@ -42,6 +42,10 @@ const  Config = (props) => {
     reloadPage()
   }
   
+  function disclaimerPurge() {
+    localStorage.removeItem('disclaimer')
+  }
+
    const style = {
     // background: 'blue',
     // color: 'red',
@@ -71,8 +75,9 @@ const  Config = (props) => {
           </div>
 
           <div style={{display:'flex'}}>
-            &nbsp; <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button>&nbsp;
-            &nbsp; <button onClick={props.refreshByToggleColumns} > Refresh table </button> 
+            <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button> &nbsp;
+            <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
+            <button onClick={disclaimerPurge} > disclaimer show </button>             
           </div>
 
 
