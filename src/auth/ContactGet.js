@@ -33,6 +33,8 @@ export default function ContactGet (props)  {
     const [searchText,setSearchText] = useState()
     
     const [logBackEnd, setLogBackEnd] = useState ();
+    const [mailList, setMailList] = useState (false)
+    const [mailListResult, setMailListResults] = useState ([])
     
     const LOG = logBackEnd; // props.logFlags.includes('contact')
     // const searchYear = searchDate.getFullYear();
@@ -78,6 +80,9 @@ export default function ContactGet (props)  {
           if (logBackEnd)
             corsUrl += '&LOG=true';
 
+          if (mailList)
+            corsUrl += '&mailList=true';
+
           const miliStart =  Date.now();
 
           setStat(' msg sent to server')
@@ -100,6 +105,14 @@ export default function ContactGet (props)  {
               console.log (getDate(), 'Response:', result.data, 'latency=', latency, 'mili)'  )
             setStat( 'Contact-count=' + result.data.length + '  (latency=' + latency +' mili)' )
             
+            if (mailList) {
+              console.log (getDate(), 'mailList', result.data)
+              const mailRaw = JSON.stringify(result.data).replace(/["\]\[]/g, " ")
+              console.log (getDate(), 'mailList stripped', mailRaw)
+              setMailListResults(result.data)
+              return;
+            }
+
             if (beutify) {
               const txtArrModified = result.data
               for (let i = 0; i < txtArrModified.length; i++) {
@@ -156,7 +169,9 @@ export default function ContactGet (props)  {
             <div style={{display: 'flex'}}>
               <GlobalFilter className="stock_button_class" filter={searchText} setFilter={setSearchText} name='Search_name' isMobile={isMobile}/> &nbsp;  &nbsp;&nbsp;
               <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} /> &nbsp;
-              <label style={{marginTop: '15px'}}>LogBackEnd </label>
+              <label style={{marginTop: '15px'}}>Log </label> &nbsp; &nbsp; &nbsp;
+              <input style={{marginTop: '15px'}} type="checkbox" checked={mailList}  onChange={()=>setMailList(! mailList)} /> &nbsp;
+              <label style={{marginTop: '15px'}}>mailing-list </label>
             </div>
             <div>&nbsp;</div>
             <input type="checkbox" checked={beutify} onChange={swapBeutify} /> beutify 
@@ -198,6 +213,12 @@ export default function ContactGet (props)  {
           <button onClick={() =>{contactGet()} } style={{backgroundColor:'lightGreen'}}> get contact requests</button>&nbsp;  
           
           <hr/> 
+
+          {mailListResult.length > 0 && <div>
+            {mailListResult.map ((email, i) => {
+              return (<div key={i}> {email} </div>)
+           } )}
+          </div>}
 
           <div>{stat}</div>
           <div>&nbsp;</div>

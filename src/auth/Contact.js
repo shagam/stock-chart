@@ -71,7 +71,7 @@ export default function ContactUs (props)  {
       // '&message='+txtArray;
       + '&text='+txtSplit
       if (mailingList)
-        corsUrl += '&mailingList=true'
+        corsUrl += '&mailList=true'
 
 
       if (logBackEnd)
