@@ -107,7 +107,7 @@ export default function ContactGet (props)  {
             
             if (mailList) {
               console.log (getDate(), 'mailList', result.data)
-              var mailRaw = JSON.stringify(result.data).replace(/["\][]/g, " ")
+              var mailRaw = JSON.stringify(result.data).replace(/["\] []/g, " ")
               mailRaw = mailRaw.replace(/ , /g, ", ")
               console.log (getDate(), 'mailList stripped', mailRaw)
               setMailListResults(result.data)
