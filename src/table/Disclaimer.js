@@ -20,7 +20,7 @@ const Disclaimer = () => {
             return null
         return (
             <div>
-                <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
+                {disclaimer === 2 && <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
                     <h1 style={{color: 'red'}}>Disclaimer</h1>
                     <hr/>
                     <h5>This web site is provided as is. No guarantee for accuracy.</h5>
@@ -34,7 +34,7 @@ const Disclaimer = () => {
                     <div>&nbsp;</div>
                     <h6>This disclaimer appears once in a while on each platform/browser</h6>
                     <h6>Reload page to clear</h6>
-                </div>
+                </div>}
                 <hr/>
             </div>
         );

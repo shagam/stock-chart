@@ -80,6 +80,7 @@ import {Futures} from './Futures'
 import {PriceAlert, priceAlertCheck} from './PriceAlert'
 import {LatestPrice} from './LatestPrice'
 import { finnhub } from './Finnhub'
+import {Disclaimer} from './Disclaimer'
 
 const BasicTable = (props) => {
 
@@ -791,7 +792,7 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
-
+        <Disclaimer />
         {eliHome && isMobile && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
 
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
