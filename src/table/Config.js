@@ -45,7 +45,7 @@ const  Config = (props) => {
   function disclaimerGetDate() {
     const disclaimerDate_ = getDisclaimerDate()
     setDisclaimerDate(disclaimerDate_)
-    console.log ('disclaimer date: ', disclaimerDate_)
+    console.log ('disclaimer', disclaimerDate_)
     return disclaimerDate_;
   }
 
@@ -85,7 +85,7 @@ const  Config = (props) => {
           <div style={{display:'flex'}}>
             <button onClick={disclaimerPurge} > disclaimer refresh </button> &nbsp;
             <button onClick={disclaimerGetDate} > disclaimer date </button> &nbsp;
-            <div>{disclaimerDate} </div>
+            {disclaimerDate && <div>{disclaimerDate.date} </div>}
           </div>
 
           <hr/>

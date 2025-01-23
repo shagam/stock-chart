@@ -54,7 +54,7 @@ function disclaimerPurge() {
 function getDisclaimerDate() {
     var disclaimer = localStorage.getItem('disclaimer')
     disclaimer = JSON.parse(disclaimer)
-    return disclaimer.date;
+    return disclaimer;
 }
 
 export {Disclaimer, disclaimerPurge, getDisclaimerDate}
