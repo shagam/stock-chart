@@ -28,7 +28,7 @@ const Disclaimer = (props) => {
                     <h1 style={{color: 'red'}}>Disclaimer</h1>
                     <hr/>
                     <h5>This web site is provided as is.</h5>
-                    <h5>We do our best to provide accurate info. No guarantee.</h5>
+                    <h5>We make a big effort to provide accurate info. No guarantee.</h5>
                     <h5>Please review other sites, before taking an investment decision.</h5>
                     <div>&nbsp;</div>
                     <h5>This site uses local-storage for persistency.</h5>
