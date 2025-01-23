@@ -39,6 +39,7 @@ function Tutorials () {
                     <tr>
                         <td><a href="https://youtu.be/Yk6fj_peDlM">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
                     </tr>
+
                     <tr>
                         <td><a href="https://youtu.be/957Dwf29JfA">Common DataBase  </a></td><td>
                              Stocks gains higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
@@ -48,6 +49,9 @@ function Tutorials () {
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/GsbVkDijE0c">Leverage_ETF</a></td><td>Strategy for short term gain of Leverage_ETF like TQQQ</td> 
+                    </tr>
+                    <tr>
+                        <td><a href="https://youtu.be/73G9GTQRddk">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
