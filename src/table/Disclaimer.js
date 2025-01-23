@@ -43,4 +43,10 @@ const Disclaimer = (props) => {
     else return null
 };
 
-export {Disclaimer}
+function disclaimerPurge() {
+    localStorage.removeItem('disclaimer')
+}
+
+
+
+export {Disclaimer, disclaimerPurge}
