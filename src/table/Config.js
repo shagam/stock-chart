@@ -6,7 +6,7 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
-
+import {disclaimerPurge} from './Disclaimer'
 
 
 const  Config = (props) => { 
@@ -42,10 +42,6 @@ const  Config = (props) => {
     reloadPage()
   }
   
-  function disclaimerPurge() {
-    localStorage.removeItem('disclaimer')
-  }
-
    const style = {
     // background: 'blue',
     // color: 'red',
