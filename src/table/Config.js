@@ -80,11 +80,13 @@ const  Config = (props) => {
           <div style={{display:'flex'}}>
             <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button> &nbsp;
             <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
+          </div>
+
+          <div style={{display:'flex'}}>
             <button onClick={disclaimerPurge} > disclaimer refresh </button> &nbsp;
             <button onClick={disclaimerGetDate} > disclaimer date </button> &nbsp;
             <div>{disclaimerDate} </div>
           </div>
-
 
           <hr/>
           <div style={{display: 'flex'}}>Url:  &nbsp;  <div style={{color: '#0077ff'}}> {window.location.href} </div> </div>
