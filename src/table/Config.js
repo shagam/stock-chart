@@ -6,7 +6,7 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
-import {disclaimerPurge} from './Disclaimer'
+import {disclaimerPurge, getDisclaimerDate} from './Disclaimer'
 
 
 const  Config = (props) => { 
@@ -18,7 +18,7 @@ const  Config = (props) => {
   const { resetPassword, currentUser, admin } = useAuth(); //, currentUser
 
   const [serviceInfo, setServiceInfo] = useState()
-
+  const [disclaimerDate, setDisclaimerDate] = useState()
 
   const configFlagChange = () => {setConfigFlag (! configFlag)}
 
@@ -42,6 +42,13 @@ const  Config = (props) => {
     reloadPage()
   }
   
+  function disclaimerGetDate() {
+    const disclaimerDate_ = getDisclaimerDate()
+    setDisclaimerDate(disclaimerDate_)
+    console.log ('disclaimer date: ', disclaimerDate_)
+    return disclaimerDate_;
+  }
+
    const style = {
     // background: 'blue',
     // color: 'red',
@@ -73,7 +80,9 @@ const  Config = (props) => {
           <div style={{display:'flex'}}>
             <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button> &nbsp;
             <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
-            <button onClick={disclaimerPurge} > disclaimer show </button>             
+            <button onClick={disclaimerPurge} > disclaimer refresh </button> &nbsp;
+            <button onClick={disclaimerGetDate} > disclaimer date </button> &nbsp;
+            <div>{disclaimerDate} </div>
           </div>
 
 

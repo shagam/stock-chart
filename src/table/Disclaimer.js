@@ -1,26 +1,30 @@
 import React, {useMemo} from 'react';
-
+import {getDate} from '../utils/Date'
 
 // 
 const Disclaimer = (props) => {
     const log = props.logFlags.includes('aux')
     var disclaimer  = useMemo(() => localStorage.getItem('disclaimer'), []);
 
-    if (disclaimer === null) {
-        disclaimer = 0
-    }
-    if (disclaimer < 2) {
-        disclaimer ++
+    if (disclaimer === null || disclaimer === 'undefined') 
+        disclaimer = {count: 0, date: getDate()}
+    else if (disclaimer === 2)
+        disclaimer = {count: 2, date: getDate()}        
+    else
+        disclaimer = JSON.parse(disclaimer)
 
-        localStorage.setItem('disclaimer', disclaimer)
+    if (disclaimer.count < 2) {
+        disclaimer.count ++
+
+        localStorage.setItem('disclaimer', JSON.stringify(disclaimer))
         if (log)
             props.eliHome && console.log ('disclaimer1: ', disclaimer);
 
-        if (disclaimer > 2)
+        if (disclaimer.count > 2)
             return null
         return (
             <div>
-                {disclaimer === 2 && <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
+                {disclaimer.count === 2 && <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
                     <h1 style={{color: 'red'}}>Disclaimer</h1>
                     <hr/>
                     <h5>This web site is provided as is.</h5>
@@ -47,6 +51,10 @@ function disclaimerPurge() {
     localStorage.removeItem('disclaimer')
 }
 
+function getDisclaimerDate() {
+    var disclaimer = localStorage.getItem('disclaimer')
+    disclaimer = JSON.parse(disclaimer)
+    return disclaimer.date;
+}
 
-
-export {Disclaimer, disclaimerPurge}
+export {Disclaimer, disclaimerPurge, getDisclaimerDate}
