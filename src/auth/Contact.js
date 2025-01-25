@@ -28,7 +28,7 @@ export default function ContactUs (props)  {
 
   const navigate = useNavigate();
   const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
-  const [logBackEnd, setLogBackEnd] = useState ();
+  const [logBackEnd, setLogBackEnd] = useState (false);
   const [mailingList, setMailingList] = useState (true)
   const LOG = logBackEnd// props.logFlags.includes('contact')
 
