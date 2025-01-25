@@ -36,6 +36,7 @@ const Disclaimer = (props) => {
                     <h5>Info is not shared with third parties.</h5>
                     <div>&nbsp;</div>
                     <h5 style={{color: 'green'}}>This site is free. Please share on social media.</h5>                    
+                    <h5 style={{color: 'lightgreen'}}>Please ContactUs, to enter our mailing list. (Once a week update)</h5> 
                     <div>&nbsp;</div>
                     <h6>This disclaimer appears once in a while on each platform/browser</h6>
                     <h6>Reload page to clear</h6>
@@ -49,6 +50,7 @@ const Disclaimer = (props) => {
 
 function disclaimerPurge() {
     localStorage.removeItem('disclaimer')
+    window.location.reload()
 }
 
 function getDisclaimerDate() {
