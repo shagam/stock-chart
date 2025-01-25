@@ -29,7 +29,7 @@ function StockLists (props) {
     
     const [logBackEnd, setLogBackEnd] = useState (false);
     const [myIp, setMyIp] = useState (true);
-    const [otherIp, setOtherIp] = useState (false);
+    const [otherIp, setOtherIp] = useState (true);
     const [delOtherIp, setDelOtherIp] = useState (false);  // allow to delete others
 
     const LOG = props.logFlags && props.logFlags.includes("stockLists");
@@ -419,8 +419,8 @@ function StockLists (props) {
                     <div style={{display:'flex'}}>
                         &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
-                        <div> <input style={{marginTop: '15px'}} type="checkbox" checked={myIp}  onChange={() => setMyIp(! myIp) }  /> &nbsp; only-my-ip &nbsp; &nbsp;</div>
-                        <div> <input style={{marginTop: '15px'}} type="checkbox" checked={otherIp}  onChange={() => setOtherIp(! otherIp) }  /> &nbsp; only-other-ip &nbsp; &nbsp;</div>
+                        <div> <input style={{marginTop: '15px'}} type="checkbox" checked={myIp}  onChange={() => setMyIp(! myIp) }  /> &nbsp; my-ip &nbsp; &nbsp;</div>
+                        <div> <input style={{marginTop: '15px'}} type="checkbox" checked={otherIp}  onChange={() => setOtherIp(! otherIp) }  /> &nbsp; other-ip &nbsp; &nbsp;</div>
                         {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  /> &nbsp;Log &nbsp; &nbsp;</div>}
                     </div>
 
