@@ -147,7 +147,7 @@ export default function ContactUs (props)  {
           <hr/>
           {eliHome && <div style={{display: 'flex'}}>
             {eliHome && <div style={{display: 'flex'}} ><input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={setLog} />&nbsp;
-            <label style={{marginTop: '15px'}}>Log </label> </div>} &nbsp; 
+            <label style={{marginTop: '15px'}}>Log </label> </div>} &nbsp; &nbsp;
 
             <input style={{marginTop: '15px'}} type="checkbox" checked={mailingList}  onChange={()=>setMailingList(! mailingList)} /> &nbsp;
             <label style={{marginTop: '15px'}}>Add-to-mailing-list </label>
