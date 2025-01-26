@@ -7,9 +7,9 @@ const Disclaimer = (props) => {
     var disclaimer  = useMemo(() => localStorage.getItem('disclaimer'), []);
 
     if (disclaimer === null || disclaimer === 'undefined') 
-        disclaimer = {count: 0, date: getDate()}
+        disclaimer = {count: 0, date: getDate(), msec: Date.now()}
     else if (disclaimer === 2)
-        disclaimer = {count: 2, date: getDate()}        
+        disclaimer = {count: 2, date: getDate(), msec: Date.now()}        
     else
         disclaimer = JSON.parse(disclaimer)
 
