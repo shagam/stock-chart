@@ -51,12 +51,17 @@ const DropRecoveryButtons = (props) => {
     setGainLostWeeks()
     setDateOfEqualVal()
     setDropRecoveryInfo()
+    setErr()
   }, [props.StockSymbol, dropStartDate,props.daily]) 
 
 
 
 function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, logFlags, weekly, gainObj, errorAdd) {
-
+  setErr()
+  if (weekly) {
+    setErr ('weekly not recomded, use daily. Mid day splits may distort data')
+    beep2()
+  }
   const LOG_DROP = logFlags && logFlags.includes('drop_');
   
   if (LOG) {
@@ -333,7 +338,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
     setDropRecoveryInfo(info)
     setDropRecoveryInfoExtra(infoExtra)
-
     // rows[index].values.deep = Number(deep);
     // rows[index].values.recoverWeek = Number(recoverPeriod);
     // rows[index].values.deepDate = deepDate;
@@ -484,7 +488,9 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           </div>
           
           <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Calc drop from high before market crash. Calc weeks number to recover </h6>
-          
+          {err && <div style={{display:'flex', }}> {props.StockSymbol} &nbsp; DropRecovery: &nbsp;
+             <div style={{color: 'red', fontWeight: 'bold'}}>{err}</div>
+          </div>}
 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
