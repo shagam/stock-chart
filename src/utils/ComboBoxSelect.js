@@ -20,8 +20,8 @@ export const ComboBoxSelect = (props) => {
 
 
   return (
-    <div style={{display: 'flex'}}>
-    {props.title} &nbsp;
+    <div style={{display: 'flex', height: '30px'}} >
+    {props.title}&nbsp;
 
     <select title={props.TITLE}  value={props.serv}  onChange={(e) =>{
       props.setSelect (forceBoolean(e.target.value))}} >
