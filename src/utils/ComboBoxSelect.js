@@ -23,7 +23,7 @@ export const ComboBoxSelect = (props) => {
     <div style={{display: 'flex'}}>
     {props.title} &nbsp;
 
-    <select title={props.TITLE}  value={props.servSelect}  onChange={(e) =>{
+    <select title={props.TITLE}  value={props.serv}  onChange={(e) =>{
       props.setSelect (forceBoolean(e.target.value))}} >
       {props.options.map((s, i) => (
           <option key={i} value={s} > {props.nameList[i]} &nbsp; </option> 
