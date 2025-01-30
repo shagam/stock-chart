@@ -10,6 +10,11 @@ export const ComboBoxSelect = (props) => {
   // props.names  
 
 
+  function forceBoolean (val) {
+    if (val === 'true') return true;
+    if (val === 'false') return false;
+    return val;
+  }
 
   const LOG = false;
 
@@ -18,8 +23,8 @@ export const ComboBoxSelect = (props) => {
     <div style={{display: 'flex'}}>
     {props.title} &nbsp;
 
-    <select   value={props.servSelect}  onChange={(e) =>{
-      props.setSelect (e.target.value)}} >
+    <select title={props.TITLE}  value={props.servSelect}  onChange={(e) =>{
+      props.setSelect (forceBoolean(e.target.value))}} >
       {props.options.map((s, i) => (
           <option key={i} value={s} > {props.nameList[i]} &nbsp; </option> 
       ))}  

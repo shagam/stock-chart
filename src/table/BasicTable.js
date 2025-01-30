@@ -836,12 +836,13 @@ const BasicTable = (props) => {
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
 
           {<div> <button style={{backgroundColor: '#bbffbb'}} onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>} &nbsp;
-          <button style={{backgroundColor: '#ffccff'}} onClick={reloadPage} title='clear table, and load default symbols' > Clear_table </button> &nbsp;                         
+          <button style={{backgroundColor: '#ffccff', height:'30px'}} onClick={reloadPage} title='clear table, and load default symbols' > Clear_table </button>&nbsp;                         
 
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
 
           {/* {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)}  title='daily vs weekly' /> daily&nbsp;&nbsp;</div>} */}
-          <Toggle names={['weekly','daily',]} colors={['gray','red']} state={daily} setState={setDaily} title='daily vs weekly'/> &nbsp;
+
+          <ComboBoxSelect serv={daily} nameList={['weekly','daily',]} setSelect={setDaily} title='' TITLE='data resultion. weekly or daily ' options={[false,true]} defaultValue={false} /> &nbsp;
 
           <Toggle names={['gain_factor','year_percent',]} colors={['gray','red']} state={yearlyPercent} setState={setYearlyPercent_wrapper}
             title='table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'/>  &nbsp;
