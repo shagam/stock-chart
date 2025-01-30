@@ -484,7 +484,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>  &nbsp; &nbsp;
             <h6 style={{color: 'blue'}}> DropRecovery  </h6>  &nbsp; &nbsp;
-            <div>{ props.daily? '(daily)' : '(weekly)'}</div>
           </div>
           
           <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Calc drop from high before market crash. Calc weeks number to recover </h6>

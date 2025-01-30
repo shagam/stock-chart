@@ -179,7 +179,6 @@ function MarketOpenPrice (props) {
             <div style = {{display: 'flex'}}>
                 <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp; &nbsp;
                 <h6 style={{color: 'blue'}}> MarketOpenPrice  </h6> &nbsp; &nbsp;
-                <div>{props.daily? '(daily)' : '(weekly)'}</div>
             </div>
 
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Tool for revealing after hour reshuffle (Expenses) of lavarage ETF like TQQQ </h6>

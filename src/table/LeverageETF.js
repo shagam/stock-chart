@@ -245,7 +245,6 @@ function LeverageETF (props) {
             <div style = {{display: 'flex'}}>
                 <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
                 <h6  style={{color: 'blue' }}> Lavarage ETF </h6> &nbsp; &nbsp;
-                <div>{props.daily? '(daily)' : '(weekly)'}</div>
             </div>
 
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Support strategy for trading leverage ETF (like TQQQ)  </h6>

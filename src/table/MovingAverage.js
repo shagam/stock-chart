@@ -111,7 +111,6 @@ function MovingAverage (props) {
             <div style = {{display: 'flex'}}>
               <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
               <h6 style={{color: 'blue'}}> Noving average &nbsp;  </h6> &nbsp; &nbsp;
-              <div>{ props.daily? '(daily)' : '(weekly)'}</div>
             </div>
             <div> &nbsp;</div>
             <div style={{color: 'red'}}>{err}</div>

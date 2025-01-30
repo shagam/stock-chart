@@ -29,7 +29,6 @@ const StockInfo = (props) => {
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}> GainRaw </h6>  &nbsp; &nbsp;
-          <div>{props.daily? '(daily)' : '(weekly)'}</div>
         </div>
         
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw gain history as recieved from AlphaVantage </h6>
