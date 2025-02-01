@@ -26,6 +26,7 @@ function Futures (props) {
     const [latency, setLatency] = useState ();
   
     const [NQ, set_NQ] = useState();
+    const [subPages, setSubPages] = useState(false);
 
     const LOG = logBackEnd; // props.logFlags.includes("futures");
 
@@ -175,6 +176,9 @@ function Futures (props) {
       if (ignoreSaved)
         url += '&ignoreSaved=true';
 
+      if (subPages)
+        url += '&subPages=true';
+
       if (LOG)
         console.log (url) // log the url
 
@@ -280,6 +284,7 @@ function Futures (props) {
             {<div style={{display:'flex'}}> <ComboBoxSelect serv={urlGetSym} nameList={googFinanceSymList} setSelect={setUrlGetSym} 
               title='urlGetSym' options={googFinanceSymList} defaultValue={urlGetSym}/> </div>}   {/* Select urlGetSym */}
             { <div><button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;</div>}
+            {eliHome &&  <input type="checkbox" checked={subPages}  onChange={()=>setSubPages (! subPages)}  />  }&nbsp;SubPages &nbsp; &nbsp;
             {urlGetSym && <div>{urlGetSym}</div>}
             {NQ && <div>{NQ}</div>}
             <div>&nbsp;</div>
