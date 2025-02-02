@@ -114,7 +114,7 @@ export default function ContactGet (props)  {
               return;
             }
             else
-            setMailListResults()
+            setMailListResults([])
 
 
             if (beutify) {
