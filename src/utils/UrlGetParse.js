@@ -8,7 +8,7 @@ import {useAuth, logout} from '../contexts/AuthContext';
 
 // import GetInt from '../utils/GetInt'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
-
+import {getDate} from '../utils/Date'
 
 function UrlGetParse (props) {
   const { eliHome, } = IpContext();
@@ -34,6 +34,7 @@ function UrlGetParse (props) {
   const ticker = Object.keys(urlPatternPair)[pairNum] // select pait of {url,pattern}
   const [latency, setLatency] = useState()
   const [results, setResults] = useState()
+  const [error, setError] = useState()
 
   function urlGetParse () {
       // console.log ('urlGetParse', serverUrl, pattern, LOG, callBack) 
@@ -53,7 +54,7 @@ function UrlGetParse (props) {
 
       if (log)
         console.log (url) // log the url
-
+      setError ()
       setLatency('request sent to server')
       const mili = Date.now()
 
@@ -63,20 +64,24 @@ function UrlGetParse (props) {
         const latency = Date.now() - mili
         setLatency('response latency(msec)=' + latency)
 
-          if (result.data) {
-              console.log (result.data)
-              setResults(result.data) 
-          }
+        console.log (result.data)
+        if (result.data === 'read ETIMEDOUT') {
+            setError([props.symbol + '  error ' + result.data])
+            return;
+        }
+        if (result.data) {
+            console.log (result.data)
+            setResults(result.data) 
+        }
 
-          if (result.data.err === "No data") {
-              props.stockChartXValues([props.symbol, 'verify marketwatch', result.data.err])
-              return;
-          }
-
-          if ((result.data !== '') && ! result.data.err) {
-              // callBack(result.data)
-          }
+        if ((result.data !== '') && ! result.data.err) {
+            // callBack(result.data)
+        }
       })
+      .catch ((err) => {
+      // setError([sym, 'email', err.message, corsUrl])
+        console.log(getDate(), 'msg', err, url)
+      })  
   }
 
   return (
@@ -84,6 +89,8 @@ function UrlGetParse (props) {
         <h6 style={{color: 'blue'}}> UrlGetParse &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; url get and parse &nbsp; </h6>
           {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
+        {error && <div style={{color: 'red'}} >{error}</div>}
+        
         
         <div style={{display:'flex'}}> 
 
