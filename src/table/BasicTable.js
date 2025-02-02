@@ -81,6 +81,7 @@ import {PriceAlert, priceAlertCheck} from './PriceAlert'
 import {LatestPrice} from './LatestPrice'
 import { finnhub } from './Finnhub'
 import {Disclaimer} from './Disclaimer'
+import { UrlGetParse } from '../utils/UrlGetParse'
 
 const BasicTable = (props) => {
 
@@ -742,7 +743,8 @@ const BasicTable = (props) => {
     config:        'config',
     stockLists:    'stockLists',
     futures:       'futures',
-    priceAlert:    'priceAlert'
+    priceAlert:    'priceAlert',
+    urlGetParse:   'urlGetParse',
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState('none')
@@ -1010,6 +1012,9 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
 
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='urlGetParse' id='12' checked={analyzeTool==='urlGetParse'} onChange={onOptionChange}/>  
+              <div style={{color:'blue'}}  title='urlGetParse'> urlGetParse </div> 
+
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div> 
             </div>
@@ -1057,6 +1062,8 @@ const BasicTable = (props) => {
             {analyzeTool ==='priceAlert' && <div> <PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} gainMap = {gainMap}
               errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> </div>}
+
+            {analyzeTool ==='urlGetParse' && <div><UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> </div>}
 
           </div>}
           </div>}        
