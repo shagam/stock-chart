@@ -9,10 +9,9 @@ import {useAuth, logout} from '../contexts/AuthContext';
 // import GetInt from '../utils/GetInt'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
-import {servSelect, PORT, ssl} from '../utils/Server'
 
 function UrlGetParse (props) {
-
+  const { eliHome, } = IpContext();
   const urlPatternPair = {
     nasdaq: {u: 'https://www.nasdaq.com/market-activity/etf/' + props.symbol + '/after-hours',
         // p: '<p class="watchlist__slide-price">$515.56</p>'},
@@ -56,9 +55,13 @@ function UrlGetParse (props) {
         console.log (url) // log the url
 
       setLatency('request sent to server')
+      const mili = Date.now()
 
       axios.get (url)
       .then ((result) => {
+
+        const latency = Date.now() - mili
+        setLatency('response latency(msec)=' + latency)
 
           if (result.data) {
               console.log (result.data)
@@ -80,7 +83,7 @@ function UrlGetParse (props) {
     <div style = {{ border: '2px solid green'}}>
         <h6 style={{color: 'blue'}}> UrlGetParse &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; url get and parse &nbsp; </h6>
-
+          {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
         
         <div style={{display:'flex'}}> 
 
