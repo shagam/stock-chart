@@ -40,7 +40,9 @@ import {getDate,} from '../utils/Date'
             const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
 
             rows[row_index].values.price = price.toFixed(2);
-            rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3); 
+            rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
+            if (rows[row_index].values.target_raw)
+            rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
             refreshByToggleColumns();
         }).catch ((err) => {
             console.log(getDate(), finnhub, err.message)
