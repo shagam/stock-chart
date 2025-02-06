@@ -851,7 +851,7 @@ const BasicTable = (props) => {
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
           {eliHome && admin && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr}/>} &nbsp;
-          {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr)}} title='finnhub info' > lastPrice {chartSymbol} </button>   }
+          {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr, props.logFlags, errorAdd, ssl, PORT, servSelect)}} title='finnhub info' > lastPrice {chartSymbol} </button>   }
        
          </div>
 

@@ -2,10 +2,10 @@ import axios from 'axios'
 import {getDate,} from '../utils/Date'
 // const finnhub = require('finnhub');
 // import finnhub from 'finnhub';
-
+import {targetPriceAdd} from './TargetPrice'
 // function Finnhub (props) {
 
-    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr) {
+    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect) {
 
         const url = 'https://finnhub.io/api/v1/quote?symbol=' + symbol + '&token=c4pfifqad3ifau3r1kjg'
 
@@ -42,7 +42,8 @@ import {getDate,} from '../utils/Date'
             rows[row_index].values.price = price.toFixed(2);
             rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
             if (rows[row_index].values.target_raw)
-            rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
+                rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
+            targetPriceAdd (symbol, rows[row_index].values.target_raw, rows[row_index].values.price, logFlags, errorAdd, 'lastPrice', ssl, PORT, servSelect) // update targetPrice
             refreshByToggleColumns();
         }).catch ((err) => {
             console.log(getDate(), finnhub, err.message)
