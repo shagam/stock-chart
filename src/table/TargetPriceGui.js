@@ -4,7 +4,7 @@ import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 
 function TargetPriceGui (props) {
-    const [targetInfoOne, setTargetInfoOne] = useState ();
+    const [targetInfoOne, setTargetInfoOne] = useState ([]);
     const [targetPriceHist, setTargetHistAll] = useState ({});
 
     const [price, setPrice] = useState ();
@@ -20,7 +20,7 @@ function TargetPriceGui (props) {
 
     // clear vars when symbol change
     useEffect(() => {
-        setTargetInfoOne()
+        setTargetInfoOne([])
         setTargetHistAll({})
         setTargetBase(0)
         setPrice()
@@ -124,6 +124,7 @@ function TargetPriceGui (props) {
 
             {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
             
+            {targetInfoOne && targetInfoOne.length > 0 && <div>count={targetInfoOne && targetInfoOne.length}</div>}
             <div style={{ maxHeight: '25vh', 'overflowY': 'scroll'}}  >
                 {price && targetInfoOne && renderList(targetInfoOne)}
             </div>
