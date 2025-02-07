@@ -124,8 +124,9 @@ function TargetPriceGui (props) {
 
             {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
             
-            {price && targetInfoOne && renderList(targetInfoOne)}
-
+            <div style={{ maxHeight: '25vh', 'overflowY': 'scroll'}}  >
+                {price && targetInfoOne && renderList(targetInfoOne)}
+            </div>
             {/* <br></br>            */}
 
             {/* Tareget price history TABLE */}
