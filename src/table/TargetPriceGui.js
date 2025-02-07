@@ -126,7 +126,7 @@ function TargetPriceGui (props) {
             
             {targetInfoOne && targetInfoOne.length > 0 && <div>count={targetInfoOne && targetInfoOne.length}</div>}
             <div style={{ maxHeight: '25vh', 'overflowY': 'scroll'}}  >
-                {price && targetInfoOne && renderList(targetInfoOne)}
+                {targetInfoOne && targetInfoOne.length && renderList(targetInfoOne)}
             </div>
             {/* <br></br>            */}
 
