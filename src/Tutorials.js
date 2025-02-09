@@ -28,7 +28,7 @@ function Tutorials () {
                     </tr>                 
                     {/* "https://youtu.be/AMrNSLRRuxY" */}
                     <tr>
-                        <td><a href="https://youtu.be/9XEvn5lHYYM">Peak2Peak</a></td><td>How to measure long term yearly gain of an ETF</td> 
+                        <td><a href="https://youtu.be/aLYaMStQVds">Peak2Peak</a></td><td>How to measure long term yearly gain of an ETF</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/xXB-dzEKAus">Bubble-line </a></td><td>Stock market bubble. Can we predict future crash? </td> 
