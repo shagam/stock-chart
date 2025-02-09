@@ -20,6 +20,12 @@ import {targetPriceAdd} from './TargetPrice'
                 return;
 
             const dat = result.data
+            const price = Number(dat.c)
+            if (price === 0) {
+                console.log (symbol, 'price=' + price)
+            }
+            const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+            rows[row_index].values.price = price.toFixed(2);
 
             // find highest price
             var highestPrice = -1; // highest price
@@ -31,18 +37,18 @@ import {targetPriceAdd} from './TargetPrice'
             if (highestPrice === -1) {
                 console.log (symbol, 'finnhub, missing stockChartYValues, pls try again')
                 setErr (symbol + '  finnhub, missing stockChartYValues, pls try again')
+                // refreshByToggleColumns();
                 return;
             }
 
-            const price = Number(dat.c)
             console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(3))
 
-            const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
 
-            rows[row_index].values.price = price.toFixed(2);
             rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
             if (rows[row_index].values.target_raw)
                 rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
+            else
+                console.log (symbol, 'finnhub no target price')
             targetPriceAdd (symbol, rows[row_index].values.target_raw, rows[row_index].values.price, logFlags, errorAdd, 'lastPrice', ssl, PORT, servSelect) // update targetPrice
             refreshByToggleColumns();
         }).catch ((err) => {

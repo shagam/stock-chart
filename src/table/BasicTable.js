@@ -414,7 +414,7 @@ const BasicTable = (props) => {
     setErr()
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-
+    // finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr, props.logFlags, errorAdd, ssl, PORT, servSelect) //latest price
     var avoidTooFrequentLimit = eliHome ? 2*1000 : 2*1000 //** allowed frequency of 2 sec */
     const lastGainMili = rows[row_index].values.gain_mili; //** save before change */
 
