@@ -791,6 +791,8 @@ const BasicTable = (props) => {
       localStorage.removeItem('yearlyPercent')
   }
 
+
+  
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
