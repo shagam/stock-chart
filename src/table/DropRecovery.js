@@ -9,6 +9,7 @@ import {todayDate, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, s
 import {IpContext, getIpInfo} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
+import {isDailyXArray} from '../utils/Date'
 import {DropsCount} from './DropsCount'
 
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
@@ -58,6 +59,15 @@ const DropRecoveryButtons = (props) => {
 
 function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, startDate, logFlags, weekly, gainObj, errorAdd) {
   setErr()
+  const isDaily_ = isDailyXArray (stockChartXValues)
+
+  console.log ('isDaily', isDaily_, 'weekly', weekly)
+
+  if (isDaily_ === weekly) {
+    setErr ('Mismatch between mode and historicalData, verify daily, and click gain again')
+    beep2()
+    return
+  }
   if (weekly) {
     setErr ('weekly not recomded, use daily. Mid day splits may distort data')
     beep2()

@@ -353,6 +353,20 @@ function year2Date () {
   return y2d_date;
 }
 
+function isDailyXArray (stockChartXValues) {
+  const dateSplit = stockChartXValues[2].split('-')
+  if (dateSplit.length < 3)
+    return false;
+  const miliToday = new Date (stockChartXValues[0]).getTime();      //  (dateSplit[0], dateSplit[1], dateSplit[2]).getTime();
+  const miliBefore = new Date (stockChartXValues[5]).getTime();
+
+  const daysDiff =  (miliToday - miliBefore) / (1000 * 60 * 60 * 24); 
+  const isDailyXArray = daysDiff < 10;
+  return isDailyXArray;
+}
+
+
+
 
 export {yearsDifference, miliDifferenceFromToday, getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date, isDailyXArray}
