@@ -45,7 +45,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowDown, FaArrowUp, FaSlideshare, FaVenusMars } from 'react-icons/fa'
 //import {} from "https:///www.gstatc"
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
-  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr, isDailyXArray} from '../utils/Date'
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
@@ -847,7 +847,8 @@ const BasicTable = (props) => {
           {/* {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)}  title='daily vs weekly' /> daily&nbsp;&nbsp;</div>} */}
 
           <ComboBoxSelect serv={daily} nameList={['weekly','daily',]} setSelect={setDaily} title='' TITLE='data resultion. weekly or daily ' options={[false,true]} defaultValue={false} /> &nbsp;
-          <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} /> &nbsp;
+          {stockChartYValues.length > 0 && isDailyXArray(stockChartXValues) !== daily && <div style={{color:'red'}}>missmatch history</div>}
+          <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} /> &nbsp;       
 
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
