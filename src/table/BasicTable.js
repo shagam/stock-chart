@@ -847,7 +847,7 @@ const BasicTable = (props) => {
           {/* {<div>&nbsp;<input  type="checkbox" checked={daily}  onChange={()=> setDaily(! daily)}  title='daily vs weekly' /> daily&nbsp;&nbsp;</div>} */}
 
           <ComboBoxSelect serv={daily} nameList={['weekly','daily',]} setSelect={setDaily} title='' TITLE='data resultion. weekly or daily ' options={[false,true]} defaultValue={false} /> &nbsp;
-          {stockChartYValues.length > 0 && isDailyXArray(stockChartXValues) !== daily && <div style={{color:'red'}}>missmatch history</div>}
+          {stockChartYValues.length > 0 && isDailyXArray(stockChartXValues) !== daily && <div style={{color:'red'}}>mode missmatch, press gain</div>}
           <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} /> &nbsp;       
 
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
