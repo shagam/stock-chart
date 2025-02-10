@@ -34,7 +34,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/xXB-dzEKAus">Bubble-line </a></td><td>Stock market bubble. Can we predict future crash? </td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/nDfYjmom24A">Drop-recovery</a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
+                        <td><a href="https://youtu.be/F458c7qZx2k">Drop-recovery</a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/Yk6fj_peDlM">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
