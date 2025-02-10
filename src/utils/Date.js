@@ -354,10 +354,10 @@ function year2Date () {
 }
 
 function isDailyXArray (stockChartXValues) {
-  const dateSplit = stockChartXValues[2].split('-')
-  if (dateSplit.length < 3)
+  if (stockChartXValues.length < 6) {
     return false;
-  const miliToday = new Date (stockChartXValues[0]).getTime();      //  (dateSplit[0], dateSplit[1], dateSplit[2]).getTime();
+  }
+  const miliToday = new Date (stockChartXValues[0]).getTime();
   const miliBefore = new Date (stockChartXValues[5]).getTime();
 
   const daysDiff =  (miliToday - miliBefore) / (1000 * 60 * 60 * 24); 
