@@ -61,6 +61,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   setErr()
   const isDaily_ = isDailyXArray (stockChartXValues)
 
+  if (LOG)
   console.log ('isDaily', isDaily_, 'weekly', weekly)
 
   if (isDaily_ === weekly) {
@@ -69,7 +70,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     return
   }
   if (weekly) {
-    setErr ('weekly not recomded, use daily. Mid day splits may distort data')
+    setErr ('Warning. weekly not recomded, use daily. Mid day splits may distort data')
     beep2()
   }
   const LOG_DROP = logFlags && logFlags.includes('drop_');
