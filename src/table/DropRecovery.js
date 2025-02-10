@@ -64,7 +64,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   console.log ('isDaily', isDaily_, 'weekly', weekly)
 
   if (isDaily_ === weekly) {
-    setErr ('Mismatch between mode and historicalData, verify daily, and click gain again')
+    setErr ('Mismatch between mode (daily/weekly) and historicalData, verify daily, and click gain again')
     beep2()
     return
   }
