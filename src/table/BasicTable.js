@@ -86,7 +86,7 @@ import { UrlGetParse } from '../utils/UrlGetParse'
 const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
-  const[error, setErr] = useState();
+  const [error, setErr] = useState();
   const [chartSymbol, setChartSymbol] = useState("");
   const [infoSymbol, setInfoSymbol] = useState("");
   const [gainMap, setGainMap] = useState([]);
@@ -152,7 +152,7 @@ const BasicTable = (props) => {
 
   //** default start date for drop recovery  Mon 0-11 */
   const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
-  
+  const [priceDivClose, setPriceDivClose] = useState();
   const useData = false;
 
   const cols =      ["symbol", "percent","Exchange","Industry","Sector","Cap","PE","ForwPE","TrailPE","PEG","Div","BETA",
@@ -855,8 +855,10 @@ const BasicTable = (props) => {
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
 
-          {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr, props.logFlags, errorAdd, ssl, PORT, servSelect)}} title='finnhub info' > lastPrice {chartSymbol} </button>   }
-       
+          {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
+             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose)}} title='finnhub info' > lastPrice {chartSymbol} </button>} &nbsp; {priceDivClose && <div>price/close={priceDivClose}</div>}
+
+          <div></div>
          </div>
 
       {/* insert sym, filter */}

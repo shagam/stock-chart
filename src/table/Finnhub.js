@@ -5,7 +5,7 @@ import {getDate,} from '../utils/Date'
 import {targetPriceAdd} from './TargetPrice'
 // function Finnhub (props) {
 
-    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect) {
+    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose) {
 
         const url = 'https://finnhub.io/api/v1/quote?symbol=' + symbol + '&token=c4pfifqad3ifau3r1kjg'
 
@@ -49,6 +49,10 @@ import {targetPriceAdd} from './TargetPrice'
                 rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
             else
                 console.log (symbol, 'finnhub no target price')
+            const priceDivClose = (price/stockChartYValues[0]).toFixed(4);
+            setPriceDivClose (priceDivClose)
+            console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivClose)
+
             targetPriceAdd (symbol, rows[row_index].values.target_raw, rows[row_index].values.price, logFlags, errorAdd, 'lastPrice', ssl, PORT, servSelect) // update targetPrice
             refreshByToggleColumns();
         }).catch ((err) => {
