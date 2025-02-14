@@ -12,6 +12,7 @@ import {getDate,} from '../utils/Date'
 function LatestPrice (props) {
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
+    const [subPages, setSubPages] = useState(false)      
     const log = props.logFlags.includes('gain')
 
     function latestPrice() {
@@ -30,6 +31,8 @@ function LatestPrice (props) {
 
         if (LOG)
             corsUrl += '&LOG=1'
+        if (subPages)
+            corsUrl += '&subPages=' + true
         console.log (props.symbol + ' ' + corsUrl)  
 
         const mili = Date.now()
@@ -71,10 +74,12 @@ function LatestPrice (props) {
             props.setErr(props.symbol + ' ' + err.message)
         })   
     }
-
+//  'inline-block'
     return (
-        <div>
-           &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>marketClosed {props.symbol} </button>
+        <div style={{display: 'flex'}}>
+            <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div>
+
+            &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>marketClosed {props.symbol} </button>
         </div>
 
     )
