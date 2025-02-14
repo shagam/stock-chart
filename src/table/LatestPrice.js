@@ -6,13 +6,18 @@ import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 import {getDate,} from '../utils/Date'
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 
 
 function LatestPrice (props) {
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
-    const [subPages, setSubPages] = useState(false)      
+    const [subPages, setSubPages] = useState(false)  
+    const priceSources = ['goog','fetchPage','nasdaq','yahoo','watch']
+    const [source, setSource] = useState(priceSources[0])
+    
+
     const log = props.logFlags.includes('gain')
 
     function latestPrice() {
@@ -23,7 +28,8 @@ function LatestPrice (props) {
         else 
             corsUrl = "http://"   
         corsUrl += props.corsServer+ ":" + props.PORT + '/latestPrice?stock=' + props.symbol
-        corsUrl += '&src=' + 'goog'  // during trade hours
+        corsUrl += '&src=' + source 
+        // corsUrl += '&src=' + 'goog'     during trade hours
         // corsUrl += '&src=' + 'fetchPage'  // during trade hours
         // corsUrl += '&src=' + 'nasdaq' // fails during trade hours
         // corsUrl += '&src=' + 'yahoo'  // during trade hours
@@ -77,8 +83,8 @@ function LatestPrice (props) {
 //  'inline-block'
     return (
         <div style={{display: 'flex'}}>
+            <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='site of lates price ' options={priceSources} defaultValue={false} /> &nbsp;
             <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div>
-
             &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>marketClosed {props.symbol} </button>
         </div>
 
