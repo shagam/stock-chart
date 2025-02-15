@@ -14,19 +14,53 @@ function UrlGetParse (props) {
   const { eliHome, } = IpContext();
   const urlPatternPair = {
 
-    nasdaq: {u: 'https://www.nasdaq.com/market-activity/etf/' + props.symbol + '/after-hours',
-        // p: '<p class="watchlist__slide-price">$515.56</p>'},
-        p: '<p class="watchlist__slide-price">$([0-9]\\.]*)</p>'},
+    nasdaq: {
+         // p: '<p class="watchlist__slide-price">$515.56</p>'},
+      p: '<p class="watchlist__slide-price">$([0-9]\\.]~~)</p>'},
 
-    NDX:    {u: 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
-    IXIC:   {u: 'https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ', p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
-
-    SPDR_put_call:    {u: 'https://www.alphaquery.com/stock/SPY/volatility-option-statistics/30-day/',
-      p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">([0-9\\.]~~)</div></a>'},
-
-    goog_nasdaq: {u: 'https://www.google.com/finance/quote/' + props.symbol + ':NASDAQ/',
+    NDX:    {
+      u: 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ',
       // 
-      p:  '<div class="YMlKec fxKbKc"> ([0-9]\\.]*)$</div></div></span>',},
+      p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
+    
+    IXIC:   {
+      u: 'https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ',
+      // 
+      p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'
+    },
+    
+    SPDR_put_call: {
+      u: 'https://www.alphaquery.com/stock/SPY/volatility-option-statistics/30-day/',
+      // 
+      p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">([0-9\\.]~~)</div></a>'
+    },
+
+    goog_nasdaq: {
+      u: 'https://www.google.com/finance/quote/' + props.symbol + ':NASDAQ/', 
+      //
+      p:  '<div class="YMlKec fxKbKc"> ([0-9]\\.]*)$</div></div></span>',
+    },
+
+    goog_nyse: {
+      u: 'https://www.google.com/finance/quote/' + props.symbol + ':NYSE/',
+      // 
+      p:  '<div> ',
+    },
+
+    yahoo:{
+      u: 'https://finance.yahoo.com/quote/' + props.symbol,
+      // 
+      p:  '<div>',
+     },
+
+    barChart:{
+      u:  'https://www.barchart.com/etfs-funds/quotes/' + props.symbol + '/overview/',
+      // p:  '"lastPriceExt":"538.15","priceChangeExt":',},
+      // p:  '"lastPriceExt":"([0-9]\\.]*)","priceChangeExt":',
+      p:  '"lastPriceExt":"([0-9\\.]~~)"',
+    },
+          
+  
 
   }
   const keys = Object.keys(urlPatternPair) // select pait of {url,pattern}
@@ -92,8 +126,12 @@ function UrlGetParse (props) {
 
   return (
     <div style = {{ border: '2px solid green'}}>
+      <div style={{display:'flex'}}>
         <h6 style={{color: 'blue'}}> UrlGetParse &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; url get and parse &nbsp; </h6>
+        <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+      </div>
+
           {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
         {error && <div style={{color: 'red'}} >{error}</div>}
         
