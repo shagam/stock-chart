@@ -83,9 +83,9 @@ function LatestPrice (props) {
 //  'inline-block'
     return (
         <div style={{display: 'flex'}}>
-            <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='site of lates price ' options={priceSources} defaultValue={false} /> &nbsp;
+            <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp;
             <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div>
-            &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice()}>marketClosed {props.symbol} </button>
+            &nbsp;<button  style={{background: 'aqua'}} type="button" title="price during market closed (not ready)" onClick={()=>latestPrice()}>marketClosed {props.symbol} </button>
         </div>
 
     )
