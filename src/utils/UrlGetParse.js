@@ -56,8 +56,8 @@ function UrlGetParse (props) {
     barChart:{
       u:  'https://www.barchart.com/etfs-funds/quotes/' + props.symbol + '/overview/',
       // p:  '"lastPriceExt":"538.15","priceChangeExt":',},
-      // p:  '"lastPriceExt":"([0-9]\\.]*)","priceChangeExt":',
-      p:  '"lastPriceExt":"([0-9\\.]~~)"',
+      p:  '"lastPriceExt":"([0-9\\.]*)","priceChangeExt":',
+      // p:  '"lastPriceExt":"([0-9\\.]~~)"',
     },
           
   
@@ -104,7 +104,7 @@ function UrlGetParse (props) {
         setLatency('response latency(msec)=' + latency)
 
         console.log (result.data)
-        if (result.data === 'read ETIMEDOUT' || result.data.includes('fail')) {
+        if (result.data && result.data === 'read ETIMEDOUT'){ //} || result.data+''.includes('fail')) {
             setError([props.symbol + '    ' + result.data])
             setResults()
             return;
