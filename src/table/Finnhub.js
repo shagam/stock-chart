@@ -48,11 +48,14 @@ import {targetPriceAdd} from './TargetPrice'
             if (rows[row_index].values.target_raw)
                 rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
             else
-                console.log (symbol, 'finnhub no target price')
-            if (Date.now() - rows[row_index].values.gain_mili < 1000*60*60) {
-                const priceDivClose = (price/stockChartYValues[0]).toFixed(4);
-                setPriceDivClose (priceDivClose)
-                console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivClose)
+                console.log (symbol, 'finnhub no target price. probaly an ETF')
+
+            const priceDivClose = price/stockChartYValues[0]
+            const priceDivClose_fixed = (price/stockChartYValues[0]).toFixed(4);
+            if (Date.now() - rows[row_index].values.gain_mili < 1000*60*60 && priceDivClose !== 1) { // less than 1 hour diff && stock value is not the same as the close value
+
+                setPriceDivClose (priceDivClose_fixed)
+                console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivClose_fixed)
             }
 
 
