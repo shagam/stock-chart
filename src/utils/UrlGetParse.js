@@ -13,6 +13,7 @@ import {getDate} from '../utils/Date'
 function UrlGetParse (props) {
   const { eliHome, } = IpContext();
   const urlPatternPair = {
+
     nasdaq: {u: 'https://www.nasdaq.com/market-activity/etf/' + props.symbol + '/after-hours',
         // p: '<p class="watchlist__slide-price">$515.56</p>'},
         p: '<p class="watchlist__slide-price">$([0-9]\\.]*)</p>'},
@@ -22,6 +23,9 @@ function UrlGetParse (props) {
 
     SPDR_put_call:    {u: 'https://www.alphaquery.com/stock/SPY/volatility-option-statistics/30-day/',
       p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">([0-9\\.]~~)</div></a>'},
+
+    goog_nasdaq: {u: 'https://www.google.com/finance/quote/' + props.symbol + ':NASDAQ/',
+      p:  '<div class="YMlKec fxKbKc"> ([0-9]\\.]*)$</div></div></span>',},
 
   }
   const keys = Object.keys(urlPatternPair) // select pait of {url,pattern}
@@ -65,8 +69,8 @@ function UrlGetParse (props) {
         setLatency('response latency(msec)=' + latency)
 
         console.log (result.data)
-        if (result.data === 'read ETIMEDOUT') {
-            setError([props.symbol + '  error ' + result.data])
+        if (result.data === 'read ETIMEDOUT' || result.data.includes('fail')) {
+            setError([props.symbol + '    ' + result.data])
             return;
         }
         if (result.data) {
@@ -104,7 +108,7 @@ function UrlGetParse (props) {
         <div>&nbsp;</div>
         <button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;
         <div>&nbsp;</div>
-        {results && <div>{results}</div>}
+        {results && <div>results={results}</div>}
         <div>&nbsp;</div>
     </div>
   )
