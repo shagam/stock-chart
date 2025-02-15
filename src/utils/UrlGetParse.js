@@ -8,7 +8,7 @@ import {useAuth, logout} from '../contexts/AuthContext';
 
 // import GetInt from '../utils/GetInt'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
-import {getDate} from '../utils/Date'
+import {getDate} from '../utils/Date' 
 
 function UrlGetParse (props) {
   const { eliHome, } = IpContext();
@@ -25,6 +25,7 @@ function UrlGetParse (props) {
       p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">([0-9\\.]~~)</div></a>'},
 
     goog_nasdaq: {u: 'https://www.google.com/finance/quote/' + props.symbol + ':NASDAQ/',
+      // 
       p:  '<div class="YMlKec fxKbKc"> ([0-9]\\.]*)$</div></div></span>',},
 
   }
@@ -61,7 +62,7 @@ function UrlGetParse (props) {
       setError ()
       setLatency('request sent to server')
       const mili = Date.now()
-
+      setResults('waiting for response')
       axios.get (url)
       .then ((result) => {
 
@@ -71,6 +72,7 @@ function UrlGetParse (props) {
         console.log (result.data)
         if (result.data === 'read ETIMEDOUT' || result.data.includes('fail')) {
             setError([props.symbol + '    ' + result.data])
+            setResults()
             return;
         }
         if (result.data) {
