@@ -20,7 +20,7 @@ function LatestPrice (props) {
 
     const log = props.logFlags.includes('gain')
 
-    
+
     function extendedHoursPrice () {
 
         const u =  'https://www.barchart.com/etfs-funds/quotes/' + props.symbol + '/overview/'
@@ -52,15 +52,11 @@ function LatestPrice (props) {
           const latency = Date.now() - mili
           setLatency('response latency(msec)=' + latency)
   
-          console.log (result.data)
+          console.log ('result=', result.data)
           if (result.data && result.data === 'read ETIMEDOUT'){ //} || result.data+''.includes('fail')) {
               props.setError([props.symbol + '    ' + result.data])
             //   setResults()
               return;
-          }
-          if (result.data) {
-              console.log (result.data)
-            //   setResults(result.data) 
           }
   
           const dat = result.data
@@ -78,7 +74,6 @@ function LatestPrice (props) {
               if (val > highestPrice)
                   highestPrice = val;
           }
-
 
           const price = Number(result.data)
           console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/Highest=' + (price / highestPrice).toFixed(3))
