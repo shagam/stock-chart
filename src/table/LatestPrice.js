@@ -21,6 +21,11 @@ function LatestPrice (props) {
     const log = props.logFlags.includes('gain')
 
 
+    useEffect (() => { 
+        props.setPriceDivClose()
+    }, [props.symbol]) 
+  
+
     function extendedHoursPrice () {
 
         const u =  'https://www.barchart.com/etfs-funds/quotes/' + props.symbol + '/overview/'
