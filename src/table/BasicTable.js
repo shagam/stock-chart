@@ -567,6 +567,7 @@ const BasicTable = (props) => {
   //     }
   //   }   
   // }, )
+  const row_index_eeee = rows.findIndex((row)=> row.values.symbol === process.env.REACT_APP_ELI_HOME_S);
 
   const saveTable = (sym) => {
     // if (saveMili && Date.now - saveMili < 1000) {
@@ -833,7 +834,7 @@ const BasicTable = (props) => {
         <div style={{display:'flex'}}>
            {! showUrl && eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>}  &nbsp; &nbsp;
 
-           {eliHome && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
+           {(row_index_eeee !== -1 || admin) && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} &nbsp;
 
            {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
