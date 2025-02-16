@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import { setYear } from 'date-fns';
+import React, {useState, useEffect} from 'react'
 
 const StockInfo = (props) => {
-
+  const [yearly_div_ratio, setYearly_div_ratio] = useState(0) 
   //** replace dash by underscore so date in header doex not split in 2 lines */
   function dateReplaceDash (date) {
     return date.replace(/[-]/g,'_')
@@ -14,13 +15,41 @@ const StockInfo = (props) => {
     else return s
   }
 
+/**
+ * calculate average dividend
+ */
+  var div_count = 0;
+  var div_ratio_sum = 0;
   const VOLUME = '6. volume'
   const SPLIT_COEFFICIENT = '8. split coefficient'
   const keys = Object.keys(props.chartData)
   for (let i = 0; i < keys.length; i++) {
     delete props.chartData[keys[i]][VOLUME]
     delete props.chartData[keys[i]][SPLIT_COEFFICIENT]
+    const div = props.chartData[keys[i]]['7. dividend amount']
+    const closePrice = props.chartData[keys[i]]['4. close']
+
+    if (div !== undefined && div !== '0.0000') {
+      const div_ratio = Number(div) / Number(closePrice);
+      div_ratio_sum += div_ratio
+      div_count += 1
+      if (div_ratio > 0.01){
+        console.log ('i=', i, 'div_ratio=', div_ratio.toFixed(4), 'div=', div, 'closePrice=', closePrice)
+      }
+    }
   }
+
+  useEffect (() => { 
+  //** calculate average dividend */
+    const year_old = keys[keys.length - 1].split('-')[0]
+    const year_new = keys[0].split('-')[0]
+    const year_diff = year_new - year_old
+  
+    var yearly_div_ratio_ = div_ratio_sum / year_diff
+    setYearly_div_ratio(yearly_div_ratio_)
+    console.log ('yearly_div_ratio=', yearly_div_ratio_.toFixed(4))
+  }, [props.symbol, div_ratio_sum, div_count, keys]) 
+
 
   return (
     <div style={{border:'2px solid blue'}}>
@@ -32,7 +61,7 @@ const StockInfo = (props) => {
         </div>
         
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw gain history as recieved from AlphaVantage </h6>
-
+        <div style={{color:'green'}}>div_ratio={yearly_div_ratio.toFixed(4)}</div>
       </div>
       
       {/* Stock gain list */}
