@@ -87,7 +87,7 @@ function LatestPrice (props) {
           props.rows[row_index].values.price = price.toFixed(2);
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
           const ratio = price / props.stockChartYValues[0]
-          props.setPriceDivClose (ratio.toFixed(4))
+          props.setPriceDivClose (ratio.toFixed(6))
           props.refreshByToggleColumns()
 
         })
