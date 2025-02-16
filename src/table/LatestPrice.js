@@ -20,10 +20,9 @@ function LatestPrice (props) {
 
     const log = props.logFlags.includes('gain')
 
-
-    useEffect (() => { 
-        props.setPriceDivClose()
-    }, [props.symbol]) 
+    // useEffect (() => { 
+    //     props.setPriceDivClose()
+    // }, [symbol]) 
   
 
     function extendedHoursPrice () {
@@ -81,13 +80,14 @@ function LatestPrice (props) {
           }
 
           const price = Number(result.data)
-          console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/Highest=' + (price / highestPrice).toFixed(3))
+          console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/Highest=' + (price / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0], 'price/close=' + (price / props.stockChartYValues[0]).toFixed(4))
 
           const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
 
           props.rows[row_index].values.price = price.toFixed(2);
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
-          props.setPriceDivClose ((price/props.stockChartYValues[0]).toFixed(4))
+          const ratio = price / props.stockChartYValues[0]
+          props.setPriceDivClose (ratio.toFixed(4))
           props.refreshByToggleColumns()
 
         })
