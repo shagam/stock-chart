@@ -47,7 +47,7 @@ const StockInfo = (props) => {
   
     var yearly_div_ratio_ = div_ratio_sum / year_diff
     setYearly_div_ratio(yearly_div_ratio_)
-    console.log ('yearly_div_ratio=', yearly_div_ratio_.toFixed(4))
+    console.log ('yearly dividend/price average=', yearly_div_ratio_.toFixed(4))
   }, [props.symbol, div_ratio_sum, div_count, keys]) 
 
 
