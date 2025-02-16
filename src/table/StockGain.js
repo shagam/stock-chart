@@ -61,7 +61,7 @@ const StockInfo = (props) => {
         </div>
         
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw gain history as recieved from AlphaVantage </h6>
-        <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(4)}</div>
+        <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(5)}   &nbsp; &nbsp;  {(yearly_div_ratio *100).toFixed(3)}%</div>
       </div>
       
       {/* Stock gain list */}
