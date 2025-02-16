@@ -55,6 +55,8 @@ import {targetPriceAdd} from './TargetPrice'
                 setPriceDivClose (priceDivClose_fixed)
                 console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivClose_fixed)
             }
+            else
+                setPriceDivClose()
 
             targetPriceAdd (symbol, rows[row_index].values.target_raw, rows[row_index].values.price, logFlags, errorAdd, 'lastPrice', ssl, PORT, servSelect) // update targetPrice
             refreshByToggleColumns();
