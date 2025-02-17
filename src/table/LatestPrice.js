@@ -55,8 +55,8 @@ function LatestPrice (props) {
   
           const latency = Date.now() - mili
           setLatency('response latency(msec)=' + latency)
-  
-          console.log ('result=', result.data)
+          if (log)
+              console.log ('result=', result.data)
           if (result.data && result.data === 'read ETIMEDOUT'){ //} || result.data+''.includes('fail')) {
               props.setError([props.symbol + '    ' + result.data])
             //   setResults()

@@ -48,7 +48,8 @@ import {targetPriceAdd} from './TargetPrice'
             if (rows[row_index].values.target_raw)
                 rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
             else
-                console.log (symbol, 'finnhub no target price. probaly an ETF')
+                if (logFlags.includes('target'))
+                    console.log (symbol, 'finnhub no target price. probaly an ETF')
 
             const priceDivClose = price/stockChartYValues[0]
             const priceDivClose_fixed = (price/stockChartYValues[0]).toFixed(4);
