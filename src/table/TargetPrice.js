@@ -30,7 +30,7 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
 
     if (lastTargetPrice[symbol]) {
         const p = lastTargetPrice[symbol].target / targetRaw;
-        if ( p  <  1.1 && p > 0.9 && logFlags.includes('target')) {// small diff
+        if ( p  <  1.1 && p > 0.9 && LOG) {// small diff
             console.log ( symbol, getDate(), 'target price small diff', p)
             return;
         }
