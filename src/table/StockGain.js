@@ -26,6 +26,8 @@ const StockInfo = (props) => {
   for (let i = 0; i < keys.length; i++) {
     delete props.chartData[keys[i]][VOLUME]
     delete props.chartData[keys[i]][SPLIT_COEFFICIENT]
+
+    //** calculate dividend ratio */
     const div = props.chartData[keys[i]]['7. dividend amount']
     const closePrice = props.chartData[keys[i]]['4. close']
 
