@@ -859,7 +859,7 @@ const BasicTable = (props) => {
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
 
           {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
-             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose)}} title='price during market open' > marketOpen price {chartSymbol} </button>} &nbsp; {priceDivClose && <div>price/close={priceDivClose}</div>}
+             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose)}} title='price during market open' > marketOpen </button>} &nbsp; {priceDivClose && <div>{priceDivClose}</div>}
 
           <div></div>
          </div>

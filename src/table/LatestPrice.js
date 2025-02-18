@@ -87,7 +87,7 @@ function LatestPrice (props) {
           props.rows[row_index].values.price = price.toFixed(2);
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
           const ratio = price / props.stockChartYValues[0]
-          props.setPriceDivClose (ratio.toFixed(6))
+          props.setPriceDivClose (props.symbol + '  ' + ((ratio-1) * 100).toFixed(3) + '%')
           props.refreshByToggleColumns()
 
         })
@@ -104,7 +104,7 @@ function LatestPrice (props) {
         <div style={{display: 'flex'}}>
             {/* <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp; */}
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
-            &nbsp;<button  style={{background: 'aqua'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed price {props.symbol} </button>
+            &nbsp;<button  style={{background: 'aqua'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button>
         </div>
 
     )
