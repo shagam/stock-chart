@@ -90,6 +90,7 @@ function LatestPrice (props) {
           const sign = ratio > 1 ? '+' : '' 
           props.setPriceDivClose (props.symbol + '  ' + sign + ((ratio-1) * 100).toFixed(3) + '%')
           props.refreshByToggleColumns()
+          props.setErr()
 
         })
         .catch ((err) => {

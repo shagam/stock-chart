@@ -60,7 +60,7 @@ import {targetPriceAdd} from './TargetPrice'
             }
             else
                 setPriceDivClose()
-
+            setErr()
             targetPriceAdd (symbol, rows[row_index].values.target_raw, rows[row_index].values.price, logFlags, errorAdd, 'lastPrice', ssl, PORT, servSelect) // update targetPrice
             refreshByToggleColumns();
         }).catch ((err) => {
