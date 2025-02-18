@@ -15,45 +15,41 @@ function UrlGetParse (props) {
   const urlPatternPair = {
 
     nasdaq: {
+      u: 'https://www.nasdaq.com/market-activity/index/' + props.symbol,
+      //https://www.nasdaq.com/market-activity/etf/qqq/after-hours 
          // p: '<p class="watchlist__slide-price">$515.56</p>'},
       p: '<p class="watchlist__slide-price">$([0-9]\\.]~~)</p>'},
 
-    NDX:    {
+    NDX:    { // ok
       u: 'https://www.google.com/finance/quote/NDX:INDEXNASDAQ',
       // 
       p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'},
     
-    IXIC:   {
+    IXIC:   { // ok
       u: 'https://www.google.com/finance/quote/.IXIC:INDEXNASDAQ',
       // 
       p: '<div class="YMlKec fxKbKc">([0-9\\.,]~~)'
     },
     
     SPDR_put_call: {
-      u: 'https://www.alphaquery.com/stock/SPY/volatility-option-statistics/30-day/',
-      // 
-      p:'<a href="/stock/SPY/volatility-option-statistics/30-day/put-call-ratio-volume"><div class="indicator-figure-inner">([0-9\\.]~~)</div></a>'
+      u: 'https://www.alphaquery.com/stock/' + props.symbol + '/volatility-option-statistics/30-day/',
+      // p: 'span id="quote-price-container".([0-9\\.]*)..span'
+      p:'div class="indicator-figure-inner">([0-9\\.]~~)'
     },
 
-    goog_nasdaq: {
-      u: 'https://www.google.com/finance/quote/' + props.symbol + ':NASDAQ/', 
-      //
-      p:  '<div class="YMlKec fxKbKc"> ([0-9]\\.]*)$</div></div></span>',
-    },
-
-    goog_nyse: {
-      u: 'https://www.google.com/finance/quote/' + props.symbol + ':NYSE/',
-      // 
-      p:  '<div> ',
+    goog: {
+      u: 'https://www.google.com/search?q=' + props.symbol, 
+      // <span jsname="wurNO">538.11</span>
+      p:  'span jsname="wurNO".([0-9\\.]*)..span',
     },
 
     yahoo:{
       u: 'https://finance.yahoo.com/quote/' + props.symbol,
-      // 
-      p:  '<div>',
+      // data-testid="qsp-post-price">538.13
+      p:  'data-testid="qsp-post-price".([0-9\\.]*)'
      },
 
-    barChart:{
+    barChart:{ //* barChart ok
       u:  'https://www.barchart.com/etfs-funds/quotes/' + props.symbol + '/overview/',
       // p:  '"lastPriceExt":"538.15","priceChangeExt":',},
       p:  '"lastPriceExt":"([0-9\\.]*)","priceChangeExt":',
