@@ -46,7 +46,9 @@ function UrlGetParse (props) {
     yahoo:{
       u: 'https://finance.yahoo.com/quote/' + props.symbol,
       // data-testid="qsp-post-price">538.13
-      p:  'data-testid="qsp-post-price".([0-9\\.]*)'
+      // p:  'data-testid="qsp-post-price".([0-9\\.]*)
+      // p: 'data-testid="qsp-pre-price-change-percent"\\>~~\\(([0-9\\.]*)\\) \\</span'
+      p: '(538.1[0-9]~~)'
      },
 
     barChart:{ //* barChart ok
