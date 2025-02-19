@@ -20,7 +20,7 @@ import {targetPriceAdd} from './TargetPrice'
                 return;
 
             const dat = result.data
-            if (dat.c === 0) {
+            if (dat.c === 0 && dat.d === null) {
                 errorAdd([symbol, ' finnhub invalid symbol'])
                 return;
             }
