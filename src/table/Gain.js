@@ -456,7 +456,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                   rows[row_index].values.year20 = ((year20 ** (1/20) - 1) * 100).toFixed(1);
                 } else
                   delete rows[row_index].values.year20
-                if (isNaN (rows[row_index].values.year20))
+                if (isNaN (rows[row_index].values.year20) && LOG_FLAG)  // debug log
                   console.log (sym, 'gain year20', rows[row_index].values.year20)  // debug log
               }
 
