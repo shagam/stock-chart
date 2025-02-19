@@ -72,6 +72,7 @@ function UrlGetParse (props) {
   const [latency, setLatency] = useState()
   const [results, setResults] = useState()
   const [error, setError] = useState()
+  const [ignoreSaved, setIgnoreSaved] = useState(false)
 
   function urlGetParse () {
       // console.log ('urlGetParse', serverUrl, pattern, LOG, callBack) 
@@ -88,6 +89,9 @@ function UrlGetParse (props) {
       
       if (subPages)
         url += '&subPages=true';
+
+      if (ignoreSaved)
+        url += '&ignoreSaved=true';
 
       if (log)
         console.log (url) // log the url
@@ -109,7 +113,7 @@ function UrlGetParse (props) {
         }
         if (result.data) {
             console.log (result.data)
-            setResults(result.data) 
+            setResults(result.data.result_1) 
         }
 
         if ((result.data !== '') && ! result.data.err) {
@@ -142,6 +146,8 @@ function UrlGetParse (props) {
           <input type="checkbox" checked={log}  onChange={()=> setLog( !log)}  />  &nbsp;Log &nbsp; &nbsp;
 
           <input type="checkbox" checked={subPages}  onChange={()=>setSubPages (! subPages)}  />  &nbsp;SubPages &nbsp; &nbsp;
+
+          <input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved
         </div> 
         <div>&nbsp;</div>
         <button style={{background: 'aqua'}} type="button" onClick={()=> urlGetParse()}>urlGetParse  </button>  &nbsp;

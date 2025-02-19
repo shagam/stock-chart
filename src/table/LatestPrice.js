@@ -17,6 +17,7 @@ function LatestPrice (props) {
     const priceSources = ['goog','fetchPage','nasdaq','yahoo','watch']
     const [source, setSource] = useState(priceSources[0])
     const [latency, setLatency] = useState()
+    const [ignoreSaved, setIgnoreSaved] = useState(false)
 
     const log = props.logFlags.includes('gain')
 
@@ -43,7 +44,9 @@ function LatestPrice (props) {
         if (log)
           url += '&LOG=true';
         
-  
+        if (ignoreSaved)
+            url += '&ignoreSaved=true';
+
         if (log)
           console.log (url) // log the url
         props.setErr ()
@@ -77,9 +80,9 @@ function LatestPrice (props) {
               const val = props.stockChartYValues[i];
               if (val > highestPrice)
                   highestPrice = val;
-          }
+          } 
 
-          const price = Number(result.data)
+          const price = Number(result.data.result_1)
           console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0], 'price/close=' + (price / props.stockChartYValues[0]).toFixed(4))
 
           const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
@@ -106,7 +109,8 @@ function LatestPrice (props) {
         <div style={{display: 'flex'}}>
             {/* <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp; */}
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
-            &nbsp;<button  style={{background: 'aqua'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button>
+            &nbsp;<button  style={{background: 'aqua'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button> &nbsp;
+            <input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved
         </div>
 
     )
