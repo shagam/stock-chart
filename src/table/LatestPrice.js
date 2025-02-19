@@ -48,7 +48,7 @@ function LatestPrice (props) {
             url += '&ignoreSaved=true';
 
         if (log)
-          console.log (url) // log the url
+          console.log (u, p) // log the url
         props.setErr ()
         setLatency('request sent to server')
         const mili = Date.now()
@@ -78,8 +78,8 @@ function LatestPrice (props) {
               props.setErr(props.symbol + ' ' +  getDate() + ' latestPrice ' + dat)
               return;
           }
-          if (log)
-              console.log (dat)
+        //   if (log)
+        //       console.log (dat)
           // find highest price
           var highestPrice = -1; // highest price
           for (let i = 0; i < props.stockChartYValues.length; i++) {
@@ -90,14 +90,21 @@ function LatestPrice (props) {
 
           const price = Number(result.data.result_1)
           console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0], 'price/close=' + (price / props.stockChartYValues[0]).toFixed(4))
-          console.log (getDate(), result.data)
+        //   console.log (getDate(), result.data)
           const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
 
           props.rows[row_index].values.price = price.toFixed(2);
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
+          if (! props.stockChartYValues[0]) {
+              props.setErr('close price not found')
+              return;
+          }
           const ratio = price / props.stockChartYValues[0];
           const sign = ratio > 1 ? '+' : '' 
-          props.setPriceDivClose (props.symbol + '  ' + sign + ((ratio-1) * 100).toFixed(3) + '%')
+          var txt = props.symbol + '  ' + sign + ((ratio-1) * 100).toFixed(3) + '% '
+          if (ignoreSaved)
+              txt += '  price=' + price
+          props.setPriceDivClose (txt)
           props.refreshByToggleColumns()
           props.setErr()
 
