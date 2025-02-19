@@ -20,6 +20,10 @@ import {targetPriceAdd} from './TargetPrice'
                 return;
 
             const dat = result.data
+            if (dat.c === 0) {
+                errorAdd([symbol, ' finnhub invalid symbol'])
+                return;
+            }
             const price = Number(dat.c)
             if (price === 0) {
                 console.log (symbol, 'price=' + price)

@@ -55,6 +55,12 @@ function LatestPrice (props) {
         // setResults('waiting for response')
         axios.get (url)
         .then ((result) => {
+
+            if (result.data.includes ('err Request failed')) {
+                props.errorAdd([props.symbol, result.data])
+                props.setErr (result.data)
+                return
+            }
   
           const latency = Date.now() - mili
           setLatency('response latency(msec)=' + latency)
