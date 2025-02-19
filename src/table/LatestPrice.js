@@ -103,7 +103,7 @@ function LatestPrice (props) {
 
         })
         .catch ((err) => {
-            props.errorAdd([props.symbol, 'email', err.message, url])
+            props.errorAdd([props.symbol, err.message])
             console.log(getDate(), 'msg', err, url)
         })  
     }
