@@ -56,7 +56,7 @@ function LatestPrice (props) {
         axios.get (url)
         .then ((result) => {
 
-            if (result.data.includes ('err Request failed')) {
+            if (JSON.stringify(result.data).includes ('err Request failed')) {
                 props.errorAdd([props.symbol, result.data])
                 props.setErr (result.data)
                 return
