@@ -105,14 +105,14 @@ function UrlGetParse (props) {
         const latency = Date.now() - mili
         setLatency('response latency(msec)=' + latency)
 
-        console.log (result.data)
+        if (log)
+          console.log (getDate(), result.data)
         if (result.data && result.data === 'read ETIMEDOUT'){ //} || result.data+''.includes('fail')) {
             setError([props.symbol + '    ' + result.data])
             setResults()
             return;
         }
         if (result.data) {
-            console.log (result.data)
             setResults(result.data.result_1) 
         }
 
