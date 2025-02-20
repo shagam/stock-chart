@@ -148,7 +148,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 return;
               }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
-                errorAdd([sym, 'Invalid API call or wrong symbol']);
+                errorAdd([sym, 'Gain, Invalid API call or wrong symbol']);
                 //setChartData ('');
                 return;
               }

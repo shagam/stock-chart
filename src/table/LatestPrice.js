@@ -57,7 +57,7 @@ function LatestPrice (props) {
         .then ((result) => {
 
             if (JSON.stringify(result.data).includes ('err Request failed')) {
-                props.errorAdd([props.symbol, result.data])
+                props.errorAdd([props.symbol, ' latestPrice', result.data])
                 props.setErr (result.data)
                 return
             }
@@ -67,7 +67,7 @@ function LatestPrice (props) {
           if (log)
               console.log ('result=', result.data)
           if (result.data && result.data === 'read ETIMEDOUT'){ //} || result.data+''.includes('fail')) {
-              props.setError([props.symbol + '    ' + result.data])
+              props.setError([props.symbol + ' LatestPrice ' + result.data])
             //   setResults()
               return;
           }
@@ -110,7 +110,7 @@ function LatestPrice (props) {
 
         })
         .catch ((err) => {
-            props.errorAdd([props.symbol, err.message])
+            props.errorAdd([props.symbol, 'LatestPrice ', err.message])
             console.log(getDate(), 'msg', err, url)
         })  
     }
