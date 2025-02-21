@@ -23,6 +23,7 @@ function Users (props) {
     // const [tbl, setTbl] = useState ({});
     const [userArray, setUserArray] = useState([]);
     const [logExtra, setLogExtra] = useState (false);
+    const [milisec, setMilisec] = useState (false);
     const [results, setResults] = useState()
     const [infoJson, setInfoJson] = useState({})
 
@@ -38,7 +39,7 @@ function Users (props) {
     function error(e) {
         clear()
         setErr (JSON.stringify(e))
-        props.errorAdd(e)
+        props.errorAdd([e])
 
     }
 
@@ -85,31 +86,32 @@ function Users (props) {
             setErr('backEnd users,  Latency(msec)=' + latency ) 
 
             if (getAll) {
-                var arr = []
+                var arr_unsort = []
                 const inf = result.data
                 const ipList = Object.keys (result.data);
                 if (logBackEnd)
                     console.log (result.data)
                 for (let i = ipList.length - 1; i >= 0; i--) {
                     var obj = {
+                        mili: inf[ipList[i]].mili, // add mili for sort on date
                         date: inf[ipList[i]].date,
                         ip:   inf[ipList[i]].ip,
                         city: inf[ipList[i]].city,
                         region: inf[ipList[i]].region,
                         country: inf[ipList[i]].country,
                         count: inf[ipList[i]].count,
-                        mili: inf[ipList[i]].sec, // add mili for sort on date
+
                     }
                     if (extra) {
                         obj.os = inf[ipList[i]].os
                         obj.sym = inf[ipList[i]].sym
                     }
 
-                    arr.push (obj)
+                    arr_unsort.push (obj)
                 }
 
                 //** a.localeCompare(b) */
-                arr = arr.sort((a, b) => b.mili > a.mili ? 1 : -1)  
+                const arr = arr_unsort.sort((a, b) => b.mili > a.mili ? -1 : 1)  
                 if (logBackEnd)
                     console.log ('users', arr)
 
@@ -118,7 +120,8 @@ function Users (props) {
                     if (!arr[i].region)
                         if (logBackEnd)
                             console.log ('missing region', arr[i])
-                    delete arr[i].mili
+                    if (! milisec)
+                        delete arr[i].mili
                 }
 
                 setUserArray(arr)
@@ -151,7 +154,8 @@ function Users (props) {
                 &nbsp;<div> <input type="checkbox" checked={getAll}  onChange={()=> setGetAll(! getAll)}  /> &nbsp;getAll </div> &nbsp;&nbsp;
                 <div> <input type="checkbox" checked={logBackEnd}  onChange={() => setLogBackEnd(! logBackEnd)}  /> &nbsp;LogBackend &nbsp; &nbsp;</div>
                 <div> <input type="checkbox" checked={logExtra}  onChange={()=> setLogExtra(!logExtra)}  /> &nbsp;LogExtra &nbsp; &nbsp;</div>            
-                <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os</div>
+                <div> <input type="checkbox" checked={extra}  onChange={()=> setExtra(! extra)}  /> &nbsp;region,os &nbsp; &nbsp;</div> 
+                <div> <input type="checkbox" checked={milisec}  onChange={()=> setMilisec(! milisec)}  /> &nbsp;milisec </div>
             </div>
 
 
