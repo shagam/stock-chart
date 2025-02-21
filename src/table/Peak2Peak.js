@@ -304,9 +304,9 @@ const Peak2PeakGui = (props) => {
           {((eliHome &&  row_index_eeee !== -1) || (results && ! results.timeUnitGain)) && <div>
             <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {props.symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
             <div style={{display: 'flex'}}>
-              <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/> 
               <input  type="checkbox" checked={bubbleCalcSinglePeak}  onChange={() => {setBubbleCalcSinglePeak (! bubbleCalcSinglePeak)}} /> 
               <div style={{paddingTop: '6px'}}> &nbsp; single-Peak &nbsp;&nbsp; </div>
+              {bubbleCalcSinglePeak && <GetInt init={yearlyGainSinglePeak} callBack={setYearlyGainSinglePeak} title='yearlGain' type='text' pattern="[\\.0-9]+" width = '25%'/>}
             </div>
           </div>}
 
