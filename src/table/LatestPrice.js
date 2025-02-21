@@ -103,8 +103,8 @@ function LatestPrice (props) {
           const ratio = price / props.stockChartYValues[0];
           const sign = ratio > 1 ? '+' : '' 
           var txt = props.symbol + '  ' + sign + ((ratio-1) * 100).toFixed(3) + '% '
-          if (ignoreSaved)
-              txt += '  price=' + price
+        //   if (ignoreSaved)
+              txt += '  (' + price + ')'
           props.setPriceDivClose (txt)
           props.refreshByToggleColumns()
           props.setErr()

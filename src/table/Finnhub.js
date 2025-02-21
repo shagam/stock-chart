@@ -5,7 +5,7 @@ import {getDate,} from '../utils/Date'
 import {targetPriceAdd} from './TargetPrice'
 // function Finnhub (props) {
 
-    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose) {
+    function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome) {
 
         const url = 'https://finnhub.io/api/v1/quote?symbol=' + symbol + '&token=c4pfifqad3ifau3r1kjg'
 
@@ -58,7 +58,9 @@ import {targetPriceAdd} from './TargetPrice'
 
             const priceDivClose = price/stockChartYValues[0]
             const sign = priceDivClose > 1 ? '+' : '' 
-            const priceDivClose_fixed = symbol + '  ' + sign + ((price/stockChartYValues[0] -1) * 100).toFixed(3) + '% ';
+            var priceDivClose_fixed = symbol + '  ' + sign + ((price/stockChartYValues[0] -1) * 100).toFixed(3) + '% ';
+            if (eliHome)
+                priceDivClose_fixed += '  (' + price + ')';
             if (Date.now() - rows[row_index].values.gain_mili < 1000*60*60 && priceDivClose !== 1) { // less than 1 hour diff && stock value is not the same as the close value
                 setPriceDivClose (priceDivClose_fixed)
                 console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivClose_fixed)
@@ -67,7 +69,7 @@ import {targetPriceAdd} from './TargetPrice'
                 setPriceDivClose()
             setErr()
             targetPriceAdd (symbol, rows[row_index].values.target_raw, rows[row_index].values.price, logFlags, errorAdd, 'lastPrice', ssl, PORT, servSelect) // update targetPrice
-            refreshByToggleColumns();
+            // refreshByToggleColumns();
         }).catch ((err) => {
             console.log(getDate(), finnhub, err.message)
         })   
