@@ -30,6 +30,7 @@ import {targetPriceAdd} from './TargetPrice'
             }
             const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
             rows[row_index].values.price = price.toFixed(2);
+            rows[row_index].values.price_mili = Date.now();
 
             // find highest price
             var highestPrice = -1; // highest price

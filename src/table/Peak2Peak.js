@@ -246,10 +246,18 @@ const Peak2PeakGui = (props) => {
       props.setBubbleLine (bubbleline)
       setBubbleLineFlag(true)
 
-
-  
+    const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+    if (row_index === -1) {
+      alert ('stock missing (bubbleLine): ' + props.symbol)
+      return;
+    }
+    var price = props.rows[row_index].values.price;
+    if (! price || props.rows[row_index].values.price_mili < props.rows[row_index].values.gain_mili) {
+      price = YValues[0]
+      console.log (props.symbol, 'price missing, using latest close value')
+    }
     //** calc ratio latestValue/bubbleline */
-    const bubbleLineOver = (YValues[0] / yBubbleLine[0]).toFixed(3)
+    const bubbleLineOver = (price / yBubbleLine[0]).toFixed(3)
     setBubbleLineRatio(bubbleLineOver)
     if (results)
       results['CurrentPrice/bubbleLine'] = bubbleLineOver;
