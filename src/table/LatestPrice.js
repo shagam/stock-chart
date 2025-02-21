@@ -58,7 +58,7 @@ function LatestPrice (props) {
 
             if (JSON.stringify(result.data).includes ('err Request failed')) {
                 props.errorAdd([props.symbol, ' latestPrice', result.data])
-                props.setErr (result.data)
+                // props.setErr (result.data)
                 return
             }
   
