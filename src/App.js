@@ -1,4 +1,4 @@
-import React, {useState, Suspense, lazy} from 'react';
+import React, {useState, useMemo, Suspense, lazy} from 'react';
 import './App.css';
 // import StockTable from './Stock-table';
 
@@ -40,6 +40,12 @@ const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "verify_1", "split
 function App() {
   const [count, setCount] = useState (0);
   const [logFlags, setLogFlags] = useState([]);
+  // var logFlags_  = useMemo(() => localStorage.getItem('logFlags'), []);
+  // if (logFlags_ === null)
+  //   logFlags_ = JSON.parse(logFlags_)
+  // if (logFlags_ !== logFlags) 
+  //   setLogFlags(logFlags_)
+
   const [server, setServer] = useState(process.env.REACT_APP_AWS_IP)
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
