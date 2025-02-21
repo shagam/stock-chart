@@ -93,14 +93,14 @@ function Users (props) {
                     console.log (result.data)
                 for (let i = ipList.length - 1; i >= 0; i--) {
                     var obj = {
-                        mili: inf[ipList[i]].mili, // add mili for sort on date
                         date: inf[ipList[i]].date,
                         ip:   inf[ipList[i]].ip,
                         city: inf[ipList[i]].city,
                         region: inf[ipList[i]].region,
                         country: inf[ipList[i]].country,
                         count: inf[ipList[i]].count,
-
+                        // mili: inf[ipList[i]].mili, // add mili for sort on date
+                        mili: new Date(inf[ipList[i]].date).getTime(),
                     }
                     if (extra) {
                         obj.os = inf[ipList[i]].os
@@ -111,7 +111,7 @@ function Users (props) {
                 }
 
                 //** a.localeCompare(b) */
-                const arr = arr_unsort.sort((a, b) => b.mili > a.mili ? -1 : 1)  
+                const arr = arr_unsort.sort((a, b) => b.mili > a.mili ? 1 : -1)  
                 if (logBackEnd)
                     console.log ('users', arr)
 
