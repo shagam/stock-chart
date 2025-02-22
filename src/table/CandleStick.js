@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import Plot from 'react-plotly.js';
 import GetInt from '../utils/GetInt'
 import {beep2} from '../utils/ErrorList'
+import MobileContext from '../contexts/MobileContext'
 
 // import { CandlestickSeries } from 'react-financial-charts';
 // import { ChartCanvas, Chart } from 'react-financial-charts';
@@ -47,7 +48,10 @@ const CandlestickChart = (props) => {
   const [log, setLog] = useState(false)
   const [data, setData] = useState(null)
   const [histLength, setHistLength] = useState(35)
-  const [err,setErr] = useState()
+  const [err, setErr] = useState()
+
+  const {isMobile} = MobileContext();
+  const [static_, setStatic] = useState(isMobile)
 
 
   function calc () {
@@ -90,7 +94,6 @@ const CandlestickChart = (props) => {
 
   }
 
-
   return (
     <div style = {{ border: '2px solid green'}}>
         <h6 style={{color: 'blue'}}>candleStick  &nbsp;  </h6>
@@ -99,17 +102,83 @@ const CandlestickChart = (props) => {
         {err && <div style={{color:'red'}}>{err}</div>}
 
         <div>
-          <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '15%'/>
-          {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( !log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
-          <div>&nbsp;</div>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '15%'/>
+            {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( !log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
+            <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />static &nbsp;&nbsp;
+          </div>
+
           <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
 
-          {data && <Plot data={data}
-            layout={{ title: 'Candlestick Chart ' + props.symbol, xaxis: { title: 'Date' }, yaxis: { title: 'Price' } }}
-          />}
-        </div>
+          {/* {data && <Plot data={data}
+            layout={{ title: 'Candlestick Chart ' + props.symbol, staticPlot: true, xaxis: { title: 'Date' }, yaxis: { title: 'Price' } }}
+          />} */}
+{/* 
+            { <Plot  data={data} layout={{ title: 'Candlestick Chart ' + props.symbol, width: 550, height: 400, staticPlot: true,
+                  xaxis: { title: 'Date' }, yaxis: { title: 'Price' }}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />} */}
+
+          </div>          
+          {data && <Plot  data={data} layout={{ width: 650, height: 400, title:  'Candlestick Chart ' + props.symbol, staticPlot: true,
+                   xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
     </div>
   );
 };
 
-export { CandlestickChart, CandleStick}
+  
+  const CandlestickChart_1 = () => {
+    const data = [
+      {
+        x: ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04'],
+        close: [120, 130, 125, 140],
+        decreasing: { line: { color: 'red' } },
+        high: [125, 135, 130, 145],
+        increasing: { line: { color: 'green' } },
+        low: [115, 125, 120, 135],
+        open: [118, 128, 123, 138],
+        type: 'candlestick',
+        xaxis: 'x',
+        yaxis: 'y'
+      },
+      // Buy markers
+      {
+        x: ['2023-01-02'],
+        y: [130],
+        mode: 'markers',
+        marker: {
+          color: 'green',
+          size: 10,
+          symbol: 'triangle-up'
+        },
+        name: 'Buy'
+      },
+      // Sell markers
+      {
+        x: ['2023-01-04'],
+        y: [140],
+        mode: 'markers',
+        marker: {
+          color: 'red',
+          size: 10,
+          symbol: 'triangle-down'
+        },
+        name: 'Sell'
+      }
+    ];
+  
+    return (
+      <Plot
+        data={data}
+        layout={{
+          title: 'Candlestick Chart with Buy/Sell Markers',
+          xaxis: { title: 'Date' },
+          yaxis: { title: 'Price' }
+        }}
+      />
+    );
+  };
+  
+  
+
+
+ 
+export { CandlestickChart, CandlestickChart_1}
