@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import Plot from 'react-plotly.js';
+import GetInt from '../utils/GetInt'
+import {beep2} from '../utils/ErrorList'
 
 // import { CandlestickSeries } from 'react-financial-charts';
 // import { ChartCanvas, Chart } from 'react-financial-charts';
@@ -42,53 +44,70 @@ const CandleStick = ({ data, width, height }) => {
 //* chatgpt 3
 
 const CandlestickChart = (props) => {
-  console.log (props.chartData)
+  const [log, setLog] = useState(false)
+  const [data, setData] = useState(null)
+  const [histLength, setHistLength] = useState(35)
+  const [err,setErr] = useState()
 
-  var data;
+
   function calc () {
-    const x = Object.keys (props.chartData)
-    console.log('calc')
-    var high = [], low = [], open = [], close = [];
-    for (var i = 0; i < x.length; i++) {
-      high.push(props.chartData[x[i]].high)
-      low.push(props.chartData[x[i]].low)
-      open.push(props.chartData[x[i]].open)
-      close.push(props.chartData[x[i]].close)
+    setErr()
+    if (! props.daily) {
+      setErr('need daily mode')
+      beep2()
+      return
     }
-    
+    const x = Object.keys (props.chartData)
+    // console.log('calc')
+    var xClipped = [], high = [], low = [], open = [], close = [];
+     //x.length; 
+    for (var i = 0; i < histLength; i++) {
+      xClipped.push(x[i])
+      high.push(props.chartData[x[i]]['2. high'])
+      low.push(props.chartData[x[i]]['3. low'])
+      open.push(props.chartData[x[i]]['1. open'])
+      close.push(props.chartData[x[i]]['4. close'])
+    }
 
-    data = [
+
+    const dat = [
       {
-        x: ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04'],
-        close: [120, 130, 125, 140],
+        x: xClipped,
+        close: close,
         decreasing: { line: { color: 'red' } },
-        high: [125, 135, 130, 145],
+        high: high,
         increasing: { line: { color: 'green' } },
-        low: [115, 125, 120, 135],
-        open: [118, 128, 123, 138],
+        low: low,
+        open: open,
         type: 'candlestick',
         xaxis: 'x',
         yaxis: 'y'
       }
     ];
+    setData(dat)
+    if (log)
+      console.log ('candleStick data', dat)
 
   }
 
 
   return (
     <div style = {{ border: '2px solid green'}}>
-        <h6 style={{color: 'blue'}}>candelStick  &nbsp;  </h6>
+        <h6 style={{color: 'blue'}}>candleStick  &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Under development &nbsp; </h6>
+        <div  style={{color: 'magenta' }}>  {props.symbol} </div> 
+        {err && <div style={{color:'red'}}>{err}</div>}
 
-        <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
-
-        {props.eliHome && <div>
-          <button onClick={() => calc()}> CandelStick calc</button>&nbsp;
+        <div>
+          <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '15%'/>
+          {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( !log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
+          <div>&nbsp;</div>
+          <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
 
           {data && <Plot data={data}
-            layout={{ title: 'Candlestick Chart', xaxis: { title: 'Date' }, yaxis: { title: 'Price' } }}
+            layout={{ title: 'Candlestick Chart ' + props.symbol, xaxis: { title: 'Date' }, yaxis: { title: 'Price' } }}
           />}
-        </div>}
+        </div>
     </div>
   );
 };
