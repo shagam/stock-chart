@@ -83,6 +83,8 @@ import { finnhub } from './Finnhub'
 import {Disclaimer} from './Disclaimer'
 import { UrlGetParse } from '../utils/UrlGetParse'
 
+import { CandlestickChart, CandleStick} from './CandleStick'
+
 const BasicTable = (props) => {
 
   const [errors, setErrors] = useState([]);
@@ -746,6 +748,7 @@ const BasicTable = (props) => {
     futures:       'futures',
     priceAlert:    'priceAlert',
     urlGetParse:   'urlGetParse',
+    candelStick: 'candelStick',
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState('none')
@@ -961,7 +964,10 @@ const BasicTable = (props) => {
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
         {/* Machanizms  for spacific sym (chartSymbol) */}
-        <hr/> 
+        <hr/>
+        
+         
+        {/* Analyze tools */}
         {chartSymbol && <div>
           {/* <div>&nbsp;</div> */}
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
@@ -1011,7 +1017,6 @@ const BasicTable = (props) => {
 
                 <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
                 {<div style={{color:'blue'}}> marketOpenPrice  </div>}
-                
             </div>
 
             <div style={{display:'flex'}}>
@@ -1026,6 +1031,9 @@ const BasicTable = (props) => {
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div> 
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candelStick' id='10' checked={analyzeTool==='candelStick'} onChange={onOptionChange}/>
+                {<div style={{color:'blue'}}> candelStick  </div>}               
             </div>
             
             {/* <hr/>  */}
@@ -1073,6 +1081,8 @@ const BasicTable = (props) => {
                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> </div>}
 
             {analyzeTool ==='urlGetParse' && <div><UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> </div>}
+
+            {analyzeTool ==='candelStick' && <CandlestickChart symbol = {chartSymbol}  chartData = {chartData} eliHome={eliHome}/>}
 
           </div>}
           </div>}        
