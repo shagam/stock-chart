@@ -5,6 +5,10 @@ import GetInt from '../utils/GetInt'
 import {beep2} from '../utils/ErrorList'
 import MobileContext from '../contexts/MobileContext'
 
+// import yfinance from 'yahoo-finance2'
+// const df = yfinance.download('AAPL', '2021-01-01', '2021-12-31')
+// console.log (df)
+
 // import { CandlestickSeries } from 'react-financial-charts';
 // import { ChartCanvas, Chart } from 'react-financial-charts';
 // import { XAxis, YAxis } from 'react-financial-charts';
@@ -51,8 +55,8 @@ const CandlestickChart = (props) => {
   const [err, setErr] = useState()
 
   const {isMobile} = MobileContext();
-  const [static_, setStatic] = useState(isMobile)
 
+  const [static_, setStatic] = useState(true)
 
   function calc () {
     setErr()
@@ -78,9 +82,9 @@ const CandlestickChart = (props) => {
       {
         x: xClipped,
         close: close,
-        decreasing: { line: { color: 'red' } },
+        // decreasing: { line: { color: 'red' } },
         high: high,
-        increasing: { line: { color: 'green' } },
+        // increasing: { line: { color: 'green' } },
         low: low,
         open: open,
         type: 'candlestick',
@@ -97,7 +101,7 @@ const CandlestickChart = (props) => {
   return (
     <div style = {{ border: '2px solid green'}}>
         <h6 style={{color: 'blue'}}>candleStick  &nbsp;  </h6>
-        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Under development &nbsp; </h6>
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Under development (Experimental) &nbsp; </h6>
         <div  style={{color: 'magenta' }}>  {props.symbol} </div> 
         {err && <div style={{color:'red'}}>{err}</div>}
 
@@ -110,17 +114,11 @@ const CandlestickChart = (props) => {
           <div>&nbsp;</div>
           <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
 
-          {/* {data && <Plot data={data}
-            layout={{ title: 'Candlestick Chart ' + props.symbol, staticPlot: true, xaxis: { title: 'Date' }, yaxis: { title: 'Price' } }}
-          />} */}
-{/* 
-            { <Plot  data={data} layout={{ title: 'Candlestick Chart ' + props.symbol, width: 550, height: 400, staticPlot: true,
-                  xaxis: { title: 'Date' }, yaxis: { title: 'Price' }}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />} */}
-
           </div>          
           {data && <Plot  data={data} layout={{ width: 650, height: 400, title:  'Candlestick Chart ' + props.symbol,
-                   xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
+                   xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: static_, 'modeBarButtonsToRemove': []}}  />}
                    {/* xaxis-rangeslider-visible=false */}
+                   {/* {isMobile && <div>mobile</div>} */}
     </div>
   );
 };
