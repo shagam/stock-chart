@@ -104,10 +104,10 @@ const CandlestickChart = (props) => {
         <div>
           <div style={{display: 'flex', flexDirection: 'row'}}>
             <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '15%'/>
-            {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( !log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
+            {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />static &nbsp;&nbsp;
           </div>
-
+          <div>&nbsp;</div>
           <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
 
           {/* {data && <Plot data={data}
@@ -118,8 +118,9 @@ const CandlestickChart = (props) => {
                   xaxis: { title: 'Date' }, yaxis: { title: 'Price' }}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />} */}
 
           </div>          
-          {data && <Plot  data={data} layout={{ width: 650, height: 400, title:  'Candlestick Chart ' + props.symbol, staticPlot: true,
+          {data && <Plot  data={data} layout={{ width: 650, height: 400, title:  'Candlestick Chart ' + props.symbol,
                    xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
+                   {/* xaxis-rangeslider-visible=false */}
     </div>
   );
 };
