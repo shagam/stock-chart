@@ -96,7 +96,11 @@ function Tutorials () {
                         <td><a href="https://youtu.be/cVxKLW3pPB0">Persistance</a></td><td>Stock info saved in localStorage</td> 
                     </tr>
 
+                    <tr>
+                        <td><a href="https://youtu.be/lztkJ_GtUq8">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
+                    </tr>
 
+                    
 
                     <tr>
                        <div>&nbsp;</div>
