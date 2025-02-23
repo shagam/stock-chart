@@ -87,6 +87,7 @@ const CandlestickChart = (props) => {
     return null
   }
 
+  //* count signal types
   var counters = {bear_3: 0, bull_3: 0, hammer: 0, bear_engulfing: 0, bull_engulfing: 0} 
   function three_white_soldiers_buy (candles, i) {
     // Strong Bullish Signal (Multiple Bullish Candles)
@@ -97,6 +98,9 @@ const CandlestickChart = (props) => {
     }
     return null
   }
+
+
+  //** check for signals */
 
   function three_black_crows_sell (candles, i) {
     // // Strong Bearish Signal (Multiple Bearish Candles)
@@ -152,7 +156,8 @@ const CandlestickChart = (props) => {
       open.push(props.chartData[x[i]]['1. open'])
       close.push(props.chartData[x[i]]['4. close'])
     }
-    console.log ('candles', candles)
+    if (log)
+      console.log ('candles', candles)
  
 
     const signals = {}
@@ -175,10 +180,10 @@ const CandlestickChart = (props) => {
         if (log) console.log ('signal', signal)
       }
     }
-    // if (log)
+    if (log)
        console.log ('signals', signals)
-    console.log ('counters', counters)
-    // console.log ('candles', candles)
+
+    console.log ('counters', counters) // type of signals 
 
 
     const dat = [
