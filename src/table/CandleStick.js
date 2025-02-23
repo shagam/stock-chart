@@ -58,6 +58,72 @@ const CandlestickChart = (props) => {
 
   const [static_, setStatic] = useState(true)
 
+  function bull_engulfing_buy (candles, i) {
+    // if (!candles || ! candles[i+1]) {
+    //   console.log ('bull_engulfing_buy: candles or candles[i+1] not found', i)
+    //   return null 
+    // } 
+    const sig =
+      candles[i].open < candles[i+1].close &&  // bear
+      candles[i+1].open < candles[i].close   // bull 
+    if (sig) {
+      counters.bull_engulfing += 1
+      return { index: i, signal_: 'BUY', reason: 'Bullish Engulfing Pattern (Buy Signal)' };
+    }
+    else return null
+  }
+
+  function bear_engulfing_sell (candles, i) {
+    if (i === 0) {
+      console.log ('i', i)
+    }
+    const sig =
+      candles[i].open > candles[i+1].close  &&  // bear
+      candles[i].close < candles[i+1].open   // bear
+    if (sig) {
+      counters.bear_engulfing += 1
+      return { index: i, signal_:  'SELL', reason: 'Bearish Engulfing Pattern (Sell Signal)' };
+    }
+    return null
+  }
+
+  var counters = {bear_3: 0, bull_3: 0, hammer: 0, bear_engulfing: 0, bull_engulfing: 0} 
+  function three_white_soldiers_buy (candles, i) {
+    // Strong Bullish Signal (Multiple Bullish Candles)
+    const sig = (candles[i+3].close > candles[i+3].open && candles[i+2].close > candles[i+2].open && candles[i+3].close > candles[i+3].open && candles[i].close > candles[i].open ) 
+    if (sig) {
+      counters.bull_3 += 1
+        return { index: i, signal_: 'BUY', reason: 'Three Consecutive Bullish Candles' };
+    }
+    return null
+  }
+
+  function three_black_crows_sell (candles, i) {
+    // // Strong Bearish Signal (Multiple Bearish Candles)
+    const sig = candles[i+3].close < candles[i+3].open && candles[i+2].close < candles[i+2].open && candles[i+3].close < candles[i+3].open && candles[i].close < candles[i].open 
+    if (sig) {
+      counters.bear_3 += 1
+      return { index: i, signal_: 'SELL', reason: 'Three Consecutive Bearish Candles' };
+    }
+    return null
+  }
+
+  function hammer_buy (candles, i) {
+    // if (!candles || ! candles[i+1]) {
+    //   console.log (' candles or candles[i] not found', i)
+    //   return null 
+    // } 
+    // Candle body is small: 
+    const sig =  Math.abs(candles[i].close - candles[i].open) < (candles[i].high - candles[i].low) * 0.3
+    const sig1 = Math.min(candles[i].open, candles[i].close) - candles[i].low > (candles[i].high - candles[i].low) * 0.7
+    //  Upper shadow is small or nonexistent.
+    if(sig && sig1) {
+      counters.hammer += 1
+      return { index: i, signal_: 'BUY', reason: 'Hammer Pattern (Buy Signal)' };
+    }
+    else return null
+  }
+
   function calc () {
     setErr()
     if (! props.daily) {
@@ -71,6 +137,7 @@ const CandlestickChart = (props) => {
      //x.length; 
     const candles = []
     for (var i = 0; i < histLength; i++) {
+      xClipped.push(x[i])
       const candle = {
         open: props.chartData[x[i]]['1. open'],
         high: props.chartData[x[i]]['2. high'],
@@ -80,33 +147,39 @@ const CandlestickChart = (props) => {
       }
       candles.push(candle)
 
-      xClipped.push(x[i])
       high.push(props.chartData[x[i]]['2. high'])
       low.push(props.chartData[x[i]]['3. low'])
       open.push(props.chartData[x[i]]['1. open'])
       close.push(props.chartData[x[i]]['4. close'])
     }
     console.log ('candles', candles)
-    
-    // Calculate signals
-    let signals = [];
-    for (let j = 3; j < candles.length; j++) {
-        let prev1 = candles[j - 1];
-        let prev2 = candles[j - 2];
-        let prev3 = candles[j - 3];
-        let curr = candles[j];
-        
-        // Strong Bullish Signal (Multiple Bullish Candles)
-        if (prev3.close > prev3.open && prev2.close > prev2.open && prev1.close > prev1.open && curr.open < curr.close) {
-            signals.push({ index: j, signal: 'BUY', reason: 'Three Consecutive Bullish Candles' });
-        }
-        
-        // Strong Bearish Signal (Multiple Bearish Candles)
-        if (prev3.close < prev3.open && prev2.close < prev2.open && prev1.close < prev1.open && curr.open > curr.close) {
-            signals.push({ index: j, signal: 'SELL', reason: 'Three Consecutive Bearish Candles' });
-        }
+ 
+
+    const signals = {}
+
+    for (let i = 0 ; i < histLength-3; i++)  { 
+      var signal = null
+      if (!signal)
+         signal = three_white_soldiers_buy (candles, i)
+      if (!signal)
+         signal = three_black_crows_sell (candles, i)
+      if (!signal)
+         signal = hammer_buy (candles, i)  
+      if (!signal)
+         signal = bull_engulfing_buy (candles, i)
+      if (!signal)
+         signal = bear_engulfing_sell (candles, i)  
+
+      if (signal){
+        signals[candles[i].date] = signal 
+        if (log) console.log ('signal', signal)
+      }
     }
-    console.log ('signals', signals) 
+    // if (log)
+       console.log ('signals', signals)
+    console.log ('counters', counters)
+    // console.log ('candles', candles)
+
 
     const dat = [
       {
@@ -123,8 +196,8 @@ const CandlestickChart = (props) => {
       }
     ];
     setData(dat)
-    if (log)
-      console.log ('candleStick data', dat)
+    // if (log)
+    //   console.log ('candleStick data', dat)
 
   }
 
@@ -137,7 +210,7 @@ const CandlestickChart = (props) => {
 
         <div>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '15%'/>
+            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '25%'/>
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />static &nbsp;&nbsp;
           </div>
