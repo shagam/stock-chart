@@ -97,7 +97,7 @@ function Tutorials () {
                     </tr>
 
                     <tr>
-                        <td><a href="https://youtu.be/lztkJ_GtUq8">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
+                        <td><a href="https://youtu.be/HZIrT91hj0o">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
                     </tr>
 
                     
