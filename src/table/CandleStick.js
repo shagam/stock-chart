@@ -60,8 +60,12 @@ const CandlestickChart = (props) => {
 
   const [buyDates, setBuyDates] = useState([])
   const [sellDates, setSellDates] = useState([])
+  const [yBuy, setYBuy] = useState([])
+  const [ySell, setYSell] = useState([])
+  const [chartMarkers, setChartMarkers] = useState(false)
 
   var counters = {bear_3: 0, bull_3: 0, hammer_buy: 0, bear_engulfing: 0, bull_engulfing: 0} //* count signal types
+  const MARKER_FACTOR = 1.05
 
   function bull_engulfing_buy (candles, i) {
     const sig =
@@ -70,6 +74,7 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bull_engulfing += 1
       buyDates.push(candles[i].date)
+      yBuy.push(candles[i].close * MARKER_FACTOR) 
       return { index: i, signal: 'BUY', reason: 'Bullish Engulfing Pattern (Buy Signal)' };
     }
     else return null
@@ -82,6 +87,7 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bear_engulfing += 1
       sellDates.push(candles[i].date )
+      ySell.push(candles[i].close * MARKER_FACTOR)
       return { index: i, signal:  'SELL', reason: 'Bearish Engulfing Pattern (Sell Signal)' };
     }
     return null
@@ -94,6 +100,7 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bull_3 += 1
       buyDates.push(candles[i].date)
+      yBuy.push(candles[i].close * MARKER_FACTOR)
       return { index: i, signal: 'BUY', reason: 'Three Consecutive Bullish Candles' };
     }
     return null
@@ -108,6 +115,7 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bear_3 += 1
       sellDates.push(candles[i].date) 
+      ySell.push(candles[i].close * MARKER_FACTOR)  
       return { index: i, signal: 'SELL', reason: 'Three Consecutive Bearish Candles' };
     }
     return null
@@ -125,6 +133,7 @@ const CandlestickChart = (props) => {
     if(sig && sig1) {
       counters.hammer_buy += 1
       buyDates.push(candles[i].date)
+      yBuy.push(candles[i].close * MARKER_FACTOR) 
       return { index: i, signal: 'BUY', reason: 'Hammer Pattern (Buy Signal)' };
     }
     else return null
@@ -201,7 +210,7 @@ const CandlestickChart = (props) => {
 
 
     const dat = [
-      {
+         {
         x: xClipped,
         close: close,
         decreasing: { line: { color: 'red' } },
@@ -212,8 +221,39 @@ const CandlestickChart = (props) => {
         type: 'candlestick',
         xaxis: 'x',
         yaxis: 'y'
-      }
+      },      
     ];
+
+    if (chartMarkers)
+      dat.push ({
+      x: buyDates,
+      y: yBuy,
+      mode: 'markers',
+      marker: {
+        color: 'green',
+        size: 7,
+        symbol: 'triangle-up'
+      },
+      name: 'Buy'
+    })
+    
+    if (chartMarkers)
+      dat.push (
+    // Sell markers
+    {
+      x: sellDates,
+      y: ySell,
+      mode: 'markers',
+      marker: {
+        color: 'red',
+        size: 7,
+        symbol: 'triangle-down'
+      },
+      name: 'Sell'
+    })
+
+
+
     setData(dat)
     // if (log)
     //   console.log ('candleStick data', dat)
@@ -232,6 +272,7 @@ const CandlestickChart = (props) => {
             <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '25%'/>
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />static &nbsp;&nbsp;
+            <input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} />chartMarkers &nbsp;&nbsp;
           </div>
           <div>&nbsp;</div>
           <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
