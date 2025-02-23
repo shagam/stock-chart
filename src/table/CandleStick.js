@@ -69,14 +69,44 @@ const CandlestickChart = (props) => {
     // console.log('calc')
     var xClipped = [], high = [], low = [], open = [], close = [];
      //x.length; 
+    const candles = []
     for (var i = 0; i < histLength; i++) {
+      const candle = {
+        open: props.chartData[x[i]]['1. open'],
+        high: props.chartData[x[i]]['2. high'],
+        low: props.chartData[x[i]]['3. low'],
+        close: props.chartData[x[i]]['4. close'],
+        date: xClipped[i]
+      }
+      candles.push(candle)
+
       xClipped.push(x[i])
       high.push(props.chartData[x[i]]['2. high'])
       low.push(props.chartData[x[i]]['3. low'])
       open.push(props.chartData[x[i]]['1. open'])
       close.push(props.chartData[x[i]]['4. close'])
     }
-
+    console.log ('candles', candles)
+    
+    // Calculate signals
+    let signals = [];
+    for (let j = 3; j < candles.length; j++) {
+        let prev1 = candles[j - 1];
+        let prev2 = candles[j - 2];
+        let prev3 = candles[j - 3];
+        let curr = candles[j];
+        
+        // Strong Bullish Signal (Multiple Bullish Candles)
+        if (prev3.close > prev3.open && prev2.close > prev2.open && prev1.close > prev1.open && curr.open < curr.close) {
+            signals.push({ index: j, signal: 'BUY', reason: 'Three Consecutive Bullish Candles' });
+        }
+        
+        // Strong Bearish Signal (Multiple Bearish Candles)
+        if (prev3.close < prev3.open && prev2.close < prev2.open && prev1.close < prev1.open && curr.open > curr.close) {
+            signals.push({ index: j, signal: 'SELL', reason: 'Three Consecutive Bearish Candles' });
+        }
+    }
+    console.log ('signals', signals) 
 
     const dat = [
       {
