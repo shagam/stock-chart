@@ -50,6 +50,7 @@ const CandleStick = ({ data, width, height }) => {
 
 const CandlestickChart = (props) => {
   const [log, setLog] = useState(false)
+  const [log_1, setLog_1] = useState(false)
   const [data, setData] = useState(null)
   const [histLength, setHistLength] = useState(35)
   const [err, setErr] = useState()
@@ -65,7 +66,7 @@ const CandlestickChart = (props) => {
   const [chartMarkers, setChartMarkers] = useState(false)
 
   var counters = {bear_3: 0, bull_3: 0, hammer_buy: 0, bear_engulfing: 0, bull_engulfing: 0} //* count signal types
-  const MARKER_FACTOR = 1.05
+  const MARKER_FACTOR = 1.07
 
   function bull_engulfing_buy (candles, i) {
     const sig =
@@ -93,10 +94,11 @@ const CandlestickChart = (props) => {
     return null
   }
 
-  
+  const THRESHOLD = 1.0075
   function three_white_soldiers_buy (candles, i) {
     // Strong Bullish Signal (Multiple Bullish Candles)
-    const sig = (candles[i+3].close > candles[i+3].open && candles[i+2].close > candles[i+2].open && candles[i+3].close > candles[i+3].open && candles[i].close > candles[i].open ) 
+    const sig = (/*candles[i+3].close / candles[i+3].open > THRESHOLD && */ candles[i+2].close / candles[i+2].open > THRESHOLD &&
+       candles[i+3].close / candles[i+3].open > THRESHOLD && candles[i].close / candles[i].open > THRESHOLD ) 
     if (sig) {
       counters.bull_3 += 1
       buyDates.push(candles[i].date)
@@ -111,7 +113,8 @@ const CandlestickChart = (props) => {
 
   function three_black_crows_sell (candles, i) {
     // // Strong Bearish Signal (Multiple Bearish Candles)
-    const sig = candles[i+3].close < candles[i+3].open && candles[i+2].close < candles[i+2].open && candles[i+3].close < candles[i+3].open && candles[i].close < candles[i].open 
+    const sig = /*candles[i+3].close / candles[i+3].open < 1/THRESHOLD && */ candles[i+2].close / candles[i+2].open < 1/THRESHOLD &&
+     candles[i+3].close / candles[i+3].open < 1/THRESHOLD && candles[i].close / candles[i].open < 1/THRESHOLD
     if (sig) {
       counters.bear_3 += 1
       sellDates.push(candles[i].date) 
@@ -179,31 +182,72 @@ const CandlestickChart = (props) => {
       console.log ('candles', candles)
  
 
+    
     const signals = {}
-
+    var buy_count = 0, sell_count= 0
     for (let i = 0 ; i < histLength-3; i++)  { 
-      var signal = null
-      if (!signal)
-         signal = three_white_soldiers_buy (candles, i)
-      if (!signal)
-         signal = three_black_crows_sell (candles, i)
-      if (!signal)
-         signal = hammer_buy (candles, i)  
-      if (!signal)
-         signal = bull_engulfing_buy (candles, i)
-      if (!signal)
-         signal = bear_engulfing_sell (candles, i)  
-
-      if (signal){
-        signals[candles[i].date] = signal 
-        // if (log) console.log ('signal', signal)
+      var signal_buy = null
+      var signal_sell = null
+       {
+         const sig = three_white_soldiers_buy (candles, i)
+         if (sig) {
+          signal_buy = sig
+          buy_count++;
+          if (log)
+            console.log (sig)
+        }
       }
+      {
+        const sig  = three_black_crows_sell (candles, i)
+        if (sig) {
+          signal_sell = sig
+          sell_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+      {
+        const sig  = hammer_buy (candles, i) 
+        if (sig) {
+          signal_buy = sig 
+          buy_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+      {
+        const sig  = bull_engulfing_buy (candles, i)
+        if (sig) {
+          signal_buy = sig
+          buy_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+       {
+        const sig  = bear_engulfing_sell (candles, i) 
+        if (sig) { 
+          signal_sell = sig
+          sell_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+
+      if (signal_buy && ! signal_sell) {
+        signals[candles[i].date] = signal_buy 
+      }
+      if (! signal_buy && signal_sell) {
+        signals[candles[i].date] = signal_sell 
+      }
+      if (signal_buy && signal_sell)
+        console.log ('both signals', signal_buy, signal_sell) 
     }
-    if (log)
+    if (log_1)
        console.log ('signals', signals)
-    if (log)
+    if (log_1)
       console.log ('buyDates', buyDates)
-    if (log) 
+    if (log_1) 
       console.log ('sellDates', sellDates)
 
     console.log ('counters', counters) // type of signals 
@@ -269,8 +313,9 @@ const CandlestickChart = (props) => {
 
         <div>
           <div style={{display: 'flex', flexDirection: 'row'}}>
-            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '25%'/>
+            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '20%'/>
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
+            {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>}
             <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />static &nbsp;&nbsp;
             <input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} />chartMarkers &nbsp;&nbsp;
           </div>
@@ -278,7 +323,7 @@ const CandlestickChart = (props) => {
           <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
 
           </div>          
-          {data && <Plot  data={data} layout={{ width: 650, height: 400, title:  'Candlestick Chart ' + props.symbol,
+          {data && <Plot  data={data} layout={{ width: 650, height: 600, title:  'Candlestick Chart ' + props.symbol,
                    xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: static_, 'modeBarButtonsToRemove': []}}  />}
                    {/* xaxis-rangeslider-visible=false */}
                    {/* {isMobile && <div>mobile</div>} */}
@@ -287,60 +332,9 @@ const CandlestickChart = (props) => {
 };
 
   
-  const CandlestickChart_1 = () => {
-    const data = [
-      {
-        x: ['2023-01-01', '2023-01-02', '2023-01-03', '2023-01-04'],
-        close: [120, 130, 125, 140],
-        decreasing: { line: { color: 'red' } },
-        high: [125, 135, 130, 145],
-        increasing: { line: { color: 'green' } },
-        low: [115, 125, 120, 135],
-        open: [118, 128, 123, 138],
-        type: 'candlestick',
-        xaxis: 'x',
-        yaxis: 'y'
-      },
-      // Buy markers
-      {
-        x: ['2023-01-02'],
-        y: [130],
-        mode: 'markers',
-        marker: {
-          color: 'green',
-          size: 10,
-          symbol: 'triangle-up'
-        },
-        name: 'Buy'
-      },
-      // Sell markers
-      {
-        x: ['2023-01-04'],
-        y: [140],
-        mode: 'markers',
-        marker: {
-          color: 'red',
-          size: 10,
-          symbol: 'triangle-down'
-        },
-        name: 'Sell'
-      }
-    ];
-  
-    return (
-      <Plot
-        data={data}
-        layout={{
-          title: 'Candlestick Chart with Buy/Sell Markers',
-          xaxis: { title: 'Date' },
-          yaxis: { title: 'Price' }
-        }}
-      />
-    );
-  };
-  
+ 
   
 
 
  
-export { CandlestickChart, CandlestickChart_1}
+export { CandlestickChart, }
