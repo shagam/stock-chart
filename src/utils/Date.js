@@ -361,7 +361,8 @@ function isDailyXArray (stockChartXValues) {
   const miliBefore = new Date (stockChartXValues[5]).getTime();
 
   const daysDiff =  (miliToday - miliBefore) / (1000 * 60 * 60 * 24); 
-  const isDailyXArray = daysDiff < 10;
+  const isDailyXArray = daysDiff < 12;
+  // console.log('isDailyXArray', isDailyXArray, daysDiff);
   return isDailyXArray;
 }
 
