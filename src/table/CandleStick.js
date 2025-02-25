@@ -43,7 +43,7 @@ const CandlestickChart = (props) => {
   const [chartData, setChartData] = useState({});  //needed for dropREcovery
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
-  const periodIndex = 3
+  const periodIndex = 0
   const intervalOPtions = ['Daily', '1min', '5min', '15min', '30min', '60min']  // adjusted=true
   const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
 
@@ -71,7 +71,7 @@ const CandlestickChart = (props) => {
     API_Call += '&outputsize=full' 
     if (periodIndex !== 0)
       API_Call += '&interval=' + intervalOPtions[periodIndex]
-
+    var dates = [], high = [], low = [], open = [], close = [];
 
     fetch(API_Call)
       .then(
@@ -92,11 +92,13 @@ const CandlestickChart = (props) => {
           }
    
           const keys = Object.keys(chartData[`${periodTag}`])
-          console.log ('chartData', keys.length, chartData)
+          if(log)
+            console.log ('chartData', keys.length, chartData)
           var candles = []
-          var xClipped = [], high = [], low = [], open = [], close = [];
+
           var i= 0;
           for (var key in chartData[`${periodTag}`]) {
+            if (i >= histLength) break;
             // const period_ = chartData[`${periodTag}`][key]
             // console.log (key, chartData[`${periodTag}`][key])
             const candle = {
@@ -110,27 +112,29 @@ const CandlestickChart = (props) => {
             low.push(candle.low)
             open.push(candle.open)
             close.push(candle.close)
+            dates.push(key)
 
             candles.push (candle)
-      
-            // console.log (key, chartData[`${periodTag}`][key])
             i++;
           } 
 
-          for (var k = 0; k < histLength - 4; k++) { 
-            getSignal (candles, k)
-          }
+          if (chartMarkers)
+            for (var k = 0; k < histLength - 3; k++) { 
+              if (k >= histLength) break;
+              getSignal (candles, k)
+            }
       
           console.log ('counters', counters) // type of signals
-      
-          console.log ('candles', candles)
-          console.log ('high', high)
-          console.log ('low', low)
-          console.log ('open', open)
-          console.log ('close', close)
+          if (log) {
+            console.log ('candles', candles)
+            console.log ('high', high)
+            console.log ('low', low)
+            console.log ('open', open)
+            console.log ('close', close)
+          }
+          // setChartData(chartData[periodTag]);
 
-          setChartData(chartData[periodTag]);
-
+          prepareChart (close, high, low, open, dates)
 
         })
         // .catch((error) => {console.log(error.message) })
@@ -174,7 +178,7 @@ const CandlestickChart = (props) => {
       return null
     }
     // Strong Bullish Signal (Multiple Bullish Candles)
-    const sig = (/*candles[i+3].close / candles[i+3].open > THRESHOLD && */ /*candles[i+2].close / candles[i+2].open > THRESHOLD &&*/
+    const sig = (/*candles[i+3].close / candles[i+3].open > THRESHOLD && */ candles[i+2].close / candles[i+2].open > THRESHOLD &&
        /*candles[i+1].close / candles[i+1].open > THRESHOLD &&*/ candles[i].close / candles[i].open > THRESHOLD ) 
     if (sig) {
       counters.bull_3 += 1
@@ -222,6 +226,9 @@ const CandlestickChart = (props) => {
   function getSignal (candles, i) {
     const signals = {}
     var buy_count = 0, sell_count= 0
+
+    while (buyDates.length > 0) buyDates.pop()
+    while (sellDates.length > 0) sellDates.pop()
     for (let i = 0 ; i < histLength-3; i++)  { 
       var signal_buy = null
       var signal_sell = null
@@ -338,8 +345,12 @@ const CandlestickChart = (props) => {
     console.log ('counters', counters) // type of signals
   
 
+    prepareChart (close, high, low, open, xClipped)
+  }
+
+  function prepareChart (close, high, low, open, xClipped) {
     const dat = [
-         {
+        {
         x: xClipped,
         close: close,
         decreasing: { line: { color: 'red' } },
@@ -382,9 +393,7 @@ const CandlestickChart = (props) => {
     })
 
     setData(dat)
-
   }
-
 
     // if (log)
     //   console.log ('candleStick data', dat)
