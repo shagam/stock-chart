@@ -1082,7 +1082,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='urlGetParse' && <div><UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> </div>}
 
-            {analyzeTool ==='candleStick' && <CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}/>}
+            {analyzeTool ==='candleStick' && <CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily} errorAdd={errorAdd} API_KEY={API_KEY}/>}
 
           </div>}
           </div>}        

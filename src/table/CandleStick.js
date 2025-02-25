@@ -18,32 +18,7 @@ import MobileContext from '../contexts/MobileContext'
 // import { format } from 'd3-format';
 // import { timeFormat } from 'd3-time-format';
 
-//* react-financial-charts copilot
-const CandleStick = ({ data, width, height }) => {
-    // const xAccessor = d => d.date;
-    // const xExtents = [xAccessor(data[data.length - 1]), xAccessor(data[0])];
 
-    // return (
-    //     <ChartCanvas
-    //         height={height}
-    //         width={width}
-    //         ratio={1}
-    //         margin={{ left: 50, right: 50, top: 10, bottom: 30 }}
-    //         type="svg"
-    //         seriesName="MSFT"
-    //         data={data}
-    //         xScale={scaleTime()}
-    //         xAccessor={xAccessor}
-    //         xExtents={xExtents}
-    //     >
-    //         <Chart id={1} yExtents={d => [d.high, d.low]}>
-    //             <XAxis axisAt="bottom" orient="bottom" ticks={6} />
-    //             <YAxis axisAt="left" orient="left" ticks={5} />
-    //             <CandlestickSeries width={timeIntervalBarWidth(utcDay)} />
-    //         </Chart>
-    //     </ChartCanvas>
-    // );
-};
 
 
 //* chatgpt 3
@@ -64,6 +39,53 @@ const CandlestickChart = (props) => {
   const [yBuy, setYBuy] = useState([])
   const [ySell, setYSell] = useState([])
   const [chartMarkers, setChartMarkers] = useState(false)
+
+  
+  const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED', 'TIME_SERIES_WEEKLY_ADJUSTED', 'TIME_SERIES_MONTHLY_ADJUSTED']
+  const intervalOPtions = ['1min', '5min', '15min', '30min', '60min']  // adjusted=true
+  //  outputsize=compact or full
+  //  https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo
+
+  // &interval=5min
+  function get () {
+    let API_Call;
+
+
+    API_Call = 'https://www.alphavantage.co/query'
+
+    API_Call += '?function=TIME_SERIES_INTRADAY'
+        // 
+    // API_CALL += '?function=TIME_SERIES_DAILY_ADJUSTED';
+    API_Call += '&symbol=' + props.symbol + '&apikey=' + props.API_KEY
+
+    API_Call += '&outputsize=full' + '&interval=15min'
+
+
+
+    fetch(API_Call)
+      .then(
+          function(response) {
+              const respStr = JSON.stringify (response);
+              if (response.status !== 200 || ! response.ok)
+                  console.log(response);
+              return response.json();
+          }
+      )
+      .then(
+        (chartData) => {
+          const dataStr = JSON.stringify(chartData);
+          if (dataStr === "{}") {
+            props.errorAdd([props.symbol, 'Invalid symbol, or fail to fetch historical data'])
+            // alert (`Invalid symbol: (${sym})`)
+            return;
+          }
+          console.log ('chartData', chartData)
+        })
+        .catch((error) => {console.log(error.message) })
+  }
+
+
+
 
   var counters = {bear_3: 0, bull_3: 0, hammer_buy: 0, bear_engulfing: 0, bull_engulfing: 0} //* count signal types
   const MARKER_FACTOR = 1.07
@@ -320,7 +342,8 @@ const CandlestickChart = (props) => {
             <input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} />chartMarkers &nbsp;&nbsp;
           </div>
           <div>&nbsp;</div>
-          <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp;
+          <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp; &nbsp;
+          <button  style={{background: 'aqua'}} onClick={() => get()}> CandleStick get</button>&nbsp;
 
           </div>          
           {data && <Plot  data={data} layout={{ width: 650, height: 600, title:  'Candlestick Chart ' + props.symbol,
