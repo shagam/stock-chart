@@ -118,10 +118,8 @@ const CandlestickChart = (props) => {
           } 
 
           if (chartMarkers)
-            for (var k = 0; k < histLength - 3; k++) { 
-              if (k >= histLength) break;
-              getSignal (candles, k)
-            }
+              calcSignals (candles)
+
       
           console.log ('counters', counters) // type of signals
           if (log) {
@@ -218,7 +216,7 @@ const CandlestickChart = (props) => {
     else return null
   }
 
-  function getSignal (candles, i) {
+  function calcSignals (candles) {
     const signals = {}
     var buy_count = 0, sell_count= 0
 
@@ -332,9 +330,9 @@ const CandlestickChart = (props) => {
     if (log)
       console.log ('candles', candles)
  
-    for (var j = 0; j < histLength - 3; j++) { 
-      getSignal (candles, j)
-    }
+
+    calcSignals (candles)
+
 
    
     console.log ('counters', counters) // type of signals
@@ -347,13 +345,13 @@ const CandlestickChart = (props) => {
 
     //** find max y for markers */
     var max_y = 0;  // for markers
-    for (var i = 0; i < close.length; i++) 
+    for (let i = 0; i < close.length; i++) 
       if (close[i] > max_y) max_y = close[i]
 
     const MARKER_FACTOR = 1
     var max_y_array = []
-    for (var i = 0; i < high.length; i++)
-        max_y_array[i] = max_y * MARKER_FACTOR
+    for (let j = 0; j < high.length; j++)
+        max_y_array[j] = max_y * MARKER_FACTOR
 
     const dat = [
         {
