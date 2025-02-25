@@ -93,8 +93,9 @@ const CandlestickChart = (props) => {
    
           const keys = Object.keys(chartData[`${periodTag}`])
           console.log ('chartData', keys.length, chartData)
-          var candles = {}
+          var candles = []
           var xClipped = [], high = [], low = [], open = [], close = [];
+          var i= 0;
           for (var key in chartData[`${periodTag}`]) {
             // const period_ = chartData[`${periodTag}`][key]
             // console.log (key, chartData[`${periodTag}`][key])
@@ -110,10 +111,18 @@ const CandlestickChart = (props) => {
             open.push(candle.open)
             close.push(candle.close)
 
-            candles[key] = candle
+            candles.push (candle)
       
             // console.log (key, chartData[`${periodTag}`][key])
+            i++;
           } 
+
+          for (var k = 0; k < histLength - 4; k++) { 
+            getSignal (candles, k)
+          }
+      
+          console.log ('counters', counters) // type of signals
+      
           console.log ('candles', candles)
           console.log ('high', high)
           console.log ('low', low)
@@ -124,7 +133,7 @@ const CandlestickChart = (props) => {
 
 
         })
-        .catch((error) => {console.log(error.message) })
+        // .catch((error) => {console.log(error.message) })
   }
 
 
@@ -160,9 +169,13 @@ const CandlestickChart = (props) => {
 
   const THRESHOLD = 1.0075
   function three_white_soldiers_buy (candles, i) {
+    if ( ! candles[i].close) {
+      console.log ('candles[i].close not found', i)
+      return null
+    }
     // Strong Bullish Signal (Multiple Bullish Candles)
-    const sig = (/*candles[i+3].close / candles[i+3].open > THRESHOLD && */ candles[i+2].close / candles[i+2].open > THRESHOLD &&
-       candles[i+3].close / candles[i+3].open > THRESHOLD && candles[i].close / candles[i].open > THRESHOLD ) 
+    const sig = (/*candles[i+3].close / candles[i+3].open > THRESHOLD && */ /*candles[i+2].close / candles[i+2].open > THRESHOLD &&*/
+       /*candles[i+1].close / candles[i+1].open > THRESHOLD &&*/ candles[i].close / candles[i].open > THRESHOLD ) 
     if (sig) {
       counters.bull_3 += 1
       buyDates.push(candles[i].date)
@@ -178,7 +191,7 @@ const CandlestickChart = (props) => {
   function three_black_crows_sell (candles, i) {
     // // Strong Bearish Signal (Multiple Bearish Candles)
     const sig = /*candles[i+3].close / candles[i+3].open < 1/THRESHOLD && */ candles[i+2].close / candles[i+2].open < 1/THRESHOLD &&
-     candles[i+3].close / candles[i+3].open < 1/THRESHOLD && candles[i].close / candles[i].open < 1/THRESHOLD
+     candles[i+1].close / candles[i+1].open < 1/THRESHOLD && candles[i].close / candles[i].open < 1/THRESHOLD
     if (sig) {
       counters.bear_3 += 1
       sellDates.push(candles[i].date) 
@@ -274,8 +287,6 @@ const CandlestickChart = (props) => {
       console.log ('buyDates', buyDates)
     if (log_1) 
       console.log ('sellDates', sellDates)
-
-    console.log ('counters', counters) // type of signals
   } 
 
 
@@ -319,9 +330,12 @@ const CandlestickChart = (props) => {
     if (log)
       console.log ('candles', candles)
  
-    getSignal (candles, i)
+    for (var j = 0; j < histLength - 3; j++) { 
+      getSignal (candles, j)
+    }
 
- 
+   
+    console.log ('counters', counters) // type of signals
   
 
     const dat = [
