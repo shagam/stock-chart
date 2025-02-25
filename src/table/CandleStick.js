@@ -37,7 +37,6 @@ const CandlestickChart = (props) => {
   const [buyDates, setBuyDates] = useState([])
   const [sellDates, setSellDates] = useState([])
   const [yBuy, setYBuy] = useState([])
-  const [ySell, setYSell] = useState([])
   const [chartMarkers, setChartMarkers] = useState(false)
 
   const [chartData, setChartData] = useState({});  //needed for dropREcovery
@@ -143,7 +142,6 @@ const CandlestickChart = (props) => {
 
 
   var counters = {bear_3: 0, bull_3: 0, hammer_buy: 0, bear_engulfing: 0, bull_engulfing: 0} //* count signal types
-  const MARKER_FACTOR = 1.07
 
   function bull_engulfing_buy (candles, i) {
     const sig =
@@ -152,7 +150,7 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bull_engulfing += 1
       buyDates.push(candles[i].date)
-      yBuy.push(candles[i].close * MARKER_FACTOR) 
+
       return { index: i, signal: 'BUY', reason: 'Bullish Engulfing Pattern (Buy Signal)' };
     }
     else return null
@@ -165,7 +163,7 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bear_engulfing += 1
       sellDates.push(candles[i].date )
-      ySell.push(candles[i].close * MARKER_FACTOR)
+
       return { index: i, signal:  'SELL', reason: 'Bearish Engulfing Pattern (Sell Signal)' };
     }
     return null
@@ -183,7 +181,6 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bull_3 += 1
       buyDates.push(candles[i].date)
-      yBuy.push(candles[i].close * MARKER_FACTOR)
       return { index: i, signal: 'BUY', reason: 'Three Consecutive Bullish Candles' };
     }
     return null
@@ -199,7 +196,6 @@ const CandlestickChart = (props) => {
     if (sig) {
       counters.bear_3 += 1
       sellDates.push(candles[i].date) 
-      ySell.push(candles[i].close * MARKER_FACTOR)  
       return { index: i, signal: 'SELL', reason: 'Three Consecutive Bearish Candles' };
     }
     return null
@@ -217,7 +213,6 @@ const CandlestickChart = (props) => {
     if(sig && sig1) {
       counters.hammer_buy += 1
       buyDates.push(candles[i].date)
-      yBuy.push(candles[i].close * MARKER_FACTOR) 
       return { index: i, signal: 'BUY', reason: 'Hammer Pattern (Buy Signal)' };
     }
     else return null
@@ -349,6 +344,17 @@ const CandlestickChart = (props) => {
   }
 
   function prepareChart (close, high, low, open, xClipped) {
+
+    //** find max y for markers */
+    var max_y = 0;  // for markers
+    for (var i = 0; i < close.length; i++) 
+      if (close[i] > max_y) max_y = close[i]
+
+    const MARKER_FACTOR = 1
+    var max_y_array = []
+    for (var i = 0; i < high.length; i++)
+        max_y_array[i] = max_y * MARKER_FACTOR
+
     const dat = [
         {
         x: xClipped,
@@ -367,7 +373,7 @@ const CandlestickChart = (props) => {
     if (chartMarkers)
       dat.push ({
       x: buyDates,
-      y: yBuy,
+      y: max_y_array,
       mode: 'markers',
       marker: {
         color: 'green',
@@ -382,7 +388,7 @@ const CandlestickChart = (props) => {
     // Sell markers
     {
       x: sellDates,
-      y: ySell,
+      y:  max_y_array,
       mode: 'markers',
       marker: {
         color: 'red',
