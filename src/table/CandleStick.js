@@ -40,26 +40,37 @@ const CandlestickChart = (props) => {
   const [ySell, setYSell] = useState([])
   const [chartMarkers, setChartMarkers] = useState(false)
 
+  const [chartData, setChartData] = useState({});  //needed for dropREcovery
   
-  const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED', 'TIME_SERIES_WEEKLY_ADJUSTED', 'TIME_SERIES_MONTHLY_ADJUSTED']
-  const intervalOPtions = ['1min', '5min', '15min', '30min', '60min']  // adjusted=true
+  // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
+  const periodIndex = 3
+  const intervalOPtions = ['Daily', '1min', '5min', '15min', '30min', '60min']  // adjusted=true
+  const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
+
+
+
+  // const [periodTag, setPeriodTag] = useState('Time Series (Daily)')
+
+
   //  outputsize=compact or full
   //  https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo
 
   // &interval=5min
   function get () {
-    let API_Call;
+
+    var periodTag = 'Time Series (' + intervalOPtions[periodIndex] + ')'
+    
+    var funct = 'TIME_SERIES_INTRADAY'
+    if (periodIndex === 0) 
+      funct = 'TIME_SERIES_DAILY_ADJUSTED';
 
 
-    API_Call = 'https://www.alphavantage.co/query'
-
-    API_Call += '?function=TIME_SERIES_INTRADAY'
-        // 
-    // API_CALL += '?function=TIME_SERIES_DAILY_ADJUSTED';
+    var API_Call = 'https://www.alphavantage.co/query'
+    API_Call += '?function=' + funct;
     API_Call += '&symbol=' + props.symbol + '&apikey=' + props.API_KEY
-
-    API_Call += '&outputsize=full' + '&interval=15min'
-
+    API_Call += '&outputsize=full' 
+    if (periodIndex !== 0)
+      API_Call += '&interval=' + intervalOPtions[periodIndex]
 
 
     fetch(API_Call)
@@ -79,11 +90,30 @@ const CandlestickChart = (props) => {
             // alert (`Invalid symbol: (${sym})`)
             return;
           }
-          console.log ('chartData', chartData)
+   
+          const keys = Object.keys(chartData[`${periodTag}`])
+          console.log ('chartData', keys.length, chartData)
+          var candles = {}
+          for (var key in chartData[`${periodTag}`]) {
+            // const period_ = chartData[`${periodTag}`][key]
+            // console.log (key, chartData[`${periodTag}`][key])
+            const candle = {
+              open: chartData[`${periodTag}`][key]['1. open'],
+              high: chartData[`${periodTag}`][key]['2. high'],
+              low: chartData[`${periodTag}`][key]['3. low'],
+              close: chartData[`${periodTag}`][key]['4. close'],
+              date: key
+            }
+            candles[key] = candle
+      
+            // console.log (key, chartData[`${periodTag}`][key])
+          } 
+          console.log ('candles', candles)
+          setChartData(chartData[periodTag]); 
+
         })
         .catch((error) => {console.log(error.message) })
-  }
-
+    }
 
 
 
