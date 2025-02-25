@@ -206,6 +206,80 @@ const CandlestickChart = (props) => {
     else return null
   }
 
+  function getSignal (candles, i) {
+    const signals = {}
+    var buy_count = 0, sell_count= 0
+    for (let i = 0 ; i < histLength-3; i++)  { 
+      var signal_buy = null
+      var signal_sell = null
+      {
+        const sig = three_white_soldiers_buy (candles, i)
+        if (sig) {
+          signal_buy = sig
+          buy_count++;
+          if (log)
+            console.log (sig)
+        }
+      }
+      {
+        const sig  = three_black_crows_sell (candles, i)
+        if (sig) {
+          signal_sell = sig
+          sell_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+      {
+        const sig  = hammer_buy (candles, i) 
+        if (sig) {
+          signal_buy = sig 
+          buy_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+      {
+        const sig  = bull_engulfing_buy (candles, i)
+        if (sig) {
+          signal_buy = sig
+          buy_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+      {
+        const sig  = bear_engulfing_sell (candles, i) 
+        if (sig) { 
+          signal_sell = sig
+          sell_count++
+          if (log)
+            console.log (sig)
+        }
+      }
+
+      if (signal_buy && ! signal_sell) {
+        signals[candles[i].date] = signal_buy 
+      }
+      if (! signal_buy && signal_sell) {
+        signals[candles[i].date] = signal_sell 
+      }
+      if (signal_buy && signal_sell)
+        console.log ('both signals', signal_buy, signal_sell) 
+    }
+    
+    if (log_1)
+      console.log ('signals', signals)
+    if (log_1)
+      console.log ('buyDates', buyDates)
+    if (log_1) 
+      console.log ('sellDates', sellDates)
+
+    console.log ('counters', counters) // type of signals
+  } 
+
+
+
   function calc () {
     setErr()
     if (! props.daily) {
@@ -245,77 +319,10 @@ const CandlestickChart = (props) => {
     if (log)
       console.log ('candles', candles)
  
+    getSignal (candles, i)
 
-    
-    const signals = {}
-    var buy_count = 0, sell_count= 0
-    for (let i = 0 ; i < histLength-3; i++)  { 
-      var signal_buy = null
-      var signal_sell = null
-       {
-         const sig = three_white_soldiers_buy (candles, i)
-         if (sig) {
-          signal_buy = sig
-          buy_count++;
-          if (log)
-            console.log (sig)
-        }
-      }
-      {
-        const sig  = three_black_crows_sell (candles, i)
-        if (sig) {
-          signal_sell = sig
-          sell_count++
-          if (log)
-            console.log (sig)
-        }
-      }
-      {
-        const sig  = hammer_buy (candles, i) 
-        if (sig) {
-          signal_buy = sig 
-          buy_count++
-          if (log)
-            console.log (sig)
-        }
-      }
-      {
-        const sig  = bull_engulfing_buy (candles, i)
-        if (sig) {
-          signal_buy = sig
-          buy_count++
-          if (log)
-            console.log (sig)
-        }
-      }
-       {
-        const sig  = bear_engulfing_sell (candles, i) 
-        if (sig) { 
-          signal_sell = sig
-          sell_count++
-          if (log)
-            console.log (sig)
-        }
-      }
-
-      if (signal_buy && ! signal_sell) {
-        signals[candles[i].date] = signal_buy 
-      }
-      if (! signal_buy && signal_sell) {
-        signals[candles[i].date] = signal_sell 
-      }
-      if (signal_buy && signal_sell)
-        console.log ('both signals', signal_buy, signal_sell) 
-    }
-    if (log_1)
-       console.log ('signals', signals)
-    if (log_1)
-      console.log ('buyDates', buyDates)
-    if (log_1) 
-      console.log ('sellDates', sellDates)
-
-    console.log ('counters', counters) // type of signals 
-
+ 
+  
 
     const dat = [
          {
@@ -360,13 +367,15 @@ const CandlestickChart = (props) => {
       name: 'Sell'
     })
 
-
-
     setData(dat)
+
+  }
+
+
     // if (log)
     //   console.log ('candleStick data', dat)
 
-  }
+  
 
   return (
     <div style = {{ border: '2px solid green'}}>
