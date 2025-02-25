@@ -94,26 +94,38 @@ const CandlestickChart = (props) => {
           const keys = Object.keys(chartData[`${periodTag}`])
           console.log ('chartData', keys.length, chartData)
           var candles = {}
+          var xClipped = [], high = [], low = [], open = [], close = [];
           for (var key in chartData[`${periodTag}`]) {
             // const period_ = chartData[`${periodTag}`][key]
             // console.log (key, chartData[`${periodTag}`][key])
             const candle = {
-              open: chartData[`${periodTag}`][key]['1. open'],
-              high: chartData[`${periodTag}`][key]['2. high'],
-              low: chartData[`${periodTag}`][key]['3. low'],
-              close: chartData[`${periodTag}`][key]['4. close'],
+              open: chartData[periodTag][key]['1. open'],
+              high: chartData[periodTag][key]['2. high'],
+              low: chartData[periodTag][key]['3. low'],
+              close: chartData[periodTag][key]['4. close'],
               date: key
             }
+            high.push(candle.high)
+            low.push(candle.low)
+            open.push(candle.open)
+            close.push(candle.close)
+
             candles[key] = candle
       
             // console.log (key, chartData[`${periodTag}`][key])
           } 
           console.log ('candles', candles)
-          setChartData(chartData[periodTag]); 
+          console.log ('high', high)
+          console.log ('low', low)
+          console.log ('open', open)
+          console.log ('close', close)
+
+          setChartData(chartData[periodTag]);
+
 
         })
         .catch((error) => {console.log(error.message) })
-    }
+  }
 
 
 
@@ -225,10 +237,10 @@ const CandlestickChart = (props) => {
       }
       candles.push(candle)
 
-      high.push(props.chartData[x[i]]['2. high'])
-      low.push(props.chartData[x[i]]['3. low'])
-      open.push(props.chartData[x[i]]['1. open'])
-      close.push(props.chartData[x[i]]['4. close'])
+      high.push(candle.high)
+      low.push(candle.low)
+      open.push(candle.open)
+      close.push(candle.close)
     }
     if (log)
       console.log ('candles', candles)
