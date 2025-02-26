@@ -372,7 +372,7 @@ const CandlestickChart = (props) => {
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>} &nbsp;&nbsp;&nbsp;
 
-            {eliHome && <div><input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} /> &nbsp;signals &nbsp;&nbsp;</div>}
+            {props.eliHome && <div><input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} /> &nbsp;signals &nbsp;&nbsp;</div>}
           </div>
           <div>&nbsp;</div>
 
