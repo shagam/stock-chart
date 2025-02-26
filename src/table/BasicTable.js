@@ -844,7 +844,7 @@ const BasicTable = (props) => {
 
         <div style={{display:'flex'}}>
              {chartSymbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
-             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome)}} title='price during market open' > marketOpen </button> &nbsp; </div>}
+             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome)}} title='price during market open' > marketOpen </button> </div>}
 
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} 
