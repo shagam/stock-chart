@@ -29,6 +29,7 @@ const CandlestickChart = (props) => {
   const [log_1, setLog_1] = useState(false)
   const [data, setData] = useState()
   const [histLength, setHistLength] = useState(35)
+  const [maxHistLength, setMaxHistLength] = useState()
   const [err, setErr] = useState()
 
   const {isMobile} = MobileContext();
@@ -44,7 +45,7 @@ const CandlestickChart = (props) => {
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
   const [periodIndex, setPeriodIndex] = useState(0)
-  const intervalOptionsNames = ['Daily', '1min', '5min', '15min', '30min', '60min']  // adjusted=true
+  const intervalOptionsNames = ['Daily', '60min', '30min', '5min', '15min', '1min']  // adjusted=true
   const indexOptions = [0,1,2,3,4,5]
   const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
   
@@ -91,8 +92,9 @@ const CandlestickChart = (props) => {
             // alert (`Invalid symbol: (${sym})`)
             return;
           }
-   
+
           const keys = Object.keys(chartData[`${periodTag}`])
+          setMaxHistLength(keys.length)
           if(log)
             console.log ('chartData', keys.length, chartData)
           var candles = []
@@ -364,6 +366,11 @@ const CandlestickChart = (props) => {
         {err && <div style={{color:'red'}}>{err}</div>}
 
         <div>  &nbsp; 
+          <div style={{display:'flex'}}>
+            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '20%'/>
+            {maxHistLength && <div style={{paddingTop:'9px'}}>&nbsp; &nbsp; max={maxHistLength} </div>}
+          </div>
+
           <div style={{display:'flex'}}>
              <ComboBoxSelect serv={periodIndex} nameList={intervalOptionsNames} setSelect={setPeriodIndex}
                                         title='resolution' options={indexOptions} defaultValue={periodIndex}/> &nbsp; &nbsp; 
