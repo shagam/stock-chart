@@ -34,14 +34,14 @@ const CandlestickChart = (props) => {
 
   const {isMobile} = MobileContext();
 
-  const [static_, setStatic] = useState(true)
+  const [frozen, setFrozen] = useState(true)
 
   const [buyDates, setBuyDates] = useState([])
   const [sellDates, setSellDates] = useState([])
-  const [yBuy, setYBuy] = useState([])
+  // const [yBuy, setYBuy] = useState([])
   const [chartMarkers, setChartMarkers] = useState(false)
 
-  const [chartData, setChartData] = useState({});  //needed for dropREcovery
+  // const [chartData, setChartData] = useState({});  //needed for dropREcovery
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
   const [periodIndex, setPeriodIndex] = useState(0)
@@ -128,8 +128,9 @@ const CandlestickChart = (props) => {
 
           if (chartMarkers)
             console.log ('counters', counters) // type of signals
-          if (log) {
+          if (log)
             console.log ('candles', candles)
+          if (log_1) {
             console.log ('high', high)
             console.log ('low', low)
             console.log ('open', open)
@@ -377,7 +378,7 @@ const CandlestickChart = (props) => {
              <ComboBoxSelect serv={periodIndex} nameList={intervalOptionsNames} setSelect={setPeriodIndex}
                                         title='resolution' options={indexOptions} defaultValue={periodIndex}/> &nbsp; &nbsp; 
 
-            {data && <div><input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} /> &nbsp;static &nbsp;&nbsp;</div>}
+            {data && <div><input  type="checkbox" checked={frozen}  onChange={() => setFrozen (! frozen)} /> &nbsp;frozen &nbsp;&nbsp;</div>}
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>} &nbsp;&nbsp;&nbsp;
 
@@ -389,7 +390,7 @@ const CandlestickChart = (props) => {
 
           </div>          
           {data && <Plot  data={data} layout={{ width: 650, height: 600, title:  'Candlestick Chart ' + props.symbol,
-                   xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: static_, 'modeBarButtonsToRemove': []}}  />}
+                   xaxis:{title: 'Date'}, yaxis: {title: 'Price'}}} config={{staticPlot: frozen, 'modeBarButtonsToRemove': []}}  />}
                    {/* xaxis-rangeslider-visible=false */}
                    {/* {isMobile && <div>mobile</div>} */}
     </div>
