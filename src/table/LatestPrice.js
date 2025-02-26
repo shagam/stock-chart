@@ -89,7 +89,7 @@ function LatestPrice (props) {
           } 
 
           const price = Number(result.data.result_1)
-          console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0], 'price/close=' + (price / props.stockChartYValues[0]).toFixed(4))
+
         //   console.log (getDate(), result.data)
           const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
 
@@ -103,7 +103,9 @@ function LatestPrice (props) {
           const ratio = price / props.stockChartYValues[0];
           const sign = ratio > 1 ? '+' : '' 
           const color = ratio > 1 ? '#82b74b': 'red' 
-          var priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
+          console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0],
+           'price/close=' + (price / props.stockChartYValues[0]).toFixed(4), 'color:' + color)
+          const priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
 
           props.setPriceDivClose (priceDivCloseObj)
           props.refreshByToggleColumns()
