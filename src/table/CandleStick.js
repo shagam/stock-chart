@@ -27,7 +27,7 @@ import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 const CandlestickChart = (props) => {
   const [log, setLog] = useState(false)
   const [log_1, setLog_1] = useState(false)
-  const [data, setData] = useState(null)
+  const [data, setData] = useState()
   const [histLength, setHistLength] = useState(35)
   const [err, setErr] = useState()
 
@@ -368,7 +368,7 @@ const CandlestickChart = (props) => {
              <ComboBoxSelect serv={periodIndex} nameList={intervalOptionsNames} setSelect={setPeriodIndex}
                                         title='resolution' options={indexOptions} defaultValue={periodIndex}/> &nbsp; &nbsp; 
 
-            <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} /> &nbsp;static &nbsp;&nbsp;
+            {data && <div><input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} /> &nbsp;static &nbsp;&nbsp;</div>}
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>} &nbsp;&nbsp;&nbsp;
 
