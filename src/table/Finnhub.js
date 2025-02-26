@@ -7,12 +7,12 @@ import {targetPriceAdd} from './TargetPrice'
 
     function finnhub (symbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome) {
 
-        const url = 'https://finnhub.io/api/v1/quote?symbol=' + symbol + '&token=c4pfifqad3ifau3r1kjg'
+        const url = 'https://finnhub.io/api/v1/quote?symbol=' + symbol + '&token=' + process.env.REACT_APP_FINNHUB
 
         // const api_key = finnhub.ApiClient.instance.authentications['api_key'];
         // api_key.apiKey = "c4pfifqad3ifau3r1kjg" // Replace this
         // const finnhubClient = new finnhub.DefaultApi()
-
+        // console.log(symbol, url)
         axios.get (url)
 
         .then ((result) => {
