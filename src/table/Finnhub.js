@@ -58,12 +58,11 @@ import {targetPriceAdd} from './TargetPrice'
 
             const priceDivClose = price/stockChartYValues[0]
             const sign = priceDivClose > 1 ? '+' : '' 
-            var priceDivClose_fixed = symbol + '  ' + sign + ((price/stockChartYValues[0] -1) * 100).toFixed(3) + '% ';
-            if (eliHome)
-                priceDivClose_fixed += '  (' + price + ')';
-            if (Date.now() - rows[row_index].values.gain_mili < 1000*60*60 && priceDivClose !== 1) { // less than 1 hour diff && stock value is not the same as the close value
-                setPriceDivClose (priceDivClose_fixed)
-                console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivClose_fixed)
+            var priceDivCloseObj = {symbol: symbol, price: price, sign: sign, ratio: ((price/stockChartYValues[0] -1) * 100).toFixed(3)};
+
+            if (true * Date.now() - rows[row_index].values.gain_mili < 1000*60*60 && priceDivClose !== 1) { // less than 1 hour diff && stock value is not the same as the close value
+                setPriceDivClose (priceDivCloseObj)
+                console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivCloseObj)
             }
             else
                 setPriceDivClose()

@@ -795,7 +795,13 @@ const BasicTable = (props) => {
       localStorage.removeItem('yearlyPercent')
   }
 
-
+  function color_diff (diff) {
+    if (diff < 0)
+      return 'red'
+    if (diff > 0)
+      return 'green'
+    return 'black'
+  }
   
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
@@ -841,7 +847,7 @@ const BasicTable = (props) => {
 
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} &nbsp;
-          {priceDivClose && <div style={{color: 'lightGreen'}}>{priceDivClose}</div>}
+          {priceDivClose && <div style={{color: priceDivClose.color}}>{priceDivClose.symbol}&nbsp; {priceDivClose.sign}{priceDivClose.ratio}%  ({priceDivClose.price})</div>}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
