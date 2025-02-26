@@ -835,7 +835,7 @@ const BasicTable = (props) => {
         </div>
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
-           {! showUrl && eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>}  &nbsp; &nbsp;
+           {! showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>}  &nbsp; &nbsp;
 
            {(row_index_eeee !== -1 || admin) && chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} &nbsp;
