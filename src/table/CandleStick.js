@@ -293,56 +293,6 @@ const CandlestickChart = (props) => {
 
 
 
-  function calc () {
-    setErr()
-    if (! props.daily) {
-      setErr('need daily mode')
-      beep2()
-      return
-    }
-    const x = Object.keys (props.chartData)
-    if (histLength >= x.length) {
-      setErr('historySize >= data length')
-      return
-    }
-
-    while (buyDates.length > 0) buyDates.pop()
-    while (sellDates.length > 0) sellDates.pop()
-
-    // console.log('calc')
-    var xClipped = [], high = [], low = [], open = [], close = [];
-     //x.length; 
-    const candles = []
-    for (var i = 0; i < histLength; i++) {
-      xClipped.push(x[i])
-      const candle = {
-        open: props.chartData[x[i]]['1. open'],
-        high: props.chartData[x[i]]['2. high'],
-        low: props.chartData[x[i]]['3. low'],
-        close: props.chartData[x[i]]['4. close'],
-        date: xClipped[i]
-      }
-      candles.push(candle)
-
-      high.push(candle.high)
-      low.push(candle.low)
-      open.push(candle.open)
-      close.push(candle.close)
-    }
-    if (log)
-      console.log ('candles', candles)
- 
-
-    getSignals (candles)
-
-
-   
-    console.log ('counters', counters) // type of signals
-  
-
-    prepareChart (close, high, low, open, xClipped)
-  }
-
   function prepareChart (close, high, low, open, xClipped) {
 
     //** find max y for markers */
@@ -416,20 +366,17 @@ const CandlestickChart = (props) => {
         <div>  &nbsp; 
           <div style={{display:'flex'}}>
              <ComboBoxSelect serv={periodIndex} nameList={intervalOptionsNames} setSelect={setPeriodIndex}
-                                        title='resolution' options={indexOptions} defaultValue={periodIndex}/> 
-          </div>  &nbsp; &nbsp;
+                                        title='resolution' options={indexOptions} defaultValue={periodIndex}/> &nbsp; &nbsp; 
 
-          <div style={{display: 'flex', flexDirection: 'row'}}>
-            <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '20%'/>
-
-            {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
-            {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>}
             <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} /> &nbsp;static &nbsp;&nbsp;
+            {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
+            {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>} &nbsp;&nbsp;&nbsp;
+
             <input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} /> &nbsp;signals &nbsp;&nbsp;
           </div>
           <div>&nbsp;</div>
-          <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp; &nbsp;
-          <button  style={{background: 'aqua'}} onClick={() => get()}> CandleStick get</button>&nbsp;
+
+            <button  style={{background: 'aqua'}} onClick={() => get()}> CandleStick get</button>&nbsp;
 
           </div>          
           {data && <Plot  data={data} layout={{ width: 650, height: 600, title:  'Candlestick Chart ' + props.symbol,
