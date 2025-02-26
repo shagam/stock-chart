@@ -4,6 +4,7 @@ import Plot from 'react-plotly.js';
 import GetInt from '../utils/GetInt'
 import {beep2} from '../utils/ErrorList'
 import MobileContext from '../contexts/MobileContext'
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 // import yfinance from 'yahoo-finance2'
 // const df = yfinance.download('AAPL', '2021-01-01', '2021-12-31')
@@ -42,10 +43,11 @@ const CandlestickChart = (props) => {
   const [chartData, setChartData] = useState({});  //needed for dropREcovery
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
-  const periodIndex = 0
-  const intervalOPtions = ['Daily', '1min', '5min', '15min', '30min', '60min']  // adjusted=true
+  const [periodIndex, setPeriodIndex] = useState(0)
+  const intervalOptionsNames = ['Daily', '1min', '5min', '15min', '30min', '60min']  // adjusted=true
+  const indexOptions = [0,1,2,3,4,5]
   const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
-
+  
 
 
   // const [periodTag, setPeriodTag] = useState('Time Series (Daily)')
@@ -57,7 +59,7 @@ const CandlestickChart = (props) => {
   // &interval=5min
   function get () {
 
-    var periodTag = 'Time Series (' + intervalOPtions[periodIndex] + ')'
+    var periodTag = 'Time Series (' + intervalOptionsNames[periodIndex] + ')'
     
     var funct = 'TIME_SERIES_INTRADAY'
     if (periodIndex === 0) 
@@ -69,7 +71,7 @@ const CandlestickChart = (props) => {
     API_Call += '&symbol=' + props.symbol + '&apikey=' + props.API_KEY
     API_Call += '&outputsize=full' 
     if (periodIndex !== 0)
-      API_Call += '&interval=' + intervalOPtions[periodIndex]
+      API_Call += '&interval=' + intervalOptionsNames[periodIndex]
     var dates = [], high = [], low = [], open = [], close = [];
 
     fetch(API_Call)
@@ -118,7 +120,7 @@ const CandlestickChart = (props) => {
           } 
 
           if (chartMarkers)
-              calcSignals (candles)
+              getSignals (candles)
 
       
           console.log ('counters', counters) // type of signals
@@ -216,7 +218,7 @@ const CandlestickChart = (props) => {
     else return null
   }
 
-  function calcSignals (candles) {
+  function getSignals (candles) {
     const signals = {}
     var buy_count = 0, sell_count= 0
 
@@ -331,7 +333,7 @@ const CandlestickChart = (props) => {
       console.log ('candles', candles)
  
 
-    calcSignals (candles)
+    getSignals (candles)
 
 
    
@@ -411,13 +413,19 @@ const CandlestickChart = (props) => {
         <div  style={{color: 'magenta' }}>  {props.symbol} </div> 
         {err && <div style={{color:'red'}}>{err}</div>}
 
-        <div>
+        <div>  &nbsp; 
+          <div style={{display:'flex'}}>
+             <ComboBoxSelect serv={periodIndex} nameList={intervalOptionsNames} setSelect={setPeriodIndex}
+                                        title='resolution' options={indexOptions} defaultValue={periodIndex}/> 
+          </div>  &nbsp; &nbsp;
+
           <div style={{display: 'flex', flexDirection: 'row'}}>
             <GetInt init={histLength} callBack={setHistLength} title='historySize' type='Number' pattern="[0-9]+" width = '20%'/>
+
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>}
-            <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />static &nbsp;&nbsp;
-            <input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} />chartMarkers &nbsp;&nbsp;
+            <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} /> &nbsp;static &nbsp;&nbsp;
+            <input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} /> &nbsp;signals &nbsp;&nbsp;
           </div>
           <div>&nbsp;</div>
           <button  style={{background: 'aqua'}} onClick={() => calc()}> CandleStick calc</button>&nbsp; &nbsp;
