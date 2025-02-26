@@ -843,8 +843,8 @@ const BasicTable = (props) => {
         {! showUrl && eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
 
         <div style={{display:'flex'}}>
-             {chartSymbol && <button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
-             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome)}} title='price during market open' > marketOpen </button>} &nbsp; 
+             {chartSymbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
+             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome)}} title='price during market open' > marketOpen </button> &nbsp; </div>}
 
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} 
