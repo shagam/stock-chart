@@ -56,11 +56,12 @@ import {targetPriceAdd} from './TargetPrice'
                 if (logFlags.includes('target'))
                     console.log (symbol, 'finnhub no target price. probaly an ETF')
 
-            const priceDivClose = price/stockChartYValues[0]
-            const sign = priceDivClose > 1 ? '+' : '' 
-            var priceDivCloseObj = {symbol: symbol, price: price, sign: sign, ratio: ((price/stockChartYValues[0] -1) * 100).toFixed(3)};
+            const ratio = price/stockChartYValues[0]
+            const sign = ratio > 1 ? '+' : '' 
+            const color = ratio > 1 ? '#82b74b': 'red'; 
+            var priceDivCloseObj = {symbol: symbol, price: price, sign: sign, ratio: ((price/stockChartYValues[0] -1) * 100).toFixed(3), color: color};
 
-            if (true * Date.now() - rows[row_index].values.gain_mili < 1000*60*60 && priceDivClose !== 1) { // less than 1 hour diff && stock value is not the same as the close value
+            if (true * Date.now() - rows[row_index].values.gain_mili < 1000*60*60 && ratio !== 1) { // less than 1 hour diff && stock value is not the same as the close value
                 setPriceDivClose (priceDivCloseObj)
                 console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(4), 'price/close=', priceDivCloseObj)
             }
