@@ -28,6 +28,9 @@ const CandlestickChart = (props) => {
   const [log, setLog] = useState(false)
   const [log_1, setLog_1] = useState(false)
   const [data, setData] = useState()
+  const [signalsBuy, setSignalsBuy] = useState()
+  const [signalsSell, setSignalsSell] = useState()
+
   const [histLength, setHistLength] = useState(35)
   const [maxHistLength, setMaxHistLength] = useState()
   const [err, setErr] = useState()
@@ -123,10 +126,8 @@ const CandlestickChart = (props) => {
             i++;
           } 
 
-          if (chartMarkers)
-              getSignals (candles)
+            getSignals (candles)
 
-          if (chartMarkers)
             console.log ('counters', counters) // type of signals
           if (log)
             console.log ('candles', candles)
@@ -237,7 +238,7 @@ const CandlestickChart = (props) => {
         if (sig) {
           signal_buy = sig
           buy_count++;
-          if (log)
+          if (log_1)
             console.log (sig)
         }
       }
@@ -246,7 +247,7 @@ const CandlestickChart = (props) => {
         if (sig) {
           signal_sell = sig
           sell_count++
-          if (log)
+          if (log_1)
             console.log (sig)
         }
       }
@@ -255,7 +256,7 @@ const CandlestickChart = (props) => {
         if (sig) {
           signal_buy = sig 
           buy_count++
-          if (log)
+          if (log_1)
             console.log (sig)
         }
       }
@@ -264,7 +265,7 @@ const CandlestickChart = (props) => {
         if (sig) {
           signal_buy = sig
           buy_count++
-          if (log)
+          if (log_1)
             console.log (sig)
         }
       }
@@ -273,7 +274,7 @@ const CandlestickChart = (props) => {
         if (sig) { 
           signal_sell = sig
           sell_count++
-          if (log)
+          if (log_1)
             console.log (sig)
         }
       }
@@ -324,9 +325,9 @@ const CandlestickChart = (props) => {
         yaxis: 'y'
       },      
     ];
+    setData(dat)
 
-    if (chartMarkers)
-      dat.push ({
+      const signBuy = {
       x: buyDates,
       y: max_y_array,
       mode: 'markers',
@@ -336,11 +337,12 @@ const CandlestickChart = (props) => {
         symbol: 'triangle-up'
       },
       name: 'Buy'
-    })
+    }
+    setSignalsBuy(signBuy)
     
-    if (chartMarkers)
-      dat.push (
+
     // Sell markers
+    const signSell =
     {
       x: sellDates,
       y:  max_y_array,
@@ -351,15 +353,22 @@ const CandlestickChart = (props) => {
         symbol: 'triangle-down'
       },
       name: 'Sell'
-    })
+    }
+    setSignalsSell(signSell)
 
-    setData(dat)
   }
 
-    // if (log)
-    //   console.log ('candleStick data', dat)
+  // aatach siunals to display
+  function attackBuySell () { 
+    if (data.length === 1) {
+      data.push(signalsBuy)
+      data.push(signalsSell)
+      props.refreshByToggleColumns()
+      console.log (data)
+    }
+  }
 
-  
+
 
   return (
     <div style = {{ border: '2px solid green'}}>
@@ -382,7 +391,7 @@ const CandlestickChart = (props) => {
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
             {props.eliHome && <div><input type="checkbox" checked={log_1}  onChange={()=> setLog_1( ! log_1)}  />  &nbsp;Log_extra &nbsp; &nbsp; </div>} &nbsp;&nbsp;&nbsp;
 
-            {props.eliHome && <div><input  type="checkbox" checked={chartMarkers}  onChange={() => setChartMarkers (! chartMarkers)} /> &nbsp;signals &nbsp;&nbsp;</div>}
+            {props.eliHome && <button onClick={() => attackBuySell()}> signals </button>}
           </div>
           <div>&nbsp;</div>
 
