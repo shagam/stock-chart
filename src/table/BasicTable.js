@@ -840,14 +840,15 @@ const BasicTable = (props) => {
           {/* {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>} */}
         </div>
         {/* {eliHome && <ServerSelect />} */}
+        {! showUrl && eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
+
         <div style={{display:'flex'}}>
-           {! showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> </div>} &nbsp;&nbsp;
-           {chartSymbol && <button style={{backgroundColor: 'aqua'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
+             {chartSymbol && <button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
              props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome)}} title='price during market open' > marketOpen </button>} &nbsp; 
 
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
-                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} &nbsp;
-          {priceDivClose && <div style={{color: priceDivClose.color}}>{priceDivClose.symbol}&nbsp; {priceDivClose.sign}{priceDivClose.ratio}%  ({priceDivClose.price})</div>}
+                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} 
+          {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>}
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>

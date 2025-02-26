@@ -123,7 +123,7 @@ function LatestPrice (props) {
         <div style={{display: 'flex'}}>
             {/* <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp; */}
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
-            &nbsp;<button  style={{background: 'aqua'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button> &nbsp;
+            &nbsp;<button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button> &nbsp;
             <input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved
         </div>
 
