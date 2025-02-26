@@ -124,8 +124,8 @@ const CandlestickChart = (props) => {
           if (chartMarkers)
               getSignals (candles)
 
-      
-          console.log ('counters', counters) // type of signals
+          if (chartMarkers)
+            console.log ('counters', counters) // type of signals
           if (log) {
             console.log ('candles', candles)
             console.log ('high', high)
