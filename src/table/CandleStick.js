@@ -74,6 +74,8 @@ const CandlestickChart = (props) => {
     if (periodIndex !== 0)
       API_Call += '&interval=' + intervalOptionsNames[periodIndex]
     var dates = [], high = [], low = [], open = [], close = [];
+    if(log)
+      console.log ('API_Call', API_Call)
 
     fetch(API_Call)
       .then(
