@@ -102,8 +102,8 @@ function LatestPrice (props) {
           }
           const ratio = price / props.stockChartYValues[0];
           const sign = ratio > 1 ? '+' : '' 
-          const color = ratio > 1 ? 'green': 'red' 
-          var priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color};
+          const color = ratio > 1 ? '#82b74b': 'red' 
+          var priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
 
           props.setPriceDivClose (priceDivCloseObj)
           props.refreshByToggleColumns()
