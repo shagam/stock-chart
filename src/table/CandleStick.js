@@ -68,7 +68,7 @@ const CandlestickChart = (props) => {
       periodTag = 'Weekly Adjusted Time Series'
       funct = 'TIME_SERIES_WEEKLY_ADJUSTED'
     }
-    if (periodIndex === '0') {
+    if (periodIndex === 0) {
       funct = 'TIME_SERIES_DAILY_ADJUSTED';
     } 
 
@@ -288,7 +288,7 @@ const CandlestickChart = (props) => {
         signals[candles[i].date] = signal_sell 
       }
       if (signal_buy && signal_sell)
-        console.log ('both signals', signal_buy, signal_sell) 
+        console.log (candles[i].date, 'both signals', signal_buy, signal_sell) 
     }
     
     if (log_1)
