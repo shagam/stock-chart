@@ -48,9 +48,9 @@ const CandlestickChart = (props) => {
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
   const [periodIndex, setPeriodIndex] = useState(0)
-  const intervalOptionsNames = ['Daily', '60min', '30min', '5min', '15min', '1min']  // adjusted=true
-  const indexOptions = [0,1,2,3,4,5]
-  const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
+  const intervalOptionsNames = ['Daily', '60min', '30min', '5min', '15min', '1min', 'Weekly']  // adjusted=true
+  const indexOptions = [0,1,2,3,4,5, 6]
+  // const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
   
 
 
@@ -62,13 +62,15 @@ const CandlestickChart = (props) => {
 
   // &interval=5min
   function get () {
-
-    var periodTag = 'Time Series (' + intervalOptionsNames[periodIndex] + ')'
-    
     var funct = 'TIME_SERIES_INTRADAY'
-    if (periodIndex === 0) 
+    var periodTag = 'Time Series (' + intervalOptionsNames[periodIndex] + ')'
+    if (periodIndex === '6') {
+      periodTag = 'Weekly Adjusted Time Series'
+      funct = 'TIME_SERIES_WEEKLY_ADJUSTED'
+    }
+    if (periodIndex === '0') {
       funct = 'TIME_SERIES_DAILY_ADJUSTED';
-
+    } 
 
     var API_Call = 'https://www.alphavantage.co/query'
     API_Call += '?function=' + funct;
