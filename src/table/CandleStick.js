@@ -288,12 +288,15 @@ const CandlestickChart = (props) => {
         }
       }
 
-      if (signal_buy && ! signal_sell) {
+      // if (! signal_buy && ! signal_sell) 
+      //   console.log (candles[i].date, 'no signals') 
+
+      if (signal_buy && ! signal_sell) 
         signals[candles[i].date] = signal_buy 
-      }
-      if (! signal_buy && signal_sell) {
+      
+      if (! signal_buy && signal_sell) 
         signals[candles[i].date] = signal_sell 
-      }
+      
       if (signal_buy && signal_sell)
         console.log (candles[i].date, 'both signals', signal_buy, signal_sell) 
     }
