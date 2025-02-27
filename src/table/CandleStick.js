@@ -47,7 +47,8 @@ const CandlestickChart = (props) => {
   // const [chartData, setChartData] = useState({});  //needed for dropREcovery
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
-  const [periodIndex, setPeriodIndex] = useState('2')
+  const [periodIndex, setPeriodIndex] = useState('2') // default daily
+  
   const intervalOptionsNames = ['Monthly', 'Weekly', 'Daily', '60min', '30min', '15min', '5min', '1min']  // adjusted=true
   const indexOptions = ['0','1','2','3','4','5','6','7']
   // const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
