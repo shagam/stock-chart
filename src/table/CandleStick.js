@@ -47,9 +47,9 @@ const CandlestickChart = (props) => {
   // const [chartData, setChartData] = useState({});  //needed for dropREcovery
   
   // const period = ['TIME_SERIES_INTRADAY', 'TIME_SERIES_DAILY_ADJUSTED']
-  const [periodIndex, setPeriodIndex] = useState(0)
-  const intervalOptionsNames = ['Daily', '60min', '30min', '5min', '15min', '1min', 'Weekly']  // adjusted=true
-  const indexOptions = [0,1,2,3,4,5, 6]
+  const [periodIndex, setPeriodIndex] = useState('0')
+  const intervalOptionsNames = ['Daily', '60min', '30min', '5min', '15min', '1min', 'Weekly','Monthly']  // adjusted=true
+  const indexOptions = ['0','1','2','3','4','5','6','7']
   // const intervalStamp = ["Time Series (Daily)", "Time Series (15min)"]
   
 
@@ -68,7 +68,11 @@ const CandlestickChart = (props) => {
       periodTag = 'Weekly Adjusted Time Series'
       funct = 'TIME_SERIES_WEEKLY_ADJUSTED'
     }
-    if (periodIndex === 0) {
+    if (periodIndex === '7') {
+      periodTag = 'Monthly Adjusted Time Series'
+      funct = 'TIME_SERIES_MONTHLY_ADJUSTED'
+    }
+    if (periodIndex === '0') {
       funct = 'TIME_SERIES_DAILY_ADJUSTED';
     } 
 
@@ -76,7 +80,7 @@ const CandlestickChart = (props) => {
     API_Call += '?function=' + funct;
     API_Call += '&symbol=' + props.symbol + '&apikey=' + props.API_KEY
     API_Call += '&outputsize=full' 
-    if (periodIndex !== 0)
+    if (periodIndex !== '0')
       API_Call += '&interval=' + intervalOptionsNames[periodIndex]
     var dates = [], high = [], low = [], open = [], close = [];
     if(log)
