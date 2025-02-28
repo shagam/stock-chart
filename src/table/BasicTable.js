@@ -137,7 +137,7 @@ const BasicTable = (props) => {
 
   const [stockInfo, setStockInfo] = useState ('');
 
-  const [daily, setDaily] = useState (false);
+  const [daily, setDaily] = useState (true);
   const [QQQ_gain, set_QQQ_gain] = useState({})
   const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
