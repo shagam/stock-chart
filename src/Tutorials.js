@@ -48,7 +48,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/BMFbtrOyRz8">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
                     </tr>
                     <tr>
-                        <td><a href="https://youtu.be/GsbVkDijE0c">Leverage_ETF</a></td><td>Strategy for short term gain of Leverage_ETF like TQQQ</td> 
+                        <td><a href="https://youtu.be/xbGUpEGu5sI">Leverage_ETF</a></td><td>Strategy for short term gain on Leverage_ETF like TQQQ</td> 
                     </tr>
                     <tr>
                         <td><a href="https://youtu.be/73G9GTQRddk">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
