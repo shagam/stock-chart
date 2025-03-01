@@ -411,7 +411,7 @@ const StockChart = (props) => {
           <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp;  </div>
           {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp; </div>}  &nbsp; 
-          <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />&nbsp;static &nbsp;&nbsp;
+          <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />&nbsp;frozen &nbsp;&nbsp;
           <input  type="checkbox" checked={showRanges}  onChange={() => setShowRanges (! showRanges)} /> &nbsp;ranges  &nbsp;
 
           {showRanges && <div>
