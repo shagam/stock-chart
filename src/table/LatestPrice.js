@@ -142,8 +142,8 @@ function LatestPrice (props) {
     return (
         <div style={{display: 'flex'}}>
             {props.symbol}&nbsp;
-            {eliHome && props.symbol && <button onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/' + props.symbol)}> barchart </button>} &nbsp;
-            {eliHome && props.symbol && <button onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp;
+            {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/' + props.symbol)}> barchart </button>} &nbsp;
+            {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp;
             
             {props.symbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (props.symbol, props.stockChartYValues, props.rows, props.refreshByToggleColumns, props.setErr,
             props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome)}} title='price during market open' > marketOpen </button> </div>}
@@ -152,7 +152,7 @@ function LatestPrice (props) {
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
             &nbsp;<button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button> &nbsp;
             
-            {props.eliHome && <div><input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved</div>} &nbsp;
+            {props.eliHome && <div style={{display: 'flex'}}><input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved</div>} &nbsp;
             
             {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>}
         </div>
