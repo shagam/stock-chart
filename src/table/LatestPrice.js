@@ -7,7 +7,7 @@ import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 import {getDate,} from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
-
+import { finnhub } from './Finnhub'
 
 
 function LatestPrice (props) {
@@ -20,11 +20,30 @@ function LatestPrice (props) {
     const [ignoreSaved, setIgnoreSaved] = useState(false)
 
     const log = props.logFlags.includes('gain')
-
-    // useEffect (() => { 
-    //     props.setPriceDivClose()
-    // }, [symbol]) 
+    const [priceDivClose, setPriceDivClose] = useState()
   
+    // if (req.query.src === 'goog'){
+    //     url = 'https://www.google.com/finance/quote/' + req.query.stock + ':NASDAQ'
+    //     pattern = 'data-currency-code="USD" data-last-price="([0-9.]+)'
+    // }
+    // else if (req.query.src === 'nasdaq') {
+    //     url = 'https://www.nasdaq.com/market-activity/etf/' + req.query.stock
+    //         // <bg-quote class="value" field="Last" format="0,0.00" channel="/zigman2/quotes/208575548/composite,/zigman2/quotes/208575548/lastsale" session="pre">513.26</bg-quote>
+    //     pattern = '<bg-quote class="value" field="Last" format="0,0.00" channel="/zigman2/quotes/208575548/composite,/zigman2/quotes/208575548/lastsale" session="pre">([0-9.]+)</bg-quote>'
+    // }
+    // else if (req.query.src === 'yahoo') {
+    //     url = 'https://finance.yahoo.com/quote/' + req.query.stock + '/'
+    //     pattern = 'data-testid="qsp-pre-price">([0-9.]+)'
+    // }
+    // else if (req.query.src === 'watch') {
+    //     url = 'https://www.marketwatch.com/investing/fund/' + req.query.stock 
+    //     pattern = 'data-last-raw="([0-9.]+)">([0-9.]+)</bg-quote>'
+    // }
+
+    const openInNewTab = (url) => {
+        window.open(url, "_blank", "noreferrer");
+      };
+
 
     function extendedHoursPrice () {
 
@@ -107,7 +126,7 @@ function LatestPrice (props) {
            'price/close=' + (price / props.stockChartYValues[0]).toFixed(4), 'color:' + color)
           const priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
 
-          props.setPriceDivClose (priceDivCloseObj)
+          setPriceDivClose (priceDivCloseObj)
           props.refreshByToggleColumns()
           props.setErr()
 
@@ -119,14 +138,23 @@ function LatestPrice (props) {
     }
 
 
-
 //  'inline-block'
     return (
         <div style={{display: 'flex'}}>
+            {props.symbol}&nbsp;
+            {eliHome && props.symbol && <button onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/' + props.symbol)}> barchart </button>} &nbsp;
+            {eliHome && props.symbol && <button onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp;
+            
+            {props.symbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (props.symbol, props.stockChartYValues, props.rows, props.refreshByToggleColumns, props.setErr,
+            props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome)}} title='price during market open' > marketOpen </button> </div>}
+
             {/* <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp; */}
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
             &nbsp;<button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>marketClosed </button> &nbsp;
-            {props.eliHome && <div><input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved</div>}
+            
+            {props.eliHome && <div><input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved</div>} &nbsp;
+            
+            {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>}
         </div>
 
     )

@@ -79,7 +79,6 @@ import {MovingAverage } from './MovingAverage'
 import {Futures} from './Futures'
 import {PriceAlert, priceAlertCheck} from './PriceAlert'
 import {LatestPrice} from './LatestPrice'
-import { finnhub } from './Finnhub'
 import {Disclaimer} from './Disclaimer'
 import { UrlGetParse } from '../utils/UrlGetParse'
 
@@ -154,7 +153,7 @@ const BasicTable = (props) => {
 
   //** default start date for drop recovery  Mon 0-11 */
   const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
-  const [priceDivClose, setPriceDivClose] = useState();
+
   const useData = false;
 
   const cols =      ["symbol", "percent","Exchange","Industry","Sector","Cap","PE","ForwPE","TrailPE","PEG","Div","BETA",
@@ -843,12 +842,8 @@ const BasicTable = (props) => {
         {! showUrl && eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
 
         <div style={{display:'flex'}}>
-             {chartSymbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr,
-             props.logFlags, errorAdd, ssl, PORT, servSelect, setPriceDivClose, eliHome)}} title='price during market open' > marketOpen </button> </div>}
-
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
-                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} setPriceDivClose={setPriceDivClose}/>} 
-          {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>}
+                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} />} 
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>
