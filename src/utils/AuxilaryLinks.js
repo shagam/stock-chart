@@ -37,12 +37,19 @@ function AuxilaryLinks () {
             <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
             <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp;      
             {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech </button>} &nbsp; 
-            {<button role="link" onClick={() => openInNewTab('https://www.quiverquant.com')}>Quiver-trade</button>}&nbsp;  
+            {<button role="link" onClick={() => openInNewTab('https://www.quiverquant.com')}>Quiver-trade</button>} &nbsp;  
             {<button role="link" onClick={() => openInNewTab('https://www.capitoltrades.com/trades')}> Capitol-trade</button>}
-
-            
-
         </div>
+            <div>&nbsp;</div>
+        <div>
+            {<button role="link" onClick={() => openInNewTab('https://www.google.com/finance/quote/QQQ:NASDAQ')}> google-finance</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/QQQ/')}> yahoo-finance</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/qqq')}> barchart</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://bigcharts.marketwatch.com/historical/default.asp?symb=qqq')}>bigchart.marketwatch</button>}  
+                 
+            
+        </div>
+
         <hr/> 
 
     </div>
