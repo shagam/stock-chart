@@ -41,7 +41,7 @@ function AuxilaryLinks () {
 
         <div>&nbsp;</div>
         <div>
-            <div>poletician trading</div>
+            <div>Politician trading</div>
             {<button role="link" onClick={() => openInNewTab('https://www.quiverquant.com')}>Quiver-trade</button>} &nbsp;  
             {<button role="link" onClick={() => openInNewTab('https://www.capitoltrades.com/trades')}> Capitol-trade</button>}
         </div>
