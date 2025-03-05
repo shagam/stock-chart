@@ -849,8 +849,8 @@ const BasicTable = (props) => {
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
 
-          {<div> <button style={{backgroundColor: '#bbffbb'}} onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>} &nbsp;
-          <button style={{backgroundColor: '#ffccff', height:'30px'}} onClick={reloadPage} title='clear table, and load default symbols' > Clear_table </button>&nbsp;                         
+          {<div> <button style={{backgroundColor: '#bbffbb'}} onClick={gainAll} title='fetch and fill table with gain values' > gainAll </button> </div>} &nbsp;&nbsp;
+          <button style={{backgroundColor: '#ffccff', height:'30px'}} onClick={reloadPage} title='clear table, and load default symbols' > Clear </button>&nbsp;                         
 
           {/* {columnHideFlag && <div style={{display:'flex'}}> <CheckBox {...getToggleHideAllColumnsProps()} /> ToggleAll </div>} &nbsp; */}
 
