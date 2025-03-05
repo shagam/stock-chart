@@ -839,7 +839,7 @@ const BasicTable = (props) => {
           {/* {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>} */}
         </div>
         {/* {eliHome && <ServerSelect />} */}
-        {! showUrl && eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
+        { eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEndServer' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
 
         <div style={{display:'flex'}}>
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
@@ -862,7 +862,7 @@ const BasicTable = (props) => {
           <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} /> &nbsp;       
 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
-           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
+          {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
 
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
