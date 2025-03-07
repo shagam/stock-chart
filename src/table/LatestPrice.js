@@ -58,7 +58,7 @@ function LatestPrice (props) {
         else 
             url = "http://"; 
   
-        url += props.corsServer + ":" + props.PORT + "/urlGetParse?stock=" + props.symbol + '&url=' + u + '&pattern=' + p
+        url += props.servSelect + ":" + props.PORT + "/urlGetParse?stock=" + props.symbol + '&url=' + u + '&pattern=' + p
   
         if (log)
           url += '&LOG=true';
