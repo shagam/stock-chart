@@ -142,8 +142,8 @@ function LatestPrice (props) {
     return (
         <div style={{display: 'flex'}}>
             {props.symbol}&nbsp;
-            {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/' + props.symbol)}> barchart </button>} &nbsp;
-            {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp;
+            {/* {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/' + props.symbol)}> barchart </button>} &nbsp; */}
+            {/* {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp; */}
             
             {props.symbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (props.symbol, props.stockChartYValues, props.rows, props.refreshByToggleColumns, props.setErr,
             props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome)}} title='price during market open' > marketOpen </button> </div>}
