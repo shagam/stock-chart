@@ -971,7 +971,7 @@ const BasicTable = (props) => {
         <hr/>
         
          
-        {/* Analyze tools */}
+        {/* Analyze tools for specific sym */}
         {chartSymbol && <div>
           {/* <div>&nbsp;</div> */}
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
@@ -1092,7 +1092,9 @@ const BasicTable = (props) => {
           </div>}
           </div>}        
           <hr/> 
-           
+
+          {/* radio buttond for no sym tools */}
+
           <div style={{display:'flex'}}>
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}
             title='turn off other pans on line'/>
@@ -1115,7 +1117,9 @@ const BasicTable = (props) => {
           <div style={{color:'#9932CC'}}> futures  </div>             
         </div>
 
-           {/* select non sym tool */}
+
+        {/* select non sym tool */}
+
         {nonSymTool ==='commonDatabase' && <CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
          admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
          allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
