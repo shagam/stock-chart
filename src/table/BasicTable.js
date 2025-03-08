@@ -996,6 +996,29 @@ const BasicTable = (props) => {
                 title='Get ETF holdings '/> 
               <div style={{color:'blue'}}> holdings  </div> 
 
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}
+                  title='simulate optimized trade based on week gain or bubble-line proximety'/>  
+              <div style={{color:'blue'}}> simulateTrade   </div>    
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
+              <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div>               
+
+            </div>
+
+            <div style={{display:'flex'}}>              
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
+                  title='Calc average month and week gain over the last 24 years'/>  
+              <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> monthGain   </div>
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
+              <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candleStick' id='13' checked={analyzeTool==='candleStick'} onChange={onOptionChange}/>
+                {<div style={{color:'blue'}}> candleStick  </div>}   
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
+              <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
+
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockGain' id='4' checked={analyzeTool==='stockGain'} onChange={onOptionChange}
                 title='Raw gain data as fetched by provider' /> 
               <div style={{color:'blue'}}> gainRaw  </div> 
@@ -1003,42 +1026,19 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}
                 title='Raw basic company data as fetched by provider'/>  
               <div style={{color:'blue'}}> infoRaw   </div> 
-   
-            </div>
-              
-            <div style={{display:'flex'}}>
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}
-                   title='simulate optimized trade based on week gain or bubble-line proximety'/>  
-                <div style={{color:'blue'}}> simulateTrade   </div> 
-                
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
-                    title='Calc average month and week gain over the last 24 years'/>  
-                <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> monthGain   </div>
-
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}
-                title='Strategy for Lavarage ETF like TQQQ (tripple QQQ)'/>
-                {<div style={{color:'blue'}}> leveragaETF  </div>}
-
-                <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
-                {<div style={{color:'blue'}}> marketOpenPrice  </div>}
             </div>
 
-            <div style={{display:'flex'}}>
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
-              <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
-              <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
-
+            {eliHome && <div style={{display:'flex'}}>
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='urlGetParse' id='12' checked={analyzeTool==='urlGetParse'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}  title='urlGetParse'> urlGetParse </div> 
 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candleStick' id='13' checked={analyzeTool==='candleStick'} onChange={onOptionChange}/>
-                {<div style={{color:'blue'}}> candleStick  </div>}               
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}
+                title='Strategy for Lavarage ETF like TQQQ (tripple QQQ)'/>
+                {<div style={{color:'blue'}}> leveragaETF  </div>}
 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
-              <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div> 
-            </div>
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
+              {<div style={{color:'blue'}}> marketOpenPrice  </div>}
+            </div>}
             
             {/* <hr/>  */}
             {/* pans  */}
