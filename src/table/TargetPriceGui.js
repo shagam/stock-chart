@@ -66,7 +66,7 @@ function TargetPriceGui (props) {
         const LOG = props.logFlags.includes('target')
         const extremeRatio = targetInfoOne[targetInfoOne.length - 1].price / targetInfoOne[0].price
         if (extremeRatio > 2.5 || extremeRatio < 0.4)
-            setStatus ('Check for splits diostortion')
+            setStatus ('Check for splits distortion')
         const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
         if (row_index  === -1)
             return;
@@ -122,7 +122,7 @@ function TargetPriceGui (props) {
                 {targetInfoOne && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }
             </div>
 
-            {!price && targetInfoOne && targetInfoOne.length > 0 && <div style={{color: 'red'}}> Click lastPrice at the top && click targetHistoryOne again </div>}
+            {!price && targetInfoOne && targetInfoOne.length > 0 && <div style={{color: 'red'}}> get lastPrice (openMarket of closedMarket at the top) && click targetHistoryOne again </div>}
             {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
             
             {targetInfoOne && targetInfoOne.length > 0 && <div>count={targetInfoOne && targetInfoOne.length}</div>}
