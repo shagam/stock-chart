@@ -116,7 +116,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/Rv5a0tkMISE">Hebrew tutorial</a></td><td></td>        
                     </tr>
                     <tr>
-                        <td><a href="https://www.veed.io/edit/e848e95a-0131-49b4-9114-5c0f3f9c19c0/video">Laverage ETF (Heb)  </a></td> short term gain (Hebrew)<td></td>        
+                        <td><a href="https://www.veed.io/edit/e848e95a-0131-49b4-9114-5c0f3f9c19c0/video">Laverage ETF (Heb)  </a></td> Short term gain trading TQQQ (Hebrew)<td></td>        
                     </tr>
                     
 
