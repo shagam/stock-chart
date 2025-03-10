@@ -74,8 +74,12 @@ function TargetPriceGui (props) {
         if (LOG)
             console.log ('predicted:', targetInfoOne[targetBase].date, targetInfoOne[targetBase].target, 
             'actual:', targetInfoOne[targetInfoOne.length - 1].date, targetInfoOne[targetInfoOne.length - 1].price)
-
-        const days =  (targetInfoOne[targetInfoOne.length - 1].dateMili -  targetInfoOne[targetBase].dateMili) / 1000 / 3600 / 24
+        // const dateSplit = targetInfoOne[targetInfoOne.length - 1].split('-')
+        const dateLate = new Date(targetInfoOne[targetInfoOne.length - 1].date)
+        const dateOld = new Date(targetInfoOne[targetBase].date)
+        const miliOld = dateOld.getTime()
+        const miliLate = dateLate.getTime()
+        const days =  (miliLate -  miliOld) / 1000 / 3600 / 24
 
         const predictionObj = {
             predictionDate:  targetInfoOne[targetBase].date,
