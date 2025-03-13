@@ -50,6 +50,9 @@ const Peak2PeakGui = (props) => {
     const [results, setResults] = useState ();
     const [err, setErr] = useState ();
     const [bubbleLineRatio, setBubbleLineRatio] = useState ();
+    const [percentBelow, setPercentBelow] = useState ();
+    const [belowHigh, setBelowHigh] = useState ();
+    const [belowHighPercent, setBelowHighPercent] = useState ();
     const [histogram, setHistogram] = useState({})
     const [histogramShow, setHistogramShow] = useState ();
     const [peaksShow, setPeaksShow] = useState ();
@@ -258,7 +261,13 @@ const Peak2PeakGui = (props) => {
     }
     //** calc ratio latestValue/bubbleline */
     const bubbleLineOver = (price / yBubbleLine[0]).toFixed(3)
+    const percent = (bubbleLineOver - 1) * 100 
+    setPercentBelow(percent.toFixed(2))
     setBubbleLineRatio(bubbleLineOver)
+    setBelowHigh(props.rows[row_index].values.priceDivHigh)
+    const priceDivHigh = Number(props.rows[row_index].values.priceDivHigh)
+    const belowHigh = ((priceDivHigh - 1) * 100)
+    setBelowHighPercent(belowHigh.toFixed(2))
     if (results)
       results['CurrentPrice/bubbleLine'] = bubbleLineOver;
     console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
@@ -298,7 +307,7 @@ const Peak2PeakGui = (props) => {
 
           <div  style={{display:'flex' }}> 
             <div style={{ color: 'black'}}  >2008_proximity_date:   </div>
-            &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
+            &nbsp; &nbsp;<DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> 
           </div>
       
           <div  style={{display:'flex' }}> 
@@ -330,7 +339,11 @@ const Peak2PeakGui = (props) => {
                   type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>
               }
 
-              {props.gainMap.bubbleLine  &&  <div style={{color: 'magenta'}} >{props.symbol} currentPrice / bubbleLine = {bubbleLineRatio} </div>}
+              {props.gainMap.bubbleLine  &&  <div style={{display: 'flex'}} >{props.symbol} currentPrice: &nbsp;
+                belowBubbleLine= <div style={{color: 'magenta'}} >{bubbleLineRatio}</div> &nbsp;
+                <div style={{color: 'magenta'}} > ({percentBelow}%) </div>  &nbsp; &nbsp;
+                belowHigh=<div style={{color: 'magenta'}}>{belowHigh} ({belowHighPercent}%)</div>
+               </div>}
               {/* <div> Click </div> &nbsp;&nbsp;
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
            </div>
