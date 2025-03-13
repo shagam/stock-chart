@@ -49,16 +49,19 @@ function AuxilaryLinks () {
         <div>&nbsp;</div>
         <div>
             <div>Stock market info</div>
-            {<button role="link" onClick={() => openInNewTab('https://www.google.com/finance/quote/QQQ:NASDAQ')}> google-finance</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/QQQ/')}> yahoo-finance</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/qqq')}> barchart</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://www.google.com/finance/quote/QQQ:NASDAQ')}> google-finance qqq</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/QQQ/')}> yahoo-finance qqq</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/qqq')}> barchart qqq</button>} &nbsp;
             </div>
 
         <div>&nbsp;</div>
         <div>
-            {<button role="link" onClick={() => openInNewTab('https://bigcharts.marketwatch.com/historical/default.asp?symb=qqq')}>bigchart.marketwatch</button>} &nbsp; 
-            {<button role="link" onClick={() => openInNewTab('https://www.nasdaq.com/market-activity/etf/qqq/after-hours')}>nasdaq</button>}  
-                 
+            {<button role="link" onClick={() => openInNewTab('https://bigcharts.marketwatch.com/historical/default.asp?symb=qqq')}>bigchart.marketwatch qqq</button>} &nbsp; 
+            {<button role="link" onClick={() => openInNewTab('https://www.nasdaq.com/market-activity/etf/qqq/after-hours')}>nasdaq qqq</button>} &nbsp; 
+            {/* {<button role="link" onClick={() => openInNewTab('https://www.cnbc.com/markets/')}>cnbc</button>} &nbsp;  */}
+            {<button role="link" onClick={() => openInNewTab('https://www.cnbc.com/quotes/QQQ?qsearchterm=qqq')}>cnbc qqq</button>} &nbsp; 
+            
+               
             
         </div>
 
