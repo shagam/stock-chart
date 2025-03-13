@@ -427,7 +427,7 @@ const BasicTable = (props) => {
 
      rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
 
-    if (singleSym)
+    if (singleSym && props.logFlags.includes('gain'))
       console.log(sym, getDate(), 'handleGainClick  singleSym=', singleSym)
 
     localStorage.setItem ('chartSymbol', sym);
