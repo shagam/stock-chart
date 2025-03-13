@@ -70,7 +70,7 @@ export const MarketstackApi = (props) => {
 
     //let API_Call =`http://api.marketstack.com/v1/eod?access_key=${API_KEY}&symbols=${sym}&date_from=${DATE}&limit=1&offset=100`
 
-    let API_Call = 'http://api.marketstack.com/v1/eod?access_key=' + API_KEY + '&symbols=' + sym + '&date_from=' + DATE + '&limit=' + limit
+    let API_Call = 'http://api.marketstack.com/v2/eod?access_key=' + API_KEY + '&symbols=' + sym + '&date_from=' + DATE + '&limit=' + limit
 
     // & date_to = YYYY-MM-DD
 
