@@ -340,9 +340,8 @@ const Peak2PeakGui = (props) => {
               }
 
               {props.gainMap.bubbleLine  &&  <div style={{display: 'flex'}} >{props.symbol} currentPrice: &nbsp;
-                belowBubbleLine= <div style={{color: 'magenta'}} >{bubbleLineRatio}</div> &nbsp;
-                <div style={{color: 'magenta'}} > ({percentBelow}%) </div>  &nbsp; &nbsp;
-                belowHigh=<div style={{color: 'magenta'}}>{belowHigh} ({belowHighPercent}%)</div>
+                belowBubbleLine= <div style={{color: 'magenta'}} >{bubbleLineRatio}  ({percentBelow}%)</div> &nbsp; &nbsp;
+                belowHigh= <div style={{color: 'magenta'}}>{belowHigh} ({belowHighPercent}%)</div>
                </div>}
               {/* <div> Click </div> &nbsp;&nbsp;
               <div style={{color: 'magenta', fontWeight: "bold"}}> chart </div> */}
