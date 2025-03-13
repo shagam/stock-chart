@@ -20,7 +20,7 @@ import {TargetPrice} from './table/TargetPrice'
 import Contact from './auth/Contact'
 import ContactGet from './auth/ContactGet'
 
-import AuxilaryLinks from './utils/AuxilaryLinks'
+import AuxilaryLinks from './table/AuxilaryLinks'
 // import {BasicTable} from './table/BasicTable' 
 const BasicTable  = lazy(() => import ( './table/BasicTable'));
 
