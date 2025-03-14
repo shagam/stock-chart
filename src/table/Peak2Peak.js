@@ -227,7 +227,11 @@ const Peak2PeakGui = (props) => {
     const startDateMili = startDate.getTime()
 
     // fill in bubble value from lates to oldest
+    var high = 0;
     for (let i = 0; i < YValues.length - 1; i ++) {
+      if (YValues[i] > high)
+        high = YValues[i]
+
       if (startFromPeakFlag) {
         const chartDateSplit = XValues[i].split('-')
         const date = (new Date([chartDateSplit[0], chartDateSplit[1], chartDateSplit[2]])); 
@@ -265,9 +269,11 @@ const Peak2PeakGui = (props) => {
     setPercentBelow(percent.toFixed(2))
     setBubbleLineRatio(bubbleLineOver)
     setBelowHigh(props.rows[row_index].values.priceDivHigh)
-    const priceDivHigh = Number(props.rows[row_index].values.priceDivHigh)
+    const priceDivHigh = price / high;
+    props.rows[row_index].values.priceDivHigh = priceDivHigh;
     const belowHigh = ((priceDivHigh - 1) * 100)
-    setBelowHighPercent(belowHigh.toFixed(2))
+    if (props.rows[row_index].values.priceDivHigh)
+      setBelowHighPercent(belowHigh.toFixed(2))
     if (results)
       results['CurrentPrice/bubbleLine'] = bubbleLineOver;
     console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
