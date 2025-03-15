@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom'
+import MobileContext from './contexts/MobileContext'
 
 function Tutorials () {
 
     const [aboutFlag, setAboutFlag] = useState(false);
+    const {isMobile} = MobileContext();
     // https://www.w3schools.com/cssref/pr_class_display.php
     return (
     <div>
@@ -15,8 +17,8 @@ function Tutorials () {
         <h4 style={{color:'Green'}}>Tutorials</h4>
 
         <div className='w-100 text-left mt-2' style={{color:'magenta'}}>
-           <h5> &nbsp; Start with The first tutorial. (lasts 2.5 minutes.) </h5>
-           <h5> &nbsp; Most other tutorials lasts around 1 to 2 minute </h5>
+           {/* <h5> &nbsp; Start with The first tutorial. (lasts 2.5 minutes.) </h5> */}
+           <h5> &nbsp; Most tutorials lasts less than 2 minute </h5>
         </div>         
 
         {/* <hr/> */}
