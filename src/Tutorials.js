@@ -8,10 +8,12 @@ function Tutorials () {
     const {eliHome} = IpContext();
     const [aboutFlag, setAboutFlag] = useState(false);
     const {isMobile} = MobileContext();
+    const [mobile, setMobile]  = useState(isMobile);
     const [language, setLanguage] = useState(false);
     // https://www.w3schools.com/cssref/pr_class_display.php
 
     const languageList = ['English', 'Hebrew']
+    const platformList = ['Desktop', 'Mobile']
     return (
     <div>
 
@@ -26,10 +28,10 @@ function Tutorials () {
            <h5> &nbsp; Most tutorials lasts less than 2 minute </h5>
 
             {/* {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={language} nameList={languageList} setSelect={setLanguage} title='backEnd' options={languageList} defaultValue={language}/> &nbsp;&nbsp;</div>}  */}
-
-            <ComboBoxSelect serv={language} nameList={languageList} setSelect={setLanguage} title='' TITLE='Choose language ' options={[false,true]} defaultValue={false} /> &nbsp;
-
-
+            <div style={{display: 'flex'}}>
+                <ComboBoxSelect serv={language} nameList={languageList} setSelect={setLanguage} title='' TITLE='Choose language ' options={[false,true]} defaultValue={false} /> &nbsp;
+                {/* <ComboBoxSelect serv={mobile} nameList={platformList} setSelect={setMobile} title='' TITLE='Mobile or desktop ' options={[false,true]} defaultValue={false} /> &nbsp; */}
+            </div>
         </div>         
 
         {/* <hr/> */}
