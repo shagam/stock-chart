@@ -25,7 +25,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
 
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
-      alert (`stock-table, history call back, invalid chartSymbol (${sym}) trying to updatehistory values` );
+      errorAdd  ([sym, 'stock-table, history call back, invalid chartSymbol  trying to updatehistory values'] );
       return;
     }
 
@@ -85,7 +85,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
     if (LOG_FLAG)
       console.log(sym, 'gain/chart (symbol)'); 
     if (sym === '' || sym === undefined) {
-      alert (`bug, chart sym vanished (${sym})`);
+      errorAdd ([sym, 'bug, chart sym vanished']);
       return;
     }
 
@@ -127,7 +127,6 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               const dataStr = JSON.stringify(chartData);
               if (dataStr === "{}") {
                 errorAdd([sym, 'Invalid symbol, or fail to fetch historical data'])
-                // alert (`Invalid symbol: (${sym})`)
                 return;
               }
               if (LOG_API) {
@@ -138,13 +137,13 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               
               // too frequent AlphaVantage api calls
               if (dataStr.indexOf ('is 5 calls per minute and 500 calls per day') !== -1) {
-                  alert (`${dataStr} (${sym}) \n\n${API_Call} ${API_KEY}  `);
+                  errorAdd([sym, dataStr, API_Call]);
                   //setChartData ('');
                   return;
               }
               const limit_100_PerDay = 'You have reached the 100 requests/day limit for your free API key'
               if (dataStr.indexOf (limit_100_PerDay) !== -1) {
-                alert (`${limit_100_PerDay} (${sym}) \n\n${API_Call}  ${API_KEY} ` );
+                errorAdd ([sym, 'limit_100_PerDay', API_Call]);
                 return;
               }              
               if (dataStr.indexOf ('Error Message":"Invalid API call') !== -1) {
@@ -411,7 +410,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               try {
               if (splitArray) {
                 if (splitArray.startsWith('u')) {
-                  alert ('bad splits json ' + splitArray+ ' ' + sym)
+                  errorAdd ([sym, 'bad splits json ', + splitArray])
                 }
                 const splitsParse = JSON.parse(splitArray);
                 const splitsCount = splitArray.length;
@@ -468,8 +467,8 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
         )
         .catch(error => {
           // Do something on error 
-          alert (sym + ' gain ' + error.message)
-          console.log (sym, 'gain', error.message)
+          errorAdd([sym, ' gain ', error.message])
+          // console.log (sym, 'gain', error.message)
       })
 
 
