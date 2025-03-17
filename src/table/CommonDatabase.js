@@ -612,8 +612,9 @@ function CommonDatabase (props) {
                 return;
             }
         }
-        for (let i = 0; i <results.length; i++) {
-            var sym = results[i].replace(/[0-9\\.,: ]/g,'')
+        for (let i = 0; i < resObjects.length; i++) {
+            const symbol =  resObjects[i].sym 
+            var sym = symbol.replace(/[0-9\\.,: ]/g,'')
             addSymOne (sym)
         }
         setNext()
