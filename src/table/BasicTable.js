@@ -886,7 +886,7 @@ const BasicTable = (props) => {
           <button style={{backgroundColor: '#ff55'}} type="submit"> Add  ({rows.length})  </button>
         </form>&nbsp;&nbsp;
 
-        <GlobalFilter className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile}/>
+        <GlobalFilter style={{marginTop: '10px'}} className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile} marginTop={'17px'}/>
           &nbsp;&nbsp;
 
         <div style={{display:'flex', paddingTop: '20px'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
