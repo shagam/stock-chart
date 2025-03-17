@@ -404,7 +404,7 @@ function StockLists (props) {
 
                     <div> &nbsp; </div>
                     <div style={{display:'flex'}}>
-                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={nameArray} nameList={nameArray} setSelect={setListName}
+                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={listName} nameList={nameArray} setSelect={setListName}
                             title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                         <button onClick={del} > delete </button>  &nbsp; &nbsp;
                         <button onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
@@ -418,7 +418,7 @@ function StockLists (props) {
                     <h5 style={{color: 'green'}}> Shared backend </h5>
                     <div style={{display:'flex'}}>
                         &nbsp; <GlobalFilter className="stock_button_class_" filter={backEndFilter} setFilter={setBackEndFilter} name='filter' isMobile={false}/>  &nbsp; &nbsp;
-                        <button style={{backgroundColor: '#7FFF00'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
+                        <button style={{backgroundColor: '#7FFF00', height: '35px'}} onClick={backEndFilterNames} > filter-names </button> &nbsp; &nbsp; 
                         <div> <input style={{marginTop: '15px'}} type="checkbox" checked={myIp}  onChange={() => setMyIp(! myIp) }  />&nbsp;my-ip &nbsp; &nbsp;</div>
                         <div> <input style={{marginTop: '15px'}} type="checkbox" checked={otherIp}  onChange={() => setOtherIp(! otherIp) }  />&nbsp;other-ip &nbsp; &nbsp;</div>
                         {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />&nbsp;Log &nbsp; &nbsp;</div>}
