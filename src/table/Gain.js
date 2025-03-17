@@ -394,7 +394,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 rows[row_index].values.year20 = year20;
               else
                 delete rows[row_index].values.year20
-              if (isNaN (rows[row_index].values.year20))  // debug log
+              if (isNaN (rows[row_index].values.year20) && LOG_FLAG)  // debug log
                 console.log (sym, 'gain year20', rows[row_index].values.year20)
   
               // rows[row_index].values.peak2Peak = peak2Peak;
