@@ -7,79 +7,6 @@ import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 
 
-function latestPrice (symbol, servSelect, PORT, ssl, rows, refreshByToggleColumns, errorAdd, stockChartXValues, stockChartYValues, LOG) {
-    const nasdaq = false;
-    const ignoreSaved = true;
-    const logBackEnd = false;
-
-    const todayDateString = todayDate()
-    const oldestDateComponets = dateSplit(todayDateString) // [year, month, day]
-    const year = oldestDateComponets[0]
-    const mon = oldestDateComponets[1]
-    const day = oldestDateComponets[2]
-
-    const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
-
-    var corsUrl;
-    // if (corsServer === 'serv.dinagold.org')
-    if (ssl) 
-      corsUrl = "https://";
-    else 
-      corsUrl = "http://"; 
-
-    if (! nasdaq)
-      corsUrl += servSelect + ":" + PORT + "/price?stock=" + symbol
-    else
-      corsUrl += servSelect + ":" + PORT + "/priceNasdaq?stock=" + symbol
-
-    // var corsUrl = "http://62.0.92.49:5000/price?stock=" + sym
-      //corsUrl = "http://localhost:5000/price?stock=" + sym
-      corsUrl += "&year=" + year + "&mon=" + mon + "&day=" + day;
-      // console.log (getDate(), corsUrl)
-      
-      if (ignoreSaved)
-        corsUrl += '&ignoreSaved=true';
-      if (logBackEnd)
-        corsUrl += '&LOG=true';
-
-    if (LOG)
-    console.log (symbol, corsUrl)
-      axios.get (corsUrl)
-      .then ((result) => {
-        // setErr()
-        if (result.data && LOG) {
-          console.log (symbol, 'latestPrice=' + JSON.stringify(result.data.close),)
-        //   setUpdateDate(formatDate (new Date(result.data.updateMili)))
-        }
-        
-        // find highest price
-        var highestPrice = -1; // highest price
-        for (let i = 0; i < stockChartYValues.length; i++) {
-            const val = stockChartYValues[i];
-            if (val > highestPrice)
-              highestPrice = val;
-        }
-
-
-        const price = result.data.close;
-        if ((result.data !== '' || ! stockChartXValues) && ! result.data.err) {
-            rows[row_index].values.price = price
-            const priceDivHigh = (price/ highestPrice).toFixed(3)
-            rows[row_index].values.priceDivHigh = priceDivHigh;
-          const searcDate = year + '-' + mon + '-' + day;
-          refreshByToggleColumns()
-        }
-        else {
-
-        }
-      })
-      .catch ((err) => {
-        console.log(err, corsUrl)
-        errorAdd([symbol, 'MarketWatch', err.message])
-      })
-}
-
-
 
 function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
@@ -103,7 +30,7 @@ function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXV
 function PriceAlert (props) {
 
     const [percent, setPercent] = useState(8)
-    const [thresholdPrice, setThesholdPrice] = useState(props.stockChartYValues[0] * 1.2)
+    const [thresholdPrice, setThesholdPrice] = useState(props.stockChartYValues[0])
     const [drop, setDrop]  = useState(true)  // above
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
@@ -148,6 +75,12 @@ function PriceAlert (props) {
         if (! percent) {
             props.setErr ('error, need to enter ')
             return;
+        }
+        // remove prev alert on same sym
+        for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {
+            if (props.priceAlertTable[i].sym === props.symbol) {
+                props.priceAlertTable.splice(i, 1);
+            }
         }
 
         props.priceAlertTable.push ({sym: props.symbol, above: drop? 'true': 'false' , thresholdPrice: thresholdPrice})
@@ -250,4 +183,4 @@ function PriceAlert (props) {
     )
 }
 
-export {PriceAlert, priceAlertCheck, latestPrice}
+export {PriceAlert, priceAlertCheck}
