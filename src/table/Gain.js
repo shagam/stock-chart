@@ -459,7 +459,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                   console.log (sym, 'gain year20', rows[row_index].values.year20)  // debug log
               }
 
-              priceAlertCheck (sym, priceAlertTable, priceDivHigh, errorAdd, stockChartXValuesFunction, stockChartYValuesFunction) 
+              priceAlertCheck (sym, priceAlertTable, price, errorAdd, stockChartXValuesFunction, stockChartYValuesFunction) 
               if (saveTabl)
                 saveTable(sym);
             

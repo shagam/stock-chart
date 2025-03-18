@@ -81,21 +81,20 @@ function latestPrice (symbol, servSelect, PORT, ssl, rows, refreshByToggleColumn
 
 
 
-function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, stockChartXValues, stockChartYValues) {
+function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
         if (priceAlertTable[i].sym !== symbol)
             continue;
-        if (priceAlertTable[i].drop === 'true') {
-            const threshold = (1 - priceAlertTable[i].percent/100)
-            if (priceDivHigh < threshold ){
-                errorAdd ([symbol, ', drop_alert, threshold=' + threshold.toFixed(3), ' > price/High=' +  priceDivHigh])
+        const threshold = priceAlertTable[i].thresholdPrice
+        if (priceAlertTable[i].above === 'true') {
+            if (price > threshold){
+                errorAdd ([symbol, ', price_alert, threshold=' + threshold.toFixed(3), ' > price=' + price, 'above=' + priceAlertTable[i].above])
             }
         }
         else {
-            const threshold = (1 + priceAlertTable[i].percent/100)
-            const rise = stockChartYValues[0] / stockChartYValues[priceAlertTable[i].risePeriod] ;
-            if (rise > threshold )
-                errorAdd ([symbol, ', rise_alert, threshold=' + threshold.toFixed(3), ' rise=' +  rise.toFixed(3), 'weeks=' + priceAlertTable[i].risePeriod])
+            if (price < threshold) {
+                errorAdd ([symbol, ', price_alert, threshold=' + threshold.toFixed(3), ' price=' + price, 'above=' + priceAlertTable[i].above])
+            }
         }
     }
 }
@@ -104,16 +103,17 @@ function priceAlertCheck (symbol, priceAlertTable, priceDivHigh, errorAdd, stock
 function PriceAlert (props) {
 
     const [percent, setPercent] = useState(8)
-    const [drop, setDrop]  = useState(true)
+    const [thresholdPrice, setThesholdPrice] = useState(props.stockChartYValues[0] * 1.2)
+    const [drop, setDrop]  = useState(true)  // above
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
     const {isMobile} = MobileContext();
     const [risePeriod, setRisePeriod] = useState(10)
 
 
-    function latestPrice__() {
-        latestPrice (props.symbol, props.servSelect, props.PORT, props.ssl, props.rows, props.refreshByToggleColumns, props.errorAdd, props.stockChartXValues, props.stockChartYValues, LOG)
-    }
+    // function latestPrice__() {
+    //     latestPrice (props.symbol, props.servSelect, props.PORT, props.ssl, props.rows, props.refreshByToggleColumns, props.errorAdd, props.stockChartXValues, props.stockChartYValues, LOG)
+    // }
 
 
     function checkDropAll () {
@@ -150,7 +150,7 @@ function PriceAlert (props) {
             return;
         }
 
-        props.priceAlertTable.push ({sym: props.symbol, drop: drop? 'true': 'false', percent: percent, risePeriod: drop ? -1: risePeriod})
+        props.priceAlertTable.push ({sym: props.symbol, above: drop? 'true': 'false' , thresholdPrice: thresholdPrice})
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
         if (LOG)
             console.log (props.symbol, props.priceAlertTable)
@@ -172,7 +172,7 @@ function PriceAlert (props) {
     }
 
 
-    const drop_or_rise = drop ? 'drop % ': 'rise % '
+    const drop_or_rise = drop ? 'Threshold-price-below': 'Threshold-price-above'
 
     return (
         <div style={{ border: '2px solid blue'}}>
@@ -184,26 +184,29 @@ function PriceAlert (props) {
             </div>
             <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Price alert setting </h6>
 
+            <div>&nbsp;</div>
             <div style={{display:'flex'}}>
                 {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> LOG&nbsp;</div>}
-                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice__()}>latest-price {props.symbol} </button>
+                <button  style={{background: 'aqua'}} type="button" onClick={()=>checkDropAll()}> check-drop-all  &nbsp; &nbsp; </button> &nbsp;  &nbsp;
+                {/* &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice__()}>latest-price {props.symbol} </button> */}
+                <GetInt init={percent} callBack={setPercent} title={'percent-drop'} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
             </div>
-            
-            <GetInt init={percent} callBack={setPercent} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
-            {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}         
-            
-            <div>&nbsp;</div>
-            <button  style={{background: 'aqua'}} type="button" onClick={()=>checkDropAll()}> check-drop-all  &nbsp; &nbsp; {percent}% </button> &nbsp;  &nbsp;
-            <div>&nbsp;</div>
+
+            <hr/> 
+
+
+            <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
+            {/* {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}          */}
+
 
             <div style={{display:'flex'}}>
                 &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
-                drop=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='drop vs rise'/> &nbsp;
+                above=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='above vs below'/> &nbsp;
 
              </div>
              
              <div>&nbsp;</div> &nbsp;
-             <button  style={{background: 'aqua'}} type="button" onClick={()=>del()}> delete {props.symbol} </button>
+             {<button  style={{background: 'aqua'}} type="button" onClick={()=>del()}> delete {props.symbol} </button>}
        
 
             <div>&nbsp;</div>
