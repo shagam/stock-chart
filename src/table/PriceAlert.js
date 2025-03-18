@@ -88,12 +88,12 @@ function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXV
         const threshold = priceAlertTable[i].thresholdPrice
         if (priceAlertTable[i].above === 'true') {
             if (price > threshold){
-                errorAdd ([symbol, ', price_alert, threshold=' + threshold.toFixed(3), ' > price=' + price, 'above=' + priceAlertTable[i].above])
+                errorAdd ([symbol, ', price_alert, threshold=' + threshold, ' < price=' + price, 'above=' + priceAlertTable[i].above])
             }
         }
         else {
             if (price < threshold) {
-                errorAdd ([symbol, ', price_alert, threshold=' + threshold.toFixed(3), ' price=' + price, 'above=' + priceAlertTable[i].above])
+                errorAdd ([symbol, ', price_alert, threshold=' + threshold, ' > price=' + price, 'above=' + priceAlertTable[i].above])
             }
         }
     }
