@@ -46,7 +46,7 @@ import {targetPriceAdd} from './TargetPrice'
                 return;
             }
 
-            console.log ('price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(3),
+            console.log (symbol, 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(3),
              'closePrice=' + stockChartYValues[0], 'price/close=' + (price / stockChartYValues[0]).toFixed(4))
 
             rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
