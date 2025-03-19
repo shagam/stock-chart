@@ -324,7 +324,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
      var info = {
       symbol: StockSymbol,
       'deepPrice/BubblePrice': deep,
-      dropPercent: ((deep - 1) * 100).toFixed(2),
+      drop: ((deep - 1) * 100).toFixed(2) + '%',
       recoverYears: recoverPeriod === -1 ? -1 : (recoverPeriod/52).toFixed(2),
       recoverWeeks:  recoverPeriod === -1 ? -1 : recoverPeriod,
       deepDate:    deepDate,
