@@ -31,7 +31,7 @@ function PriceAlert (props) {
 
     const [percent, setPercent] = useState(8)
     const [thresholdPrice, setThesholdPrice] = useState(props.stockChartYValues[0])
-    const [drop, setDrop]  = useState(true)  // above
+    const [above, setAbove]  = useState(true)  // above
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
     const {isMobile} = MobileContext();
@@ -83,7 +83,7 @@ function PriceAlert (props) {
             }
         }
 
-        props.priceAlertTable.push ({sym: props.symbol, above: drop? 'true': 'false' , thresholdPrice: thresholdPrice})
+        props.priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
         if (LOG)
             console.log (props.symbol, props.priceAlertTable)
@@ -105,7 +105,7 @@ function PriceAlert (props) {
     }
 
 
-    const drop_or_rise = drop ?  'above' : 'below'
+    const drop_or_rise = above ?  'above' : 'below'
 
     return (
         <div style={{ border: '2px solid blue'}}>
@@ -135,7 +135,7 @@ function PriceAlert (props) {
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>
                 &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
-                above=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='above vs below'/> &nbsp;
+                above=<Toggle names={['false', 'true',]} colors={['gray','red']} state={above} setState={setAbove} title='above vs below'/> &nbsp;
 
              </div>
              
