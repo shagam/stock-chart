@@ -816,7 +816,7 @@ const BasicTable = (props) => {
 
         {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {<Link to="/generalLinks">Auxilary links</Link>} &nbsp;
-        {eliHome && <Link to="/contactGet">ContactGet</Link>}
+        {eliHome && ! showUrl &&<Link to="/contactGet">ContactGet</Link>}
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong style={{color: 'red'}}>(admin)</strong>  &nbsp; </div>}
@@ -840,7 +840,7 @@ const BasicTable = (props) => {
         </div>
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
-          {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
+          {eliHome && ! showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
         </div>
@@ -1029,7 +1029,7 @@ const BasicTable = (props) => {
               <div style={{color:'blue'}}> infoRaw   </div> 
             </div>
 
-            {eliHome && <div style={{display:'flex'}}>
+            {eliHome && ! showUrl && <div style={{display:'flex'}}>
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='urlGetParse' id='12' checked={analyzeTool==='urlGetParse'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}  title='urlGetParse'> urlGetParse </div> 
 
