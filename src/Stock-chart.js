@@ -30,6 +30,7 @@ const StockChart = (props) => {
 
   const [logarithmic, setLogarithmic] = useState(false);
   const [scaleFlag, setScaleFlag] = useState(! props.gainMap['bubbleLine']);
+  const [totalGain, setTotalGain] = useState(false);
 
   // const [chartDate, setChartDate] = useState (new Date(1999, 1, 15));
   const [chartDate, setChartDate] = useState (new Date(2007, 6, 15));
@@ -201,7 +202,11 @@ const StockChart = (props) => {
     const weeksDiff = (Date.now() - oldestMili) / (1000 * 3600 * 24 * 7)
     const gainSingle = newest / oldest;
     const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
-    title = symbol + ' (' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
+    title = symbol ;
+    if (totalGain)
+      title += ' (' + gainSingle.toFixed(2) + ') '
+     title += '  yearly=' + yearlyGain_ 
+
     const titleSingle = symbol + ' (gain: ' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
 
     // chart of a single ticker
@@ -412,6 +417,7 @@ const StockChart = (props) => {
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp;  </div>
           {gainChart.length > 1 && <div>  <input  type="checkbox" checked={scaleFlag}  onChange={() => setScaleFlag (! scaleFlag)} /> scale &nbsp; </div>}  &nbsp; 
           <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />&nbsp;frozen &nbsp;&nbsp;
+          <input  type="checkbox" checked={totalGain}  onChange={() => setTotalGain (! totalGain)} />&nbsp;totalGain &nbsp;&nbsp;
           <input  type="checkbox" checked={showRanges}  onChange={() => setShowRanges (! showRanges)} /> &nbsp;ranges  &nbsp;
 
           {showRanges && <div>
@@ -431,10 +437,10 @@ const StockChart = (props) => {
         {/* yaxis={'title': 'x-axis','fixedrange':True, 'autorange': false},
        yaxis={'title': 'y-axis','fixedrange':True}) */}
           {(props.isMobile || static_) && <Plot  data={gainChart} 
-            layout={{ width: 700, height: 350, title: title, staticPlot: true, yaxis: {fixedrange: false}  }}
+            layout={{ width: 650, height: 350, title: title, staticPlot: true, yaxis: {fixedrange: false}  }}
              config={{staticPlot: true, 'modeBarButtonsToRemove': ['zoom','zoomOut','zoomIn','pan']}} />}
           {! (props.isMobile || static_) && <Plot  data={gainChart} 
-            layout={{ width: 750, height: 500, title: title, yaxis: {autorange: true, }, xaxis:{tickformat: '%Y-%b-%d'} }}
+            layout={{ width: 650, height: 500, title: title, yaxis: {autorange: true, }, xaxis:{tickformat: '%Y-%b-%d'} }}
              config={{'modeBarButtonsToRemove': []}} />}
         </div>
 
