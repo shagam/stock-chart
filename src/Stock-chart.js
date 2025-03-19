@@ -204,8 +204,8 @@ const StockChart = (props) => {
     const yearlyGain_ = yearlyGain (gainSingle, weeksDiff);
     title = symbol ;
     if (totalGain)
-      title += ' (' + gainSingle.toFixed(2) + ') '
-     title += '  yearly=' + yearlyGain_ 
+      title += ', gain=' + gainSingle.toFixed(2)
+     title += ' (' + yearlyGain_ + ') '
 
     const titleSingle = symbol + ' (gain: ' + gainSingle.toFixed(2) + ', yearly: ' + yearlyGain_ + ') ';
 
@@ -324,7 +324,7 @@ const StockChart = (props) => {
   var title
   if (multi && Object.keys(props.gainMap).length > 1) {
     gainChart = buildGainChartMutiple();
-    title = 'symbol (gain, yearlyGain) count=' + gainChart.length
+    title = 'symbol,  gain, (yearlyGain) count=' + gainChart.length
     if (LOG_FLAG)
       console.log (props.chartDate)
   }
