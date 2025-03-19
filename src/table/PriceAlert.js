@@ -87,7 +87,7 @@ function PriceAlert (props) {
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
         if (LOG)
             console.log (props.symbol, props.priceAlertTable)
-        window.location.reload();
+        // window.location.reload();
     }
     
     
@@ -131,7 +131,7 @@ function PriceAlert (props) {
             <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
             {/* {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}          */}
 
-
+            <div style={{color: 'magenta'}}>Reload page to see changes</div>
             <div style={{display:'flex'}}>
                 &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
                 above=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='above vs below'/> &nbsp;
