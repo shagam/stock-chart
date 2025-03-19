@@ -876,11 +876,11 @@ const BasicTable = (props) => {
 
       <div style={{display:'flex'}} id="add_stock_id">
         <form className='w-00 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
-          <input style={{width:'145px'}}
+          <input style={{width:'105px'}}
             type="text"
             name="symbol"
             required="required"
-            placeholder="Add stock symbol ..."
+            placeholder="stock symbol"
             onChange={handleAddFormChange}
           />
           <button style={{backgroundColor: '#ff55'}} type="submit"> Add  ({rows.length})  </button>
