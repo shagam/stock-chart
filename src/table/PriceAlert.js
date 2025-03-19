@@ -5,7 +5,7 @@ import Toggle from '../utils/Toggle'
 import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
-
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 
 function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXValues, stockChartYValues) {
@@ -134,9 +134,8 @@ function PriceAlert (props) {
             </div>
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>
-                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
-                above=<Toggle names={['false', 'true',]} colors={['gray','red']} state={above} setState={setAbove} title='above vs below'/> &nbsp;
-
+                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add-price-alert  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
+                <ComboBoxSelect serv={above} nameList={['below','above',]} setSelect={setAbove} title='' TITLE='above vs below' options={[false,true]} defaultValue={above} /> &nbsp;
              </div>
              
              <div>&nbsp;</div> &nbsp;
