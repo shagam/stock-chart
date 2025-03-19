@@ -105,7 +105,7 @@ function PriceAlert (props) {
     }
 
 
-    const drop_or_rise = drop ? 'Threshold-price-below': 'Threshold-price-above'
+    const drop_or_rise = drop ?  'above' : 'below'
 
     return (
         <div style={{ border: '2px solid blue'}}>
@@ -126,12 +126,13 @@ function PriceAlert (props) {
             </div>
 
             <hr/> 
-
-
-            <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
-            {/* {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}          */}
-
             <div style={{color: 'magenta'}}>Reload page to see changes</div>
+            <div style={{display:'flex'}}>
+                <div style={{marginTop:'10px'}}>Threshold-price</div> &nbsp; &nbsp;  &nbsp;  &nbsp;
+                <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '25%'/> &nbsp;
+            {/* {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}          */}
+            </div>
+            <div>&nbsp;</div>
             <div style={{display:'flex'}}>
                 &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add {props.symbol} </button> &nbsp;  &nbsp;
                 above=<Toggle names={['false', 'true',]} colors={['gray','red']} state={drop} setState={setDrop} title='above vs below'/> &nbsp;
