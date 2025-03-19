@@ -81,11 +81,13 @@ const  Config = (props) => {
             <button style={{height: '30px'}} type="button" className="stock_button_class" onClick={()=>props.saveTable()}>saveTable</button> &nbsp;
             <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
           </div>
-
+          
+          <hr/> 
           <div style={{display:'flex'}}>
             <button onClick={disclaimerPurge} > disclaimer refresh </button> &nbsp;
             <button onClick={disclaimerGetDate} > disclaimer date </button> &nbsp;
-            {disclaimerDate && <div>{disclaimerDate.date} </div>}
+            {disclaimerDate &&
+             <div>{disclaimerDate.date} </div>}
           </div>
 
           <hr/>
