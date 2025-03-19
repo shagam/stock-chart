@@ -36,6 +36,18 @@ function PriceAlert (props) {
     const {eliHome} = IpContext();
     const {isMobile} = MobileContext();
     const [risePeriod, setRisePeriod] = useState(10)
+    const [showDel, setShowDel] = useState(false)
+
+   useEffect (() => {
+    for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
+        if (props.priceAlertTable[i].sym === props.symbol) {
+            setShowDel (true);
+            return;
+        }
+        setShowDel(false);
+    }
+  }, [props.symbol]) 
+
 
 
     // function latestPrice__() {
@@ -134,12 +146,12 @@ function PriceAlert (props) {
             </div>
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>
-                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>add-price-alert  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
+                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>price-alert-add  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
                 <ComboBoxSelect serv={above} nameList={['below','above',]} setSelect={setAbove} title='' TITLE='above vs below' options={[false,true]} defaultValue={above} /> &nbsp;
              </div>
              
              <div>&nbsp;</div> &nbsp;
-             {<button  style={{background: 'aqua'}} type="button" onClick={()=>del()}> delete {props.symbol} </button>}
+             {showDel && <button  style={{background: 'aqua'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
        
 
             <div>&nbsp;</div>
