@@ -46,7 +46,7 @@ function PriceAlert (props) {
         }
         setShowDel(false);
     }
-  }, [props.symbol]) 
+  }, [props.symbol, props.priceAlertTable]) 
 
 
 
