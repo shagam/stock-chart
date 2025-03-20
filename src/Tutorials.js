@@ -38,9 +38,9 @@ function Tutorials () {
         <div >
             <table>
                 <tbody>              
-                    {! language && <tr>
+                    {/* {! language && <tr>
                         <td><a href="https://youtu.be/jibwwWP0OVQ">Introduction </a></td><td>Compare Stocks & ETF (PortFolio Check)</td> 
-                    </tr>}                 
+                    </tr>}                  */}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/29TnD1h8ZPs">Bubble-line </a></td><td>Stock market bubble. Can we predict future crash? </td> 
                     </tr>}
@@ -56,19 +56,19 @@ function Tutorials () {
                              Stocks with 2x gain higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/BMFbtrOyRz8">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
+                        <td><a href="https://youtube.com/shorts/zQdRjpuYkjA">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
                     </tr>}
-                    {! language && <tr>
+                    {/* {! language && <tr>
                         <td><a href="https://youtu.be/xbGUpEGu5sI">Leverage_ETF</a></td><td>Strategy for short term gain on Leverage_ETF like TQQQ</td> 
-                    </tr>}
-                    {! language && <tr>
+                    </tr>} */}
+                    {/* {! language && <tr>
                         <td><a href="https://youtu.be/73G9GTQRddk">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
-                    </tr>}
+                    </tr>} */}
                     {! language && <tr>
                         <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/XjNCqdMoEws">Price-drop-alert</a></td><td>Compare selected stocks closing price with highest price</td> 
+                        <td><a href="https://youtu.be/XjNCqdMoEws">Price-alert</a></td><td>Compare selected stocks closing price with highest price</td> 
                     </tr>}
 
                     
@@ -81,7 +81,7 @@ function Tutorials () {
                     </tr>}
 
                     {! language && <tr>
-                        <td><a href="https://youtu.be/IG7rc-0JHMM">Trade-simulator</a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
+                        <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share">Trade-simulator</a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>}
 
 
