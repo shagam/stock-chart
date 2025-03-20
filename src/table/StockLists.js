@@ -405,7 +405,7 @@ function StockLists (props) {
                     <div> &nbsp; </div>
                     <div style={{display:'flex'}}>
                     &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={listName} nameList={nameArray} setSelect={setListName}
-                            title='local-lists' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
+                            title='' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
                         <button style={{backgroundColor: '#ffccff', height:'35px'}} onClick={del} > delete </button>  &nbsp; &nbsp;
                         <button style={{backgroundColor: '#7FFF00', height: '35px'}} onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
                         <button style={{backgroundColor: '#00eeff'}} onClick={backendShare} > share_to_backEnd </button> &nbsp; &nbsp; 
@@ -426,7 +426,7 @@ function StockLists (props) {
 
                     {/* {info && <pre> filtered-names {info.length} {JSON.stringify(info)}</pre>} */}
                     {backendNameArray && <div> filtered-names({backendNameArray.length})
-                            <div style={{maxWidth: '90%', 'overflowY': 'scroll'}}> {JSON.stringify(backendNameArray)}</div>
+                            <div style={{maxWidth: '500px', 'overflowY': 'scroll'}}> {JSON.stringify(backendNameArray)}</div>
                          </div>}
                     
                     {/* <div> &nbsp; </div> */}
@@ -449,7 +449,7 @@ function StockLists (props) {
                     {Object.keys(stockLists).map((m,k)=> {
                         return(<div  key={k}> 
                          <div style={{color: 'magenta'}}>&nbsp;{m} &nbsp;&nbsp; {stockLists[m].length}</div>
-                          <div style={{width:'600px', overflow:'auto'}}>{JSON.stringify(stockLists[m])}</div> &nbsp; &nbsp;</div>)
+                          <div style={{width:'500px', overflow:'auto'}}>{JSON.stringify(stockLists[m])}</div> &nbsp; &nbsp;</div>)
                     })}
                 </div>
                 {/* <pre> stockLists {JSON.stringify(stockLists, null, 2)}</pre> */}
