@@ -108,7 +108,7 @@ function Tutorials () {
                     </tr>}
 
                     {! language && <tr>
-                        <td><a href="https://youtu.be/HZIrT91hj0o">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
+                        <td><a href="https://youtube.com/shorts/rxrcge4LsIc">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
                     </tr>}
 
                     
