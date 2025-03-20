@@ -48,12 +48,12 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/C0UjQWHWbB8">Drop-recovery</a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/Yk6fj_peDlM">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
+                        <td><a href="https://youtube.com/shorts/jlFlJfKPGrE">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
                     </tr>}
 
                     {! language && <tr>
-                        <td><a href="https://youtu.be/957Dwf29JfA">Common DataBase  </a></td><td>
-                             Stocks gains higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
+                        <td><a href="https://youtube.com/shorts/hjxdWTGohAc">Common DataBase  </a></td><td>
+                             Stocks with 2x gain higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtu.be/BMFbtrOyRz8">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
