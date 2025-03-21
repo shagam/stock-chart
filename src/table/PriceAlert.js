@@ -107,6 +107,7 @@ useEffect(() => {
         props.priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
         localStorage.setItem('priceAlert_', JSON.stringify(props.priceAlertTable));
+        setState(props.priceAlertTable)
         if (LOG)
             console.log (props.symbol, props.priceAlertTable)
         // window.location.reload();
@@ -119,9 +120,10 @@ useEffect(() => {
                 props.priceAlertTable.splice(i, 1);
                 localStorage.setItem('priceAlert_', JSON.stringify(state));
                 localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
+                setState(props.priceAlertTable)
                 if (LOG)
                     console.log (props.symbol, props.priceAlertTable)
-                window.location.reload();
+                // window.location.reload();
                 return
             }
         }
@@ -149,7 +151,7 @@ useEffect(() => {
             </div>
 
             <hr/> 
-            <div style={{color: 'magenta'}}>Reload page to see changes</div>
+            {/* <div style={{color: 'magenta'}}>Reload page to see changes</div> */}
             <div style={{display:'flex'}}>
                 <div style={{marginTop:'10px'}}>Threshold-price</div> &nbsp; &nbsp;  &nbsp;  &nbsp;
                 <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '25%'/> &nbsp;
