@@ -435,7 +435,7 @@ function StockLists (props) {
                         title='backend-lists' options={backendNameArray} defaultValue={backendListName}/> </div> &nbsp; &nbsp;
 
                         <button style={{backgroundColor: '#7FFF00'}} onClick={backendGetOne} > get </button> &nbsp; &nbsp; 
-                        <button style={{backgroundColor: '#7FFF00'}} onClick={backendDelete} > delete-backend </button> &nbsp; &nbsp; 
+                        <button style={{backgroundColor: '#ffccff'}} onClick={backendDelete} > delete-backend </button> &nbsp; &nbsp; 
                         {eliHome && <div> <input style={{marginTop: '15px'}} type="checkbox" checked={delOtherIp}  onChange={() => setDelOtherIp(! delOtherIp) }  /> &nbsp; del-other-ip &nbsp; &nbsp;</div>}
 
                     </div>}
