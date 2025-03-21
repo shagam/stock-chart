@@ -41,15 +41,15 @@ function PriceAlert (props) {
 
 
   // Initialize state with localStorage value or a default value
-  const [state, setState] = useState(() => {
+  const [priceAlertTable_, setState] = useState(() => {
     const savedState = localStorage.getItem('priceAlert_');
     return savedState ? JSON.parse(savedState) : [];
 });
 
 // Update localStorage whenever state changes
 useEffect(() => {
-    localStorage.setItem('priceAlert_', JSON.stringify(state));
-}, [state]);
+    localStorage.setItem('priceAlert_', JSON.stringify(priceAlertTable_));
+}, [priceAlertTable_]);
 
 
 
@@ -118,7 +118,7 @@ useEffect(() => {
         for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
             if (props.priceAlertTable[i].sym === props.symbol) {
                 props.priceAlertTable.splice(i, 1);
-                localStorage.setItem('priceAlert_', JSON.stringify(state));
+                localStorage.setItem('priceAlert_', JSON.stringify(priceAlertTable_));
                 localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
                 setState(props.priceAlertTable)
                 if (LOG)
