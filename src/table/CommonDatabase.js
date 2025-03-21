@@ -605,6 +605,7 @@ function CommonDatabase (props) {
  
     // Insert in table list of symbols 
     function insertInTable () {
+        // 0 :{sym: 'AVGO', ratio-above-qqq: '1.47'}
         clear();
         if (next !== 'insert') {
             if (! eliHome) {// only admin allowed to insert from del list to allow del from common database
@@ -612,10 +613,22 @@ function CommonDatabase (props) {
                 return;
             }
         }
-        for (let i = 0; i < resObjects.length; i++) {
-            const symbol =  resObjects[i].sym 
-            var sym = symbol.replace(/[0-9\\.,: ]/g,'')
-            addSymOne (sym)
+
+        
+        if (resObjects.length !== 0) {
+            for (let i = 0; i < resObjects.length; i++) {
+                const symbol =  resObjects[i].sym 
+                var sym = symbol.replace(/[0-9\\.,: ]/g,'')
+                addSymOne (sym)
+            }
+        }
+
+        //** getAll */
+        if (results.length > 0) {
+            for (let i = 0; i < results.length; i++) { 
+                const symbol =  results[i] 
+                addSymOne (symbol) 
+            }
         }
         setNext()
         props.saveTable('any');  
