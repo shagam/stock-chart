@@ -39,6 +39,20 @@ function PriceAlert (props) {
     const [showDel, setShowDel] = useState(false)
 
 
+
+  // Initialize state with localStorage value or a default value
+  const [state, setState] = useState(() => {
+    const savedState = localStorage.getItem('priceAlert_');
+    return savedState ? JSON.parse(savedState) : [];
+});
+
+// Update localStorage whenever state changes
+useEffect(() => {
+    localStorage.setItem('priceAlert_', JSON.stringify(state));
+}, [state]);
+
+
+
     useEffect (() => {
         for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
             if (props.priceAlertTable[i].sym === props.symbol) {
@@ -49,18 +63,6 @@ function PriceAlert (props) {
         }
     }, [props.symbol, props.priceAlertTable]) 
 
-
-
-    // Initialize state with localStorage value or a default value
-    const [state, setState] = useState(() => {
-        const savedState = localStorage.getItem('myKey');
-        return savedState ? JSON.parse(savedState) : 'defaultValue';
-    });
-
-    // Update localStorage whenever state changes
-    useEffect(() => {
-        localStorage.setItem('myKey', JSON.stringify(state));
-    }, [state]);
 
     function checkDropAll () {
         const sym_list = Object.keys(props.gainMap);
@@ -104,6 +106,7 @@ function PriceAlert (props) {
 
         props.priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
+        localStorage.setItem('priceAlert_', JSON.stringify(props.priceAlertTable));
         if (LOG)
             console.log (props.symbol, props.priceAlertTable)
         // window.location.reload();
@@ -114,6 +117,7 @@ function PriceAlert (props) {
         for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
             if (props.priceAlertTable[i].sym === props.symbol) {
                 props.priceAlertTable.splice(i, 1);
+                localStorage.setItem('priceAlert_', JSON.stringify(state));
                 localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
                 if (LOG)
                     console.log (props.symbol, props.priceAlertTable)
