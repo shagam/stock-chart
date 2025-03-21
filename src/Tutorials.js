@@ -86,7 +86,7 @@ function Tutorials () {
 
 
                     {! language && <tr>
-                        <td><a href="https://youtu.be/maU-gq6iCqA">Stock-lists</a></td><td>Share stock-list</td> 
+                        <td><a href="https://youtube.com/shorts/S_eBgij72Zk">Stock-lists</a></td><td>Share stock-list</td> 
                     </tr>}
 
                     {! language && <tr>
