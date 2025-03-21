@@ -42,7 +42,7 @@ function PriceAlert (props) {
 
   // Initialize state with localStorage value or a default value
   const [priceAlertTable, setPriceAlertTable] = useState(() => {
-    const savedState = localStorage.getItem('priceAlert_');
+    const savedState = localStorage.getItem('priceAlert');
     return savedState ? JSON.parse(savedState) : [];
 });
 
@@ -106,7 +106,6 @@ useEffect(() => {
 
         props.priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
-        localStorage.setItem('priceAlert_', JSON.stringify(props.priceAlertTable));
         setPriceAlertTable(props.priceAlertTable)
         if (LOG)
             console.log (props.symbol, props.priceAlertTable)
@@ -118,7 +117,6 @@ useEffect(() => {
         for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
             if (props.priceAlertTable[i].sym === props.symbol) {
                 props.priceAlertTable.splice(i, 1);
-                localStorage.setItem('priceAlert_', JSON.stringify(priceAlertTable));
                 localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
                 setPriceAlertTable(props.priceAlertTable)
                 if (LOG)
@@ -151,7 +149,7 @@ useEffect(() => {
             </div>
 
             <hr/> 
-            {/* <div style={{color: 'magenta'}}>Reload page to see changes</div> */}
+            <div style={{color: 'magenta'}}>Reload page to see changes</div>
             <div style={{display:'flex'}}>
                 <div style={{marginTop:'10px'}}>Threshold-price</div> &nbsp; &nbsp;  &nbsp;  &nbsp;
                 <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '25%'/> &nbsp;
@@ -169,13 +167,13 @@ useEffect(() => {
 
             <div>&nbsp;</div>
             {/* {<pre>{JSON.stringify(props.priceAlertTable, null, 2)}</pre>} */}
-            <div>count={props.priceAlertTable.length}</div>
-            {props.priceAlertTable.length > 0 &&  <div  style={{width: '350px', maxHeight: '35vh', 'overflowY': 'scroll'}}>
+            <div>count={priceAlertTable.length}</div>
+            {priceAlertTable.length > 0 &&  <div  style={{width: '350px', maxHeight: '35vh', 'overflowY': 'scroll'}}>
                 <table>
                     <thead>
                     <tr>
                         <th>N</th>
-                        {Object.keys(props.priceAlertTable[0]).map((p, index) => {
+                        {Object.keys(priceAlertTable[0]).map((p, index) => {
                             return (
                                 <th key={index} scope="col">
                                     {p} 
@@ -186,14 +184,14 @@ useEffect(() => {
                     </thead>
 
                     <tbody>             
-                        {props.priceAlertTable.map((s, s1) =>{
+                        {priceAlertTable.map((s, s1) =>{
                             return (
                             <tr key={s1}>
                                 <td style={{padding: '2px', margin: '1px', width: '12px'}}>{s1}</td>
-                                {Object.keys(props.priceAlertTable[s1]).map((k,n)=>{
+                                {Object.keys(priceAlertTable[s1]).map((k,n)=>{
                                 return (
                                     <td key={n} style={{padding: '2px', margin: '1px'}}>
-                                        {props.priceAlertTable[s1][k]}
+                                        {priceAlertTable[s1][k]}
                                     </td>
                                 )
                                 })
