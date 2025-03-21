@@ -38,22 +38,29 @@ function PriceAlert (props) {
     const [risePeriod, setRisePeriod] = useState(10)
     const [showDel, setShowDel] = useState(false)
 
-   useEffect (() => {
-    for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
-        if (props.priceAlertTable[i].sym === props.symbol) {
-            setShowDel (true);
-            return;
+
+    useEffect (() => {
+        for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
+            if (props.priceAlertTable[i].sym === props.symbol) {
+                setShowDel (true);
+                return;
+            }
+            setShowDel(false);
         }
-        setShowDel(false);
-    }
-  }, [props.symbol, props.priceAlertTable]) 
+    }, [props.symbol, props.priceAlertTable]) 
 
 
 
-    // function latestPrice__() {
-    //     latestPrice (props.symbol, props.servSelect, props.PORT, props.ssl, props.rows, props.refreshByToggleColumns, props.errorAdd, props.stockChartXValues, props.stockChartYValues, LOG)
-    // }
+    // Initialize state with localStorage value or a default value
+    const [state, setState] = useState(() => {
+        const savedState = localStorage.getItem('myKey');
+        return savedState ? JSON.parse(savedState) : 'defaultValue';
+    });
 
+    // Update localStorage whenever state changes
+    useEffect(() => {
+        localStorage.setItem('myKey', JSON.stringify(state));
+    }, [state]);
 
     function checkDropAll () {
         const sym_list = Object.keys(props.gainMap);
