@@ -44,24 +44,20 @@ function PriceAlert (props) {
   const [priceAlertTable, setPriceAlertTable] = useState(() => {
     const savedState = localStorage.getItem('priceAlert');
     return savedState ? JSON.parse(savedState) : [];
-});
-
-// Update localStorage whenever state changes
-useEffect(() => {
-    localStorage.setItem('priceAlert_', JSON.stringify(priceAlertTable));
-}, [priceAlertTable]);
+    });
 
 
 
     useEffect (() => {
-        for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
-            if (props.priceAlertTable[i].sym === props.symbol) {
+        for (let i = priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
+            if (priceAlertTable[i].sym === props.symbol) {
                 setShowDel (true);
+                setThesholdPrice (props.stockChartYValues[0])
                 return;
             }
             setShowDel(false);
         }
-    }, [props.symbol, props.priceAlertTable]) 
+    }, [props.symbol, priceAlertTable]) 
 
 
     function checkDropAll () {
@@ -157,12 +153,12 @@ useEffect(() => {
             </div>
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>
-                &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>add()}>price-alert-add  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
+                &nbsp;<button  style={{background: 'lightgreen'}} type="button" onClick={()=>add()}>price-alert-add  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
                 <ComboBoxSelect serv={above} nameList={['below','above',]} setSelect={setAbove} title='' TITLE='above vs below' options={[false,true]} defaultValue={above} /> &nbsp;
              </div>
              
              <div>&nbsp;</div> &nbsp;
-             {showDel && <button  style={{background: 'aqua'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
+             {showDel && <button  style={{background: '#ffccff'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
        
 
             <div>&nbsp;</div>
