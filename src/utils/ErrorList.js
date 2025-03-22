@@ -32,13 +32,13 @@ function ErrorList (props) {
                  &nbsp; &nbsp; <button type="button" onClick={()=>clear()}>Clear </button> 
             </div>
 
-            <Container  className='d-flex align-items-left justify-content-left' style={{maxHeight: "25vh", padding: '0px', margin:'0px'}}  > 
+            <Container  className='d-flex_ align-items-left justify-content-left_' style={{maxHeight: "25vh", padding: '0px', margin:'0px'}}  > 
             {/* <hr/>  */}
-            <div className="container" style ={{overflow: 'scroll', hight: '17%'}} >
+            <div className="container_" style ={{overflow: 'scroll', hight: '17%', width: '85%'}} >
                 { visible && props.errorList.map((err) => (
                     // display each err in array in one line
-                <div key={concat(err)} style ={{display: 'flex'}} >
-                    <div> {concat (err)} </div> 
+                <div style={{display: 'flex'}} key={concat(err)} >
+                    <div style={{display: 'flex', margin: '0px'}} > {concat (err)} </div> 
                 </div>
                 ))
                 }
