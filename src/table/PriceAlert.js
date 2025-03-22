@@ -46,7 +46,6 @@ function PriceAlert (props) {
   const [priceAlertTable, setPriceAlertTable] = useState(() => {
     const savedState = localStorage.getItem('priceAlert');
     const parsedState = savedState ? JSON.parse(savedState) : [];
-    // props.setPriceAlertTable(parsedState);
     return parsedState;
     });
 
@@ -98,14 +97,14 @@ function PriceAlert (props) {
             return;
         }
         // remove prev alert on same sym
-        for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {
-            if (props.priceAlertTable[i].sym === props.symbol) {
-                props.priceAlertTable.splice(i, 1);
+        for (let i = priceAlertTable.length - 1; i >= 0; i--) {
+            if (priceAlertTable[i].sym === props.symbol) {
+                priceAlertTable.splice(i, 1);
             }
         }
 
-        props.priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
-        localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
+        priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
+        localStorage.setItem('priceAlert', JSON.stringify(priceAlertTable))
         setPriceAlertTable(priceAlertTable)
         props.setPriceAlertTable(priceAlertTable)
         setRefresh(! refresh)
@@ -116,20 +115,20 @@ function PriceAlert (props) {
     
     
     function del () {
-        for (let i = props.priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
-            if (props.priceAlertTable[i].sym === props.symbol) {
-                props.priceAlertTable.splice(i, 1);
-                localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
-                setPriceAlertTable(priceAlertTable)
-                props.setPriceAlertTable(priceAlertTable)
-                setRefresh(! refresh)
-                if (LOG)
-                    console.log (props.symbol, priceAlertTable)
-                // window.location.reload();
-                return
-            }
-            beep2()
+        for (let i = priceAlertTable.length - 1; i >= 0; i--) {  // search from end of table
+            if (priceAlertTable[i].sym !== props.symbol) // skip non relevant symbols
+                continue; 
+            priceAlertTable.splice(i, 1);
+            localStorage.setItem('priceAlert', JSON.stringify(priceAlertTable))
+            setPriceAlertTable(priceAlertTable)
+            props.setPriceAlertTable(priceAlertTable)
+            if (LOG)
+                console.log (props.symbol, priceAlertTable)
+            setRefresh(! refresh)
+            // window.location.reload();
+            return
         }
+        beep2()
     }
 
 
@@ -156,14 +155,17 @@ function PriceAlert (props) {
             {/* Add remove buttons  */}
 
             <hr/> 
+            <div>&nbsp;</div>
+            {showDel && <button  style={{background: '#ffccff'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
+            <div>&nbsp;</div>
+
             {eliHome && !isMobile && <div style={{display:'flex'}} >&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> &nbsp;log &nbsp;</div>} &nbsp;
             <div style={{display:'flex'}}>
                 <button  style={{background: 'lightgreen'}} type="button" onClick={()=>add()}>price-alert-add  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
                 <ComboBoxSelect serv={above} nameList={['below','above',]} setSelect={setAbove} title='' TITLE='above vs below' options={[false,true]} defaultValue={above} /> &nbsp;
              </div>
              
-             <div>&nbsp;</div>
-             {showDel && <button  style={{background: '#ffccff'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
+ 
        
              <div style={{display:'flex'}} >
                 <div style={{marginTop:'10px'}}>Threshold-price</div> &nbsp; &nbsp;  &nbsp;  &nbsp;
@@ -180,7 +182,7 @@ function PriceAlert (props) {
             {/* price alert Table  */}
 
             <div>&nbsp;</div> &nbsp;         
-            {/* {<pre>{JSON.stringify(props.priceAlertTable, null, 2)}</pre>} */}
+      
             <div>count={priceAlertTable.length}</div>
             {priceAlertTable.length > 0 &&  <div  style={{width: '350px', maxHeight: '35vh', 'overflowY': 'scroll'}}>
                 <table>
