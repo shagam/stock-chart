@@ -189,11 +189,9 @@ const BasicTable = (props) => {
 
   //** read last reminder mili */
   const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
-  var priceAlertTable  = useMemo(() => (localStorage.getItem('priceAlert')), []);
-  if (priceAlertTable)
-    priceAlertTable = JSON.parse(priceAlertTable)
-  else
-    priceAlertTable =[{sym: 'NVDA', drop: 'true', percent: 7, risePeriod: -1}]
+  
+  const [priceAlertTable, setPriceAlertTable] = useState([]);
+
 
   var  yearlyPercent_temp = useMemo(() => (localStorage.getItem('yearlyPercent')), []);
   var yearlyPercent;
@@ -1081,7 +1079,8 @@ const BasicTable = (props) => {
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
 
-            {analyzeTool ==='priceAlert' && <div> <PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} gainMap = {gainMap}
+            {analyzeTool ==='priceAlert' && <div> <PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} setPriceAlertTable = {setPriceAlertTable}
+              gainMap = {gainMap}
               errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> </div>}
 

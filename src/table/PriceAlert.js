@@ -6,6 +6,8 @@ import {IpContext} from '../contexts/IpContext';
 import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+import { setRef } from '@material-ui/core';
+import { beep2 } from '../utils/ErrorList';
 
 
 function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXValues, stockChartYValues) {
@@ -37,13 +39,15 @@ function PriceAlert (props) {
     const {isMobile} = MobileContext();
     const [risePeriod, setRisePeriod] = useState(10)
     const [showDel, setShowDel] = useState(false)
-
+    const [refresh, setRefresh] = useState(false)   
 
 
   // Initialize state with localStorage value or a default value
   const [priceAlertTable, setPriceAlertTable] = useState(() => {
     const savedState = localStorage.getItem('priceAlert');
-    return savedState ? JSON.parse(savedState) : [];
+    const parsedState = savedState ? JSON.parse(savedState) : [];
+    // props.setPriceAlertTable(parsedState);
+    return parsedState;
     });
 
 
@@ -57,7 +61,7 @@ function PriceAlert (props) {
             }
             setShowDel(false);
         }
-    }, [props.symbol, priceAlertTable]) 
+    }, [props.symbol, priceAlertTable, props.stockChartYValues]) 
 
 
     function checkDropAll () {
@@ -102,9 +106,11 @@ function PriceAlert (props) {
 
         props.priceAlertTable.push ({sym: props.symbol, above: above? 'true': 'false' , thresholdPrice: thresholdPrice})
         localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
-        setPriceAlertTable(props.priceAlertTable)
+        setPriceAlertTable(priceAlertTable)
+        props.setPriceAlertTable(priceAlertTable)
+        setRefresh(! refresh)
         if (LOG)
-            console.log (props.symbol, props.priceAlertTable)
+            console.log (props.symbol, priceAlertTable)
         // window.location.reload();
     }
     
@@ -114,12 +120,15 @@ function PriceAlert (props) {
             if (props.priceAlertTable[i].sym === props.symbol) {
                 props.priceAlertTable.splice(i, 1);
                 localStorage.setItem('priceAlert', JSON.stringify(props.priceAlertTable))
-                setPriceAlertTable(props.priceAlertTable)
+                setPriceAlertTable(priceAlertTable)
+                props.setPriceAlertTable(priceAlertTable)
+                setRefresh(! refresh)
                 if (LOG)
-                    console.log (props.symbol, props.priceAlertTable)
+                    console.log (props.symbol, priceAlertTable)
                 // window.location.reload();
                 return
             }
+            beep2()
         }
     }
 
@@ -138,7 +147,9 @@ function PriceAlert (props) {
 
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>
-                {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> LOG&nbsp;</div>}
+                {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> LOG&nbsp;</div>} &nbsp;
+                {<div>&nbsp;<input  type="checkbox" checked={refresh}  onChange={()=> setRefresh(! refresh)} /> refresh&nbsp;</div>}
+
                 <button  style={{background: 'aqua'}} type="button" onClick={()=>checkDropAll()}> check-drop-all  &nbsp; &nbsp; </button> &nbsp;  &nbsp;
                 {/* &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice__()}>latest-price {props.symbol} </button> */}
                 <GetInt init={percent} callBack={setPercent} title={'percent-drop'} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
