@@ -148,31 +148,35 @@ function PriceAlert (props) {
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>
                 {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={LOG}  onChange={()=> setLOG(! LOG)} /> LOG&nbsp;</div>} &nbsp;
-                {<div>&nbsp;<input  type="checkbox" checked={refresh}  onChange={()=> setRefresh(! refresh)} /> refresh&nbsp;</div>}
 
-                <button  style={{background: 'aqua'}} type="button" onClick={()=>checkDropAll()}> check-drop-all  &nbsp; &nbsp; </button> &nbsp;  &nbsp;
+                <button  style={{background: 'aqua'}} type="button" onClick={()=>checkDropAll()}> check-drop-from-high (all)  &nbsp; &nbsp; </button> &nbsp;  &nbsp;
                 {/* &nbsp;<button  style={{background: 'aqua'}} type="button" onClick={()=>latestPrice__()}>latest-price {props.symbol} </button> */}
                 <GetInt init={percent} callBack={setPercent} title={'percent-drop'} type='text' pattern="[0-9\.\-]+" width = '15%'/> &nbsp;
             </div>
 
             <hr/> 
-            <div style={{color: 'magenta'}}>Reload page to see changes</div>
-            <div style={{display:'flex'}}>
-                <div style={{marginTop:'10px'}}>Threshold-price</div> &nbsp; &nbsp;  &nbsp;  &nbsp;
-                <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '25%'/> &nbsp;
-            {/* {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}          */}
-            </div>
-            <div>&nbsp;</div>
+            <div>&nbsp;</div> &nbsp;
             <div style={{display:'flex'}}>
                 &nbsp;<button  style={{background: 'lightgreen'}} type="button" onClick={()=>add()}>price-alert-add  &nbsp;  &nbsp; {props.symbol} </button> &nbsp;  &nbsp;
                 <ComboBoxSelect serv={above} nameList={['below','above',]} setSelect={setAbove} title='' TITLE='above vs below' options={[false,true]} defaultValue={above} /> &nbsp;
              </div>
              
-             <div>&nbsp;</div> &nbsp;
+
              {showDel && <button  style={{background: '#ffccff'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
        
+             <div style={{display:'flex'}}>
+                <div style={{marginTop:'10px'}}>Threshold-price</div> &nbsp; &nbsp;  &nbsp;  &nbsp;
+                <GetInt init={thresholdPrice} callBack={setThesholdPrice} title={drop_or_rise} type='text' pattern="[0-9\.\-]+" width = '25%'/> &nbsp;
+            {/* {!drop && <GetInt init={risePeriod} callBack={setRisePeriod} title=' rise-period (weeks)' type='Number' pattern="[0-9]+" width = '15%'/>}          */}
+            </div>
 
             <div>&nbsp;</div>
+            {<div>
+                <input  type="checkbox" checked={refresh}  onChange={()=> setRefresh(! refresh)} /> refresh&nbsp;
+                <div style={{color: 'magenta'}}>Toggle refresh to refresh table</div>
+            </div>}
+
+            <div>&nbsp;</div> &nbsp;         
             {/* {<pre>{JSON.stringify(props.priceAlertTable, null, 2)}</pre>} */}
             <div>count={priceAlertTable.length}</div>
             {priceAlertTable.length > 0 &&  <div  style={{width: '350px', maxHeight: '35vh', 'overflowY': 'scroll'}}>
