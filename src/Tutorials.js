@@ -68,7 +68,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/XjNCqdMoEws">Price-alert</a></td><td>Compare selected stocks closing price with highest price</td> 
+                        <td><a href="https://youtube.com/shorts/AK38qRao-TE">Price-alert (group)</a></td><td>Compare selected stocks closing price with highest price</td> 
                     </tr>}
 
                     
