@@ -126,7 +126,7 @@ function TargetPriceGui (props) {
                 {targetInfoOne && props.symbol && <button style={{height: '35px', marginTop: '7px'}} type="button" onClick={()=>checkPrediction ()}>checkPrediction </button> }
             </div>
 
-            {!price && targetInfoOne && targetInfoOne.length > 0 && <div style={{color: 'red'}}> get lastPrice (openMarket of closedMarket at the top) && click targetHistoryOne again </div>}
+            {/* {!price && targetInfoOne && targetInfoOne.length > 0 && <div style={{color: 'red'}}> get lastPrice (openMarket of closedMarket at the top) && click targetHistoryOne again </div>} */}
             {target && price && <div>price: {price} &nbsp; &nbsp; target: {target}  &nbsp; &nbsp; (target above 1 - means growth) </div> }
             
             {targetInfoOne && targetInfoOne.length > 0 && <div>count={targetInfoOne && targetInfoOne.length}</div>}
