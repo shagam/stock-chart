@@ -64,9 +64,9 @@ function Tutorials () {
                     {/* {! language && <tr>
                         <td><a href="https://youtu.be/73G9GTQRddk">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
                     </tr>} */}
-                    {! language && <tr>
+                    {/* {! language && <tr>
                         <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
-                    </tr>}
+                    </tr>} */}
 
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/AK38qRao-TE">Price-alert (group)</a></td><td>Compare selected stocks closing price with highest price</td> 
@@ -76,7 +76,7 @@ function Tutorials () {
                     </tr>}                 
                     
                     {! language && <tr>
-                        <td><a href="https://youtu.be/faEcqp7PIfw">Table-view</a></td><td>Compare many stocks & ETF</td> 
+                        <td><a href="https://youtube.com/shorts/12oKOXv0gqA">Table-view</a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart-view</a></td><td>Compare a few stocks</td> 
