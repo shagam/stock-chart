@@ -81,6 +81,9 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart-view</a></td><td>Compare a few stocks</td> 
                     </tr>}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/jSlOyfLPMZc">CandleSticks</a></td><td>Popular prediction mechanism</td> 
+                    </tr>}
 
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share">Trade-simulator</a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
