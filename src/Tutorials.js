@@ -94,10 +94,7 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/S_eBgij72Zk">Stock-lists</a></td><td>Share stock-list</td> 
                     </tr>}
 
-                    {! language && <tr>
-                        <td><a href="https://youtu.be/-AFWK_7RK1s">Future-contracts</a></td><td> Can they hint on market trend</td> 
-                    </tr>}         
-
+                 
 
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/w0qQc_Ue_jw">Verify_1</a></td><td>Verify historical price. Compare with other sites</td> 
