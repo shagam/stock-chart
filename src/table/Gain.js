@@ -405,8 +405,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               // console.log (splits)
               
               set_QQQ_gain({mon: mon, mon3: mon3, mon6: mon6, year: year, year2: year2, year5: year5}) // save gain for commonDatabase gain filter
-              targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
-            
+
               try {
               if (splitArray) {
                 if (splitArray.startsWith('u')) {
@@ -419,8 +418,12 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
             
               if (LOG_API)
               console.dir (rows[row_index].values)
-              if (rows[row_index].values.target_raw !== undefined && rows[row_index].values.price !== undefined)
-                rows[row_index].values.target = Number((rows[row_index].values.target_raw/rows[row_index].values.price).toFixed(2))
+              if (rows[row_index].values.target_raw !== undefined && price !== undefined) {
+                rows[row_index].values.target = Number((rows[row_index].values.target_raw/price).toFixed(2))
+                targetPriceAdd (sym, rows[row_index].values.target_raw, price, logFlags, errorAdd, 'gain', ssl, PORT, servSelect) 
+                if (! rows[row_index].values.price)
+                  rows[row_index].values.price = price
+              }
               if (LOG_DROP)
                 console.log(sym,'to firebase deep:', rows[row_index].values.deep, 'recoverIndex:', rows[row_index].values.recoverWeek,
                 rows[row_index].values.deepDate, rows[row_index].values.priceDivHigh)

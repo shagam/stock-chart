@@ -375,15 +375,16 @@ const BasicTable = (props) => {
     rows[index].values.target_raw = targetRaw 
     rows[index].values.Cap = Number (childData["MarketCapitalization"] / 1000 / 1000 / 1000).toFixed(2);
     rows[index].values.PriceToBookRatio = Number (childData["PriceToBookRatio"]);
-    //Sector         
-    targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
+    //Sector       
+
 
     rows[index].values.info_mili = updateMili;
     rows[index].values.info_date = updateDate;
 
-    if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined)
+    if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined) {
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
-    
+      targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
+    }
     // childData.Address = '';   // Clear some data to decrese traffic
     // childData.Description = '';
     
