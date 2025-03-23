@@ -79,7 +79,7 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/12oKOXv0gqA">Table-view</a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/MoOBqUHw3Xo">Chart-view</a></td><td>Compare a few stocks</td> 
+                        <td><a href="https://youtube.com/shorts/11RweD4QKnI">Chart-view</a></td><td>Compare a few stocks</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/jSlOyfLPMZc">CandleSticks</a></td><td>Popular prediction mechanism</td> 
