@@ -538,15 +538,6 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {gainLostWeeks && <h6>  GainTimeUnitLost={gainLostWeeks}  &nbsp;  dateWithTodayVal={dateOfEqualVal}</h6>} */}
 
           
-          {/* Drop count  */}
-          <hr/> 
-          {dropRecoveryInfo && <div>            
-            {<div>
-              <DropsCount symbol = {props.StockSymbol}  highIndex={highIndex} LOG={LOG} 
-                setDropStartDate={setDropStartDate}  stockChartXValues = {props.stockChartXValues} stockChartYValues = {props.stockChartYValues}
-                errorAdd={props.errorAdd} daily={props.daily}/>
-            </div>}
-          </div>}
         </div>
     </div>
   )

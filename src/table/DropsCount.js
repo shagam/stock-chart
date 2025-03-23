@@ -9,15 +9,17 @@ import {beep2} from '../utils/ErrorList'
 import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
 import Toggle from '../utils/Toggle'
-
+import {searchDateInArray, } from '../utils/Date'
 
 
 function DropsCount (props) {
       //** for counting drops */
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
     const [err, setErr] = useState();
+    const [log, setLog] = useState (false);
 
     //** input */
+    const [startDate, setStartDate] = useState(new Date(2021, 8, 1 ))   // start date for drop count
     const [changeThreshold, setChangeThreshold] = useState(10) // drop percentage, used for count number of drops
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
@@ -93,18 +95,16 @@ function DropsCount (props) {
             beep2()
             return;            
         }
-
-        if (! props.highIndex) {
-            setErr('Missing highIndex, please press DropRecoveryCalc to calc high for start')
-            beep2()
-            return;
-        }
-
+      
         // first high before drop calc by dropRecovery    
         if (props.LOG)
         console.log ('highndex=', props.highIndex)  // found by dropRecovery
 
+        //startDate
         var searchIndex = props.highIndex;
+        const startDateArray = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()];// // [1..31]
+        const chartIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, /*logFlags*/[])
+        searchIndex = chartIndex;
         var nextIndex; 
         var dropsArray_ = []
 
@@ -241,6 +241,9 @@ function DropsCount (props) {
         <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold %' type='Number' pattern="[0-9]+" width = '15%'/> 
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
+        &nbsp; log &nbsp; <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;
+        <div>&nbsp;</div>
+        Start-date {<DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> }
 
         <div>&nbsp;</div>
 
