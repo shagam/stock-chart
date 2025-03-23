@@ -97,7 +97,7 @@ function Tutorials () {
 
 
                     {! language && <tr>
-                        <td><a href="https://youtu.be/IR3TBJlqM_g">Verify_1</a></td><td>Verify historical price. Compare with another site</td> 
+                        <td><a href="https://youtube.com/shorts/w0qQc_Ue_jw">Verify_1</a></td><td>Verify historical price. Compare with other sites</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/FgYGr5KcJe0">Analyst-target-price</a></td><td>History of analyst-target-price prediction (average of many)</td> 
