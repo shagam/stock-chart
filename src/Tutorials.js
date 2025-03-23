@@ -103,10 +103,10 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/FgYGr5KcJe0">Analyst-target-price</a></td><td>History of analyst-target-price prediction (average of many)</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/n_NXoU5ce-A">Raw data</a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
+                        <td><a href="https://youtube.com/shorts/BpC7wK7Psvw">Raw data</a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtu.be/cVxKLW3pPB0">Persistance</a></td><td>Stock info saved in localStorage</td> 
+                        <td><a href="https://youtube.com/shorts/Z-YxEWlq94o">Persistance</a></td><td>Stock info saved in localStorage</td> 
                     </tr>}
 
                     {! language && <tr>
