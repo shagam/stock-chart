@@ -10,7 +10,7 @@ import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
 import Toggle from '../utils/Toggle'
 import {searchDateInArray, } from '../utils/Date'
-
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 function DropsCount (props) {
       //** for counting drops */
@@ -237,11 +237,15 @@ function DropsCount (props) {
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops and rises</h6>
         <div style={{color: 'red'}}>{err}</div>
 
-        <Toggle names={['range','threshold',]} colors={['gray','red']} state={searchMode} setState={setSearchMode} title='searchMode: range vs threshold'/>
+        {<div style={{display:'flex'}}>
+            <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp;
+            <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} />&nbsp;log    
+        </div>} 
+
         <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold %' type='Number' pattern="[0-9]+" width = '15%'/> 
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
-        &nbsp; log &nbsp; <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;
+  
         <div>&nbsp;</div>
         Start-date {<DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> }
 
