@@ -42,21 +42,21 @@ function Tutorials () {
                         <td><a href="https://youtu.be/jibwwWP0OVQ">Introduction </a></td><td>Compare Stocks & ETF (PortFolio Check)</td> 
                     </tr>}                  */}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/29TnD1h8ZPs">Bubble-line </a></td><td>Stock market bubble. Can we predict future crash? </td> 
+                        <td><a href="https://youtube.com/shorts/29TnD1h8ZPs"><b>Bubble-line</b> </a></td><td>Stock market bubble. Can we predict future crash? </td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/C0UjQWHWbB8">Drop-recovery</a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
+                        <td><a href="https://youtube.com/shorts/C0UjQWHWbB8"><b>Drop-recovery</b></a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/jlFlJfKPGrE">ETF-Holdings</a></td><td>ETF holdings review and compare ETFs</td> 
+                        <td><a href="https://youtube.com/shorts/jlFlJfKPGrE"><b>ETF-Holdings</b></a></td><td>ETF holdings review and compare ETFs</td> 
                     </tr>}
 
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/hjxdWTGohAc">Common DataBase  </a></td><td>
+                        <td><a href="https://youtube.com/shorts/hjxdWTGohAc"><b>Common DataBase</b>  </a></td><td>
                              Stocks with 2x gain higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/zQdRjpuYkjA">Month-gain</a></td><td>Is there a systematic difference between month's gain</td> 
+                        <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share"><b>Trade-simulator</b></a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>}
                     {/* {! language && <tr>
                         <td><a href="https://youtu.be/xbGUpEGu5sI">Leverage_ETF</a></td><td>Strategy for short term gain on Leverage_ETF like TQQQ</td> 
@@ -68,13 +68,7 @@ function Tutorials () {
                         <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
                     </tr>} */}
 
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/AK38qRao-TE">Price-alert (group)</a></td><td>Compare selected stocks closing price with highest price</td> 
-                    </tr>}
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/9n_nQuhbeFc">Price-alert (specific stock)</a></td><td>Compare price of stock with threshold </td> 
-                    </tr>}                 
-                    
+                           
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/12oKOXv0gqA">Table-view</a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
                     </tr>}
@@ -82,11 +76,21 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/11RweD4QKnI">Chart-view</a></td><td>Compare a few stocks</td> 
                     </tr>}
                     {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/AK38qRao-TE">Price-alert (group)</a></td><td>Compare selected stocks closing price with highest price</td> 
+                    </tr>}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/9n_nQuhbeFc">Price-alert (specific stock)</a></td><td>Compare price of stock with threshold </td> 
+                    </tr>}                 
+
+     
+                         {! language && <tr>
                         <td><a href="https://youtube.com/shorts/jSlOyfLPMZc">CandleSticks</a></td><td>Popular prediction mechanism</td> 
                     </tr>}
-
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share">Trade-simulator</a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
+                    </tr>}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/FgYGr5KcJe0">Analyst-target-price</a></td><td>History of analyst-target-price prediction (average of many)</td> 
                     </tr>}
 
 
@@ -94,15 +98,10 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/S_eBgij72Zk">Stock-lists</a></td><td>Share stock-list</td> 
                     </tr>}
 
-                 
-
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/w0qQc_Ue_jw">Verify_1</a></td><td>Verify historical price. Compare with other sites</td> 
                     </tr>}
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/FgYGr5KcJe0">Analyst-target-price</a></td><td>History of analyst-target-price prediction (average of many)</td> 
-                    </tr>}
-                    {! language && <tr>
+                          {! language && <tr>
                         <td><a href="https://youtube.com/shorts/BpC7wK7Psvw">Raw data</a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
                     </tr>}
                     {! language && <tr>
@@ -112,14 +111,13 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/rxrcge4LsIc">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
                     </tr>}
-
-                    
+            
 
                     <tr>
                        <div>&nbsp;</div>
                     </tr>
-                    {language === 'English' && <tr>
-                        <td><a href="https://youtube.com/playlist?list=PLBwPhbE_paAyMgNmnnkCjUYloLcAIy6ks&feature=shared">Tutorial Playlist</a></td><td>Serialized tutorials</td> 
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/playlist?list=PLBwPhbE_paAyMgNmnnkCjUYloLcAIy6ks&feature=shared"> <b>Tutorial Playlist</b></a></td><td>Serialized tutorials</td> 
                     </tr>}
 
                     {<tr>
@@ -128,10 +126,11 @@ function Tutorials () {
                     {/* {language &&  <tr>
                         <td><a href="https://youtu.be/Rv5a0tkMISE">Hebrew tutorial</a></td><td></td>        
                     </tr>} */}
+
+
                     {language && <tr>
                         <td><a href="https://www.veed.io/edit/e848e95a-0131-49b4-9114-5c0f3f9c19c0/video">Laverage ETF (Heb)  </a></td> Short term gain trading TQQQ (Hebrew)<td></td>        
-                    </tr>}
-                    
+                    </tr>}                
 
                     <tr>
                        <div>&nbsp;</div>
