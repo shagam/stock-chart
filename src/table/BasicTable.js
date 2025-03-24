@@ -1094,10 +1094,10 @@ const BasicTable = (props) => {
             {analyzeTool ==='candleStick' && <CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
                errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns}/>}
 
-            {analyzeTool ==='dropCount' && <DropsCount symbol = {props.StockSymbol}  highIndex={800} LOG={false} 
+            {analyzeTool ==='dropCount' && <DropsCount symbol = {props.StockSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
                 errorAdd={props.errorAdd} daily={props.daily}/>}
-                
+
           </div>}
           </div>}        
           <hr/> 

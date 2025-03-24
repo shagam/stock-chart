@@ -101,15 +101,17 @@ function DropsCount (props) {
         }
       
         // first high before drop calc by dropRecovery    
-        if (props.LOG)
-        console.log ('highndex=', props.highIndex)  // found by dropRecovery
+        if (log)
+            console.log ('highndex=', props.highIndex)  // found by dropRecovery
 
         //startDate
-        var searchIndex = props.highIndex;
+
+        if (log)
+            console.log ('startDate', startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate())
         const startDateArray = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()];// // [1..31]
         const chartIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, /*logFlags*/[])
 
-        searchIndex = chartIndex !== -1? chartIndex: props.stockChartXValues.length -1 //protect for date beyond array
+        var searchIndex = chartIndex !== -1? chartIndex: props.stockChartXValues.length -1 //protect for date beyond array
         var nextIndex; 
         var dropsArray_ = []
 
@@ -128,12 +130,12 @@ function DropsCount (props) {
             } else {
                 if (i % 2 === 0) {
                     nextIndex = searchLow (searchIndex)
-                    if (props.LOG)
+                    if (log)
                     console.log ('searchLow', searchIndex, nextIndex)
                 }
                 else {
                     nextIndex = searchHigh (searchIndex)
-                    if (props.LOG)
+                    if (log)
                     console.log ('searchHigh', searchIndex, nextIndex)
                 }
             }
@@ -157,7 +159,7 @@ function DropsCount (props) {
                 endIndex: nextIndex,
                 endPrice: props.stockChartYValues[nextIndex].toFixed(2),
             }
-            if (props.LOG)
+            if (log)
                 console.log (dropObj, searchIndex, nextIndex)
             
             //** build arrays for the chart */
