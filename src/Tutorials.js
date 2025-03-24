@@ -70,46 +70,46 @@ function Tutorials () {
 
                            
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/12oKOXv0gqA">Table-view</a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
+                        <td><a href="https://youtube.com/shorts/12oKOXv0gqA"><b>Table-view</b></a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/11RweD4QKnI">Chart-view</a></td><td>Compare a few stocks</td> 
+                        <td><a href="https://youtube.com/shorts/11RweD4QKnI"><b>Chart-view</b></a></td><td>Compare a few stocks</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/AK38qRao-TE">Price-alert (group)</a></td><td>Compare selected stocks closing price with highest price</td> 
+                        <td><a href="https://youtube.com/shorts/AK38qRao-TE"><b>Price-alert (group)</b></a></td><td>Compare selected stocks closing price with highest price</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/9n_nQuhbeFc">Price-alert (specific stock)</a></td><td>Compare price of stock with threshold </td> 
+                        <td><a href="https://youtube.com/shorts/9n_nQuhbeFc"><b>Price-alert (specific stock)</b></a></td><td>Compare price of stock with threshold </td> 
                     </tr>}                 
 
      
                          {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/jSlOyfLPMZc">CandleSticks</a></td><td>Popular prediction mechanism</td> 
+                        <td><a href="https://youtube.com/shorts/jSlOyfLPMZc"><b>CandleSticks</b></a></td><td>Popular prediction mechanism</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share">Trade-simulator</a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
+                        <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share"><b>Trade-simulator</b></a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/FgYGr5KcJe0">Analyst-target-price</a></td><td>History of analyst-target-price prediction (average of many)</td> 
-                    </tr>}
-
-
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/S_eBgij72Zk">Stock-lists</a></td><td>Share stock-list</td> 
+                        <td><a href="https://youtube.com/shorts/FgYGr5KcJe0"><b>Analyst-target-price</b></a></td><td>History of analyst-target-price prediction (average of many)</td> 
                     </tr>}
 
+
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/w0qQc_Ue_jw">Verify_1</a></td><td>Verify historical price. Compare with other sites</td> 
+                        <td><a href="https://youtube.com/shorts/S_eBgij72Zk"><b>share-stock-lists</b></a></td><td>Share stock-list</td> 
+                    </tr>}
+
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/w0qQc_Ue_jw"><b>Verify_1</b></a></td><td>Verify historical price. Compare with other sites</td> 
                     </tr>}
                           {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/BpC7wK7Psvw">Raw data</a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
+                        <td><a href="https://youtube.com/shorts/BpC7wK7Psvw"><b>Raw data</b></a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/Z-YxEWlq94o">Persistance</a></td><td>Stock info saved in localStorage</td> 
+                        <td><a href="https://youtube.com/shorts/Z-YxEWlq94o"><b>Persistance</b></a></td><td>Stock info saved in localStorage</td> 
                     </tr>}
 
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/rxrcge4LsIc">Berkshire-Hathaway </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
+                        <td><a href="https://youtube.com/shorts/rxrcge4LsIc"><b>Berkshire-Hathaway</b> </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
                     </tr>}
             
 
