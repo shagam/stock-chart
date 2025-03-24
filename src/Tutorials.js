@@ -83,11 +83,8 @@ function Tutorials () {
                     </tr>}                 
 
      
-                         {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/jSlOyfLPMZc"><b>CandleSticks</b></a></td><td>Popular prediction mechanism</td> 
-                    </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share"><b>Trade-simulator</b></a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
+                        <td><a href="https://youtube.com/shorts/jSlOyfLPMZc"><b>CandleSticks</b></a></td><td>Popular prediction mechanism</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/FgYGr5KcJe0"><b>Analyst-target-price</b></a></td><td>History of analyst-target-price prediction (average of many)</td> 
@@ -129,7 +126,7 @@ function Tutorials () {
 
 
                     {language && <tr>
-                        <td><a href="https://www.veed.io/edit/e848e95a-0131-49b4-9114-5c0f3f9c19c0/video">Laverage ETF (Heb)  </a></td> Short term gain trading TQQQ (Hebrew)<td></td>        
+                        <td><a href="https://www.veed.io/edit/e848e95a-0131-49b4-9114-5c0f3f9c19c0/video"><b>Laverage ETF (Heb)</b></a></td> Short term gain trading TQQQ (Hebrew)<td></td>        
                     </tr>}                
 
                     <tr>
