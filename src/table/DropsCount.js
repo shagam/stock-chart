@@ -108,7 +108,8 @@ function DropsCount (props) {
         var searchIndex = props.highIndex;
         const startDateArray = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()];// // [1..31]
         const chartIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, /*logFlags*/[])
-        searchIndex = chartIndex;
+
+        searchIndex = chartIndex !== -1? chartIndex: props.stockChartXValues.length -1 //protect for date beyond array
         var nextIndex; 
         var dropsArray_ = []
 
