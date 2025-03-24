@@ -19,7 +19,7 @@ function DropsCount (props) {
     const [log, setLog] = useState (false);
 
     //** input */
-    const [startDate, setStartDate] = useState(new Date(2021, 8, 1 ))   // start date for drop count
+    const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
     const [changeThreshold, setChangeThreshold] = useState(10) // drop percentage, used for count number of drops
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
@@ -75,10 +75,14 @@ function DropsCount (props) {
     }
 
     function bigChange (startIndex) {
+        const date = props.stockChartXValues[startIndex]
+        let i = 0
         var startValue = props.stockChartYValues[startIndex] // start from high value
-        for (let i = startIndex; i >= 0; i --) {
+        for (i = startIndex; i >= 0; i --) {
             const ratio = startValue / props.stockChartYValues[i];
-            if (ratio < (100 - changeThreshold)/100 || ratio > 1/((100 - changeThreshold)/100) ) {
+            const lowRatio =  (100 - changeThreshold)/100 
+            const highRatio = 1/((100 - changeThreshold)/100) 
+            if (ratio <lowRatio || ratio > highRatio) {
                 return i;
             }
         }
@@ -108,8 +112,16 @@ function DropsCount (props) {
         var nextIndex; 
         var dropsArray_ = []
 
+        //** clipp main chart */
+        var chartClippedX_temp = [];
+        var chartClippedY_temp = [];
+        for (let i = 0; i < searchIndex; i++) {
+            chartClippedX_temp[i] = props.stockChartXValues[i];
+            chartClippedY_temp[i] = props.stockChartYValues[i];
+        }
 
-        for (let i = 0; i < 300; i++) {
+
+        for (let i = 0; i < chartClippedX_temp.length; i++) {
             if (searchMode) { // big Chanhe
                 nextIndex = bigChange(searchIndex)
             } else {
@@ -166,14 +178,6 @@ function DropsCount (props) {
         setDropsArray(dropsArray_)
         setBigDropsCount(bigDropCount_)
         setBigRiseCount(bigRiseCount_)
-
-        //** clipp main chart */
-        var chartClippedX_temp = [];
-        var chartClippedY_temp = [];
-        for (let i = 0; i < props.highIndex; i++) {
-            chartClippedX_temp[i] = props.stockChartXValues[i];
-            chartClippedY_temp[i] = props.stockChartYValues[i];
-        }
 
 
         const dat =
