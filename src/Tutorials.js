@@ -75,30 +75,32 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/11RweD4QKnI"><b>Chart-view</b></a></td><td>Compare a few stocks</td> 
                     </tr>}
+                    
+                    <div>&nbsp;</div>
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/AK38qRao-TE"><b>Price-alert (group)</b></a></td><td>Compare selected stocks closing price with highest price</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/9n_nQuhbeFc"><b>Price-alert (specific stock)</b></a></td><td>Compare price of stock with threshold </td> 
                     </tr>}                 
-
-     
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/UOtcApd5XOY"><b>Rise-drop-frequency</b></a></td><td>How often is there a 5%, price rise or drop?</td> 
+                    </tr>}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/h2sE1njL4iw"><b>Moving-average</b></a></td><td>May be used for predicting market trend</td> 
+                    </tr>}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/jSlOyfLPMZc"><b>CandleSticks</b></a></td><td>Popular prediction mechanism</td> 
                     </tr>}
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/FgYGr5KcJe0"><b>Analyst-target-price</b></a></td><td>History of analyst-target-price prediction (average of many)</td> 
                     </tr>}
+
+                    
+                    <div>&nbsp;</div>
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/UOtcApd5XOY"><b>Rise-drop-frequency</b></a></td><td>How often is there a 5%, price rise or drop?</td> 
+                        <td><a href="https://youtube.com/shorts/S_eBgij72Zk"><b>stock-lists</b></a></td><td>Save & Share stock-list between users</td> 
                     </tr>}
-                   
-
-
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/S_eBgij72Zk"><b>share-stock-lists</b></a></td><td>Share stock-list</td> 
-                    </tr>}
-
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/w0qQc_Ue_jw"><b>Verify_1</b></a></td><td>Verify historical price. Compare with other sites</td> 
                     </tr>}
