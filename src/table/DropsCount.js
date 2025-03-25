@@ -20,7 +20,7 @@ function DropsCount (props) {
 
     //** input */
     const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
-    const [changeThreshold, setChangeThreshold] = useState(10) // drop percentage, used for count number of drops
+    const [changeThreshold, setChangeThreshold] = useState(5) // drop percentage, used for count number of drops
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
