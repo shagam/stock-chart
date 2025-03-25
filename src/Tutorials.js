@@ -45,6 +45,9 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/29TnD1h8ZPs"><b>Bubble-line</b> </a></td><td>Stock market bubble. Can we predict future crash? </td> 
                     </tr>}
                     {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/ul_LzUeENd4"><b>Market-crash-hint</b> </a></td><td>Bubble-line proximety can hint for market crash</td> 
+                    </tr>}
+                    {! language && <tr>
                         <td><a href="https://youtube.com/shorts/C0UjQWHWbB8"><b>Drop-recovery</b></a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
                     </tr>}
                     {! language && <tr>
@@ -114,7 +117,7 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/rxrcge4LsIc"><b>Berkshire-Hathaway</b> </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
                     </tr>}
-            
+                    
 
                     <tr>
                        <div>&nbsp;</div>
