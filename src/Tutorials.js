@@ -131,6 +131,10 @@ function Tutorials () {
                     </tr>} */}
 
 
+
+                    {language && <tr>
+                        <td><a href="https://www.veed.io/view/df28ebf3-2a6c-4ac8-81f4-1ab9ca3f33c4?panel=share"><b>Bubble-line (Heb)</b></a></td> קו-הבועות בעברית<td></td>        
+                    </tr>}     
                     {language && <tr>
                         <td><a href="https://www.veed.io/edit/e848e95a-0131-49b4-9114-5c0f3f9c19c0/video"><b>Laverage ETF (Heb)</b></a></td> Short term gain trading TQQQ (Hebrew)<td></td>        
                     </tr>}                
