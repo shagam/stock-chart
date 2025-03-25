@@ -983,11 +983,11 @@ const BasicTable = (props) => {
           {<div>
             <div style={{display:'flex'}}>
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='11' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
-              {<div style={{color:'blue'}}>none</div>} &nbsp; 
+              <div style={{color:'blue'}}>none</div> &nbsp; 
 
               <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}
                  title='calc line that connect major stock market bubbles (2008,2022)'/>
-              {<div style={{color:'blue', fontWeight: gainMap.bubbleLine? "bolder": 'normal'}}> bubble-line  </div>} 
+              <div style={{color:'blue', fontWeight: gainMap.bubbleLine? "bolder": 'normal'}}> bubble-line  </div> 
               
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}
                   title='calc value drop of a symbol during market crash, and the recovery time (weeks or dayes) '/>         
@@ -1002,7 +1002,7 @@ const BasicTable = (props) => {
               <div style={{color:'blue'}}> simulateTrade   </div>    
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropCount' id='14' checked={analyzeTool==='dropCount'} onChange={onOptionChange}/>
-              {<div style={{color:'blue'}}> dropCount  </div>}
+              <div style={{color:'blue'}}> dropCount  </div>
 
             </div>
 
@@ -1015,7 +1015,7 @@ const BasicTable = (props) => {
               <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candleStick' id='13' checked={analyzeTool==='candleStick'} onChange={onOptionChange}/>
-                {<div style={{color:'blue'}}> candleStick  </div>}   
+                <div style={{color:'blue'}}> candleStick  </div>   
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
