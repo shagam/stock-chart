@@ -89,6 +89,10 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/FgYGr5KcJe0"><b>Analyst-target-price</b></a></td><td>History of analyst-target-price prediction (average of many)</td> 
                     </tr>}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/UOtcApd5XOY"><b>Rise-drop-frequency</b></a></td><td>How often is there a 5%, price rise or drop?</td> 
+                    </tr>}
+                   
 
 
                     {! language && <tr>
