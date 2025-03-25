@@ -193,10 +193,9 @@ export const COLUMNS = [
 
 export const GROUPED_COLUMNS = [
   {
-    Header: '',
-    Footer: '',
-    accessor: 'sym',
-    sticky: 'left',
+    Header: 'Info',
+    Footer: 'Info',
+    accessor: 'Info',       
     columns: [
       {
         Header: 'symbol',
@@ -209,15 +208,7 @@ export const GROUPED_COLUMNS = [
         Footer: '%',    
         accessor: 'percent',
         sticky: 'left'
-      },
-    
-    ],
-  },
-  {
-    Header: 'Info',
-    Footer: 'Info',
-    accessor: 'Info',       
-    columns: [    
+      },  
       {
         Header: 'Exch',
         Footer: 'Exch',    
