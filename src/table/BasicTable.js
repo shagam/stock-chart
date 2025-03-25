@@ -1001,8 +1001,8 @@ const BasicTable = (props) => {
                   title='simulate optimized trade based on week gain or bubble-line proximety'/>  
               <div style={{color:'blue'}}> simulateTrade   </div>    
 
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
-              <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div>               
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropCount' id='14' checked={analyzeTool==='dropCount'} onChange={onOptionChange}/>
+              {<div style={{color:'blue'}}> dropCount  </div>}
 
             </div>
 
@@ -1027,6 +1027,11 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}
                 title='Raw basic company data as fetched by provider'/>  
               <div style={{color:'blue'}}> infoRaw   </div> 
+            
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
+              <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div>               
+
+
             </div>
 
             {eliHome && ! showUrl && <div style={{display:'flex'}}>
@@ -1040,8 +1045,6 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
               {<div style={{color:'blue'}}> marketOpenPrice  </div>}
               
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropCount' id='14' checked={analyzeTool==='dropCount'} onChange={onOptionChange}/>
-              {<div style={{color:'blue'}}> dropCount  </div>}
             </div>}
             
             {/* <hr/>  */}
