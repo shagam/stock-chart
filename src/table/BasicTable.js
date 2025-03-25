@@ -974,6 +974,7 @@ const BasicTable = (props) => {
          
         {/* Analyze tools for specific sym */}
         {chartSymbol && <div>
+          
           {/* <div>&nbsp;</div> */}
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
             <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; Analyze &nbsp;
@@ -996,6 +997,9 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}
                 title='Get ETF holdings '/> 
               <div style={{color:'blue'}}> holdings  </div> 
+            </div>
+
+            <div style={{display:'flex'}}>              
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}
                   title='simulate optimized trade based on week gain or bubble-line proximety'/>  
@@ -1004,16 +1008,15 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropCount' id='14' checked={analyzeTool==='dropCount'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}> dropCount  </div>
 
-            </div>
-
-            <div style={{display:'flex'}}>              
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
+               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
                   title='Calc average month and week gain over the last 24 years'/>  
               <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> monthGain   </div>
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
+            </div>
 
+            <div style={{display:'flex'}}>              
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candleStick' id='13' checked={analyzeTool==='candleStick'} onChange={onOptionChange}/>
                 <div style={{color:'blue'}}> candleStick  </div>   
 
@@ -1030,8 +1033,6 @@ const BasicTable = (props) => {
             
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
               <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div>               
-
-
             </div>
 
             {eliHome && ! showUrl && <div style={{display:'flex'}}>
