@@ -25,7 +25,7 @@ function Tutorials () {
 
         <div className='w-100 text-left mt-2' style={{color:'magenta'}}>
            {/* <h5> &nbsp; Start with The first tutorial. (lasts 2.5 minutes.) </h5> */}
-           <h5> &nbsp; Most tutorials lasts less than 2 minute </h5>
+           <h5> &nbsp; Most tutorials lasts around 1 minute </h5>
 
             {/* {eliHome && <div style={{display:'flex'}}> <ComboBoxSelect serv={language} nameList={languageList} setSelect={setLanguage} title='backEnd' options={languageList} defaultValue={language}/> &nbsp;&nbsp;</div>}  */}
             <div style={{display: 'flex'}}>
@@ -61,16 +61,13 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share"><b>Trade-simulator</b></a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>}
-                    {/* {! language && <tr>
-                        <td><a href="https://youtu.be/xbGUpEGu5sI">Leverage_ETF</a></td><td>Strategy for short term gain on Leverage_ETF like TQQQ</td> 
-                    </tr>} */}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/lMb-a7BA_ws">Leverage_ETF</a></td><td>Short term gain on Leverage_ETF like TQQQ</td> 
+                    </tr>}
                     {/* {! language && <tr>
                         <td><a href="https://youtu.be/73G9GTQRddk">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
                     </tr>} */}
-                    {/* {! language && <tr>
-                        <td><a href="https://youtu.be/UM2J5eWzZfI">Drop_rise_count</a></td><td>Frequency of drops may be used for trading Leverage-ETF</td> 
-                    </tr>} */}
-
+           
                            
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/12oKOXv0gqA"><b>Table-view</b></a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
