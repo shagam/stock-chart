@@ -64,9 +64,9 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/lMb-a7BA_ws">Leverage_ETF</a></td><td>Short term gain on Leverage_ETF like TQQQ</td> 
                     </tr>}
-                    {/* {! language && <tr>
-                        <td><a href="https://youtu.be/73G9GTQRddk">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
-                    </tr>} */}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/6F06FI6mdG8">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
+                    </tr>}
            
                            
                     {! language && <tr>
