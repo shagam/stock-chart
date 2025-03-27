@@ -60,9 +60,17 @@ function AuxilaryLinks () {
             {<button role="link" onClick={() => openInNewTab('https://www.nasdaq.com/market-activity/etf/qqq/after-hours')}>nasdaq qqq</button>} &nbsp; 
             {/* {<button role="link" onClick={() => openInNewTab('https://www.cnbc.com/markets/')}>cnbc</button>} &nbsp;  */}
             {<button role="link" onClick={() => openInNewTab('https://www.cnbc.com/quotes/QQQ?qsearchterm=qqq')}>cnbc qqq</button>} &nbsp; 
-            
-               
-            
+                    
+        </div>
+
+        <div>&nbsp;</div>
+        <div>
+            <div>Crypto</div>
+            {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/')}>Crypto</button>} &nbsp;         
+            {<button role="link" onClick={() => openInNewTab(' https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
+            {<button role="link" onClick={() => openInNewTab(' https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;          
+            {<button role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;  
+
         </div>
 
         <hr/> 
