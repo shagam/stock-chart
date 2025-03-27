@@ -67,10 +67,11 @@ function AuxilaryLinks () {
         <div>
             <div>Crypto</div>
             {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/')}>Crypto</button>} &nbsp;         
-            {<button role="link" onClick={() => openInNewTab(' https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
-            {<button role="link" onClick={() => openInNewTab(' https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;          
-            {<button role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;  
-
+            {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
+            {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;          
+            {/* {<button role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;   */}
+            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp; 
+            
         </div>
 
         <hr/> 
