@@ -59,13 +59,17 @@ function Tutorials () {
                              Stocks with 2x gain higher than QQQ: 1Yr, 2Yr, 5Yr, 10Yr</td> 
                     </tr>}
                     {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/zQdRjpuYkjA"><b>Month-gain</b></a></td><td>Is there a systematic difference between month's gain</td> 
+                    </tr>}
+
+                    {! language && <tr>
                         <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share"><b>Trade-simulator</b></a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/lMb-a7BA_ws">Leverage_ETF</a></td><td>Short term gain on Leverage_ETF like TQQQ</td> 
+                        <td><a href="https://youtube.com/shorts/lMb-a7BA_ws"><b>Leverage_ETF</b></a></td><td>Short term gain on Leverage_ETF like TQQQ</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/6F06FI6mdG8">Is QQQ better than SPY</a></td><td>During the last year - same holdings for both</td> 
+                        <td><a href="https://youtube.com/shorts/6F06FI6mdG8"><b>Is QQQ better than SPY</b></a></td><td>During the last year - same holdings for both</td> 
                     </tr>}
            
                            
@@ -132,7 +136,7 @@ function Tutorials () {
 
 
 
-                    {language && <tr>
+                    {eliHome && language && <tr>
                         <td><a href="https://www.veed.io/view/df28ebf3-2a6c-4ac8-81f4-1ab9ca3f33c4?panel=share"><b>Bubble-line (Heb)</b></a></td> קו-הבועות בעברית<td></td>        
                     </tr>}     
                     {language && <tr>
