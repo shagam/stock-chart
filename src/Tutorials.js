@@ -112,7 +112,7 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/BpC7wK7Psvw"><b>Raw data</b></a></td><td>Raw historical stock prices, received from AlphaVantage</td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/Z-YxEWlq94o"><b>Persistance</b></a></td><td>Stock info saved in localStorage</td> 
+                        <td><a href="https://youtube.com/shorts/k5CbJD8cIAA"><b>Persistance</b></a></td><td>Stock info saved in localStorage</td> 
                     </tr>}
 
                     {! language && <tr>
