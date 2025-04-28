@@ -1,4 +1,4 @@
-// git log --pretty=format:"%h%x09%an%x09%ad%x09%s"
+// git log --pretty=format:"%h%x09%an%x09%ad%x09%s" 
 // force recompile
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
