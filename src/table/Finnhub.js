@@ -46,10 +46,11 @@ import {targetPriceAdd} from './TargetPrice'
                 return;
             }
 
-            console.log (symbol, getDate(), 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + (price / highestPrice).toFixed(3),
+            const priceDivHigh = (price / highestPrice).toFixed(3);
+            console.log (symbol, getDate(), 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + priceDivHigh,
              'closePrice=' + stockChartYValues[0], 'price/close=' + (price / stockChartYValues[0]).toFixed(4))
 
-            rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
+            rows[row_index].values.priceDivHigh = priceDivHigh;
             if (rows[row_index].values.target_raw)
                 rows[row_index].values.target = (rows[row_index].values.target_raw / price).toFixed(3); // update targetPrice
             else
