@@ -94,7 +94,7 @@ const BasicTable = (props) => {
   const [bubbleLine, setBubbleLine] = useState();
 
   
-  const servList = [process.env.REACT_APP_AWS_IP_, process.env.REACT_APP_LOCAL_SERV_IP]// , process.env.REACT_APP_AWS_IP];
+  const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP]// , process.env.REACT_APP_AWS_IP];
   const servNameList = ['production', 'test']//, 'production_'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
