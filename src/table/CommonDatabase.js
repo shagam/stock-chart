@@ -624,9 +624,9 @@ function CommonDatabase (props) {
         }
 
         //** getAll */
-        if (results.length > 0) {
-            for (let i = 0; i < results.length; i++) { 
-                const symbol =  results[i] 
+        if (resObjects.length > 0) {
+            for (let i = 0; i < resObjects.length; i++) { 
+                const symbol =  resObjects[i].sym 
                 addSymOne (symbol) 
             }
         }
