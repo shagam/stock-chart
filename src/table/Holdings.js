@@ -282,9 +282,10 @@ function Holdings (props) {
       </div>
 
       <div>&nbsp;</div>
-      {<button onClick={() => openInNewTab(url_holdings_schwab)}> holdings (schwab) ({props.chartSymbol})</button>} &nbsp;
-      {<button onClick={() => openInNewTab(urlCors)}> holdings (stockAnalysis) ({props.chartSymbol}) </button>} &nbsp;
-      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + props.chartSymbol)}> holdings (yahoo) ({props.chartSymbol}) </button>} &nbsp;
+      <h6>Holdings links </h6>
+      {<button onClick={() => openInNewTab(url_holdings_schwab)}> schwab ({props.chartSymbol})</button>} &nbsp;
+      {<button onClick={() => openInNewTab(urlCors)}>  stockAnalysis ({props.chartSymbol}) </button>} &nbsp;
+      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + props.chartSymbol)}> yahoo ({props.chartSymbol}) </button>} &nbsp;
 
 
       
