@@ -31,14 +31,11 @@ function AuxilaryLinks () {
         </div>          */}
 
         {/* <hr/> */}
-        <div >
-            {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
-            {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
-            <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
-            <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=VIXY")}> VIXY </button> &nbsp;
-            <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=UVXY")}> UVXY </button> &nbsp;
+          <div>
+            <div>&nbsp;</div>
+            <div>Aux</div>
             <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp;      
-            {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech </button>} &nbsp; 
+            {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button>} &nbsp; 
         </div>
 
         <div>&nbsp;</div>
@@ -72,8 +69,19 @@ function AuxilaryLinks () {
             {/* {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
             {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;           */}
             {/* {<button role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;   */}
-            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp; 
-            
+            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp;           
+        </div>
+
+     <div >
+            {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
+            {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
+            <div>&nbsp;</div>
+            <div>Volatility</div>
+            <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
+            <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=VIXY")}> VIXY </button> &nbsp;
+            <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=UVXY")}> UVXY </button> &nbsp;
+            <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVXO/")}> VXO </button> &nbsp;
+
         </div>
 
         <hr/> 
