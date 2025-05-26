@@ -119,6 +119,12 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/rxrcge4LsIc"><b>Berkshire-Hathaway</b> </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
                     </tr>}
                     
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/6tbGbdvEvt0"><b>Leverage-hightech-etf</b> </a></td><td>Short term profit example . </td> 
+                    </tr>}
+
+                    
+                    
 
                     <tr>
                        <div>&nbsp;</div>
