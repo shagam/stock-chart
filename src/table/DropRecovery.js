@@ -326,7 +326,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       'deepPrice/BubblePrice': deep,
       drop: ((deep - 1) * 100).toFixed(2) + '%',
       recoverYears: recoverPeriod === -1 ? -1 : (recoverPeriod/52).toFixed(2),
-      recoverWeeks:  recoverPeriod === -1 ? -1 : recoverPeriod,
+      recoverWeeks: recoverPeriod === -1 ? -1 : recoverPeriod,
       deepDate:    deepDate,
     }
 
@@ -339,8 +339,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     if (props.daily) {
-      info.recoverWeeks = (recoverPeriod / 5).toFixed(2);
-      info.recoverYears= (recoverPeriod / 52 / 5).toFixed(2)
+      info.recoverWeeks = recoverPeriod == -1? -1 : (recoverPeriod / 5).toFixed(2);
+      info.recoverYears = recoverPeriod == -1? -1 : (recoverPeriod / 52 / 5).toFixed(2)
     }
 
     if (eliHome){
