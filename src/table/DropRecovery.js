@@ -402,6 +402,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     // setEndDate (new Date(2020, 4, 15));
   }
 
+  function swap_period_2025() {
+    setDropStartDate (new Date(2025, 1, 1));  // 2025 jan 1 
+    // setEndDate (new Date(2020, 4, 15));
+  }
+
   function swap_period_8_mon() {
     var date = new Date();
     var formattedDate = format(date, "yyyy-MM-dd");
@@ -517,7 +522,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
             <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
-            <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; &nbsp;
+            <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; 
+            <button type="button" onClick={()=>swap_period_2025()}>  2025   </button> &nbsp; &nbsp;
           </div>
      
 
