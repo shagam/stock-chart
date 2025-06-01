@@ -339,8 +339,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     }
 
     if (props.daily) {
-      info.recoverWeeks = recoverPeriod == -1? -1 : (recoverPeriod / 5).toFixed(2);
-      info.recoverYears = recoverPeriod == -1? -1 : (recoverPeriod / 52 / 5).toFixed(2)
+      info.recoverWeeks = recoverPeriod === -1? -1 : (recoverPeriod / 5).toFixed(2);
+      info.recoverYears = recoverPeriod === -1? -1 : (recoverPeriod / 52 / 5).toFixed(2)
     }
 
     if (eliHome){
