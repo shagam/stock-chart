@@ -45,9 +45,6 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/29TnD1h8ZPs"><b>Bubble-line</b> </a></td><td>Stock market bubble. Can we predict future crash? </td> 
                     </tr>}
                     {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/ul_LzUeENd4"><b>Market-crash-hint</b> </a></td><td>Bubble-line proximety can hint for market crash</td> 
-                    </tr>}
-                    {! language && <tr>
                         <td><a href="https://youtube.com/shorts/C0UjQWHWbB8"><b>Drop-recovery</b></a></td><td>Analyse drops and recovery 2008, 2020, 2022 </td> 
                     </tr>}
                     {! language && <tr>
@@ -65,13 +62,10 @@ function Tutorials () {
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/ziRLU3XPJRY?feature=share"><b>Trade-simulator</b></a></td><td>Can we beat the gain of QQQ, just by trading QQQ?</td> 
                     </tr>}
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/lMb-a7BA_ws"><b>Leverage_ETF</b></a></td><td>Short term gain on Leverage_ETF like TQQQ</td> 
-                    </tr>}
-                    {! language && <tr>
-                        <td><a href="https://youtube.com/shorts/6F06FI6mdG8"><b>Is QQQ better than SPY</b></a></td><td>During the last year - same holdings for both</td> 
-                    </tr>}
-           
+
+                    <tr>
+                       <div>&nbsp;</div>
+                    </tr>           
                            
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/12oKOXv0gqA"><b>Table-view</b></a></td><td>Compare many stocks & ETF, (sort/filter/select column)</td> 
@@ -115,12 +109,25 @@ function Tutorials () {
                         <td><a href="https://youtube.com/shorts/k5CbJD8cIAA"><b>Persistance</b></a></td><td>Stock info saved in localStorage</td> 
                     </tr>}
 
+                    <tr>
+                       <div>&nbsp;</div>
+                    </tr>
+
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/rxrcge4LsIc"><b>Berkshire-Hathaway</b> </a></td><td>BRK-B gain compared with S&P anf QQQ</td> 
-                    </tr>}
-                    
+                    </tr>}                    
                     {! language && <tr>
                         <td><a href="https://youtube.com/shorts/6tbGbdvEvt0"><b>Leverage-hightech-etf</b> </a></td><td>Short term profit example . </td> 
+                    </tr>}
+                    {/* {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/lMb-a7BA_ws"><b>Leverage_ETF</b></a></td><td>Short term gain on Leverage_ETF like TQQQ</td> 
+                    </tr>} */}
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/6F06FI6mdG8"><b>Is QQQ better than SPY</b></a></td><td>During the last year - same holdings for both</td> 
+                    </tr>}
+
+                    {! language && <tr>
+                        <td><a href="https://youtube.com/shorts/ul_LzUeENd4"><b>Market-crash-hint</b> </a></td><td>Bubble-line proximety can hint for market crash</td> 
                     </tr>}
 
                     
