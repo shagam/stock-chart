@@ -45,6 +45,27 @@ function LatestPrice (props) {
       };
 
 
+    function checkPriceColumnVisible () {
+      var ind_price = props.allColumns.findIndex((column)=> column.Header === 'price');
+      var ind_priceDivHigh = props.allColumns.findIndex((column)=> column.Header === 'price/high');
+      const isInvisible_price = props.allColumns[ind_price].isVisible;
+      const isInvisible_priceDivHigh = props.allColumns[ind_priceDivHigh].isVisible;
+
+      // if on mobile, hide price and priceDivHigh columns  exit
+      if (isInvisible_price || isInvisible_priceDivHigh) {
+        return;
+      }
+      
+      if (! isInvisible_price && ! isInvisible_priceDivHigh) {
+        // props.allColumns[ind_price].toggleHidden();
+        props.errorAdd([props.symbol, 'Column nonVisible. price or priceDivHigh. use column_select to make visible']) // show error if priceDivHigh is visible
+      } 
+      // if (! isInvisible_priceDivHigh){
+      //   // props.allColumns[ind_priceDivHigh].toggleHidden(); 
+      //   props.errorAdd([props.symbol, ' priceDivHigh column nonVisible. use column_select to turn on visible']) // show error if priceDivHigh is visible
+      // }
+    }
+
     function extendedHoursPrice () {
 
         const u =  'https://www.barchart.com/etfs-funds/quotes/' + props.symbol + '/overview/'
@@ -127,6 +148,7 @@ function LatestPrice (props) {
           const priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
 
           setPriceDivClose (priceDivCloseObj)
+          checkPriceColumnVisible()
           props.refreshByToggleColumns()
           props.setErr()
 
@@ -146,7 +168,7 @@ function LatestPrice (props) {
             {/* {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp; */}
             
             {props.symbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (props.symbol, props.stockChartYValues, props.rows, props.refreshByToggleColumns, props.setErr,
-            props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome)}} title='price during market open' > marketOpen </button> </div>}
+            props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome, checkPriceColumnVisible)}} title='price during market open' > marketOpen </button> </div>}
 
             {/* <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp; */}
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
