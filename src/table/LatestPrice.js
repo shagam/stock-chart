@@ -8,6 +8,7 @@ import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 import {getDate,} from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { finnhub } from './Finnhub'
+import { el } from 'date-fns/locale';
 
 
 function LatestPrice (props) {
@@ -148,7 +149,8 @@ function LatestPrice (props) {
           const priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
 
           setPriceDivClose (priceDivCloseObj)
-          checkPriceColumnVisible()
+          if (el)
+            checkPriceColumnVisible()
           props.refreshByToggleColumns()
           props.setErr()
 
