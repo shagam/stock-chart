@@ -194,7 +194,7 @@ function Holdings (props) {
       const holdArr = result.data.holdArr;
       if (Math.abs (holdArr[0].sym - holdArr[0].perc) < MIS_MATCH_MAX) {
 
-        if (! etfArr.includes(etf) && result.data.holdArr.length > 1) {
+        if (! etfArr.includes(etf) && result.data.holdArr.length > 1) {// if effectively empty avoid insert; //first record contains counters 
           etfArr.push (etf)
           etfArr_.push (etf)
         }
@@ -204,7 +204,7 @@ function Holdings (props) {
         const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
         var cnt = 0;
         var percentSum = 0;
-        for (let i = 1; i < len; i++) {
+        for (let i = 1; i < len; i++) {  //first record contains counters should be skipped
           cnt ++;
           const symm = result.data.holdArr[i].sym;
           if (heldMasterObj[symm] === undefined)
