@@ -194,7 +194,7 @@ function Holdings (props) {
       const holdArr = result.data.holdArr;
       if (Math.abs (holdArr[0].sym - holdArr[0].perc) < MIS_MATCH_MAX) {
 
-        if (! etfArr.includes(etf)) {
+        if (! etfArr.includes(etf) && result.data.holdArr.length > 1) {
           etfArr.push (etf)
           etfArr_.push (etf)
         }
@@ -226,6 +226,7 @@ function Holdings (props) {
           console.log ('warn:', warn)
 
         // fill missing values with 0
+        if (len > 1)
         Object.keys(heldMasterObj).forEach((symm) => {
           etfArr.forEach((etf) => {
             if (heldMasterObj[symm][etf] === undefined)
@@ -318,7 +319,7 @@ function Holdings (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  ({props.chartSymbol}) </button> &nbsp;
 
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
-            {holdingsRawObj[props.chartSymbol] && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
+            {holdingsRawObj[props.chartSymbol] && Object.keys(heldMasterObj).length > 0 && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
           </div> 
           <div>&nbsp; </div>
         </div>
