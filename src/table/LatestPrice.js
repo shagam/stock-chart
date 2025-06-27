@@ -149,7 +149,7 @@ function LatestPrice (props) {
           const priceDivCloseObj = {symbol: props.symbol, price: price, sign: sign, ratio: ((price/props.stockChartYValues[0] -1) * 100).toFixed(3), color: color, seconds: result.data.secondsDiff.toFixed(0)};
 
           setPriceDivClose (priceDivCloseObj)
-          if (el)
+          if (false)
             checkPriceColumnVisible()
           props.refreshByToggleColumns()
           props.setErr()
