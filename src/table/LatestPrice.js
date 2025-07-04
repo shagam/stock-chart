@@ -138,7 +138,7 @@ function LatestPrice (props) {
           props.rows[row_index].values.price_mili = Date.now();
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(3);
           if (! props.stockChartYValues[0]) {
-              props.setErr('close price not found')
+              props.setErr('price not found, Try again later')
               return;
           }
           const ratio = price / props.stockChartYValues[0];
