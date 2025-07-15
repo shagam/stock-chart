@@ -21,7 +21,8 @@ function OptionQuote (props) {
   const [log, setLog] = useState (eliHome); // default to true if eliHome is true
   const [log1, setLog1] = useState (false);
   const [expirationsArray, setExpirationsArray] = useState([]); 
-  const [selectedRowExp, setSelectedRowExp] = useState(null);
+  const [expirationCount, setExpirationCount] = useState(3);
+  const [selectedExpiration, setSelectedExpiration] = useState(null);
 
   const [strikeArray, setStrikeArray] = useState([]);
   const [selectedStrike, setSelectedStrike] = useState(null);
@@ -61,7 +62,7 @@ function OptionQuote (props) {
   }
 
   function handleRowClick(rowId)  { 
-    setSelectedRowExp(rowId);
+    setSelectedExpiration(rowId);
     if (log)
       console.log('Expiration Row clicked:', rowId);
   }
@@ -74,7 +75,7 @@ function OptionQuote (props) {
 
   function strikePrices () {
     url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationsArray[selectedRowExp] 
+        + expirationsArray[selectedExpiration] 
         // + '?token=' + TOKEN;
     if (log)
       console.log (url)
@@ -86,7 +87,7 @@ function OptionQuote (props) {
         console.dir (result.data)
       const mili = result.data.updated
       const status = result.data.s
-      const arr = result.data[expirationsArray[selectedRowExp]]
+      const arr = result.data[expirationsArray[selectedExpiration]]
       console.log (arr)
       for (var i = 0; i < arr.length; i++) {
         strikeArray.push (arr[i])
@@ -115,7 +116,7 @@ function OptionQuote (props) {
     setLineNumberArr(lineArr);
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
-        + '/?expiration=' + expirationsArray[selectedRowExp]
+        + '/?expiration=' + expirationsArray[selectedExpiration]
         + '&side=call' + '&strike=' + strikeGroup
         // + '?human=true';
     if (log)
@@ -129,7 +130,8 @@ function OptionQuote (props) {
 
       setOptionQuote(result.data); // take the first one, there could be more
       setOptionKeys(Object.keys(result.data))
-      console.log ('keys', Object.keys(result.data))
+      if (log)
+        console.log ('keys', Object.keys(result.data))
     })
     .catch ((err) => {
       console.log(err)
@@ -164,7 +166,7 @@ function OptionQuote (props) {
                     <tr key={index}
                       onClick={() => handleRowClick(index)}
                       style={{
-                          backgroundColor: selectedRowExp === index ? '#d3e5ff' : 'white',
+                          backgroundColor: selectedExpiration === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
                         }}                      
                       >
@@ -180,7 +182,7 @@ function OptionQuote (props) {
         {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; for {ymbol}  &nbsp; </h6> */}
         {expirationsArray.length > 0 && <div>
           <hr/> 
-          <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>
+          {selectedExpiration && <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>}
           <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
 
           {strikeArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
@@ -213,8 +215,8 @@ function OptionQuote (props) {
           </div>}
 
           <hr/> 
-          <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>
-          <h8>expiration-date={expirationsArray[selectedRowExp]}</h8>
+          {selectedStrike && <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>}
+          <h8>expiration-date={expirationsArray[selectedExpiration]}</h8>
           {optionKeys.length > 0 && <div style={{height:'300px', width: '600px', overflow:'auto'}}>
 
             <table>
