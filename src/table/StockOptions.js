@@ -20,7 +20,10 @@ function OptionQuote (props) {
   const [log, setLog] = useState (eliHome); // default to true if eliHome is true
   const [log1, setLog1] = useState (false);
   const [expirationsArray, setExpirationsArray] = useState([]); 
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedRowExp, setSelectedRowExp] = useState(null);
+
+  const [strikeArray, setStrikeArray] = useState([]);
+  const [selectedStrike, setSelectedStrike] = useState(null);
 
   function expirationsGet () {
     url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol;
@@ -48,15 +51,43 @@ function OptionQuote (props) {
   }
 
   function handleRowClick(rowId)  { 
-    // handle row click
-    setSelectedRow(rowId);
+    setSelectedRowExp(rowId);
     if (log)
-      console.log('Row clicked:', rowId);
+      console.log('Expiration Row clicked:', rowId);
   }
 
+ function handleRowClickStrike(rowId)  { 
+    setSelectedStrike(rowId);
+    if (log)
+      console.log('Strike Row clicked:', rowId);
+  }
 
   function strikePrices () {
-    url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol;
+    url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
+        + expirationsArray[selectedRowExp] 
+        // + '?token=' + TOKEN;
+    if (log)
+      console.log (url)
+
+    const strikeArray = [] 
+    axios.get (url)
+    .then ((result) => {
+      if (log)
+        console.dir (result.data)
+      const mili = result.data.updated
+      const status = result.data.s
+      const arr = result.data[expirationsArray[selectedRowExp]]
+      console.log (arr)
+      for (var i = 0; i < arr.length; i++) {
+        strikeArray.push (arr[i])
+      }
+      console.log ('strikeArray=', strikeArray.length)
+      setStrikeArray(strikeArray );
+      // console.log (strikeArray)
+    })
+    .catch ((err) => {
+      console.log(err)
+    })
   }
 
   return (
@@ -71,14 +102,13 @@ function OptionQuote (props) {
 
         <div><button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> </div>
 
-          <h6> count {expirationsArray.length} </h6>
         { expirationsArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
-
+          <h6> count {expirationsArray.length} </h6>
             <table>
                 <thead>
                   <tr>
                     <th>N</th>
-                    <th>date</th>
+                    <th>expiration-date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,7 +117,7 @@ function OptionQuote (props) {
                     <tr key={index}
                       onClick={() => handleRowClick(index)}
                       style={{
-                          backgroundColor: selectedRow === index ? '#d3e5ff' : 'white',
+                          backgroundColor: selectedRowExp === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
                         }}                      
                       >
@@ -101,9 +131,40 @@ function OptionQuote (props) {
         </div>}  
 
         {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; for {ymbol}  &nbsp; </h6> */}
-        
-        <hr/> 
-        <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>
+        {expirationsArray.length > 0 && <div>
+          <hr/> 
+          <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>
+                   
+          {strikeArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
+          <h6> count {strikeArray.length} </h6>
+            <table>
+                <thead>
+                  <tr>
+                    <th>N</th>
+                    <th>strike-price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {strikeArray.map((date, index) =>{
+                    return (
+                    <tr key={index}
+                      onClick={() => handleRowClickStrike(index)}
+                      style={{
+                          backgroundColor: selectedStrike === index ? '#d3e5ff' : 'white',
+                          cursor: 'pointer',
+                        }}                      
+                      >
+                      <td style={{padding: '2px', margin: '2px', width: '5px'}}>{index}  </td>
+                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{date}  </td> 
+                    </tr>
+                    )
+                  })}
+                </tbody>
+            </table>
+        </div>}  
+
+        </div>}
+
       </div>
     </div>
   );
