@@ -67,6 +67,8 @@ import Config from './Config'
 import StockLists from './StockLists'
 
 import MarketStackApi from  './MarketStackApi'
+import {OptionQuote} from  './StockOptions'
+
 
 import Manual from '../manual/Manual';
 
@@ -748,6 +750,7 @@ const BasicTable = (props) => {
     urlGetParse:   'urlGetParse',
     candleStick: 'candleStick',
     dropCount:    'dropCount',
+    Options:      'Options',
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState('none')
@@ -997,6 +1000,10 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}
                 title='Get ETF holdings '/> 
               <div style={{color:'blue'}}> holdings  </div> 
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='options' id='3' checked={analyzeTool==='options'} onChange={onOptionChange}
+                title='stock options'/> 
+              <div style={{color:'blue'}}> options  </div> 
             </div>
 
             <div style={{display:'flex'}}>              
@@ -1098,8 +1105,11 @@ const BasicTable = (props) => {
             {analyzeTool ==='candleStick' && <CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
                errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns}/>}
 
-            {analyzeTool ==='dropCount' && <DropsCount symbol = {props.StockSymbol}  
+            {analyzeTool ==='dropCount' && <DropsCount symbol = {chartSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+                errorAdd={props.errorAdd} daily={props.daily}/>}
+
+            {analyzeTool ==='options' && <OptionQuote symbol = {'AAPL'}  
                 errorAdd={props.errorAdd} daily={props.daily}/>}
 
           </div>}
