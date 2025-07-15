@@ -26,6 +26,7 @@ function OptionQuote (props) {
   const [strikeArray, setStrikeArray] = useState([]);
   const [selectedStrike, setSelectedStrike] = useState(null);
   const [strikeCount, setStrikeCount] = useState(5);
+  const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
@@ -103,13 +104,15 @@ function OptionQuote (props) {
   function optionFee () {
 
     var strikeGroup = strikeArray[selectedStrike];
+    var lineArr = []
     for (let i = 0; i < strikeCount; i++) {
       if (selectedStrike + i >= strikeArray.length)
         break;
       strikeGroup += ',' + strikeArray[selectedStrike + i]
+      lineArr.push (i) 
     }
     console.log ('strikeGroup=', strikeGroup) 
-
+    setLineNumberArr(lineArr);
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + '/?expiration=' + expirationsArray[selectedRowExp]
@@ -142,7 +145,7 @@ function OptionQuote (props) {
           <h6  style={{color: 'blue' }}>Option Quote (under development) </h6>  &nbsp; &nbsp;
         </div>
 
-        {eliHome &&  <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />}&nbsp;log &nbsp; &nbsp;
+        {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
 
         <div><button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> </div>
 
@@ -211,6 +214,7 @@ function OptionQuote (props) {
 
           <hr/> 
           <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>
+          <h8>expiration-date={expirationsArray[selectedRowExp]}</h8>
           {optionKeys.length > 0 && <div style={{height:'300px', width: '600px', overflow:'auto'}}>
 
             <table>
@@ -225,7 +229,7 @@ function OptionQuote (props) {
                   </tr> 
                 </thead>
                 <tbody>
-                  {[0,1].map((quote, index) =>{
+                  {lineNumberArr.map((quote, index) =>{
                     return (
                     <tr key={index}>
                       {optionKeys.map((key, keyI) => {
@@ -234,11 +238,6 @@ function OptionQuote (props) {
                       )
                     })}
 
-                      {/* <td style={{padding: '2px', margin: '2px', width: '5px'}}>{index}  </td>
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.symbol}  </td> 
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.last_price}  </td> 
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.bid}  </td> 
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.ask}  </td>  */}
                     </tr>
                     )
                   })}
