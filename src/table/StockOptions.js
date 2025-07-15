@@ -89,6 +89,32 @@ function OptionQuote (props) {
       console.log(err)
     })
   }
+ 
+
+  function optionFee () {
+    // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
+    url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
+        + '/?expiration=' + expirationsArray[selectedRowExp]
+        + '&side=call' + '&strike=' + strikeArray[selectedStrike]
+        // + '?human=true';
+    if (log)
+      console.log (url)
+
+    axios.get (url)
+    .then ((result) => {
+      if (log)
+        console.dir (result.data)
+      const status = result.data.s
+
+      console.log ('strikeArray=', strikeArray.length)
+      setStrikeArray(strikeArray );
+      // console.log (strikeArray)
+    })
+    .catch ((err) => {
+      console.log(err)
+    })
+
+  }
 
   return (
     <div>
@@ -163,6 +189,10 @@ function OptionQuote (props) {
             </table>
         </div>}  
 
+          <hr/> 
+          <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>
+
+
         </div>}
 
       </div>
@@ -189,7 +219,7 @@ function OptionQuote (props) {
 // https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-02-20&side=call
 // https://api.marketdata.app/v1/options/quotes/AAPL260220C00150000/?human=true
 
-// https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-02-20&side=call&strike=150.00
+// https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25
 
 
 
