@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {IpContext} from '../contexts/IpContext';
-import { set } from 'date-fns';
+import GetInt from '../utils/GetInt'
+
 // Zuberi Moshe
 
 // 
@@ -24,6 +25,14 @@ function OptionQuote (props) {
 
   const [strikeArray, setStrikeArray] = useState([]);
   const [selectedStrike, setSelectedStrike] = useState(null);
+  const [strikeCount, setStrikeCount] = useState(5);
+
+  const [optionQuote, setOptionQuote] = useState({});
+  const [optionKeys, setOptionKeys] = useState([]);
+
+// (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
+  
+  const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
 
   function expirationsGet () {
     url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol;
@@ -92,10 +101,19 @@ function OptionQuote (props) {
  
 
   function optionFee () {
+
+    var strikeGroup = strikeArray[selectedStrike];
+    for (let i = 0; i < strikeCount; i++) {
+      if (selectedStrike + i >= strikeArray.length)
+        break;
+      strikeGroup += ',' + strikeArray[selectedStrike + i]
+    }
+    console.log ('strikeGroup=', strikeGroup) 
+
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + '/?expiration=' + expirationsArray[selectedRowExp]
-        + '&side=call' + '&strike=' + strikeArray[selectedStrike]
+        + '&side=call' + '&strike=' + strikeGroup
         // + '?human=true';
     if (log)
       console.log (url)
@@ -106,9 +124,9 @@ function OptionQuote (props) {
         console.dir (result.data)
       const status = result.data.s
 
-      console.log ('strikeArray=', strikeArray.length)
-      setStrikeArray(strikeArray );
-      // console.log (strikeArray)
+      setOptionQuote(result.data); // take the first one, there could be more
+      setOptionKeys(Object.keys(result.data))
+      console.log ('keys', Object.keys(result.data))
     })
     .catch ((err) => {
       console.log(err)
@@ -117,7 +135,7 @@ function OptionQuote (props) {
   }
 
   return (
-    <div>
+
       <div style = {{ border: '2px solid blue'}} >
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
@@ -160,7 +178,8 @@ function OptionQuote (props) {
         {expirationsArray.length > 0 && <div>
           <hr/> 
           <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>
-                   
+          <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+
           {strikeArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
           <h6> count {strikeArray.length} </h6>
             <table>
@@ -187,18 +206,52 @@ function OptionQuote (props) {
                   })}
                 </tbody>
             </table>
-        </div>}  
+          </div>}  
+          </div>}
 
           <hr/> 
           <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>
+          {optionKeys.length > 0 && <div style={{height:'300px', width: '600px', overflow:'auto'}}>
 
+            <table>
+                <thead>
+                  <tr>
+                    {optionKeys.map((key, keyI) => {
+                      return (
+    
+                        <th key={keyI}>{optionKeys[keyI]}</th>
+                      )
+                    })}
+                  </tr> 
+                </thead>
+                <tbody>
+                  {[0,1].map((quote, index) =>{
+                    return (
+                    <tr key={index}>
+                      {optionKeys.map((key, keyI) => {
+                      return (
+                        <td style={{padding: '2px', margin: '2px', width: '10px'}}>{optionQuote[key][quote]}</td>
+                      )
+                    })}
+
+                      {/* <td style={{padding: '2px', margin: '2px', width: '5px'}}>{index}  </td>
+                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.symbol}  </td> 
+                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.last_price}  </td> 
+                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.bid}  </td> 
+                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{quote.ask}  </td>  */}
+                    </tr>
+                    )
+                  })}
+                </tbody>
+            </table>
 
         </div>}
 
-      </div>
     </div>
-  );
-};
+  )
+}
+
+
 
 
 
