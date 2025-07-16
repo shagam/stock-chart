@@ -8,6 +8,10 @@ const StockGain = (props) => {
     return date.replace(/[-]/g,'_')
   }
 
+  useEffect (() => { 
+    setYearly_div_ratio(0)
+  }, [props.symbol, props.chartData]) 
+
   //** clear dividand if zero, so non zero stick out */
   function isZero (s) {
     if (Number(s) === 0)
