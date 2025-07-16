@@ -48,6 +48,11 @@ function OptionQuote (props) {
           console.dir (result.data)
         const mili = result.data.updated
         const status = result.data.s
+
+        if (result.data.s !== 'ok') {
+          props.errorAdd ([props.symbol, 'expiration error', result.data.s])
+          console.log (props.symbol, 'expiration error', result.data.s)
+        }
         
         for (var i = 0; i < result.data.expirations.length; i++) {
           expArray.push (result.data.expirations[i])
@@ -86,7 +91,12 @@ function OptionQuote (props) {
       if (log)
         console.dir (result.data)
       const mili = result.data.updated
-      const status = result.data.s
+
+      if (result.data.s !== 'ok') {
+        props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
+        console.log (props.symbol, 'strike-price error', result.data.s)
+      }
+
       const arr = result.data[expirationsArray[selectedExpiration]]
       console.log (arr)
       for (var i = 0; i < arr.length; i++) {
@@ -126,7 +136,11 @@ function OptionQuote (props) {
     .then ((result) => {
       if (log)
         console.dir (result.data)
-      const status = result.data.s
+
+      if (result.data.s !== 'ok') {
+        props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
+        console.log (props.symbol, 'option-fee error', result.data.s)
+      }
 
       setOptionQuote(result.data); // take the first one, there could be more
       setOptionKeys(Object.keys(result.data))
