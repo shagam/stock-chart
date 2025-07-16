@@ -1,8 +1,12 @@
 import { setYear } from 'date-fns';
 import React, {useState, useEffect} from 'react'
+import {IpContext} from '../contexts/IpContext';
 
 const StockGain = (props) => {
   const [yearly_div_ratio, setYearly_div_ratio] = useState(0) 
+  const [log, setLog] = useState (false); // default to true if eliHome is true
+  const {eliHome} = IpContext();
+
   //** replace dash by underscore so date in header doex not split in 2 lines */
   function dateReplaceDash (date) {
     return date.replace(/[-]/g,'_')
@@ -41,7 +45,7 @@ const StockGain = (props) => {
         const div_ratio = Number(div) / Number(closePrice);
         div_ratio_sum += div_ratio
         div_count += 1
-        if (div_ratio > 0.01){
+        if (div_ratio > 0.01 && log){
           console.log ('i=', i, 'div_ratio=', div_ratio.toFixed(4), 'div=', div, 'closePrice=', closePrice)
         }
       }
@@ -78,6 +82,7 @@ const StockGain = (props) => {
         <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(5)}   &nbsp; &nbsp;  {(yearly_div_ratio *100).toFixed(3)}%</div>
       </div>
       <button style={{background: 'aqua'}} type="button" onClick={()=>dividandCalc()}> dividend-calc  </button> &nbsp; &nbsp; 
+      {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
       {/* Stock gain list */}
 
       {Object.keys(props.chartData).length > 0 && <div  style={{height:'400px', overflow:'auto'}}> 
