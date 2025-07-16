@@ -174,6 +174,7 @@ function OptionQuote (props) {
         result.data.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
         result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
         delete result.data.optionSymbol
+        delete result.data.s
       }
 
       setOptionQuote(result.data); // take the first one, there could be more
@@ -276,11 +277,12 @@ function OptionQuote (props) {
 
 
           <h8>expiration-date={expirationsArray[selectedExpiration]}</h8>
-          {optionKeys.length > 0 && <div style={{height:'300px', width: '600px', overflow:'auto'}}>
-
+          {optionKeys.length > 0 && <div style={{height:'300px', width: '1200px', overflow:'auto'}}>
+          <h6> count {optionQuote.expiration.length} </h6>
             <table>
                 <thead>
                   <tr>
+                    <th>N</th>
                     {optionKeys.map((key, keyI) => {
                       return (
     
@@ -293,6 +295,7 @@ function OptionQuote (props) {
                   {lineNumberArr.map((quote, index) =>{
                     return (
                     <tr key={index}>
+                      <td>{index}</td>
                       {optionKeys.map((key, keyI) => {
                       return (
                         <td key={keyI} style={{padding: '2px', margin: '2px', width: '10px'}}>{optionQuote[key][quote]}</td>
