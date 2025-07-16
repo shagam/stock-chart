@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
-
+import {format} from "date-fns"
+import {todayDate, getDate_YYYY_mm_dd} from '../utils/Date';
+// 
 // Zuberi Moshe
 
 // 
@@ -55,9 +57,12 @@ function OptionQuote (props) {
         }
         
         for (var i = 0; i < result.data.expirations.length; i++) {
-          expArray.push (result.data.expirations[i])
+          if (selectedExpiration + i >= result.data.expirations.length)
+            break;
+          expArray.push (result.data.expirations[selectedExpiration + i])
         }
-        console.log ('expirationsArray=', expArray.length)
+        if (log)
+          console.log ('expirationsArray=', expArray)
         setExpirationsArray(expArray);
       })
       .catch ((err) => {
@@ -139,7 +144,8 @@ function OptionQuote (props) {
       strikeGroup += ',' + strikeArray[selectedStrike + i]
       lineArr.push (i) 
     }
-    console.log ('strikeGroup=', strikeGroup) 
+    if (log)
+      console.log ('strikeGroup=', strikeGroup) 
     setLineNumberArr(lineArr);
  
     
@@ -154,18 +160,28 @@ function OptionQuote (props) {
     axios.get (url)
     .then ((result) => {
       if (log)
-        console.dir (result.data)
+        console.log (result.data)
 
       if (result.data.s !== 'ok') {
         props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
         console.log (props.symbol, 'option-fee error', result.data.s)
       }
 
+     for (let i = 0; i < result.data.expiration.length; i++) {
+        //  console.log (Date(result.data.expiration[i]))
+        console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
+        result.data.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
+        result.data.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
+        result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
+        delete result.data.optionSymbol
+      }
+
       setOptionQuote(result.data); // take the first one, there could be more
       setOptionKeys(Object.keys(result.data))
       if (log)
         console.log ('keys', Object.keys(result.data))
-    })
+
+     })
     .catch ((err) => {
       console.log(err)
     })
