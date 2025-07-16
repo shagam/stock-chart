@@ -103,11 +103,12 @@ function OptionQuote (props) {
       }
 
       const arr = result.data[expirationsArray[selectedExpiration]]
-      console.log (arr)
+      if(log)
+        console.log (arr)
       for (var i = 0; i < arr.length; i++) {
         strikeArray.push (arr[i])
       }
-      console.log ('strikeArray=', strikeArray.length)
+      // console.log ('strikeArray=', strikeArray)
       setStrikeArray(strikeArray );
       // console.log (strikeArray)
     })
@@ -123,7 +124,7 @@ function OptionQuote (props) {
     console.log (expirationCount, selectedExpiration, expirationsArray.length)
     var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration];
     if (expirationCount > 1) {
-      expirationGroup =  '/?expirations=' + expirationsArray[selectedExpiration];
+      // expirationGroup =  '/?expiration_from=' + expirationsArray[selectedExpiration] + '&expiration_to=' + expirationsArray[selectedExpiration + 1];
 
       for (let i = 1; i < expirationCount; i++) {
         if (selectedExpiration + i >= expirationsArray.length)
