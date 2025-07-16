@@ -1072,8 +1072,8 @@ const BasicTable = (props) => {
             stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
             servSelect={servSelect} ssl={ssl} PORT={PORT} daily={daily} /> }
 
-            {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} infoSymbol={chartSymbol} gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
-            daily={daily} chartData={chartData}/>}
+            {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} symbol={chartSymbol} //gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
+            daily={daily} chartData={chartData} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns} />}
 
             {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
          
