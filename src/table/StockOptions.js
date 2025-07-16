@@ -23,7 +23,7 @@ function OptionQuote (props) {
   const [log, setLog] = useState (eliHome); // default to true if eliHome is true
   const [log1, setLog1] = useState (false);
   const [expirationsArray, setExpirationsArray] = useState([]); 
-  const [expirationCount, setExpirationCount] = useState(3);
+  const [expirationCount, setExpirationCount] = useState(1);
   const [selectedExpiration, setSelectedExpiration] = useState(null);
 
   const [strikeArray, setStrikeArray] = useState([]);
@@ -120,14 +120,18 @@ function OptionQuote (props) {
   function optionFee () {
 
     //** create expiration group */
+    console.log (expirationCount, selectedExpiration, expirationsArray.length)
+    var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration];
+    if (expirationCount > 1) {
+      expirationGroup =  '/?expirations=' + expirationsArray[selectedExpiration];
 
-    var expirationGroup = '[' + expirationsArray[selectedExpiration];
-    for (let i = 0; i < expirationCount; i++) {
-      if (selectedExpiration + i >= expirationsArray.length)
-        break;
-      expirationGroup += ',' + expirationsArray[selectedExpiration + i] 
+      for (let i = 1; i < expirationCount; i++) {
+        if (selectedExpiration + i >= expirationsArray.length)
+          break;
+        expirationGroup += ',' + expirationsArray[selectedExpiration + i] 
+      }
+      // expirationGroup += ']';
     }
-    expirationGroup += ']';
     if (log)
       console.log ('expirationGroup=', expirationGroup)
 
@@ -138,7 +142,7 @@ function OptionQuote (props) {
     var strikeGroup = strikeArray[selectedStrike];
     var lineArr = []
     
-    for (let i = 0; i < strikeCount; i++) {
+    for (let i = 1; i < strikeCount; i++) {
       if (selectedStrike + i >= strikeArray.length)
         break;
       strikeGroup += ',' + strikeArray[selectedStrike + i]
@@ -151,9 +155,12 @@ function OptionQuote (props) {
     
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
-        + '/?expirations=' + expirationGroup
+        + expirationGroup
         + '&side=call' + '&strike=' + strikeGroup
         // + '?human=true';
+
+    const TEST = 'https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25'
+    // url = TEST;
     if (log)
       console.log (url)
 
@@ -169,7 +176,7 @@ function OptionQuote (props) {
 
      for (let i = 0; i < result.data.expiration.length; i++) {
         //  console.log (Date(result.data.expiration[i]))
-        console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
+        // console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
         result.data.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
         result.data.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
         result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
@@ -336,6 +343,7 @@ function OptionQuote (props) {
 // https://api.marketdata.app/v1/options/quotes/AAPL260220C00150000/?human=true
 
 // https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25
+// https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2025-08-15&side=call&strike=25
 
 
 
