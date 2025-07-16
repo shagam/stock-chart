@@ -216,6 +216,7 @@ function OptionQuote (props) {
         {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; for {ymbol}  &nbsp; </h6> */}
         {expirationsArray.length > 0 && <div>
           <hr/> 
+          {!selectedExpiration && ! strikeArray.length > 0 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {selectedExpiration && <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>}
           <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
 
@@ -249,7 +250,10 @@ function OptionQuote (props) {
           </div>}
 
           <hr/> 
+          {selectedExpiration && !selectedStrike && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
           {selectedStrike && <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>}
+
+
           <h8>expiration-date={expirationsArray[selectedExpiration]}</h8>
           {optionKeys.length > 0 && <div style={{height:'300px', width: '600px', overflow:'auto'}}>
 
