@@ -182,8 +182,10 @@ function OptionQuote (props) {
 
         {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
 
-        <div><button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> </div>
+        <div style = {{display: 'flex'}}>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+        </div>
 
         { expirationsArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
           <h6> count {expirationsArray.length} </h6>
@@ -217,8 +219,11 @@ function OptionQuote (props) {
         {expirationsArray.length > 0 && <div>
           <hr/> 
           {!selectedExpiration && ! strikeArray.length > 0 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
-          {selectedExpiration && <div><button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> </div>}
-          <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+          {selectedExpiration && <div style = {{display: 'flex'}}>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; 
+            <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+          </div>}
+
 
           {strikeArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
           <h6> count {strikeArray.length} </h6>
