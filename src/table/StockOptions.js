@@ -140,7 +140,7 @@ function OptionQuote (props) {
     //** Create strike-group  (list) */
 
     var strikeGroup = strikeArray[selectedStrike];
-    var lineArr = []
+    var lineArr = [0]
     
     for (let i = 1; i < strikeCount; i++) {
       if (selectedStrike + i >= strikeArray.length)
@@ -283,7 +283,7 @@ function OptionQuote (props) {
           {selectedStrike && <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>}
 
 
-          <h8>expiration-date={expirationsArray[selectedExpiration]}</h8>
+          {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
           {optionKeys.length > 0 && <div style={{height:'300px', width: '1200px', overflow:'auto'}}>
           <h6> count {optionQuote.expiration.length} </h6>
             <table>
