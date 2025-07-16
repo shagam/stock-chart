@@ -114,8 +114,25 @@ function OptionQuote (props) {
 
   function optionFee () {
 
+    //** create expiration group */
+
+    var expirationGroup = '[' + expirationsArray[selectedExpiration];
+    for (let i = 0; i < expirationCount; i++) {
+      if (selectedExpiration + i >= expirationsArray.length)
+        break;
+      expirationGroup += ',' + expirationsArray[selectedExpiration + i] 
+    }
+    expirationGroup += ']';
+    if (log)
+      console.log ('expirationGroup=', expirationGroup)
+
+
+ 
+    //** Create strike-group  (list) */
+
     var strikeGroup = strikeArray[selectedStrike];
     var lineArr = []
+    
     for (let i = 0; i < strikeCount; i++) {
       if (selectedStrike + i >= strikeArray.length)
         break;
@@ -124,9 +141,11 @@ function OptionQuote (props) {
     }
     console.log ('strikeGroup=', strikeGroup) 
     setLineNumberArr(lineArr);
+ 
+    
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
-        + '/?expiration=' + expirationsArray[selectedExpiration]
+        + '/?expirations=' + expirationGroup
         + '&side=call' + '&strike=' + strikeGroup
         // + '?human=true';
     if (log)
@@ -164,6 +183,7 @@ function OptionQuote (props) {
         {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
 
         <div><button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> </div>
+          <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
 
         { expirationsArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
           <h6> count {expirationsArray.length} </h6>
@@ -250,7 +270,7 @@ function OptionQuote (props) {
                     <tr key={index}>
                       {optionKeys.map((key, keyI) => {
                       return (
-                        <td style={{padding: '2px', margin: '2px', width: '10px'}}>{optionQuote[key][quote]}</td>
+                        <td key={keyI} style={{padding: '2px', margin: '2px', width: '10px'}}>{optionQuote[key][quote]}</td>
                       )
                     })}
 
