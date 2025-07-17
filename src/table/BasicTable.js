@@ -20,7 +20,7 @@ import {MarketOpenPrice} from './MarketOpenPrice'
 
 
 import StockInfo from './StockInfo'
-import StockGain from './StockGain'
+import  {StockGain, dividendCalc} from './StockGain'
 
 import {Holdings} from './Holdings'
 import {DropsCount} from './DropsCount'
