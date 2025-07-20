@@ -36,6 +36,7 @@ function OptionQuote (props) {
   const [optionKeys, setOptionKeys] = useState([]);
   const  options = ['call', 'put'];
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
+  const[responseRows, setResponseRows] = useState(); // for debugging
 
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
@@ -144,17 +145,14 @@ function OptionQuote (props) {
     //** Create strike-group  (list) */
 
     var strikeGroup = strikeArray[selectedStrike];
-    var lineArr = [0]
     
     for (let i = 1; i < strikeCount; i++) {
       if (selectedStrike + i >= strikeArray.length)
         break;
       strikeGroup += ',' + strikeArray[selectedStrike + i]
-      lineArr.push (i) 
     }
     if (log)
       console.log ('strikeGroup=', strikeGroup) 
-    setLineNumberArr(lineArr);
  
     
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
@@ -176,9 +174,13 @@ function OptionQuote (props) {
       if (result.data.s !== 'ok') {
         props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
         console.log (props.symbol, 'option-fee error', result.data.s)
+        return
       }
 
-     for (let i = 0; i < result.data.expiration.length; i++) {
+      setResponseRows(result.data.expiration.length)  // response lines
+
+      var lineArr = [0]
+      for (let i = 0; i < result.data.expiration.length; i++) {
         //  console.log (Date(result.data.expiration[i]))
         // console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
         result.data.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
@@ -186,7 +188,9 @@ function OptionQuote (props) {
         result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
         delete result.data.optionSymbol
         delete result.data.s
+        lineArr.push (i) 
       }
+      setLineNumberArr(lineArr);
 
       setOptionQuote(result.data); // take the first one, there could be more
       setOptionKeys(Object.keys(result.data))
