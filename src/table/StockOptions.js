@@ -5,6 +5,7 @@ import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 import {format} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd} from '../utils/Date';
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 // 
 // Zuberi Moshe
 
@@ -33,6 +34,8 @@ function OptionQuote (props) {
 
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
+  const  options = ['call', 'put'];
+  const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
 
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
@@ -157,7 +160,7 @@ function OptionQuote (props) {
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + expirationGroup
-        + '&side=call' + '&strike=' + strikeGroup
+        + '&side=' + callOrPut + '&strike=' + strikeGroup
         // + '?human=true';
 
     const TEST = 'https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25'
@@ -281,7 +284,11 @@ function OptionQuote (props) {
 
           <hr/> 
           {selectedExpiration && !selectedStrike && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
-          {selectedStrike && <div><button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button> </div>}
+
+          {selectedStrike && <div style = {{display: 'flex'}}>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button>  &nbsp; &nbsp;  &nbsp;
+            <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> 
+          </div>}
 
 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
