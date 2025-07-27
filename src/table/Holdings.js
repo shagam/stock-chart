@@ -299,12 +299,13 @@ function Holdings (props) {
       {/* ====== Buttons */} 
       {props.chartSymbol && <div>
         {/* <div>&nbsp; </div> */}
-          <div stype={{display: 'flex'}}>
+          <div style={{display: 'flex'}}>
       
-            {eliHome &&  <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  />}&nbsp;IgnoreSaved &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  />}&nbsp;log &nbsp; &nbsp;
-            {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  }&nbsp;SaveInFile &nbsp; &nbsp;
-            {<input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  }&nbsp;get-even-when-mismatch &nbsp; &nbsp; 
+            {eliHome && <div> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  /> &nbsp;IgnoreSaved &nbsp; &nbsp; </div> }
+            {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  /> &nbsp;log &nbsp; &nbsp; </div>} 
+            {eliHome && <div> <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  /> &nbsp;SaveInFile &nbsp; &nbsp; </div> }
+            <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  &nbsp;get-even-when-mismatch &nbsp; &nbsp; 
+          </div>
 
             <GetInt init={count} callBack={setCount} title='Count-Limit (50 max) &nbsp;' type='Number' pattern="[0-9]+" width = '15%'/> 
             <div style={{display: 'flex', marginTop: '10px'}}>
@@ -312,7 +313,7 @@ function Holdings (props) {
               <button type="button" onClick={()=>togglePercent ()}>toggle % column  </button>  &nbsp; &nbsp;
             </div>
             <div>&nbsp; </div>
-          </div>
+
 
           <div>  
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  ({props.chartSymbol}) </button> &nbsp; 
