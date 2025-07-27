@@ -25,10 +25,10 @@ function OptionQuote (props) {
   const [log1, setLog1] = useState (false);
   const [expirationsArray, setExpirationsArray] = useState([]); 
   const [expirationCount, setExpirationCount] = useState(2);
-  const [selectedExpiration, setSelectedExpiration] = useState(null);
+  const [selectedExpiration, setSelectedExpiration] = useState(-1);
 
   const [strikeArray, setStrikeArray] = useState([]);
-  const [selectedStrike, setSelectedStrike] = useState(null);
+  const [selectedStrike, setSelectedStrike] = useState(-1);
   const [strikeCount, setStrikeCount] = useState(5);
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
@@ -48,7 +48,6 @@ function OptionQuote (props) {
     url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/' //'/&api_key=' + TOKEN
     if (log)
       console.log (url)
-    const expArray = []
 
     axios.get (url)
       .then ((result) => {
@@ -62,14 +61,7 @@ function OptionQuote (props) {
           console.log (props.symbol, 'expiration error', result.data.s)
         }
         
-        for (var i = 0; i < result.data.expirations.length; i++) {
-          if (selectedExpiration + i >= result.data.expirations.length)
-            break;
-          expArray.push (result.data.expirations[selectedExpiration + i])
-        }
-        if (log)
-          console.log ('expirationsArray=', expArray)
-        setExpirationsArray(expArray);
+        setExpirationsArray(result.data.expirations);
       })
       .catch ((err) => {
         console.log(err)
@@ -96,7 +88,6 @@ function OptionQuote (props) {
     if (log)
       console.log (url)
 
-    const strikeArray = [] 
     axios.get (url)
     .then ((result) => {
       if (log)
@@ -111,12 +102,9 @@ function OptionQuote (props) {
       const arr = result.data[expirationsArray[selectedExpiration]]
       if(log)
         console.log (arr)
-      for (var i = 0; i < arr.length; i++) {
-        strikeArray.push (arr[i])
-      }
-      // console.log ('strikeArray=', strikeArray)
-      setStrikeArray(strikeArray );
-      // console.log (strikeArray)
+
+      setStrikeArray(arr);
+
     })
     .catch ((err) => {
       console.log(err)
@@ -185,6 +173,7 @@ function OptionQuote (props) {
         //  console.log (Date(result.data.expiration[i]))
         // console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
         result.data.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
+        console.log('expiration=', new Date(result.data.expiration[i] * 1000))
         result.data.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
         result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
         delete result.data.optionSymbol
@@ -251,8 +240,8 @@ function OptionQuote (props) {
         {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; for {ymbol}  &nbsp; </h6> */}
         {expirationsArray.length > 0 && <div>
           <hr/> 
-          {!selectedExpiration && ! strikeArray.length > 0 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
-          {selectedExpiration && <div style = {{display: 'flex'}}>
+          {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
+          {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
           </div>}
@@ -288,9 +277,9 @@ function OptionQuote (props) {
           </div>}
 
           <hr/> 
-          {selectedExpiration && !selectedStrike && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
+          {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
-          {selectedStrike && <div style = {{display: 'flex'}}>
+          {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> 
           </div>}
