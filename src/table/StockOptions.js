@@ -173,7 +173,7 @@ function OptionQuote (props) {
         //  console.log (Date(result.data.expiration[i]))
         // console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
         result.data.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
-        console.log('expiration=', new Date(result.data.expiration[i] * 1000))
+        // console.log('expiration=', new Date(result.data.expiration[i] * 1000))
         result.data.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
         result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
         delete result.data.optionSymbol
@@ -207,10 +207,11 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+          <h6> count {expirationsArray.length} </h6>
         </div>
 
         { expirationsArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
-          <h6> count {expirationsArray.length} </h6>
+
             <table>
                 <thead>
                   <tr>
@@ -244,11 +245,11 @@ function OptionQuote (props) {
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+            <h6> count {strikeArray.length} </h6>
           </div>}
 
 
           {strikeArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
-          <h6> count {strikeArray.length} </h6>
             <table>
                 <thead>
                   <tr>
@@ -286,8 +287,8 @@ function OptionQuote (props) {
 
 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
-          {optionKeys.length > 0 && <div style={{height:'300px', width: '1200px', overflow:'auto'}}>
-          <h6> count {optionQuote.expiration.length} </h6>
+          {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
+            <h6> count {optionQuote.expiration.length} </h6>
             <table>
                 <thead>
                   <tr>
