@@ -34,6 +34,7 @@ function Holdings (props) {
 
   const [percentRegex, setPercentRegex] = useState ();
 
+  const TOKEN = process.env.REACT_APP_MARKETDATA;
 
   const {localIp, localIpv4, eliHome, city, countryName, countryCode,} = IpContext();
 
@@ -58,6 +59,37 @@ function Holdings (props) {
     setErr ('stock missing (Holdings): ' + props.chartSymbol)
     return;
   }
+
+  function holdingsMarketData () {
+    const url = 'https://api.marketdata.app/v1/etf/holdings?symbol=' + props.chartSymbol + '&token=' + TOKEN
+      axios.get (url)
+    // getDate()
+    .then ((result) => {
+      setErr()
+      if (result.status !== 200) {
+        console.log (props.chartSymbol, 'status=', result)
+        return;
+      }
+      if (LOG)
+        console.log (props.chartSymbol, JSON.stringify(result.data))
+
+      if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+        setErr(result.data)
+        return;
+      }
+
+      setArr(result.data.holdArr)
+      setDat(result.data)
+         
+    } )
+    .catch ((err) => {
+      setErr(err.message)
+      props.errorAdd ([props.chartSymbol, err.message])
+      // console.log(err.message)
+    })
+  }
+// https://api.marketdata.app/v1/etfs/holdings/{symbol}?token=YOUR_API_TOKEN6
+
 
   function addSymOne (sym) {
     const sym_index = props.rows.findIndex((row)=> row.values.symbol === sym); 
@@ -318,7 +350,7 @@ function Holdings (props) {
           <div>  
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  ({props.chartSymbol}) </button> &nbsp; 
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  ({props.chartSymbol}) </button> &nbsp;
-
+            {/* {eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>holdingsMarketData ()}>marketData  ({props.chartSymbol}) </button> &nbsp;</div>} */}
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
             {holdingsRawObj[props.chartSymbol] && Object.keys(heldMasterObj).length > 0 && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
           </div> 
