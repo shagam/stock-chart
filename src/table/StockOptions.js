@@ -45,7 +45,7 @@ function OptionQuote (props) {
   function expirationsGet () {
     if (log)
       console.log ('expirationCount=', expirationCount)
-    url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/' //'/&api_key=' + TOKEN
+    url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
     if (log)
       console.log (url)
 
@@ -64,7 +64,8 @@ function OptionQuote (props) {
         setExpirationsArray(result.data.expirations);
       })
       .catch ((err) => {
-        console.log(err)
+        console.log(err.message)
+        props.errorAdd ([props.symbol, 'expiration error', err.message])
       })
 
   }
@@ -83,7 +84,7 @@ function OptionQuote (props) {
 
   function strikePrices () {
     url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationsArray[selectedExpiration] + '&api_key=' + TOKEN
+        + expirationsArray[selectedExpiration] + '&token=' + TOKEN
         // + '?token=' + TOKEN;
     if (log)
       console.log (url)
@@ -107,7 +108,8 @@ function OptionQuote (props) {
 
     })
     .catch ((err) => {
-      console.log(err)
+      console.log(err.message)
+      props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
   }
  
@@ -119,7 +121,8 @@ function OptionQuote (props) {
     var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration];
     // console.log ('expirationCount=', expirationCount)
     if (expirationCount > 1) {
-      expirationGroup =  '/?from=' + expirationsArray[selectedExpiration] + '&to=' + expirationsArray[selectedExpiration + expirationCount -1];
+      expirationGroup =  '/?from=' + expirationsArray[selectedExpiration] + '&to=' + expirationsArray[selectedExpiration + expirationCount -1]
+       + '&token=' + TOKEN
 
       // for (let i = 1; i < expirationCount; i++) {
       //   if (selectedExpiration + i >= expirationsArray.length)
@@ -189,7 +192,8 @@ function OptionQuote (props) {
 
      })
     .catch ((err) => {
-      console.log(err)
+      console.log(err.message)
+      props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
 
   }

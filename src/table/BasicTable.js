@@ -1107,10 +1107,10 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='dropCount' && <DropsCount symbol = {chartSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-                errorAdd={props.errorAdd} daily={props.daily}/>}
+                errorAdd={errorAdd} daily={props.daily}/>}
 
             {analyzeTool ==='options' && <OptionQuote symbol = {row_index_eeee === -1 ? 'AAPL' : chartSymbol}  
-                errorAdd={props.errorAdd} daily={props.daily}/>}
+                errorAdd={errorAdd} daily={props.daily}/>}
 
           </div>}
           </div>}        
