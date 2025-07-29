@@ -36,7 +36,8 @@ function OptionQuote (props) {
   const [optionKeys, setOptionKeys] = useState([]);
   const  options = ['call', 'put'];
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
-  const[responseRows, setResponseRows] = useState(); // for debugging
+
+  const [columnHideFlag, setColumnHideFlag] = useState(false);
 
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
@@ -115,12 +116,15 @@ function OptionQuote (props) {
  
 
   function optionFee () {
-
+    //** clear */
+    setOptionQuote({})
+    setOptionKeys([]);
+    setLineNumberArr([]);
     //** create expiration group */
     // console.log (expirationCount, selectedExpiration, expirationsArray.length)
-    var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration];
+    var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration] + '&token=' + TOKEN;
     // console.log ('expirationCount=', expirationCount)
-    if (expirationCount > 1) {
+    if (expirationCount > 1 && (selectedExpiration + expirationCount < expirationsArray.length)) {
       expirationGroup =  '/?from=' + expirationsArray[selectedExpiration] + '&to=' + expirationsArray[selectedExpiration + expirationCount -1]
        + '&token=' + TOKEN
 
@@ -169,9 +173,7 @@ function OptionQuote (props) {
         return
       }
 
-      setResponseRows(result.data.expiration.length)  // response lines
-
-      var lineArr = [0]
+      var lineArr = []
       for (let i = 0; i < result.data.expiration.length; i++) {
         //  console.log (Date(result.data.expiration[i]))
         // console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
