@@ -285,7 +285,7 @@ function OptionQuote (props) {
           {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-fee   </button>  &nbsp; &nbsp;  &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/>  &nbsp;  &nbsp; &nbsp;  &nbsp;
             {optionQuote && optionQuote.expiration && <h6> count {optionQuote.expiration.length} </h6>}
           </div>}
