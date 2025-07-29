@@ -43,8 +43,8 @@ function OptionQuote (props) {
   const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
 
   function expirationsGet () {
-    if (log)
-      console.log ('expirationCount=', expirationCount)
+    // if (log)
+    //   console.log ('expirationCount=', expirationCount)
     url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
     if (log)
       console.log (url)
@@ -52,7 +52,7 @@ function OptionQuote (props) {
     axios.get (url)
       .then ((result) => {
         if (log)
-          console.dir (result.data)
+          console.log ('expirations', result.data)
         const mili = result.data.updated
         const status = result.data.s
 
@@ -92,7 +92,7 @@ function OptionQuote (props) {
     axios.get (url)
     .then ((result) => {
       if (log)
-        console.dir (result.data)
+        console.log ('strike-prices', result.data)
       const mili = result.data.updated
 
       if (result.data.s !== 'ok') {
@@ -102,7 +102,7 @@ function OptionQuote (props) {
 
       const arr = result.data[expirationsArray[selectedExpiration]]
       if(log)
-        console.log (arr)
+        console.log ('strike-array', arr)
 
       setStrikeArray(arr);
 
@@ -161,7 +161,7 @@ function OptionQuote (props) {
     axios.get (url)
     .then ((result) => {
       if (log)
-        console.log (result.data)
+        console.log ('primium', result.data)
 
       if (result.data.s !== 'ok') {
         props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
