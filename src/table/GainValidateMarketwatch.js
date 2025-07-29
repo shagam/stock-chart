@@ -293,8 +293,8 @@ function VerifyGain (props) {
 
       <div style={{display:'flex'}}>
         {eliHome && <div>  &nbsp; <input  type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
-        {eliHome &&  <div> <input type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd( !logBackEnd)}  />  &nbsp;LogBackend &nbsp; &nbsp; </div>}
-        {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  }&nbsp;SaveInFile &nbsp; &nbsp;
+        {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd( !logBackEnd)}  />  &nbsp;LogBackend &nbsp; &nbsp; </div>}
+        {eliHome && <div><input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  &nbsp;SaveInFile &nbsp; &nbsp; </div>}
       </div>
 
       <div style={{display:'flex'}}>
