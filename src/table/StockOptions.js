@@ -37,9 +37,8 @@ function OptionQuote (props) {
   const [optionKeys, setOptionKeys] = useState([]);
   const  options = ['call', 'put'];
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
-
   const [columnHideFlag, setColumnHideFlag] = useState(false);
-
+  const [hide, setHide]  = useState([])
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
   const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
@@ -313,7 +312,19 @@ function OptionQuote (props) {
           </div>}
 
           {columnHideFlag && <div>
-            <div> select columns </div>
+            
+            <hr/> 
+            <div style={{color:'#11ee33', fontWeight: '32', fontStyle: "italic"}}> column-select  </div>
+              {optionKeys.map((key, keyI) => {
+                return (
+                  <div style = {{display: 'flex'}}>
+                  <input type="checkbox" checked={hide[keyI]} 
+                    onChange={()=>setHide (! hide[keyI])}  /> &nbsp; &nbsp;&nbsp; 
+                  <label key={keyI} style={{margin: '2px', padding: '2px'}}>{key}</label>
+                  </div>
+                )
+              })}
+
             </div>}
 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
