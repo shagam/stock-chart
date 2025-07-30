@@ -6,6 +6,7 @@ import GetInt from '../utils/GetInt'
 import {format} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd} from '../utils/Date';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+import { el } from 'date-fns/locale';
 // 
 // Zuberi Moshe
 
@@ -174,21 +175,38 @@ function OptionQuote (props) {
       }
 
       var lineArr = []
-      for (let i = 0; i < result.data.expiration.length; i++) {
-        //  console.log (Date(result.data.expiration[i]))
-        // console.log (getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000 )));
-        result.data.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
-        // console.log('expiration=', new Date(result.data.expiration[i] * 1000))
-        result.data.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
-        result.data.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
-        delete result.data.optionSymbol
-        delete result.data.s
-        lineArr.push (i) 
-      }
+      var OptionQuoteFiltered = {}
+      OptionQuoteFiltered.expiration = [] 
+      OptionQuoteFiltered.firstTraded = []
+      OptionQuoteFiltered.updated = []
+      const rows = result.data.expiration.length;  // row count
+      Object.keys(result.data).forEach((key) => {
+        // if (key === 'iv' || key === 'delta' || key === 'gamma' || key === 'theta' || key === 'vega')
+        //   return; // skip these keys
+    
+        if (key === 's' || key === 'optionSymbol')
+          return;
+
+            // delete result.data.optionSymbol
+            // delete result.data.s
+          OptionQuoteFiltered[key] = []
+          for (let i = 0; i < rows; i++) {
+            if (key === 'expiration' || key === 'firstTraded' || key === 'updated') {
+              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
+              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
+              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
+            }
+            else
+              OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just
+            if (key === 'expiration')
+              lineArr.push (i) 
+          }
+        } )
+      console.log ('filtered', OptionQuoteFiltered)
       setLineNumberArr(lineArr);
 
-      setOptionQuote(result.data); // take the first one, there could be more
-      setOptionKeys(Object.keys(result.data))
+      setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
+      setOptionKeys(Object.keys(OptionQuoteFiltered))
       if (log)
         console.log ('keys', Object.keys(result.data))
 
