@@ -316,19 +316,22 @@ function OptionQuote (props) {
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>
           </div>}
 
-          {columnHideFlag && <div>
+          {columnHideFlag && <div >
             
             <hr/> 
-            <div style={{color:'#11ee33', fontWeight: '32', fontStyle: "italic"}}> column-select  </div>
+            {/* columnShow  */}
+            <div style={{hight: '400px', color:'#11ee33', fontWeight: '32', fontStyle: "italic" }}> column-select  </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '600px'}}>
               {optionKeys.map((key, keyI) => {
                 return (
-                  <div style = {{display: 'flex'}}>
+                  <div key={keyI} style = {{display: 'flex'}}>
                   <input type="checkbox" checked={columnShow[keyI]} 
                     onChange={()=>setColumnShow (! columnShow[keyI])}  /> &nbsp; &nbsp;&nbsp; 
                   <label key={keyI} style={{margin: '2px', padding: '2px'}}>{key}</label>
                   </div>
                 )
               })}
+              </div>
 
             </div>}
 
