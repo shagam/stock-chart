@@ -307,11 +307,15 @@ function OptionQuote (props) {
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/>  &nbsp;  &nbsp; &nbsp;  &nbsp;
-            {optionQuote && optionQuote.expiration && <h6> count {optionQuote.expiration.length} </h6>}
+            {optionQuote && optionQuote.expiration && <h6> count {optionQuote.expiration.length} </h6>}  &nbsp; 
+            <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
+                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>
           </div>}
 
 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
+
+
           {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
 
             <table>
