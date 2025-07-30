@@ -234,7 +234,7 @@ function OptionQuote (props) {
           <h6> count {expirationsArray.length} </h6>
         </div>
 
-        { expirationsArray.length > 0 && <div style={{height:'250px', width: '300px', overflow:'auto'}}>
+        { expirationsArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
 
             <table>
                 <thead>
@@ -273,7 +273,7 @@ function OptionQuote (props) {
           </div>}
 
 
-          {strikeArray.length > 0 && <div style={{height:'250px', width: '300px', overflow:'auto'}}>
+          {strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr>
@@ -312,6 +312,9 @@ function OptionQuote (props) {
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>
           </div>}
 
+          {columnHideFlag && <div>
+            <div> select columns </div>
+            </div>}
 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
 
