@@ -38,7 +38,7 @@ function OptionQuote (props) {
   const  options = ['call', 'put'];
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
-  const [hide, setHide]  = useState([])
+  const [columnShow, setColumnShow]  = useState([])
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
   const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
@@ -205,7 +205,12 @@ function OptionQuote (props) {
       setLineNumberArr(lineArr);
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
-      setOptionKeys(Object.keys(OptionQuoteFiltered))
+      const keys = Object.keys(OptionQuoteFiltered);
+    const colsArray = (Array(keys.length).fill(true)) 
+      setColumnShow (colsArray)
+      setOptionKeys(keys)
+
+
       if (log)
         console.log ('keys', Object.keys(result.data))
 
@@ -318,8 +323,8 @@ function OptionQuote (props) {
               {optionKeys.map((key, keyI) => {
                 return (
                   <div style = {{display: 'flex'}}>
-                  <input type="checkbox" checked={hide[keyI]} 
-                    onChange={()=>setHide (! hide[keyI])}  /> &nbsp; &nbsp;&nbsp; 
+                  <input type="checkbox" checked={columnShow[keyI]} 
+                    onChange={()=>setColumnShow (! columnShow[keyI])}  /> &nbsp; &nbsp;&nbsp; 
                   <label key={keyI} style={{margin: '2px', padding: '2px'}}>{key}</label>
                   </div>
                 )
@@ -338,8 +343,7 @@ function OptionQuote (props) {
                     <th>N</th>
                     {optionKeys.map((key, keyI) => {
                       return (
-    
-                        <th key={keyI}>{optionKeys[keyI]}</th>
+                        <th key={keyI}>{key}</th>
                       )
                     })}
                   </tr> 
