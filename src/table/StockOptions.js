@@ -234,7 +234,7 @@ function OptionQuote (props) {
           <h6> count {expirationsArray.length} </h6>
         </div>
 
-        { expirationsArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
+        { expirationsArray.length > 0 && <div style={{height:'250px', width: '300px', overflow:'auto'}}>
 
             <table>
                 <thead>
@@ -273,7 +273,7 @@ function OptionQuote (props) {
           </div>}
 
 
-          {strikeArray.length > 0 && <div style={{height:'300px', width: '300px', overflow:'auto'}}>
+          {strikeArray.length > 0 && <div style={{height:'250px', width: '300px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr>
