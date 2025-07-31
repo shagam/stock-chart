@@ -351,7 +351,7 @@ function OptionQuote (props) {
              {log && <p>Selected: {columnShow.join(", ")}</p>}
             </div>}
 
-            <hr/> 
+            {/* <hr/>  */}
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
 
           {props.symbol} &nbsp; &nbsp;
