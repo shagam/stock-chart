@@ -354,7 +354,11 @@ function OptionQuote (props) {
             <hr/> 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
 
+          {props.symbol} &nbsp; &nbsp;
+          stockPrice={props.stockPrice} &nbsp; &nbsp;
 
+          {/* {selectedStrike !== -1 && <h8>strike-price={strikeArray[selectedStrike]}</h8>} &nbsp; &nbsp;
+          {selectedExpiration !== -1 && <h8>expiration-date={expirationsArray[selectedExpiration]}</h8>} &nbsp; &nbsp; */}
           {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
 
             <table>
