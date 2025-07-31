@@ -38,7 +38,8 @@ function OptionQuote (props) {
   const  options = ['call', 'put'];
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
-  const [columnShow, setColumnShow]  = useState([])
+  const [columnShow, setColumnShow] = useState([]);
+
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
   const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
@@ -206,10 +207,13 @@ function OptionQuote (props) {
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       const keys = Object.keys(OptionQuoteFiltered);
-    const colsArray = (Array(keys.length).fill(true)) 
-      setColumnShow (colsArray)
-      setOptionKeys(keys)
+      const colsArray = (Array(keys.length).fill(true)) 
+      setColumnShow(keys)
+      colsArray[1] = false; // underlying
+      colsArray[2] = false; // expiration
 
+      setOptionKeys(keys)
+      // console.log ('columnShow', columnShow)
 
       if (log)
         console.log ('keys', Object.keys(result.data))
@@ -221,6 +225,15 @@ function OptionQuote (props) {
     })
 
   }
+
+  function handleCheckboxChange (item) {
+    setColumnShow((prev) =>
+      prev.includes(item)
+        ? prev.filter((i) => i !== item)
+        : [...prev, item]
+    );
+  };
+
 
   return (
 
@@ -321,17 +334,23 @@ function OptionQuote (props) {
             <hr/> 
             {/* columnShow  */}
             <div style={{hight: '400px', color:'#11ee33', fontWeight: '32', fontStyle: "italic" }}> column-select  </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '600px'}}>
-              {optionKeys.map((key, keyI) => {
-                return (
-                  <div key={keyI} style = {{display: 'flex'}}>
-                  <input type="checkbox" checked={columnShow[keyI]} 
-                    onChange={()=>setColumnShow (! columnShow[keyI])}  /> &nbsp; &nbsp;&nbsp; 
-                  <label key={keyI} style={{margin: '2px', padding: '2px'}}>{key}</label>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '800px'}}>
+
+            {optionKeys.map((item) => (
+                  <div key={item}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={columnShow.includes(item)}
+                        onChange={() => handleCheckboxChange(item)}
+                      />
+                      &nbsp;{item}
+                    </label>
                   </div>
-                )
-              })}
+                ))}
+
               </div>
+             {log && <p>Selected: {columnShow.join(", ")}</p>}
 
             </div>}
 
@@ -343,9 +362,9 @@ function OptionQuote (props) {
             <table>
                 <thead>
                   <tr>
-                    <th>N</th>
+                    <th style={{width: '20px'}}>N</th>
                     {optionKeys.map((key, keyI) => {
-                      return (
+                      return columnShow.includes (key) && (
                         <th key={keyI}>{key}</th>
                       )
                     })}
@@ -355,9 +374,9 @@ function OptionQuote (props) {
                   {lineNumberArr.map((quote, index) =>{
                     return (
                     <tr key={index}>
-                      <td>{index}</td>
+                      <td style={{width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
-                      return (
+                      return columnShow.includes (key) &&  (
                         <td key={keyI} style={{padding: '2px', margin: '2px', width: '10px'}}>{optionQuote[key][quote]}</td>
                       )
                     })}
