@@ -116,7 +116,7 @@ function OptionQuote (props) {
   }
  
 
-  function optionFee () {
+  function optionPremium () {
     //** clear */
     setOptionQuote({})
     setOptionKeys([]);
@@ -226,7 +226,7 @@ function OptionQuote (props) {
 
   }
 
-  function handleCheckboxChange (item) {
+  function handleColumnCheckboxChange (item) {
     setColumnShow((prev) =>
       prev.includes(item)
         ? prev.filter((i) => i !== item)
@@ -322,7 +322,7 @@ function OptionQuote (props) {
           {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionFee()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/>  &nbsp;  &nbsp; &nbsp;  &nbsp;
             {optionQuote && optionQuote.expiration && <h6> count {optionQuote.expiration.length} </h6>}  &nbsp; &nbsp;&nbsp;  
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
@@ -334,26 +334,24 @@ function OptionQuote (props) {
             <hr/> 
             {/* columnShow  */}
             <div style={{hight: '400px', color:'#11ee33', fontWeight: '32', fontStyle: "italic" }}> column-select  </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '800px'}}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
 
             {optionKeys.map((item) => (
                   <div key={item}>
-                    <label>
                       <input
                         type="checkbox"
                         checked={columnShow.includes(item)}
-                        onChange={() => handleCheckboxChange(item)}
+                        onChange={() => handleColumnCheckboxChange(item)}
                       />
                       &nbsp;{item}
-                    </label>
                   </div>
                 ))}
 
               </div>
              {log && <p>Selected: {columnShow.join(", ")}</p>}
-
             </div>}
 
+            <hr/> 
           {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
 
 
