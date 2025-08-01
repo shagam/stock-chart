@@ -42,7 +42,18 @@ function OptionQuote (props) {
 
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
   
-  const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
+  //unused
+  // const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
+
+  useEffect (() => { 
+    localStorage.setItem('columnShow', JSON.stringify(columnShow));
+    if (log) {
+      console.log ('columnShow', columnShow) 
+    }
+
+  }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
+    
+
 
   function expirationsGet () {
     // if (log)
@@ -209,8 +220,7 @@ function OptionQuote (props) {
       const keys = Object.keys(OptionQuoteFiltered);
       const colsArray = (Array(keys.length).fill(true)) 
       setColumnShow(keys)
-      colsArray[1] = false; // underlying
-      colsArray[2] = false; // expiration
+      // colsArray[2] = false; // expiration
 
       setOptionKeys(keys)
       // console.log ('columnShow', columnShow)
@@ -248,7 +258,7 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-          <h6> count {expirationsArray.length} </h6>
+          <h6> count={expirationsArray.length} </h6>
         </div>
 
         { expirationsArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
@@ -286,7 +296,7 @@ function OptionQuote (props) {
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-            <h6> count {strikeArray.length} </h6>
+            <h6> count={strikeArray.length} </h6>
           </div>}
 
 
@@ -324,7 +334,7 @@ function OptionQuote (props) {
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/>  &nbsp;  &nbsp; &nbsp;  &nbsp;
-            {optionQuote && optionQuote.expiration && <h6> count {optionQuote.expiration.length} </h6>}  &nbsp; &nbsp;&nbsp;  
+            {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} </h6>}  &nbsp; &nbsp;&nbsp;  
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>
           </div>}
