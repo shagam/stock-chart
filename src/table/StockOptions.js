@@ -73,10 +73,10 @@ function OptionQuote (props) {
     setSelectedExpiration(-1);
     setExpirationCount(2);
     // setCallOrPut(options[0]);
-    setLineNumberArr([]);
+    // setLineNumberArr([]);
     setOptionQuote({});
-    // setOptionKeys([]);
-  }, [props.symbol, selectedExpiration, props.errorAdd]); 
+    setOptionKeys([]);
+  }, [props.symbol]); 
     
 
 
@@ -240,6 +240,8 @@ function OptionQuote (props) {
         } )
       console.log ('filtered', OptionQuoteFiltered)
       setLineNumberArr(lineArr);
+      if (log)
+        console.log ('lineNumberArr', lineArr)
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       const keys = Object.keys(OptionQuoteFiltered);
