@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
@@ -39,7 +39,21 @@ function OptionQuote (props) {
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   const [columnShow, setColumnShow] = useState([]);
+  const columnsAll = [
+    "expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
+    "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
+    "underlyingPrice","iv","delta","gamma","theta","vega"]
+  var columnShow_= useMemo(() => JSON.parse (localStorage.getItem('columnShow')), []);
+  if (! columnShow_  ) {
+    columnShow_ = columnsAll;
+    localStorage.setItem('columnShow', JSON.stringify(columnShow_)); // set default columnShow
+  }
 
+  console.log ('columnShow from localStorage', columnShow_.length, columnShow_)
+  if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
+    console.log ('columnShow from localStorage ', columnShow_)
+    setColumnShow (columnShow_)
+  }
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
  
   useEffect (() => { 
@@ -127,7 +141,7 @@ function OptionQuote (props) {
   function optionPremium () {
     //** clear */
     setOptionQuote({})
-    setOptionKeys([]);
+
     setLineNumberArr([]);
     //** create expiration group */
     // console.log (expirationCount, selectedExpiration, expirationsArray.length)
@@ -205,7 +219,7 @@ function OptionQuote (props) {
               OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
             }
             else
-              OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just
+              OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just copy
             if (key === 'expiration')
               lineArr.push (i) 
           }
@@ -215,12 +229,20 @@ function OptionQuote (props) {
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       const keys = Object.keys(OptionQuoteFiltered);
-      const colsArray = (Array(keys.length).fill(true)) 
-      setColumnShow(keys)
-      // colsArray[2] = false; // expiration
+
+      console.log ('columnShow set to all keys', keys)
+      if (columnShow_.length === 0) {
+        setColumnShow(keys)
+        localStorage.setItem('columnShow (keys)', JSON.stringify(keys));
+      }
 
       setOptionKeys(keys)
-
+      if (columnShow.length === 0) {
+        setColumnShow(keys) // if columnShow is empty, set it to all keys
+        columnShow_ = keys; // update the columnShow_ to all keys
+        localStorage.setItem('columnShow', JSON.stringify(columnShow_));
+        console.log ('columnShow set to all keys', keys)
+      }
 
       if (log)
         console.log ('keys', Object.keys(result.data))
