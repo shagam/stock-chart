@@ -66,6 +66,18 @@ function OptionQuote (props) {
 
   }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
     
+  useEffect (() => { 
+    setStrikeArray([]);
+    setSelectedStrike(-1);
+    setExpirationsArray([]);
+    setSelectedExpiration(-1);
+    setExpirationCount(2);
+    // setCallOrPut(options[0]);
+    setLineNumberArr([]);
+    setOptionQuote({});
+    // setOptionKeys([]);
+  }, [props.symbol, selectedExpiration, props.errorAdd]); 
+    
 
 
   function expirationsGet () {
