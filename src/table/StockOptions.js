@@ -41,10 +41,7 @@ function OptionQuote (props) {
   const [columnShow, setColumnShow] = useState([]);
 
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
-  
-  //unused
-  // const quoteKeys =['optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask',];
-
+ 
   useEffect (() => { 
     localStorage.setItem('columnShow', JSON.stringify(columnShow));
     if (log) {
@@ -223,7 +220,7 @@ function OptionQuote (props) {
       // colsArray[2] = false; // expiration
 
       setOptionKeys(keys)
-      // console.log ('columnShow', columnShow)
+
 
       if (log)
         console.log ('keys', Object.keys(result.data))
