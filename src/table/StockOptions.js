@@ -47,9 +47,11 @@ function OptionQuote (props) {
   if (! columnShow_  ) {
     columnShow_ = columnsAll;
     localStorage.setItem('columnShow', JSON.stringify(columnShow_)); // set default columnShow
+    console.log ('columnShow init', columnShow_.length, columnShow_)
   }
+  // else
+  //  console.log ('columnShow from localStorage', columnShow_.length, columnShow_)
 
-  console.log ('columnShow from localStorage', columnShow_.length, columnShow_)
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
     console.log ('columnShow from localStorage ', columnShow_)
     setColumnShow (columnShow_)
