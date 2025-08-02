@@ -158,7 +158,7 @@ function OptionQuote (props) {
   //** Get option premium for selected expiration and strike */
   function optionPremium () {
     //** clear */
-    setOptionQuote({})
+    // setOptionQuote({})
 
     setLineNumberArr([]);
     //** create expiration group */
