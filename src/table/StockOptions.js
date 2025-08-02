@@ -248,21 +248,26 @@ function OptionQuote (props) {
       
       //** calc yearly gain */
       const miliNow = Date.now()
+      OptionQuoteFiltered.gain = OptionQuoteFiltered.gain || [];
+      OptionQuoteFiltered.yearlyGain = OptionQuoteFiltered.yearlyGain || [];
       for (let i = 0; i < rows; i++) {
       const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
         // const gain = mid /  OptionQuoteFiltered.strike[i];
-        const gain = mid /  props.stockPrice;
-        const yearlyGain = ((gain + 1) ** (365 / dte)).toFixed(4)
+        const gain = mid /  props.stockPrice + 1;
+        const yearlyGain = ((gain) ** (365 / dte)).toFixed(4)
       
-        OptionQuoteFiltered.yearlyGain = OptionQuoteFiltered.yearlyGain || [];
+
+        OptionQuoteFiltered.gain[i] = gain.toFixed(4);
         OptionQuoteFiltered.yearlyGain[i] = yearlyGain;
 
-        console.log ('gain',     'dte(days)=', result.data.dte[i], 'yearlyGain=', yearlyGain,
+        console.log ('gain', gain.toFixed(3), 'dte(days)=', result.data.dte[i], 'yearlyGain=', yearlyGain,
            'expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i])  
-        columnShow.push ('yearlyGain'); // add yearlyGain to columnShow_     
       }
-
+      if (!columnShow.includes('gain')) // if gain is not in columnShow, add it
+        columnShow.push('gain')
+      if (!columnShow.includes('yearlyGain')) // if yearlyGain is not in columnShow, add it
+        columnShow.push ('yearlyGain'); // add yearlyGain to columnShow_     
 
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
@@ -289,10 +294,10 @@ function OptionQuote (props) {
         console.log ('keys', Object.keys(result.data))
 
      })
-    .catch ((err) => {
-      console.log(err.message)
-      props.errorAdd ([props.symbol, 'expiration error', err.message])
-    })
+    // .catch ((err) => {
+    //   console.log(err.message)
+    //   props.errorAdd ([props.symbol, 'expiration error', err.message])
+    // })
 
   }
 
