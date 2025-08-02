@@ -36,7 +36,9 @@ function OptionQuote (props) {
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
   const  options = ['call', 'put'];
-  const [percent, setPercent] = useState(true); // default to 10%
+  const [percent, setPercent] = useState(true); // true - percent, false - gain factor
+  const [compoundGain, setCompoundGain] = useState(false); // true - compound gain, false - simple gain
+
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   const [columnShow, setColumnShow] = useState([]);
@@ -256,13 +258,13 @@ function OptionQuote (props) {
         const dte = OptionQuoteFiltered.dte[i];
         // const gain = mid /  OptionQuoteFiltered.strike[i];
         const gain = (mid / props.stockPrice) + 1;
-        const yearlyGain = ((gain) ** (365 / dte)).toFixed(4)
-      
+        const yearlyGain = compoundGain ? (gain ** (365 / dte)).toFixed(4) : ((gain - 1) * (365 / dte)).toFixed(4);
+        // const yearlyGain = ((gain) ** (365 / dte)).toFixed(4)
 
         OptionQuoteFiltered.gain[i] = ! percent ? gain.toFixed(4) : (gain * 100 - 100).toFixed(2);
         OptionQuoteFiltered.yearlyGain[i] = ! percent ? yearlyGain : (yearlyGain * 100 - 100).toFixed(2);
 
-        if (log)
+        // if (log)
           console.log ('gain', gain.toFixed(3), 'dte(days)=', result.data.dte[i], 'yearlyGain=', yearlyGain,
             'expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i])  
       }
@@ -327,7 +329,7 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-          <h6> count={expirationsArray.length} </h6>
+          <h6> count={expirationsArray.length} &nbsp;</h6>
         </div>
 
         { expirationsArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
@@ -365,7 +367,7 @@ function OptionQuote (props) {
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-            <h6> count={strikeArray.length} </h6>
+            <h6> count={strikeArray.length} &nbsp;</h6>
           </div>}
 
 
@@ -402,9 +404,10 @@ function OptionQuote (props) {
 
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
-            <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/>  &nbsp;  &nbsp; &nbsp;  &nbsp;
-            {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} </h6>}  &nbsp; &nbsp;&nbsp;  
+            <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
+            {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or gain-factor) &nbsp; &nbsp; &nbsp; </div>
+            <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundGain}  onChange={()=>setCompoundGain (! compoundGain)} />&nbsp;compound-gain &nbsp; &nbsp; </div> &nbsp; &nbsp;
 
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>
@@ -414,7 +417,7 @@ function OptionQuote (props) {
             
             <hr/> 
             {/* columnShow  */}
-            <div style={{hight: '400px', color:'#11ee33', fontWeight: '32', fontStyle: "italic" }}> column-select  </div>
+            <div style={{hight: '400px', color:'#119933', fontWeight: '99', fontStyle: "italic", fontWeight: 'bold' }}> column-select  </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
 
             {optionKeys.map((item) => (
