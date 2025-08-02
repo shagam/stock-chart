@@ -37,7 +37,7 @@ function OptionQuote (props) {
   const [optionKeys, setOptionKeys] = useState([]);
   const  options = ['call', 'put'];
   const [percent, setPercent] = useState(true); // true - percent, false - gain factor
-  const [compoundGain, setCompoundGain] = useState(false); // true - compound gain, false - simple gain
+  const [compoundYield, setCompoundYield] = useState(false); // true - compound gain, false - simple gain
 
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
@@ -249,29 +249,29 @@ function OptionQuote (props) {
         console.log ('lineNumberArr', lineArr)
 
       
-      //** calc yearly gain */
+      //** calc yearly yield */
       const miliNow = Date.now()
-      OptionQuoteFiltered.gain = OptionQuoteFiltered.gain || [];
-      OptionQuoteFiltered.yearlyGain = OptionQuoteFiltered.yearlyGain || [];
+      OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
+      OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       for (let i = 0; i < rows; i++) {
       const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
         // const gain = mid /  OptionQuoteFiltered.strike[i];
-        const gain = (mid / props.stockPrice) + 1;
-        const yearlyGain = compoundGain ? (gain ** (365 / dte)).toFixed(4) : ((gain - 1) * (365 / dte)).toFixed(4);
+        const yield_ = (mid / props.stockPrice) + 1;
+        const yearlyYield = compoundYield ? (yield_ ** (365 / dte)).toFixed(4) : ((yield_ - 1) * (365 / dte)).toFixed(4);
         // const yearlyGain = ((gain) ** (365 / dte)).toFixed(4)
 
-        OptionQuoteFiltered.gain[i] = ! percent ? gain.toFixed(4) : (gain * 100 - 100).toFixed(2);
-        OptionQuoteFiltered.yearlyGain[i] = ! percent ? yearlyGain : (yearlyGain * 100 - 100).toFixed(2);
+        OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100 - 100).toFixed(2);
+        OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : (yearlyYield * 100 - 100).toFixed(2);
 
         // if (log)
-          console.log ('gain', gain.toFixed(3), 'dte(days)=', result.data.dte[i], 'yearlyGain=', yearlyGain,
+          console.log ('calc   yield', yield_.toFixed(3), 'dte(days)=', result.data.dte[i], 'yearlyYield=', yearlyYield,
             'expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i])  
       }
-      if (!columnShow.includes('gain')) // if gain is not in columnShow, add it
-        columnShow.push('gain')
-      if (!columnShow.includes('yearlyGain')) // if yearlyGain is not in columnShow, add it
-        columnShow.push ('yearlyGain'); // add yearlyGain to columnShow_     
+      if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
+        columnShow.push('yield_')
+      if (!columnShow.includes('yearlyYield')) // if yearlyGain is not in columnShow, add it
+        columnShow.push ('yearlyYield'); // add yearlyGain to columnShow_     
 
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
@@ -406,18 +406,18 @@ function OptionQuote (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
             {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or gain-factor) &nbsp; &nbsp; &nbsp; </div>
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundGain}  onChange={()=>setCompoundGain (! compoundGain)} />&nbsp;compound-gain &nbsp; &nbsp; </div> &nbsp; &nbsp;
+            <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
+            <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
 
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
-                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>
+                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
           </div>}
 
           {columnHideFlag && <div >
             
             <hr/> 
             {/* columnShow  */}
-            <div style={{hight: '400px', color:'#119933', fontWeight: '99', fontStyle: "italic", fontWeight: 'bold' }}> column-select  </div>
+            <div style={{hight: '400px', color:'#119933', fontWeight: '99', fontStyle: "italic"}}> column-select  </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
 
             {optionKeys.map((item) => (
