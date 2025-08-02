@@ -332,8 +332,9 @@ function OptionQuote (props) {
           <h6> count={expirationsArray.length} &nbsp;</h6>
         </div>
 
+        
+        {/* Expiration table */}
         { expirationsArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
-
             <table>
                 <thead>
                   <tr>
@@ -371,6 +372,7 @@ function OptionQuote (props) {
           </div>}
 
 
+          {/* Strike-list table */}
           {strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
             <table>
                 <thead>
@@ -413,8 +415,9 @@ function OptionQuote (props) {
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
           </div>}
 
-          {columnHideFlag && <div >
-            
+
+          {/* select columns */}
+          {columnHideFlag && <div >    
             <hr/> 
             {/* columnShow  */}
             <div style={{hight: '400px', color:'#119933', fontWeight: '99', fontStyle: "italic"}}> column-select  </div>
@@ -430,7 +433,6 @@ function OptionQuote (props) {
                       &nbsp;{item}
                   </div>
                 ))}
-
               </div>
              {log && <p>Selected: {columnShow.join(", ")}</p>}
             </div>}
@@ -441,10 +443,9 @@ function OptionQuote (props) {
           {props.symbol} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp;
 
-          {/* {selectedStrike !== -1 && <h8>strike-price={strikeArray[selectedStrike]}</h8>} &nbsp; &nbsp;
-          {selectedExpiration !== -1 && <h8>expiration-date={expirationsArray[selectedExpiration]}</h8>} &nbsp; &nbsp; */}
-          {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
 
+          {/* Display quote table */}
+          {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr>
