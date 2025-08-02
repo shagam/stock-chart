@@ -61,7 +61,7 @@ function OptionQuote (props) {
   useEffect (() => { 
     localStorage.setItem('columnShow', JSON.stringify(columnShow));
     if (log) {
-      console.log ('columnShow', columnShow) 
+      console.log ('save columnShow', columnShow) 
     }
 
   }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
@@ -211,10 +211,12 @@ function OptionQuote (props) {
         return
       }
 
-      //** copy and translate result.data */
+      //** copy and convert date format of result.data */
       var lineArr = []
       var OptionQuoteFiltered = {}
-
+      OptionQuoteFiltered.expiration = [] 
+      OptionQuoteFiltered.firstTraded = []
+      OptionQuoteFiltered.updated = []
       const rows = result.data.expiration.length;  // row count
       Object.keys(result.data).forEach((key) => {
 
@@ -227,17 +229,11 @@ function OptionQuote (props) {
           OptionQuoteFiltered[key] = []
           for (let i = 0; i < rows; i++) {
             if (key === 'expiration' || key === 'firstTraded' || key === 'updated') {
-              OptionQuoteFiltered.expiration = [] 
               OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
-              
-              OptionQuoteFiltered.firstTraded = []
               OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
-              
-              OptionQuoteFiltered.updated = []
               OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
             }
             else {
-
               OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just copy
             }
             if (key === 'expiration')
@@ -253,13 +249,29 @@ function OptionQuote (props) {
       //** calc yearly gain */
       const miliNow = Date.now()
       for (let i = 0; i < rows; i++) {
+      const mid = OptionQuoteFiltered.mid[i];
+        const dte = OptionQuoteFiltered.dte[i];
+        // const gain = mid /  OptionQuoteFiltered.strike[i];
+        const gain = mid /  props.stockPrice;
+        const yearlyGain = ((gain + 1) ** (365 / dte)).toFixed(4)
+      
+        OptionQuoteFiltered.yearlyGain = OptionQuoteFiltered.yearlyGain || [];
+        OptionQuoteFiltered.yearlyGain[i] = yearlyGain;
+
+        console.log ('gain',     'dte(days)=', result.data.dte[i], 'yearlyGain=', yearlyGain,
+           'expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i])  
+        columnShow.push ('yearlyGain'); // add yearlyGain to columnShow_     
       }
+
 
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       const keys = Object.keys(OptionQuoteFiltered);
 
-      console.log ('columnShow set to all keys', keys)
+      if(log)
+        console.log ('columnShow set to all keys', keys)
+      
+      // if columnShow is empty, set it to all keys
       if (columnShow_.length === 0) {
         setColumnShow(keys)
         localStorage.setItem('columnShow (keys)', JSON.stringify(keys));
