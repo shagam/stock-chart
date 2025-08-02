@@ -267,16 +267,17 @@ function OptionQuote (props) {
       const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
         // const gain = mid /  OptionQuoteFiltered.strike[i];
-        const yield_ = (mid / props.stockPrice) + 1;
-        const yearlyYield = compoundYield ? (yield_ ** (365 / dte)).toFixed(4) : ((yield_ - 1) * (365 / dte)).toFixed(4);
+        const yield_ = (mid / props.stockPrice);
+        const yearlyYield = compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
         // const yearlyGain = ((gain) ** (365 / dte)).toFixed(4)
 
-        OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100 - 100).toFixed(2);
-        OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : (yearlyYield * 100 - 100).toFixed(2);
+        OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
+        OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
 
         // if (log)
-          console.log ('calc   yield', yield_.toFixed(3), 'dte(days)=', result.data.dte[i], 'yearlyYield=', yearlyYield,
-            'expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i])  
+          console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
+            'dte(days)=', result.data.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
+          )  
       }
       if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
         columnShow.push('yield_')
@@ -462,7 +463,7 @@ function OptionQuote (props) {
                     <th style={{width: '20px'}}>N</th>
                     {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) && (
-                        <th key={keyI}>{key}</th>
+                        <th style={{padding: '2px', margin: '2px', width: '5px'}} key={keyI}>{key}</th>
                       )
                     })}
                   </tr> 
