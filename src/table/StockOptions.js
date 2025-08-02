@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
-import {format} from "date-fns"
+import {format, set} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd} from '../utils/Date';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { el } from 'date-fns/locale';
@@ -103,6 +103,7 @@ function OptionQuote (props) {
         }
         
         setExpirationsArray(result.data.expirations);
+        setSelectedExpiration(0); // first expiration by default
       })
       .catch ((err) => {
         console.log(err.message)
@@ -147,6 +148,15 @@ function OptionQuote (props) {
 
       setStrikeArray(arr);
 
+      //** default select just above current price*/
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > props.stockPrice) {
+          setSelectedStrike(i);
+          if (log)
+            console.log ('default strike selected', i, arr[i])
+          break;
+        }
+      }
     })
     .catch ((err) => {
       console.log(err.message)
