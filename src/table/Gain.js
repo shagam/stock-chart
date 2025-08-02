@@ -466,7 +466,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               priceAlertCheck (sym, priceAlertTable, price, errorAdd, stockChartXValuesFunction, stockChartYValuesFunction) 
               if (saveTabl)
                 saveTable(sym);
-              dividendCalc (sym, null, true, chartData[periodTag], rows, refreshByToggleColumns)             
+              dividendCalc (sym, null, LOG_FLAG, chartData[periodTag], rows, refreshByToggleColumns)             
             }        
         )
         .catch(error => {

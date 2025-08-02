@@ -1,7 +1,7 @@
 import { setYear } from 'date-fns';
 import React, {useState, useEffect} from 'react'
 import {IpContext} from '../contexts/IpContext';
-
+import {getDate, } from '../utils/Date'
 
   function dividendCalc (symbol, setYearly_div_ratio, log, chartData, rows, refreshByToggleColumns ) {
 
@@ -35,7 +35,7 @@ import {IpContext} from '../contexts/IpContext';
     var yearly_div_ratio_ = div_ratio_sum / year_diff
     if (setYearly_div_ratio)
       setYearly_div_ratio(yearly_div_ratio_)
-    console.log ('yearly dividend/price average=', yearly_div_ratio_.toFixed(4))
+    console.log (symbol, getDate(), 'yearly dividend/price average=', yearly_div_ratio_.toFixed(4))
 
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index !== -1) {
