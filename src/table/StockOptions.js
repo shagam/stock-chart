@@ -152,6 +152,7 @@ function OptionQuote (props) {
   }
  
 
+  //** Get option premium for selected expiration and strike */
   function optionPremium () {
     //** clear */
     setOptionQuote({})
@@ -210,30 +211,35 @@ function OptionQuote (props) {
         return
       }
 
+      //** copy and translate result.data */
       var lineArr = []
       var OptionQuoteFiltered = {}
-      OptionQuoteFiltered.expiration = [] 
-      OptionQuoteFiltered.firstTraded = []
-      OptionQuoteFiltered.updated = []
+
       const rows = result.data.expiration.length;  // row count
       Object.keys(result.data).forEach((key) => {
-        // if (key === 'iv' || key === 'delta' || key === 'gamma' || key === 'theta' || key === 'vega')
-        //   return; // skip these keys
-    
+
+        // delete result.data.optionSymbol
+        // delete result.data.s
         if (key === 's' || key === 'optionSymbol')
           return;
 
-            // delete result.data.optionSymbol
-            // delete result.data.s
+          // convert date to YYYY-mm-dd format
           OptionQuoteFiltered[key] = []
           for (let i = 0; i < rows; i++) {
             if (key === 'expiration' || key === 'firstTraded' || key === 'updated') {
+              OptionQuoteFiltered.expiration = [] 
               OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
+              
+              OptionQuoteFiltered.firstTraded = []
               OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
+              
+              OptionQuoteFiltered.updated = []
               OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
             }
-            else
+            else {
+
               OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just copy
+            }
             if (key === 'expiration')
               lineArr.push (i) 
           }
@@ -242,6 +248,13 @@ function OptionQuote (props) {
       setLineNumberArr(lineArr);
       if (log)
         console.log ('lineNumberArr', lineArr)
+
+      
+      //** calc yearly gain */
+      const miliNow = Date.now()
+      for (let i = 0; i < rows; i++) {
+      }
+
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       const keys = Object.keys(OptionQuoteFiltered);
