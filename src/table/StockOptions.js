@@ -420,10 +420,10 @@ function OptionQuote (props) {
           {columnHideFlag && <div >    
             <hr/> 
             {/* columnShow  */}
-            <div style={{hight: '400px', color:'#119933', fontWeight: '99', fontStyle: "italic"}}> column-select  </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
+            <div style={{hight: '400px', color:'#119933', fontWeight: 'bold', fontStyle: "italic"}}> column-select  </div>
 
-            {optionKeys.map((item) => (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
+              {optionKeys.map((item) => (
                   <div key={item}>
                       <input
                         type="checkbox"
