@@ -8,6 +8,7 @@ import searchURL from '../utils/SearchURL'
 import {targetPriceAdd} from './TargetPrice'
 import  {CommonDatabase, GainWrite} from './CommonDatabase'
 import {PriceAlert, priceAlertCheck} from './PriceAlert'
+import  {dividendCalc} from './StockGain'
 
 let periodTag;
 
@@ -17,7 +18,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable) {
+     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -465,8 +466,8 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               priceAlertCheck (sym, priceAlertTable, price, errorAdd, stockChartXValuesFunction, stockChartYValuesFunction) 
               if (saveTabl)
                 saveTable(sym);
-            
-            }
+              dividendCalc (sym, null, true, chartData[periodTag], rows, refreshByToggleColumns)             
+            }        
         )
         .catch(error => {
           // Do something on error 

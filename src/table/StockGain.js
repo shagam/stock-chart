@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {IpContext} from '../contexts/IpContext';
 
 
-  function dividendCalc (symbol, setYearly_div_ratio, setLog, log, chartData, rows, refreshByToggleColumns ) {
+  function dividendCalc (symbol, setYearly_div_ratio, log, chartData, rows, refreshByToggleColumns ) {
 
     var div_count = 0;
     var div_ratio_sum = 0;
@@ -33,7 +33,8 @@ import {IpContext} from '../contexts/IpContext';
     const year_diff = year_new - year_old
   
     var yearly_div_ratio_ = div_ratio_sum / year_diff
-    setYearly_div_ratio(yearly_div_ratio_)
+    if (setYearly_div_ratio)
+      setYearly_div_ratio(yearly_div_ratio_)
     console.log ('yearly dividend/price average=', yearly_div_ratio_.toFixed(4))
 
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
@@ -85,7 +86,7 @@ const StockGain = (props) => {
         <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(5)}   &nbsp; &nbsp;  {(yearly_div_ratio *100).toFixed(3)}%</div>
       </div>
       <button style={{background: 'aqua'}} type="button" onClick={()=>
-        dividendCalc(props.symbol, setYearly_div_ratio, setLog, log, props.chartData, props.rows, props.refreshByToggleColumns)}> dividend-calc </button> &nbsp; &nbsp; 
+        dividendCalc(props.symbol, setYearly_div_ratio, log, props.chartData, props.rows, props.refreshByToggleColumns)}> dividend-calc </button> &nbsp; &nbsp; 
       {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
       {/* Stock gain list */}
 
