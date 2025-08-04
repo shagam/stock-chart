@@ -183,12 +183,6 @@ const tutorialArray = [
         description:  "Serialized tutorials",
     },
     {
-        condition:    language,
-        link:         null,
-        name:         '====',
-        description:  null,
-    },
-    {
         condition:  language,
         link:         'https://youtu.be/Rv5a0tkMISE',
         name:         'Hebrew tutorial',
