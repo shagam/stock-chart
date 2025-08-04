@@ -183,19 +183,19 @@ const tutorialArray = [
         description:  "Serialized tutorials",
     },
     {
-        condition: true,
+        condition:    language,
         link:         null,
         name:         '====',
         description:  null,
     },
     {
-        condition: language,
+        condition:  language,
         link:         'https://youtu.be/Rv5a0tkMISE',
         name:         'Hebrew tutorial',
-        description:  "",
+        description:   "Hebrew tutorial",
     },
     {
-        condition: false && language,
+        condition:    language,
         link:         'https://www.veed.io/view/df28ebf3-2a6c-4ac8-81f4-1ab9ca3f33c4?panel=share',
         name:         'Bubble-line (Heb)',
         description:  " קו-הבועות בעברית",
@@ -213,7 +213,7 @@ const tutorialArray = [
         description:  null,
     },
     {
-        condition: language,
+        condition: ! language,
         link:         'https://stocks-compare.netlify.app',
         name:         'Stocks-compare',
         description:  "Link for the tool",
@@ -222,22 +222,6 @@ const tutorialArray = [
 
 ]
 
-//                         return <tr key={index} style={{display: item.condition ? 'table-row' : 'none'}}>
-
-                //  <tbody> 
-                //       {tutorialArray.map((item, index) => {
-                //         return <tr key={index} >
-                //             <td>
-                //                 {item.link ? <a href={item.link}><b>{item.name}</b> </a> : <td>{item.description}</td>}
-                //             </td>
-                //             <td>{item.description}</td>
-                //         </tr>
-
-                //       })}
-                //     <tr>
-                //        <div>&nbsp;</div>
-                //     </tr> 
-                // </tbody>
 
 
 function Tutorials () {
@@ -278,10 +262,9 @@ function Tutorials () {
             <table>
                 <tbody> 
                       {tutorialArray.map((item, index) => {
-                        return (!searchText || ! item.description || ! item.name ||
-
+                        return ((!searchText || ! item.description || ! item.name ||
                         item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-                        item.description.toLowerCase().includes(searchText.toLowerCase())               
+                        item.description.toLowerCase().includes(searchText.toLowerCase())) && (language !== item.condition)               
                     ) && 
                         <tr key={index} >
                             <td>
