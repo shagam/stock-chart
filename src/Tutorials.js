@@ -53,8 +53,8 @@ const tutorialArray = [
     {
         condition: true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: ! language,
@@ -71,8 +71,8 @@ const tutorialArray = [
     {
         condition: true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: ! language,
@@ -113,8 +113,8 @@ const tutorialArray = [
     {
         condition: true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: ! language,
@@ -143,8 +143,8 @@ const tutorialArray = [
     {
         condition: true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: ! language,
@@ -173,8 +173,8 @@ const tutorialArray = [
     {
         condition: true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: ! language,
@@ -185,8 +185,8 @@ const tutorialArray = [
     {
         condition: true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: language,
@@ -207,10 +207,10 @@ const tutorialArray = [
         description:  "Short term gain trading TQQQ (Hebrew)",
     },
     {
-        condition: true,
+        condition:   true,
         link:         null,
-        name:         '',
-        description:  <div>&nbsp;</div>,
+        name:         '====',
+        description:  null,
     },
     {
         condition: language,
@@ -278,7 +278,12 @@ function Tutorials () {
             <table>
                 <tbody> 
                       {tutorialArray.map((item, index) => {
-                        return item.condition && <tr key={index} >
+                        return (!searchText || ! item.description || ! item.name ||
+
+                        item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+                        item.description.toLowerCase().includes(searchText.toLowerCase())               
+                    ) && 
+                        <tr key={index} >
                             <td>
                                 { <a href={item.link}><b>{item.name}</b> </a>}
                             </td>

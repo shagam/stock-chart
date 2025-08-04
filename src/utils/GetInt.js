@@ -6,6 +6,7 @@ function GetInt (props) {
   // props.callBack
   // props.title
   // props.pattern "[\-]?[0-9]+"
+  // props.required = true;
 
 const [int, setInt] = useState(props.init);
 
@@ -24,7 +25,7 @@ return (
       type={props.type}
       pattern={props.pattern}
       name={props.title}
-      required="required"
+      required={props.required}//"required"
       // defaultValue={Number(int)}
       placeholder={props.init}
       onChange={(e)=>
