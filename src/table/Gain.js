@@ -398,8 +398,8 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 console.log (sym, 'gain year20', rows[row_index].values.year20)
   
               // rows[row_index].values.peak2Peak = peak2Peak;
-              // rows[row_index].values.price = price;
-              // rows[row_index].values.priceDivHigh = priceDivHigh;
+              rows[row_index].values.price = price;
+              rows[row_index].values.priceDivHigh = priceDivHigh;
             
               rows[row_index].values.sym = sym; // added field
               rows[row_index].values.splits_list = splitArray;
