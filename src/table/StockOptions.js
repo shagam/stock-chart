@@ -263,16 +263,20 @@ function OptionQuote (props) {
       const miliNow = Date.now()
       OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
+      OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
       for (let i = 0; i < rows; i++) {
       const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
         // const gain = mid /  OptionQuoteFiltered.strike[i];
         const yield_ = (mid / props.stockPrice);
         const yearlyYield = compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
-        // const yearlyGain = ((gain) ** (365 / dte)).toFixed(4)
+        // const breakEven = (OptionQuoteFiltered.strike[i] * (1 + yield_)).toFixed(4);
+        const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
+
 
         OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
         OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
+        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
 
         // if (log)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
@@ -282,7 +286,9 @@ function OptionQuote (props) {
       if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
         columnShow.push('yield_')
       if (!columnShow.includes('yearlyYield')) // if yearlyGain is not in columnShow, add it
-        columnShow.push ('yearlyYield'); // add yearlyGain to columnShow_     
+        columnShow.push ('yearlyYield'); // add yearlyGain to columnShow_  
+      if (!columnShow.includes('breakEven')) // if breakEven is not in columnShow, add it
+        columnShow.push ('breakEven');   
 
 
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
