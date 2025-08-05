@@ -357,8 +357,8 @@ function OptionQuote (props) {
             <table>
                 <thead>
                   <tr>
-                    <th>N</th>
-                    <th>expiration-date</th>
+                    <th style={{...ROW_SPACING, width: '20px'}}>N</th>
+                    <th style={{...ROW_SPACING, width: '100px'}} >expiration-date</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -371,8 +371,8 @@ function OptionQuote (props) {
                           cursor: 'pointer',
                         }}                      
                       >
-                      <td style={{padding: '2px', margin: '2px', width: '5px'}}>{index}  </td>
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{date}  </td> 
+                      <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
+                      <td style={{...ROW_SPACING, width: '100px'}}>{date}  </td> 
                     </tr>
                     )
                   })}
@@ -396,8 +396,8 @@ function OptionQuote (props) {
             <table>
                 <thead>
                   <tr>
-                    <th>N</th>
-                    <th>strike-price</th>
+                    <th style={{...ROW_SPACING, width: '20px'}}>N</th>
+                    <th style={{...ROW_SPACING, width: '100px'}}>strike-price</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -406,12 +406,12 @@ function OptionQuote (props) {
                     <tr key={index}
                       onClick={() => handleRowClickStrike(index)}
                       style={{
-                          backgroundColor: selectedStrike === index ? '#d3e5ff' : 'white',
+                          ...ROW_SPACING, backgroundColor: selectedStrike === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
                         }}                      
                       >
-                      <td style={{padding: '2px', margin: '2px', width: '5px'}}>{index}  </td>
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{strike.toFixed(3)}  </td> 
+                      <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
+                      <td style={{...ROW_SPACING, width: '100px'}}>{strike.toFixed(3)}  </td> 
                     </tr>
                     )
                   })}
