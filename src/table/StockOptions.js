@@ -466,7 +466,7 @@ function OptionQuote (props) {
             <table>
                 <thead>
                   <tr style={ROW_SPACING}>
-                    <th style={{width: '20px'}}>N</th>
+                    <th style={{...ROW_SPACING, width: '20px'}}> N</th>
                     {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) && (
                         <th style={ROW_SPACING} key={keyI}>{key}</th>
@@ -481,7 +481,7 @@ function OptionQuote (props) {
                   {lineNumberArr.map((quote, index) =>{
                     return (
                     <tr key={index} style={ROW_SPACING}>
-                      <td style={{width: '20px'}}> {index}</td>
+                      <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
                         <td key={keyI} style= {ROW_SPACING}> {optionQuote[key][quote]}</td>
