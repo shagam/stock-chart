@@ -330,7 +330,9 @@ function OptionQuote (props) {
     );
   };
 
-
+  // const ROW_SPACING = {padding: "0px 10px 0px 10px", margin: '0px'}
+  //  top, right, bottom, left 
+  const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
   return (
 
       <div style = {{ border: '2px solid blue'}} >
@@ -460,26 +462,29 @@ function OptionQuote (props) {
           stockPrice={props.stockPrice} &nbsp; &nbsp;
 
           {/* premium quote table */}
-          {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
+          {optionKeys.length > 0 && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
-                  <tr>
+                  <tr style={ROW_SPACING}>
                     <th style={{width: '20px'}}>N</th>
                     {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) && (
-                        <th style={{padding: '2px', margin: '2px', width: '5px'}} key={keyI}>{key}</th>
+                        <th style={ROW_SPACING} key={keyI}>{key}</th>
                       )
                     })}
                   </tr> 
                 </thead>
+                  
+                  {/* top, right, bottom, left */} 
+
                 <tbody>
                   {lineNumberArr.map((quote, index) =>{
                     return (
-                    <tr key={index}>
+                    <tr key={index} style={ROW_SPACING}>
                       <td style={{width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{padding: '2px', margin: '2px', width: '10px'}}>{optionQuote[key][quote]}</td>
+                        <td key={keyI} style= {ROW_SPACING}> {optionQuote[key][quote]}</td>
                       )
                     })}
 
