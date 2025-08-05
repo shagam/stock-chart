@@ -393,7 +393,7 @@ function OptionQuote (props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {strikeArray.map((date, index) =>{
+                  {strikeArray.map((strike, index) =>{
                     return (
                     <tr key={index}
                       onClick={() => handleRowClickStrike(index)}
@@ -403,7 +403,7 @@ function OptionQuote (props) {
                         }}                      
                       >
                       <td style={{padding: '2px', margin: '2px', width: '5px'}}>{index}  </td>
-                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{date}  </td> 
+                      <td style={{padding: '2px', margin: '2px', width: '10px'}}>{strike.toFixed(3)}  </td> 
                     </tr>
                     )
                   })}
