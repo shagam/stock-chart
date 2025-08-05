@@ -4,7 +4,7 @@ import axios from 'axios';
 import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
-import {todayDate, getDate_YYYY_mm_dd} from '../utils/Date';
+import {todayDate, getDate_YYYY_mm_dd__} from '../utils/Date';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { el } from 'date-fns/locale';
 // 
@@ -242,9 +242,9 @@ function OptionQuote (props) {
           OptionQuoteFiltered[key] = []
           for (let i = 0; i < rows; i++) {
             if (key === 'expiration' || key === 'firstTraded' || key === 'updated') {
-              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd(new Date(result.data.expiration[i] * 1000))
-              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd(new Date(result.data.firstTraded[i] * 1000))
-              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd(new Date(result.data.updated[i] * 1000))
+              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(result.data.expiration[i] * 1000))
+              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(result.data.firstTraded[i] * 1000))
+              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(result.data.updated[i] * 1000))
             }
             else {
               OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just copy

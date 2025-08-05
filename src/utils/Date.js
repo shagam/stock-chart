@@ -77,6 +77,15 @@ function getDate_YYYY_mm_dd(date) {
 }
 
 
+function getDate_YYYY_mm_dd__(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}_${month}_${day}`;
+}
+
+
 // [year, mon, day]
 const dateSplit = (date) => {
   const dateSplit = date.split('-');
@@ -379,4 +388,4 @@ function isDailyXArray (stockChartXValues) {
 
 
 export {yearsDifference, miliDifferenceFromToday, getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date, isDailyXArray, getDate_YYYY_mm_dd}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date, isDailyXArray, getDate_YYYY_mm_dd, getDate_YYYY_mm_dd__}
