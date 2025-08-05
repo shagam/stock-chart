@@ -449,13 +449,11 @@ function OptionQuote (props) {
             </div>}
 
             {/* <hr/>  */}
-          {/* <h8>expiration-date={expirationsArray[selectedExpiration]}</h8> */}
 
           {props.symbol} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp;
 
-
-          {/* Display quote table */}
+          {/* premium quote table */}
           {optionKeys.length > 0 && <div style={{height:'500px', width: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
