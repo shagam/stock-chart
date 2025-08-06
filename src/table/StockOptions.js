@@ -38,6 +38,7 @@ function OptionQuote (props) {
   const  options = ['call', 'put'];
   const [percent, setPercent] = useState(true); // true - percent, false - gain factor
   const [compoundYield, setCompoundYield] = useState(false); // true - compound gain, false - simple gain
+  const [maxYearlyYield, setMaxYearlyYield] = useState(0); // max yearly yield for all options
 
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
@@ -278,7 +279,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
 
-        // if (log)
+        if (log)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
             'dte(days)=', result.data.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
           )  
@@ -291,8 +292,26 @@ function OptionQuote (props) {
         columnShow.push ('breakEven');   
 
 
-      setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
+
       const keys = Object.keys(OptionQuoteFiltered);
+
+      //** find highest yearlyYield */
+      var maxYearlyYield_ = 0;
+     for (let i = 0; i < rows; i++) {
+        if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
+          continue
+         OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
+         if (OptionQuoteFiltered.yearlyYield[i] > maxYearlyYield_) {
+          // if (log)
+          //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
+          maxYearlyYield_ = OptionQuoteFiltered.yearlyYield[i]; 
+         }
+      }
+      setMaxYearlyYield(maxYearlyYield_); // set maxYearlyYield
+      setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
+      if (log)
+        console.log ('maxYearlyYield=', maxYearlyYield_)
+
 
       if(log)
         console.log ('columnShow set to all keys', keys)
@@ -333,11 +352,19 @@ function OptionQuote (props) {
   function cellColor (line, attrib) {
     if (attrib === 'expiration') {
       if (line === 0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1]) {
-        console.log ('expiration changed', line, optionQuote.expiration[line])
+        // console.log ('expiration changed', line, optionQuote.expiration[line])
         return {backgroundColor: '#d3e5ff', color: 'black', fontWeight: 'bold'};
       } else {
         return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
       } 
+    }
+
+    if (attrib === 'yearlyYield') {
+      if (optionQuote.yearlyYield[line] !== 'Infinity' && maxYearlyYield === optionQuote.yearlyYield[line]) {
+        return {backgroundColor: '#d3e533', color: 'black', fontWeight: 'bold'};
+      } else {
+        return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
+      }          
     }
   }
 
