@@ -329,6 +329,17 @@ function OptionQuote (props) {
         : [...prev, item]
     );
   };
+  
+  function cellColor (line, attrib) {
+    if (attrib === 'expiration') {
+      if (line === 0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1]) {
+        console.log ('expiration changed', line, optionQuote.expiration[line])
+        return {backgroundColor: '#d3e5ff', color: 'black', fontWeight: 'bold'};
+      } else {
+        return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
+      } 
+    }
+  }
 
   // const ROW_SPACING = {padding: "0px 10px 0px 10px", margin: '0px'}
   //  top, right, bottom, left 
@@ -484,7 +495,7 @@ function OptionQuote (props) {
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style= {ROW_SPACING}> {optionQuote[key][quote]}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key][quote]}</td>
                       )
                     })}
 
