@@ -373,6 +373,7 @@ function OptionQuote (props) {
   // const ROW_SPACING = {padding: "0px 10px 0px 10px", margin: '0px'}
   //  top, right, bottom, left 
   const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
+
   return (
 
       <div style = {{ border: '2px solid blue'}} >
@@ -388,7 +389,7 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-          <h6> count={expirationsArray.length} &nbsp;</h6>
+          <h6> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</h6>
         </div>
 
         
@@ -427,12 +428,12 @@ function OptionQuote (props) {
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-            <h6> count={strikeArray.length} &nbsp;</h6>
+            <h6> count={strikeArray.length} &nbsp; selected={selectedStrike}</h6>
           </div>}
 
 
           {/* Strike-list table */}
-          {strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
+          {strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr>
@@ -469,13 +470,15 @@ function OptionQuote (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
             {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
+          </div>}
+
+          {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
 
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
           </div>}
-
 
           {/* select columns */}
           {columnHideFlag && <div >    
