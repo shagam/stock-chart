@@ -390,7 +390,7 @@ function OptionQuote (props) {
         {/* expirations */}
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
-          <div style={{display: 'flex', marginTop:'13px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
+          <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
         </div>
 
@@ -430,7 +430,7 @@ function OptionQuote (props) {
           {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp;
-            <div style={{display: 'flex', marginTop:'13px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
+            <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
           </div>}
 
