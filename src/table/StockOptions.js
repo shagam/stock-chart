@@ -398,7 +398,7 @@ function OptionQuote (props) {
                 <thead>
                   <tr>
                     <th style={{...ROW_SPACING, width: '20px'}}>N</th>
-                    <th style={{...ROW_SPACING, width: '100px'}} >expiration-date</th>
+                    <th style={{...ROW_SPACING, width: '100px'}} >expiration-date</th>                    
                   </tr>
                 </thead>
                 <tbody>
@@ -438,6 +438,7 @@ function OptionQuote (props) {
                   <tr>
                     <th style={{...ROW_SPACING, width: '20px'}}>N</th>
                     <th style={{...ROW_SPACING, width: '100px'}}>strike-price</th>
+                    <th style={{...ROW_SPACING, width: '100px'}}>strike-price/price</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -452,6 +453,7 @@ function OptionQuote (props) {
                       >
                       <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
                       <td style={{...ROW_SPACING, width: '100px'}}>{strike.toFixed(3)}  </td> 
+                      <td style={{...ROW_SPACING, width: '100px'}}>{(strike/props.stockPrice).toFixed(3)}  </td> 
                     </tr>
                     )
                   })}
