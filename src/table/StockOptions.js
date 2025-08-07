@@ -39,6 +39,7 @@ function OptionQuote (props) {
   const [percent, setPercent] = useState(true); // true - percent, false - gain factor
   const [compoundYield, setCompoundYield] = useState(false); // true - compound gain, false - simple gain
   const [maxYearlyYield, setMaxYearlyYield] = useState(0); // max yearly yield for all options
+  const [maxYearlyYieldIndex, setMaxYearlyYieldIndex] = useState(-1); // index of max yearly yield
 
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
@@ -304,7 +305,8 @@ function OptionQuote (props) {
          if (OptionQuoteFiltered.yearlyYield[i] > maxYearlyYield_) {
           // if (log)
           //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
-          maxYearlyYield_ = OptionQuoteFiltered.yearlyYield[i]; 
+          maxYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
+          setMaxYearlyYieldIndex(i); // save index of max yearly yield
          }
       }
       setMaxYearlyYield(maxYearlyYield_); // set maxYearlyYield
@@ -498,6 +500,7 @@ function OptionQuote (props) {
 
           {props.symbol} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp;
+          maxYearlyYieldIndex={maxYearlyYieldIndex} &nbsp; &nbsp;
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
