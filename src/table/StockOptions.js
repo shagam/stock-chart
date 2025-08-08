@@ -81,6 +81,7 @@ function OptionQuote (props) {
     // setLineNumberArr([]);
     setOptionQuote({});
     setOptionKeys([]);
+    expirationsGet ();
   }, [props.symbol]); 
     
 
