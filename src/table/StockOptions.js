@@ -376,8 +376,7 @@ function OptionQuote (props) {
   const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
 
   return (
-
-      <div style = {{ border: '2px solid blue'}} >
+    <div style = {{ border: '2px solid blue'}} >
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}>Option Quote (under development) </h6>  &nbsp; &nbsp;
@@ -390,7 +389,7 @@ function OptionQuote (props) {
         
         {/* expirations */}
         <div style = {{display: 'flex'}}>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
+          {/* <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp; */}
           <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
         </div>
