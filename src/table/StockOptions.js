@@ -269,10 +269,10 @@ function OptionQuote (props) {
       for (let i = 0; i < rows; i++) {
       const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
-        // const gain = mid /  OptionQuoteFiltered.strike[i];
+
         const yield_ = (mid / props.stockPrice);
         const yearlyYield = compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
-        // const breakEven = (OptionQuoteFiltered.strike[i] * (1 + yield_)).toFixed(4);
+
         const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
 
 
