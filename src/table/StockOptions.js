@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
@@ -70,26 +70,17 @@ function OptionQuote (props) {
     }
 
   }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
-    
-  useEffect (() => { 
-    setStrikeArray([]);
-    setSelectedStrike(-1);
-    setExpirationsArray([]);
-    setSelectedExpiration(-1);
-    // setExpirationCount(3);
-    // setCallOrPut(options[0]);
-    // setLineNumberArr([]);
-    setOptionQuote({});
-    setOptionKeys([]);
-    expirationsGet ();
-  }, [props.symbol]); 
-    
+        
 
+  function expirationSelect (index) {
+    setSelectedExpiration(index);
+  }
 
-  function expirationsGet () {
+  const expirationsGet = useCallback (() => {
+
     // if (log)
     //   console.log ('expirationCount=', expirationCount)
-    url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
+    const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
     if (log)
       console.log (url)
 
@@ -113,15 +104,30 @@ function OptionQuote (props) {
         props.errorAdd ([props.symbol, 'expiration error', err.message])
       })
 
-  }
+  }, [props, TOKEN, log]);
 
-  function handleRowClick(rowId)  { 
+    useEffect (() => { 
+    setStrikeArray([]);
+    setSelectedStrike(-1);
+    setExpirationsArray([]);
+    setSelectedExpiration(-1);
+    // setExpirationCount(3);
+    // setCallOrPut(options[0]);
+    // setLineNumberArr([]);
+    setOptionQuote({});
+    setOptionKeys([]);
+    expirationsGet ();
+  }, [props.symbol, expirationsGet, log, log1, eliHome, props.errorAdd]); 
+
+
+  function expirationRowClick(rowId)  { 
     setSelectedExpiration(rowId);
     if (log)
       console.log('Expiration Row clicked:', rowId);
+    strikePrices ();
   }
 
- function handleRowClickStrike(rowId)  { 
+ function strikeRowClick(rowId)  { 
     setSelectedStrike(rowId);
     if (log)
       console.log('Strike Row clicked:', rowId);
@@ -408,7 +414,7 @@ function OptionQuote (props) {
                   {expirationsArray.map((date, index) =>{
                     return (
                     <tr key={index}
-                      onClick={() => handleRowClick(index)}
+                      onClick={() => expirationRowClick(index)}
                       style={{
                           backgroundColor: selectedExpiration === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
@@ -429,7 +435,7 @@ function OptionQuote (props) {
           <hr/> 
           {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp;
+            {/* <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; */}
             <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
           </div>}
@@ -449,7 +455,7 @@ function OptionQuote (props) {
                   {strikeArray.map((strike, index) =>{
                     return (
                     <tr key={index}
-                      onClick={() => handleRowClickStrike(index)}
+                      onClick={() => strikeRowClick(index)}
                       style={{
                           ...ROW_SPACING, backgroundColor: selectedStrike === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
