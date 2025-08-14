@@ -47,11 +47,11 @@ export default function ContactGet (props)  {
       setStat()
   }, [beutify]) 
 
-    useEffect (() => {
-      contactGet()
-      console.log (getDate(), 'ContactGet useEffect')
-      // setSearchDate(new Date(mili7DaysAgo)) // set date 90 days back  }
-    },[])
+    // useEffect (() => {
+    //   contactGet()
+    //   console.log (getDate(), 'ContactGet useEffect')
+    //   // setSearchDate(new Date(mili7DaysAgo)) // set date 90 days back  }
+    // },[])
 
     // avoid loop
     function setLog () {
