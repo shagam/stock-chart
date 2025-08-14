@@ -71,111 +71,8 @@ function OptionQuote (props) {
 
   }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
         
-
-  function expirationSelect (index) {
-    setSelectedExpiration(index);
-  }
-
-  const expirationsGet = useCallback (() => {
-
-    // if (log)
-    //   console.log ('expirationCount=', expirationCount)
-    const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
-    if (log)
-      console.log (url)
-
-    axios.get (url)
-      .then ((result) => {
-        if (log)
-          console.log ('expirations', result.data)
-        const mili = result.data.updated
-        const status = result.data.s
-
-        if (result.data.s !== 'ok') {
-          props.errorAdd ([props.symbol, 'expiration error', result.data.s])
-          console.log (props.symbol, 'expiration error', result.data.s)
-        }
-        
-        setExpirationsArray(result.data.expirations);
-        setSelectedExpiration(0); // first expiration by default
-      })
-      .catch ((err) => {
-        console.log(err.message)
-        props.errorAdd ([props.symbol, 'expiration error', err.message])
-      })
-
-  }, [props, TOKEN, log]);
-
-    useEffect (() => { 
-    setStrikeArray([]);
-    setSelectedStrike(-1);
-    setExpirationsArray([]);
-    setSelectedExpiration(-1);
-    // setExpirationCount(3);
-    // setCallOrPut(options[0]);
-    // setLineNumberArr([]);
-    setOptionQuote({});
-    setOptionKeys([]);
-    expirationsGet ();
-  }, [props.symbol, expirationsGet, log, log1, eliHome, props.errorAdd]); 
-
-
-  function expirationRowClick(rowId)  { 
-    setSelectedExpiration(rowId);
-    if (log)
-      console.log('Expiration Row clicked:', rowId);
-    strikePrices ();
-  }
-
- function strikeRowClick(rowId)  { 
-    setSelectedStrike(rowId);
-    if (log)
-      console.log('Strike Row clicked:', rowId);
-  }
-
-  function strikePrices () {
-    url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationsArray[selectedExpiration] + '&token=' + TOKEN
-        // + '?token=' + TOKEN;
-    if (log)
-      console.log (url)
-
-    axios.get (url)
-    .then ((result) => {
-      if (log)
-        console.log ('strike-prices', result.data)
-      const mili = result.data.updated
-
-      if (result.data.s !== 'ok') {
-        props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
-        console.log (props.symbol, 'strike-price error', result.data.s)
-      }
-
-      const arr = result.data[expirationsArray[selectedExpiration]]
-      if(log)
-        console.log ('strike-array', arr)
-
-      setStrikeArray(arr);
-
-      //** default select just above current price*/
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i] > props.stockPrice) {
-          setSelectedStrike(i);
-          if (log)
-            console.log ('default strike selected', i, arr[i])
-          break;
-        }
-      }
-    })
-    .catch ((err) => {
-      console.log(err.message)
-      props.errorAdd ([props.symbol, 'expiration error', err.message])
-    })
-  }
- 
-
   //** Get option premium for selected expiration and strike */
-  function optionPremium () {
+  const optionPremium = useCallback (() => {
     //** clear */
     // setOptionQuote({})
 
@@ -187,13 +84,6 @@ function OptionQuote (props) {
     if (expirationCount > 1 && (selectedExpiration + expirationCount < expirationsArray.length)) {
       expirationGroup =  '/?from=' + expirationsArray[selectedExpiration] + '&to=' + expirationsArray[selectedExpiration + expirationCount -1]
        + '&token=' + TOKEN
-
-      // for (let i = 1; i < expirationCount; i++) {
-      //   if (selectedExpiration + i >= expirationsArray.length)
-      //     break;
-      //   expirationGroup += ',' + expirationsArray[selectedExpiration + i] 
-      // }
-      // expirationGroup += ']';
     }
 
  
@@ -212,7 +102,7 @@ function OptionQuote (props) {
     }
     
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
-    url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
+    const url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + expirationGroup
         + '&side=' + callOrPut + '&strike=' + strikeGroup + '&api_key=' + TOKEN
         // + '?human=true';
@@ -334,8 +224,8 @@ function OptionQuote (props) {
       setOptionKeys(keys)
       if (columnShow.length === 0) {
         setColumnShow(keys) // if columnShow is empty, set it to all keys
-        columnShow_ = keys; // update the columnShow_ to all keys
-        localStorage.setItem('columnShow', JSON.stringify(columnShow_));
+        // columnShow__= keys; // update the columnShow_ to all keys
+        localStorage.setItem('columnShow', JSON.stringify(keys));
         console.log ('columnShow set to all keys', keys)
       }
 
@@ -348,7 +238,114 @@ function OptionQuote (props) {
     //   props.errorAdd ([props.symbol, 'expiration error', err.message])
     // })
 
+  }, [props, TOKEN, log, strikeArray, selectedStrike, expirationsArray,
+     selectedExpiration, callOrPut, percent, compoundYield, columnShow, columnShow_.length, 
+       expirationCount, setColumnShow, setOptionKeys, setLineNumberArr,
+       setMaxYearlyYield, setMaxYearlyYieldIndex, strikeCount]); // add callOrPut to dependencies
+
+
+  const strikePrices = useCallback (() => {
+    const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
+        + expirationsArray[selectedExpiration] + '&token=' + TOKEN
+        // + '?token=' + TOKEN;
+    if (log)
+      console.log (url)
+
+    axios.get (url)
+    .then ((result) => {
+      if (log)
+        console.log ('strike-prices', result.data)
+      const mili = result.data.updated
+
+      if (result.data.s !== 'ok') {
+        props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
+        console.log (props.symbol, 'strike-price error', result.data.s)
+      }
+
+      const arr = result.data[expirationsArray[selectedExpiration]]
+      if(log)
+        console.log ('strike-array', arr)
+
+      setStrikeArray(arr);
+
+      //** default select just above current price*/
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > props.stockPrice) {
+          setSelectedStrike(i);
+          if (log)
+            console.log ('default strike selected', i, arr[i])
+          break;
+        }
+      }
+      // optionPremium ()
+    })
+    .catch ((err) => {
+      console.log(err.message)
+      props.errorAdd ([props.symbol, 'expiration error', err.message])
+    })
+  }, [props, TOKEN, log, expirationsArray, selectedExpiration]);
+ 
+
+
+  const expirationsGet = useCallback (() => {
+    const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
+    if (log)
+      console.log (url)
+
+    axios.get (url)
+      .then ((result) => {
+        if (log)
+          console.log ('expirations', result.data)
+        const mili = result.data.updated
+        const status = result.data.s
+
+        if (result.data.s !== 'ok') {
+          props.errorAdd ([props.symbol, 'expiration error', result.data.s])
+          console.log (props.symbol, 'expiration error', result.data.s)
+        }
+        
+        setExpirationsArray(result.data.expirations);
+        setSelectedExpiration(0); // first expiration by default
+        // strikePrices ()
+
+      })
+      .catch ((err) => {
+        console.log(err.message)
+        props.errorAdd ([props.symbol, 'expiration error', err.message])
+      })
+
+  }, [props, TOKEN, log]);
+
+
+
+  function expirationRowClick(rowId)  { 
+    setSelectedExpiration(rowId);
+    if (log)
+      console.log('Expiration Row clicked:', rowId);
+    // strikePrices ();
   }
+
+ function strikeRowClick(rowId)  { 
+    setSelectedStrike(rowId);
+    if (log)
+      console.log('Strike Row clicked:', rowId);
+  }
+
+
+  useEffect (() => { 
+    // setStrikeArray([]);
+    // setSelectedStrike(-1);
+    // setExpirationsArray([]);
+    // setSelectedExpiration(-1);
+    // setExpirationCount(3);
+    // setCallOrPut(options[0]);
+    // setLineNumberArr([]);
+    // setOptionQuote({});
+    // setOptionKeys([]);
+    expirationsGet ();
+  }, [props.symbol, expirationsGet, log, log1, eliHome, props.errorAdd]); 
+
+
 
   function handleColumnCheckboxChange (item) {
     setColumnShow((prev) =>
@@ -395,7 +392,7 @@ function OptionQuote (props) {
         
         {/* expirations */}
         <div style = {{display: 'flex'}}>
-          {/* <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp; */}
+          <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
           <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
           <GetInt init={expirationCount} callBack={setExpirationCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
         </div>
@@ -435,7 +432,7 @@ function OptionQuote (props) {
           <hr/> 
           {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
-            {/* <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp; */}
+            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp;
             <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
           </div>}
