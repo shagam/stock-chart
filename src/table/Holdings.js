@@ -31,6 +31,7 @@ function Holdings (props) {
   const [logBackEnd, setLogBackEnd] = useState (false);
   const [saveInFile, setSaveInFile] = useState (false);
   const [ignoreMismatch, setIgnoreMismatch] = useState (false);
+  const [fullList, setFullList] = useState (false); // for future use
 
   const [percentRegex, setPercentRegex] = useState ();
 
@@ -303,6 +304,8 @@ function Holdings (props) {
   }
 
   const ROW_SPACING = {padding: '1px', margin: '1px'}
+  const hieght = fullList ? {maxHeight: '60vh'} : {maxHeight: '30vh'} ;
+
 
   return (
     <div style={{ border: '2px solid blue'}}> 
@@ -336,6 +339,7 @@ function Holdings (props) {
             {eliHome && <div> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  /> &nbsp;IgnoreSaved &nbsp; &nbsp; </div> }
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  /> &nbsp;log &nbsp; &nbsp; </div>} 
             {eliHome && <div> <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  /> &nbsp;SaveInFile &nbsp; &nbsp; </div> }
+            {<div> <input type="checkbox" checked={fullList}  onChange={()=>setFullList (! fullList)}  /> &nbsp;fullList &nbsp; &nbsp; </div> }
             <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  &nbsp;get-even-when-mismatch &nbsp; &nbsp; 
           </div>
 
@@ -374,7 +378,7 @@ function Holdings (props) {
 
 
       {/* ====== Display filtered held list */} 
-      {Object.keys(heldMasterObj).length > 0 && <div  style={{ maxHeight: '50vh', overflowY: 'scroll'}}>
+      {Object.keys(heldMasterObj).length > 0 && <div  style={{...hieght, overflowY: 'scroll', }}>
       <table>
         <thead>
           <tr>
