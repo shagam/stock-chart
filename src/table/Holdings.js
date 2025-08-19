@@ -321,11 +321,10 @@ function Holdings (props) {
       <h6>Holdings links </h6>
       {<button onClick={() => openInNewTab(url_holdings_schwab)}> schwab ({props.chartSymbol})</button>} &nbsp;
       {<button onClick={() => openInNewTab(urlCors)}>  stockAnalysis ({props.chartSymbol}) </button>} &nbsp;
-      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + props.chartSymbol)}> yahoo ({props.chartSymbol}) </button>} &nbsp;
-
+      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + props.chartSymbol)}> yahoo ({props.chartSymbol}) </button>} &nbsp; &nbsp; &nbsp; &nbsp;
+      {<button onClick={() => openInNewTab('https://hedgefollow.com/')}> Hedge funds </button>} &nbsp;
 
       
-
       <div>&nbsp;</div>
       <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Allow to insert holdings into stock-table) </h6>
 
