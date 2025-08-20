@@ -29,7 +29,7 @@ import { beep2 } from '../utils/ErrorList';
 
  //** search for week number */
  const LOG_week_above_52 = false
- function weekOfYearGet (Xarray, i, logFlags) {
+ function weekOfYearGet (Xarray, i, logFlags, sym) {
     const LOG = logFlags.includes('month')
     if (i + 52 > Xarray.length){
       console.log ('near oldest i=', i, 'date=', Xarray[i], 'oldest=', Xarray[Xarray.length - 1])
@@ -136,14 +136,25 @@ function MonthGain (props) {
     const weekGainArrayCount = new Array(52).fill(0);
 
     //** used to display daste in weekgain table */
-    const weekNumOfDate_temp = (gainMapSym && props.gainMap[gainMapSym]) ?  weekOfYearGet (props.gainMap[gainMapSym].x, 0, props.logFlags) : null // get week num of first date
+    const weekNumOfDate_temp = (gainMapSym && props.gainMap[gainMapSym]) ? 
+       weekOfYearGet (props.gainMap[gainMapSym].x, 0, props.logFlags, gainMapSym) : null // get week num of first date
     if (weekNumOfDate_temp)
       setWeekNumberForDate_0 (weekNumOfDate_temp)
 
 
     // if (false) // temp by pass
     // week gain  collect for all symbols
+    if (Object.keys(gainMap).length > 1) {
+        console.log ('Subbort for multiple symbols is not implemented yet') 
+        setStatus ('Subbort for multiple symbols is not implemented yet') 
+        beep2()
+        return;     
+    }
     for (var symm_ in gainMap) {
+      if (symm_ === 'bubbleLine') {
+        console.log ('Week gain skip bubbleLine')
+        continue;
+      }
       
       const gainMapSym = gainMap[symm_];
       const xArray = gainMapSym.x;
@@ -159,7 +170,7 @@ function MonthGain (props) {
       var errCount = 0;
       for (let i = 0; i < oldestIndex -1; i++) { // index into weekly x (date) y (price) arrays 
 
-        var weekOfYear = weekOfYearGet (xArray, i, props.logFlags) 
+        var weekOfYear = weekOfYearGet (xArray, i, props.logFlags, symm_) 
         if (weekOfYear === -1) {// fail
           continue;
         }
@@ -192,7 +203,12 @@ function MonthGain (props) {
     stockCount_ = stocks.length;
     var arrayLen = 0; // collect average length in weeks
 
+    // const keys = Object.keys(gainMap);
     for (var symm in gainMap) {
+      if (symm === 'bubbleLine') {
+        console.log ('Month gain: skip bubbleLine')
+        continue;
+      }
       const gainMapSym = gainMap[symm];
       const mGainForSymm = [1,1,1,1,1,1, 1,1,1,1,1,1] ;  // monthGainfor one stock
       const mGainForSymmShift = [] ;  // monthGainfor one stock
