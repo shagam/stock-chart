@@ -269,7 +269,7 @@ const Peak2PeakGui = (props) => {
     setPercentBelow(percent.toFixed(2))
     setBubbleLineRatio(bubbleLineOver)
     setBelowHigh(props.rows[row_index].values.priceDivHigh)
-    const priceDivHigh = (price / high).toFixed(2);
+    const priceDivHigh = (price / high).toFixed(4);
     props.rows[row_index].values.priceDivHigh = priceDivHigh;
     const belowHigh = ((priceDivHigh - 1) * 100)
     if (props.rows[row_index].values.priceDivHigh)
