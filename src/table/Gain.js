@@ -356,7 +356,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               console.log ('sym short gain,  agrgate=', short.toFixed(3), 'mon=', mon_.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
                '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3), 'count=', count)
               rows[row_index].values.short = short.toFixed(3);
-
+            
               var price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
@@ -398,9 +398,11 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 console.log (sym, 'gain year20', rows[row_index].values.year20)
   
               // rows[row_index].values.peak2Peak = peak2Peak;
-              rows[row_index].values.price = price;
-              rows[row_index].values.priceDivHigh = priceDivHigh;
-            
+              if (rows[row_index].values.price === undefined || ! rows[row_index].values.price_mili ||
+                 Date.now() - rows[row_index].values.price_mili > 1000 * 60 * 60 * 2) {
+                rows[row_index].values.price = price;
+                rows[row_index].values.priceDivHigh = priceDivHigh;
+              }
               rows[row_index].values.sym = sym; // added field
               rows[row_index].values.splits_list = splitArray;
               // console.log (splits)
