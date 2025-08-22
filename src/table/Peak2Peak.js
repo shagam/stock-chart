@@ -346,7 +346,7 @@ const Peak2PeakGui = (props) => {
                   type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>
               }
 
-              {props.gainMap.bubbleLine  &&  <div>{props.symbol} price: &nbsp;
+              {props.gainMap.bubbleLine  &&  <div>{props.symbol} price: {props.price} &nbsp;
                 <dev style={{display: 'flex'}} >
                   belowBubbleLine= <div style={{color: 'magenta'}} >{bubbleLineRatio}  ({percentBelow}%)</div> &nbsp; &nbsp;
                   belowHigh= <div style={{color: 'magenta'}}>{belowHigh} ({belowHighPercent}%)</div>

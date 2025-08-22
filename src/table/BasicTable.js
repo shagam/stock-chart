@@ -142,7 +142,7 @@ const BasicTable = (props) => {
   const [QQQ_gain, set_QQQ_gain] = useState({})
   const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
-
+  const [price, setPrice] = useState();
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
   // const gainRef = collection(db, "stock-gain_")
@@ -386,6 +386,7 @@ const BasicTable = (props) => {
     if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined) {
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
       targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
+      setPrice(rows[index].values.price)
     }
     // childData.Address = '';   // Clear some data to decrese traffic
     // childData.Description = '';
@@ -443,7 +444,8 @@ const BasicTable = (props) => {
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns)
-
+    
+    setPrice (rows[row_index].values.price)
  
      if (singleSym)
       saveTable(sym);
@@ -1063,7 +1065,8 @@ const BasicTable = (props) => {
               errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
 
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable}/>}
+                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
+                  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price}/>}
 
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
