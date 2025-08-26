@@ -1066,7 +1066,7 @@ const BasicTable = (props) => {
 
             {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
-                  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price}/>}
+                  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>}
 
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}

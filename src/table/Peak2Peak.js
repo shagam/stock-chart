@@ -58,11 +58,13 @@ const Peak2PeakGui = (props) => {
     const [peaksShow, setPeaksShow] = useState ();
 
     const [histogramLast, setHistogramLast] = useState({})
+    const [log,setLog] = useState (false);
+
     var bubbleline = {}
 
     const [tableShowFlag, setTableShowFlag] = useState ();
 
-    const LOG_FLAG = props.logFlags && props.logFlags.includes('peak2Peak');
+    const LOG_FLAG = log; //props.logFlags && props.logFlags.includes('peak2Peak');
     const row_index_eeee = props.rows.findIndex((row)=> row.values.symbol === process.env.REACT_APP_ELI_HOME_S)
 
     function clear () {
@@ -303,7 +305,8 @@ const Peak2PeakGui = (props) => {
 
             <div style={{color: 'red'}}>{err}</div>
 
-            
+            {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}
+  
             {/* Choose dates for crashes 2001, 2008, 2022 */}
 
             {admin && <div  style={{display:'flex' }}> 
