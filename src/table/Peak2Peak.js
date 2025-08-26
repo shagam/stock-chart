@@ -276,7 +276,7 @@ const Peak2PeakGui = (props) => {
       setBelowHighPercent(belowHigh.toFixed(2))
     if (results)
       results['CurrentPrice/bubbleLine'] = bubbleLineOver;
-    console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
+    console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'price=', props.price, 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
     // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
     histogramBuild ()
