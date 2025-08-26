@@ -72,7 +72,7 @@ function OptionQuote (props) {
   }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
         
   //** Get option premium for selected expiration and strike */
-  const optionPremium = useCallback (() => {
+  const optionPremium = useCallback ((selectedExpiration, selectedStrike) => {
     //** clear */
     // setOptionQuote({})
 
@@ -244,7 +244,7 @@ function OptionQuote (props) {
        setMaxYearlyYield, setMaxYearlyYieldIndex, strikeCount]); // add callOrPut to dependencies
 
 
-  const strikePrices = useCallback (() => {
+  const strikePricesGet = useCallback ((selectedExpiration, expirationsArray) => {
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
         + expirationsArray[selectedExpiration] + '&token=' + TOKEN
         // + '?token=' + TOKEN;
@@ -306,7 +306,7 @@ function OptionQuote (props) {
         
         setExpirationsArray(result.data.expirations);
         setSelectedExpiration(0); // first expiration by default
-        // strikePrices ()
+        strikePricesGet (0, result.data.expirations) 
 
       })
       .catch ((err) => {
@@ -432,7 +432,7 @@ function OptionQuote (props) {
           <hr/> 
           {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePrices()}>  strike-price   </button> &nbsp; &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(selectedExpiration)}>  strike-price   </button> &nbsp; &nbsp;
             <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
           </div>}
@@ -473,7 +473,7 @@ function OptionQuote (props) {
           {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium()}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(selectedExpiration, selectedStrike)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
             {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
           </div>}
