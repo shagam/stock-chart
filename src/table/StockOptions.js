@@ -238,8 +238,8 @@ function OptionQuote (props) {
     //   props.errorAdd ([props.symbol, 'expiration error', err.message])
     // })
 
-  }, [props, TOKEN, log, strikeArray, selectedStrike, expirationsArray,
-     selectedExpiration, callOrPut, percent, compoundYield, columnShow, columnShow_.length, 
+  }, [props, TOKEN, log, strikeArray, expirationsArray,
+      callOrPut, percent, compoundYield, columnShow, columnShow_.length, 
        expirationCount, setColumnShow, setOptionKeys, setLineNumberArr,
        setMaxYearlyYield, setMaxYearlyYieldIndex, strikeCount]); // add callOrPut to dependencies
 
@@ -283,7 +283,7 @@ function OptionQuote (props) {
       console.log(err.message)
       props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
-  }, [props, TOKEN, log, expirationsArray, selectedExpiration]);
+  }, [props, TOKEN, log]);
  
 
 
