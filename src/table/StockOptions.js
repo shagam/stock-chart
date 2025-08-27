@@ -314,7 +314,7 @@ function OptionQuote (props) {
         props.errorAdd ([props.symbol, 'expiration error', err.message])
       })
 
-  }, [props, TOKEN, log]);
+  }, [props, TOKEN, log, strikePricesGet]);
 
 
 
