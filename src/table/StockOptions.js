@@ -22,14 +22,18 @@ function OptionQuote (props) {
   const TOKEN = process.env.REACT_APP_MARKETDATA;
   var url = 'https://marketdata.app/api/v1/marketdata?token=' + TOKEN;
 
-  const [log, setLog] = useState (eliHome); // default to true if eliHome is true
+  const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
   const [log1, setLog1] = useState (false);
+
   const [expirationsArray, setExpirationsArray] = useState([]); 
-  const [expirationCount, setExpirationCount] = useState(3);
   const [selectedExpiration, setSelectedExpiration] = useState(-1);
 
   const [strikeArray, setStrikeArray] = useState([]);
+  var strikeArray_ = []; // for local use, during computation
   const [selectedStrike, setSelectedStrike] = useState(-1);
+  var selectedStrike_ = -1; // for local use, during computation
+  
+  const [expirationCount, setExpirationCount] = useState(3);
   const [strikeCount, setStrikeCount] = useState(3);
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
@@ -70,20 +74,22 @@ function OptionQuote (props) {
     }
 
   }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
+
+
         
   //** Get option premium for selected expiration and strike */
-  const optionPremium = useCallback ((selectedExpiration, selectedStrike) => {
+  const optionPremium = useCallback ((selectedExpiration, expirationsArray, selectedStrike, strikeArray) => {
+    console.log ('ptionPremiumGet', selectedExpiration, expirationsArray, selectedStrike, strikeArray)
     //** clear */
     // setOptionQuote({})
 
     setLineNumberArr([]);
     //** create expiration group */
     // console.log (expirationCount, selectedExpiration, expirationsArray.length)
-    var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration] + '&token=' + TOKEN;
+    var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration]
     // console.log ('expirationCount=', expirationCount)
     if (expirationCount > 1 && (selectedExpiration + expirationCount < expirationsArray.length)) {
       expirationGroup =  '/?from=' + expirationsArray[selectedExpiration] + '&to=' + expirationsArray[selectedExpiration + expirationCount -1]
-       + '&token=' + TOKEN
     }
 
  
@@ -104,13 +110,14 @@ function OptionQuote (props) {
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     const url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + expirationGroup
-        + '&side=' + callOrPut + '&strike=' + strikeGroup + '&api_key=' + TOKEN
+        + '&side=' + callOrPut + '&strike=' + strikeGroup + '&token=' + TOKEN
         // + '?human=true';
 
+    // console.log(props.symbol , 'expirations=', expirationGroup, '&side=' + callOrPut + '&strike=' + strikeGroup)
     // const TEST = 'https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25'
     // url = TEST;
-    if (log)
-      console.log (url)
+    // if (log)
+    //   console.log (url)
 
     axios.get (url)
     .then ((result) => {
@@ -233,15 +240,16 @@ function OptionQuote (props) {
         console.log ('keys', Object.keys(result.data))
 
      })
-    // .catch ((err) => {
-    //   console.log(err.message)
-    //   props.errorAdd ([props.symbol, 'expiration error', err.message])
-    // })
+    .catch ((err) => {
+      console.log(err.message)
+      props.errorAdd ([props.symbol, 'expiration error', err.message])
+    })
 
-  }, [props, TOKEN, log, strikeArray, expirationsArray,
+  }, [props, TOKEN, log, // strikeArray, expirationsArray,
       callOrPut, percent, compoundYield, columnShow, columnShow_.length, 
        expirationCount, setColumnShow, setOptionKeys, setLineNumberArr,
        setMaxYearlyYield, setMaxYearlyYieldIndex, strikeCount]); // add callOrPut to dependencies
+
 
 
   const strikePricesGet = useCallback ((selectedExpiration, expirationsArray) => {
@@ -267,23 +275,26 @@ function OptionQuote (props) {
         console.log ('strike-array', arr)
 
       setStrikeArray(arr);
-
+      // setSelectedStrike(-1); // clear selected strike
+      var selectedStrike_ = -1; // for local use, during computation
       //** default select just above current price*/
       for (let i = 0; i < arr.length; i++) {
         if (arr[i] > props.stockPrice) {
           setSelectedStrike(i);
+          selectedStrike_ = i
           if (log)
-            console.log ('default strike selected', i, arr[i])
+            console.log ('default strike selected', i, 'price=', arr[i])
           break;
         }
       }
-      // optionPremium ()
+      // console.log ('ptionPremiumGet', selectedExpiration, expirationsArray, selectedStrike_, arr)
+      // optionPremium (expirationsArray, selectedExpiration, selectedStrike_, arr)
     })
     .catch ((err) => {
       console.log(err.message)
       props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
-  }, [props, TOKEN, log]);
+  }, [props, TOKEN, log, optionPremium]);
  
 
 
@@ -305,6 +316,7 @@ function OptionQuote (props) {
         }
         
         setExpirationsArray(result.data.expirations);
+
         setSelectedExpiration(0); // first expiration by default
         strikePricesGet (0, result.data.expirations) 
 
@@ -473,7 +485,7 @@ function OptionQuote (props) {
           {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(selectedExpiration, selectedStrike)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(selectedExpiration, expirationsArray, selectedStrike, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
             <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
             {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
           </div>}

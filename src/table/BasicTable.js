@@ -1113,7 +1113,7 @@ const BasicTable = (props) => {
                 errorAdd={errorAdd} daily={props.daily}/>}
 
             {analyzeTool ==='options' && <OptionQuote symbol = {chartSymbol} stockPrice = {stockChartYValues[0]}
-                errorAdd={errorAdd} daily={props.daily}/>}
+                errorAdd={errorAdd} daily={props.daily} eliHome={eliHome} />}
 
           </div>}
           </div>}        
