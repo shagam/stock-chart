@@ -406,7 +406,6 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
           <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
-          <GetInt init={expirationCount} callBack={setExpirationCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
         </div>
 
         
@@ -446,7 +445,6 @@ function OptionQuote (props) {
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(selectedExpiration)}>  strike-price   </button> &nbsp; &nbsp;
             <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
-            <GetInt init={strikeCount} callBack={setStrikeCount} title='request-count' type='Number' pattern="[0-9]+" width = '15%'/> 
           </div>}
 
 
@@ -497,6 +495,11 @@ function OptionQuote (props) {
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
           </div>}
+
+          <div style = {{display: 'flex', marginTop:'10px'}}>
+            <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+            <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
+          </div>
 
           {/* select columns */}
           {columnHideFlag && <div >    
