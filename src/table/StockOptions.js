@@ -294,7 +294,7 @@ function OptionQuote (props) {
       console.log(err.message)
       props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
-  }, [props, TOKEN, log, optionPremium]);
+  }, [props, TOKEN, log])// , optionPremium]);
  
 
 
