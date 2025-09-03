@@ -48,6 +48,11 @@ function OptionQuote (props) {
   const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   const [columnShow, setColumnShow] = useState([]);
+  const [err, setErr] = useState();
+  const [latency, setLatency] = useState();
+  const [arr, setArr] = useState([]);
+  const [dat, setDat] = useState({});
+
   const columnsAll = [
     "expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
@@ -344,6 +349,68 @@ function OptionQuote (props) {
   }
 
 
+  //** get from coirsServer */
+  function optionsInfoServer () {
+    var corsUrl;
+    if (props.ssl)
+      corsUrl = "https://";
+    else
+      corsUrl = "http://";
+
+    corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
+    corsUrl += "&expNum=" + 1
+    corsUrl += "&strikeNum=" + 1
+    corsUrl += '&expirationCount=' + expirationCount
+    corsUrl += '&strikeCount=' + strikeCount
+    corsUrl += "&callOrPut=" + callOrPut
+    corsUrl += "&percent=" + (percent ? 1 : 0)
+    corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
+    corsUrl += "&stockPrice=" + props.stockPrice
+    corsUrl += "&func=" + "expirations" // expirations, strikes, optionPremium
+
+
+    // corsUrl += "&token=" + TOKEN
+    if (log)
+      corsUrl += "&log=1"
+
+    setErr()
+    setDat()
+    const mili = Date.now()
+
+    axios.get (corsUrl)
+    // getDate()
+    .then ((result) => {
+      setErr()
+      if (result.status !== 200) {
+        console.log (props.chartSymbol, 'status=', result)
+        return;
+      }
+      setDat(result.data)
+      if (log)
+        console.log (props.symbol, result.data)
+
+      if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+        setErr(result.data)
+        props.errorAdd ([props.symbol,result.data])
+        return;
+      }
+
+
+
+      const latency = Date.now() - mili
+      setLatency ('getoptions done,  Latency(msec)=' + latency)    
+
+      setDat(result.data)
+         
+    } )
+    .catch ((err) => {
+      setErr(err.message)
+      // console.log(err.message)
+    })
+
+  }
+
+
   useEffect (() => { 
     // setStrikeArray([]);
     // setSelectedStrike(-1);
@@ -401,8 +468,16 @@ function OptionQuote (props) {
           {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
         </div>
 
+        {err && <div style={{color: 'red'}}>Error: {err} </div>}
+        {latency && <div style={{color: 'green'}}> {latency} </div>}
+
+        {props.eliHome &&
+        <div>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>optionsInfoServer()}>  from-corsServer   </button> &nbsp;&nbsp;
+          {dat && typeof(dat) === 'object' && <div>options from corsServer: {JSON.stringify(dat)} </div> }
+        </div>}
         
-        {/* expirations */}
+
         <div style = {{display: 'flex'}}>
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
           <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
