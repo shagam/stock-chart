@@ -63,8 +63,12 @@ function OptionQuote (props) {
     localStorage.setItem('columnShow', JSON.stringify(columnShow_)); // set default columnShow
     console.log ('columnShow init', columnShow_.length, columnShow_)
   }
-  // else
-  //  console.log ('columnShow from localStorage', columnShow_.length, columnShow_)
+
+  var config = useMemo(() => JSON.parse (localStorage.getItem('stockOptionsConfig')), []);
+  if (! config ) {
+    config = {expirationCount: 3, strikeCount: 3, callOrPut: options[0], percent: true, compoundYield: false};
+  }
+
 
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
     console.log ('columnShow from localStorage ', columnShow_)
@@ -358,7 +362,7 @@ function OptionQuote (props) {
       corsUrl = "http://";
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
-    corsUrl += "&expNum=" + 1
+    corsUrl += "&expirationNum=" + 1
     corsUrl += "&strikeNum=" + 1
     corsUrl += '&expirationCount=' + expirationCount
     corsUrl += '&strikeCount=' + strikeCount
@@ -376,6 +380,7 @@ function OptionQuote (props) {
     setErr()
     setDat()
     const mili = Date.now()
+    setLatency('request sent to server ...')
 
     axios.get (corsUrl)
     // getDate()
@@ -392,20 +397,20 @@ function OptionQuote (props) {
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr(result.data)
         props.errorAdd ([props.symbol,result.data])
+        console.log (props.symbol, result.data)
         return;
       }
 
-
-
       const latency = Date.now() - mili
-      setLatency ('getoptions done,  Latency(msec)=' + latency)    
+      setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       setDat(result.data)
          
     } )
     .catch ((err) => {
       setErr(err.message)
-      // console.log(err.message)
+      console.log(err.message)
+      props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     })
 
   }
@@ -474,7 +479,8 @@ function OptionQuote (props) {
         {props.eliHome &&
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>optionsInfoServer()}>  from-corsServer   </button> &nbsp;&nbsp;
-          {dat && typeof(dat) === 'object' && <div>options from corsServer: {JSON.stringify(dat)} </div> }
+          {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> }
+          <hr/> 
         </div>}
         
 
