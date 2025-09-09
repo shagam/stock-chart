@@ -50,7 +50,8 @@ function OptionQuote (props) {
   const [columnShow, setColumnShow] = useState([]);
   const [err, setErr] = useState();
   const [latency, setLatency] = useState();
-  const [arr, setArr] = useState([]);
+  const [useOptionServer, setUseOptionServer] = useState(eliHome);
+  // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
   const columnsAll = [
@@ -363,14 +364,14 @@ function OptionQuote (props) {
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
     corsUrl += "&expirationNum=" + 1
-    corsUrl += "&strikeNum=" + 1
+    corsUrl += "&strikeNum=" + '-1' 
     corsUrl += '&expirationCount=' + expirationCount
     corsUrl += '&strikeCount=' + strikeCount
     corsUrl += "&callOrPut=" + callOrPut
     corsUrl += "&percent=" + (percent ? 1 : 0)
     corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
     corsUrl += "&stockPrice=" + props.stockPrice
-    corsUrl += "&func=" + "expirations" // expirations, strikes, optionPremium
+    // corsUrl += "&func=" + "expirations" // expirations, strikes, optionPremium
 
 
     // corsUrl += "&token=" + TOKEN
@@ -426,7 +427,8 @@ function OptionQuote (props) {
     // setLineNumberArr([]);
     // setOptionQuote({});
     // setOptionKeys([]);
-    expirationsGet ();
+    if (! eliHome && false)
+      expirationsGet ();
   }, [props.symbol, expirationsGet, log, log1, eliHome, props.errorAdd]); 
 
 
