@@ -405,6 +405,10 @@ function OptionQuote (props) {
       const latency = Date.now() - mili
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
+      setExpirationsArray(result.data.expirationArray)
+      setStrikeArray(result.data.strikeArray)
+      setOptionQuote(result.data.primiumArray)
+      // setOptionKeys(Object.keys(result.data.primiumArray))
       setDat(result.data)
          
     } )
