@@ -405,17 +405,135 @@ function OptionQuote (props) {
       const latency = Date.now() - mili
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
+
       setExpirationsArray(result.data.expirationArray)
       setSelectedExpiration (1)
       setStrikeArray(result.data.strikeArray)
       setSelectedStrike(result.data.strikeNum)
-      setOptionQuote(result.data.premiumArray)
-      setOptionKeys(Object.keys(result.data.premiumArray))
-      setDat(result.data)
+
+      const optionQuote = result.data.premiumArray;
+      setOptionQuote(optionQuote)
+      setOptionKeys(Object.keys(optionQuote))
 
 
+
+      // if (result.data.s !== 'ok') {
+      //   props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
+      //   console.log (props.symbol, 'option-fee error', result.data.s)
+      //   return
+      // }
+
+      //** copy and convert date format of result.data */
+      var lineArr = []
+      var OptionQuoteFiltered = {}
+      OptionQuoteFiltered.expiration = [] 
+      OptionQuoteFiltered.firstTraded = []
+      OptionQuoteFiltered.updated = []
+      const rows = optionQuote.expiration.length;  // row count
+
+      Object.keys(optionQuote).forEach((key) => {
+
+        // delete result.data.optionSymbol
+        // delete result.data.s
+        if (key === 's' || key === 'optionSymbol')
+          return;
+
+          // convert date to YYYY-mm-dd format
+          OptionQuoteFiltered[key] = []
+          for (let i = 0; i < rows; i++) {
+            if (key === 'expiration' || key === 'firstTraded' || key === 'updated') {
+              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.expiration[i] * 1000))
+              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.firstTraded[i] * 1000))
+              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.updated[i] * 1000))
+            }
+            else {
+              OptionQuoteFiltered[key][i] = optionQuote[key][i]; // all other just copy
+            }
+            if (key === 'expiration')
+              lineArr.push (i) 
+          }
+        } )
+      console.log ('filtered', OptionQuoteFiltered)
+      setLineNumberArr(lineArr);
+      if (log)
+        console.log ('lineNumberArr', lineArr)
 
       
+      //** calc yearly yield */
+      const miliNow = Date.now()
+      OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
+      OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
+      OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
+      for (let i = 0; i < rows; i++) {
+      const mid = OptionQuoteFiltered.mid[i];
+        const dte = OptionQuoteFiltered.dte[i];
+
+        const yield_ = (mid / props.stockPrice);
+        const yearlyYield = compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
+
+        const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
+
+
+        OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
+        OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
+        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
+
+        if (log)
+          console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
+            'dte(days)=', optionQuote.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
+          )  
+      }
+      if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
+        columnShow.push('yield_')
+      if (!columnShow.includes('yearlyYield')) // if yearlyGain is not in columnShow, add it
+        columnShow.push ('yearlyYield'); // add yearlyGain to columnShow_  
+      if (!columnShow.includes('breakEven')) // if breakEven is not in columnShow, add it
+        columnShow.push ('breakEven');   
+
+
+
+      const keys = Object.keys(OptionQuoteFiltered);
+
+      //** find highest yearlyYield */
+      var maxYearlyYield_ = 0;
+     for (let i = 0; i < rows; i++) {
+        if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
+          continue
+         OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
+         if (OptionQuoteFiltered.yearlyYield[i] > maxYearlyYield_) {
+          // if (log)
+          //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
+          maxYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
+          setMaxYearlyYieldIndex(i); // save index of max yearly yield
+         }
+      }
+      setMaxYearlyYield(maxYearlyYield_); // set maxYearlyYield
+      setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
+      if (log)
+        console.log ('maxYearlyYield=', maxYearlyYield_)
+
+
+      if(log)
+        console.log ('columnShow set to all keys', keys)
+      
+      // if columnShow is empty, set it to all keys
+      if (columnShow_.length === 0) {
+        setColumnShow(keys)
+        localStorage.setItem('columnShow (keys)', JSON.stringify(keys));
+      }
+
+      setOptionKeys(keys)
+      if (columnShow.length === 0) {
+        setColumnShow(keys) // if columnShow is empty, set it to all keys
+        // columnShow__= keys; // update the columnShow_ to all keys
+        localStorage.setItem('columnShow', JSON.stringify(keys));
+        console.log ('columnShow set to all keys', keys)
+      }
+
+      if (log)
+        console.log ('keys', Object.keys(optionQuote))
+
+
          
     } )
     .catch ((err) => {
