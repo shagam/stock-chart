@@ -391,7 +391,7 @@ function OptionQuote (props) {
         console.log (props.chartSymbol, 'status=', result)
         return;
       }
-      setDat(result.data)
+      // setDat(result.data)
       if (log)
         console.log (props.symbol, result.data)
 
