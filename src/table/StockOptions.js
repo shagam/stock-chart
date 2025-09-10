@@ -50,6 +50,10 @@ function OptionQuote (props) {
   const [columnShow, setColumnShow] = useState([]);
   const [err, setErr] = useState();
   const [latency, setLatency] = useState();
+
+  const [expirationShow, setExpirationShow] = useState(false);
+  const [strikeShow, setStrikeShow] = useState(false);
+
   const [useOptionServer, setUseOptionServer] = useState(eliHome);
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
@@ -608,50 +612,55 @@ function OptionQuote (props) {
 
         {props.eliHome &&
         <div>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>optionsInfoServer()}>  from-corsServer   </button> &nbsp;&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>optionsInfoServer()}>  stock option data   </button> &nbsp;&nbsp;
           {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> }
+          {/* <hr/>  */}
+        </div>}
+        
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;expirationShow &nbsp; &nbsp; </div>
+        {expirationShow && <div>
+ 
+          <div style = {{display: 'flex'}}>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
+            <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
+          </div>
+
+          
+          {/* Expiration table */}
+          {expirationsArray.length > 0  && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
+              <table>
+                  <thead>
+                    <tr>
+                      <th style={{...ROW_SPACING, width: '20px'}}>N</th>
+                      <th style={{...ROW_SPACING, width: '100px'}} >expiration-date</th>                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {expirationsArray.map((date, index) =>{
+                      return (
+                      <tr key={index}
+                        onClick={() => expirationRowClick(index)}
+                        style={{
+                            backgroundColor: selectedExpiration === index ? '#d3e5ff' : 'white',
+                            cursor: 'pointer',
+                          }}                      
+                        >
+                        <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
+                        <td style={{...ROW_SPACING, width: '100px'}}>{date}  </td> 
+                      </tr>
+                      )
+                    })}
+                  </tbody>
+              </table>
+          </div>}
           <hr/> 
         </div>}
         
-
-        <div style = {{display: 'flex'}}>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
-          <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
-        </div>
-
-        
-        {/* Expiration table */}
-        { expirationsArray.length > 0 && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
-            <table>
-                <thead>
-                  <tr>
-                    <th style={{...ROW_SPACING, width: '20px'}}>N</th>
-                    <th style={{...ROW_SPACING, width: '100px'}} >expiration-date</th>                    
-                  </tr>
-                </thead>
-                <tbody>
-                  {expirationsArray.map((date, index) =>{
-                    return (
-                    <tr key={index}
-                      onClick={() => expirationRowClick(index)}
-                      style={{
-                          backgroundColor: selectedExpiration === index ? '#d3e5ff' : 'white',
-                          cursor: 'pointer',
-                        }}                      
-                      >
-                      <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
-                      <td style={{...ROW_SPACING, width: '100px'}}>{date}  </td> 
-                    </tr>
-                    )
-                  })}
-                </tbody>
-            </table>
-        </div>}  
-
-        
         {/* strikes */}
-        {expirationsArray.length > 0 && <div>
-          <hr/> 
+
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;strikeShow &nbsp; &nbsp; </div>
+        {strikeShow && expirationsArray.length > 0 && <div>
+
           {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(selectedExpiration)}>  strike-price   </button> &nbsp; &nbsp;
@@ -687,10 +696,11 @@ function OptionQuote (props) {
                   })}
                 </tbody>
             </table>
-          </div>}  
+          </div>} 
+          <hr/>  
           </div>}
 
-          <hr/> 
+
           {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
