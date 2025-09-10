@@ -406,10 +406,16 @@ function OptionQuote (props) {
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       setExpirationsArray(result.data.expirationArray)
+      setSelectedExpiration (1)
       setStrikeArray(result.data.strikeArray)
-      setOptionQuote(result.data.primiumArray)
-      // setOptionKeys(Object.keys(result.data.primiumArray))
+      setSelectedStrike(result.data.strikeNum)
+      setOptionQuote(result.data.premiumArray)
+      setOptionKeys(Object.keys(result.data.premiumArray))
       setDat(result.data)
+
+
+
+      
          
     } )
     .catch ((err) => {
