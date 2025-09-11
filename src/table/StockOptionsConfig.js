@@ -6,17 +6,17 @@ import '../alphaVantage.css'
 
 function StockOptionsConfig (props) { 
   console.log(props.config)
-  const [expirationCount, setExpirationCount] = useState(3);
-  const [expirationNum, setExpirationNum] = useState(-1);
-  const [strikeCount, setStrikeCount] = useState(3);
-  const [strikeNum, setStrikeNum] = useState(-1);
+  const [expirationCount, setExpirationCount] = useState(props.config.expirationCount);
+  const [expirationNum, setExpirationNum] = useState(props.config.expirationNum);
+  const [strikeCount, setStrikeCount] = useState(props.config.strikeCount);
+  const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
   const  options = ['call', 'put'];
-  const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
+  const [callOrPut, setCallOrPut] = useState(props.config.callOrPut); // default to call options
   
-  const [compoundYield, setCompoundYield] = useState(false); // true - compound gain, false - simple gain
-  const [percent, setPercent] = useState(true); // true - percent, false - gain factor
+  const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
+  const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
 
-  const [alpha, setAlpha] = useState();
+  // const [alpha, setAlpha] = useState();
   
   var flexConfig = localStorage.getItem('stockOptionsConfig');
 
@@ -28,21 +28,26 @@ function StockOptionsConfig (props) {
 
         // console.log(event);
         console.log('alpha key change', event.target.name + " " + event.target.value.toUpperCase());
-        setAlpha (event.target.value.toUpperCase());
+        // setAlpha (event.target.value.toUpperCase());
     }
 
     const formSubmit = (event) => {
         event.preventDefault();
 
-        console.log("final data is: ", alpha);
-        localStorage.setItem('stockOptionsConfig', alpha);
-        // props.alphaCallBack (alpha);
+
+      const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
+         strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
+        callOrPut: callOrPut, percent: percent, compoundYield: compoundYield};
+
+        console.log("final data is: ", newConfig);
+        localStorage.setItem('stockOptionsConfig', JSON.stringify(newConfig));
+        props.setConfig (newConfig);
     }
 
     function clearKey () {
       // console.log("clear");
       localStorage.removeItem ('stockOptionsConfig');
-      setAlpha(null)
+      // setAlpha(null)
       // props.alphaCallBack(null)
     }
 
@@ -57,24 +62,25 @@ function StockOptionsConfig (props) {
 
           <label> ExpirationNum: &nbsp;
             <input style={{width: '50px'}} type="number" name="expirationNum" // required="required"
-              placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={props.config.expirationNum} />
+              placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={expirationNum} />
           </label>&nbsp; &nbsp; 
 
           <label> ExpirationCount &nbsp;
             <input style={{width: '50px'}} type="number" name="expirationCount" // required="required"
-              placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={props.config.expirationCount} />
+              placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={expirationCount} />
           </label>&nbsp; &nbsp; 
 
 
 
+          <br/>          <br/>
           <label> StrikeNum: &nbsp;
             <input style={{width: '50px'}} type="number" name="strikeNum" // required="required"
-              placeholder="strikeNum"  onChange={(e) => setStrikeNum(e.target.value)} value={props.config.strikeNum} />
+              placeholder="strikeNum"  onChange={(e) => setStrikeNum(e.target.value)} value={strikeNum} />
           </label>&nbsp; &nbsp; 
 
           <label> StrikeCount &nbsp;
             <input style={{width: '50px'}} type="number" name="strikeCount" // required="required"
-              placeholder="strikeCount"  onChange={(e) => setStrikeCount(e.target.value)} value={props.config.strikeCount} />
+              placeholder="strikeCount"  onChange={(e) => setStrikeCount(e.target.value)} value={strikeCount} />
           </label>&nbsp; &nbsp; 
 
 

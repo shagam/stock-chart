@@ -74,9 +74,12 @@ function OptionQuote (props) {
   var config = useMemo(() => JSON.parse (localStorage.getItem('stockOptionsConfig')), []);
   if (! config ) {
     config = {expirationCount: 3, expirationNum: 1, strikeCount: 3, strikeNum: -1,
-      callOrPut: options[0], percent: true, compoundYield: false};
+      callOrPut: 'call', percent: true, compoundYield: false};
+    localStorage.setItem('stockOptionsConfig', JSON.stringify(config));
   }
-
+  else {
+    console.log('config from localStorage', config)
+  }
 
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
     console.log ('columnShow from localStorage ', columnShow_)
