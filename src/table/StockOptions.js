@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import axios from 'axios';
-import {IpContext} from '../contexts/IpContext';
+// import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd__} from '../utils/Date';
@@ -16,7 +16,7 @@ import { el } from 'date-fns/locale';
 
 
 function OptionQuote (props) {
-  const {eliHome} = IpContext();
+
   // const [quote, setQuote] = useState(null);
   const optionSymbol = 'AAPL'+'250817C00' + '150000'; // Jan 2025 $150 AAPL Call
   const TOKEN = process.env.REACT_APP_MARKETDATA;
@@ -54,7 +54,7 @@ function OptionQuote (props) {
   const [expirationShow, setExpirationShow] = useState(false);
   const [strikeShow, setStrikeShow] = useState(false);
 
-  const [useOptionServer, setUseOptionServer] = useState(eliHome);
+  const [useOptionServer, setUseOptionServer] = useState(props.eliHome);
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
@@ -83,11 +83,11 @@ function OptionQuote (props) {
  
   useEffect (() => { 
     localStorage.setItem('columnShow', JSON.stringify(columnShow));
-    if (log) {
+    if (log1) {
       console.log ('save columnShow', columnShow) 
     }
 
-  }, [columnShow, log, log1, eliHome, props.symbol, props.errorAdd]); 
+  }, [columnShow, log, log1, props.eliHome, props.symbol, props.errorAdd]); 
 
 
         
@@ -359,7 +359,8 @@ function OptionQuote (props) {
 
 
   //** get from coirsServer */
-  function optionsInfoServer () {
+  const  getOptionsInfoFromServer  = useCallback (() => {
+
     var corsUrl;
     if (props.ssl)
       corsUrl = "https://";
@@ -482,7 +483,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
 
-        if (log)
+        if (log1)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
             'dte(days)=', optionQuote.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
           )  
@@ -517,7 +518,7 @@ function OptionQuote (props) {
         console.log ('maxYearlyYield=', maxYearlyYield_)
 
 
-      if(log)
+      if(log1)
         console.log ('columnShow set to all keys', keys)
       
       // if columnShow is empty, set it to all keys
@@ -546,7 +547,7 @@ function OptionQuote (props) {
       props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     })
 
-  }
+  }, [props, callOrPut, expirationCount, strikeCount, percent, compoundYield, columnShow, columnShow_, log, log1])
 
 
   useEffect (() => { 
@@ -559,9 +560,8 @@ function OptionQuote (props) {
     // setLineNumberArr([]);
     // setOptionQuote({});
     // setOptionKeys([]);
-    if (! eliHome && false)
-      expirationsGet ();
-  }, [props.symbol, expirationsGet, log, log1, eliHome, props.errorAdd]); 
+     getOptionsInfoFromServer () 
+  }, [props.symbol, getOptionsInfoFromServer, log, log1, props.eliHome, props.errorAdd]); 
 
 
 
@@ -604,7 +604,8 @@ function OptionQuote (props) {
         </div>
 
         <div style = {{display: 'flex'}}>
-          {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
+          {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
+          {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log1}  onChange={()=>setLog1 (! log1)}  />&nbsp;logExtra &nbsp; &nbsp; </div>}
         </div>
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
@@ -612,7 +613,7 @@ function OptionQuote (props) {
 
         {props.eliHome &&
         <div>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>optionsInfoServer()}>  stock option data   </button> &nbsp;&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  stock option data   </button> &nbsp;&nbsp;
           {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> }
           {/* <hr/>  */}
         </div>}
