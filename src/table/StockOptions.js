@@ -7,6 +7,7 @@ import {format, set} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd__} from '../utils/Date';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { el } from 'date-fns/locale';
+import StockOptionsConfig from './StockOptionsConfig';
 // 
 // Zuberi Moshe
 
@@ -53,6 +54,7 @@ function OptionQuote (props) {
 
   const [expirationShow, setExpirationShow] = useState(false);
   const [strikeShow, setStrikeShow] = useState(false);
+  const [configShow, setConfigShow] = useState(false);
 
   const [useOptionServer, setUseOptionServer] = useState(props.eliHome);
   // const [arr, setArr] = useState([]);
@@ -717,6 +719,9 @@ function OptionQuote (props) {
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
           </div>}
+
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;configShow &nbsp; &nbsp; </div>
+          {configShow && <StockOptionsConfig/>}
 
           <div style = {{display: 'flex', marginTop:'10px'}}>
             <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
