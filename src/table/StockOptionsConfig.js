@@ -51,24 +51,39 @@ function StockOptionsConfig (props) {
     return (
       <div style={{border:'2px solid magenta'}} className = 'alpha'>
         {/* <div style={{border:'2px solid blue'}}></div> */}
-        <div>&nbsp;</div>
-        <h6>StockOptions config: </h6>
+        {/* <div>&nbsp;</div> */}
+        <h5  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>StockOptions config: </h5>
         <form onSubmit = {formSubmit}>
-          <label> ExpirationCount &nbsp;
-            <input style={{width: '50px'}} type="number" name="expirationCount" // required="required"
-              placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={props.config.expirationCount} />
-          </label>&nbsp; &nbsp; 
 
           <label> ExpirationNum: &nbsp;
             <input style={{width: '50px'}} type="number" name="expirationNum" // required="required"
               placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={props.config.expirationNum} />
           </label>&nbsp; &nbsp; 
 
+          <label> ExpirationCount &nbsp;
+            <input style={{width: '50px'}} type="number" name="expirationCount" // required="required"
+              placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={props.config.expirationCount} />
+          </label>&nbsp; &nbsp; 
+
+
+
+          <label> StrikeNum: &nbsp;
+            <input style={{width: '50px'}} type="number" name="strikeNum" // required="required"
+              placeholder="strikeNum"  onChange={(e) => setStrikeNum(e.target.value)} value={props.config.strikeNum} />
+          </label>&nbsp; &nbsp; 
+
+          <label> StrikeCount &nbsp;
+            <input style={{width: '50px'}} type="number" name="strikeCount" // required="required"
+              placeholder="strikeCount"  onChange={(e) => setStrikeCount(e.target.value)} value={props.config.strikeCount} />
+          </label>&nbsp; &nbsp; 
+
+
+
           <br/>          <br/>
-          <button type="submit"> submit update-config</button> 
+          <button  style={{background: 'aqua'}} type="submit"> submit update-config</button> 
         </form>
         
-        <hr/> 
+        <div>&nbsp;</div> 
           {/* <div>&nbsp;</div> */}
         {/* &nbsp;&nbsp;key: ({alpha}) */}
         {/* &nbsp; <button type="button" onClick={()=>clearKey()}>Clear  </button>  */}
