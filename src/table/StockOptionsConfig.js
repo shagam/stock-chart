@@ -5,6 +5,7 @@ import '../alphaVantage.css'
 
 
 function StockOptionsConfig (props) { 
+  console.log(props.config)
   const [expirationCount, setExpirationCount] = useState(3);
   const [expirationNum, setExpirationNum] = useState(-1);
   const [strikeCount, setStrikeCount] = useState(3);
@@ -51,13 +52,23 @@ function StockOptionsConfig (props) {
       <div style={{border:'2px solid magenta'}} className = 'alpha'>
         {/* <div style={{border:'2px solid blue'}}></div> */}
         <div>&nbsp;</div>
-        <h5>StockOptions config </h5>
+        <h6>StockOptions config: </h6>
         <form onSubmit = {formSubmit}>
-          <input type="text"name="symbol" // required="required"
-            placeholder="enter key from alphaVantage.co "  onChange={formChange} value={'input'} />
-         
+          <label> ExpirationCount &nbsp;
+            <input style={{width: '50px'}} type="number" name="expirationCount" // required="required"
+              placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={props.config.expirationCount} />
+          </label>&nbsp; &nbsp; 
+
+          <label> ExpirationNum: &nbsp;
+            <input style={{width: '50px'}} type="number" name="expirationNum" // required="required"
+              placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={props.config.expirationNum} />
+          </label>&nbsp; &nbsp; 
+
+          <br/>          <br/>
           <button type="submit"> submit update-config</button> 
         </form>
+        
+        <hr/> 
           {/* <div>&nbsp;</div> */}
         {/* &nbsp;&nbsp;key: ({alpha}) */}
         {/* &nbsp; <button type="button" onClick={()=>clearKey()}>Clear  </button>  */}

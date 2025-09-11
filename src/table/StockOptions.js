@@ -73,7 +73,8 @@ function OptionQuote (props) {
 
   var config = useMemo(() => JSON.parse (localStorage.getItem('stockOptionsConfig')), []);
   if (! config ) {
-    config = {expirationCount: 3, strikeCount: 3, callOrPut: options[0], percent: true, compoundYield: false};
+    config = {expirationCount: 3, expirationNum: 1, strikeCount: 3, strikeNum: -1,
+      callOrPut: options[0], percent: true, compoundYield: false};
   }
 
 
@@ -266,7 +267,8 @@ function OptionQuote (props) {
        expirationCount, setColumnShow, setOptionKeys, setLineNumberArr,
        setMaxYearlyYield, setMaxYearlyYieldIndex, strikeCount]); // add callOrPut to dependencies
 
-
+  function setConfig (newConfig) {
+  }
 
   const strikePricesGet = useCallback ((selectedExpiration, expirationsArray) => {
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
@@ -721,7 +723,7 @@ function OptionQuote (props) {
           </div>}
 
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;configShow &nbsp; &nbsp; </div>
-          {configShow && <StockOptionsConfig/>}
+          {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
 
           <div style = {{display: 'flex', marginTop:'10px'}}>
             <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
