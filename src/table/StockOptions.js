@@ -34,19 +34,15 @@ function OptionQuote (props) {
   // const [selectedStrike, setSelectedStrike] = useState(-1);
   var selectedStrike_ = -1; // for local use, during computation
   
-  const [expirationCount, setExpirationCount] = useState(3);
-  const [strikeCount, setStrikeCount] = useState(3);
+
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
-  const  options = ['call', 'put'];
-  const [percent, setPercent] = useState(true); // true - percent, false - gain factor
-  const [compoundYield, setCompoundYield] = useState(false); // true - compound gain, false - simple gain
+
   const [maxYearlyYield, setMaxYearlyYield] = useState(0); // max yearly yield for all options
   const [maxYearlyYieldIndex, setMaxYearlyYieldIndex] = useState(-1); // index of max yearly yield
 
-  const [callOrPut, setCallOrPut] = useState(options[0]); // default to call options
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   const [columnShow, setColumnShow] = useState([]);
   const [err, setErr] = useState();
@@ -562,22 +558,18 @@ function OptionQuote (props) {
 
          
     } )
-    .catch ((err) => {
-      setErr(err.message)
-      console.log(err.message)
-      props.errorAdd ([props.symbol, ' getStockOptions', err.message])
-    })
+    // .catch ((err) => {
+    //   setErr(err.message)
+    //   console.log(err.message)
+    //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
+    // })
 
   }, [props, config, columnShow, columnShow_, log, logExtra])
 
 
   useEffect (() => { 
-    // setStrikeArray([]);
-    // setSelectedStrike(-1);
-    // setExpirationsArray([]);
-    // setSelectedExpiration(-1);
-    // setExpirationCount(3);
-    // setCallOrPut(options[0]);
+    setStrikeArray([]);
+    setExpirationsArray([]);
     // setLineNumberArr([]);
     // setOptionQuote({});
     // setOptionKeys([]);
@@ -639,16 +631,18 @@ function OptionQuote (props) {
           {/* <hr/>  */}
         </div>}
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;config-show &nbsp; &nbsp; </div>
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config-show</strong> &nbsp; &nbsp; </div>
         {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
 
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;expiration-show &nbsp; &nbsp; </div>
+        <div style = {{display: 'flex'}}>
+          <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
+          <div > (count={expirationsArray.length} &nbsp; selected={config.expirationNum}) </div>  &nbsp; &nbsp; 
+        </div>
         {expirationShow && <div>
  
           <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
-            <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={config.expirationNum}</div>  &nbsp; &nbsp; 
           </div>
 
           
@@ -684,13 +678,17 @@ function OptionQuote (props) {
         
         {/* strikes */}
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;strike-show &nbsp; &nbsp; </div>
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
+           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
+            <div> (count={strikeArray.length} &nbsp; selected={config.strikeNum})</div>   &nbsp; &nbsp; 
+        </div>
+        
         {strikeShow && expirationsArray.length > 0 && <div>
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
           {config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strike-price   </button> &nbsp; &nbsp;
-            <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={config.strikeNum}</div>   &nbsp; &nbsp; 
+
           </div>}
 
 
@@ -735,7 +733,7 @@ function OptionQuote (props) {
 
           {/* select columns */}
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
-                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  
+                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;<strong>column-select</strong></div>  
 
           {/* {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
 
