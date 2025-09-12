@@ -99,7 +99,7 @@ function OptionQuote (props) {
 
         
   //** Get option premium for selected expiration and strike */
-  const optionPremium = useCallback ((selectedExpiration, expirationsArray, selectedStrikeNum, strikeArray) => { // config.strikeCount, config.expirationNum
+  const optionPremium = useCallback ((expirationsArray, strikeArray) => {
     console.log ('ptionPremiumGet', expirationsArray, strikeArray)
     //** clear */
     // setOptionQuote({})
@@ -728,7 +728,7 @@ function OptionQuote (props) {
           {config.expirationBum !== -1 && config.strikeNum ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(config.expirationNum, expirationsArray, config.strikeNum, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(expirationsArray, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
                {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
           </div>}
           </div>}
