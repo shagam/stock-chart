@@ -379,7 +379,7 @@ function OptionQuote (props) {
     corsUrl += "&strikeNum=" + config.strikeNum
     corsUrl += '&expirationCount=' + config.expirationCount
     corsUrl += '&strikeCount=' + config.strikeCount
-    corsUrl += "&callOrPut=" + config.callOrPut
+    corsUrl += "&side=" + config.callOrPut
     // corsUrl += "&percent=" + (percent ? 1 : 0)
     // corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
     corsUrl += "&stockPrice=" + props.stockPrice
@@ -389,6 +389,8 @@ function OptionQuote (props) {
     // corsUrl += "&token=" + TOKEN
     if (log)
       corsUrl += "&log=1"
+    if (log)
+      console.log ('getOptionsInfoFromServer', corsUrl)
 
     setErr()
     setDat()
@@ -620,7 +622,7 @@ function OptionQuote (props) {
 
         {props.eliHome &&
         <div>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  stock option data   </button> &nbsp;&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
           {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> }
           {/* <hr/>  */}
         </div>}
@@ -706,7 +708,6 @@ function OptionQuote (props) {
             </table>
           </div>} 
           <hr/>  
-          </div>}
 
 
           {config.expirationBum !== -1 && config.strikeNum ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
@@ -714,6 +715,7 @@ function OptionQuote (props) {
           {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(config.expirationNum, expirationsArray, config.strikeNum, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
                {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
+          </div>}
           </div>}
 
           {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
