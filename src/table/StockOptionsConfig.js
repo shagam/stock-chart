@@ -85,12 +85,14 @@ function StockOptionsConfig (props) {
           </label>&nbsp; &nbsp; 
 
 
-         <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
-
-
           <br/>          <br/>
+        <div style = {{display: 'flex'}}>
+          <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
+        </div>
+        <div>&nbsp;</div>
+          {/* <br/>          <br/> */}
           <button  style={{background: 'aqua'}} type="submit"> save-config</button> 
         </form>
         
