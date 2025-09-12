@@ -5,7 +5,7 @@ import axios from 'axios';
 import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd__} from '../utils/Date';
-import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+
 import { el } from 'date-fns/locale';
 import StockOptionsConfig from './StockOptionsConfig';
 // 
@@ -27,11 +27,11 @@ function OptionQuote (props) {
   const [log1, setLog1] = useState (false);
 
   const [expirationsArray, setExpirationsArray] = useState([]); 
-  const [selectedExpiration, setSelectedExpiration] = useState(-1);
+  // const [selectedExpiration, setSelectedExpiration] = useState(-1);
 
   const [strikeArray, setStrikeArray] = useState([]);
   var strikeArray_ = []; // for local use, during computation
-  const [selectedStrike, setSelectedStrike] = useState(-1);
+  // const [selectedStrike, setSelectedStrike] = useState(-1);
   var selectedStrike_ = -1; // for local use, during computation
   
   const [expirationCount, setExpirationCount] = useState(3);
@@ -98,29 +98,29 @@ function OptionQuote (props) {
 
         
   //** Get option premium for selected expiration and strike */
-  const optionPremium = useCallback ((selectedExpiration, expirationsArray, selectedStrike, strikeArray) => {
-    console.log ('ptionPremiumGet', selectedExpiration, expirationsArray, selectedStrike, strikeArray)
+  const optionPremium = useCallback ((selectedExpiration, expirationsArray, selectedStrikeNum, strikeArray) => { // config.strikeCount, config.expirationNum
+    console.log ('ptionPremiumGet', expirationsArray, strikeArray)
     //** clear */
     // setOptionQuote({})
 
     setLineNumberArr([]);
     //** create expiration group */
-    // console.log (expirationCount, selectedExpiration, expirationsArray.length)
-    var expirationGroup =  '/?expiration=' + expirationsArray[selectedExpiration]
-    // console.log ('expirationCount=', expirationCount)
-    if (expirationCount > 1 && (selectedExpiration + expirationCount < expirationsArray.length)) {
-      expirationGroup =  '/?from=' + expirationsArray[selectedExpiration] + '&to=' + expirationsArray[selectedExpiration + expirationCount -1]
+
+    var expirationGroup =  '/?expiration=' + expirationsArray[config.expirationNum]
+
+    if (config.expirationCount > 1 && (config.expirationNum + config.expirationCount < expirationsArray.length)) {
+      expirationGroup =  '/?from=' + expirationsArray[config.expirationNum] + '&to=' + expirationsArray[config.expirationNum + config.expirationCount -1]
     }
 
  
     //** Create strike-group  (list) */
 
-    var strikeGroup = strikeArray[selectedStrike];
+    var strikeGroup = strikeArray[config.strikeNum];
     
-    for (let i = 1; i < strikeCount; i++) {
-      if (selectedStrike + i >= strikeArray.length)
+    for (let i = 1; i < config.strikeCount; i++) {
+      if (config.strikeNum + i >= strikeArray.length)
         break;
-      strikeGroup += ',' + strikeArray[selectedStrike + i]
+      strikeGroup += ',' + strikeArray[config.strikeNum + i]
     }
     if (log) {
       console.log ('strikeGroup=', strikeGroup) 
@@ -130,7 +130,7 @@ function OptionQuote (props) {
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     const url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + expirationGroup
-        + '&side=' + callOrPut + '&strike=' + strikeGroup + '&token=' + TOKEN
+        + '&side=' + config.callOrPut + '&strike=' + strikeGroup + '&token=' + TOKEN
         // + '?human=true';
 
     // console.log(props.symbol , 'expirations=', expirationGroup, '&side=' + callOrPut + '&strike=' + strikeGroup)
@@ -195,13 +195,13 @@ function OptionQuote (props) {
         const dte = OptionQuoteFiltered.dte[i];
 
         const yield_ = (mid / props.stockPrice);
-        const yearlyYield = compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
+        const yearlyYield = config.compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
         const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
 
 
-        OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
-        OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
+        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
+        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
 
         if (log)
@@ -266,16 +266,16 @@ function OptionQuote (props) {
     })
 
   }, [props, TOKEN, log, // strikeArray, expirationsArray,
-      callOrPut, percent, compoundYield, columnShow, columnShow_.length, 
-       expirationCount, setColumnShow, setOptionKeys, setLineNumberArr,
-       setMaxYearlyYield, setMaxYearlyYieldIndex, strikeCount]); // add callOrPut to dependencies
+      config.callOrPut, config.percent, config.compoundYield, columnShow, columnShow_.length, 
+       setColumnShow, setOptionKeys, setLineNumberArr,
+       setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount]); // add callOrPut to dependencies
 
   function setConfig (newConfig) {
   }
 
-  const strikePricesGet = useCallback ((selectedExpiration, expirationsArray) => {
+  const strikePricesGet = useCallback ((expirationsArray) => {
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationsArray[selectedExpiration] + '&token=' + TOKEN
+        + expirationsArray[config.expirationNum] + '&token=' + TOKEN
         // + '?token=' + TOKEN;
     if (log)
       console.log (url)
@@ -291,7 +291,7 @@ function OptionQuote (props) {
         console.log (props.symbol, 'strike-price error', result.data.s)
       }
 
-      const arr = result.data[expirationsArray[selectedExpiration]]
+      const arr = result.data[expirationsArray[config.expirationNum]]
       if(log)
         console.log ('strike-array', arr)
 
@@ -301,7 +301,7 @@ function OptionQuote (props) {
       //** default select just above current price*/
       for (let i = 0; i < arr.length; i++) {
         if (arr[i] > props.stockPrice) {
-          setSelectedStrike(i);
+          // setSelectedStrike(i);
           selectedStrike_ = i
           if (log)
             console.log ('default strike selected', i, 'price=', arr[i])
@@ -315,7 +315,7 @@ function OptionQuote (props) {
       console.log(err.message)
       props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
-  }, [props, TOKEN, log])// , optionPremium]);
+  }, [props, config.expirationNum, TOKEN, log])// , optionPremium]);
  
 
 
@@ -338,8 +338,8 @@ function OptionQuote (props) {
         
         setExpirationsArray(result.data.expirations);
 
-        setSelectedExpiration(0); // first expiration by default
-        strikePricesGet (0, result.data.expirations) 
+
+        strikePricesGet (result.data.expirations) 
 
       })
       .catch ((err) => {
@@ -352,14 +352,14 @@ function OptionQuote (props) {
 
 
   function expirationRowClick(rowId)  { 
-    setSelectedExpiration(rowId);
+    config.expirationNum = rowId;
     if (log)
       console.log('Expiration Row clicked:', rowId);
     // strikePrices ();
   }
 
  function strikeRowClick(rowId)  { 
-    setSelectedStrike(rowId);
+    config.strikeNum = rowId;
     if (log)
       console.log('Strike Row clicked:', rowId);
   }
@@ -375,13 +375,13 @@ function OptionQuote (props) {
       corsUrl = "http://";
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
-    corsUrl += "&expirationNum=" + 1
-    corsUrl += "&strikeNum=" + '-1' 
-    corsUrl += '&expirationCount=' + expirationCount
-    corsUrl += '&strikeCount=' + strikeCount
-    corsUrl += "&callOrPut=" + callOrPut
-    corsUrl += "&percent=" + (percent ? 1 : 0)
-    corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
+    corsUrl += "&expirationNum=" + config.expirationNum
+    corsUrl += "&strikeNum=" + config.strikeNum
+    corsUrl += '&expirationCount=' + config.expirationCount
+    corsUrl += '&strikeCount=' + config.strikeCount
+    corsUrl += "&callOrPut=" + config.callOrPut
+    // corsUrl += "&percent=" + (percent ? 1 : 0)
+    // corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
     corsUrl += "&stockPrice=" + props.stockPrice
     // corsUrl += "&func=" + "expirations" // expirations, strikes, optionPremium
 
@@ -398,7 +398,7 @@ function OptionQuote (props) {
     axios.get (corsUrl)
     // getDate()
     .then ((result) => {
-      setErr()
+
       if (result.status !== 200) {
         console.log (props.chartSymbol, 'status=', result)
         return;
@@ -419,9 +419,9 @@ function OptionQuote (props) {
 
 
       setExpirationsArray(result.data.expirationArray)
-      setSelectedExpiration (1)
+
       setStrikeArray(result.data.strikeArray)
-      setSelectedStrike(result.data.strikeNum)
+      // setSelectedStrike(result.data.strikeNum)
 
       const optionQuote = result.data.premiumArray;
       setOptionQuote(optionQuote)
@@ -481,13 +481,13 @@ function OptionQuote (props) {
         const dte = OptionQuoteFiltered.dte[i];
 
         const yield_ = (mid / props.stockPrice);
-        const yearlyYield = compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
+        const yearlyYield = config.compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
         const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
 
 
-        OptionQuoteFiltered.yield_[i] = ! percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
-        OptionQuoteFiltered.yearlyYield[i] = ! percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
+        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
+        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
 
         if (log1)
@@ -554,7 +554,7 @@ function OptionQuote (props) {
       props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     })
 
-  }, [props, callOrPut, expirationCount, strikeCount, percent, compoundYield, columnShow, columnShow_, log, log1])
+  }, [props, config.callOrPut, config.expirationNum, config.expirationCount, config.strikeNum, config.strikeCount, config.percent, config.compoundYield, columnShow, columnShow_, log, log1])
 
 
   useEffect (() => { 
@@ -630,7 +630,7 @@ function OptionQuote (props) {
  
           <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
-            <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={selectedExpiration}</div>  &nbsp; &nbsp; 
+            <div style={{display: 'flex', marginTop:'10px'}}> count={expirationsArray.length} &nbsp; selected={config.expirationNum}</div>  &nbsp; &nbsp; 
           </div>
 
           
@@ -649,7 +649,7 @@ function OptionQuote (props) {
                       <tr key={index}
                         onClick={() => expirationRowClick(index)}
                         style={{
-                            backgroundColor: selectedExpiration === index ? '#d3e5ff' : 'white',
+                            backgroundColor: config.expirationNum === index ? '#d3e5ff' : 'white',
                             cursor: 'pointer',
                           }}                      
                         >
@@ -669,10 +669,10 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;strikeShow &nbsp; &nbsp; </div>
         {strikeShow && expirationsArray.length > 0 && <div>
 
-          {selectedExpiration === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
-          {selectedExpiration >= 0  && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(selectedExpiration)}>  strike-price   </button> &nbsp; &nbsp;
-            <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={selectedStrike}</div>   &nbsp; &nbsp; 
+          {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
+          {config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strike-price   </button> &nbsp; &nbsp;
+            <div style={{display: 'flex', marginTop:'10px'}}> count={strikeArray.length} &nbsp; selected={config.strikeNum}</div>   &nbsp; &nbsp; 
           </div>}
 
 
@@ -692,7 +692,7 @@ function OptionQuote (props) {
                     <tr key={index}
                       onClick={() => strikeRowClick(index)}
                       style={{
-                          ...ROW_SPACING, backgroundColor: selectedStrike === index ? '#d3e5ff' : 'white',
+                          ...ROW_SPACING, backgroundColor: config.strikNum === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
                         }}                      
                       >
@@ -709,17 +709,14 @@ function OptionQuote (props) {
           </div>}
 
 
-          {selectedExpiration !== -1 && selectedStrike ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
+          {config.expirationBum !== -1 && config.strikeNum ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
-          {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(selectedExpiration, expirationsArray, selectedStrike, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
-            <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
-            {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
+          {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(config.expirationNum, expirationsArray, config.strikeNum, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
+               {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
           </div>}
 
-          {selectedStrike !== -1 && <div style = {{display: 'flex'}}>
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
+          {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
 
             <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
@@ -728,10 +725,10 @@ function OptionQuote (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;configShow &nbsp; &nbsp; </div>
           {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
 
-          <div style = {{display: 'flex', marginTop:'10px'}}>
+          {/* <div style = {{display: 'flex', marginTop:'10px'}}>
             <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
             <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-          </div>
+          </div> */}
 
           {/* select columns */}
           {columnHideFlag && <div >    
@@ -782,6 +779,8 @@ function OptionQuote (props) {
                     <tr key={index} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
+                        
+                       {/*} if (key === '0' || keyI === 0) console.log ('invaid', key, keyI) */}
                       return columnShow.includes (key) &&  (
                         <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key][quote]}</td>
                       )
