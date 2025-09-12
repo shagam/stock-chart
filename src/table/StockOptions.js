@@ -783,7 +783,6 @@ function OptionQuote (props) {
                     <tr key={index} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
-                        if (key === '0') console.log ('invaid', key, keyI, optionKeys)
                       return columnShow.includes (key) &&  (
                         <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key][quote]}</td>
                       )
