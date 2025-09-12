@@ -24,7 +24,7 @@ function OptionQuote (props) {
   var url = 'https://marketdata.app/api/v1/marketdata?token=' + TOKEN;
 
   const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
-  const [log1, setLog1] = useState (false);
+  const [logExtra, setLogExtra] = useState (false);
 
   const [expirationsArray, setExpirationsArray] = useState([]); 
   // const [selectedExpiration, setSelectedExpiration] = useState(-1);
@@ -78,7 +78,7 @@ function OptionQuote (props) {
     localStorage.setItem('stockOptionsConfig', JSON.stringify(config));
   }
   else {
-    if (log1)
+    if (logExtra)
       console.log('config from localStorage', config)
   }
 
@@ -90,11 +90,11 @@ function OptionQuote (props) {
  
   useEffect (() => { 
     localStorage.setItem('columnShow', JSON.stringify(columnShow));
-    if (log1) {
+    if (logExtra) {
       console.log ('save columnShow', columnShow) 
     }
 
-  }, [columnShow, log, log1, props.eliHome, props.symbol, props.errorAdd]); 
+  }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
 
 
         
@@ -394,6 +394,8 @@ function OptionQuote (props) {
     // corsUrl += "&token=" + TOKEN
     if (log)
       corsUrl += "&log=1"
+    if (logExtra)
+      corsUrl += "&logExtra=1"
     if (log)
       console.log ('getOptionsInfoFromServer', corsUrl)
 
@@ -413,6 +415,10 @@ function OptionQuote (props) {
       // setDat(result.data)
       if (log)
         console.log (props.symbol, result.data)
+
+      if (result.data.strikeNum ) {
+        config.strikeNum = result.data.strikeNum
+      }
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr(result.data)
@@ -498,7 +504,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
 
-        if (log1)
+        if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
             'dte(days)=', optionQuote.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
           )  
@@ -533,7 +539,7 @@ function OptionQuote (props) {
         console.log ('maxYearlyYield=', maxYearlyYield_)
 
 
-      if(log1)
+      if(logExtra)
         console.log ('columnShow set to all keys', keys)
       
       // if columnShow is empty, set it to all keys
@@ -562,7 +568,7 @@ function OptionQuote (props) {
       props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     })
 
-  }, [props, config.callOrPut, config.expirationNum, config.expirationCount, config.strikeNum, config.strikeCount, config.percent, config.compoundYield, columnShow, columnShow_, log, log1])
+  }, [props, config, columnShow, columnShow_, log, logExtra])
 
 
   useEffect (() => { 
@@ -576,7 +582,7 @@ function OptionQuote (props) {
     // setOptionQuote({});
     // setOptionKeys([]);
      getOptionsInfoFromServer () 
-  }, [props.symbol, getOptionsInfoFromServer, log, log1, props.eliHome, props.errorAdd]); 
+  }, [props.symbol, getOptionsInfoFromServer, log, logExtra, props.eliHome, props.errorAdd]); 
 
 
 
@@ -620,7 +626,7 @@ function OptionQuote (props) {
 
         <div style = {{display: 'flex'}}>
           {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
-          {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log1}  onChange={()=>setLog1 (! log1)}  />&nbsp;logExtra &nbsp; &nbsp; </div>}
+          {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={logExtra}  onChange={()=>setLogExtra (! logExtra)}  />&nbsp;logExtra &nbsp; &nbsp; </div>}
         </div>
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
