@@ -78,7 +78,8 @@ function OptionQuote (props) {
     localStorage.setItem('stockOptionsConfig', JSON.stringify(config));
   }
   else {
-    console.log('config from localStorage', config)
+    if (log1)
+      console.log('config from localStorage', config)
   }
 
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
@@ -709,7 +710,6 @@ function OptionQuote (props) {
           </div>} 
           <hr/>  
 
-
           {config.expirationBum !== -1 && config.strikeNum ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
@@ -718,21 +718,18 @@ function OptionQuote (props) {
           </div>}
           </div>}
 
-          {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
+          {/* select columns */}
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
+                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  
 
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
-                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;column-select</div>  &nbsp; &nbsp;
-          </div>}
+          {/* {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
 
-          <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;configShow &nbsp; &nbsp; </div>
+          </div>} */}
+
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;config-show &nbsp; &nbsp; </div>
           {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
 
-          {/* <div style = {{display: 'flex', marginTop:'10px'}}>
-            <GetInt init={expirationCount} callBack={setExpirationCount} title='expiration-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-            <GetInt init={strikeCount} callBack={setStrikeCount} title='strike-count' type='Number' pattern="[0-9]+" width = '15%'/> 
-          </div> */}
 
-          {/* select columns */}
           {columnHideFlag && <div >    
             <hr/> 
             {/* columnShow  */}
@@ -753,9 +750,9 @@ function OptionQuote (props) {
              {log && <p>Selected: {columnShow.join(", ")}</p>}
             </div>}
 
-            {/* <hr/>  */}
+            <hr/> 
 
-          {props.symbol} &nbsp; &nbsp;
+          {props.symbol} &nbsp; &nbsp; count={lineNumberArr.length} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp;
           maxYearlyYieldIndex={maxYearlyYieldIndex} &nbsp; &nbsp;
 
