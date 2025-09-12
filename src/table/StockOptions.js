@@ -627,7 +627,11 @@ function OptionQuote (props) {
           {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> }
           {/* <hr/>  */}
         </div>}
-        
+
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;config-show &nbsp; &nbsp; </div>
+        {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
+
+
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;expirationShow &nbsp; &nbsp; </div>
         {expirationShow && <div>
  
@@ -725,10 +729,6 @@ function OptionQuote (props) {
           {/* {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
 
           </div>} */}
-
-          <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;config-show &nbsp; &nbsp; </div>
-          {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
-
 
           {columnHideFlag && <div >    
             <hr/> 
