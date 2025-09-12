@@ -271,7 +271,11 @@ function OptionQuote (props) {
        setColumnShow, setOptionKeys, setLineNumberArr,
        setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount]); // add callOrPut to dependencies
 
+
+
+
   function setConfig (newConfig) {
+    config = newConfig
   }
 
   const strikePricesGet = useCallback ((expirationsArray) => {
@@ -427,6 +431,7 @@ function OptionQuote (props) {
       // setSelectedStrike(result.data.strikeNum)
 
       const optionQuote = result.data.premiumArray;
+      delete  optionQuote.s // remove diffent key from server
       setOptionQuote(optionQuote)
       setOptionKeys(Object.keys(optionQuote))
 
@@ -451,7 +456,7 @@ function OptionQuote (props) {
         // delete result.data.optionSymbol
         // delete result.data.s
         if (key === 's' || key === 'optionSymbol')
-          return;
+          return; // skip these two keys
 
           // convert date to YYYY-mm-dd format
           OptionQuoteFiltered[key] = []
@@ -632,7 +637,7 @@ function OptionQuote (props) {
         {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
 
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;expirationShow &nbsp; &nbsp; </div>
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;expiration-show &nbsp; &nbsp; </div>
         {expirationShow && <div>
  
           <div style = {{display: 'flex'}}>
@@ -673,7 +678,7 @@ function OptionQuote (props) {
         
         {/* strikes */}
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;strikeShow &nbsp; &nbsp; </div>
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;strike-show &nbsp; &nbsp; </div>
         {strikeShow && expirationsArray.length > 0 && <div>
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
@@ -778,8 +783,7 @@ function OptionQuote (props) {
                     <tr key={index} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
-                        
-                       {/*} if (key === '0' || keyI === 0) console.log ('invaid', key, keyI) */}
+                        if (key === '0') console.log ('invaid', key, keyI, optionKeys)
                       return columnShow.includes (key) &&  (
                         <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key][quote]}</td>
                       )
