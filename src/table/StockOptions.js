@@ -532,7 +532,7 @@ function OptionQuote (props) {
       }
       setMaxYearlyYield(maxYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
-      if (log)
+      if (logExtra)
         console.log ('maxYearlyYield=', maxYearlyYield_)
 
 
@@ -565,7 +565,7 @@ function OptionQuote (props) {
     //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     // })
 
-  }, [props, config, columnShow, columnShow_, log, logExtra])
+  }, [props, config, columnShow, columnShow_, log, logExtra, ignoreSaved])
 
 
   useEffect (() => { 
