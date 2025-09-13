@@ -25,13 +25,11 @@ function OptionQuote (props) {
 
   const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
   const [logExtra, setLogExtra] = useState (false);
-
+  const [ignoreSaved, setIgnoreSaved] = useState (false);
   const [expirationsArray, setExpirationsArray] = useState([]); 
-  // const [selectedExpiration, setSelectedExpiration] = useState(-1);
 
   const [strikeArray, setStrikeArray] = useState([]);
-  var strikeArray_ = []; // for local use, during computation
-  // const [selectedStrike, setSelectedStrike] = useState(-1);
+
   var selectedStrike_ = -1; // for local use, during computation
   
 
@@ -52,7 +50,7 @@ function OptionQuote (props) {
   const [strikeShow, setStrikeShow] = useState(false);
   const [configShow, setConfigShow] = useState(false);
 
-  const [useOptionServer, setUseOptionServer] = useState(props.eliHome);
+  // const [useOptionServer, setUseOptionServer] = useState(props.eliHome);
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
@@ -392,6 +390,9 @@ function OptionQuote (props) {
       corsUrl += "&log=1"
     if (logExtra)
       corsUrl += "&logExtra=1"
+    if (ignoreSaved)
+      corsUrl += "&ignoreSaved=1"
+
     if (log)
       console.log ('getOptionsInfoFromServer', corsUrl)
 
@@ -616,10 +617,11 @@ function OptionQuote (props) {
           <h6  style={{color: 'blue' }}>Option Quote (under development) </h6>  &nbsp; &nbsp;
         </div>
 
-        <div style = {{display: 'flex'}}>
-          {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
-          {props.eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={logExtra}  onChange={()=>setLogExtra (! logExtra)}  />&nbsp;logExtra &nbsp; &nbsp; </div>}
-        </div>
+        {props.eliHome && <div style = {{display: 'flex'}}>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={logExtra}  onChange={()=>setLogExtra (! logExtra)}  />&nbsp;logExtra &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (! ignoreSaved)}  />&nbsp;ignore-saved &nbsp; &nbsp; </div>
+        </div>}
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
@@ -627,7 +629,7 @@ function OptionQuote (props) {
         {props.eliHome &&
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
-          {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> }
+          {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>}
 
