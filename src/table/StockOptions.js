@@ -45,6 +45,7 @@ function OptionQuote (props) {
   const [columnShow, setColumnShow] = useState([]);
   const [err, setErr] = useState();
   const [latency, setLatency] = useState();
+  const [compareStatus, setCompareStatus] = useState();
 
   const [expirationShow, setExpirationShow] = useState(false);
   const [strikeShow, setStrikeShow] = useState(false);
@@ -419,6 +420,9 @@ function OptionQuote (props) {
         setStrikeNumCalc (result.data.strikeNum)   // from server
       }
 
+      if (result.data.compareStatus && props.eliHome)
+        setCompareStatus(result.data.compareStatus)
+
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr(result.data)
         props.errorAdd ([props.symbol,result.data])
@@ -630,6 +634,7 @@ function OptionQuote (props) {
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
+        {props.eliHome && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
 
         {props.eliHome &&
         <div>
@@ -730,9 +735,9 @@ function OptionQuote (props) {
           </div>} 
           <hr/>  
 
-          {config.expirationBum !== -1 && config.strikeNum ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
+          {config.expirationBum !== -1 && strikeNumCalc ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
-          {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
+          {strikeNumCalc !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(expirationsArray, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
                {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
           </div>}
