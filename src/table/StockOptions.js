@@ -30,7 +30,7 @@ function OptionQuote (props) {
 
   const [strikeArray, setStrikeArray] = useState([]);
 
-  var selectedStrike_ = -1; // for local use, during computation
+  const [strikeNumCalc,setStrikeNumCalc] = useState(-1) // for display only
   
 
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
@@ -302,6 +302,7 @@ function OptionQuote (props) {
         if (arr[i] > props.stockPrice) {
           // setSelectedStrike(i);
           selectedStrike_ = i
+          setStrikeNumCalc (i)
           if (log)
             console.log ('default strike selected', i, 'price=', arr[i])
           break;
@@ -411,10 +412,10 @@ function OptionQuote (props) {
       }
       // setDat(result.data)
       if (log)
-        console.log (props.symbol, result.data)
+        console.log ('option-raw-from-server', props.symbol, result.data)
 
       if (result.data.strikeNum ) {
-        config.strikeNum = result.data.strikeNum
+        setStrikeNumCalc (result.data.strikeNum)   // from server
       }
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
@@ -598,6 +599,9 @@ function OptionQuote (props) {
     }
 
     if (attrib === 'yearlyYield') {
+      if (line==='0' || optionQuote.yearlyYield === undefined) {
+        return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
+      }
       if (optionQuote.yearlyYield[line] !== 'Infinity' && maxYearlyYield === optionQuote.yearlyYield[line]) {
         return {backgroundColor: '#d3e533', color: 'black', fontWeight: 'bold'};
       } else {
@@ -682,7 +686,7 @@ function OptionQuote (props) {
 
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
            &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <div> (count={strikeArray.length} &nbsp; selected={config.strikeNum})</div>   &nbsp; &nbsp; 
+            <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>   &nbsp; &nbsp; 
         </div>
         
         {strikeShow && expirationsArray.length > 0 && <div>
@@ -710,7 +714,7 @@ function OptionQuote (props) {
                     <tr key={index}
                       onClick={() => strikeRowClick(index)}
                       style={{
-                          ...ROW_SPACING, backgroundColor: config.strikNum === index ? '#d3e5ff' : 'white',
+                          ...ROW_SPACING, backgroundColor: strikeNumCalc === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
                         }}                      
                       >
@@ -790,7 +794,7 @@ function OptionQuote (props) {
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key][quote]}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key] ? optionQuote[key][quote] : 'err='+ key}</td>
                       )
                     })}
 
