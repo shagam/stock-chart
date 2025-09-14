@@ -81,6 +81,7 @@ function AuxilaryLinks () {
             <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=VIXY")}> VIXY </button> &nbsp;
             <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=UVXY")}> UVXY </button> &nbsp;
             <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVXO/")}> VXO </button> &nbsp;
+            <button role="link" onClick={() => openInNewTab("https://www.gurufocus.com/economic_indicators/56/sp-500-shiller-cape-ratio")}>Shiller CAPE </button> &nbsp;
 
         </div>
 
