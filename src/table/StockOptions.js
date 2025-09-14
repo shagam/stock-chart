@@ -359,7 +359,8 @@ function OptionQuote (props) {
   }
 
  function strikeRowClick(rowId)  { 
-    config.strikeNum = rowId;
+    setStrikeNumCalc(rowId)
+    // config.strikeNum = rowId;
     if (log)
       console.log('Strike Row clicked:', rowId);
   }
@@ -572,9 +573,9 @@ function OptionQuote (props) {
   useEffect (() => { 
     setStrikeArray([]);
     setExpirationsArray([]);
-    // setLineNumberArr([]);
-    // setOptionQuote({});
-    // setOptionKeys([]);
+    setLineNumberArr([]);
+    setOptionQuote({});
+    setOptionKeys([]);
      getOptionsInfoFromServer () 
   }, [props.symbol, getOptionsInfoFromServer, log, logExtra, props.eliHome, props.errorAdd]); 
 
