@@ -582,7 +582,7 @@ function OptionQuote (props) {
     setOptionKeys([]);
     if (! err)
      getOptionsInfoFromServer () 
-  }, [props.symbol, getOptionsInfoFromServer, log, logExtra, props.eliHome, props.errorAdd]); 
+  }, [props.symbol, getOptionsInfoFromServer, log, logExtra, err, props.eliHome, props.errorAdd]); 
 
 
 
