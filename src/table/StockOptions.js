@@ -416,23 +416,23 @@ function OptionQuote (props) {
       if (log)
         console.log ('option-raw-from-server', props.symbol, result.data)
 
+      const latency = Date.now() - mili
+      setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
+
+      if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+        setErr(result.data)
+        // err_ = result.data
+        props.errorAdd ([props.symbol,result.data])
+        console.log (props.symbol, result.data)
+        return;
+      }
+
       if (result.data.strikeNum ) {
         setStrikeNumCalc (result.data.strikeNum)   // from server
       }
 
       if (result.data.compareStatus && props.eliHome)
         setCompareStatus(result.data.compareStatus)
-
-      if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(result.data)
-        props.errorAdd ([props.symbol,result.data])
-        console.log (props.symbol, result.data)
-        return;
-      }
-
-      const latency = Date.now() - mili
-      setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
-
 
       setExpirationsArray(result.data.expirationArray)
 
@@ -580,6 +580,7 @@ function OptionQuote (props) {
     setLineNumberArr([]);
     setOptionQuote({});
     setOptionKeys([]);
+    if (! err)
      getOptionsInfoFromServer () 
   }, [props.symbol, getOptionsInfoFromServer, log, logExtra, props.eliHome, props.errorAdd]); 
 
