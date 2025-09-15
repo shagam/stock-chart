@@ -4,7 +4,7 @@ import axios from 'axios';
 // import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
-import {todayDate, getDate_YYYY_mm_dd__} from '../utils/Date';
+import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
 
 import { el } from 'date-fns/locale';
 import StockOptionsConfig from './StockOptionsConfig';
@@ -132,9 +132,12 @@ function OptionQuote (props) {
     // console.log(props.symbol , 'expirations=', expirationGroup, '&side=' + callOrPut + '&strike=' + strikeGroup)
     // const TEST = 'https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25'
     // url = TEST;
-    // if (log)
-    //   console.log (url)
-
+    if (log)
+      console.log (getDate(), props.symbol, url)
+    setErr()
+    setDat()
+    setLatency('request sent ...')
+    setCompareStatus()
     axios.get (url)
     .then ((result) => {
       if (log)
@@ -278,8 +281,11 @@ function OptionQuote (props) {
         + expirationsArray[config.expirationNum] + '&token=' + TOKEN
         // + '?token=' + TOKEN;
     if (log)
-      console.log (url)
-
+      console.log (getDate(), props.symbol, url)
+    setErr()
+    setDat()
+    setLatency('request sent ...')
+    setCompareStatus()
     axios.get (url)
     .then ((result) => {
       if (log)
@@ -324,8 +330,11 @@ function OptionQuote (props) {
     const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
     if (log)
       console.log (url)
-
-    axios.get (url)
+    setErr()
+    setDat()
+    setLatency('request sent ...')
+    setCompareStatus()
+    axios.get (getDate(), props.symbol, url)
       .then ((result) => {
         if (log)
           console.log ('expirations', result.data)
@@ -397,10 +406,12 @@ function OptionQuote (props) {
       corsUrl += "&ignoreSaved=1"
 
     if (log)
-      console.log ('getOptionsInfoFromServer', corsUrl)
+      console.log (getDate(), props.symbol, 'getOptionsInfoFromServer', corsUrl)
 
     setErr()
     setDat()
+    setLatency('request sent ...')
+    setCompareStatus()
     const mili = Date.now()
     setLatency('request sent to server ...')
 
