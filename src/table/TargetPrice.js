@@ -60,14 +60,14 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
             console.log (JSON.stringify(result.data))
 
         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-            errorAdd([symbol, getDate(), 'target',result.data])
+            errorAdd([symbol, 'target',result.data])
             return;
         }
         if (LOG)
             console.log(symbol, getDate(), 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
     } )
     .catch ((err) => {
-        errorAdd([symbol, getDate(), 'target', err.message])
+        errorAdd([symbol, 'target', err.message])
         console.log(getDate(), symbol, 'targetPrice', err.message)
     })
 }
@@ -109,7 +109,7 @@ async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, log
         // }
 
         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-             errorAdd([symbol, getDate(), 'target',result.data])
+             errorAdd([symbol, 'target',result.data])
              return;
          }
          console.log(getDate(), symbol, 'targetPrice arrived', dat,)  
@@ -125,7 +125,7 @@ async function targetHistoryOne (symbol, setTargetInfoOne, setTargetHistAll, log
          setTargetHistAll();       
      } )
      .catch ((err) => {
-         errorAdd([symbol, getDate(), 'target', err.message])
+         errorAdd([symbol, 'target', err.message])
          console.log(getDate(), symbol, 'targetPrice', err.message)
      })
 }
@@ -159,7 +159,7 @@ async function targetHistAll (setTargetPriceHist, setTargetInfoOne, logFlags, er
 
 
         if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-            errorAdd([getDate(), 'targetAll', result.data])
+            errorAdd(['targetAll', result.data])
             return;
         }
         if (LOG)
