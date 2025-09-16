@@ -19,7 +19,7 @@ import StockOptionsConfig from './StockOptionsConfig';
 function OptionQuote (props) {
 
   // const [quote, setQuote] = useState(null);
-  const optionSymbol = 'AAPL'+'250817C00' + '150000'; // Jan 2025 $150 AAPL Call
+  // const optionSymbol = 'AAPL'+'250817C00' + '150000'; // Jan 2025 $150 AAPL Call
   const TOKEN = process.env.REACT_APP_MARKETDATA;
   var url = 'https://marketdata.app/api/v1/marketdata?token=' + TOKEN;
 
@@ -431,7 +431,7 @@ function OptionQuote (props) {
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(result.data)
+        setErr(getDate() + '  ' + result.data)
         // err_ = result.data
         props.errorAdd ([props.symbol,result.data])
         console.log (props.symbol, result.data)
@@ -591,8 +591,8 @@ function OptionQuote (props) {
     setLineNumberArr([]);
     setOptionQuote({});
     setOptionKeys([]);
-    if (! err)
-     getOptionsInfoFromServer () 
+    // if (! err)
+    //  getOptionsInfoFromServer () 
   }, [props.symbol, getOptionsInfoFromServer, log, logExtra, err, props.eliHome, props.errorAdd]); 
 
 
