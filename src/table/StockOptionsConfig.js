@@ -6,7 +6,8 @@ import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 
 function StockOptionsConfig (props) { 
-  console.log(props.config)
+  if (props.logExtra)
+    console.log(props.config)
   const [expirationCount, setExpirationCount] = useState(props.config.expirationCount);
   const [expirationNum, setExpirationNum] = useState(props.config.expirationNum);
   const [strikeCount, setStrikeCount] = useState(props.config.strikeCount);
@@ -40,8 +41,8 @@ function StockOptionsConfig (props) {
          strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
         callOrPut: callOrPut, percent: percent, compoundYield: compoundYield};
 
-        console.log("final data is: ", newConfig);
-        localStorage.setItem('stockOptionsConfig', JSON.stringify(newConfig));
+        if (props.logExtra)
+          console.log("final data is: ", newConfig);
         props.setConfig (newConfig);
     }
 

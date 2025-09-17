@@ -66,16 +66,23 @@ function OptionQuote (props) {
     console.log ('columnShow init', columnShow_.length, columnShow_)
   }
 
-  var config = useMemo(() => JSON.parse (localStorage.getItem('stockOptionsConfig')), []);
-  if (! config ) {
-    config = {expirationCount: 3, expirationNum: 1, strikeCount: 3, strikeNum: -1,
-      callOrPut: 'call', percent: true, compoundYield: false};
-    localStorage.setItem('stockOptionsConfig', JSON.stringify(config));
+
+  //* config persistant storage */
+  const CONFIG_KEY = 'stockOptionsConfig';
+  const [config, setConfig_] = useState(() => {
+    const stored = localStorage.getItem(CONFIG_KEY);
+    return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:20, strikeCount: 3, strikeNum: 5,
+      callOrPut: 'call', percent: true, compoundYield: false}
+  });
+
+  function setConfig (newConfig) {
+    setConfig_(newConfig)
+    localStorage.setItem( CONFIG_KEY, JSON.stringify(newConfig));
+    localStorage.setItem('stockOptionsConfig_', JSON.stringify(config));
   }
-  else {
-    if (logExtra)
-      console.log('config from localStorage', config)
-  }
+
+
+
 
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
     console.log ('columnShow from localStorage ', columnShow_)
@@ -180,7 +187,7 @@ function OptionQuote (props) {
         } )
       console.log ('filtered', OptionQuoteFiltered)
       setLineNumberArr(lineArr);
-      if (log)
+      if (logExtra)
         console.log ('lineNumberArr', lineArr)
 
       
@@ -267,14 +274,10 @@ function OptionQuote (props) {
   }, [props, TOKEN, log, // strikeArray, expirationsArray,
       config.callOrPut, config.percent, config.compoundYield, columnShow, columnShow_.length, 
        setColumnShow, setOptionKeys, setLineNumberArr,
-       setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount]); // add callOrPut to dependencies
+       setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount, logExtra]); // add callOrPut to dependencies
 
 
 
-
-  function setConfig (newConfig) {
-    config = newConfig
-  }
 
   const strikePricesGet = useCallback ((expirationsArray) => {
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
@@ -493,9 +496,10 @@ function OptionQuote (props) {
               lineArr.push (i) 
           }
         } )
-      console.log ('filtered', OptionQuoteFiltered)
+      if (logExtra)
+        console.log ('filtered', OptionQuoteFiltered)
       setLineNumberArr(lineArr);
-      if (log)
+      if (logExtra)
         console.log ('lineNumberArr', lineArr)
 
       
@@ -570,7 +574,7 @@ function OptionQuote (props) {
         console.log ('columnShow set to all keys', keys)
       }
 
-      if (log)
+      if (logExtra)
         console.log ('keys', Object.keys(optionQuote))
 
 
@@ -656,7 +660,7 @@ function OptionQuote (props) {
         </div>}
 
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config-show</strong> &nbsp; &nbsp; </div>
-        {configShow && <StockOptionsConfig config={config} setConfig={setConfig}/>}
+        {configShow && <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra}/>}
 
 
         <div style = {{display: 'flex'}}>
