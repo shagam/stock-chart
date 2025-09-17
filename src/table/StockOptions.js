@@ -45,7 +45,7 @@ function OptionQuote (props) {
   const [columnShow, setColumnShow] = useState([]);
   const [err, setErr] = useState();
   const [latency, setLatency] = useState();
-  const [compareStatus, setCompareStatus] = useState();
+
 
   const [expirationShow, setExpirationShow] = useState(false);
   const [strikeShow, setStrikeShow] = useState(false);
@@ -144,7 +144,7 @@ function OptionQuote (props) {
     setErr()
     setDat()
     setLatency('request sent ...')
-    setCompareStatus()
+
     axios.get (url)
     .then ((result) => {
       if (log)
@@ -288,7 +288,7 @@ function OptionQuote (props) {
     setErr()
     setDat()
     setLatency('request sent ...')
-    setCompareStatus()
+
     axios.get (url)
     .then ((result) => {
       if (log)
@@ -336,7 +336,7 @@ function OptionQuote (props) {
     setErr()
     setDat()
     setLatency('request sent ...')
-    setCompareStatus()
+
     axios.get (getDate(), props.symbol, url)
       .then ((result) => {
         if (log)
@@ -414,7 +414,7 @@ function OptionQuote (props) {
     setErr()
     setDat()
     setLatency('request sent ...')
-    setCompareStatus()
+
     const mili = Date.now()
     setLatency('request sent to server ...')
 
@@ -445,8 +445,9 @@ function OptionQuote (props) {
         setStrikeNumCalc (result.data.strikeNum)   // from server
       }
 
-      if (result.data.compareStatus && props.eliHome)
-        setCompareStatus(result.data.compareStatus)
+      if (result.data.compareStatus && props.eliHome) {
+        console.log ('compareStatus=', result.data.compareStatus)
+      }
 
       setExpirationsArray(result.data.expirationArray)
 
@@ -650,7 +651,7 @@ function OptionQuote (props) {
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
-        {props.eliHome && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
+        {/* {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>} */}
 
         {props.eliHome &&
         <div>
