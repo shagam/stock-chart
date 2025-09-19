@@ -380,7 +380,6 @@ const StockChart = (props) => {
       const sym = keys[symIndex]
       const arrayLength = props.gainMap[sym].x.length
       const symStartDate = props.gainMap[sym].x[arrayLength - 1]
-      console.log(symStartDate)
       if (compareDate (symStartDate, startDate) > 0) {
         startDate = symStartDate
       }
