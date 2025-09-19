@@ -55,14 +55,15 @@ function OptionQuote (props) {
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
+  const COLUMNS = 'stockOptionColumnsShow';
   const columnsAll = [
     "expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
-  var columnShow_= useMemo(() => JSON.parse (localStorage.getItem('columnShow')), []);
+  var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
   if (! columnShow_  ) {
     columnShow_ = columnsAll;
-    localStorage.setItem('columnShow', JSON.stringify(columnShow_)); // set default columnShow
+    localStorage.setItem(COLUMNS, JSON.stringify(columnShow_)); // set default columnShow
     console.log ('columnShow init', columnShow_.length, columnShow_)
   }
 
@@ -78,12 +79,11 @@ function OptionQuote (props) {
   function setConfig (newConfig) {
     setConfig_(newConfig)
     localStorage.setItem( CONFIG_KEY, JSON.stringify(newConfig));
-    localStorage.setItem('stockOptionsConfig_', JSON.stringify(config));
   }
 
 
 
-  const COLUMNS = 'stockOptionColumnsShow';
+
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
     console.log ('columnShow from localStorage ', columnShow_)
     setColumnShow (columnShow_)
