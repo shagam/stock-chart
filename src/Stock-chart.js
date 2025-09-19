@@ -372,6 +372,23 @@ const StockChart = (props) => {
     setEndDate(end)
   }
 
+  // find oldest start date in all symbols  
+  function adjustStart() {
+    var startDate = '1997-01-01';
+    const keys = Object.keys (props.gainMap)
+    for (let symIndex = 0; symIndex <  keys.length; symIndex++ ) {
+      const sym = keys[symIndex]
+      const arrayLength = props.gainMap[sym].x.length
+      const symStartDate = props.gainMap[sym].x[arrayLength - 1]
+      console.log(symStartDate)
+      if (compareDate (symStartDate, startDate) > 0) {
+        startDate = symStartDate
+      }
+    }
+    console.log('startDate', startDate)
+    setChartDate (new Date(startDate)) 
+  }
+
 
   return (
     <div style = {{border: '2px solid blue'}}>
@@ -398,6 +415,7 @@ const StockChart = (props) => {
             <label style={{marginRight:'10px', paddingRight: '1px'}}> 1_Year</label>
         </div>
         
+        {/* Buttons first */}
         <div style={{display:'flex'}} > EndDate:&nbsp;&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
             dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} /> &nbsp; &nbsp;
              {/* some drop recovery ranges  month 0-11 */}
@@ -409,9 +427,9 @@ const StockChart = (props) => {
              <label style={{marginRight:'10px', paddingRight: '1px'}}> 10_year </label>
           <input style={{marginRight: '2px', width: '20px'}} type="radio" name="mon" value='264' id='264' checked={months==='264'} onChange={onOptionChange}/>
              <label style={{marginRight:'10px', paddingRight: '25px'}}> 22_Year </label>
-
         </div>
   
+        {/* Buttonf second */}
         <div style={{display:'flex'}}>
           <div> <input  type="checkbox" checked={multi}  onChange={() => setMulti (! multi)} />  multi </div>
           <div> &nbsp;&nbsp;&nbsp; <input  type="checkbox" checked={logarithmic}  onChange={() => setLogarithmic (! logarithmic)} />  Logarithemic &nbsp;&nbsp;  </div>
@@ -419,6 +437,7 @@ const StockChart = (props) => {
           <input  type="checkbox" checked={static_}  onChange={() => setStatic (! static_)} />&nbsp;frozen &nbsp;&nbsp;
           <input  type="checkbox" checked={totalGain}  onChange={() => setTotalGain (! totalGain)} />&nbsp;totalGain &nbsp;&nbsp;
           <input  type="checkbox" checked={showRanges}  onChange={() => setShowRanges (! showRanges)} /> &nbsp;ranges  &nbsp;
+          <button onClick={() => adjustStart()    }> adjustStart</button>&nbsp;
 
           {showRanges && <div>
             &nbsp; &nbsp;

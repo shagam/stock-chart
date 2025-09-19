@@ -230,6 +230,9 @@ const daysBack = (dateArray, days) => {  // [y,m,d] days bacck limit to 14
 }
 
 // recieves 2 arrays [y,m,d]
+// if date0 > date1 return 1
+// if date0 < date1 return -1
+// if date0 = date1 return 0
 const compareDate = (date1, date2) => {
   // compare year
   if (date1[0] > date2[0])
