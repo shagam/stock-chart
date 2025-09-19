@@ -83,7 +83,7 @@ function OptionQuote (props) {
 
 
 
-
+  const COLUMNS = 'stockOptionColumnsShow';
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
     console.log ('columnShow from localStorage ', columnShow_)
     setColumnShow (columnShow_)
@@ -91,7 +91,7 @@ function OptionQuote (props) {
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
  
   useEffect (() => { 
-    localStorage.setItem('columnShow', JSON.stringify(columnShow));
+    localStorage.setItem(COLUMNS, JSON.stringify(columnShow));
     if (logExtra) {
       console.log ('save columnShow', columnShow) 
     }
@@ -251,14 +251,14 @@ function OptionQuote (props) {
       // if columnShow is empty, set it to all keys
       if (columnShow_.length === 0) {
         setColumnShow(keys)
-        localStorage.setItem('columnShow (keys)', JSON.stringify(keys));
+        localStorage.setItem('COLUMNS', JSON.stringify(keys));
       }
 
       setOptionKeys(keys)
       if (columnShow.length === 0) {
         setColumnShow(keys) // if columnShow is empty, set it to all keys
         // columnShow__= keys; // update the columnShow_ to all keys
-        localStorage.setItem('columnShow', JSON.stringify(keys));
+        localStorage.setItem(COLUMNS, JSON.stringify(keys));
         console.log ('columnShow set to all keys', keys)
       }
 
@@ -571,7 +571,7 @@ function OptionQuote (props) {
       if (columnShow.length === 0) {
         setColumnShow(keys) // if columnShow is empty, set it to all keys
         // columnShow__= keys; // update the columnShow_ to all keys
-        localStorage.setItem('columnShow', JSON.stringify(keys));
+        localStorage.setItem(COLUMNS, JSON.stringify(keys));
         console.log ('columnShow set to all keys', keys)
       }
 
