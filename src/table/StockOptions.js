@@ -73,7 +73,7 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:20, strikeCount: 3, strikeNum: 5,
-      callOrPut: 'call', percent: true, compoundYield: false, yieldGoal: 'highest'}
+      side: 'call', percent: true, compoundYield: false, yieldGoal: 'highest'}
   });
 
   function setConfig (newConfig) {
@@ -133,10 +133,10 @@ function OptionQuote (props) {
     // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
     const url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
         + expirationGroup
-        + '&side=' + config.callOrPut + '&strike=' + strikeGroup + '&token=' + TOKEN
+        + '&side=' + config.side + '&strike=' + strikeGroup + '&token=' + TOKEN
         // + '?human=true';
 
-    // console.log(props.symbol , 'expirations=', expirationGroup, '&side=' + callOrPut + '&strike=' + strikeGroup)
+    // console.log(props.symbol , 'expirations=', expirationGroup, '&side=' + side + '&strike=' + strikeGroup)
     // const TEST = 'https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25'
     // url = TEST;
     if (log)
@@ -272,9 +272,9 @@ function OptionQuote (props) {
     })
 
   }, [props, TOKEN, log, // strikeArray, expirationsArray,
-      config.callOrPut, config.percent, config.compoundYield, columnShow, columnShow_.length, 
+      config.side, config.percent, config.compoundYield, columnShow, columnShow_.length, 
        setColumnShow, setOptionKeys, setLineNumberArr,
-       setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount, logExtra]); // add callOrPut to dependencies
+       setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount, logExtra]); // add side to dependencies
 
 
 
@@ -393,7 +393,7 @@ function OptionQuote (props) {
     corsUrl += "&strikeNum=" + config.strikeNum
     corsUrl += '&expirationCount=' + config.expirationCount
     corsUrl += '&strikeCount=' + config.strikeCount
-    corsUrl += "&side=" + config.callOrPut
+    corsUrl += "&side=" + config.side
     // corsUrl += "&percent=" + (percent ? 1 : 0)
     // corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
     corsUrl += "&stockPrice=" + props.stockPrice

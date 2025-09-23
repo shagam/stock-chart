@@ -13,7 +13,7 @@ function StockOptionsConfig (props) {
   const [strikeCount, setStrikeCount] = useState(props.config.strikeCount);
   const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
   const  sideLIst = ['call', 'put'];
-  const [callOrPut, setCallOrPut] = useState(props.config.callOrPut); // default to call options
+  const [side, setSide] = useState(props.config.side); // default to call options
   
   const [yieldGoal, setYieldGoal] = useState(props.config.yieldGoal); // highest gain or lowest gain
   const yieldGoalList = ['highest', 'kowest'];
@@ -42,7 +42,7 @@ function StockOptionsConfig (props) {
 
       const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
          strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
-        callOrPut: callOrPut, percent: percent, compoundYield: compoundYield, yieldGoal: yieldGoal};
+        side: side, percent: percent, compoundYield: compoundYield, yieldGoal: yieldGoal};
 
         if (props.logExtra)
           console.log("final data is: ", newConfig);
@@ -91,7 +91,7 @@ function StockOptionsConfig (props) {
 
           <br/>          <br/>
         <div style = {{display: 'flex'}}>
-          <ComboBoxSelect serv={callOrPut} nameList={sideLIst} setSelect={setCallOrPut} title='' options={sideLIst} defaultValue={callOrPut}/> &nbsp; &nbsp;  &nbsp; 
+          <ComboBoxSelect serv={side} nameList={sideLIst} setSelect={setSide} title='side=' options={sideLIst} defaultValue={side}/> &nbsp; &nbsp;  &nbsp; 
           <ComboBoxSelect serv={yieldGoal} nameList={yieldGoalList} setSelect={setYieldGoal} title='yieldGoal=' options={yieldGoalList} defaultValue={yieldGoal}/> &nbsp; &nbsp;  &nbsp; 
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
