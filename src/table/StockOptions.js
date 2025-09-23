@@ -793,9 +793,9 @@ function OptionQuote (props) {
                   </div>
                 ))}
               </div>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>saveColumnChecked()}>  save    </button> &nbsp;&nbsp;
+              {/* <button style={{background: 'aqua'}} type="button" onClick={()=>saveColumnChecked()}>  save    </button> &nbsp;&nbsp; */}
 
-            {log && <p>Selected: {columnShow.join(", ")}</p>}  
+            {/* {log && <p>Selected: {columnShow.join(", ")}</p>}   */}
              {/* {log && <p>Selected: {optionKeys.join(", ")}</p>}   */}
             </div>}
 
