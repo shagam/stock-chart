@@ -514,8 +514,12 @@ function OptionQuote (props) {
         const dte = OptionQuoteFiltered.dte[i];
 
         const yield_ = (mid / props.stockPrice);
-        const yearlyYield = config.compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
-
+        var yearlyYield =-1
+        if (config.compoundYield) {
+          yearlyYield = (((yield_ + 1) ** (365 / dte)) - 1).toFixed(4)
+        } else {
+          yearlyYield = ((yield_ ) * (365 / dte)).toFixed(4);
+        }
         const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
 
 
