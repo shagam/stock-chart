@@ -73,7 +73,7 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:20, strikeCount: 3, strikeNum: 5,
-      callOrPut: 'call', percent: true, compoundYield: false}
+      callOrPut: 'call', percent: true, compoundYield: false, yieldGoal: 'yieldHighest'}
   });
 
   function setConfig (newConfig) {
@@ -510,7 +510,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
       for (let i = 0; i < rows; i++) {
-      const mid = OptionQuoteFiltered.mid[i];
+        const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
 
         const yield_ = (mid / props.stockPrice);

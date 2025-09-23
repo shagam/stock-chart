@@ -12,9 +12,12 @@ function StockOptionsConfig (props) {
   const [expirationNum, setExpirationNum] = useState(props.config.expirationNum);
   const [strikeCount, setStrikeCount] = useState(props.config.strikeCount);
   const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
-  const  options = ['call', 'put'];
+  const  sideLIst = ['call', 'put'];
   const [callOrPut, setCallOrPut] = useState(props.config.callOrPut); // default to call options
   
+  const [yieldGoal, setYieldGoal] = useState(props.config.yieldGoal); // highest gain or lowest gain
+  const yieldGoalList = ['yieldHighest', 'yieldLowest'];
+
   const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
   const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
 
@@ -88,9 +91,11 @@ function StockOptionsConfig (props) {
 
           <br/>          <br/>
         <div style = {{display: 'flex'}}>
-          <ComboBoxSelect serv={callOrPut} nameList={options} setSelect={setCallOrPut} title='' options={options} defaultValue={callOrPut}/> &nbsp;&nbsp;
+          <ComboBoxSelect serv={callOrPut} nameList={sideLIst} setSelect={setCallOrPut} title='' options={sideLIst} defaultValue={callOrPut}/> &nbsp; &nbsp;  &nbsp; 
+          <ComboBoxSelect serv={yieldGoal} nameList={yieldGoalList} setSelect={setYieldGoal} title='' options={yieldGoalList} defaultValue={yieldGoal}/> &nbsp; &nbsp;  &nbsp; 
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
+         
         </div>
         <div>&nbsp;</div>
           {/* <br/>          <br/> */}
