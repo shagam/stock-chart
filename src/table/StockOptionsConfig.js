@@ -16,7 +16,7 @@ function StockOptionsConfig (props) {
   const [callOrPut, setCallOrPut] = useState(props.config.callOrPut); // default to call options
   
   const [yieldGoal, setYieldGoal] = useState(props.config.yieldGoal); // highest gain or lowest gain
-  const yieldGoalList = ['yieldHighest', 'yieldLowest'];
+  const yieldGoalList = ['highest', 'kowest'];
 
   const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
   const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
@@ -42,7 +42,7 @@ function StockOptionsConfig (props) {
 
       const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
          strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
-        callOrPut: callOrPut, percent: percent, compoundYield: compoundYield};
+        callOrPut: callOrPut, percent: percent, compoundYield: compoundYield, yieldGoal: yieldGoal};
 
         if (props.logExtra)
           console.log("final data is: ", newConfig);
@@ -92,7 +92,7 @@ function StockOptionsConfig (props) {
           <br/>          <br/>
         <div style = {{display: 'flex'}}>
           <ComboBoxSelect serv={callOrPut} nameList={sideLIst} setSelect={setCallOrPut} title='' options={sideLIst} defaultValue={callOrPut}/> &nbsp; &nbsp;  &nbsp; 
-          <ComboBoxSelect serv={yieldGoal} nameList={yieldGoalList} setSelect={setYieldGoal} title='' options={yieldGoalList} defaultValue={yieldGoal}/> &nbsp; &nbsp;  &nbsp; 
+          <ComboBoxSelect serv={yieldGoal} nameList={yieldGoalList} setSelect={setYieldGoal} title='yieldGoal=' options={yieldGoalList} defaultValue={yieldGoal}/> &nbsp; &nbsp;  &nbsp; 
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
          

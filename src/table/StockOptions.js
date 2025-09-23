@@ -73,7 +73,7 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:20, strikeCount: 3, strikeNum: 5,
-      callOrPut: 'call', percent: true, compoundYield: false, yieldGoal: 'yieldHighest'}
+      callOrPut: 'call', percent: true, compoundYield: false, yieldGoal: 'highest'}
   });
 
   function setConfig (newConfig) {
