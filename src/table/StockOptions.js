@@ -197,10 +197,15 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
       for (let i = 0; i < rows; i++) {
-      const mid = OptionQuoteFiltered.mid[i];
+        const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
 
-        const yield_ = (mid / props.stockPrice);
+        var  yield_;
+        if (config.side)
+          yield_ = (mid / props.stockPrice);
+        else 
+          yield_ = (mid +  OptionQuoteFiltered.strike) / props.stockPrice;
+
         const yearlyYield = config.compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
         const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
@@ -513,15 +518,24 @@ function OptionQuote (props) {
         const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
 
-        const yield_ = (mid / props.stockPrice);
+        const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
+
+        var yield_
+        if (config.yieldGoal === 'highest') 
+          yield_ = (mid / optionQuote.strike[i]); // call option seller
+        else 
+          yield_ = breakEven / optionQuote.strike[i]; // call option buyer
+
+
         var yearlyYield =-1
         if (config.compoundYield) {
-          yearlyYield = (((yield_ + 1) ** (365 / dte)) - 1).toFixed(4)
+          yearlyYield = (((yield_) ** (365 / dte))).toFixed(4)
         } else {
           yearlyYield = ((yield_ ) * (365 / dte)).toFixed(4);
         }
-        const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
 
+        if (log)
+          console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven, 'yield_=' + yield_, 'yearlyYield=' + yearlyYield)
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
         OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
