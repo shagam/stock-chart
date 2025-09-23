@@ -38,8 +38,8 @@ function OptionQuote (props) {
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
 
-  const [maxYearlyYield, setMaxYearlyYield] = useState(0); // max yearly yield for all options
-  const [maxYearlyYieldIndex, setMaxYearlyYieldIndex] = useState(-1); // index of max yearly yield
+  const [bestYearlyYield, setBestYearlyYield] = useState(0); // max yearly yield for all options
+  const [bestYearlyYieldIndex, setBestYearlyYieldIndex] = useState(-1); // index of max yearly yield
 
   const [columnHideFlag, setColumnHideFlag] = useState(false);
   const [columnShow, setColumnShow] = useState([]);
@@ -227,22 +227,22 @@ function OptionQuote (props) {
       const keys = Object.keys(OptionQuoteFiltered);
 
       //** find highest yearlyYield */
-      var maxYearlyYield_ = 0;
+      var bestYearlyYield_ = 0;
      for (let i = 0; i < rows; i++) {
         if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
           continue
          OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
-         if (OptionQuoteFiltered.yearlyYield[i] > maxYearlyYield_) {
+         if (OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) {
           // if (log)
           //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
-          maxYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
-          setMaxYearlyYieldIndex(i); // save index of max yearly yield
+          bestYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
+          setBestYearlyYieldIndex(i); // save index of max yearly yield
          }
       }
-      setMaxYearlyYield(maxYearlyYield_); // set maxYearlyYield
+      setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       if (log)
-        console.log ('maxYearlyYield=', maxYearlyYield_)
+        console.log ('maxYearlyYield=', bestYearlyYield_)
 
 
       if(log)
@@ -274,7 +274,7 @@ function OptionQuote (props) {
   }, [props, TOKEN, log, // strikeArray, expirationsArray,
       config.side, config.percent, config.compoundYield, columnShow, columnShow_.length, 
        setColumnShow, setOptionKeys, setLineNumberArr,
-       setMaxYearlyYield, setMaxYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount, logExtra]); // add side to dependencies
+       setBestYearlyYield, setBestYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount, logExtra]); // add side to dependencies
 
 
 
@@ -544,22 +544,24 @@ function OptionQuote (props) {
       const keys = Object.keys(OptionQuoteFiltered);
 
       //** find highest yearlyYield */
-      var maxYearlyYield_ = 0;
+      var bestYearlyYield_ = config.yieldGoal === 'highest' ? 0 : 99999999;
      for (let i = 0; i < rows; i++) {
         if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
           continue
          OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
-         if (OptionQuoteFiltered.yearlyYield[i] > maxYearlyYield_) {
+
+         if ((config.yieldGoal === 'highest' && OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) 
+          || (config.yieldGoal === 'lowest' && OptionQuoteFiltered.yearlyYield[i] < bestYearlyYield_)) {
           // if (log)
           //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
-          maxYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
-          setMaxYearlyYieldIndex(i); // save index of max yearly yield
+          bestYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
+          setBestYearlyYieldIndex(i); // save index of max yearly yield
          }
       }
-      setMaxYearlyYield(maxYearlyYield_); // set maxYearlyYield
+      setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       if (logExtra)
-        console.log ('maxYearlyYield=', maxYearlyYield_)
+        console.log ('maxYearlyYield=', bestYearlyYield_)
 
 
       if(logExtra)
@@ -634,7 +636,7 @@ function OptionQuote (props) {
       if (line==='0' || optionQuote.yearlyYield === undefined) {
         return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
       }
-      if (optionQuote.yearlyYield[line] !== 'Infinity' && maxYearlyYield === optionQuote.yearlyYield[line]) {
+      if (optionQuote.yearlyYield[line] !== 'Infinity' && bestYearlyYield === optionQuote.yearlyYield[line]) {
         return {backgroundColor: '#d3e533', color: 'black', fontWeight: 'bold'};
       } else {
         return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
@@ -807,7 +809,7 @@ function OptionQuote (props) {
 
           {props.symbol} &nbsp; &nbsp; count={lineNumberArr.length} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp;
-          maxYearlyYieldIndex={maxYearlyYieldIndex} &nbsp; &nbsp;
+          bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp;
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>

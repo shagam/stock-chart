@@ -16,7 +16,7 @@ function StockOptionsConfig (props) {
   const [side, setSide] = useState(props.config.side); // default to call options
   
   const [yieldGoal, setYieldGoal] = useState(props.config.yieldGoal); // highest gain or lowest gain
-  const yieldGoalList = ['highest', 'kowest'];
+  const yieldGoalList = ['highest', 'lowest'];
 
   const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
   const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
