@@ -258,7 +258,7 @@ function OptionQuote (props) {
       if (columnShow.length === 0) {
         setColumnShow(keys) // if columnShow is empty, set it to all keys
         // columnShow__= keys; // update the columnShow_ to all keys
-        localStorage.setItem(COLUMNS, JSON.stringify(keys));
+        // localStorage.setItem(COLUMNS, JSON.stringify(keys));
         console.log ('columnShow set to all keys', keys)
       }
 
@@ -591,14 +591,16 @@ function OptionQuote (props) {
 
 
   useEffect (() => { 
+    console.log ('useEffect symbol change', props.symbol)
     setStrikeArray([]);
     setExpirationsArray([]);
     setLineNumberArr([]);
     setOptionQuote({});
-    setOptionKeys([]);
+
+    // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
-  }, [props.symbol, getOptionsInfoFromServer, log, logExtra, err, props.eliHome, props.errorAdd]); 
+  }, [props.symbol, log, logExtra, err, props.eliHome, props.errorAdd]); 
 
 
 
@@ -610,6 +612,10 @@ function OptionQuote (props) {
     );
   };
   
+  function saveColumnChecked (item) {
+    localStorage.setItem(COLUMNS, JSON.stringify(columnShow_)); // set default columnShow
+  }
+
   function cellColor (line, attrib) {
     if (attrib === 'expiration') {
       if (line === 0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1]) {
@@ -760,6 +766,8 @@ function OptionQuote (props) {
           </div>}
           </div>}
 
+
+
           {/* select columns */}
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;<strong>column-select</strong></div>  
@@ -785,7 +793,10 @@ function OptionQuote (props) {
                   </div>
                 ))}
               </div>
-             {log && <p>Selected: {columnShow.join(", ")}</p>}
+            <button style={{background: 'aqua'}} type="button" onClick={()=>saveColumnChecked()}>  save    </button> &nbsp;&nbsp;
+
+            {log && <p>Selected: {columnShow.join(", ")}</p>}  
+             {/* {log && <p>Selected: {optionKeys.join(", ")}</p>}   */}
             </div>}
 
             <hr/> 
