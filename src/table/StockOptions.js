@@ -529,8 +529,9 @@ function OptionQuote (props) {
         const breakEven = (optionQuote.strike[i] + optionQuote.mid[i]);
 
         var  yield_;
-        if (config.yieldGoal === 'sell')
+        if (config.action === 'sell') {
           yield_ = (mid / props.stockPrice);
+        }
         else {
           const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
           yield_ = (expirationDateValue -  optionQuote.strike[i]) / mid; //  - props.stockPrice
