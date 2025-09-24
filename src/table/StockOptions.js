@@ -32,6 +32,7 @@ function OptionQuote (props) {
 
   const [strikeNumCalc,setStrikeNumCalc] = useState(-1) // for display only
   
+  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
 
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
@@ -55,7 +56,7 @@ function OptionQuote (props) {
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
-  const COLUMNS = 'stockOptionColumnsShow';
+  const COLUMNS = 'stockOptionColumns';
   const columnsAll = [
     "expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
@@ -64,7 +65,8 @@ function OptionQuote (props) {
   if (! columnShow_  ) {
     columnShow_ = columnsAll;
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow_)); // set default columnShow
-    console.log ('columnShow init', columnShow_.length, columnShow_)
+    if (logExtra)
+      console.log ('columnShow init', columnShow_.length, columnShow_)
   }
 
 
@@ -72,8 +74,8 @@ function OptionQuote (props) {
   const CONFIG_KEY = 'stockOptionsConfig';
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
-    return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:20, strikeCount: 3, strikeNum: 5,
-      side: 'call', percent: true, compoundYield: false, yieldGoal: 'highest'}
+    return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
+      side: 'call', percent: true, compoundYield: false, yieldGoal: 'buy'}
   });
 
   function setConfig (newConfig) {
@@ -200,15 +202,20 @@ function OptionQuote (props) {
         const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
 
+        const breakEven = (OptionQuote.strike[i] + OptionQuote.mid[i]);
+
         var  yield_;
-        if (config.side)
+        if (config.yieldGoal === 'sell')
           yield_ = (mid / props.stockPrice);
-        else 
-          yield_ = (mid +  OptionQuoteFiltered.strike) / props.stockPrice;
+        else {
+          const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
+          yield_ = (expirationDateValue -  optionQuote.strike[i]) / mid; //  - props.stockPrice
+          const a = 1 // for breakpoint debug
+        }
 
-        const yearlyYield = config.compoundYield ? ((yield_ + 1) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
+        const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
-        const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
+
 
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
@@ -278,8 +285,9 @@ function OptionQuote (props) {
 
   }, [props, TOKEN, log, // strikeArray, expirationsArray,
       config.side, config.percent, config.compoundYield, columnShow, columnShow_.length, 
-       setColumnShow, setOptionKeys, setLineNumberArr,
-       setBestYearlyYield, setBestYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum, config.expirationCount, logExtra]); // add side to dependencies
+       setColumnShow, setOptionKeys, setLineNumberArr, estimatedYearlyGain,
+       setBestYearlyYield, setBestYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum,
+       config.yieldGoal, config.expirationCount, logExtra]); // add side to dependencies
 
 
 
@@ -515,31 +523,29 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
       for (let i = 0; i < rows; i++) {
-        const mid = OptionQuoteFiltered.mid[i];
-        const dte = OptionQuoteFiltered.dte[i];
+        const mid = optionQuote.mid[i];
+        const dte = optionQuote.dte[i];
 
-        const breakEven = (OptionQuoteFiltered.strike[i] + OptionQuoteFiltered.mid[i]);
+        const breakEven = (optionQuote.strike[i] + optionQuote.mid[i]);
 
-        var yield_
-        if (config.yieldGoal === 'highest') 
-          yield_ = (mid / optionQuote.strike[i]); // call option seller
-        else 
-          yield_ = breakEven / optionQuote.strike[i]; // call option buyer
-
-
-        var yearlyYield =-1
-        if (config.compoundYield) {
-          yearlyYield = (((yield_) ** (365 / dte))).toFixed(4)
-        } else {
-          yearlyYield = ((yield_ ) * (365 / dte)).toFixed(4);
+        var  yield_;
+        if (config.yieldGoal === 'sell')
+          yield_ = (mid / props.stockPrice);
+        else {
+          const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
+          yield_ = (expirationDateValue -  optionQuote.strike[i]) / mid; //  - props.stockPrice
+          const a = 1 // for breakpoint debug
         }
 
-        if (log)
-          console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven, 'yield_=' + yield_, 'yearlyYield=' + yearlyYield)
+        const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
-        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(4) : (yield_ * 100).toFixed(3);  
+
+        if (log)
+          console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2), 'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield)
+
+        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : (yield_ * 100).toFixed(2);  
         OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
-        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(4); // add breakEven to OptionQuoteFiltered
+        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
@@ -558,14 +564,14 @@ function OptionQuote (props) {
       const keys = Object.keys(OptionQuoteFiltered);
 
       //** find highest yearlyYield */
-      var bestYearlyYield_ = config.yieldGoal === 'highest' ? 0 : 99999999;
+      var bestYearlyYield_ = 0
      for (let i = 0; i < rows; i++) {
         if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
           continue
          OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
 
-         if ((config.yieldGoal === 'highest' && OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) 
-          || (config.yieldGoal === 'lowest' && OptionQuoteFiltered.yearlyYield[i] < bestYearlyYield_)) {
+         if (OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) 
+         {
           // if (log)
           //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
           bestYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
@@ -607,7 +613,7 @@ function OptionQuote (props) {
     //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     // })
 
-  }, [props, config, columnShow, columnShow_, log, logExtra, ignoreSaved])
+  }, [props, config, columnShow, columnShow_, log, logExtra, ignoreSaved, estimatedYearlyGain])
 
 
   useEffect (() => { 
@@ -687,7 +693,7 @@ function OptionQuote (props) {
         </div>}
 
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config-show</strong> &nbsp; &nbsp; </div>
-        {configShow && <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra}/>}
+        {configShow && <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} yearlyGain={props.yearlyGain}/>}
 
 
         <div style = {{display: 'flex'}}>

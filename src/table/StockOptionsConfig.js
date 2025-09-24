@@ -14,9 +14,11 @@ function StockOptionsConfig (props) {
   const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
   const  sideLIst = ['call', 'put'];
   const [side, setSide] = useState(props.config.side); // default to call options
-  
+    
+  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
+
   const [yieldGoal, setYieldGoal] = useState(props.config.yieldGoal); // highest gain or lowest gain
-  const yieldGoalList = ['highest', 'lowest'];
+  const yieldGoalList = ['buy', 'sell'];
 
   const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
   const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
@@ -95,8 +97,14 @@ function StockOptionsConfig (props) {
           <ComboBoxSelect serv={yieldGoal} nameList={yieldGoalList} setSelect={setYieldGoal} title='yieldGoal=' options={yieldGoalList} defaultValue={yieldGoal}/> &nbsp; &nbsp;  &nbsp; 
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
-         
         </div>
+
+        <label>YearlyGain: &nbsp;
+          <input style={{width: '100px'}} type="number" name="YearlyGain" // required="required"
+            placeholder="YearlyGain"  onChange={(e) =>  setEstimatedYearlyGain(e.target.value)} value={estimatedYearlyGain} />
+        </label>&nbsp; &nbsp; 
+
+
         <div>&nbsp;</div>
           {/* <br/>          <br/> */}
           <button  style={{background: 'aqua'}} type="submit"> save-config</button> 
