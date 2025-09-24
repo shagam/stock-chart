@@ -32,7 +32,11 @@ function OptionQuote (props) {
 
   const [strikeNumCalc,setStrikeNumCalc] = useState(-1) // for display only
   
-  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
+  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+  var yearlyGain = props.rows[row_index].values.peak2Peak;
+  if (! yearlyGain)
+    yearlyGain = props.rows[row_index].values.short
+  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(yearlyGain); // estimated yearly gain
 
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
@@ -287,7 +291,7 @@ function OptionQuote (props) {
       config.side, config.percent, config.compoundYield, columnShow, columnShow_.length, 
        setColumnShow, setOptionKeys, setLineNumberArr, estimatedYearlyGain,
        setBestYearlyYield, setBestYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum,
-       config.yieldGoal, config.expirationCount, logExtra]); // add side to dependencies
+       config.expirationCount, logExtra, config.action, optionQuote.strike]); // add side to dependencies
 
 
 
@@ -694,7 +698,8 @@ function OptionQuote (props) {
         </div>}
 
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config-show</strong> &nbsp; &nbsp; </div>
-        {configShow && <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} yearlyGain={props.yearlyGain}/>}
+        {configShow && 
+        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
 
 
         <div style = {{display: 'flex'}}>

@@ -14,8 +14,6 @@ function StockOptionsConfig (props) {
   const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
   const  sideLIst = ['call', 'put'];
   const [side, setSide] = useState(props.config.side); // default to call options
-    
-  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
 
   const [action, setAction] = useState(props.config.action); // highest gain or lowest gain
   const actionList = ['buy', 'sell'];
@@ -101,7 +99,7 @@ function StockOptionsConfig (props) {
 
         <label>YearlyGain: &nbsp;
           <input style={{width: '100px'}} type="number" name="YearlyGain" // required="required"
-            placeholder="YearlyGain"  onChange={(e) =>  setEstimatedYearlyGain(e.target.value)} value={estimatedYearlyGain} />
+            placeholder="YearlyGain"  onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
         </label>&nbsp; &nbsp; 
 
 
