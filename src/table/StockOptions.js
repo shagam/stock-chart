@@ -75,7 +75,7 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
-      side: 'call', percent: true, compoundYield: false, yieldGoal: 'buy'}
+      side: 'call', percent: true, compoundYield: false, action: 'buy'}
   });
 
   function setConfig (newConfig) {
@@ -205,7 +205,7 @@ function OptionQuote (props) {
         const breakEven = (OptionQuote.strike[i] + OptionQuote.mid[i]);
 
         var  yield_;
-        if (config.yieldGoal === 'sell')
+        if (config.action === 'sell')
           yield_ = (mid / props.stockPrice);
         else {
           const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 

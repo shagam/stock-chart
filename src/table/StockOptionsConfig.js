@@ -17,8 +17,8 @@ function StockOptionsConfig (props) {
     
   const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
 
-  const [yieldGoal, setYieldGoal] = useState(props.config.yieldGoal); // highest gain or lowest gain
-  const yieldGoalList = ['buy', 'sell'];
+  const [action, setAction] = useState(props.config.action); // highest gain or lowest gain
+  const actionList = ['buy', 'sell'];
 
   const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
   const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
@@ -44,7 +44,7 @@ function StockOptionsConfig (props) {
 
       const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
          strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
-        side: side, percent: percent, compoundYield: compoundYield, yieldGoal: yieldGoal};
+        side: side, percent: percent, compoundYield: compoundYield, action: action};
 
         if (props.logExtra)
           console.log("final data is: ", newConfig);
@@ -94,7 +94,7 @@ function StockOptionsConfig (props) {
           <br/>          <br/>
         <div style = {{display: 'flex'}}>
           <ComboBoxSelect serv={side} nameList={sideLIst} setSelect={setSide} title='side=' options={sideLIst} defaultValue={side}/> &nbsp; &nbsp;  &nbsp; 
-          <ComboBoxSelect serv={yieldGoal} nameList={yieldGoalList} setSelect={setYieldGoal} title='yieldGoal=' options={yieldGoalList} defaultValue={yieldGoal}/> &nbsp; &nbsp;  &nbsp; 
+          <ComboBoxSelect serv={action} nameList={actionList} setSelect={setAction} title='action=' options={actionList} defaultValue={action}/> &nbsp; &nbsp;  &nbsp; 
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
         </div>
