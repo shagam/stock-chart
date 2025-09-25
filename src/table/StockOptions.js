@@ -65,9 +65,13 @@ function OptionQuote (props) {
     "expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
+ const columnsDefault = [
+    "expiration","underlying","side","strike","dte","mid","ask",]
+
+
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
   if (! columnShow_  ) {
-    columnShow_ = columnsAll;
+    columnShow_ = columnsDefault;
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow_)); // set default columnShow
     if (logExtra)
       console.log ('columnShow init', columnShow_.length, columnShow_)
@@ -811,7 +815,7 @@ function OptionQuote (props) {
           {columnHideFlag && <div >    
             <hr/> 
             {/* columnShow  */}
-            <div style={{hight: '400px', color:'#119933', fontWeight: 'bold', fontStyle: "italic"}}> column-select  </div>
+            {/* <div style={{hight: '400px', color:'#119933', fontWeight: 'bold', fontStyle: "italic"}}> column-select  </div> */}
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
               {optionKeys.map((item) => (
