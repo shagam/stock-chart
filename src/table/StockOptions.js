@@ -729,9 +729,9 @@ function OptionQuote (props) {
         </div>
         {expirationShow && <div>
  
-          <div style = {{display: 'flex'}}>
+          {props.eliHome && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
-          </div>
+          </div>}
 
           
           {/* Expiration table */}
@@ -774,7 +774,7 @@ function OptionQuote (props) {
         {strikeShow && expirationsArray.length > 0 && <div>
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
-          {config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
+          {props.eliHome && config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strike-price   </button> &nbsp; &nbsp;
 
           </div>}
@@ -814,7 +814,7 @@ function OptionQuote (props) {
           {config.expirationBum !== -1 && strikeNumCalc ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
           {strikeNumCalc !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(expirationsArray, strikeArray)}>  option-primium   </button>  &nbsp; &nbsp;  &nbsp;
+            {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(expirationsArray, strikeArray)}>  option-primium   </button>}  &nbsp; &nbsp;  &nbsp;
                {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
           </div>}
           </div>}
