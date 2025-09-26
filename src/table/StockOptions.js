@@ -36,6 +36,9 @@ function OptionQuote (props) {
   var yearlyGain = props.rows[row_index].values.peak2Peak;
   if (! yearlyGain)
     yearlyGain = props.rows[row_index].values.short
+  const priceDivHigh = props.rows[row_index].values.priceDivHigh;
+  const bubblePrice  = props.rows[row_index].values.bubblePrice ;
+  const [belowBubble, setBelowBubble] = useState(props.stockPrice / bubblePrice ) // stock price is below bubble line
   const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(yearlyGain); // estimated yearly gain
 
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
@@ -863,7 +866,7 @@ function OptionQuote (props) {
             <hr/> 
 
           {props.symbol} &nbsp; &nbsp; count={lineNumberArr.length} &nbsp; &nbsp;
-          stockPrice={props.stockPrice} &nbsp; &nbsp;
+          stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; belowBubble={belowBubble.toFixed(3)} &nbsp; &nbsp;
           bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp;
 
           {/* premium quote table */}

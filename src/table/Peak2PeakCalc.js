@@ -137,9 +137,12 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         results['timeUnitGain'] = timeUnitGain;  // weekly or daily
         results['yearsDiff'] = yearsDiff;
 
+        const bubblePrice = results.v_2022_value * timeUnitGain ** results.i_2022_index // weekCount 
+
         const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
         if (row_index !== -1) {
           rows[row_index].values.peak2Peak = yearlyGain;
+          rows[row_index].values.bubblePrice  = bubblePrice.toFixed(2);
           if (saveTable)
             saveTable(symbol);
         }

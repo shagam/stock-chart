@@ -181,6 +181,11 @@ export const COLUMNS = [
     accessor: 'priceDivHigh'
   },
   {
+    Header: 'bubblePrice',
+    Footer: 'bubblePrice',    
+    accessor: 'bubblePrice'
+  },
+  {
     Header: 'sym',
     Footer: 'sym',    
     accessor: 'sym',
@@ -399,6 +404,11 @@ export const GROUPED_COLUMNS = [
         Header: 'price/high',
         Footer: 'price/high',    
         accessor: 'priceDivHigh'
+      },
+      {
+        Header: 'bubblePrice',
+        Footer: 'bubblePrice',    
+        accessor: 'bubblePrice'
       },
     
     ]
