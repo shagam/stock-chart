@@ -1,11 +1,11 @@
 
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 // import {IpContext} from '../contexts/IpContext';
 import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
-
+import {beep2} from '../utils/ErrorList'
 import { el } from 'date-fns/locale';
 import StockOptionsConfig from './StockOptionsConfig';
 // 
@@ -111,7 +111,7 @@ function OptionQuote (props) {
 
         
   //** Get option premium for selected expiration and strike */
-  const optionPremium = useCallback ((expirationsArray, strikeArray) => {
+  function optionPremium (expirationsArray, strikeArray) {
     console.log ('ptionPremiumGet', expirationsArray, strikeArray)
     //** clear */
     // setOptionQuote({})
@@ -291,18 +291,29 @@ function OptionQuote (props) {
       props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
 
-  }, [props, TOKEN, log, // strikeArray, expirationsArray,
-      config.side, config.percent, config.compoundYield, columnShow, columnShow_.length, 
-       setColumnShow, setOptionKeys, setLineNumberArr, estimatedYearlyGain,
-       setBestYearlyYield, setBestYearlyYieldIndex, config.strikeNum, config.strikeCount, config.expirationNum,
-       config.expirationCount, logExtra, config.action, optionQuote.strike]); // add side to dependencies
+  }
 
 
 
 
-  const strikePricesGet = useCallback ((expirationsArray) => {
+ function strikePricesGet (expirationsArray_) {
+
+    // get expiration
+    // var expirationSelect = "";
+    // const strikePrice = props.stockPrice * (1 + config.strikeNum / 100); // e.g. 150/10 = 15
+    var expirationSelect = "";
+    var mili = new Date().getTime()
+    mili += config.expirationNum * 24 * 3600 * 1000; // now + expirationNum days
+    for (let i = 0; i < expirationsArray.length; i++) { 
+      if (new Date(expirationsArray[i]).getTime() > mili) {
+        expirationSelect = expirationsArray[i];
+        break;
+      }
+    }
+
+
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationsArray[config.expirationNum] + '&token=' + TOKEN
+        + expirationSelect + '&token=' + TOKEN
         // + '?token=' + TOKEN;
     if (log)
       console.log (getDate(), props.symbol, url)
@@ -321,7 +332,7 @@ function OptionQuote (props) {
         console.log (props.symbol, 'strike-price error', result.data.s)
       }
 
-      const arr = result.data[expirationsArray[config.expirationNum]]
+      const arr = result.data[expirationSelect]
       if(log)
         console.log ('strike-array', arr)
 
@@ -346,11 +357,11 @@ function OptionQuote (props) {
       console.log(err.message)
       props.errorAdd ([props.symbol, 'expiration error', err.message])
     })
-  }, [props, config.expirationNum, TOKEN, log])// , optionPremium]);
+  }
  
 
 
-  const expirationsGet = useCallback (() => {
+  function expirationsGet () {
     const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
     if (log)
       console.log (url)
@@ -377,11 +388,11 @@ function OptionQuote (props) {
 
       })
       .catch ((err) => {
-        console.log(err.message)
+        console.log(err.message, url)
         props.errorAdd ([props.symbol, 'expiration error', err.message])
       })
 
-  }, [props, TOKEN, log, strikePricesGet]);
+  }
 
 
 
@@ -401,7 +412,13 @@ function OptionQuote (props) {
 
 
   //** get from coirsServer */
-  const  getOptionsInfoFromServer  = useCallback (() => {
+  function  getOptionsInfoFromServer () {
+
+    if (config.expirationNum < 0 || config.expirationCount < 0 ||  config.strikeNum < 0 || config.strikeCount < 0) {
+      setErr('config error, negative number')
+      beep2()
+      return;
+    }
 
     var corsUrl;
     if (props.ssl)
@@ -616,13 +633,13 @@ function OptionQuote (props) {
 
          
     } )
-    // .catch ((err) => {
-    //   setErr(err.message)
-    //   console.log(err.message)
-    //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
-    // })
+    .catch ((err) => {
+      setErr(err.message)
+      console.log(err.message)
+      props.errorAdd ([props.symbol, ' getStockOptions', err.message])
+    })
 
-  }, [props, config, columnShow, columnShow_, log, logExtra, ignoreSaved, estimatedYearlyGain])
+  }
 
 
   useEffect (() => { 
