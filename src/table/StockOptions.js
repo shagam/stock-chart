@@ -367,12 +367,12 @@ function OptionQuote (props) {
   function expirationsGet () {
     const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
     if (log)
-      console.log (url)
+      console.log (getDate(), props.symbol, url)
     setErr()
     setDat()
     setLatency('request sent ...')
 
-    axios.get (getDate(), props.symbol, url)
+    axios.get (url)
       .then ((result) => {
         if (log)
           console.log ('expirations', result.data)
@@ -917,6 +917,7 @@ function OptionQuote (props) {
 // https://api.marketdata.app/v1/options/strikes/{symbol}/?expiration=YYYY-MM-DD
 
 // https://api.marketdata.app/v1/options/expirations/AAPL
+// https://api.marketdata.app/v1/options/expirations/QQQ/?token=
 
 // https://api.marketdata.app/v1/options/quotes/AAPL250817C00150000/
 // https://api.marketdata.app/v1/options/chaiside=call
