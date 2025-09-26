@@ -53,7 +53,7 @@ function OptionQuote (props) {
   const [columnShow, setColumnShow] = useState([]);
   const [err, setErr] = useState();
   const [latency, setLatency] = useState();
-
+  const [compareStatus, setCompareStatus] = useState();
 
   const [expirationShow, setExpirationShow] = useState(false);
   const [strikeShow, setStrikeShow] = useState(false);
@@ -493,6 +493,7 @@ function OptionQuote (props) {
 
       if (result.data.compareStatus && props.eliHome) {
         console.log ('compareStatus=', result.data.compareStatus)
+        setCompareStatus (result.data.compareStatus)
       }
 
       setExpirationsArray(result.data.expirationArray)
@@ -720,7 +721,7 @@ function OptionQuote (props) {
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
-        {/* {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>} */}
+        {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
 
 
         <div>
