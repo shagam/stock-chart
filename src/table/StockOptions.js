@@ -413,12 +413,18 @@ function OptionQuote (props) {
 
   //** get from coirsServer */
   function  getOptionsInfoFromServer () {
-
+    setErr()
     if (config.expirationNum < 0 || config.expirationCount < 0 ||  config.strikeNum < 0 || config.strikeCount < 0) {
       setErr('config error, negative number')
       beep2()
       return;
     }
+
+    if (isNaN(estimatedYearlyGain)){
+      setErr('config.YearlyGain is required for calculationg expected yield, for buy of call option')
+      beep2()
+    }
+
 
     var corsUrl;
     if (props.ssl)
@@ -449,7 +455,6 @@ function OptionQuote (props) {
     if (log)
       console.log (getDate(), props.symbol, 'getOptionsInfoFromServer', corsUrl)
 
-    setErr()
     setDat()
     setLatency('request sent ...')
 
@@ -547,6 +552,8 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
+
+
       for (let i = 0; i < rows; i++) {
         const mid = optionQuote.mid[i];
         const dte = optionQuote.dte[i];
@@ -567,7 +574,8 @@ function OptionQuote (props) {
 
 
         if (log)
-          console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2), 'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield)
+          console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2),
+          'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : (yield_ * 100).toFixed(2);  
         OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
