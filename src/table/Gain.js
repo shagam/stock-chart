@@ -317,31 +317,31 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               }
 
               var year_ = 1
-              if (year !== -1) {
+              if (year !== -1 && ! isNaN(year)) {
                 year_ = Number(year)
                 count ++;
               }
 
               var year2_ = 1;   // if missing use netral '1'
-              if (year2 && year2 !== -1) {
+              if (year2 && ! isNaN(year2) && year2 !== -1) {
                 year2_ = Number(year2) ** (1/2); //** calc yearly gain */
                 count ++;
               }
 
               var year5_ = 1;
-              if (year5 && year5 !== -1) {
+              if (year5 && ! isNaN(year5) && year5 !== -1) {
                 year5_ = Number (year5) ** (1/5); //** calc yearly gain */
                 count ++;
               }
 
               var year10_ = 1;
-                if (year10 && year10 !== -1){
+                if (year10 && ! isNaN(year10) && year10 !== -1){
                   year10_ = Number (year10) ** (1/10); //** calc yearly gain */
                    count ++;
                 }
 
               var year20_ = 1;
-              if (year20 && year20 !== -1) {
+              if (year20 && ! isNaN(year20) && year20 !== -1) {
                 year20_ = Number (year20) ** (1/20) //** calc yearly gain */
                 count ++;
               }
