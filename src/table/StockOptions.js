@@ -749,6 +749,7 @@ function OptionQuote (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={logExtra}  onChange={()=>setLogExtra (! logExtra)}  />&nbsp;logExtra &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (! ignoreSaved)}  />&nbsp;ignore-saved &nbsp; &nbsp; </div>
+          &nbsp; <button type="button" onClick={()=>localStorage.removeItem(COLUMNS)}>Clear columns </button> 
         </div>}
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
