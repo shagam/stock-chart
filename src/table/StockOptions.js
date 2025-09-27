@@ -271,8 +271,8 @@ function OptionQuote (props) {
           continue
          OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
          if (OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) {
-          // if (log)
-          //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
+          if (logExtra)
+            console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  bestYearlyYield_)  
           bestYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
           setBestYearlyYieldIndex(i); // save index of max yearly yield
          }
@@ -611,18 +611,13 @@ function OptionQuote (props) {
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
         OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield.toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
-        if (config.percent) {
-          OptionQuoteFiltered.yield_[i] += ' %'
-          OptionQuoteFiltered.yearlyYield[i] += ' %'
-        }
-
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
             'dte(days)=', optionQuote.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
           )  
       }
-     if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
+      if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
         columnShow.push('yield_')
       if (!columnShow.includes('yearlyYield')) // if yearlyGain is not in columnShow, add it
         columnShow.push ('yearlyYield'); // add yearlyGain to columnShow_  
@@ -635,19 +630,26 @@ function OptionQuote (props) {
 
       //** find highest yearlyYield */
       var bestYearlyYield_ = 0
-     for (let i = 0; i < rows; i++) {
+      for (let i = 0; i < rows; i++) {
         if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
           continue
         //  OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
 
-         if (OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) 
-         {
+         if (Number(OptionQuoteFiltered.yearlyYield[i]) > bestYearlyYield_) {
           // if (log)
           //   console.log ('i=', i, 'yearlyYield=', OptionQuoteFiltered.yearlyYield[i], 'maxYearlyYield_',  maxYearlyYield_)  
-          bestYearlyYield_ = OptionQuoteFiltered.yearlyYield[i];
+          bestYearlyYield_ = Number(OptionQuoteFiltered.yearlyYield[i]);
           setBestYearlyYieldIndex(i); // save index of max yearly yield
          }
       }
+
+      for (let i = 0; i < rows; i++) {
+        if (config.percent) {
+          OptionQuoteFiltered.yield_[i] += ' %'
+          OptionQuoteFiltered.yearlyYield[i] += ' %'
+          }
+      }
+
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       if (logExtra)
@@ -726,7 +728,7 @@ function OptionQuote (props) {
       if (line==='0' || optionQuote.yearlyYield === undefined) {
         return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
       }
-      if (optionQuote.yearlyYield[line] !== 'Infinity' && bestYearlyYield === optionQuote.yearlyYield[line]) {
+      if (optionQuote.yearlyYield[line] !== 'Infinity' && bestYearlyYieldIndex === line) {
         return {backgroundColor: '#d3e533', color: 'black', fontWeight: 'bold'};
       } else {
         return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
@@ -742,7 +744,7 @@ function OptionQuote (props) {
     <div style = {{ border: '2px solid blue'}} >
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}>Option Quote (under development) </h6>  &nbsp; &nbsp;
+          <h6  style={{color: 'blue' }}>Option primium (under development) </h6>  &nbsp; &nbsp;
         </div>
 
         {props.eliHome && <div style = {{display: 'flex'}}>
@@ -900,7 +902,7 @@ function OptionQuote (props) {
             <hr/> 
 
           {props.symbol} &nbsp; &nbsp; count={lineNumberArr.length} &nbsp; &nbsp;
-          stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; belowBubble={belowBubble.toFixed(3)} &nbsp; &nbsp;
+          stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
           bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp;
 
           {/* premium quote table */}
