@@ -119,13 +119,37 @@ function OptionQuote (props) {
     //** clear */
     // setOptionQuote({})
 
+    var expirationDayIndex = -1;
+    const todayDays = new Date().getTime() / 1000 / 3600 / 24
+    console.log ('today=' + todayDays)
+    for (let i = 0; i < expirationsArray.length; i++) {
+      const expirationDays = new Date(expirationsArray[i]).getTime() / 1000 / 3600 / 24
+      if (logExtra)
+        console.log (i, 'today=' + todayDays.toFixed(2), expirationsArray[i],  'expirationDays=' + expirationDays)
+      if (expirationDays > todayDays + Number(config.expirationNum)) {
+        expirationDayIndex = i;  // found requre expiration
+        break;
+      }
+    }
+    if (expirationDayIndex === -1) { // expirationIndex not found
+      console.log ('fail, expirationDayIndex not found')
+      return;
+    }
+
+ 
     setLineNumberArr([]);
     //** create expiration group */
 
-    var expirationGroup =  '/?expiration=' + expirationsArray[config.expirationNum]
-
-    if (config.expirationCount > 1 && (config.expirationNum + config.expirationCount < expirationsArray.length)) {
-      expirationGroup =  '/?from=' + expirationsArray[config.expirationNum] + '&to=' + expirationsArray[config.expirationNum + config.expirationCount -1]
+    var expirationGroup
+    if (config.expirationCount <= 1)
+     expirationGroup =  '/?expiration=' + expirationsArray[expirationDayIndex]
+    else {
+      if (expirationDayIndex + config.expirationCount < expirationsArray.length)
+        expirationGroup =  '/?from=' + expirationsArray[expirationDayIndex] + '&to=' + expirationsArray[expirationDayIndex+ config.expirationCount -1]
+      else {
+        console.log ('expirationCount too big, reduce it')
+        return
+      }
     }
 
  
@@ -213,19 +237,10 @@ function OptionQuote (props) {
         const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
 
-        const breakEven = (OptionQuote.strike[i] + OptionQuote.mid[i]);
+        const breakEven = (strikeArray[i] + mid);
 
-        var  yield_;
-        if (config.action === 'sell')
-          yield_ = (mid / props.stockPrice);
-        else {
-          const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
-          yield_ = (expirationDateValue -  optionQuote.strike[i]) / mid; //  - props.stockPrice
-          const a = 1 // for breakpoint debug
-        }
-
+        const yield_ =  yieldCalc (optionQuote.strike[i], dte, mid)  
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
-
 
 
 
@@ -413,6 +428,23 @@ function OptionQuote (props) {
       console.log('Strike Row clicked:', rowId);
   }
 
+  
+  
+  function yieldCalc (strike, dte, mid) {
+    var  yield_;
+      if (config.action === 'sell') {
+        yield_ = (mid / props.stockPrice);
+      }
+      else {  // buy call or put
+        const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
+        yield_ = (expirationDateValue - strike) / mid; //  - props.stockPrice
+        const a = 1 // for breakpoint debug
+      }
+      return yield_;
+  }
+
+
+
 
   //** get from coirsServer */
   function  getOptionsInfoFromServer () {
@@ -568,18 +600,9 @@ function OptionQuote (props) {
 
         const breakEven = (optionQuote.strike[i] + optionQuote.mid[i]);
 
-        var  yield_;
-        if (config.action === 'sell') {
-          yield_ = (mid / props.stockPrice);
-        }
-        else {  // buy call or put
-          const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
-          yield_ = (expirationDateValue -  optionQuote.strike[i]) / mid; //  - props.stockPrice
-          const a = 1 // for breakpoint debug
-        }
-
+        var  yield_ =  yieldCalc (optionQuote.strike[i], dte, mid)
+    
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
-
 
         if (log)
           console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2),
