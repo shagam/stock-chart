@@ -564,16 +564,16 @@ function OptionQuote (props) {
           // convert date to YYYY-mm-dd format
           OptionQuoteFiltered[key] = []
           for (let i = 0; i < rows; i++) {
-            if (key === 'expiration' || key === 'firstTraded' || key === 'updated') {
+            if (key === 'expiration') {
               OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.expiration[i] * 1000))
-              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.firstTraded[i] * 1000))
-              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.updated[i] * 1000))
-            }
-            else {
-              OptionQuoteFiltered[key][i] = optionQuote[key][i]; // all other just copy
-            }
-            if (key === 'expiration')
               lineArr.push (i) 
+            }
+            else if (key === 'firstTraded')
+              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.firstTraded[i] * 1000))
+            else if (key === 'updated') 
+              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.updated[i] * 1000))
+            else
+              OptionQuoteFiltered[key][i] = optionQuote[key][i]; // all other just copy
           }
         } )
       if (logExtra)
@@ -609,7 +609,7 @@ function OptionQuote (props) {
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
-        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield.toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
+        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
 
         if (logExtra)
