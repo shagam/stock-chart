@@ -608,16 +608,21 @@ function OptionQuote (props) {
           console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
-        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : (yield_ * 100).toFixed(2);  
-        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield : Number(yearlyYield * 100).toFixed(3);
+        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
+        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? yearlyYield.toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
+        if (config.percent) {
+          OptionQuoteFiltered.yield_[i] += ' %'
+          OptionQuoteFiltered.yearlyYield[i] += ' %'
+        }
+
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
             'dte(days)=', optionQuote.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
           )  
       }
-      if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
+     if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
         columnShow.push('yield_')
       if (!columnShow.includes('yearlyYield')) // if yearlyGain is not in columnShow, add it
         columnShow.push ('yearlyYield'); // add yearlyGain to columnShow_  
@@ -633,7 +638,7 @@ function OptionQuote (props) {
      for (let i = 0; i < rows; i++) {
         if (OptionQuoteFiltered.yearlyYield[i] === 'Infinity')
           continue
-         OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
+        //  OptionQuoteFiltered.yearlyYield[i] = Number(OptionQuoteFiltered.yearlyYield[i])
 
          if (OptionQuoteFiltered.yearlyYield[i] > bestYearlyYield_) 
          {
@@ -672,11 +677,11 @@ function OptionQuote (props) {
 
          
     } )
-    .catch ((err) => {
-      setErr(err.message)
-      console.log(err.message)
-      props.errorAdd ([props.symbol, ' getStockOptions', err.message])
-    })
+    // .catch ((err) => {
+    //   setErr(err.message)
+    //   console.log(err.message)
+    //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
+    // })
 
   }
 
