@@ -557,7 +557,11 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
 
-
+      //* only calculate yield for call or buy put, sell put is too risky */  
+      if (config.side==='sell' || config.action === 'sell') { // sell put is risky, do not calculate yield
+        setErr('Sell put is very risky')
+        beep2()
+      }
       for (let i = 0; i < rows; i++) {
         const mid = optionQuote.mid[i];
         const dte = optionQuote.dte[i];
@@ -568,7 +572,7 @@ function OptionQuote (props) {
         if (config.action === 'sell') {
           yield_ = (mid / props.stockPrice);
         }
-        else {
+        else {  // buy call or put
           const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
           yield_ = (expirationDateValue -  optionQuote.strike[i]) / mid; //  - props.stockPrice
           const a = 1 // for breakpoint debug
