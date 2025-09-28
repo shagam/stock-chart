@@ -146,7 +146,7 @@ function OptionQuote (props) {
 
  
     setLineNumberArr([]);
-    
+
     //** create expiration group */
 
     var expirationGroup
@@ -510,7 +510,7 @@ function OptionQuote (props) {
     .then ((result) => {
 
       if (result.status !== 200) {
-        console.log (props.chartSymbol, 'status=', result)
+        console.log (props.chartSymbol, ' ', result)
         return;
       }
       // setDat(result.data)
@@ -521,9 +521,8 @@ function OptionQuote (props) {
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(getDate() + '  ' + result.data)
-        // err_ = result.data
-        props.errorAdd ([props.symbol,result.data])
+        setErr(getDate() + ' status from server:  ' + result.data)
+        beep2()
         console.log (props.symbol, result.data)
         return;
       }
@@ -548,6 +547,12 @@ function OptionQuote (props) {
       setOptionKeys(Object.keys(optionQuote))
 
       var expirationDayIndex = getExpirationDayIndex (result.data.expirationArray)
+      if (expirationDayIndex === -1) { // expirationIndex not found
+        console.log ('fail, expirationDayIndex not found')
+        setErr('fail, expirationDayIndex not found')
+        beep2()
+        return;
+      }
 
       // if (result.data.s !== 'ok') {
       //   props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
