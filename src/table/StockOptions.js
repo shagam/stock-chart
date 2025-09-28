@@ -126,7 +126,7 @@ function OptionQuote (props) {
         continue; // different expiration, skip
         
         if (optionQuote.mid[i] > optionQuote.mid[i-1]) {
-          console.log ('irregular premium found', i, optionQuote.strike[i-1], optionQuote.mid[i-1], optionQuote.strike[i], optionQuote.mid[i])
+          props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike/mid=', optionQuote.strike[i-1], optionQuote.mid[i-1], 'strike/mid=' , optionQuote.strike[i],  optionQuote.mid[i]])
           iregularCount++;
       }   
     }
@@ -640,7 +640,7 @@ function OptionQuote (props) {
     
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
-        if (log)
+        if (logExtra)
           console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
@@ -735,7 +735,7 @@ function OptionQuote (props) {
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
-  }, [props.symbol, log, logExtra, err, props.eliHome, props.errorAdd]); 
+  }, [props.symbol, log, logExtra, err, props.eliHome]); 
 
 
 
