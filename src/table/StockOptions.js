@@ -27,6 +27,7 @@ function OptionQuote (props) {
   const [logExtra, setLogExtra] = useState (false);
   const [ignoreSaved, setIgnoreSaved] = useState (false);
   const [expirationsArray, setExpirationsArray] = useState([]); 
+  const [expirationSelected, setExpirationSelected] = useState(-1) // for display only
 
   const [strikeArray, setStrikeArray] = useState([]);
 
@@ -112,13 +113,7 @@ function OptionQuote (props) {
   }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
 
 
-        
-  //** Get option premium for selected expiration and strike */
-  function optionPremium (expirationsArray, strikeArray) {
-    console.log ('ptionPremiumGet', expirationsArray, strikeArray)
-    //** clear */
-    // setOptionQuote({})
-
+  function getExpirationDayIndex (expirationsArray) {
     var expirationDayIndex = -1;
     const todayDays = new Date().getTime() / 1000 / 3600 / 24
     console.log ('today=' + todayDays)
@@ -128,16 +123,30 @@ function OptionQuote (props) {
         console.log (i, 'today=' + todayDays.toFixed(2), expirationsArray[i],  'expirationDays=' + expirationDays)
       if (expirationDays > todayDays + Number(config.expirationNum)) {
         expirationDayIndex = i;  // found requre expiration
-        break;
+        setExpirationSelected(i) // for display only
+        return i;
       }
     }
+    return -1  // not found
+  }
+
+        
+  //** Get option premium for selected expiration and strike */
+  function optionPremium (expirationsArray, strikeArray) {
+    console.log ('ptionPremiumGet', expirationsArray, strikeArray)
+    //** clear */
+    // setOptionQuote({})
+    const expirationDayIndex = getExpirationDayIndex (expirationsArray)
     if (expirationDayIndex === -1) { // expirationIndex not found
       console.log ('fail, expirationDayIndex not found')
+      setErr('fail, expirationDayIndex not found')
+      beep2()
       return;
     }
 
  
     setLineNumberArr([]);
+    
     //** create expiration group */
 
     var expirationGroup
@@ -538,7 +547,7 @@ function OptionQuote (props) {
       setOptionQuote(optionQuote)
       setOptionKeys(Object.keys(optionQuote))
 
-
+      var expirationDayIndex = getExpirationDayIndex (result.data.expirationArray)
 
       // if (result.data.s !== 'ok') {
       //   props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
@@ -694,7 +703,8 @@ function OptionQuote (props) {
     setExpirationsArray([]);
     setLineNumberArr([]);
     setOptionQuote({});
-
+    setExpirationSelected(-1)
+    setStrikeNumCalc(-1)
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
@@ -772,7 +782,7 @@ function OptionQuote (props) {
 
         <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
-          <div > (count={expirationsArray.length} &nbsp; selected={config.expirationNum}) </div>  &nbsp; &nbsp; 
+          <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) </div>  &nbsp; &nbsp; 
         </div>
         {expirationShow && <div>
  
@@ -796,7 +806,7 @@ function OptionQuote (props) {
                       <tr key={index}
                         onClick={() => expirationRowClick(index)}
                         style={{
-                            backgroundColor: config.expirationNum === index ? '#d3e5ff' : 'white',
+                            backgroundColor: expirationSelected === index ? '#d3e5ff' : 'white',
                             cursor: 'pointer',
                           }}                      
                         >
