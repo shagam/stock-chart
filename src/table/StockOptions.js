@@ -446,7 +446,7 @@ function OptionQuote (props) {
 
 
   function expirationRowClick(rowId)  { 
-    config.expirationNum = rowId;
+    setExpirationSelected(rowId)
     if (log)
       console.log('Expiration Row clicked:', rowId);
     // strikePrices ();
