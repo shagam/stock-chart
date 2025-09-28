@@ -113,6 +113,25 @@ function OptionQuote (props) {
   }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
 
 
+  
+
+  //** check if there is irregular premium, e.g. higher strike with lower mis premium */
+  // strikes are ordered from low to high
+  function iregularPremium () {
+    console.log (optionQuote.length, optionQuote)
+    var expiration = optionQuote.expiration[0];
+    for (let i = 1; i < optionQuote.expiration.length; i++) {
+      if (optionQuote.expiration[i] !== optionQuote.expiration[i-1])
+        continue; // different expiration, skip
+        
+        if (optionQuote.mid[i] < optionQuote.mid[i-1] && optionQuote.strike[i] > optionQuote.strike[i-1]) {
+        console.log ('irregular premium found', i, optionQuote.strike[i-1], optionQuote.mid[i-1], optionQuote.strike[i], optionQuote.mid[i])
+      }   
+    }
+  }
+
+
+
   function getExpirationDayIndex (expirationsArray) {
     var expirationDayIndex = -1;
     const todayDays = new Date().getTime() / 1000 / 3600 / 24
@@ -776,6 +795,7 @@ function OptionQuote (props) {
 
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>iregularPremium()}>  check-ireguar-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
