@@ -113,21 +113,24 @@ function OptionQuote (props) {
   }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
 
 
-  
+
 
   //** check if there is irregular premium, e.g. higher strike with lower mis premium */
   // strikes are ordered from low to high
   function iregularPremium () {
-    console.log (optionQuote.length, optionQuote)
+    var iregularCount = 0;
+    // console.log (optionQuote.length, optionQuote)
     var expiration = optionQuote.expiration[0];
     for (let i = 1; i < optionQuote.expiration.length; i++) {
       if (optionQuote.expiration[i] !== optionQuote.expiration[i-1])
         continue; // different expiration, skip
         
-        if (optionQuote.mid[i] < optionQuote.mid[i-1] && optionQuote.strike[i] > optionQuote.strike[i-1]) {
-        console.log ('irregular premium found', i, optionQuote.strike[i-1], optionQuote.mid[i-1], optionQuote.strike[i], optionQuote.mid[i])
+        if (optionQuote.mid[i] > optionQuote.mid[i-1]) {
+          console.log ('irregular premium found', i, optionQuote.strike[i-1], optionQuote.mid[i-1], optionQuote.strike[i], optionQuote.mid[i])
+          iregularCount++;
       }   
     }
+    console.log (props.symbol, 'irregular premium count=' + iregularCount)
   }
 
 
@@ -135,7 +138,7 @@ function OptionQuote (props) {
   function getExpirationDayIndex (expirationsArray) {
     var expirationDayIndex = -1;
     const todayDays = new Date().getTime() / 1000 / 3600 / 24
-    console.log ('today=' + todayDays)
+    // console.log ('today=' + todayDays)
     for (let i = 0; i < expirationsArray.length; i++) {
       const expirationDays = new Date(expirationsArray[i]).getTime() / 1000 / 3600 / 24
       if (logExtra)
