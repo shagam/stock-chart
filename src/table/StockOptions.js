@@ -117,8 +117,8 @@ function OptionQuote (props) {
 
   //** check if there is irregular premium, e.g. higher strike with lower mis premium */
   // strikes are ordered from low to high
-  function iregularPremium () {
-    var iregularCount = 0;
+  function irregularPremium () {
+    var irregularCount = 0;
     // console.log (optionQuote.length, optionQuote)
     var expiration = optionQuote.expiration[0];
     for (let i = 1; i < optionQuote.expiration.length; i++) {
@@ -127,10 +127,10 @@ function OptionQuote (props) {
         
         if (optionQuote.mid[i] > optionQuote.mid[i-1]) {
           props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike/mid=', optionQuote.strike[i-1], optionQuote.mid[i-1], 'strike/mid=' , optionQuote.strike[i],  optionQuote.mid[i]])
-          iregularCount++;
+          irregularCount++;
       }   
     }
-    console.log (props.symbol, 'irregular premium count=' + iregularCount)
+    console.log (props.symbol, 'irregular premium count=' + irregularCount)
   }
 
 
@@ -798,7 +798,7 @@ function OptionQuote (props) {
 
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>iregularPremium()}>  check-ireguar-premium   </button>} &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
