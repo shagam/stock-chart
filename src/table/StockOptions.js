@@ -626,8 +626,8 @@ function OptionQuote (props) {
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
-      if (config.side==='sell' || config.action === 'sell') { // sell put is risky, do not calculate yield
-        setErr('Sell put is very risky')
+      if (config.action === 'sell') { // sell put is risky, do not calculate yield
+        setErr('Sell put or call option is very aggressive and risky')
         beep2()
       }
       for (let i = 0; i < rows; i++) {
