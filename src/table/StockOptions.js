@@ -637,6 +637,8 @@ function OptionQuote (props) {
         const breakEven = (optionQuote.strike[i] + optionQuote.mid[i]);
 
         var  yield_ =  yieldCalc (optionQuote.strike[i], dte, mid)
+        if (yield_ < 0)
+          props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
     
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
@@ -645,7 +647,7 @@ function OptionQuote (props) {
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
-        OptionQuoteFiltered.yearlyYield[i] = ! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
+        OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
 
         if (logExtra)
