@@ -778,6 +778,12 @@ function OptionQuote (props) {
       const a = 1
       return { color: 'red', fontWeight: 'bold'};        
     }
+
+    else if (attrib === 'mid' && line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1]
+      && optionQuote.mid[line] > optionQuote.mid[line - 1]) { 
+      return { color: 'red', fontWeight: 'bold'};        
+    }
+
     else {
       return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
     }
