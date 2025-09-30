@@ -34,7 +34,7 @@ function ErrorList (props) {
 
             <Container  className='d-flex_ align-items-left justify-content-left_' style={{maxHeight: "25vh", padding: '0px', margin:'0px'}}  > 
             {/* <hr/>  */}
-            <div className="container_" style ={{overflow: 'scroll', hight: '17%', width: '580px'}} >
+            <div className="container_" style ={{overflow: 'scroll', hight: '17%', width: '700px'}} >
                 { visible && props.errorList.map((err) => (
                     // display each err in array in one line
                 <div style={{display: 'flex'}} key={concat(err)} >
