@@ -637,8 +637,8 @@ function OptionQuote (props) {
         const breakEven = (optionQuote.strike[i] + optionQuote.mid[i]);
 
         var  yield_ =  yieldCalc (optionQuote.strike[i], dte, mid)
-        if (yield_ < 0)
-          props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
+        // if (yield_ < 0)
+        //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
     
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
@@ -763,7 +763,7 @@ function OptionQuote (props) {
       } 
     }
 
-    if (attrib === 'yearlyYield') {
+    else if (attrib === 'yearlyYield') {
       if (line==='0' || optionQuote.yearlyYield === undefined) {
         return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
       }
@@ -772,6 +772,14 @@ function OptionQuote (props) {
       } else {
         return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
       }          
+    }
+
+    else if (attrib === 'yield_' && optionQuote.yield_[line] < 0) {
+      const a = 1
+      return { color: 'red', fontWeight: 'bold'};        
+    }
+    else {
+      return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
     }
   }
 
