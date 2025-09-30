@@ -764,7 +764,7 @@ function OptionQuote (props) {
     }
 
     else if (attrib === 'yearlyYield') {
-      if (line==='0' || optionQuote.yearlyYield === undefined) {
+      if (optionQuote.yearlyYield === undefined) {
         return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
       }
       if (optionQuote.yearlyYield[line] !== 'Infinity' && bestYearlyYieldIndex === line) {
