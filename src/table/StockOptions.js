@@ -784,6 +784,11 @@ function OptionQuote (props) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
+    else if (attrib === 'ask' && line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1]
+      && optionQuote.ask[line] > optionQuote.ask[line - 1]) { 
+      return { color: 'red', fontWeight: 'bold'};        
+    }
+
     else {
       return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
     }
