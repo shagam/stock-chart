@@ -737,7 +737,7 @@ function OptionQuote (props) {
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
-  }, [props.symbol, log, logExtra, err, props.eliHome]); 
+  }, [props.symbol]); 
 
 
 
