@@ -21,7 +21,7 @@ function OptionQuote (props) {
   // const [quote, setQuote] = useState(null);
   // const optionSymbol = 'AAPL'+'250817C00' + '150000'; // Jan 2025 $150 AAPL Call
   const TOKEN = process.env.REACT_APP_MARKETDATA;
-  var url = 'https://marketdata.app/api/v1/marketdata?token=' + TOKEN;
+  // var url = 'https://marketdata.app/api/v1/marketdata?token=' + TOKEN;
 
   const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
   const [logExtra, setLogExtra] = useState (false);
@@ -625,12 +625,15 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
+      OptionQuoteFiltered.expectedPrice = OptionQuoteFiltered.expectedPrice || [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
         setErr('Sell put or call option is very aggressive and risky')
         beep2()
       }
+
+      //** calc yield */
       for (let i = 0; i < rows; i++) {
         const mid = optionQuote.mid[i];
         const dte = optionQuote.dte[i];
@@ -650,6 +653,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
         OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
+        OptionQuoteFiltered.expectedPrice[i] = (optionQuote.strike[i] * (estimatedYearlyGain) ** (dte / 365)).toFixed(2); // expected price at expiration date
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
@@ -682,6 +686,7 @@ function OptionQuote (props) {
          }
       }
 
+      // add % sign if percent is true
       for (let i = 0; i < rows; i++) {
         if (config.percent) {
           OptionQuoteFiltered.yield_[i] += ' %'
