@@ -33,13 +33,14 @@ function OptionQuote (props) {
 
   const [strikeNumCalc,setStrikeNumCalc] = useState(-1) // for display only
   
-  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+  const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
+
   var yearlyGain = props.rows[row_index].values.peak2Peak;
-  if (! yearlyGain)
-    yearlyGain = props.rows[row_index].values.short
+  // if (! yearlyGain)
+  //   yearlyGain = props.rows[row_index].values.short
   const priceDivHigh = props.rows[row_index].values.priceDivHigh;
   const bubblePrice  = props.rows[row_index].values.bubblePrice ;
-  const [belowBubble, setBelowBubble] = useState(props.stockPrice / bubblePrice ) // stock price is below bubble line
+  const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
   const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(yearlyGain); // estimated yearly gain
 
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
@@ -734,10 +735,20 @@ function OptionQuote (props) {
     setOptionQuote({});
     setExpirationSelected(-1)
     setStrikeNumCalc(-1)
+
+    const row_index_ = props.rows.findIndex((row)=> row.values.symbol === props.symbol) // nsymbol change
+    if (row_index === -1) {
+      console.log ('error, symbol not found in rows', props.symbol)
+    } 
+    else {
+      setRow_index(row_index_)
+      setBelowBubble (props.stockPrice / props.rows[row_index].values.bubblePrice) ;
+    }
+
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
-  }, [props.symbol]); 
+  }, [props.symbol, props.rows, row_index, props.stockPrice]); 
 
 
 
@@ -754,6 +765,8 @@ function OptionQuote (props) {
   }
 
   function cellColor (line, attrib) {
+    if (logExtra)
+      console.log ('cellColor', line, attrib)
     if (attrib === 'expiration') {
       if (line === 0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1]) {
         // console.log ('expiration changed', line, optionQuote.expiration[line])
