@@ -488,7 +488,7 @@ function OptionQuote (props) {
     }
 
     if (isNaN(estimatedYearlyGain)){
-      setErr('config.YearlyGain is required for calculationg expected yield, for buy of call option')
+      setErr('config.YearlyGain is required for calculationg expected yield')
       beep2()
     }
 
@@ -771,6 +771,10 @@ function OptionQuote (props) {
   }
 
   function cellColor (line, attrib) {
+    if (line === '0') {
+      console.log ('line=0 string', attrib)
+      line = 0
+    }
     if (logExtra)
       console.log ('cellColor', line, attrib)
     if (attrib === 'expiration') {
