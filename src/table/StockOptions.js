@@ -41,7 +41,7 @@ function OptionQuote (props) {
   const priceDivHigh = props.rows[row_index].values.priceDivHigh;
   const bubblePrice  = props.rows[row_index].values.bubblePrice ;
   const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
-  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(yearlyGain); // estimated yearly gain
+  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
 
   const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
@@ -742,7 +742,8 @@ function OptionQuote (props) {
     } 
     else {
       setRow_index(row_index_)
-      setBelowBubble (props.stockPrice / props.rows[row_index].values.bubblePrice) ;
+      setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
+      setEstimatedYearlyGain (props.rows[row_index_].values.peak2Peak)
     }
 
     // setOptionKeys([]);
