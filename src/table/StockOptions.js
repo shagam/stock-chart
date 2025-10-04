@@ -839,7 +839,7 @@ function OptionQuote (props) {
         {latency && <div style={{color: 'green'}}> {latency} </div>}
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
 
-
+        {/*  buttons  */}
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
           {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
