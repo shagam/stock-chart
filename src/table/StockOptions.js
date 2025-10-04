@@ -794,12 +794,12 @@ function OptionQuote (props) {
 
     else if (attrib === 'mid' && line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1]
       && optionQuote.mid[line] > optionQuote.mid[line - 1]) { 
-      return { color: 'red', fontWeight: 'bold'};        
+      return { color: 'blue', fontWeight: 'bold'};        
     }
 
     else if (attrib === 'ask' && line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1]
       && optionQuote.ask[line] > optionQuote.ask[line - 1]) { 
-      return { color: 'red', fontWeight: 'bold'};        
+      return { color: 'blue', fontWeight: 'bold'};        
     }
 
     else {
