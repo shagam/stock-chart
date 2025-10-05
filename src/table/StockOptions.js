@@ -772,7 +772,7 @@ function OptionQuote (props) {
 
   function cellColor (line, attrib) {
     if (line === '0') {
-      console.log ('line=0 string', attrib)
+      setErr ("cellColor  line='0' string", attrib)
       line = 0
     }
     if (logExtra)
