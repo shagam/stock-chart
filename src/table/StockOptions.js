@@ -847,7 +847,7 @@ function OptionQuote (props) {
           {/* <hr/>  */}
         </div>
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config-show</strong> &nbsp; &nbsp; </div>
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config</strong> &nbsp; &nbsp; </div>
         {configShow && 
         <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
 
