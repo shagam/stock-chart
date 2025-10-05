@@ -12,6 +12,15 @@ function miliDifferenceFromToday (date) {
 }
 
 
+function yearsDifference_1 (dateString1, dateString2) {
+  const date1 = new Date(dateString1).getTime();
+  const date2 = new Date(dateString2).getTime();
+  const diffTime = Math.abs(date2 - date1);
+  const diffDays = diffTime / (1000 * 60 * 60 * 24);
+  const diffYears = diffDays / 365.25;  // considering leap years
+  return diffYears;
+}
+
 
 //** date format YYYY-MM-DD */
 function yearsDifference (date0, date1) {
@@ -20,8 +29,9 @@ function yearsDifference (date0, date1) {
   const dateStartMili = new Date(dateStartSplit[0], dateStartSplit[1], dateStartSplit[2]).getTime()
   const dateLastMili = new Date(dateLastSplit[0], dateLastSplit[1], dateLastSplit[2]).getTime()
   const yearsDiff = (dateLastMili - dateStartMili) / (1000 * 3600 * 24 * 365)   // calc years between 2 values
+  const yersDiff_ = yearsDifference_1 (date0, date1)
   return yearsDiff;
-}
+} 
 
 
 const todayDate = () => {
@@ -391,4 +401,4 @@ function isDailyXArray (stockChartXValues) {
 
 
 export {yearsDifference, miliDifferenceFromToday, getDate, getDateSec, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack,
-   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date, isDailyXArray, getDate_YYYY_mm_dd, getDate_YYYY_mm_dd__}
+   compareDate, daysFrom1970, searchDateInArray, monthsBackTest, daysBackTest, dateStr, formatDate, dateToArray, year2Date, isDailyXArray, getDate_YYYY_mm_dd, getDate_YYYY_mm_dd__,}
