@@ -43,7 +43,6 @@ function OptionQuote (props) {
   const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
   const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
 
-  const [lineNumberArr, setLineNumberArr] = useState([]); // each line corespond to one strike-price
 
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
@@ -167,9 +166,6 @@ function OptionQuote (props) {
       return;
     }
 
- 
-    setLineNumberArr([]);
-
     //** create expiration group */
 
     var expirationGroup
@@ -226,7 +222,7 @@ function OptionQuote (props) {
       }
 
       //** copy and convert date format of result.data */
-      var lineArr = []
+
       var OptionQuoteFiltered = {}
       OptionQuoteFiltered.expiration = [] 
       OptionQuoteFiltered.firstTraded = []
@@ -250,16 +246,12 @@ function OptionQuote (props) {
             else {
               OptionQuoteFiltered[key][i] = result.data[key][i]; // all other just copy
             }
-            if (key === 'expiration')
-              lineArr.push (i) 
+
           }
         } )
       console.log ('filtered', OptionQuoteFiltered)
-      setLineNumberArr(lineArr);
-      if (logExtra)
-        console.log ('lineNumberArr', lineArr)
 
-      
+ 
       //** calc yearly yield */
       const miliNow = Date.now()
       OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
@@ -584,7 +576,6 @@ function OptionQuote (props) {
       // }
 
       //** copy and convert date format of result.data */
-      var lineArr = []
       var OptionQuoteFiltered = {}
       OptionQuoteFiltered.expiration = [] 
       OptionQuoteFiltered.firstTraded = []
@@ -603,7 +594,6 @@ function OptionQuote (props) {
           for (let i = 0; i < rows; i++) {
             if (key === 'expiration') {
               OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.expiration[i] * 1000))
-              lineArr.push (i) 
             }
             else if (key === 'firstTraded')
               OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.firstTraded[i] * 1000))
@@ -615,9 +605,6 @@ function OptionQuote (props) {
         } )
       if (logExtra)
         console.log ('filtered', OptionQuoteFiltered)
-      setLineNumberArr(lineArr);
-      if (logExtra)
-        console.log ('lineNumberArr', lineArr)
 
       
       //** calc yearly yield */
@@ -736,7 +723,6 @@ function OptionQuote (props) {
     console.log ('useEffect symbol change', props.symbol)
     setStrikeArray([]);
     setExpirationsArray([]);
-    setLineNumberArr([]);
     setOptionQuote({});
     setExpirationSelected(-1)
     setStrikeNumCalc(-1)
@@ -984,9 +970,9 @@ function OptionQuote (props) {
 
             <hr/> 
 
-          {props.symbol} &nbsp; &nbsp; count={lineNumberArr.length} &nbsp; &nbsp;
+          {optionQuote && optionQuote.expiration && <div>{props.symbol} &nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
-          bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp;
+          bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; </div>}
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
@@ -1005,13 +991,13 @@ function OptionQuote (props) {
                   {/* top, right, bottom, left */} 
 
                 <tbody>
-                  {lineNumberArr.map((quote, index) =>{
+                  {optionQuote && optionQuote.expiration && optionQuote.expiration.map((quote, index) =>{
                     return (
                     <tr key={index} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key] ? optionQuote[key][quote] : 'err='+ key}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key] ? optionQuote[key][index] : 'err='+ key}</td>
                       )
                     })}
 
