@@ -558,7 +558,7 @@ function OptionQuote (props) {
 
       const premiumArray = result.data.premiumArray;
       delete  premiumArray.s // remove diffent key from server
-      setOptionQuote(premiumArray)
+      // setOptionQuote(premiumArray)
       setOptionKeys(Object.keys(premiumArray))
 
       var expirationDayIndex = getExpirationDayIndex (result.data.expirationArray)
