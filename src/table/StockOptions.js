@@ -842,7 +842,7 @@ function OptionQuote (props) {
         {/*  buttons  */}
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'yellow'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'liblue'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
