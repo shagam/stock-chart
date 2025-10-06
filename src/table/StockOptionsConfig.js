@@ -99,7 +99,7 @@ function StockOptionsConfig (props) {
 
         <label>YearlyGain: &nbsp;
           <input style={{width: '100px'}} type="number" name="YearlyGain" // required="required"
-            placeholder="YearlyGain"  onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
+            placeholder="YearlyGain" step="any" onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
         </label>&nbsp; &nbsp; 
 
 
