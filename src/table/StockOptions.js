@@ -105,13 +105,13 @@ function OptionQuote (props) {
   }
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
  
-  useEffect (() => { 
-    localStorage.setItem(COLUMNS, JSON.stringify(columnShow));
-    if (logExtra) {
-      console.log ('save columnShow', columnShow) 
-    }
+  // useEffect (() => { 
+  //   localStorage.setItem(COLUMNS, JSON.stringify(columnShow));
+  //   if (logExtra) {
+  //     console.log ('save columnShow', columnShow) 
+  //   }
 
-  }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
+  // }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
 
 
 
@@ -767,7 +767,7 @@ function OptionQuote (props) {
   };
   
   function saveColumnChecked (item) {
-    localStorage.setItem(COLUMNS, JSON.stringify(columnShow_)); // set default columnShow
+    localStorage.setItem(COLUMNS, JSON.stringify(columnShow)); // set default columnShow
   }
 
   function cellColor (line, attrib) {
@@ -975,8 +975,8 @@ function OptionQuote (props) {
                       &nbsp;{item}
                   </div>
                 ))}
-              </div>
-              {/* <button style={{background: 'aqua'}} type="button" onClick={()=>saveColumnChecked()}>  save    </button> &nbsp;&nbsp; */}
+            </div>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>saveColumnChecked()}>  save    </button> &nbsp;&nbsp;
 
             {/* {log && <p>Selected: {columnShow.join(", ")}</p>}   */}
              {/* {log && <p>Selected: {optionKeys.join(", ")}</p>}   */}
