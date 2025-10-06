@@ -673,14 +673,6 @@ function OptionQuote (props) {
          }
       }
 
-      // add % sign if percent is true
-      for (let i = 0; i < rows; i++) {
-        if (config.percent) {
-          OptionQuoteFiltered.yield_[i] += ' %'
-          OptionQuoteFiltered.yearlyYield[i] += ' %'
-          }
-      }
-
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
       if (logExtra)
@@ -762,8 +754,8 @@ function OptionQuote (props) {
       line = 0
       return {backgroundColor: 'white', color: 'orange', fontWeight: 'normal'};
     }
-    if (logExtra)
-      console.log ('cellColor', line, attrib)
+    // if (logExtra)
+    //   console.log ('cellColor', line, attrib)
     if (attrib === 'expiration') {
       if (line === 0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1]) {
         // console.log ('expiration changed', line, optionQuote.expiration[line])
@@ -804,6 +796,15 @@ function OptionQuote (props) {
     }
   }
 
+  function percentSign (attrib) {
+    if (attrib === 'yield_' || attrib === 'yearlyYield') {
+      return config.percent ? ' %' : ''
+    }
+    else {
+      return ''
+    }
+  }
+
   // const ROW_SPACING = {padding: "0px 10px 0px 10px", margin: '0px'}
   //  top, right, bottom, left 
   const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
@@ -828,8 +829,8 @@ function OptionQuote (props) {
 
         {/*  buttons  */}
         <div>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
+          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-ascending-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
@@ -997,7 +998,7 @@ function OptionQuote (props) {
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {optionQuote[key] ? optionQuote[key][index] : 'err='+ key}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {(optionQuote[key] ? optionQuote[key][index] : 'err='+ key) + percentSign(key)}</td>
                       )
                     })}
 
