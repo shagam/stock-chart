@@ -774,7 +774,7 @@ function OptionQuote (props) {
     if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
       setErr ("cellColor  line='0' string", attrib)
       line = 0
-      return
+      return {backgroundColor: 'white', color: 'orange', fontWeight: 'normal'};
     }
     if (logExtra)
       console.log ('cellColor', line, attrib)
@@ -843,7 +843,7 @@ function OptionQuote (props) {
         {/*  buttons  */}
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-stock-option-data   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'liblue'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  check-irregular-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
