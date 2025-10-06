@@ -798,7 +798,7 @@ function OptionQuote (props) {
       }          
     }
 
-    else if (attrib === 'yield_' && optionQuote.yield_[line] < 0) {
+    else if (attrib === 'yield_' && optionQuote.yield_[line].startsWith('-')) {
       const a = 1
       return { color: 'red', fontWeight: 'bold'};        
     }
