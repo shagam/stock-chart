@@ -742,7 +742,7 @@ function OptionQuote (props) {
     setStrikeNumCalc(-1)
 
     const row_index_ = props.rows.findIndex((row)=> row.values.symbol === props.symbol) // nsymbol change
-    if (row_index === -1) {
+    if (row_index_ === -1) {
       console.log ('error, symbol not found in rows', props.symbol)
     } 
     else {
@@ -754,7 +754,7 @@ function OptionQuote (props) {
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
-  }, [props.symbol, props.rows, row_index, props.stockPrice]); 
+  }, [props.symbol, props.rows, props.stockPrice]); 
 
 
 
