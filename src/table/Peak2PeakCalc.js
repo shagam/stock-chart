@@ -44,7 +44,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
     if (len < 2)
       return -1;
     const yearsDifff = yearsDifference (stockChartXValues[len - 1], stockChartXValues[0])
-    if (yearsDifff < 5)
+    if (yearsDifff < 2)
       return -2
     const gain = Number (stockChartYValues[0]/ stockChartYValues[len-1])
     const yearlyGain = Number (gain ** (1 / yearsDifff)).toFixed(3)
