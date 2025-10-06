@@ -454,16 +454,19 @@ function OptionQuote (props) {
 
   
   
-  function yieldCalc (strike, dte, mid) {
+  function yieldCalc (strike, dte, mid, breakEven, expirationDateValue) {
     var  yield_;
       if (config.action === 'sell') {
         yield_ = (mid / props.stockPrice);
       }
       else {  // buy call or put
-        const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
-        yield_ = (expirationDateValue - strike) / mid; //  - props.stockPrice
+        yield_ = (expirationDateValue - breakEven) / mid; //  - props.stockPrice
         const a = 1 // for breakpoint debug
+        if (log)
+          console.log('strike=' + strike, 'dte=' + dte, 'mid=' + mid, 'breakEven=' + breakEven.toFixed(2),
+          'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2))
       }
+
       return yield_;
   }
 
@@ -626,8 +629,9 @@ function OptionQuote (props) {
         const dte = premiumArray.dte[i];
 
         const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
+        const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
 
-        var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid)
+        var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid, breakEven, expirationDateValue)
         // if (yield_ < 0)
         //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
     
@@ -637,10 +641,10 @@ function OptionQuote (props) {
           console.log ('i=', i, 'mid=' + mid, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
-        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
-        OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
+        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2);  
+        OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
-        OptionQuoteFiltered.expectedPrice[i] = (premiumArray.strike[i] * (estimatedYearlyGain) ** (dte / 365)).toFixed(2); // expected price at expiration date
+        OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
@@ -798,7 +802,7 @@ function OptionQuote (props) {
 
   function percentSign (attrib) {
     if (attrib === 'yield_' || attrib === 'yearlyYield') {
-      return config.percent ? ' %' : ''
+      return config.percent ? '_%' : ''
     }
     else {
       return ''
