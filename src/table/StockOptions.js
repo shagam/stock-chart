@@ -564,10 +564,10 @@ function OptionQuote (props) {
       setStrikeArray(result.data.strikeArray)
       // setSelectedStrike(result.data.strikeNum)
 
-      const optionQuote = result.data.premiumArray;
-      delete  optionQuote.s // remove diffent key from server
-      setOptionQuote(optionQuote)
-      setOptionKeys(Object.keys(optionQuote))
+      const premiumArray = result.data.premiumArray;
+      delete  premiumArray.s // remove diffent key from server
+      setOptionQuote(premiumArray)
+      setOptionKeys(Object.keys(premiumArray))
 
       var expirationDayIndex = getExpirationDayIndex (result.data.expirationArray)
       if (expirationDayIndex === -1) { // expirationIndex not found
@@ -589,9 +589,9 @@ function OptionQuote (props) {
       OptionQuoteFiltered.expiration = [] 
       OptionQuoteFiltered.firstTraded = []
       OptionQuoteFiltered.updated = []
-      const rows = optionQuote.expiration.length;  // row count
+      const rows = premiumArray.expiration.length;  // row count
 
-      Object.keys(optionQuote).forEach((key) => {
+      Object.keys(premiumArray).forEach((key) => {
 
         // delete result.data.optionSymbol
         // delete result.data.s
@@ -602,15 +602,15 @@ function OptionQuote (props) {
           OptionQuoteFiltered[key] = []
           for (let i = 0; i < rows; i++) {
             if (key === 'expiration') {
-              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.expiration[i] * 1000))
+              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.expiration[i] * 1000))
               lineArr.push (i) 
             }
             else if (key === 'firstTraded')
-              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.firstTraded[i] * 1000))
+              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.firstTraded[i] * 1000))
             else if (key === 'updated') 
-              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(optionQuote.updated[i] * 1000))
+              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.updated[i] * 1000))
             else
-              OptionQuoteFiltered[key][i] = optionQuote[key][i]; // all other just copy
+              OptionQuoteFiltered[key][i] = premiumArray[key][i]; // all other just copy
           }
         } )
       if (logExtra)
@@ -635,29 +635,29 @@ function OptionQuote (props) {
 
       //** calc yield */
       for (let i = 0; i < rows; i++) {
-        const mid = optionQuote.mid[i];
-        const dte = optionQuote.dte[i];
+        const mid = premiumArray.mid[i];
+        const dte = premiumArray.dte[i];
 
-        const breakEven = (optionQuote.strike[i] + optionQuote.mid[i]);
+        const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
 
-        var  yield_ =  yieldCalc (optionQuote.strike[i], dte, mid)
+        var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid)
         // if (yield_ < 0)
         //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
     
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
         if (logExtra)
-          console.log ('i=', i, 'mid=' + mid, 'strike=' + optionQuote.strike[i], 'breakEven=' + breakEven.toFixed(2),
+          console.log ('i=', i, 'mid=' + mid, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_ -1) * 100).toFixed(2);  
         OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)-1) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
-        OptionQuoteFiltered.expectedPrice[i] = (optionQuote.strike[i] * (estimatedYearlyGain) ** (dte / 365)).toFixed(2); // expected price at expiration date
+        OptionQuoteFiltered.expectedPrice[i] = (premiumArray.strike[i] * (estimatedYearlyGain) ** (dte / 365)).toFixed(2); // expected price at expiration date
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
-            'dte(days)=', optionQuote.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
+            'dte(days)=', premiumArray.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
           )  
       }
       if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
@@ -718,7 +718,7 @@ function OptionQuote (props) {
       }
 
       if (logExtra)
-        console.log ('keys', Object.keys(optionQuote))
+        console.log ('keys', Object.keys(premiumArray))
 
 
          
