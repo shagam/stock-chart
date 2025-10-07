@@ -635,8 +635,14 @@ function OptionQuote (props) {
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, ask, breakEven, expirationDateValue)
         // if (yield_ < 0)
         //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/ask=', optionQuote.strike[i], '  ', ask])
-    
-        const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
+        var yearlyYield = 0
+        if (yield_ > 0) {
+          if (config.compoundYield)
+            yearlyYield = ((yield_ + 1) ** (365 / dte) - 1).toFixed(3);
+          else {
+            yearlyYield = ((yield_ ) * (365 / dte)).toFixed(2);
+          }
+        }
 
         if (logExtra)
           console.log ('i=', i, 'ask=' + ask, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
