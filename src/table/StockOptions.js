@@ -70,7 +70,7 @@ function OptionQuote (props) {
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
  const columnsDefault = [
-    "expiration","underlying","side","strike","dte","ask",]
+    "expiration","underlying","side","strike","dte","ask","yield_", "yearlyYield", "expectedPrice","profit"]
 
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
@@ -79,6 +79,11 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow_)); // set default columnShow
     if (logExtra)
       console.log ('columnShow init', columnShow_.length, columnShow_)
+  }
+
+  function columnsSetDefault () {
+    setColumnShow(columnsDefault)
+    localStorage.setItem(COLUMNS, JSON.stringify(columnsDefault)); // set default columnShow
   }
 
 
@@ -837,7 +842,6 @@ function OptionQuote (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={logExtra}  onChange={()=>setLogExtra (! logExtra)}  />&nbsp;logExtra &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (! ignoreSaved)}  />&nbsp;ignore-saved &nbsp; &nbsp; </div>
-          &nbsp; <button type="button" onClick={()=>localStorage.removeItem(COLUMNS)}>Clear columns </button> 
         </div>}
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
@@ -957,8 +961,9 @@ function OptionQuote (props) {
 
           {/* select columns */}
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
-                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;<strong>column-select</strong></div>  
-
+                onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;<strong>column-select</strong>  &nbsp; &nbsp; &nbsp; &nbsp; 
+             <button type="button" onClick={()=>columnsSetDefault ()}>reset columns </button> 
+          </div>  
           {/* {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
 
           </div>} */}
