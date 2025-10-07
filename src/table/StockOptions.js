@@ -464,7 +464,7 @@ function OptionQuote (props) {
         const a = 1 // for breakpoint debug
         if (log)
           console.log('strike=' + strike, 'dte=' + dte, 'ask=' + ask, 'breakEven=' + breakEven.toFixed(2),
-          'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2))
+          'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2), 'proft=' + (expirationDateValue - breakEven).toFixed(2))
       }
 
       return yield_;
