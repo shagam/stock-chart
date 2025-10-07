@@ -787,7 +787,7 @@ function OptionQuote (props) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
-    else if (attrib === 'ask') {
+    else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid') {
       if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
         if (optionQuote.ask[line] > optionQuote.ask[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
@@ -795,9 +795,12 @@ function OptionQuote (props) {
       return {backgroundColor: '#c9e0a7ff'};
     }
 
-    else if (attrib === 'profit') 
-      return {backgroundColor: '#c9e0a7ff'};
-
+    else if (attrib === 'profit') {
+      if (optionQuote.profit[line] < 0)
+        return { color: 'red', fontWeight: 'bold'};
+      else
+        return {backgroundColor: '#c9e0a7ff'};
+    }
 
     else {
       return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
