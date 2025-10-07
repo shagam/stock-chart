@@ -851,7 +851,7 @@ function OptionQuote (props) {
         {/*  buttons  */}
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-ascending-premium   </button>} &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
@@ -962,7 +962,7 @@ function OptionQuote (props) {
           {/* select columns */}
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={columnHideFlag} 
                 onChange={()=>setColumnHideFlag (! columnHideFlag)}  />&nbsp;<strong>column-select</strong>  &nbsp; &nbsp; &nbsp; &nbsp; 
-             <button type="button" onClick={()=>columnsSetDefault ()}>reset columns </button> 
+             <button type="button" onClick={()=>columnsSetDefault ()}>default-columns </button> 
           </div>  
           {/* {config.strikeNum !== -1 && <div style = {{display: 'flex'}}>
 
