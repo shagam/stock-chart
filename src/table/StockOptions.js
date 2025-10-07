@@ -776,7 +776,7 @@ function OptionQuote (props) {
         return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
       }
       if (optionQuote.yearlyYield[line] !== 'Infinity' && bestYearlyYieldIndex === line) {
-        return {backgroundColor: '#d3e533', color: 'black', fontWeight: 'bold'};
+        return {backgroundColor: '#e5d333ff', color: 'black', fontWeight: 'bold'};
       } else {
         return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
       }          
@@ -787,15 +787,17 @@ function OptionQuote (props) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
-    else if (attrib === 'ask' && line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1]
-      && optionQuote.ask[line] > optionQuote.ask[line - 1]) { 
-      return { color: 'blue', fontWeight: 'bold'};        
+    else if (attrib === 'ask') {
+      if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
+        if (optionQuote.ask[line] > optionQuote.ask[line - 1]) 
+          return { color: 'blue', fontWeight: 'bold'};
+      }
+      return {backgroundColor: '#c9e0a7ff'};
     }
 
-    else if (attrib === 'ask' && line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1]
-      && optionQuote.ask[line] > optionQuote.ask[line - 1]) { 
-      return { color: 'blue', fontWeight: 'bold'};        
-    }
+    else if (attrib === 'profit') 
+      return {backgroundColor: '#c9e0a7ff'};
+
 
     else {
       return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
