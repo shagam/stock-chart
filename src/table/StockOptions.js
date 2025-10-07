@@ -616,6 +616,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
       OptionQuoteFiltered.expectedPrice = OptionQuoteFiltered.expectedPrice || [];
+      OptionQuoteFiltered.profit = OptionQuoteFiltered.profit || [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -645,6 +646,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
+        OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
