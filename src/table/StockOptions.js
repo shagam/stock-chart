@@ -653,7 +653,7 @@ function OptionQuote (props) {
           if (config.compoundYield)
             yearlyYield = ((yield_ + 1) ** (365 / dte) - 1).toFixed(3);
           else {
-            yearlyYield = -1;
+            yearlyYield = ((yield_ ) * (365 / dte)).toFixed(2);
           }
         }
 
