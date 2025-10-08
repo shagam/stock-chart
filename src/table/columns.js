@@ -50,7 +50,8 @@ export const COLUMNS = [
     accessor: 'PEG'
   },
   {
-    Header: 'Div',
+    Header: 'Div %',
+    Footer: 'Div %',
     accessor: 'Div'
   },
   {
@@ -253,7 +254,8 @@ export const GROUPED_COLUMNS = [
         accessor: 'PEG'
       },
       {
-        Header: 'Div',
+        Header: 'Div %',
+        Footer: 'Div %',
         accessor: 'Div'
       },
       {

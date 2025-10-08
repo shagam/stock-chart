@@ -35,12 +35,12 @@ import {getDate, } from '../utils/Date'
     var yearly_div_ratio_ = div_ratio_sum / year_diff
     if (setYearly_div_ratio)
       setYearly_div_ratio(yearly_div_ratio_)
-    console.log (symbol, getDate(), 'yearly dividend/price average=', yearly_div_ratio_.toFixed(4))
+    console.log (symbol, getDate(), 'yearly dividend/price average=', yearly_div_ratio_.toFixed(2))
 
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index !== -1) {
       // if (props.rows[row_index].values.symbol === props.symbol) 
-      rows[row_index].values.Div = yearly_div_ratio_.toFixed(4);
+      rows[row_index].values.Div = (yearly_div_ratio_ * 100).toFixed(3);
       refreshByToggleColumns('Div');
     }
 
