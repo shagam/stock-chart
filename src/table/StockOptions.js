@@ -28,6 +28,8 @@ function OptionQuote (props) {
   const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
   const [logExtra, setLogExtra] = useState (false);
   const [ignoreSaved, setIgnoreSaved] = useState (false);
+  const [hideNegativeYield, setHideNegativeYield] = useState (true);
+
   const [expirationsArray, setExpirationsArray] = useState([]); 
   const [expirationSelected, setExpirationSelected] = useState(-1) // for display only
 
@@ -592,6 +594,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.updated = []
       const rows = premiumArray.expiration.length;  // row count
 
+      //** Loop on attributes */
       Object.keys(premiumArray).forEach((key) => {
 
         // delete result.data.optionSymbol
@@ -601,6 +604,8 @@ function OptionQuote (props) {
 
           // convert date to YYYY-mm-dd format
           OptionQuoteFiltered[key] = []
+
+          // Loop on rows
           for (let i = 0; i < rows; i++) {
             if (key === 'expiration') {
               OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.expiration[i] * 1000))
@@ -619,11 +624,11 @@ function OptionQuote (props) {
       
       //** calc yearly yield */
       const miliNow = Date.now()
-      OptionQuoteFiltered.yield_ = OptionQuoteFiltered.yield_ || [];
-      OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
-      OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
-      OptionQuoteFiltered.expectedPrice = OptionQuoteFiltered.expectedPrice || [];
-      OptionQuoteFiltered.profit = OptionQuoteFiltered.profit || [];
+      OptionQuoteFiltered.yield_ = [];
+      OptionQuoteFiltered.yearlyYield =  [];
+      OptionQuoteFiltered.breakEven = [];
+      OptionQuoteFiltered.expectedPrice =  [];
+      OptionQuoteFiltered.profit = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -843,11 +848,14 @@ function OptionQuote (props) {
           <h6  style={{color: 'blue' }}>Option primium (under development) </h6>  &nbsp; &nbsp;
         </div>
 
+        {/* flags checkboxes */}
         {props.eliHome && <div style = {{display: 'flex'}}>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={logExtra}  onChange={()=>setLogExtra (! logExtra)}  />&nbsp;logExtra &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (! ignoreSaved)}  />&nbsp;ignore-saved &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={hideNegativeYield}  onChange={()=>setHideNegativeYield (! hideNegativeYield)}  />&nbsp;hide-negative-yield &nbsp; &nbsp; </div>
         </div>}
+
 
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
@@ -1025,8 +1033,9 @@ function OptionQuote (props) {
                   {/* top, right, bottom, left */} 
 
                 <tbody>
-                  {optionQuote && optionQuote.expiration && optionQuote.expiration.map((quote, index) =>{
+                  {optionQuote && optionQuote.expiration && optionQuote.expiration.map((quote, index) => {
                     return (
+                    (! hideNegativeYield || optionQuote.yield_[index] >= 0) &&
                     <tr key={index} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
