@@ -469,7 +469,7 @@ function OptionQuote (props) {
         const a = 1 // for breakpoint debug
         if (log)
           console.log('strike=' + strike, 'dte=' + dte, 'ask=' + ask, 'breakEven=' + breakEven.toFixed(2),
-          'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2), 'proft=' + (expirationDateValue - breakEven).toFixed(2))
+          'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2), 'profit=' + (expirationDateValue - breakEven).toFixed(2))
       }
 
       return yield_;
@@ -640,12 +640,12 @@ function OptionQuote (props) {
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, ask, breakEven, expirationDateValue)
         // if (yield_ < 0)
         //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/ask=', optionQuote.strike[i], '  ', ask])
-        var yearlyYield = 0
+        var yearlyYield = -1
         if (yield_ > 0) {
           if (config.compoundYield)
             yearlyYield = ((yield_ + 1) ** (365 / dte) - 1).toFixed(3);
           else {
-            yearlyYield = ((yield_ ) * (365 / dte)).toFixed(2);
+            yearlyYield = -1;
           }
         }
 
@@ -653,8 +653,11 @@ function OptionQuote (props) {
           console.log ('i=', i, 'ask=' + ask, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
-        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2);  
-        OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
+        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2); 
+        if (yearlyYield != -1)
+          OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
+        else
+          OptionQuoteFiltered.yearlyYield[i] = 0;
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
         OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
