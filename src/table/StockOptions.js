@@ -629,6 +629,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.breakEven = [];
       OptionQuoteFiltered.expectedPrice =  [];
       OptionQuoteFiltered.profit = [];
+      OptionQuoteFiltered.askDivPrice = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -668,6 +669,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
         OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
+        OptionQuoteFiltered.askDivPrice[i] = (ask / props.stockPrice).toFixed(3); // ask divided by priceDivHigh
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
@@ -753,7 +755,7 @@ function OptionQuote (props) {
     else {
       setRow_index(row_index_)
       setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
-      setEstimatedYearlyGain ((props.rows[row_index_].values.peak2Peak - 1) * 100)
+      setEstimatedYearlyGain (((props.rows[row_index_].values.peak2Peak - 1) * 100).toFixed(2))
     }
 
     // setOptionKeys([]);

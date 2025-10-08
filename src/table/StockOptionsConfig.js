@@ -97,7 +97,7 @@ function StockOptionsConfig (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
         </div>
 
-        <label>YearlyGain %: &nbsp;
+        <label>YearlyGain % &nbsp;
           <input style={{width: '100px', backgroundColor: '#e5d333ff'}} type="number" name="YearlyGain" // required="required"
             placeholder="YearlyGain" step="any" onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
         </label>&nbsp; &nbsp; 
