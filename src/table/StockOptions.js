@@ -37,13 +37,13 @@ function OptionQuote (props) {
   
   const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
 
-  var yearlyGain = props.rows[row_index].values.peak2Peak;
+  // var yearlyGain = props.rows[row_index].values.peak2Peak;
   // if (! yearlyGain)
   //   yearlyGain = props.rows[row_index].values.short
   const priceDivHigh = props.rows[row_index].values.priceDivHigh;
   const bubblePrice  = props.rows[row_index].values.bubblePrice ;
   const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
-  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(props.yearlyGain); // estimated yearly gain
+  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState((Number(props.yearlyGain) - 1) * 100); // estimated yearly gain
 
 
   const [optionQuote, setOptionQuote] = useState({});
@@ -637,7 +637,7 @@ function OptionQuote (props) {
         const dte = premiumArray.dte[i];
 
         const breakEven = (premiumArray.strike[i] + premiumArray.ask[i]);
-        const expirationDateValue = props.stockPrice * (estimatedYearlyGain) ** (dte / 365); 
+        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365); 
 
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, ask, breakEven, expirationDateValue)
         // if (yield_ < 0)
@@ -748,7 +748,7 @@ function OptionQuote (props) {
     else {
       setRow_index(row_index_)
       setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
-      setEstimatedYearlyGain (props.rows[row_index_].values.peak2Peak)
+      setEstimatedYearlyGain ((props.rows[row_index_].values.peak2Peak - 1) * 100)
     }
 
     // setOptionKeys([]);
