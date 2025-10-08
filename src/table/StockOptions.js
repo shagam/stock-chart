@@ -851,6 +851,13 @@ function OptionQuote (props) {
         {latency && <div style={{color: 'green'}}> {latency} </div>}
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
 
+        <div>&nbsp;</div>
+       <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config</strong> &nbsp; &nbsp; </div>
+        {configShow && 
+        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
+        <div>&nbsp;</div>
+        {/* <hr/> */}
+
         {/*  buttons  */}
         <div>
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
@@ -858,11 +865,6 @@ function OptionQuote (props) {
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
           {/* <hr/>  */}
         </div>
-
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config</strong> &nbsp; &nbsp; </div>
-        {configShow && 
-        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
-
 
         <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
