@@ -8,6 +8,8 @@ import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
 import {beep2} from '../utils/ErrorList'
 import { el } from 'date-fns/locale';
 import StockOptionsConfig from './StockOptionsConfig';
+import { FaCheckSquare } from 'react-icons/fa';
+import { FaCog } from 'react-icons/fa';
 // 
 // Zuberi Moshe
 
@@ -654,7 +656,7 @@ function OptionQuote (props) {
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2); 
-        if (yearlyYield != -1)
+        if (yearlyYield !== -1)
           OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
         else
           OptionQuoteFiltered.yearlyYield[i] = 0;
@@ -852,7 +854,10 @@ function OptionQuote (props) {
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
 
         <div>&nbsp;</div>
-       <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong>config</strong> &nbsp; &nbsp; </div>
+
+
+        {/* <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> */}
+       <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong><FaCog style={{ fontSize: '24px', color: '#0078D4' }} /> config</strong> &nbsp; &nbsp; </div>
         {configShow && 
         <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
         <div>&nbsp;</div>
