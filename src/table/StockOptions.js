@@ -857,7 +857,8 @@ function OptionQuote (props) {
 
 
         {/* <link rel="icon" href="%PUBLIC_URL%/favicon.ico" /> */}
-       <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)}  />&nbsp;<strong><FaCog style={{ fontSize: '24px', color: '#0078D4' }} /> config</strong> &nbsp; &nbsp; </div>
+       <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)} 
+        />&nbsp;<strong> config <FaCog style={{ fontSize: '24px', color: '#0078D4' }} /> </strong> &nbsp; &nbsp; </div>
         {configShow && 
         <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
         <div>&nbsp;</div>
