@@ -625,13 +625,21 @@ function CommonDatabase (props) {
 
         //** getAll */
         if (resObjects.length > 0) {
-            for (let i = 0; i < resObjects.length; i++) { 
-                const symbol =  resObjects[i].sym 
+            for (let i = 0; i < results.length; i++) { 
+                const symbol =  results[i].sym 
                 addSymOne (symbol) 
             }
         }
+
+        if (results && results.length !== 0) {
+            for (let i = 0; i < results.length; i++) { 
+                const symbol =  results[i]
+                addSymOne (symbol) 
+            }   
+        }
         setNext()
-        props.saveTable('any');  
+        props.saveTable('any');
+
         window.location.reload();
     }
 
