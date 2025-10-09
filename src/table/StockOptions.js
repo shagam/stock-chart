@@ -32,6 +32,7 @@ function OptionQuote (props) {
 
   const [expirationsArray, setExpirationsArray] = useState([]); 
   const [expirationSelected, setExpirationSelected] = useState(-1) // for display only
+  const [premiumSelected, setPremiumSelected] = useState(-1) // index of selected premium
 
   const [strikeArray, setStrikeArray] = useState([]);
 
@@ -461,7 +462,15 @@ function OptionQuote (props) {
       console.log('Strike Row clicked:', rowId);
   }
 
-  
+
+  function premiumRowClick(rowId)  { 
+    setPremiumSelected(rowId)
+    if (log)
+      console.log('premium Row clicked:', rowId);
+    // strikePrices ();
+  }
+
+
   
   function yieldCalc (strike, dte, ask, breakEven, expirationDateValue) {
     var  yield_;
@@ -788,21 +797,17 @@ function OptionQuote (props) {
     if (attrib === 'expiration') {
       if (line === 0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1]) {
         // console.log ('expiration changed', line, optionQuote.expiration[line])
-        return {backgroundColor: '#d3e5ff', color: 'black', fontWeight: 'bold'};
-      } else {
-        return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
-      } 
+        return {backgroundColor: '#ffd3fbff', color: 'black', fontWeight: 'bold'};
+      }
     }
 
     else if (attrib === 'yearlyYield') {
       if (optionQuote.yearlyYield === undefined) {
         return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
       }
-      if (optionQuote.yearlyYield[line] !== 'Infinity' && bestYearlyYieldIndex === line) {
+      if (bestYearlyYieldIndex === line) {
         return {backgroundColor: '#e5d333ff', color: 'black', fontWeight: 'bold'};
-      } else {
-        return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
-      }          
+      }
     }
 
     else if (attrib === 'yield_' && optionQuote.yield_[line].startsWith('-')) {
@@ -824,10 +829,11 @@ function OptionQuote (props) {
       else
         return {backgroundColor: '#c9e0a7ff'};
     }
-
-    else {
-      return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
-    }
+    if (premiumSelected === line)
+      return {background: '#d3e5ff'}
+    
+    return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
+    
   }
 
   function percentSign (attrib) {
@@ -1038,7 +1044,7 @@ function OptionQuote (props) {
                   {optionQuote && optionQuote.expiration && optionQuote.expiration.map((quote, index) => {
                     return (
                     (! hideNegativeYield || optionQuote.yield_[index] >= 0) &&
-                    <tr key={index} style={ROW_SPACING}>
+                      <tr key={index} style={ROW_SPACING} onClick={() => premiumRowClick(index)}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
