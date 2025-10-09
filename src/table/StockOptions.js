@@ -997,7 +997,7 @@ function OptionQuote (props) {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', maxWidth: '700px'}}>
               {optionKeys.map((item) => (
                   <div key={item}>
-                      <input
+                      <input style = {{'accentColor':'pink'}}
                         type="checkbox"
                         checked={columnShow.includes(item)}
                         onChange={() => handleColumnCheckboxChange(item)}
