@@ -28,7 +28,7 @@ function OptionQuote (props) {
   const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
   const [logExtra, setLogExtra] = useState (false);
   const [ignoreSaved, setIgnoreSaved] = useState (false);
-  const [hideNegativeYield, setHideNegativeYield] = useState (true);
+  const [hideNegativeYield, setHideNegativeYield] = useState (false);
 
   const [expirationsArray, setExpirationsArray] = useState([]); 
   const [expirationSelected, setExpirationSelected] = useState(-1) // for display only
