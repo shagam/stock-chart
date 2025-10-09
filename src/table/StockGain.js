@@ -35,7 +35,9 @@ import {getDate, } from '../utils/Date'
     var yearly_div_ratio_ = div_ratio_sum / year_diff
     if (setYearly_div_ratio)
       setYearly_div_ratio(yearly_div_ratio_)
-    console.log (symbol, getDate(), 'yearly dividend/price average=', yearly_div_ratio_.toFixed(4), 'div_count=', div_count, 'year_diff=', year_diff);
+    
+    if (log)
+      console.log (symbol, getDate(), 'yearly dividend/price average=', yearly_div_ratio_.toFixed(4), 'div_count=', div_count, 'year_diff=', year_diff);
 
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index !== -1) {

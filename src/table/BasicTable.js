@@ -342,7 +342,7 @@ const BasicTable = (props) => {
         .catch(error => {
           // Do something on error 
           errorAdd ([symbol, 'info', error.message])
-          console.log(symbol + ' info ' + error.message)
+          // console.log(symbol + ' info ' + error.message)
       })
   }
 
@@ -423,7 +423,8 @@ const BasicTable = (props) => {
 
     var diff = lastGainMili ? Date.now() - lastGainMili : avoidTooFrequentLimit * 2; //** empty => assume more than limit*/ 
     if (diff < avoidTooFrequentLimit) {
-      console.log (sym, 'Abort <gain>, too frequent. allowed once per day for sym. diff sec:', (diff / 1000).toFixed(0))
+      errorAdd([sym, `too frequent gain, wait ${(avoidTooFrequentLimit - diff)/1000} sec`])
+      // console.log (sym, 'Abort <gain>, too frequent. allowed once per day for sym. diff sec:', (diff / 1000).toFixed(0))
       return;
     }
 
@@ -437,7 +438,8 @@ const BasicTable = (props) => {
   
     //** avoid bubbleline while another symbol */
     if (gainMap['bubbleLine']) {
-      console.log (sym, 'delete bubbleLine, avoid bubbleline while another symbol', Object.keys(gainMap))
+      errorAdd([sym, 'delete bubbleLine, avoid bubbleline while another symbol'])
+      // console.log (sym, 'delete bubbleLine, avoid bubbleline while another symbol', Object.keys(gainMap))
       delete gainMap['bubbleLine']
     }
 

@@ -200,7 +200,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
 
 
               if (stockChartXValuesFunction.length === 0) {
-                console.log (sym, 'stockChartXValuesFunction  empty')
+                errorAdd ([sym, 'stockChartXValuesFunction  empty'])
                 return;
               }
               setStockChartXValues (stockChartXValuesFunction);  // save for plotly chart
