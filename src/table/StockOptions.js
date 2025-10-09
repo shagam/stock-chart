@@ -599,7 +599,7 @@ function OptionQuote (props) {
 
         // delete result.data.optionSymbol
         // delete result.data.s
-        if (key === 's' || key === 'optionSymbol')
+        if (key === 's')
           return; // skip these two keys
 
           // convert date to YYYY-mm-dd format
