@@ -66,6 +66,7 @@ function OptionQuote (props) {
   const [configShow, setConfigShow] = useState(false);
 
   const [focusGroup, setFocusGroup] = useState({}); // keep group of optionQuote in focus
+  const [focusGroupKeys, setFocusGroupKeys] = useState([]); // keys of focus group
   const [focusGroupShow, setFocusGroupShow] = useState(false); // name of focus group
   const [focusGroupSelected, setFocusGroupSelected] = useState(-1); // row number of selected
 
@@ -127,7 +128,7 @@ function OptionQuote (props) {
 
     const symbol = props.symbol
     focusGroup[symbol] = option;
-
+    setFocusGroupKeys(Object.keys(focusGroup))
     if (log)
       console.log ('focusGroupAdd', symbol, option, focusGroup )
   }
@@ -1050,13 +1051,8 @@ function OptionQuote (props) {
           bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
           </div>}
 
-          <div>
-            {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button> 
-             &nbsp; &nbsp;  ({premiumSelected}) </div>} &nbsp; &nbsp;  &nbsp;
-          </div>
-
           {/* premium quote table */}
-          {optionKeys.length > 0 && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
+          {optionKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr style={ROW_SPACING}>
@@ -1089,8 +1085,50 @@ function OptionQuote (props) {
                 </tbody>
             </table>
 
+
+          <div>
+            {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button> 
+            &nbsp; &nbsp;  selected-row={premiumSelected} </div>} &nbsp; &nbsp;  &nbsp;
+          </div>
         </div>}
 
+        <hr/>
+
+        {focusGroupKeys.length > 0 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={focusGroupShow} 
+         onChange={()=>setFocusGroupShow (! focusGroupShow)}  />&nbsp;focusGroupShow &nbsp; &nbsp; count={focusGroupKeys.length} </div>}
+         {/* premium quote table */}
+          {focusGroupKeys.length > 0 && focusGroupShow && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
+            <table>
+                <thead>
+                  <tr style={ROW_SPACING}>
+                    <th style={{...ROW_SPACING, width: '20px'}}> N</th>
+                    {optionKeys.map((key, keyI) => {
+                      return columnShow.includes (key) && (
+                        <th style={ROW_SPACING} key={keyI}>{key}</th>
+                      )
+                    })}
+                  </tr> 
+                </thead>
+                  
+                  {/* top, right, bottom, left */} 
+
+                <tbody>
+                    {Object.keys(focusGroup).map((sym, row) => {
+                    return (
+                      <tr key={row} style={ROW_SPACING}>
+                      <td style={{ROW_SPACING, width: '20px'}}> {row}</td>
+                      {Object.keys(focusGroup[sym]).map((key, keyI) => {
+                      return columnShow.includes (key) &&  (
+                        <td key={keyI} style={{ROW_SPACING}}> {focusGroup[sym][key]}</td>
+                      )
+                    })}
+
+                    </tr>
+                    )
+                  })}
+                </tbody>
+            </table>
+        </div>}
     </div>
   )
 }
