@@ -80,7 +80,7 @@ function OptionQuote (props) {
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
  const columnsDefault = [
-    "expiration","underlying","side","strike","dte","ask","yield_", "yearlyYield", "expectedPrice","profit"]
+    "expiration","underlying","side","strike","dte","mid","yield_", "yearlyYield", "expectedPrice","profit"]
 
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
@@ -162,8 +162,8 @@ function OptionQuote (props) {
       if (optionQuote.expiration[i] !== optionQuote.expiration[i-1])
         continue; // different expiration, skip
         
-        if (optionQuote.ask[i] > optionQuote.ask[i-1]) {
-          props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike/ask=', optionQuote.strike[i-1], optionQuote.ask[i-1], 'strike/ask=' , optionQuote.strike[i],  optionQuote.ask[i]])
+        if (optionQuote.mid[i] > optionQuote.mid[i-1]) {
+          props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike/mid=', optionQuote.strike[i-1], optionQuote.mid[i-1], 'strike/mid=' , optionQuote.strike[i],  optionQuote.mid[i]])
           irregularCount++;
       }   
     }
@@ -295,12 +295,12 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield = OptionQuoteFiltered.yearlyYield || [];
       OptionQuoteFiltered.breakEven = OptionQuoteFiltered.breakEven || [];
       for (let i = 0; i < rows; i++) {
-        const ask = OptionQuoteFiltered.ask[i];
+        const mid = OptionQuoteFiltered.mid[i];
         const dte = OptionQuoteFiltered.dte[i];
 
-        const breakEven = (strikeArray[i] + ask);
+        const breakEven = (strikeArray[i] + mid);
 
-        const yield_ =  yieldCalc (optionQuote.strike[i], dte, ask)  
+        const yield_ =  yieldCalc (optionQuote.strike[i], dte, mid)  
         const yearlyYield = config.compoundYield ? ((yield_) ** (365 / dte)).toFixed(4) : ((yield_ ) * (365 / dte)).toFixed(4);
 
 
@@ -499,16 +499,16 @@ function OptionQuote (props) {
 
 
   
-  function yieldCalc (strike, dte, ask, breakEven, expirationDateValue) {
+  function yieldCalc (strike, dte, mid, breakEven, expirationDateValue) {
     var  yield_;
       if (config.action === 'sell') {
-        yield_ = (ask / props.stockPrice);
+        yield_ = (mid / props.stockPrice);
       }
       else {  // buy call or put
-        yield_ = (expirationDateValue - breakEven) / ask; //  - props.stockPrice
+        yield_ = (expirationDateValue - breakEven) / mid; //  - props.stockPrice
         const a = 1 // for breakpoint debug
         if (log)
-          console.log('strike=' + strike, 'dte=' + dte, 'ask=' + ask, 'breakEven=' + breakEven.toFixed(2),
+          console.log('strike=' + strike, 'dte=' + dte, 'mid=' + mid, 'breakEven=' + breakEven.toFixed(2),
           'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2), 'profit=' + (expirationDateValue - breakEven).toFixed(2))
       }
 
@@ -665,7 +665,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.breakEven = [];
       OptionQuoteFiltered.expectedPrice =  [];
       OptionQuoteFiltered.profit = [];
-      OptionQuoteFiltered.askDivPrice = [];
+      OptionQuoteFiltered.midDivPrice = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -675,15 +675,15 @@ function OptionQuote (props) {
 
       //** calc yield */
       for (let i = 0; i < rows; i++) {
-        const ask = premiumArray.ask[i];
+        const mid = premiumArray.mid[i];
         const dte = premiumArray.dte[i];
 
-        const breakEven = (premiumArray.strike[i] + premiumArray.ask[i]);
+        const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
         const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365); 
 
-        var  yield_ =  yieldCalc (premiumArray.strike[i], dte, ask, breakEven, expirationDateValue)
+        var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid, breakEven, expirationDateValue)
         // if (yield_ < 0)
-        //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/ask=', optionQuote.strike[i], '  ', ask])
+        //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
         var yearlyYield = -1
         if (yield_ > 0) {
           if (config.compoundYield)
@@ -694,7 +694,7 @@ function OptionQuote (props) {
         }
 
         if (logExtra)
-          console.log ('i=', i, 'ask=' + ask, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
+          console.log ('i=', i, 'mid=' + mid, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
         OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2); 
@@ -705,7 +705,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
         OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
-        OptionQuoteFiltered.askDivPrice[i] = (ask / props.stockPrice).toFixed(3); // ask divided by priceDivHigh
+        OptionQuoteFiltered.midDivPrice[i] = (mid / props.stockPrice).toFixed(3); // mid divided by priceDivHigh
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
@@ -844,7 +844,7 @@ function OptionQuote (props) {
 
     else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid') {
       if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
-        if (optionQuote.ask[line] > optionQuote.ask[line - 1]) 
+        if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
       }
       return {backgroundColor: '#c9e0a7ff'};
