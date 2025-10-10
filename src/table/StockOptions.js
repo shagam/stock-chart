@@ -68,6 +68,7 @@ function OptionQuote (props) {
   const [focusGroup, setFocusGroup] = useState({}); // keep group of optionQuote in focus
   const [focusGroupKeys, setFocusGroupKeys] = useState([]); // keys of focus group
   const [focusGroupShow, setFocusGroupShow] = useState(false); // name of focus group
+  const [focusGroupKeyShow, setFocusGroupKeyShow] = useState(false); 
   const [focusGroupSelected, setFocusGroupSelected] = useState(-1); // row number of selected
 
   // const [arr, setArr] = useState([]);
@@ -1094,15 +1095,21 @@ function OptionQuote (props) {
 
         <hr/>
 
-        {focusGroupKeys.length > 0 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={focusGroupShow} 
-         onChange={()=>setFocusGroupShow (! focusGroupShow)}  />&nbsp;focusGroupShow &nbsp; &nbsp; count={focusGroupKeys.length} </div>}
+        {focusGroupKeys.length > 0 &&
+         <div style = {{display: 'flex'}}>
+           <input type="checkbox" checked={focusGroupShow} 
+              onChange={()=>setFocusGroupShow (! focusGroupShow)}  />&nbsp;focusGroupShow &nbsp; &nbsp; count={focusGroupKeys.length}  &nbsp;  &nbsp; &nbsp;  &nbsp;
+            <input type="checkbox" checked={focusGroupKeyShow} 
+              onChange={()=>setFocusGroupKeyShow (! focusGroupKeyShow)}  />&nbsp;focusGroupKeyShow &nbsp; &nbsp; 
+         </div>}
+
          {/* premium quote table */}
           {focusGroupKeys.length > 0 && focusGroupShow && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr style={ROW_SPACING}>
                     <th style={{...ROW_SPACING, width: '20px'}}> N</th>
-                    <th style={{...ROW_SPACING, width: '20px'}}>optionSymbol</th>
+                    {focusGroupKeyShow && <th style={{...ROW_SPACING, width: '20px'}}>optionSymbol</th>}
                     {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) && (
                         <th style={ROW_SPACING} key={keyI}>{key}</th>
@@ -1118,7 +1125,7 @@ function OptionQuote (props) {
                     return (
                       <tr key={row} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {row}</td>
-                      <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>
+                      {focusGroupKeyShow && <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>}
                       {Object.keys(focusGroup[sym]).map((key, keyI) => {
                       return columnShow.includes (key) &&  (
                         <td key={keyI} style={{...ROW_SPACING}}> {focusGroup[sym][key]}{percentSign(key)}</td>
