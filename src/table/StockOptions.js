@@ -121,13 +121,13 @@ function OptionQuote (props) {
     const option = {}
 
     // build the focusGroup object
-    Object.keys(optionQuote).forEach((key) => {
+    Object.keys(optionQuote).forEach((key) => { 
       option[key] = optionQuote[key][premiumSelected];
     })
     option.yearlyGain = estimatedYearlyGain;
 
     const symbol = props.symbol
-    focusGroup[symbol] = option;
+    focusGroup[option.optionSymbol] = option;
     setFocusGroupKeys(Object.keys(focusGroup))
     if (log)
       console.log ('focusGroupAdd', symbol, option, focusGroup )
@@ -1102,6 +1102,7 @@ function OptionQuote (props) {
                 <thead>
                   <tr style={ROW_SPACING}>
                     <th style={{...ROW_SPACING, width: '20px'}}> N</th>
+                    <th style={{...ROW_SPACING, width: '20px'}}>optionSymbol</th>
                     {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) && (
                         <th style={ROW_SPACING} key={keyI}>{key}</th>
@@ -1117,9 +1118,10 @@ function OptionQuote (props) {
                     return (
                       <tr key={row} style={ROW_SPACING}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {row}</td>
+                      <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>
                       {Object.keys(focusGroup[sym]).map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING}}> {focusGroup[sym][key]}</td>
+                        <td key={keyI} style={{...ROW_SPACING}}> {focusGroup[sym][key]}{percentSign(key)}</td>
                       )
                     })}
 
