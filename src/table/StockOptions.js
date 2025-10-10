@@ -1108,7 +1108,7 @@ function OptionQuote (props) {
                       )
                     })}
                   </tr> 
-                </thead>
+                </thead> 
                   
                   {/* top, right, bottom, left */} 
 
@@ -1116,10 +1116,10 @@ function OptionQuote (props) {
                     {Object.keys(focusGroup).map((sym, row) => {
                     return (
                       <tr key={row} style={ROW_SPACING}>
-                      <td style={{ROW_SPACING, width: '20px'}}> {row}</td>
+                      <td style={{...ROW_SPACING, width: '20px'}}> {row}</td>
                       {Object.keys(focusGroup[sym]).map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{ROW_SPACING}}> {focusGroup[sym][key]}</td>
+                        <td key={keyI} style={{...ROW_SPACING}}> {focusGroup[sym][key]}</td>
                       )
                     })}
 
