@@ -65,7 +65,10 @@ function OptionQuote (props) {
   const [strikeShow, setStrikeShow] = useState(false);
   const [configShow, setConfigShow] = useState(false);
 
-  // const [useOptionServer, setUseOptionServer] = useState(props.eliHome);
+  const [focusGroup, setFocusGroup] = useState({}); // keep group of optionQuote in focus
+  const [focusGroupShow, setFocusGroupShow] = useState(false); // name of focus group
+  const [focusGroupSelected, setFocusGroupSelected] = useState(-1); // row number of selected
+
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
@@ -106,6 +109,28 @@ function OptionQuote (props) {
   }
 
 
+  function focusGroupAdd () {
+    if (premiumSelected === -1) {
+      setErr('no row selected to add to focus group')
+      beep2()
+      return;
+    }
+
+    // add the selected premium to focusGroup
+    const option = {}
+
+    // build the focusGroup object
+    Object.keys(optionQuote).forEach((key) => {
+      option[key] = optionQuote[key][premiumSelected];
+    })
+    option.yearlyGain = estimatedYearlyGain;
+
+    const symbol = props.symbol
+    focusGroup[symbol] = option;
+
+    if (log)
+      console.log ('focusGroupAdd', symbol, option, focusGroup )
+  }
 
 
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
@@ -1022,7 +1047,13 @@ function OptionQuote (props) {
 
           {optionQuote && optionQuote.expiration && <div>{props.symbol} &nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
           stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
-          bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; </div>}
+          bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
+          </div>}
+
+          <div>
+            {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button> 
+             &nbsp; &nbsp;  ({premiumSelected}) </div>} &nbsp; &nbsp;  &nbsp;
+          </div>
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
