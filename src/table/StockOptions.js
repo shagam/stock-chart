@@ -102,7 +102,7 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
-      side: 'call', percent: true, compoundYield: false, action: 'buy'}
+      side: 'call', percent: true, compoundYield: true, action: 'buy'}
   });
 
   function setConfig (newConfig) {
@@ -815,7 +815,7 @@ function OptionQuote (props) {
 
   function cellColor (line, attrib) {
     if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
-      setErr ("cellColor  line='0' string", attrib)
+      setErr ("cellColor  line='0' string", attrib, line)
       line = 0
       return {backgroundColor: 'white', color: 'orange', fontWeight: 'normal'};
     }
@@ -862,6 +862,31 @@ function OptionQuote (props) {
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
     
   }
+
+ function cellColorFocus (line, attrib) {
+    if (attrib === 'yield_' && optionQuote.yield_[line].startsWith('-')) {
+      const a = 1
+      return { color: 'red', fontWeight: 'bold'};        
+    }
+
+    else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid') {
+      if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
+        if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
+          return { color: 'blue', fontWeight: 'bold'};
+      }
+      return {backgroundColor: '#c9e0a7ff'};
+    }
+
+    else if (attrib === 'profit') {
+      if (optionQuote.profit[line] < 0)
+        return { color: 'red', fontWeight: 'bold'};
+      else
+        return {backgroundColor: '#c9e0a7ff'};
+    }
+     
+    return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};  
+  }
+
 
   function percentSign (attrib) {
     if (attrib === 'yield_' || attrib === 'yearlyYield') {
@@ -1128,7 +1153,7 @@ function OptionQuote (props) {
                       {optionSymbolShow && <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>}
                       {Object.keys(focusGroup[sym]).map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING}}> {focusGroup[sym][key]}{percentSign(key)}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColorFocus(row, key)}}> {focusGroup[sym][key]}{percentSign(key)}</td>
                       )
                     })}
 
