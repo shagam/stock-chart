@@ -864,6 +864,12 @@ function OptionQuote (props) {
   }
 
  function cellColorFocus (line, attrib) {
+    if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
+      setErr ("cellColor  line='0' string", attrib, line)
+      line = 0
+      return {backgroundColor: 'white', color: 'orange', fontWeight: 'normal'};
+    }
+
     if (attrib === 'yield_' && optionQuote.yield_[line].startsWith('-')) {
       const a = 1
       return { color: 'red', fontWeight: 'bold'};        
@@ -888,7 +894,9 @@ function OptionQuote (props) {
   }
 
 
-  function percentSign (attrib) {
+  function percentSign (attrib, value) {    
+    if (value === 0)
+      return null;
     if (attrib === 'yield_' || attrib === 'yearlyYield') {
       return config.percent ? '_%' : ''
     }
@@ -1101,7 +1109,8 @@ function OptionQuote (props) {
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> {(optionQuote[key] ? optionQuote[key][index] : 'err='+ key) + percentSign(key)}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColor(index, key)}}> 
+                        {(optionQuote[key] ? optionQuote[key][index] : 'err='+ key) + percentSign(key, optionQuote[key][index])}</td>
                       )
                     })}
 
@@ -1153,7 +1162,7 @@ function OptionQuote (props) {
                       {optionSymbolShow && <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>}
                       {Object.keys(focusGroup[sym]).map((key, keyI) => {
                       return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING, ...cellColorFocus(row, key)}}> {focusGroup[sym][key]}{percentSign(key)}</td>
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColorFocus(row, key)}}> {focusGroup[sym][key]}{percentSign(key, focusGroup[sym][key])}</td>
                       )
                     })}
 
