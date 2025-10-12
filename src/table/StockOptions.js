@@ -25,7 +25,7 @@ function OptionQuote (props) {
   const TOKEN = process.env.REACT_APP_MARKETDATA;
   // var url = 'https://marketdata.app/api/v1/marketdata?token=' + TOKEN;
 
-  const [log, setLog] = useState (props.eliHome); // default to true if eliHome is true
+  const [log, setLog] = useState (false); // default to true if eliHome is true
   const [logExtra, setLogExtra] = useState (false);
   const [ignoreSaved, setIgnoreSaved] = useState (false);
   const [hideNegativeYield, setHideNegativeYield] = useState (false);
