@@ -46,7 +46,7 @@ import {targetPriceAdd} from './TargetPrice'
                 return;
             }
 
-            const priceDivHigh = (price / highestPrice).toFixed(3);
+            const priceDivHigh = (price / highestPrice).toFixed(4);
             console.log (symbol, getDate(), 'price=' + price, ' highest=' + highestPrice.toFixed(2), ' price/High=' + priceDivHigh,
              'closePrice=' + stockChartYValues[0], 'price/close=' + (price / stockChartYValues[0]).toFixed(4))
 
