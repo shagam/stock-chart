@@ -80,7 +80,7 @@ function OptionQuote (props) {
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
  const columnsDefault = [
-    "expiration","underlying","side","strike","dte","mid","yield_", "yearlyYield", "expectedPrice","profit"]
+    "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",]
 
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
