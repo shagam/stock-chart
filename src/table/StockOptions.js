@@ -705,7 +705,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
         OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
-        OptionQuoteFiltered.midDivPrice[i] = (mid / props.stockPrice * 100).toFixed(3); // mid divided by priceDivHigh
+        OptionQuoteFiltered.midDivPrice[i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
 
         if (logExtra)
           console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
