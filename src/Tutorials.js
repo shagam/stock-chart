@@ -12,7 +12,7 @@ const tutorialArray = [
         condition: ! language,
         link:         'https://youtube.com/shorts/29TnD1h8ZPs',
         name:         'Bubble-line',
-        description:  'Stock market bubble. Can we predict future crash? ',
+        description:  'Stock market bubble. Can we predict future crash? ',  
     },
     // {
     //     condition: language,
@@ -25,6 +25,12 @@ const tutorialArray = [
         link:         'https://youtube.com/shorts/C0UjQWHWbB8',
         name:         'Drop-recovery',
         description:  'Analyse drops and recovery 2008, 2020, 2022 ',
+    },
+    {
+        condition: ! language,
+        link:         ' https://youtube.com/shorts/YnNDCs4sUyA',
+        name:         'Call-options',
+        description:  'Analyse call options, expected yield',
     },
     {
         condition: ! language,
