@@ -28,7 +28,8 @@ function News (props) {
 
   return (
     <div>
-        {(props.eliHome && news.optionCount < 8) && <div style={{display: 'flex'}}>
+        {(props.eliHome && news.optionCount < 8) && <div style={{display: 'flex', border:'2px solid magenta'}}>
+            <hr/> 
             <div> New support page for  <strong style={{color:'green'}}>Call options</strong> &nbsp; &nbsp; </div>
             <a href="https://youtube.com/shorts/YnNDCs4sUyA" target="_blank" rel="noopener noreferrer">
                 <b>Call Option Tutorial</b>
@@ -36,6 +37,7 @@ function News (props) {
             {/* { <a href={'https://youtube.com/shorts/YnNDCs4sUyA'}><b>'call option tutorial'</b> </a>} */}
 
             {news_Option ()}
+            <hr/> 
         </div>}   
     </div>
   )
