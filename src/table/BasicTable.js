@@ -82,6 +82,7 @@ import {Futures} from './Futures'
 import {PriceAlert, priceAlertCheck} from './PriceAlert'
 import {LatestPrice} from './LatestPrice'
 import {Disclaimer} from './Disclaimer'
+import {News} from '../utils/News'
 import { UrlGetParse } from '../utils/UrlGetParse'
 
 import { CandlestickChart, CandleStick} from './CandleStick'
@@ -813,6 +814,7 @@ const BasicTable = (props) => {
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
+        <News  eliHome={eliHome}/>
         {(admin || (eliHome && ! isMobile)) && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
 
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
