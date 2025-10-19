@@ -4,7 +4,7 @@ import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 // new functionality
 function News (props) {
 
-    const image_url = "https://"+props.corsServer + ":" + props.PORT + "/download?img=QQQQ_call_options.jpg" 
+    const image_url = "https://"+props.corsServer + ":" + props.PORT + "/download?img=QQQ_call_options.jpg" 
     console.log (image_url)
     const [QQQ_call_option_image, setQQQ_call_ption_image] = useState(image_url) 
     const NEWS = 'news'; // localStorage file name
@@ -40,7 +40,7 @@ function News (props) {
         {(props.eliHome && news.optionCount < 8) && <div style={{ border:'2px solid magenta'}}>
             <div>
                 <hr/> 
-                <strong> &nbsp; New support page for  <div style={{color:'magenta'}}>Call options</div> &nbsp; &nbsp; </strong>
+                < h5> &nbsp; Update: New page  <strong style={{color:'magenta'}}>Call options</strong> &nbsp; &nbsp; </h5>
                 <hr/>
 
                 {/* // If image is in public folder */}
@@ -50,7 +50,6 @@ function News (props) {
 
                 {/* <img src="http://localhost:3001/image/QQQ_call_options.jpg" alt="Server Image" /> */}
                 <img src={QQQ_call_option_image} alt="QQQ_call_options__" />
-    + 
 
                 {/* call option tutorial */}
                 <div> &nbsp;</div>
