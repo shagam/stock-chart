@@ -97,8 +97,8 @@ const BasicTable = (props) => {
   const [bubbleLine, setBubbleLine] = useState();
 
   
-  const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP]// , process.env.REACT_APP_AWS_IP];
-  const servNameList = ['production', 'test']//, 'production_'];
+  const servList = [process.env.REACT_APP_LOCAL_SERV_IP, process.env.REACT_APP_AWS_IP, ]// , process.env.REACT_APP_AWS_IP];
+  const servNameList = ['test', 'production', ]//, 'production_'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
@@ -814,7 +814,7 @@ const BasicTable = (props) => {
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
-        <News  eliHome={eliHome}/>
+        <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/>
         {(admin || (eliHome && ! isMobile)) && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
 
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
