@@ -40,7 +40,7 @@ function News (props) {
         {(props.eliHome && news.optionCount < 8) && <div style={{ border:'2px solid magenta'}}>
             <div>
                 <hr/> 
-                <div> &nbsp; New support page for  <strong style={{color:'magenta'}}>Call options</strong> &nbsp; &nbsp; </div>
+                <strong> &nbsp; New support page for  <div style={{color:'magenta'}}>Call options</div> &nbsp; &nbsp; </strong>
                 <hr/>
 
                 {/* // If image is in public folder */}
@@ -53,8 +53,9 @@ function News (props) {
     + 
 
                 {/* call option tutorial */}
+                <div> &nbsp;</div>
                 <a href="https://youtube.com/shorts/YnNDCs4sUyA" target="_blank" rel="noopener noreferrer">
-                    <b> &nbsp; &nbsp; Call-Option-Tutorial</b>
+                    <b> Call-Option-Tutorial</b>
                 </a>
         
                 <div> &nbsp;</div>
