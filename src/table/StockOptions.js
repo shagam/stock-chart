@@ -125,10 +125,10 @@ function OptionQuote (props) {
     if (header === "strike") return 'Option strike price'
     if (header === "dte") return 'Days to expiration'
 
-    if (header === "bid") return 'Bid price'
+    if (header === "bid") return 'Bid price, price willing to pay for option'
     if (header === "mid") return 'Mid price between bid and ask'
-    if (header === "ask") return 'Ask price'
-    if( header === "bidSize") return 'Size of bid'
+    if (header === "ask") return 'Ask price, price willing to sell option'
+    if( header === "bidSize") return 'Size of bid, average number of contracts per trade'
     if (header === "last") return 'Last trade price'
 
     if (header === "openInterest") return 'Open interest'
