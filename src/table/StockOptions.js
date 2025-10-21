@@ -131,9 +131,9 @@ function OptionQuote (props) {
     if( header === "bidSize") return 'Size of bid, average number of contracts per trade'
     if (header === "last") return 'Last trade price'
 
-    if (header === "openInterest") return 'Open interest'
+    if (header === "openInterest") return 'Number of outstanding option contracts that have not yet been settled or closed'
     if (header === "volume") return 'Volume of option traded today'
-    if (header === "inTheMoney") return 'Is option price above break-even price?'
+    if (header === "inTheMoney") return 'Is option price above strike-price price?'
     if (header === "intrinsicValue") return '(Share_price - strike_price), intrinsic value of option'
     if (header === "extrinsicValue") return '(Option_Premium - Intrinsic_Value)'
 
@@ -145,12 +145,12 @@ function OptionQuote (props) {
     if (header === "theta") return 'Theta sensitivity, time decay of option price'
     if (header === "vega") return 'Vega sensitivity, change in option price for 1% change in implied volatility'
 
-    if (header === 'yield_') return 'total Yield, premium / break-even price'
+    if (header === 'yield_') return 'total Yield, (expirationDateValue - breakEven) / mid'  
     if (header === "yearlyYield") return 'Estimated yearly yield based on estimated yearly gain'
     if (header === "breakEven") return 'strike + premium, price at expiration to break even'
-    if (header === "expectedPrice") return 'Estimated option price at expiration based on estimated yearly gain'
-    if (header === "profit") return 'Estimated dollar profit at expiration based on estimated yearly gain'
-    if (header === "midDivPrice") return 'option mid price vs share price'
+    if (header === "expectedPrice") return 'current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
+    if (header === "profit") return 'expirationDateValue - breakEven, profit at expiration'
+    if (header === "midDivPrice") return 'option_mid_price / share_price'
 
     return null
   }
