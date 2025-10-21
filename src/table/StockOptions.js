@@ -1124,9 +1124,11 @@ function OptionQuote (props) {
 
             <hr/> 
 
-          {optionQuote && optionQuote.expiration && <div>{props.symbol} &nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
-          stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
-          bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
+          {optionQuote && optionQuote.expiration && 
+          <div style={{display: 'flex'}}>
+            <div style={{color: 'magenta'}}>{props.symbol}</div>&nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
+            stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
+            bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
           </div>}
 
           {/* premium quote table */}
