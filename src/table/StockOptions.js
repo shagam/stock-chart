@@ -110,6 +110,42 @@ function OptionQuote (props) {
     localStorage.setItem( CONFIG_KEY, JSON.stringify(newConfig));
   }
 
+  function titleGet (header) {
+    // ["expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
+    // "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
+    // "underlyingPrice","iv","delta","gamma","theta","vega"]
+
+    if (header === "expiration") return 'Option expiration date'
+    if (header === 'openinterest') return 'Option open interest'
+    if (header === 'yield_') return 'total Yield'
+    if (header === "underlying") return 'Share ticker/symbol'
+    if( header === "side") return 'Option type: call or put'
+    if (header === "strike") return 'Option strike price'
+    if (header === "dte") return 'Days to expiration'
+    if (header === "iv") return 'Implied volatility'
+    if (header === "delta") return 'Delta sensitivity'
+    if (header === "gamma") return 'Gamma sensitivity'
+    if (header === "theta") return 'Theta sensitivity'
+    if (header === "vega") return 'Vega sensitivity'
+    if (header === "openInterest") return 'Open interest'
+    if (header === "intrinsicValue") return 'Intrinsic value of option'
+    if (header === "extrinsicValue") return 'Extrinsic value of option'
+    if (header === "underlyingPrice") return 'Current price of underlying share'
+    if (header === "firstTraded") return 'Date of first trade of this option'
+    if (header === "updated") return 'Date of last update of this option'
+    if (header === "volume") return 'Volume of option traded today'
+    if (header === "mid") return 'Mid price between bid and ask'
+    if (header === "expectedPrice") return 'Estimated option price at expiration based on estimated yearly gain'
+    if (header === "breakEven") return 'strike + premium, price at expiration to break even'
+    if (header === "yearlyYield") return 'Estimated yearly yield based on estimated yearly gain'
+    if (header === "bid") return 'Bid price'
+    if (header === "ask") return 'Ask price'
+    if (header === "last") return 'Last trade price'
+    if (header === "inTheMoney") return 'Is option in the money?'
+   
+
+    return null
+  }
 
   function focusGroupAdd () {
     if (premiumSelected === -1) {
@@ -1093,7 +1129,7 @@ function OptionQuote (props) {
                     <th style={{...ROW_SPACING, width: '20px'}}> N</th>
                     {optionKeys.map((key, keyI) => {
                       return columnShow.includes (key) && (
-                        <th style={ROW_SPACING} key={keyI}>{key}</th>
+                        <th style={ROW_SPACING} title={titleGet(key)} key={keyI}>{key}</th>
                       )
                     })}
                   </tr> 
