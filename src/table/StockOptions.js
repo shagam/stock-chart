@@ -102,7 +102,7 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
-      side: 'call', percent: true, compoundYield: true, action: 'buy'}
+      side: 'call', percent: true, compoundYield: true, action: 'buy', ignoreDepreciatedStocks: false};
   });
 
   function setConfig (newConfig) {
@@ -544,8 +544,9 @@ function OptionQuote (props) {
 
   
   function yieldCalc (strike, dte, mid, breakEven, expirationDateValue) {
+   
     var  yield_;
-      if (config.action === 'sell') {
+      if (config.action === 'sell' && config.ignoreStocksDepreciated) {
         yield_ = (mid / props.stockPrice);
       }
       else {  // buy call or put
@@ -554,6 +555,8 @@ function OptionQuote (props) {
         if (log)
           console.log('strike=' + strike, 'dte=' + dte, 'mid=' + mid, 'breakEven=' + breakEven.toFixed(2),
           'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2), 'profit=' + (expirationDateValue - breakEven).toFixed(2))
+        if (config.action === 'sell')
+          yield_ = - yield_; // for sell, invert the yield
       }
 
       return yield_;
@@ -968,7 +971,7 @@ function OptionQuote (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={hideNegativeYield}  onChange={()=>setHideNegativeYield (! hideNegativeYield)}  />&nbsp;hide-negative-yield &nbsp; &nbsp; </div>
         </div>}
 
-
+        {config.side === 'put' && <div  style={{color: 'red'}}> Put was not tested' </div>}
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}

@@ -20,7 +20,7 @@ function StockOptionsConfig (props) {
 
   const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
   const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
-
+  const [ignoreDepreciatedStocks, setIgnoreDepreciatedStocks] = useState(props.config.ignoreDepreciatedStocks); // true - ignore depreciated stocks
   // const [alpha, setAlpha] = useState();
   
   var flexConfig = localStorage.getItem('stockOptionsConfig');
@@ -93,7 +93,11 @@ function StockOptionsConfig (props) {
         <div style = {{display: 'flex'}}>
           <ComboBoxSelect serv={side} nameList={sideLIst} setSelect={setSide} title='side=' options={sideLIst} defaultValue={side}/> &nbsp; &nbsp;  &nbsp; 
           <ComboBoxSelect serv={action} nameList={actionList} setSelect={setAction} title='action=' options={actionList} defaultValue={action}/> &nbsp; &nbsp;  &nbsp; 
+        </div>
+        <div>&nbsp;</div>
+        <div style = {{display: 'flex'}}>        
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={ignoreDepreciatedStocks}  onChange={()=>setIgnoreDepreciatedStocks (! ignoreDepreciatedStocks)} />&nbsp;ignore-depreciated-stocks &nbsp; &nbsp; </div>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
         </div>
 
