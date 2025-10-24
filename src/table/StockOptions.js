@@ -971,7 +971,7 @@ function OptionQuote (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={hideNegativeYield}  onChange={()=>setHideNegativeYield (! hideNegativeYield)}  />&nbsp;hide-negative-yield &nbsp; &nbsp; </div>
         </div>}
 
-        {config.side === 'put' && <div  style={{color: 'red'}}> Put was not tested' </div>}
+        {config.action === 'sell' && <div  style={{color: 'red'}}> 'yield not defined, for selling options bacause of unlimited risk' </div>}
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
