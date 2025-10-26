@@ -539,6 +539,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {/* <br></br>   */}
           <hr/> 
 
+            {/* Results table */}
           {dropRecoveryInfo && <div style={{width: '350px'}}>
             <h5> DropRecovery Result for {props.StockSymbol} </h5>
             <table border="1" >
