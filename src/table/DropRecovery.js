@@ -531,13 +531,27 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button> &nbsp;
           {dropRecoveryInfo && <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns  </button>}
           
-          <pre>{JSON.stringify(dropRecoveryInfo, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(https://help.openai.com/en, null, 2)}</pre> */}
 
           <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; showExtra </div>
           {summeryShow && <pre>{JSON.stringify(dropRecoveryInfoExtra, null, 2)}</pre>}
 
           {/* <br></br>   */}
           <hr/> 
+
+          {dropRecoveryInfo && <div style={{width: '350px'}}>
+            <h5> DropRecovery Result for {props.StockSymbol} </h5>
+            <table border="1" >
+              <tbody>
+                {Object.entries(dropRecoveryInfo).map(([key, value]) => (   
+                  <tr key={key}>
+                    <td style={{fontWeight: 'bold', background: '#ddddff'}}>{key}</td>
+                    <td style={{ paddingLeft: '10px', paddingRight: '10px'}}>{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>}
 
           {/* <h5>TodayGainWeeksLost</h5>
           <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
