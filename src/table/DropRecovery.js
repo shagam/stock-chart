@@ -494,6 +494,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       }
   }
 
+    const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
 
   return (
     <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
@@ -546,8 +547,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
               <tbody>
                 {Object.entries(dropRecoveryInfo).map(([key, value]) => (   
                   <tr key={key}>
-                    <td style={{fontWeight: 'bold', background: '#ddddff'}}>{key}</td>
-                    <td style={{textAlign: 'right', paddingLeft: '10px', paddingRight: '10px'}}>{value}</td>
+                    <td style={{...ROW_SPACING, fontWeight: 'bold', background: '#ddddff'}}>{key}</td>
+                    <td style={{...ROW_SPACING, textAlign: 'right',}}>{value}</td>
                   </tr>
                 ))}
               </tbody>
