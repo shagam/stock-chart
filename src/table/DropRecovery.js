@@ -534,14 +534,11 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           
           {/* <pre>{JSON.stringify(https://help.openai.com/en, null, 2)}</pre> */}
 
-          <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; showExtra </div>
-          {summeryShow && <pre>{JSON.stringify(dropRecoveryInfoExtra, null, 2)}</pre>}
-
-          {/* <br></br>   */}
-          <hr/> 
-
+      
             {/* Results table */}
-          {dropRecoveryInfo && <div style={{width: '350px'}}>
+
+          <hr/> 
+          {dropRecoveryInfo && <div style={{width: '300px'}}>
             <h5> DropRecovery Result for {props.StockSymbol} </h5>
             <table border="1" >
               <tbody>
@@ -554,6 +551,29 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
               </tbody>
             </table>
           </div>}
+
+          <hr/> 
+          <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; showExtra </div>
+          {/* {summeryShow && <pre>{JSON.stringify(dropRecoveryInfoExtra, null, 2)}</pre>} */}
+
+          {summeryShow && dropRecoveryInfoExtra && <div style={{width: '300px'}}>
+          <h5> Extra info for {props.StockSymbol} </h5>
+          <table border="1" >
+              <tbody>
+                {Object.entries(dropRecoveryInfoExtra).map(([key, value]) => (   
+                  <tr key={key}>
+                    <td style={{...ROW_SPACING, fontWeight: 'bold', background: '#ddddff'}}>{key}</td>
+                    <td style={{...ROW_SPACING, textAlign: 'right',}}>{value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>}
+
+
+          {/* <br></br>   */}
+
+
 
           {/* <h5>TodayGainWeeksLost</h5>
           <button style={{background: 'aqua'}} type="button" onClick={()=>gainLostWeeksCalc()}>  calc   </button> &nbsp;         
