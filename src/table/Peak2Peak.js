@@ -49,20 +49,20 @@ const Peak2PeakGui = (props) => {
 
     const [results, setResults] = useState ();
     const [err, setErr] = useState ();
-    const [bubbleLineRatio, setBubbleLineRatio] = useState ();
+    const [bubbleLineRatio, setBubbleLineRatio] = useState (false);
     const [percentBelow, setPercentBelow] = useState ();
     const [belowHigh, setBelowHigh] = useState ();
     const [belowHighPercent, setBelowHighPercent] = useState ();
     const [histogram, setHistogram] = useState({})
-    const [histogramShow, setHistogramShow] = useState ();
-    const [peaksShow, setPeaksShow] = useState ();
+    const [histogramShow, setHistogramShow] = useState (false);
+    const [peaksShow, setPeaksShow] = useState (false);
 
     const [histogramLast, setHistogramLast] = useState({})
     const [log,setLog] = useState (false);
 
     var bubbleline = {}
 
-    const [tableShowFlag, setTableShowFlag] = useState ();
+    const [tableShowFlag, setTableShowFlag] = useState (false);
 
     const LOG_FLAG = log; //props.logFlags && props.logFlags.includes('peak2Peak');
     const row_index_eeee = props.rows.findIndex((row)=> row.values.symbol === process.env.REACT_APP_ELI_HOME_S)
@@ -447,8 +447,24 @@ const Peak2PeakGui = (props) => {
           {eliHome && results && <div><input type="checkbox" checked={peaksShow}  onChange={() => setPeaksShow (! peaksShow)} /> &nbsp;peaks list&nbsp; </div>}
           {eliHome && peaksShow && results && <div> 
            <hr/> 
-            <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {props.symbol}  Bubbles list info </div>
-            <pre>{JSON.stringify(results, null, 2)}</pre>
+
+
+            {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
+            {results && <div style={{width: '300px'}}>
+              <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {props.symbol}  Peak list </div>
+              <table border="1" >
+                  <tbody>
+                    {Object.entries(results).map(([key, value]) => (   
+                      <tr key={key}>
+                        <td style={{...ROW_SPACING, fontWeight: 'bold', background: '#ddddff'}}>{key}</td>
+                        <td style={{...ROW_SPACING, textAlign: 'right',}}>{value}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>}
+
+
            </div>}
            <hr/>
         </div>

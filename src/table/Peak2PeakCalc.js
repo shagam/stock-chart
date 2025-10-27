@@ -105,15 +105,17 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const index2001 = quasiTop (symbol, d_2001_dateArray, stockChartXValues, stockChartYValues, logFlags, true, setErr)
       if (index2001 !== -1) {
         results['d_2001_date'] = stockChartXValues[index2001];
-        results['v_2001_value'] = stockChartYValues[index2001];
+        results['v_2001_value'] = stockChartYValues[index2001].toFixed(2);
         results['i_2001_index'] = index2001;
+        results['.'] = ''
       }
 
       const index2008 = quasiTop (symbol, d_2008_dateArray, stockChartXValues, stockChartYValues, logFlags, true, setErr)
       if (index2008 !== -1) {
         results['d_2008_date'] = stockChartXValues[index2008];
-        results['v_2008_value'] = stockChartYValues[index2008];
+        results['v_2008_value'] = stockChartYValues[index2008].toFixed(2);
         results['i_2008_index'] = index2008;
+        results['..'] = ''
       }
       if (index2008 === -1 && setErr) {
         const err =  ' peak2Peak, date beyond range; ';
@@ -125,8 +127,9 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
       const index2022 = quasiTop (symbol, d_2022_dateArray, stockChartXValues, stockChartYValues, logFlags, true, setErr)
       if (index2022 !== -1) {
         results['d_2022_date'] = stockChartXValues[index2022];
-        results['v_2022_value'] = stockChartYValues[index2022];
+        results['v_2022_value'] = stockChartYValues[index2022].toFixed(2);
         results['i_2022_index'] = index2022;
+        results['...'] = ''
       }
 
       const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
@@ -145,8 +148,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         results['yearlyGain'] = yearlyGain;
         results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
         results['weeklyGain'] = weeklyGain.toFixed(5);
-        results['timeUnitGain'] = timeUnitGain;  // weekly or daily
-        results['yearsDiff'] = yearsDiff;
+        results['timeUnitGain'] = timeUnitGain.toFixed(7);  // weekly or daily
+        results['yearsDiff'] = yearsDiff.toFixed(3);
 
         const bubblePrice = results.v_2022_value * timeUnitGain ** results.i_2022_index // weekCount 
         if (row_index !== -1){
