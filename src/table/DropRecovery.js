@@ -173,12 +173,18 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
     //** Search for value like deep before deep */
     function gainLostWeeksIfSoldOnDeep (StockSymbol, stockChartYValues, deepIndex, deepPrice ) {
+      var lostWeeks = -1
       if (stockChartYValues.length < deepIndex - 10)
         return -1;
       for (let i = deepIndex + 10; i < stockChartYValues.length; i++) {
-        if (stockChartYValues[i] < deepPrice)
-          return i - deepIndex;
+        if (stockChartYValues[i] < deepPrice) {
+          lostWeeks = i - deepIndex; // days in a weeks
+          break
+        }
       }
+      if (props.daily)
+        lostWeeks /= 4.8
+      return lostWeeks;
     }
 
     // search for deepPrice after start date
@@ -323,19 +329,27 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
      var info = {
       symbol: StockSymbol,
-      'deepPrice/BubblePrice': deep,
-      drop: ((deep - 1) * 100).toFixed(2) + '%',
+
+      drop_percent: ((deep - 1) * 100).toFixed(2) + '%',
+      
       recoverYears: recoverPeriod === -1 ? -1 : (recoverPeriod/52).toFixed(2),
       recoverWeeks: recoverPeriod === -1 ? -1 : recoverPeriod,
+      
+      deepPrice:  deepPrice.toFixed(2),
       deepDate:    deepDate,
+
+      highBeforeDropPrice: stockChartYValues[highPriceBeforeDeepIndex].toFixed(2),
+      highBeforeDropDate:  stockChartXValues[highPriceBeforeDeepIndex],
+
+      deepSell_lostWeeks: gainLostWeeks.toFixed(0),
+      'latestPrice/Highest': priceDivHigh,
+      'deepPrice/BubblePrice': deep,
     }
 
     var infoExtra = {
-      'latestPrice/Highest': priceDivHigh,
-      deepGainLostWeeks: gainLostWeeks,
       oldestDate: stockChartXValues[stockChartXValues.length-1],
       highBeforeDropIndex: highPriceBeforeDeepIndex,
-      highBeforeDropPrice: stockChartXValues[highPriceBeforeDeepIndex],
+
     }
 
     if (props.daily) {
