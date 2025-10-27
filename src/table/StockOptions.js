@@ -180,7 +180,8 @@ function OptionQuote (props) {
 
 
   if (columnShow.length === 0) {// if columnShow is empty, restore from localStorage
-    console.log ('columnShow from localStorage ', columnShow_)
+    if (logExtra)
+      console.log ('columnShow from localStorage ', columnShow_)
     setColumnShow (columnShow_)
   }
 // (26) ['s', 'optionSymbol', 'underlying', 'expiration', 'side', 'strike', 'firstTraded', 'dte', 'updated', 'bid', 'bidSize', 'mid', 'ask', 'askSize', 'last', 'openInterest', 'volume', 'inTheMoney', 'intrinsicValue', 'extrinsicValue', 'underlyingPrice', 'iv', 'delta', 'gamma', 'theta', 'vega']
