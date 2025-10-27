@@ -143,11 +143,12 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         const weeklyGain = Number (gain ** (1 / weeksDiff))
         const timeUnitGain = Number(gain ** (1 / (index2008 - index2022)))
         
-        results['daily'] = ! weekly;
+        results['daily'] = ! weekly + '';
         results['gain'] = gain.toFixed(3);
         results['yearlyGain'] = yearlyGain;
-        results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
-        results['weeklyGain'] = weeklyGain.toFixed(5);
+        results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2) + '%';
+        results['monthlyGainPercent'] = ((gain ** (1 / (yearsDiff * 12)) - 1) * 100).toFixed(3) + '%';
+        results['weeklyGainPercent'] = ((weeklyGain - 1) * 100).toFixed(5) + '%'
         results['timeUnitGain'] = timeUnitGain.toFixed(7);  // weekly or daily
         results['yearsDiff'] = yearsDiff.toFixed(3);
 
