@@ -329,21 +329,21 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
 
      var info = {
       symbol: StockSymbol,
-
+      'deepPrice/BubblePrice': deep,
       drop_percent: ((deep - 1) * 100).toFixed(2) + '%',
-      
+      '_': '',
       recoverYears: recoverPeriod === -1 ? -1 : (recoverPeriod/52).toFixed(2),
       recoverWeeks: recoverPeriod === -1 ? -1 : recoverPeriod,
-      
+      '__': '',
       deepPrice:  deepPrice.toFixed(2),
       deepDate:    deepDate,
-
+      '-': '',
       highBeforeDropPrice: stockChartYValues[highPriceBeforeDeepIndex].toFixed(2),
       highBeforeDropDate:  stockChartXValues[highPriceBeforeDeepIndex],
-
+      '--': '',
       deepSell_lostWeeks: gainLostWeeks.toFixed(0),
       'latestPrice/Highest': priceDivHigh,
-      'deepPrice/BubblePrice': deep,
+
     }
 
     var infoExtra = {
