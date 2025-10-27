@@ -850,7 +850,7 @@ function OptionQuote (props) {
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
-  }, [props.symbol, props.rows, props.stockPrice]); 
+  }, [props.symbol, props.rows, props.stockPrice, config.percent]); 
 
 
 
