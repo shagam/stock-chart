@@ -552,7 +552,7 @@ function OptionQuote (props) {
       else {  // buy call or put
         yield_ = (expirationDateValue - breakEven) / mid; //  - props.stockPrice
         const a = 1 // for breakpoint debug
-        if (log)
+        if (logExtra)
           console.log('strike=' + strike, 'dte=' + dte, 'mid=' + mid, 'breakEven=' + breakEven.toFixed(2),
           'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2), 'profit=' + (expirationDateValue - breakEven).toFixed(2))
         if (config.action === 'sell')
@@ -749,14 +749,18 @@ function OptionQuote (props) {
           OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
         else
           OptionQuoteFiltered.yearlyYield[i] = 0;
-        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(); // add breakEven to OptionQuoteFiltered
+        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
         OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
         OptionQuoteFiltered.midDivPrice[i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
 
-        if (logExtra)
-          console.log ('expiration=', OptionQuoteFiltered.expiration[i], 'strike', OptionQuoteFiltered.strike[i], 
-            'dte(days)=', premiumArray.dte[i], 'yield', yield_.toFixed(3), 'yearlyYield=', yearlyYield,
+        if (log)
+          console.log ('expiration=' + OptionQuoteFiltered.expiration[i], 'strike' + OptionQuoteFiltered.strike[i], 
+            // 'dte(days)=', premiumArray.dte[i],
+            'mid=' + premiumArray.mid[i],
+            'yield=' + yield_.toFixed(3), 'yearlyYield=' + yearlyYield,
+            'breakEven=' + breakEven.toFixed(2),
+            'mid/price=' +OptionQuoteFiltered.midDivPrice[i],
           )  
       }
       if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
