@@ -80,7 +80,7 @@ function OptionQuote (props) {
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
  const columnsDefault = [
-    "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",]
+    "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",'mid/price']
 
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
@@ -150,7 +150,7 @@ function OptionQuote (props) {
     if (header === "breakEven") return 'strike + premium, price at expiration to break even'
     if (header === "expectedPrice") return 'current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
     if (header === "profit") return 'expirationDateValue - breakEven, profit at expiration'
-    if (header === "midDivPrice") return 'option_mid_price / share_price'
+    if (header === "mid/price") return 'option_mid_price / share_price'
 
     return null
   }
@@ -715,7 +715,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.breakEven = [];
       OptionQuoteFiltered.expectedPrice =  [];
       // OptionQuoteFiltered.profit = [];
-      OptionQuoteFiltered.midDivPrice = [];
+      OptionQuoteFiltered['mid/price'] = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -755,7 +755,7 @@ function OptionQuote (props) {
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
         // OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
-        OptionQuoteFiltered.midDivPrice[i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
+        OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
 
         if (log)
           console.log ('expiration=' + OptionQuoteFiltered.expiration[i], 'strike' + OptionQuoteFiltered.strike[i], 
@@ -763,7 +763,7 @@ function OptionQuote (props) {
             'mid=' + premiumArray.mid[i],
             'yield=' + yield_.toFixed(3), 'yearlyYield=' + yearlyYield,
             'breakEven=' + breakEven.toFixed(2),
-            'mid/price=' +OptionQuoteFiltered.midDivPrice[i],
+            'mid/price=' +OptionQuoteFiltered['mid/price'][i],
           )  
       }
       if (!columnShow.includes('yield_')) // if gain is not in columnShow, add it
@@ -951,7 +951,7 @@ function OptionQuote (props) {
   function percentSign (attrib, value) {    
     if (value === 0)
       return null;
-    if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'midDivPrice') {
+    if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'mid/price') {
       return config.percent ? '_%' : ''
     }
     else {
