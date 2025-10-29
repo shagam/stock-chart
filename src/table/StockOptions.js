@@ -872,8 +872,8 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow)); // set default columnShow
   }
 
-  const CALCULATED_FIELDS = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price'];
-  const CALCULATED_FIELDS_COLOR = '#c9e0a7ff'
+  const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price'];
+  const CALCULATED_COLUMNS_COLOR = '#e4ece2ff'
 
   function cellColor (line, attrib) {
     if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
@@ -923,7 +923,7 @@ function OptionQuote (props) {
     
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
               attrib === 'mid/price' || attrib === 'profit')
-      return {backgroundColor: CALCULATED_FIELDS_COLOR};
+      return {backgroundColor: CALCULATED_COLUMNS_COLOR};
 
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
     
@@ -1151,6 +1151,7 @@ function OptionQuote (props) {
             <div style={{color: 'magenta'}}>{props.symbol}</div>&nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
             stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
             bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
+            <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED_COLUMNS  </div>
           </div>}
 
           {/* premium quote table */}
