@@ -714,7 +714,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.yearlyYield =  [];
       OptionQuoteFiltered.breakEven = [];
       OptionQuoteFiltered.expectedPrice =  [];
-      // OptionQuoteFiltered.profit = [];
+      OptionQuoteFiltered.profit = [];
       OptionQuoteFiltered['mid/price'] = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
@@ -754,7 +754,7 @@ function OptionQuote (props) {
           OptionQuoteFiltered.yearlyYield[i] = 0;
         OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
         OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
-        // OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
+        OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
         OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
 
         if (log)
