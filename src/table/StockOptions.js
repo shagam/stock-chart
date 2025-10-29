@@ -872,6 +872,9 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow)); // set default columnShow
   }
 
+  const CALCULATED_FIELDS = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price'];
+  const CALCULATED_FIELDS_COLOR = '#c9e0a7ff'
+
   function cellColor (line, attrib) {
     if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
       setErr ("cellColor  line='0' string", attrib, line)
@@ -906,18 +909,22 @@ function OptionQuote (props) {
         if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
       }
-      return {backgroundColor: '#c9e0a7ff'};
+      // return {backgroundColor: '#c9e0a7ff'};
     }
 
     else if (attrib === 'profit') {
       if (optionQuote.profit[line] < 0)
         return { color: 'red', fontWeight: 'bold'};
-      else
-        return {backgroundColor: '#c9e0a7ff'};
+      // else
+      //   return {backgroundColor: '#c9e0a7ff'};
     }
     if (premiumSelected === line)
       return {background: '#d3e5ff'}
     
+    else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
+              attrib === 'mid/price' || attrib === 'profit')
+      return {backgroundColor: CALCULATED_FIELDS_COLOR};
+
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
     
   }
