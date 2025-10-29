@@ -763,6 +763,7 @@ function OptionQuote (props) {
             'mid=' + premiumArray.mid[i],
             'yield=' + yield_.toFixed(3), 'yearlyYield=' + yearlyYield,
             'breakEven=' + breakEven.toFixed(2),
+            'expectedPrice=' + OptionQuoteFiltered.expectedPrice[i],
             'mid/price=' +OptionQuoteFiltered['mid/price'][i],
           )  
       }
