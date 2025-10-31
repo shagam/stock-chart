@@ -118,7 +118,7 @@ function OptionQuote (props) {
     if (header === "expiration") return 'Option expiration date'
     if (header === "firstTraded") return 'Date of first trade of this option'
     if (header === "updated") return 'Date of last update of this option'
-    if( header === "optionSymbol") return 'Option symbol (underlying + expiration + side + strike)'
+    if( header === "optionSymbol") return 'Option symbol name,  (underlying + expiration + side + strike)'
 
     if (header === "underlying") return 'Share ticker/symbol'
     if( header === "side") return 'Option type: call or put'
@@ -145,11 +145,11 @@ function OptionQuote (props) {
     if (header === "theta") return 'Theta sensitivity, time decay of option price'
     if (header === "vega") return 'Vega sensitivity, change in option price for 1% change in implied volatility'
 
-    if (header === 'yield_') return 'total Yield, (expirationDateValue - breakEven) / mid'  
+    if (header === 'yield_') return 'Yield, (expected price on expiration date - breakEven) / mid'  
     if (header === "yearlyYield") return 'Estimated yearly yield based on estimated yearly gain'
-    if (header === "breakEven") return 'strike + premium, price at expiration to break even'
-    if (header === "expectedPrice") return 'current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
-    if (header === "profit") return 'expirationDateValue - breakEven, profit at expiration'
+    if (header === "breakEven") return 'Above this price $, means profit, strike + premium, price at expiration to break even'
+    if (header === "expectedPrice") return 'expected price on expiration.  current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
+    if (header === "profit") return 'profit $,  expirationDateValue - breakEven, profit at expiration'
     if (header === "mid/price") return 'option_mid_price / share_price'
 
     return null
@@ -1150,8 +1150,8 @@ function OptionQuote (props) {
           <div style={{display: 'flex'}}>
             <div style={{color: 'magenta'}}>{props.symbol}</div>&nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
             stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
-            bestYearlyYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
-            <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED_COLUMNS  </div>
+            bestYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
+            <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div>
           </div>}
 
           {/* premium quote table */}
