@@ -243,7 +243,7 @@ function OptionQuote (props) {
     const expirationDayIndex = getExpirationDayIndex (expirationsArray)
     if (expirationDayIndex === -1) { // expirationIndex not found
       console.log ('fail, expirationDayIndex not found')
-      setErr('fail, expirationDayIndex not found')
+      setErr('fail, option expirationDayIndex not found')
       beep2()
       return;
     }
@@ -576,7 +576,7 @@ function OptionQuote (props) {
   function  getOptionsInfoFromServer () {
     setErr()
     if (config.expirationNum < 0 || config.expirationCount < 0 ||  config.strikeNum < 0 || config.strikeCount < 0) {
-      setErr('config error, negative number')
+      setErr('option config error, negative number')
       beep2()
       return;
     }
@@ -638,7 +638,7 @@ function OptionQuote (props) {
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(getDate() + ' status from server:  ' + result.data)
+        setErr(getDate() + 'option status from server:  ' + result.data)
         beep2()
         console.log (props.symbol, result.data)
         return;
@@ -899,7 +899,7 @@ function OptionQuote (props) {
       }
     }
 
-    else if (attrib === 'yield_' && optionQuote.yield_[line].startsWith('-')) {
+    else if ((attrib === 'yield_' || attrib === 'profit') && optionQuote[attrib][line] < 0) {
       const a = 1
       return { color: 'red', fontWeight: 'bold'};        
     }
@@ -912,13 +912,7 @@ function OptionQuote (props) {
       // return {backgroundColor: '#c9e0a7ff'};
     }
 
-    else if (attrib === 'profit') {
-      if (optionQuote.profit[line] < 0)
-        return { color: 'red', fontWeight: 'bold'};
-      // else
-      //   return {backgroundColor: '#c9e0a7ff'};
-    }
-    if (premiumSelected === line)
+    else if (premiumSelected === line)
       return {background: '#d3e5ff'}
     
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
@@ -936,8 +930,7 @@ function OptionQuote (props) {
       return {backgroundColor: 'white', color: 'orange', fontWeight: 'normal'};
     }
 
-    if (attrib === 'yield_' && optionQuote.yield_[line].startsWith('-')) {
-      const a = 1
+    else if ((attrib === 'yield_' || attrib === 'profit') && optionQuote[attrib][line] < 0) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
@@ -946,16 +939,11 @@ function OptionQuote (props) {
         if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
       }
-      return {backgroundColor: '#c9e0a7ff'};
     }
 
-    else if (attrib === 'profit') {
-      if (optionQuote.profit[line] < 0)
-        return { color: 'red', fontWeight: 'bold'};
-      else
-        return {backgroundColor: '#c9e0a7ff'};
-    }
-     
+    else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
+          attrib === 'mid/price' || attrib === 'profit')
+      return {backgroundColor: CALCULATED_COLUMNS_COLOR};
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};  
   }
 
@@ -1188,14 +1176,10 @@ function OptionQuote (props) {
                   })}
                 </tbody>
             </table>
+          </div>}
 
-
-          <div>
-            {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button> 
-            &nbsp; &nbsp;  selected-row={premiumSelected} </div>} &nbsp; &nbsp;  &nbsp;
-          </div>
-        </div>}
-
+          {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button> 
+          &nbsp; &nbsp;  selected-row={premiumSelected} </div>} &nbsp; &nbsp;  &nbsp;
         <hr/>
 
         {focusGroupKeys.length > 0 &&
