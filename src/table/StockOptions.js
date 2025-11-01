@@ -890,13 +890,8 @@ function OptionQuote (props) {
       }
     }
 
-    else if (attrib === 'yearlyYield') {
-      if (optionQuote.yearlyYield === undefined) {
-        return {backgroundColor: '#d3e533', color: 'red', fontWeight: 'bold'};        
-      }
-      if (bestYearlyYieldIndex === line) {
+    else if (attrib === 'yearlyYield' && bestYearlyYieldIndex === line) {
         return {backgroundColor: '#e5d333ff', color: 'black', fontWeight: 'bold'};
-      }
     }
 
     else if ((attrib === 'yield_' || attrib === 'profit') && optionQuote[attrib][line] < 0) {
