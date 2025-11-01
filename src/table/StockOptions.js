@@ -557,11 +557,11 @@ function OptionQuote (props) {
         }
         yield_ = profit / mid; //  - props.stockPrice
 
-        if (logExtra)
-          console.log('strike=' + strike, 'dte=' + dte, 'mid=' + mid, 'breakEven=' + breakEven.toFixed(2),
-          'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2),
-          //  'profit=' + (expirationDateValue - breakEven).toFixed(2)
-          )
+        // if (logExtra)
+        //   console.log('strike=' + strike, 'dte=' + dte, 'mid=' + mid, 'breakEven=' + breakEven.toFixed(2),
+        //   'expirationDateValue=' + expirationDateValue.toFixed(2), 'yield=' + yield_.toFixed(2),
+        //   //  'profit=' + (expirationDateValue - breakEven).toFixed(2)
+        //   )
         if (config.action === 'sell')
           yield_ = - yield_; // for sell, invert the yield
       }
@@ -762,7 +762,9 @@ function OptionQuote (props) {
         OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
 
         if (log)
-          console.log ('expiration=' + OptionQuoteFiltered.expiration[i], 'strike' + OptionQuoteFiltered.strike[i], 
+          console.log ('i=', i,
+            'expiration=' + OptionQuoteFiltered.expiration[i],
+            'strike=' + OptionQuoteFiltered.strike[i], 
             // 'dte(days)=', premiumArray.dte[i],
             'mid=' + premiumArray.mid[i],
             'yield=' + yield_.toFixed(3), 'yearlyYield=' + yearlyYield,
@@ -1132,7 +1134,7 @@ function OptionQuote (props) {
           {optionQuote && optionQuote.expiration && 
           <div style={{display: 'flex'}}>
             <div style={{color: 'magenta'}}>{props.symbol}</div>&nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
-            stockPrice={props.stockPrice} &nbsp; &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
+            stockPrice={props.stockPrice} &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
             bestYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
             <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div>
           </div>}
