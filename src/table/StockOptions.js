@@ -964,7 +964,7 @@ function OptionQuote (props) {
     <div style = {{ border: '2px solid blue'}} >
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}>Option primium (under development) </h6>  &nbsp; &nbsp;
+          <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Anaysis only. Please consult other tools) </strong> </h6>  &nbsp; &nbsp;
         </div>
 
         {/* flags checkboxes */}
