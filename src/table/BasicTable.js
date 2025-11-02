@@ -1114,7 +1114,7 @@ const BasicTable = (props) => {
 
             {analyzeTool ==='dropCount' && <DropsCount symbol = {chartSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-                errorAdd={errorAdd} daily={props.daily}/>}
+                errorAdd={errorAdd} daily={daily}/>}
 
             {analyzeTool ==='options' && <OptionQuote symbol = {chartSymbol} stockPrice = {stockChartYValues[0]}
                 errorAdd={errorAdd} daily={props.daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows} />}
