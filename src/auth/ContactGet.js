@@ -64,7 +64,7 @@ export default function ContactGet (props)  {
         // console.log (form.current)
         // console.log (localIpv4, city, countryName, countryCode)
     
-        localStorage.setItem('contactGetReminderMili', Date.now()); // turn off reminder for 24 hours
+        localStorage.setItem('contactGetReminder', JSON.stringify({mili: Date.now(), date: getDate()})); // turn off reminder for 24 hours
 
         const ssl = true
         const PORT = 5000

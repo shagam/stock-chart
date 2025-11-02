@@ -191,7 +191,7 @@ const BasicTable = (props) => {
       data = mmmmm(() => JSON.parse (localStorage.getItem("stocks")), []);
 
   //** read last reminder mili */
-  const contactGetMili  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminderMili')), []);
+  const contactGetReminder  = useMemo(() => JSON.parse (localStorage.getItem('contactGetReminder')), []);
   
   const [priceAlertTable, setPriceAlertTable] = useState([]);
 
@@ -815,7 +815,7 @@ const BasicTable = (props) => {
     <>
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
-        {(admin || (eliHome && ! isMobile)) && Date.now() - contactGetMili > 1000 * 3600 * 24 * 3 && <div style={{color:'red'}}>ContactGet reminder</div>} 
+        {(admin || (eliHome && ! isMobile)) && (! contactGetReminder || Date.now() - contactGetReminder.mili > 1000 * 3600 * 24 * 3) && <div style={{color:'red'}}>ContactGet reminder</div>} 
 
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
         <Link to="/about">About</Link>&nbsp; 
