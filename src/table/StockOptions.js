@@ -38,7 +38,7 @@ function OptionQuote (props) {
 
   const [strikeNumCalc,setStrikeNumCalc] = useState(-1) // for display only
   
-  const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
+  // const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
 
   const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
   const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(-1)// filled by useEffect
@@ -746,16 +746,17 @@ function OptionQuote (props) {
           console.log ('i=', i, 'mid=' + mid, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
           'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
 
-        OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2); 
-        if (yearlyYield !== 0)
-          OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
-        else
-          OptionQuoteFiltered.yearlyYield[i] = 0;
-        OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
-        OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
-        OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
-        OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
-
+        if (config.side !== 'put') {
+          OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2); 
+          if (yearlyYield !== 0)
+            OptionQuoteFiltered.yearlyYield[i] =! config.percent ? Number(yearlyYield).toFixed(2) : ((Number(yearlyYield)) * 100).toFixed(2);
+          else
+            OptionQuoteFiltered.yearlyYield[i] = 0;
+          OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
+          OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
+          OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
+          OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
+        }
         if (log)
           console.log ('i=', i,
             'expiration=' + OptionQuoteFiltered.expiration[i],
@@ -845,7 +846,7 @@ function OptionQuote (props) {
       console.log ('error, symbol not found in rows', props.symbol)
     } 
     else {
-      setRow_index(row_index_)
+      // setRow_index(row_index_)
       setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
       setEstimatedYearlyGain (((props.rows[row_index_].values.peak2Peak - 1) * 100).toFixed(2))
       setYearlyGainSource (props.rows[row_index_].values.yearlyGain_source);
