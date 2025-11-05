@@ -963,9 +963,10 @@ function OptionQuote (props) {
   return (
     <div style = {{ border: '2px solid blue'}} >
         <div style = {{display: 'flex'}}>
-          <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Anaysis only. Please consult other tools) </strong> </h6>  &nbsp; &nbsp;
+          <div style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+          <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
         </div>
+        {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}
 
         {/* flags checkboxes */}
         {props.eliHome && <div style = {{display: 'flex'}}>
@@ -975,7 +976,7 @@ function OptionQuote (props) {
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={hideNegativeYield}  onChange={()=>setHideNegativeYield (! hideNegativeYield)}  />&nbsp;hide-negative-yield &nbsp; &nbsp; </div>
         </div>}
 
-        {config.action === 'sell' && <div  style={{color: 'red'}}> 'yield not defined, for selling options bacause of unlimited risk' </div>}
+        {/* {config.action === 'sell' && <div  style={{color: 'red'}}> 'yield not defined, for selling options bacause of unlimited risk' </div>} */}
         {err && <div style={{color: 'red'}}>Error: {err} </div>}
         {latency && <div style={{color: 'green'}}> {latency} </div>}
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
