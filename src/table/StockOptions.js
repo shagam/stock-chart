@@ -40,14 +40,9 @@ function OptionQuote (props) {
   
   const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
 
-  // var yearlyGain = props.rows[row_index].values.peak2Peak;
-  // if (! yearlyGain)
-  //   yearlyGain = props.rows[row_index].values.short
-  const priceDivHigh = props.rows[row_index].values.priceDivHigh;
-  const bubblePrice  = props.rows[row_index].values.bubblePrice ;
   const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
-  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState((Number(props.yearlyGain) - 1) * 100); // estimated yearly gain
-
+  const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(-1)// filled by useEffect
+  const [yearlyGainSource, setYearlyGainSource] = useState("") // filled by useEffect
 
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
@@ -853,6 +848,7 @@ function OptionQuote (props) {
       setRow_index(row_index_)
       setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
       setEstimatedYearlyGain (((props.rows[row_index_].values.peak2Peak - 1) * 100).toFixed(2))
+      setYearlyGainSource (props.rows[row_index_].values.yearlyGain_source);
     }
 
     // setOptionKeys([]);
@@ -988,7 +984,7 @@ function OptionQuote (props) {
        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)} 
         />&nbsp;<strong> <FaCog style={{ fontSize: '24px', color: '#0078D4' }} /> config </strong> &nbsp; &nbsp; </div>
         {configShow && 
-        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain}/>}
+        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain} yearlyGainSource={yearlyGainSource}/>}
         <div>&nbsp;</div>
         {/* <hr/> */}
 
