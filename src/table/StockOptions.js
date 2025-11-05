@@ -964,6 +964,7 @@ function OptionQuote (props) {
           <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
         </div>
         {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}
+        {config.side === 'put' && <h6  style={{color: '#c760ff'}}>  &nbsp;  <strong style={{color: 'red'}}>put options, not supported. and never tested</strong> </h6>}
 
         {/* flags checkboxes */}
         {props.eliHome && <div style = {{display: 'flex'}}>
