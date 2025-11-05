@@ -17,6 +17,7 @@ function DropsCount (props) {
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
     const [err, setErr] = useState();
     const [log, setLog] = useState (false);
+    const [logExtra, setLogExtra] = useState (false);
 
     //** input */
     const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
@@ -94,6 +95,16 @@ function DropsCount (props) {
 
     //** main */ 
     function countDrops () {
+
+        // const stockChartXValues = ['2025-11-01', '2025-10-31', '2025-10-30', '2025-10-29', '2025-10-28'];
+        // const stockChartYValues = [100, 105, 110, 108, 95];
+        // const startIndex = stockChartYValues.length - 1;
+        // const changeThreshold = 5; // 5%
+
+        // const streaks = analyzeAlternatingStreaks(stockChartXValues, stockChartYValues, startIndex, changeThreshold);
+        // console.log(streaks);
+
+
         if (changeThreshold >= 100 || changeThreshold < 0) {
             setErr('Change threashold should be between 0 to 100')
             beep2()
@@ -118,6 +129,12 @@ function DropsCount (props) {
         //** clipp main chart */
         var chartClippedX_temp = [];
         var chartClippedY_temp = [];
+
+        const alternateStreaks =   extractAlternatingStreaks_ (props.stockChartXValues, props.stockChartYValues, searchIndex, changeThreshold)
+
+        if (log)
+            console.log ('analyzeStreaks result=', alternateStreaks)    
+
         for (let i = 0; i < searchIndex; i++) {
             chartClippedX_temp[i] = props.stockChartXValues[i];
             chartClippedY_temp[i] = props.stockChartYValues[i];
@@ -246,7 +263,8 @@ function DropsCount (props) {
 
         {<div style={{display:'flex'}}>
             <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp;
-            <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} />&nbsp;log    
+            <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} />&nbsp;log  &nbsp; &nbsp; 
+            <input  type="checkbox" checked={logExtra}  onChange={()=>setLogExtra(! logExtra)} />&nbsp;logExtra  
         </div>} 
 
         <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold %' type='Number' pattern="[0-9]+" width = '15%'/> 
