@@ -122,7 +122,7 @@ function DropsCount (props) {
             if (direction !== undefined) {
                 var results = {
                     direction: direction,
-                    len: len,
+
                     ratio: Number((valArray[next] / valArray[searchIndex]).toFixed(3)),
                     ratioEnd: ratioEnd.toFixed(3), //direction === 'rise'? deepAfterRise / virtualHigh : topAfterDrop / virtualLow,
                     
@@ -132,9 +132,8 @@ function DropsCount (props) {
                     // rise_after_drop: topAfterDrop / virtualLow,
        
                     startDate: dateArray[searchIndex],
-                    endDate: dateArray[next],
-
-
+                    // endDate: dateArray[next],
+                    len: len,
                     };
 
                 
