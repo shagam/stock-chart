@@ -126,8 +126,8 @@ function DropsCount (props) {
                     ratio: Number((valArray[next] / valArray[searchIndex]).toFixed(3)),
                     ratioEnd: ratioEnd.toFixed(3), //direction === 'rise'? deepAfterRise / virtualHigh : topAfterDrop / virtualLow,
                     
-                    // searchIndex : searchIndex,
-                    next: next,              
+                    index : searchIndex,
+                    // next: next,              
                     // drop_after_rise: deepAfterRise / virtualHigh,
                     // rise_after_drop: topAfterDrop / virtualLow,
        
