@@ -308,7 +308,7 @@ function DropsCount (props) {
         {dropsArray.length > 0 && 
         <div>
             {/* <div>&nbsp;</div> */}
-            <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
+            <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table (streaks) </div>
 
             {tableShow && <div style={{...ROW_SPACING, textAlign: 'left', height: '45vh', 'overflowY': 'scroll'}}>
             <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={props.stockChartXValues[rawArrayLength - 1]}</div>
