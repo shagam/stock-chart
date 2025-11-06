@@ -298,9 +298,9 @@ function DropsCount (props) {
 
         <div>&nbsp;</div>
 
-        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
-        {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount} &nbsp; &nbsp;
-             bigDropsPerYear={bigDropsPerYear} &nbsp; &nbsp; bigRisesPerYear={bigRisesPerYear}</div>}
+        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops or rises   </button> &nbsp;
+        {bigDropCount && bigRiseCount && <div>dropCount={bigDropCount} &nbsp; &nbsp; riseCount={bigRiseCount} &nbsp; &nbsp;
+             dropsPerYear={bigDropsPerYear} &nbsp; &nbsp; risesPerYear={bigRisesPerYear}</div>}
         
         <div>&nbsp;</div>
 
