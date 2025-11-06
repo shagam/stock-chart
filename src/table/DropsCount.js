@@ -158,7 +158,7 @@ function DropsCount (props) {
                 zigzagy.push(props.stockChartYValues[next])
 
                 if (len === 1) {
-                    console.log ('1-day streak')
+                    console.log ('1-day streak, index=' + searchIndex,  '  ', props.stockChartXValues[searchIndex], '  ratio=', results.ratio)
                 }
                 return next; // last index of this streak
             }
