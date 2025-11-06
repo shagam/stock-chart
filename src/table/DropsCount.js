@@ -311,15 +311,15 @@ function DropsCount (props) {
             {/* <div>&nbsp;</div> */}
             <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
 
-            {tableShow && <div style={{...ROW_SPACING, textAlign: 'left', maxWidth: '750px', height: '45vh', 'overflowY': 'scroll'}}>
+            {tableShow && <div style={{...ROW_SPACING, textAlign: 'left', height: '45vh', 'overflowY': 'scroll'}}>
             <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={props.stockChartXValues[rawArrayLength - 1]}</div>
             <table>
                 <thead>
-                <tr style={ROW_SPACING}>
-                    <th style={ROW_SPACING}>N</th>
+                <tr style={{...ROW_SPACING}}>
+                    <th style={{width: '15px', ...ROW_SPACING}}>N</th>
                     {Object.keys(dropsArray[0]).map((h,h1) => {
                         return (
-                            <th style={ROW_SPACING} key={h1}>{h}</th>
+                            <th style={{width: '15px', ...ROW_SPACING}} key={h1}>{h}</th>
                         )
                     })}
                 </tr>
