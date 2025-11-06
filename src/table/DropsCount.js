@@ -30,8 +30,12 @@ function DropsCount (props) {
 
     //** output display */
     const [dropsArray, setDropsArray] = useState([])
+    
     const [bigDropCount, setBigDropsCount] = useState()
     const [bigRiseCount, setBigRiseCount] = useState();
+    const [bigDropsPerYear, setBigDropsPerYear] = useState();
+    const [bigRisesPerYear, setBigRisesPerYear] = useState();
+
     const [rawArrayLength, setRawArrayLength] = useState()
 
 
@@ -221,6 +225,10 @@ function DropsCount (props) {
         setBigDropsCount(bigDropCount_)
         setBigRiseCount(bigRiseCount_)
 
+        // years_span
+        var years_span = (new Date(chartClippedX_temp[0]) - new Date(chartClippedX_temp[chartClippedX_temp.length -1])) / (1000 * 60 * 60 * 24 * 365)
+        setBigDropsPerYear ( (bigDropCount_ / years_span).toFixed(2))
+        setBigRisesPerYear ( (bigRiseCount_ / years_span).toFixed(2))
 
         const dat =
         [
@@ -292,7 +300,8 @@ function DropsCount (props) {
         <div>&nbsp;</div>
 
         <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count drops   </button> &nbsp;
-        {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount}</div>}
+        {bigDropCount && bigRiseCount && <div>bigDropCount={bigDropCount} &nbsp; &nbsp;  bigRiseCount={bigRiseCount} &nbsp; &nbsp;
+             bigDropsPerYear={bigDropsPerYear} &nbsp; &nbsp; bigRisesPerYear={bigRisesPerYear}</div>}
         
         <div>&nbsp;</div>
 
