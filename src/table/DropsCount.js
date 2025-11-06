@@ -166,15 +166,7 @@ function DropsCount (props) {
     //** main */ 
     function countDrops () {
 
-        // const stockChartXValues = ['2025-11-01', '2025-10-31', '2025-10-30', '2025-10-29', '2025-10-28'];
-        // const stockChartYValues = [100, 105, 110, 108, 95];
-        // const startIndex = stockChartYValues.length - 1;
-        // const changeThreshold = 5; // 5%
-
-        // const streaks = analyzeAlternatingStreaks(stockChartXValues, stockChartYValues, startIndex, changeThreshold);
-        // console.log(streaks);
-
-
+    
         if (changeThreshold >= 100 || changeThreshold < 0) {
             setErr('Change threashold should be between 0 to 100')
             beep2()
@@ -252,15 +244,7 @@ function DropsCount (props) {
             mode: 'markers',
             marker: { color: 'red', size: 3 },       
         },
-        // {
-        //     name: 'drop_rise_ratio',
-        //     x: dropRiseRatioX,
-        //     y: dropRiseRatioY,
-        //     type: 'scatter',
-        //     mode: 'lines+markers',
-        //     // type: 'bar',
-        //     marker: { color: 'blue' },       
-        // },
+
         ]
         setChartData(dat)
     }
@@ -278,8 +262,8 @@ function DropsCount (props) {
         return 'black'
     }
 
-    const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px'}
-    
+    // const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px', gap: '0', boarderSpacing: '0', boarderCollapse: 'collapse'};
+   const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px'}
     return (
         <div>
     {/* <hr/>  */}
@@ -292,7 +276,7 @@ function DropsCount (props) {
         <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops and rises</h6>
         <div style={{color: 'red'}}>{err}</div>
 
-        {<div style={{display:'flex'}}>
+        {props.eliHome && <div style={{display:'flex'}}>
             <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp;
             <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} />&nbsp;log  &nbsp; &nbsp; 
             <input  type="checkbox" checked={logExtra}  onChange={()=>setLogExtra(! logExtra)} />&nbsp;logExtra  
@@ -318,15 +302,15 @@ function DropsCount (props) {
             {/* <div>&nbsp;</div> */}
             <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
 
-            {tableShow && <div style={{maxWidth: '750px', height: '45vh', 'overflowY': 'scroll'}}>
+            {tableShow && <div style={{...ROW_SPACING, textAlign: 'left', maxWidth: '750px', height: '45vh', 'overflowY': 'scroll'}}>
             <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={props.stockChartXValues[rawArrayLength - 1]}</div>
             <table>
                 <thead>
-                <tr>
-                    <th style={{padding: '1px', margin: '1px'}}>N</th>
+                <tr style={ROW_SPACING}>
+                    <th style={ROW_SPACING}>N</th>
                     {Object.keys(dropsArray[0]).map((h,h1) => {
                         return (
-                            <th style={{padding: '1px', margin: '1px'}} key={h1}>{h}</th>
+                            <th style={ROW_SPACING} key={h1}>{h}</th>
                         )
                     })}
                 </tr>
@@ -334,11 +318,11 @@ function DropsCount (props) {
                 <tbody>
                     {dropsArray.map((s, s1) =>{
                         return (
-                        <tr key={s1}>
-                            <td style={{padding: '1px', margin: '1px'}}>{s1}</td>
+                        <tr style={ROW_SPACING} key={s1}>
+                            <td style={ROW_SPACING}>{s1}</td>
                             {Object.keys(dropsArray[s1]).map((a,a1) => {
                                 return (
-                                    <td key={a1} style={{padding: '1px', margin: '1px', color: colorChange(a,dropsArray[s1][a])}} >{dropsArray[s1][a]}</td>
+                                    <td key={a1} style={{...ROW_SPACING, color: colorChange(a,dropsArray[s1][a])}} >{dropsArray[s1][a]}</td>
                                 )
                             })}
                         </tr>
