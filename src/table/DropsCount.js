@@ -138,15 +138,15 @@ function DropsCount (props) {
                     const extra = {               
                         highIndex: virtualHighIndex,
                         lowIndex: virtualLowIndex,
-                        virtualHigh: virtualHigh,
-                        virtualLow: virtualLow,
+                        virtualHigh: virtualHigh.toFixed(2),
+                        virtualLow: virtualLow.toFixed(2),
                         
                         value: value.toFixed(2),
                     }
                     const merged = {...results, ...extra};
                     results = merged;
 
-                    console.log ('streak=', results);
+                    // console.log ('streak=', results);
                 }
                 streakArray.push (results);
             
@@ -278,7 +278,8 @@ function DropsCount (props) {
         return 'black'
     }
 
-
+    const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px'}
+    
     return (
         <div>
     {/* <hr/>  */}
@@ -317,7 +318,7 @@ function DropsCount (props) {
             {/* <div>&nbsp;</div> */}
             <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
 
-            {tableShow && <div style={{width: '650px', height: '45vh', 'overflowY': 'scroll'}}>
+            {tableShow && <div style={{maxWidth: '750px', height: '45vh', 'overflowY': 'scroll'}}>
             <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={props.stockChartXValues[rawArrayLength - 1]}</div>
             <table>
                 <thead>
