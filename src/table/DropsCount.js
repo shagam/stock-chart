@@ -32,65 +32,135 @@ function DropsCount (props) {
     const [dropsArray, setDropsArray] = useState([])
     const [bigDropCount, setBigDropsCount] = useState()
     const [bigRiseCount, setBigRiseCount] = useState();
+    const [rawArrayLength, setRawArrayLength] = useState()
+
+
     var bigDropCount_ = 0;
     var bigRiseCount_ = 0;
 
     var dropRiseRatioX = []
     var dropRiseRatioY = []
     var zigzagx = []
-    var zigzagy = []
+    var zigzagy = [] 
 
     useEffect (() => { 
         setDropsArray([])
       }, [props.symbol,  props.daily]) 
 
+    function extractOneStreak (dateArray, valArray, searchIndex, changeThreshold, streakArray) {
+        // if (searchIndex === 1432) {
+        //     console.log ('breakpoint searchIndex at 1432')  
+        // }
+        var virtualHighIndex = -1;
+        var virtualHigh = valArray[searchIndex];
+        var virtualLowIndex = -1;
+        var virtualLow = valArray[searchIndex];
+        const startValue = valArray[searchIndex];
+        var direction = undefined;
+        var next = -1;
+        var rise_or_fall = 0
+        var deepAfterRise = 0
+        var topAfterDrop = 0
+
+        for (let i = searchIndex; i > 0; i--) {
+
+            // check for new high and low
+            var value = valArray[i];
+            if (value > virtualHigh) {
+                virtualHighIndex = i;
+                virtualHigh = valArray[virtualHighIndex];
+            }
+            if (value < virtualLow) {
+                virtualLowIndex = i;
+                virtualLow = valArray[virtualLowIndex];
+            }
+
+            const riseRatioThreshold = 1 + changeThreshold / 100
+            // const riseThresholdVal = startValue * riseRatioThreshold;
+            const riseEndRatioThreshold = 1 - changeThreshold / 100 / 4;
+            // const riseEndThresholdVal = virtualHigh * (1 - changeThreshold / 100 / 4);
+
+            if (virtualHigh > startValue * riseRatioThreshold) {
+                rise_or_fall = 1
+                deepAfterRise = value;
+            }
+
+            if (rise_or_fall === 1 && value < deepAfterRise)
+                deepAfterRise = value
+
+            if (rise_or_fall === 1 && deepAfterRise < virtualHigh * riseEndRatioThreshold) {
+                direction = 'rise';
+                next = virtualHighIndex;
+            }
+
+            // end of rise streak, start drop streak
+            const dropRatioThreshold = 1 - changeThreshold / 100
+            // const dropValThreshold = startValue * (1 - changeThreshold / 100);
+            const dropEndRatioThreshold = 1 + changeThreshold / 100 / 4;
+            // const dropEndThreshold = virtualLow * (1 + changeThreshold / 100 / 4);
+
+            if (virtualLow <  startValue * dropRatioThreshold) {
+                rise_or_fall = -1
+                topAfterDrop = value;
+            }
+
+            if (rise_or_fall === -1 && value > topAfterDrop)
+                topAfterDrop = value
+
+            if (rise_or_fall  && topAfterDrop > virtualLow * dropEndRatioThreshold) { 
+                direction = 'drop';
+                next = virtualLowIndex;
+            }
+
+            const len = searchIndex - next
+            const ratioEnd = direction === 'rise'? deepAfterRise / virtualHigh : topAfterDrop / virtualLow
+
+            if (direction !== undefined) {
+                var results = {
+                    direction: direction,
+                    len: len,
+                    ratio: Number((valArray[next] / valArray[searchIndex]).toFixed(3)),
+                    ratioEnd: ratioEnd.toFixed(3), //direction === 'rise'? deepAfterRise / virtualHigh : topAfterDrop / virtualLow,
+                    
+                    // searchIndex : searchIndex,
+                    next: next,              
+                    // drop_after_rise: deepAfterRise / virtualHigh,
+                    // rise_after_drop: topAfterDrop / virtualLow,
+       
+                    startDate: dateArray[searchIndex],
+                    endDate: dateArray[next],
 
 
-    //** countDrops */
-    function searchLow (highIndex) {
-        // today is index 0
-        var lowValue = props.stockChartYValues[highIndex] // start from high value
-        var lowIndex = -1;
-        const limit =  highIndex - searchRange <= 0 ? 0:  highIndex - searchRange;
-        for (let i = highIndex; i > limit; i --) {
-        if (lowValue > props.stockChartYValues[i]) {
-            lowValue = props.stockChartYValues[i]
-            lowIndex = i;
-        }
-        }
-        return lowIndex;
-    }
+                    };
 
-    function searchHigh (startIndex) {
-        // today is index 0
-        var value = props.stockChartYValues[startIndex] // start from high value
-        var foundIndex = -1;
-        const limit =  startIndex - searchRange <= 0 ? 0:  startIndex - searchRange;
-        for (let i = startIndex; i > limit; i --) {
-        if (value < props.stockChartYValues[i]) {
-            value = props.stockChartYValues[i]
-            foundIndex = i;
-        }
-        }
-        return foundIndex;
-    }
+                
+                if (logExtra) {
+                    const extra = {               
+                        highIndex: virtualHighIndex,
+                        lowIndex: virtualLowIndex,
+                        virtualHigh: virtualHigh,
+                        virtualLow: virtualLow,
+                        
+                        value: value.toFixed(2),
+                    }
+                    const merged = {...results, ...extra};
+                    results = merged;
 
-    function bigChange (startIndex) {
-        const date = props.stockChartXValues[startIndex]
-        let i = 0
-        var startValue = props.stockChartYValues[startIndex] // start from high value
-        for (i = startIndex; i >= 0; i --) {
-            const ratio = startValue / props.stockChartYValues[i];
-            const lowRatio =  (100 - changeThreshold)/100 
-            const highRatio = 1/((100 - changeThreshold)/100) 
-            if (ratio <lowRatio || ratio > highRatio) {
-                return i;
+                    console.log ('streak=', results);
+                }
+                streakArray.push (results);
+            
+                zigzagx.push(props.stockChartXValues[next])
+                zigzagy.push(props.stockChartYValues[next])
+
+                if (len === 1) {
+                    console.log ('1-day streak')
+                }
+                return next; // last index of this streak
             }
         }
-        return -1 // npt found   
+        return -1; // not found  
     }
-
-
 
 
     //** main */ 
@@ -129,73 +199,33 @@ function DropsCount (props) {
         //** clipp main chart */
         var chartClippedX_temp = [];
         var chartClippedY_temp = [];
-
-        const alternateStreaks =   extractAlternatingStreaks_ (props.stockChartXValues, props.stockChartYValues, searchIndex, changeThreshold)
-
-        if (log)
-            console.log ('analyzeStreaks result=', alternateStreaks)    
-
         for (let i = 0; i < searchIndex; i++) {
             chartClippedX_temp[i] = props.stockChartXValues[i];
             chartClippedY_temp[i] = props.stockChartYValues[i];
         }
+        setRawArrayLength (chartClippedX_temp.length)
 
-
-        for (let i = 0; i < chartClippedX_temp.length; i++) {
-            if (searchMode) { // big Chanhe
-                nextIndex = bigChange(searchIndex)
-            } else {
-                if (i % 2 === 0) {
-                    nextIndex = searchLow (searchIndex)
-                    if (log)
-                    console.log ('searchLow', searchIndex, nextIndex)
-                }
-                else {
-                    nextIndex = searchHigh (searchIndex)
-                    if (log)
-                    console.log ('searchHigh', searchIndex, nextIndex)
-                }
-            }
-            if (nextIndex === -1)
-                break;
-
-            const changeRatio = props.stockChartYValues[nextIndex] / props.stockChartYValues[searchIndex];
-            if (changeRatio < (100-changeThreshold)/100) {
-                bigDropCount_ ++
-            }
-            const thresh = 1/((100-changeThreshold)/100)
-            if (changeRatio >  thresh ){
-                bigRiseCount_ ++
-            }
-
-            //* prepare for table
-            const dropObj = {
-                endDate: props.stockChartXValues[nextIndex],
-                change: changeRatio.toFixed(3),
-                startIndex: searchIndex,
-                endIndex: nextIndex,
-                endPrice: props.stockChartYValues[nextIndex].toFixed(2),
-            }
-            if (log)
-                console.log (dropObj, searchIndex, nextIndex)
-            
-            //** build arrays for the chart */
-            dropRiseRatioX.push(props.stockChartXValues[nextIndex])
-            dropRiseRatioY.push((1-changeRatio) * 200 + 200)
-
-            zigzagx.push(props.stockChartXValues[nextIndex])
-            zigzagy.push(props.stockChartYValues[nextIndex])
-
-
-            // if (dropRatio < dropThreshold / 100)
-
-            dropsArray_.push (dropObj)
-            // console.log (dropRatio, dropObj, dropThreshold/100, dropsArray.length)
-
-            searchIndex = nextIndex; 
+        // collect streakArray
+        var streakArray = []
+        var next_ = searchIndex - 1
+        while (next_ !== -1) {
+            next_ =  extractOneStreak (chartClippedX_temp, chartClippedY_temp, next_, changeThreshold, streakArray)
+            // console.log ('nextIndex=', next_)
         }
+        if (log)
+            console.log ('streakArray=', streakArray)  
 
-        setDropsArray(dropsArray_)
+        for (let i = 0; i < streakArray.length; i++) {
+            const streak = streakArray[i];
+            if (streak.direction === 'drop') 
+                bigDropCount_ += 1;
+            
+            if (streak.direction === 'rise') 
+                bigRiseCount_ += 1;
+        }
+        console.log ('bigDropCount=', bigDropCount_, ' bigRiseCount=', bigRiseCount_, ' thershold=', changeThreshold)
+
+        setDropsArray(streakArray)
         setBigDropsCount(bigDropCount_)
         setBigRiseCount(bigRiseCount_)
 
@@ -287,8 +317,8 @@ function DropsCount (props) {
             {/* <div>&nbsp;</div> */}
             <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table </div>
 
-            {tableShow && <div style={{width: '450px', height: '45vh', 'overflowY': 'scroll'}}>
-            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={props.highIndex} &nbsp;&nbsp; startDate={props.stockChartXValues[props.highIndex]}</div>
+            {tableShow && <div style={{width: '650px', height: '45vh', 'overflowY': 'scroll'}}>
+            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={props.stockChartXValues[rawArrayLength - 1]}</div>
             <table>
                 <thead>
                 <tr>
@@ -317,7 +347,7 @@ function DropsCount (props) {
             </table>
         </div>}
 
-        {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'drop-rise-count',
+        {chartData && <Plot  data={chartData} layout={{ width: 750, height: 500, title: 'drop-rise-count',
             xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
         </div>}
