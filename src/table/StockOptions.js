@@ -899,7 +899,7 @@ function OptionQuote (props) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
-    else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid', attrib==='last') {
+    else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid' || attrib==='last') {
       if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
         if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
