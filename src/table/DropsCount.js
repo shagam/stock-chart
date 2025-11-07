@@ -21,7 +21,8 @@ function DropsCount (props) {
 
     //** input */
     const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
-    const [changeThreshold, setChangeThreshold] = useState(5) // drop percentage, used for count number of drops
+    const [streakThreshold, setStreakThreshold] = useState(6) // drop percentage, used for count number of drops
+    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(1.5) // percentage to reverse the streak
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
@@ -81,7 +82,7 @@ function DropsCount (props) {
 
             const riseRatioThreshold = 1 + changeThreshold / 100
             // const riseThresholdVal = startValue * riseRatioThreshold;
-            const riseEndRatioThreshold = 1 - changeThreshold / 100 / 4;
+            const riseEndRatioThreshold = 1 - streakEndReverseThreshold / 100;
             // const riseEndThresholdVal = virtualHigh * (1 - changeThreshold / 100 / 4);
 
             if (virtualHigh > startValue * riseRatioThreshold) {
@@ -100,7 +101,7 @@ function DropsCount (props) {
             // end of rise streak, start drop streak
             const dropRatioThreshold = 1 - changeThreshold / 100
             // const dropValThreshold = startValue * (1 - changeThreshold / 100);
-            const dropEndRatioThreshold = 1 + changeThreshold / 100 / 4;
+            const dropEndRatioThreshold = 1 + streakEndReverseThreshold / 100;
             // const dropEndThreshold = virtualLow * (1 + changeThreshold / 100 / 4);
 
             if (virtualLow <  startValue * dropRatioThreshold) {
@@ -170,7 +171,7 @@ function DropsCount (props) {
     function countDrops () {
 
     
-        if (changeThreshold >= 100 || changeThreshold < 0) {
+        if (streakThreshold >= 100 || streakThreshold < 0) {
             setErr('Change threashold should be between 0 to 100')
             beep2()
             return;            
@@ -204,7 +205,7 @@ function DropsCount (props) {
         var streakArray = []
         var next_ = searchIndex - 1
         while (next_ !== -1) {
-            next_ =  extractOneStreak (chartClippedX_temp, chartClippedY_temp, next_, changeThreshold, streakArray)
+            next_ =  extractOneStreak (chartClippedX_temp, chartClippedY_temp, next_, streakThreshold, streakArray)
             // console.log ('nextIndex=', next_)
         }
         if (log)
@@ -218,7 +219,7 @@ function DropsCount (props) {
             if (streak.direction === 'rise') 
                 bigRiseCount_ += 1;
         }
-        console.log ('bigDropCount=', bigDropCount_, ' bigRiseCount=', bigRiseCount_, ' thershold=', changeThreshold)
+        console.log ('bigDropCount=', bigDropCount_, ' bigRiseCount=', bigRiseCount_, ' thershold=', streakThreshold)
 
         setDropsArray(streakArray)
         setBigDropsCount(bigDropCount_)
@@ -259,10 +260,10 @@ function DropsCount (props) {
     function colorChange (col, change) {
         if (col !== 'change')
         return 'black'
-        if (change < (100 - changeThreshold)/100) {
+        if (change < (100 - streakThreshold)/100) {
         return 'red'
         }
-        const thresh = 1/((100 - changeThreshold)/100)
+        const thresh = 1/((100 - streakThreshold)/100)
         if (change >  thresh ){
         return 'lightGreen'
         }
@@ -289,7 +290,9 @@ function DropsCount (props) {
             <input  type="checkbox" checked={logExtra}  onChange={()=>setLogExtra(! logExtra)} />&nbsp;logExtra  
         </div>} 
 
-        <GetInt init={changeThreshold} callBack={setChangeThreshold} title='change threshold %' type='Number' pattern="[0-9]+" width = '15%'/> 
+        
+        <GetInt init={streakThreshold} callBack={setStreakThreshold} title='streak threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
+        <GetInt init={streakEndReverseThreshold} callBack={setStreakEndReverseThreshold} title='streak end reverse threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
   
@@ -298,9 +301,11 @@ function DropsCount (props) {
 
         <div>&nbsp;</div>
 
-        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops or rises   </button> &nbsp;
-        {bigDropCount && bigRiseCount && <div>dropCount={bigDropCount} &nbsp; &nbsp; riseCount={bigRiseCount} &nbsp; &nbsp;
-             dropsPerYear={bigDropsPerYear} &nbsp; &nbsp; risesPerYear={bigRisesPerYear}</div>}
+        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button> &nbsp;
+        {bigDropCount && bigRiseCount && <div>
+            <div>drop_count={bigDropCount} &nbsp; &nbsp; rise_count={bigRiseCount} &nbsp; &nbsp; </div>
+            <div>drops_per_Year={bigDropsPerYear} &nbsp; &nbsp; rises_per_year={bigRisesPerYear} </div>
+        </div>}
         
         <div>&nbsp;</div>
 
