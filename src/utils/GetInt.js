@@ -31,7 +31,7 @@ return (
       onChange={(e)=>
         setInt ((v) => e.target.validity.valid ? e.target.value : v)}
     />
-    <button  style={{width: '30%', background: '#f2ed8f'}} type="submit"> Enter</button>
+    <button  style={{width: '60px', background: '#f2ed8f'}} type="submit"> Enter</button>
   </form>
 
 </div>
