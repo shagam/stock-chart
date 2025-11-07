@@ -437,8 +437,8 @@ const BasicTable = (props) => {
     localStorage.setItem ('chartSymbol', sym);
     handleInfoClick(sym, singleSym);
   
-    //** avoid bubbleline while another symbol */
-    if (gainMap['bubbleLine']) {
+    //** avoid bubbleline while another symbol except a prious sym*/
+    if (gainMap['bubbleLine'] && ! gainMap[sym]) {
       errorAdd([sym, 'delete bubbleLine, avoid bubbleline while another symbol'])
       // console.log (sym, 'delete bubbleLine, avoid bubbleline while another symbol', Object.keys(gainMap))
       delete gainMap['bubbleLine']
