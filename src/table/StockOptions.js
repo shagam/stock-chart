@@ -203,7 +203,8 @@ function OptionQuote (props) {
         continue; // different expiration, skip
         
         if (optionQuote.mid[i] > optionQuote.mid[i-1]) {
-          props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike/mid=', optionQuote.strike[i-1], optionQuote.mid[i-1], 'strike/mid=' , optionQuote.strike[i],  optionQuote.mid[i]])
+          props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike=' + optionQuote.strike[i-1], 'mid=' + optionQuote.mid[i-1],
+             'strike=' + optionQuote.strike[i],  'mid=' + optionQuote.mid[i]])
           irregularCount++;
       }   
     }
@@ -570,7 +571,7 @@ function OptionQuote (props) {
   //** get from coirsServer */
   function  getOptionsInfoFromServer () {
     setErr()
-    if (config.expirationNum < 0 || config.expirationCount < 0 ||  config.strikeNum < 0 || config.strikeCount < 0) {
+    if (config.expirationNum < 0 || config.expirationCount < 0 || config.strikeCount < 0) {
       setErr('option config error, negative number')
       beep2()
       return;
@@ -757,7 +758,7 @@ function OptionQuote (props) {
           OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
           OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
         }
-        if (log)
+        if (logExtra)
           console.log ('i=', i,
             'expiration=' + OptionQuoteFiltered.expiration[i],
             'strike=' + OptionQuoteFiltered.strike[i], 
@@ -898,7 +899,7 @@ function OptionQuote (props) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
-    else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid') {
+    else if (attrib === 'ask' || attrib === 'bid' || attrib === 'mid', attrib==='last') {
       if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
         if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
