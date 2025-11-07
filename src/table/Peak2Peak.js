@@ -260,6 +260,7 @@ const Peak2PeakGui = (props) => {
       alert ('stock missing (bubbleLine): ' + props.symbol)
       return;
     }
+    // const price_ = props.price;
     var price = props.rows[row_index].values.price;
     if (! price || props.rows[row_index].values.price_mili < props.rows[row_index].values.gain_mili) {
       price = YValues[0]

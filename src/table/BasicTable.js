@@ -856,7 +856,8 @@ const BasicTable = (props) => {
 
         <div style={{display:'flex'}}>
            {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
-                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} allColumns={allColumns}/>} 
+                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} allColumns={allColumns} 
+                setPrice={setPrice} />} 
         </div>
 
         <div id="buttons_id" style={{display:'flex'}}>

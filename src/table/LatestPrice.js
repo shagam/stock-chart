@@ -137,6 +137,7 @@ function LatestPrice (props) {
           props.rows[row_index].values.price = price.toFixed(2);
           props.rows[row_index].values.price_mili = Date.now();
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(4);
+          props.setPrice(price)
           if (! props.stockChartYValues[0]) {
               props.setErr('price not found, Try again')
               return;
@@ -170,7 +171,7 @@ function LatestPrice (props) {
             {/* {eliHome && props.symbol && <button style={{height:'28px'}} onClick={() => openInNewTab('https://www.marketwatch.com/investing/fund/' + props.symbol)}> marketWatch </button>} &nbsp; */}
             
             {props.symbol && <div><button style={{backgroundColor: 'aqua', height:'28px'}} onClick={() => {finnhub (props.symbol, props.stockChartYValues, props.rows, props.refreshByToggleColumns, props.setErr,
-            props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome, checkPriceColumnVisible)}} title='price during market open' > marketOpen </button> </div>}
+            props.logFlags, props.errorAdd, props.ssl, props.PORT, props.servSelect, setPriceDivClose, props.eliHome, checkPriceColumnVisible, props.setPrice)}} title='price during market open' > marketOpen </button> </div>}
 
             {/* <ComboBoxSelect serv={source} nameList={priceSources} setSelect={setSource} title='' TITLE='market open price ' options={priceSources} defaultValue={false} /> &nbsp; */}
             {/* <div> <input  type="checkbox" checked={subPages}  onChange={()=> setSubPages(! subPages)} />  subPages </div> */}
