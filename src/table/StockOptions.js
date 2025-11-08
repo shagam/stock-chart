@@ -46,6 +46,8 @@ function OptionQuote (props) {
 
   const [optionQuote, setOptionQuote] = useState({});
   const [optionKeys, setOptionKeys] = useState([]);
+  const [optionHistory, setOptionHistory] = useState({});
+  const [optionHistoryKeys, setOptionHistoryKeys] = useState([]);
 
   const [bestYearlyYield, setBestYearlyYield] = useState(0); // max yearly yield for all options
   const [bestYearlyYieldIndex, setBestYearlyYieldIndex] = useState(-1); // index of max yearly yield
@@ -91,6 +93,31 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnsDefault)); // set default columnShow
   }
 
+  function translateDates (premiumArray) {
+    var OptionQuoteFiltered = {}
+    //** Loop on attributes */
+    const keys = Object.keys(premiumArray)
+    keys.forEach((key) => {
+      if (key === 's')
+        return; // skip these two key
+      OptionQuoteFiltered[key] = []
+      for (let i = 0; i < premiumArray.expiration.length; i++) {
+
+        if (key === 'expiration') {
+          OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.expiration[i] * 1000))
+        }
+        else if (key === 'firstTraded')
+          OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.firstTraded[i] * 1000))
+        else if (key === 'updated') 
+          OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.updated[i] * 1000))
+        else
+          OptionQuoteFiltered[key][i] = premiumArray[key][i]; // all other just copy
+      }
+    })
+    return OptionQuoteFiltered;     
+  }
+
+
   //* get historical option quote */
   function historecalOptionQuote (row) { 
     // https://api.marketdata.app/v1/options/quotes/AAPL250117C00250000/?from=2024-01-01&to=2024-12-31
@@ -106,7 +133,7 @@ function OptionQuote (props) {
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptionsHistory?stock=" + props.symbol;
     corsUrl += '&optionSymbol=' + optionSymbol;
-    corsUrl += '&from=2023-01-01&to=' + todayDate();
+    corsUrl += '&from=2025-01-01&to=' + todayDate();
 
     if (logExtra)
       corsUrl += "&logExtra=1"
@@ -123,9 +150,21 @@ function OptionQuote (props) {
 
     axios.get (corsUrl)
     .then ((result) => {
-      // if (log)
+
+      if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
+        setErr(getDate() + ' option status from server:  ' + result.data)
+        beep2()
+        console.log (props.symbol, result.data)
+        return;
+      }
+
+      if (log)
         console.log (getDate(), props.symbol, optionSymbol, 'primium history', result.data)
 
+        var OptionHistoryFiltered = translateDates (result.data)
+        setOptionHistory(OptionHistoryFiltered);
+        const keys = Object.keys(result.data) 
+        setOptionHistoryKeys(keys);
      })
     .catch ((err) => {
       console.log(err.message)
@@ -608,8 +647,6 @@ function OptionQuote (props) {
   }
 
 
-
-
   //** get from coirsServer */
   function  getOptionsInfoFromServer () {
     setErr()
@@ -716,36 +753,11 @@ function OptionQuote (props) {
       // }
 
       //** copy and convert date format of result.data */
-      var OptionQuoteFiltered = {}
-      OptionQuoteFiltered.expiration = [] 
-      OptionQuoteFiltered.firstTraded = []
-      OptionQuoteFiltered.updated = []
+
+
       const rows = premiumArray.expiration.length;  // row count
 
-      //** Loop on attributes */
-      Object.keys(premiumArray).forEach((key) => {
-
-        // delete result.data.optionSymbol
-        // delete result.data.s
-        if (key === 's')
-          return; // skip these two keys
-
-          // convert date to YYYY-mm-dd format
-          OptionQuoteFiltered[key] = []
-
-          // Loop on rows
-          for (let i = 0; i < rows; i++) {
-            if (key === 'expiration') {
-              OptionQuoteFiltered.expiration[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.expiration[i] * 1000))
-            }
-            else if (key === 'firstTraded')
-              OptionQuoteFiltered.firstTraded[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.firstTraded[i] * 1000))
-            else if (key === 'updated') 
-              OptionQuoteFiltered.updated[i] = getDate_YYYY_mm_dd__(new Date(premiumArray.updated[i] * 1000))
-            else
-              OptionQuoteFiltered[key][i] = premiumArray[key][i]; // all other just copy
-          }
-        } )
+      var OptionQuoteFiltered = translateDates (premiumArray)
       if (logExtra)
         console.log ('filtered', OptionQuoteFiltered)
 
@@ -1221,6 +1233,43 @@ function OptionQuote (props) {
 
           {premiumSelected !== -1 && props.eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
              historical primium quote </button>  </div>} 
+
+        {/* OptionHistiory table */}
+         {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '800px', overflow:'auto'}}>
+
+            <table>
+                <thead>
+                  <tr style={ROW_SPACING}>
+                    <th style={{...ROW_SPACING, width: '20px'}}> N</th>
+                    {optionHistoryKeys.map((key, keyI) => {
+                      return columnShow.includes (key) && (
+                        <th style={ROW_SPACING} title={titleGet(key)} key={keyI}>{key}</th>
+                      )
+                    })}
+                  </tr> 
+                </thead>
+                  
+                  {/* top, right, bottom, left */} 
+                <tbody>
+                  {optionHistoryKeys && optionQuote.expiration
+                   && optionHistory.expiration.map((quote, index) => {
+                    return (
+                      <tr key={index} style={ROW_SPACING} onClick={() => premiumRowClick(index)}>
+                      <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
+                      {optionHistoryKeys.map((key, keyI) => {
+                      return columnShow.includes (key) &&  (
+                        <td key={keyI} style={{...ROW_SPACING,}}> 
+                        {(optionHistory[key][index])}</td>
+                      )
+                    })}
+
+                    </tr>
+                    )
+                  })}
+                </tbody>
+            </table>
+          </div>}
+
 
           {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button>  </div>}
         <hr/>
