@@ -1,12 +1,14 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
+import DatePicker, {moment} from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 // import {IpContext} from '../contexts/IpContext';
-import GetInt from '../utils/GetInt'
+// import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
 import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
 import {beep2} from '../utils/ErrorList'
-import { el } from 'date-fns/locale';
+// import { el } from 'date-fns/locale';
 import StockOptionsConfig from './StockOptionsConfig';
 import { FaCheckSquare } from 'react-icons/fa';
 import { FaCog } from 'react-icons/fa';
@@ -48,6 +50,8 @@ function OptionQuote (props) {
   const [optionKeys, setOptionKeys] = useState([]);
   const [optionHistory, setOptionHistory] = useState({});
   const [optionHistoryKeys, setOptionHistoryKeys] = useState([]);
+  const mili_start_DaysAgo = (Date.now() - 250 * 24 * 3600 * 1000) //** date 90 days back */
+  const [searchDate, setSearchDate] = useState (new Date(mili_start_DaysAgo)); 
 
   const [bestYearlyYield, setBestYearlyYield] = useState(0); // max yearly yield for all options
   const [bestYearlyYieldIndex, setBestYearlyYieldIndex] = useState(-1); // index of max yearly yield
@@ -131,9 +135,12 @@ function OptionQuote (props) {
     else
       corsUrl = "http://";
 
+    const d = new Date(searchDate);
+    const startDate = format(d, "yyyy-MM-dd");
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptionsHistory?stock=" + props.symbol;
     corsUrl += '&optionSymbol=' + optionSymbol;
-    corsUrl += '&from=2025-01-01&to=' + todayDate();
+    corsUrl += '&from=' + startDate;
+    corsUrl += '&to=' + todayDate();
 
     if (logExtra)
       corsUrl += "&logExtra=1"
@@ -1228,11 +1235,18 @@ function OptionQuote (props) {
                 </tbody>
             </table>
           </div>}
-
           {premiumSelected !== -1 && <div>selected-row={premiumSelected}</div>}
 
-          {premiumSelected !== -1 && props.eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
-             historical primium quote </button>  </div>} 
+          <hr/> 
+          {premiumSelected !== -1 && <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+                dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp;
+          </div>}
+
+          {premiumSelected !== -1 && props.eliHome && <div>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
+              historical primium quote </button> &nbsp; &nbsp;
+              turn-on 'update' column to see price-change over time
+            </div>} 
 
         {/* OptionHistiory table */}
          {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '800px', overflow:'auto'}}>
@@ -1270,6 +1284,7 @@ function OptionQuote (props) {
             </table>
           </div>}
 
+          <hr/> 
 
           {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button>  </div>}
         <hr/>
