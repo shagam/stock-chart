@@ -91,6 +91,48 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnsDefault)); // set default columnShow
   }
 
+  //* get historical option quote */
+  function historecalOptionQuote (row) { 
+    // https://api.marketdata.app/v1/options/quotes/AAPL250117C00250000/?from=2024-01-01&to=2024-12-31
+    var optionSymbol = 'AAPL280121C00230000'; // Jan 2025 $150 AAPL Call
+    if (row)
+      optionSymbol = optionQuote.optionSymbol[row]
+
+    var corsUrl;
+    if (props.ssl)
+      corsUrl = "https://";
+    else
+      corsUrl = "http://";
+
+    corsUrl += props.corsServer + ":" + props.PORT + "/stockOptionsHistory?stock=" + props.symbol;
+    corsUrl += '&optionSymbol=' + optionSymbol;
+    corsUrl += '&from=2023-01-01&to=' + todayDate();
+
+    if (logExtra)
+      corsUrl += "&logExtra=1"
+    if (log) {
+      corsUrl += "&log=1"
+      console.log (getDate(), props.symbol, 'historecalOptionQuote', corsUrl)
+    }
+
+    // if (ignoreSaved)
+    //   corsUrl += "&ignoreSaved=1"
+
+    // var url = 'https://www.marketdata.app/api/v1/options/quotes/' + optionSymbol;
+    // const url = 'https://www.marketdata.app/api/v1/options/' + optionSymbol + '/token=' + TOKEN;
+
+    axios.get (corsUrl)
+    .then ((result) => {
+      // if (log)
+        console.log (getDate(), props.symbol, optionSymbol, 'primium history', result.data)
+
+     })
+    .catch ((err) => {
+      console.log(err.message)
+      props.errorAdd ([props.symbol, 'historical quotes error ', err.message])
+    })
+
+  }
 
   //* config persistant storage */
   const CONFIG_KEY = 'stockOptionsConfig';
@@ -634,7 +676,7 @@ function OptionQuote (props) {
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(getDate() + 'option status from server:  ' + result.data)
+        setErr(getDate() + ' option status from server:  ' + result.data)
         beep2()
         console.log (props.symbol, result.data)
         return;
@@ -907,7 +949,7 @@ function OptionQuote (props) {
       // return {backgroundColor: '#c9e0a7ff'};
     }
 
-    else if (premiumSelected === line)
+    if (premiumSelected === line)
       return {background: '#d3e5ff'}
     
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
@@ -1175,8 +1217,12 @@ function OptionQuote (props) {
             </table>
           </div>}
 
-          {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button> 
-          &nbsp; &nbsp;  selected-row={premiumSelected} </div>} &nbsp; &nbsp;  &nbsp;
+          {premiumSelected !== -1 && <div>selected-row={premiumSelected}</div>}
+
+          {premiumSelected !== -1 && props.eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
+             historical primium quote </button>  </div>} 
+
+          {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button>  </div>}
         <hr/>
 
         {focusGroupKeys.length > 0 &&
