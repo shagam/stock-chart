@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // import {IpContext} from '../contexts/IpContext';
 // import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
+import {searchDateInArray} from '../utils/Date'
 import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
 import {beep2} from '../utils/ErrorList'
 // import { el } from 'date-fns/locale';
@@ -168,14 +169,24 @@ function OptionQuote (props) {
       if (log)
         console.log (getDate(), props.symbol, optionSymbol, 'primium history', result.data)
 
-        var OptionHistoryFiltered = translateDates (result.data)
-        setOptionHistory(OptionHistoryFiltered);
-        const keys = Object.keys(result.data) 
+        var optionHistoryFiltered = translateDates (result.data)
+    
+        // add price column
+       optionHistoryFiltered.stockPrice = []
+        for (let i = 0; i < optionHistoryFiltered.expiration.length; i++) {
+          const date = optionHistoryFiltered.updated[i]
+          const dateSplit = date.split('_')
+          const index = searchDateInArray(props.stockChartXValues, dateSplit, optionSymbol, props.logFlags, setErr)
+          const price = props.stockChartYValues[index]
+          optionHistoryFiltered.stockPrice[i] = price.toFixed(2)
+        }
+
+        setOptionHistory(optionHistoryFiltered);
+        const keys = Object.keys(optionHistoryFiltered) 
         setOptionHistoryKeys(keys);
 
         if (! columnShow.includes('updated'))
-           setColumnShow ([...columnShow, 'updated'])
-
+           setColumnShow ([...columnShow, 'updated', 'stockPrice'])
      })
     .catch ((err) => {
       console.log(err.message)
