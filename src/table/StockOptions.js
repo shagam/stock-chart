@@ -172,13 +172,16 @@ function OptionQuote (props) {
         var optionHistoryFiltered = translateDates (result.data)
     
         // add price column
-       optionHistoryFiltered.stockPrice = []
+        optionHistoryFiltered.stockPrice = []
+        optionHistoryFiltered['mid/price'] = []
+
         for (let i = 0; i < optionHistoryFiltered.expiration.length; i++) {
           const date = optionHistoryFiltered.updated[i]
           const dateSplit = date.split('_')
           const index = searchDateInArray(props.stockChartXValues, dateSplit, optionSymbol, props.logFlags, setErr)
           const price = props.stockChartYValues[index]
           optionHistoryFiltered.stockPrice[i] = price.toFixed(2)
+          optionHistoryFiltered['mid/price'][i] = (optionHistoryFiltered.mid[i] / optionHistoryFiltered.stockPrice[i]).toFixed(3)
         }
 
         setOptionHistory(optionHistoryFiltered);
@@ -186,7 +189,7 @@ function OptionQuote (props) {
         setOptionHistoryKeys(keys);
 
         if (! columnShow.includes('updated'))
-           setColumnShow ([...columnShow, 'updated', 'stockPrice'])
+           setColumnShow ([...columnShow, 'updated', 'stockPrice','mid/price'])
      })
     .catch ((err) => {
       console.log(err.message)
