@@ -172,6 +172,10 @@ function OptionQuote (props) {
         setOptionHistory(OptionHistoryFiltered);
         const keys = Object.keys(result.data) 
         setOptionHistoryKeys(keys);
+
+        if (! columnShow.includes('updated'))
+           setColumnShow ([...columnShow, 'updated'])
+
      })
     .catch ((err) => {
       console.log(err.message)
@@ -1245,11 +1249,11 @@ function OptionQuote (props) {
           {premiumSelected !== -1 && props.eliHome && <div>
             <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
               historical primium quote </button> &nbsp; &nbsp;
-              turn-on 'update' column to see price-change over time
+              watch 'update' column to see price-change over time
             </div>} 
 
         {/* OptionHistiory table */}
-         {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '800px', overflow:'auto'}}>
+         {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '700px', overflow:'auto'}}>
 
             <table>
                 <thead>
