@@ -311,8 +311,17 @@ function DropsCount (props) {
         <div>&nbsp;</div>
 
        {chartData && <Plot  data={chartData} layout={{ margin: {l:40, r:0, t:0, b:40}, width: 750, height: 500, title: 'drop-rise-count',
+             autosixe: true,
+             legend: {
+                orientation: 'v',
+                x: 9.5,
+                y: 6.5,
+                xanchor: 'left',
+                yanchor: 'top'
+                },
              xaxis: {title: {text: 'date'}},
-             yaxis: {title: {text: 'price'}}}} 
+             yaxis: {title: {text: 'price'}}
+            }} 
             config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
         {<div>       
