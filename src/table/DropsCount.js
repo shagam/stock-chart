@@ -305,7 +305,7 @@ function DropsCount (props) {
   
         <div>&nbsp;</div>
         Start-date {<DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> }
-                <div>&nbsp;</div>
+        <div>&nbsp;</div>
         <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2001, 0, 1))}}>2001 jan 1</button> &nbsp; 
         <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2007, 7, 1))}}>2007 aug 1</button> &nbsp; 
         <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2019, 7, 1))}}>2019 aug 1</button> &nbsp; 
