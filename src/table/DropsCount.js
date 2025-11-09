@@ -285,14 +285,21 @@ function DropsCount (props) {
         <div style={{color: 'red'}}>{err}</div>
 
         {props.eliHome && <div style={{display:'flex'}}>
-            <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp;
+            {/* <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp; */}
             <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} />&nbsp;log  &nbsp; &nbsp; 
             <input  type="checkbox" checked={logExtra}  onChange={()=>setLogExtra(! logExtra)} />&nbsp;logExtra  
         </div>} 
 
-        
+
         <GetInt init={streakThreshold} callBack={setStreakThreshold} title='streak threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
         <GetInt init={streakEndReverseThreshold} callBack={setStreakEndReverseThreshold} title='streak end reverse threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
+
+        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (6);  setStreakEndReverseThreshold(1.5)}}> 6%  1.5%   </button> &nbsp; 
+        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (10); setStreakEndReverseThreshold(2.5)}}> 10%  2.5%   </button> &nbsp; 
+        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (15); setStreakEndReverseThreshold(4)}}> 15%  4%   </button> &nbsp; 
+        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (25); setStreakEndReverseThreshold(8)}}> 25%  8%   </button> &nbsp; 
+        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (35); setStreakEndReverseThreshold(10)}}> 35%  10%   </button> &nbsp; 
+            
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
   
@@ -301,12 +308,12 @@ function DropsCount (props) {
 
         <div>&nbsp;</div>
 
-        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button>
-        <div>&nbsp;</div>
-        {bigDropCount && bigRiseCount && <div>
-            <div>drop_streaks={bigDropCount} &nbsp; &nbsp; rise_streaks={bigRiseCount} &nbsp; &nbsp; </div>
-            <div>drops_per_Year={bigDropsPerYear} &nbsp; &nbsp; rises_per_year={bigRisesPerYear} </div>
-        </div>}
+        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button>  &nbsp; 
+       <div>&nbsp;</div>
+
+        {chartData && <div>rise_streaks={bigRiseCount} &nbsp; &nbsp; rises_per_year={bigRisesPerYear}  </div>}
+        {chartData && <div>drop_streaks={bigDropCount} &nbsp; &nbsp; drops_per_Year={bigDropsPerYear}  </div>}
+
         
         <div>&nbsp;</div>
 
