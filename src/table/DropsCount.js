@@ -301,7 +301,7 @@ function DropsCount (props) {
 
         <div>&nbsp;</div>
 
-        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button> &nbsp;
+        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button>
         <div>&nbsp;</div>
         {bigDropCount && bigRiseCount && <div>
             <div>drop_streaks={bigDropCount} &nbsp; &nbsp; rise_streaks={bigRiseCount} &nbsp; &nbsp; </div>
@@ -310,8 +310,10 @@ function DropsCount (props) {
         
         <div>&nbsp;</div>
 
-       {chartData && <Plot  data={chartData} layout={{ width: 750, height: 500, title: 'drop-rise-count',
-            xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
+       {chartData && <Plot  data={chartData} layout={{ margin: {l:40, r:0, t:0, b:40}, width: 750, height: 500, title: 'drop-rise-count',
+             xaxis: {title: {text: 'date'}},
+             yaxis: {title: {text: 'price'}}}} 
+            config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
 
         {<div>       
         {dropsArray.length > 0 && 
