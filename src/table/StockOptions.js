@@ -1262,12 +1262,12 @@ function OptionQuote (props) {
 
           {premiumSelected !== -1 && props.eliHome && <div>
             <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
-              historical primium quote </button> &nbsp; &nbsp;
+              historical option primium </button> &nbsp; &nbsp;
               watch 'update' column to see price-change over time
             </div>} 
 
         {/* OptionHistiory table */}
-         {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '700px', overflow:'auto'}}>
+         {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '780px', overflow:'auto'}}>
 
             <table>
                 <thead>
