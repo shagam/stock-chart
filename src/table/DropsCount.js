@@ -93,8 +93,8 @@ function DropsCount (props) {
             if (rise_or_fall === 1 && value < deepAfterRise)
                 deepAfterRise = value
 
-            if (rise_or_fall === 1 && deepAfterRise < virtualHigh * riseEndRatioThreshold) {
-                direction = 'rise';
+            if (rise_or_fall === 1 && (deepAfterRise < virtualHigh * riseEndRatioThreshold || i === 1)) {  // i === 1 meand end of search
+                direction = 'rise'; // end of streak
                 next = virtualHighIndex;
             }
 
@@ -112,8 +112,8 @@ function DropsCount (props) {
             if (rise_or_fall === -1 && value > topAfterDrop)
                 topAfterDrop = value
 
-            if (rise_or_fall  && topAfterDrop > virtualLow * dropEndRatioThreshold) { 
-                direction = 'drop';
+            if (rise_or_fall === -1 && (topAfterDrop > virtualLow * dropEndRatioThreshold || i === 1)) { // i === 1 meand end of search
+                direction = 'drop'; // end of streak
                 next = virtualLowIndex;
             }
 
