@@ -88,12 +88,9 @@ function LatestPrice (props) {
       const color = changepct_ >= 0 ? '#82b74b': 'red' 
       console.log (props.symbol, getDate(), 'price=' + price_, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price_ / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0],
         'price/close=' + (price_ / props.stockChartYValues[0]).toFixed(4))
-      const priceDivCloseObj = {symbol: props.symbol, price: price_, sign: sign, ratio: (changepct_), color: color};
+      const priceDivCloseObj = {symbol: props.symbol, price: price_, sign: sign, ratio: changepct_  , color: color};
       console.log (priceDivCloseObj)
-      if ( highestPrice !== -1)
-        setPriceDivClose (priceDivCloseObj)
-      else
-        setPriceDivClose('Press again for diff')
+      setPriceDivClose (priceDivCloseObj)
       if (false)
         checkPriceColumnVisible()
       props.refreshByToggleColumns()
@@ -115,7 +112,7 @@ function LatestPrice (props) {
             
             {/* {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>} */}
         
-            {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{props.symbol}&nbsp; &nbsp;{price} &nbsp; <div style={{color: changepct >= 0 ? '#82b74b': 'red'}}> 
+            {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; &nbsp;{price} &nbsp; <div style={{color: changepct >= 0 ? '#82b74b': 'red'}}> 
               {changepct>0 ? '+': ''}{changepct}% </div> </div>}
 
         </div>
