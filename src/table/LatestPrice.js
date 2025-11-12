@@ -113,7 +113,7 @@ function LatestPrice (props) {
             {/* {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>} */}
         
             {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; &nbsp;{price} &nbsp; <div style={{color: changepct >= 0 ? '#82b74b': 'red'}}> 
-              {changepct>0 ? '+': ''}{changepct}% </div> </div>}
+              {changepct>0 ? '+': ''}{changepct.toFixed(3)}% </div> </div>}
 
         </div>
 
