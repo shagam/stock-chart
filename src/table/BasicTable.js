@@ -854,12 +854,7 @@ const BasicTable = (props) => {
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
         </div>
 
-        <div style={{display:'flex'}}>
-           {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
-                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} allColumns={allColumns} 
-                setPrice={setPrice} />} 
-        </div>
-
+     
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
 
@@ -873,7 +868,14 @@ const BasicTable = (props) => {
           <ComboBoxSelect serv={daily} nameList={['weekly','daily',]} setSelect={setDaily} title='' TITLE='data resultion. weekly or daily ' options={[false,true]} defaultValue={false} /> &nbsp;
           {stockChartYValues.length > 0 && isDailyXArray(stockChartXValues) !== daily && <div style={{color:'red'}}>mode missmatch, press gain</div>}
           
-          <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} /> &nbsp;       
+          <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} 
+            TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} />
+
+          &nbsp;&nbsp;{chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
+                errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} allColumns={allColumns} 
+                setPrice={setPrice} />} 
+
+
 
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
