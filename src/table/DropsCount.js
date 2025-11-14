@@ -45,8 +45,10 @@ function DropsCount (props) {
 
     var dropRiseRatioX = []
     var dropRiseRatioY = []
-    var zigzagx = []
-    var zigzagy = [] 
+    var zigzagx_rise = []
+    var zigzagx_drop = []
+    var zigzagy_rise = [] 
+    var zigzagy_drop = [] 
 
     useEffect (() => { 
         setDropsArray([])
@@ -154,9 +156,15 @@ function DropsCount (props) {
                 }
                 streakArray.push (results);
             
-                zigzagx.push(props.stockChartXValues[next])
-                zigzagy.push(props.stockChartYValues[next])
 
+                if (rise_or_fall === 1) {
+                    zigzagx_rise.push(props.stockChartXValues[next])
+                    zigzagy_rise.push(props.stockChartYValues[next])
+                }
+                else {
+                    zigzagx_drop.push(props.stockChartXValues[next])
+                    zigzagy_drop.push(props.stockChartYValues[next])
+                }
                 if (len === 1) {
                     console.log ('1-day streak, index=' + searchIndex,  '  ', props.stockChartXValues[searchIndex], '  ratio=', results.ratio)
                 }
@@ -238,20 +246,30 @@ function DropsCount (props) {
             y: chartClippedY_temp,
             type: 'scatter',
             mode: 'lines',
-            // marker: { color: 'green' }, 
+            // marker: { color: 'black' }, 
             line: {
-                color: 'green',
+                color: 'lightGrey',
                 width: 1 
             }
         },
         {
-            name: 'rise_drop',
-            x: zigzagx,
-            y: zigzagy,
+            name: 'rise',
+            x: zigzagx_rise,
+            y: zigzagy_rise,
+            type: 'scatter',
+            mode: 'markers',
+            // marker: { color: '#28b65388', size: 4 },       
+            marker: { color: 'darkGreen', size: 3 }, 
+        },
+        {
+            name: 'drop',
+            x: zigzagx_drop,
+            y: zigzagy_drop,
             type: 'scatter',
             mode: 'markers',
             marker: { color: 'red', size: 3 },       
         },
+
 
         ]
         setChartData(dat)
@@ -294,23 +312,25 @@ function DropsCount (props) {
         <GetInt init={streakThreshold} callBack={setStreakThreshold} title='streak threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
         <GetInt init={streakEndReverseThreshold} callBack={setStreakEndReverseThreshold} title='streak end reverse threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (6);  setStreakEndReverseThreshold(1.5)}}> 6%  1.5%   </button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (10); setStreakEndReverseThreshold(2.5)}}> 10%  2.5%   </button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (15); setStreakEndReverseThreshold(4)}}> 15%  4%   </button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (25); setStreakEndReverseThreshold(8)}}> 25%  8%   </button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStreakThreshold (35); setStreakEndReverseThreshold(10)}}> 35%  10%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (6);  setStreakEndReverseThreshold(1.5)}}> 6%  1.5%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (10); setStreakEndReverseThreshold(2.5)}}> 10%  2.5%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (15); setStreakEndReverseThreshold(4)}}> 15%  4%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (25); setStreakEndReverseThreshold(8)}}> 25%  8%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (35); setStreakEndReverseThreshold(10)}}> 35%  10%   </button> &nbsp; 
             
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
   
         <div>&nbsp;</div>
         Start-date {<DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} /> }
-        <div>&nbsp;</div>
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2001, 0, 1))}}>2001 jan 1</button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2007, 7, 1))}}>2007 aug 1</button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2019, 7, 1))}}>2019 aug 1</button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2021, 7, 1))}}>2021 aug 1</button> &nbsp; 
-        <button  style={{background: '#77cc88ff'}} type="button" onClick={()=>{setStartDate(new Date(2022, 7, 1))}}>2022 aug 1</button> &nbsp; 
+        {/* <div>&nbsp;</div> */}
+        <div>
+        <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2001, 0, 1))}}>2001 jan 1</button> &nbsp; 
+        <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2007, 7, 1))}}>2007 aug 1</button> &nbsp; 
+        <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2019, 7, 1))}}>2019 aug 1</button> &nbsp; 
+        <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2021, 7, 1))}}>2021 aug 1</button> &nbsp; 
+        <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2022, 7, 1))}}>2022 aug 1</button> &nbsp; 
+        </div>
         <div>&nbsp;</div>
 
         <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button>  &nbsp; 
