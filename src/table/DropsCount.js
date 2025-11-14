@@ -22,7 +22,7 @@ function DropsCount (props) {
     //** input */
     const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
     const [streakThreshold, setStreakThreshold] = useState(6) // drop percentage, used for count number of drops
-    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(1.5) // percentage to reverse the streak
+    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(2) // percentage to reverse the streak
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
@@ -257,8 +257,7 @@ function DropsCount (props) {
             x: zigzagx_rise,
             y: zigzagy_rise,
             type: 'scatter',
-            mode: 'markers',
-            // marker: { color: '#28b65388', size: 4 },       
+            mode: 'markers',      
             marker: { color: 'darkGreen', size: 3 }, 
         },
         {
@@ -312,11 +311,11 @@ function DropsCount (props) {
         <GetInt init={streakThreshold} callBack={setStreakThreshold} title='streak threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
         <GetInt init={streakEndReverseThreshold} callBack={setStreakEndReverseThreshold} title='streak end reverse threshold %' type='text' pattern="[0-9\.]+" width = '60px'/> 
 
-        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (6);  setStreakEndReverseThreshold(1.5)}}> 6%  1.5%   </button> &nbsp; 
-        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (10); setStreakEndReverseThreshold(2.5)}}> 10%  2.5%   </button> &nbsp; 
-        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (15); setStreakEndReverseThreshold(4)}}> 15%  4%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (6);  setStreakEndReverseThreshold(2)}}> 6%  2%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (10); setStreakEndReverseThreshold(3.5)}}> 10%  3.5%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (15); setStreakEndReverseThreshold(5)}}> 15%  5%   </button> &nbsp; 
         <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (25); setStreakEndReverseThreshold(8)}}> 25%  8%   </button> &nbsp; 
-        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (35); setStreakEndReverseThreshold(10)}}> 35%  10%   </button> &nbsp; 
+        <button  style={{background: '#e6eee6ff'}} type="button" onClick={()=>{setStreakThreshold (35); setStreakEndReverseThreshold(12)}}> 35%  12%   </button> &nbsp; 
             
         {! searchMode && <GetInt init={searchRange} callBack={setSearchRange} title='SearchRange' type='Number' pattern="[0-9]+" width = '15%'/> }
 
