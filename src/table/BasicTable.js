@@ -457,9 +457,18 @@ const BasicTable = (props) => {
 
    // get all info for targetPrice
   function gainAll() {
-    rows.forEach ((row, i) => {
-      handleGainClick (row.values.symbol, false) 
-    })
+    var count = 0;
+    for (let i = 0; i < rows.length; i ++) {
+      if (rows[i].values.mon3) {
+        continue;
+      }
+      handleGainClick (rows[i].values.symbol, false) 
+      count ++
+      if (count >= 25) {      
+        console.log ('geinAll exit after ', count, ' symbols')
+        break; // exit forEach 
+      }
+    }
     saveTable();
   }
 
