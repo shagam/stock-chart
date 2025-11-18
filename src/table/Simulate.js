@@ -72,10 +72,15 @@ const Simulate = (props) => {
     const [tradeChartShow, setTradeChartShow] = useState (true);
     const [portionShow, setPortionShow] = useState (false);
     const [portionScale, setPortionScale] = useState (5); // scale portion for chart
-    const [startDate, setStartDate] = useState(new Date(2000, 8, 1 )) // sep 1
+    const [startDate, setStartDate] = useState(new Date(2021, 10, 1)) // nov 1 2021 (bubble)
     const [endDate, setEndDate] = useState(new Date()) // sep 1
     const [logTradeChartData, setLogTradeChartData] = useState ([])
     const [log, setLog] = useState (false);
+    
+    const buyArrayX = [];
+    const buyArrayY = []; 
+    const sellArrayX = []; 
+    const sellArrayY = [];
 
     const historyLength = props.stockChartXValues.length;
 
@@ -193,7 +198,7 @@ const Simulate = (props) => {
         return targetPortion;
     }
 
-    function portionBubble_calc (priceDivBbubblePrice) {
+    function portionBubble_calc (priceDivBbubblePrice, targetPortion_revious) {
         var targetPortion = -1;
         if (priceDivBbubblePrice <= priceDivBubble_LOW)  // low level set high portion
             targetPortion = Number(PORTION_HIGH) ;
@@ -205,51 +210,128 @@ const Simulate = (props) => {
         return targetPortion
     }
 
+    // identify if array values on the rise or drop (index 0 is latest)
+    function identifyRise (YValues, index) {
+        var count_rise = 0;
+        var count_drop = 0;
+        const TARGET_COUNT = 20
+        const count = index + TARGET_COUNT < YValues.length? TARGET_COUNT : YValues.length - index // number of points checked
+        const startIndex = index + count <= YValues.length? index + count: YValues.length - 1  
 
-    function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
-    
-        var targetPortion =  aggressivePortionInit; 
-        if (i >= XValues.length) {
-            console.log ('indexByond array i=', i)
+        for (let i = 0; i < count; i++) {
+            if (index + i >=  YValues.length || index - i < 0) // out of range
+                continue;
+            if (YValues[index + i] < YValues[index])
+                count_rise++;
+            if (YValues[index + i] > YValues[index])
+                count_drop++;
+            // console.log ('index=' + index, ' count_rise=' + count_rise, ' count_drop=' + count_drop, YValues[index + i], YValues[index - i])         
         }
-        const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
-        const symVal = YValues[i]; 
-        var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags, setErr)
-        if (bubbleIndex === -1) {
-            console.log (props.symbol, i, 'failed to find date in bubble line')
-            return aggressivePortionInit
+        if (count_rise > count_drop) {
+            return 1; // rise
+        }
+        if (count_rise < count_drop) {
+            return -1;  // drop
+        }
+        return 0;
+    }
+
+
+
+    // calr portion value
+    function portion_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine, targetPortion, targetPortion_prev) {
+       // find highest  from old to this
+
+         // calc highest
+        var highest = 0;
+        for (let j = YValues.length - 1; j > i; j--) { // 
+            if (highest < YValues[j])
+                highest = YValues[j]
         }
 
-        //** optimize according to bubbleLine */
-        var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
-        if (priceDivBbubblePrice > 1) {
-            if (log)
-                console.log (props.symbol, 'price>bubbl i=' + i, XValues[i],
-            'price='+ symVal.toFixed(2),
-            'price/bubble=', priceDivBbubblePrice.toFixed(2),
-            'bubblePrice=' + bubbleLine.y[bubbleIndex].toFixed(2))
-            return PORTION_LOW; // minimum
+        var limitValue
+        if (false)
+            limitValue = highest
+        else
+            limitValue = bubbleLine.y[i] //* 1.2
+        // limitValue *= 1.1
+
+        const val =  YValues[i];
+        const bubble_Val = bubbleLine.y[i]
+
+        var targetPortionNew = ((limitValue - val) / limitValue) 
+        if (targetPortionNew < 0)
+            targetPortionNew = 0.1
+        // else
+        //     targetPortionNew ^= 0.9
+
+        const direction = identifyRise (YValues, i)  // rise (1) or drop (-1)
+        if (direction <= 0) {
+             targetPortion = targetPortionNew;
         }
+        else if (direction > 0) {
+            if (val > limitValue * 0.98) {
+                targetPortion = targetPortion_prev // keep
+            }
+            else {
+                targetPortion = targetPortion_prev // targetPortionNew;
+            }
+        }       
 
-        if (false) { // experiment 
-            const bubbleOver = 1 - priceDivBbubblePrice
-            console.log (Math.pow (1 - aggressivePortionInit, bubbleOver))
-            const factor = Math.pow (1 - aggressivePortionInit, bubbleOver)
-            targetPortion *= 1 - factor;
-            return targetPortion;
-        }
-    
-        targetPortion = portionBubble_calc (priceDivBbubblePrice)
+        // //targetPortion = portionBubble_calc (priceDivBbubblePrice, targetPortion)
 
-        if (logOptimize)
-            console.log(props.symbol, 'bubblOptm', 'i=' + i, XValues[i], 'price=' + price.toFixed(2), 'price/bubble=' + priceDivBbubblePrice.toFixed(2),
-            'portion=' + targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
-
+        // if (logOptimize)
+            console.log(props.symbol, 'bubblOptm', 'i=' + i, XValues[i], 'price=' + price.toFixed(2),
+         'limit=' + limitValue.toFixed(2), 'price/limit=' + (price/limitValue).toFixed(2), 'por=' + targetPortionNew.toFixed(3),
+            'portion=' + targetPortion.toFixed(3), 'direction=' + direction, ) // , 'portionPriv=', portionPriv.toFixed(3)
+        targetPortion = targetPortionNew
         return targetPortion;
     }
 
+
+    // function optimizeBubble_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine) {
+    //     var targetPortion =  aggressivePortionInit; 
+    //     if (i >= XValues.length) {
+    //         console.log ('indexByond array i=', i)
+    //     }
+    //     const symdate =  XValues[i].split('-') // prepare search format [2003,9,12]
+    //     const symVal = YValues[i]; 
+    //     var bubbleIndex = searchDateInArray (bubbleLine.x, symdate, props.symbol, props.logFlags, setErr)
+    //     if (bubbleIndex === -1) {
+    //         console.log (props.symbol, i, 'failed to find date in bubble line')
+    //         return aggressivePortionInit
+    //     }
+
+    //     //** optimize according to bubbleLine */
+    //     var priceDivBbubblePrice = symVal / (bubbleLine.y[bubbleIndex]);
+    //     if (priceDivBbubblePrice > 1) {
+    //         if (log)
+    //             console.log (props.symbol, 'price>bubbl i=' + i, XValues[i],
+    //         'price='+ symVal.toFixed(2),
+    //         'price/bubble=', priceDivBbubblePrice.toFixed(2),
+    //         'bubblePrice=' + bubbleLine.y[bubbleIndex].toFixed(2))
+    //         return PORTION_LOW; // minimum
+    //     }
+
+    //     if (false) { // experiment 
+    //         const bubbleOver = 1 - priceDivBbubblePrice
+    //         console.log (Math.pow (1 - aggressivePortionInit, bubbleOver))
+    //         const factor = Math.pow (1 - aggressivePortionInit, bubbleOver)
+    //         targetPortion *= 1 - factor;
+    //         return targetPortion;
+    //     }
+    
+    //     targetPortion = portionBubble_calc (priceDivBbubblePrice)
+
+    //     if (logOptimize)
+    //         console.log(props.symbol, 'bubblOptm', 'i=' + i, XValues[i], 'price=' + price.toFixed(2), 'price/bubble=' + priceDivBbubblePrice.toFixed(2),
+    //         'portion=' + targetPortion.toFixed(3)) // , 'portionPriv=', portionPriv.toFixed(3)
+
+    //     return targetPortion;
+    // }
+
     //** SIMULATE TRADE */
-    function simulateTrade(XValues, YValues) {
+    function simulateTrade(XValues, YValues,){ // } simulate_type) { // highest | bubble | monthGain
         // setResults()
         setErr()
         // setResultsArray({})
@@ -364,9 +446,10 @@ const Simulate = (props) => {
         const logRecordsFull_ = []
 
         // trade loop start
+        targetPortion =  aggressivePortionInit; 
         for (let i = oldestIndex; i >= endDateIndex; i--) {
             portionPriv = targetPortion; //save for log
-            targetPortion =  aggressivePortionInit; 
+
             // try {
                 //* monthGain weekGain optimize */
                 if (optimizeWeekGain && props.monthGainData.weekGainArray) {
@@ -374,7 +457,10 @@ const Simulate = (props) => {
                 }
 
                 if (bubbleLine && optimizeBubble) {
-                    targetPortion =  optimizeBubble_calc (props.stockChartXValues, props.stockChartYValues, i, aggressivePortionInit, price, bubbleLine) 
+                    const target = portion_calc (XValues, YValues, i, aggressivePortionInit, price, bubbleLine, targetPortion, targetPortion)
+                    if (target !== -1)
+                        targetPortion = target;
+                    // targetPortion =  optimizeBubble_calc (props.stockChartXValues, props.stockChartYValues, i, aggressivePortionInit, price, bubbleLine) 
                 }
             const pricePrev = price;
             price = YValues[i] 
@@ -409,6 +495,8 @@ const Simulate = (props) => {
                     moneyMarket -= transactionFee;
                     buyCount ++
                     buySumTotal += tradeSum;
+                    buyArrayX.push(XValues[i]);
+                    buyArrayY.push(YValues[i]);
                 }
 
                 else {
@@ -423,6 +511,8 @@ const Simulate = (props) => {
                      moneyMarket -= transactionFee; // for stocks trade only
                      sellCount ++;
                      sellSumTotal -= tradeSum;
+                    sellArrayX.push(XValues[i]);
+                    sellArrayY.push(YValues[i]);
                 }
             } else {
                 buySell = 'skip'
@@ -754,27 +844,41 @@ const Simulate = (props) => {
         var logTradeChartData_ =
         [
             {
-                name: 'accountGain=' + gain,
+                name: 'account=' + gain,
                 x: logRecordsKeys_,
                 y: accountGainArray,
                 type: 'scatter',
                 mode: 'lines',
                 //   marker: { color: 'green' }, 
-                line: {
-                    width: 1 
-                    }
+                line: {width: 2}
             },
             {
-                name: 'stockGain=' + stockGainDuringPeriod.toFixed(2),
+                name: 'stock=' + stockGainDuringPeriod.toFixed(2),
                 x: logRecordsKeys_,
                 y: stockGainArray,
                 type: 'scatter',
                 mode: 'lines',
                 //   marker: { color: 'green' }, 
-                line: {
-                    width: 1 
-                    }
-            },        
+                line: {width: 2, color: 'lightGrey'}
+            }, 
+            // {
+            //     name: 'buy',
+            //     x: buyArrayX,
+            //     y: buyArrayY,
+            //     type: 'scatter',
+            //     mode: 'markers', 
+            //     marker: {color: 'green', size: 3}, 
+            //     // line: {  width: 1 }
+            // },
+            // {
+            //     name: 'sell',
+            //     x: sellArrayX,
+            //     y: sellArrayY,
+            //     type: 'scatter',
+            //     mode: 'markers', 
+            //     marker: {color: 'red', size: 3}, 
+            //     // line: {  width: 1 }
+            // },
         ]
 
         if (portionShow) 
@@ -883,21 +987,21 @@ const Simulate = (props) => {
 
                 {optimizeBubble && <div>
                     {optimizeBubble && <div  style={{color: 'green' }}> &nbsp; Decrease aggressive portion near the bubbleLine (and vice versa)</div>}
-                    <div style = {{display:'flex'}}>
+                    {/* <div style = {{display:'flex'}}>
                         &nbsp;<GetInt init={priceDivBubble_HIGH} callBack={setPriceDivBubble_HIGH} title='Proximity:   &nbsp; &nbsp; High' type='text' pattern="[\\.0-9]+" width = '25%'/>
                         <GetInt init={priceDivBubble_LOW} callBack={setPriceDivBubble_LOW} title='Low' type='text' pattern="[\\.0-9]+" width = '25%'/> 
                     </div> 
                     <div style = {{display:'flex'}}>
                         &nbsp; <GetInt init={PORTION_HIGH} callBack={set_PORTION_HIGH} title='portion:  &nbsp; &nbsp; High' type='text' pattern="[\.0-9]+" width = '25%'/>
                         <GetInt init={PORTION_LOW} callBack={set_PORTION_LOW} title='Low' type='text' pattern="[\.0-9]+" width = '25%'/>
-                    </div>
+                    </div> */}
                 </div>}
            
                 {/* https://plotly.com/javascript/figure-labels/ */}
                 {/* <hr/> */}
                 {props.gainMap.bubbleLine && <div><input  type="checkbox" checked={chartShow}  onChange={() => setChartShow (! chartShow)} /> &nbsp; Show-chart&nbsp;</div>}
                 <div>&nbsp;</div>
-                {chartShow && optimizeBubble && <Plot  data={chartData} layout={{ width: 550, height: 400, title: title, staticPlot: true,
+                {chartShow && optimizeBubble && <Plot  data={chartData} layout={{ width: 650, height: 500, title: title, staticPlot: true,
                     xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
             </div>
 
@@ -929,8 +1033,17 @@ const Simulate = (props) => {
             </div>
 
             <div> &nbsp;</div>
-            <div  style = {{display:'flex'}}>
+            <div >
                 &nbsp;startDate &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={startDate} onChange={(date) => setStartDate(date)} />  &nbsp; &nbsp;
+                <div style = {{display:'flex'}}>
+                    <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2001, 0, 1))}}>2001 jan 1</button> &nbsp; 
+                    <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2007, 7, 1))}}>2007 aug 1</button> &nbsp; 
+                    <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2019, 2, 1))}}>2020 mar 1</button> &nbsp; 
+                    <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2021, 10, 1)); setEndDate(new Date(2024, 5, 1))}}>2021 nov 1</button> &nbsp; 
+                    <button  style={{background: '#d1f7d1ff'}} type="button" onClick={()=>{setStartDate(new Date(2025, 2, 1))}}>2025 mar 1</button> &nbsp; 
+                </div>
+                <div>&nbsp;</div>
+                               
                 &nbsp;endDate &nbsp; <DatePicker style={{ margin: '0px'}} dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)}/>&nbsp; &nbsp;
              </div>
             <div> &nbsp;</div>
