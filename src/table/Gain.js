@@ -368,7 +368,9 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 if (val > highestPrice)
                   highestPrice = val;
               }
-              const priceDivHigh = (price/ highestPrice).toFixed(4)
+              var priceDivHigh = -1
+              if (highestPrice !== -1)
+                priceDivHigh = (price/ highestPrice).toFixed(4)
             
               //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
                

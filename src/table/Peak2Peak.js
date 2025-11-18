@@ -230,6 +230,7 @@ const Peak2PeakGui = (props) => {
 
     // fill in bubble value from lates to oldest
     var high = 0;
+    if (YValues.length > 0)
     for (let i = 0; i < YValues.length - 1; i ++) {
       if (YValues[i] > high)
         high = YValues[i]
@@ -273,7 +274,8 @@ const Peak2PeakGui = (props) => {
     setBubbleLineRatio(bubbleLineOver)
     setBelowHigh(props.rows[row_index].values.priceDivHigh)
     const priceDivHigh = (price / high).toFixed(4);
-    props.rows[row_index].values.priceDivHigh = priceDivHigh;
+    if (high !== 0)
+      props.rows[row_index].values.priceDivHigh = priceDivHigh;
     const belowHigh = ((priceDivHigh - 1) * 100)
     if (props.rows[row_index].values.priceDivHigh)
       setBelowHighPercent(belowHigh.toFixed(2))

@@ -82,11 +82,12 @@ function PriceAlert (props) {
 
             // check drop
             const threshold = (1 - percent/100)
-            const priceDivHigh = symGainInfo.y[0] / highest 
+            if (highest !== 0) {
+                const priceDivHigh = symGainInfo.y[0] / highest 
 
-            if (priceDivHigh < threshold)
-                props.errorAdd ([sym_list[i], ', drop_alert, threshold=' + threshold.toFixed(2), ' > price/High=' +  priceDivHigh.toFixed(2)])
-
+                if (priceDivHigh < threshold)
+                    props.errorAdd ([sym_list[i], ', drop_alert, threshold=' + threshold.toFixed(2), ' > price/High=' +  priceDivHigh.toFixed(2)])
+            }
         }
         // price 
     }
