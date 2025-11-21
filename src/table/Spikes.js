@@ -105,10 +105,9 @@ function Spikes (props) {
   function renderList(array) {
     if (array.length === 0)
       return <div>[]</div>
-    if (array[0].date)
-      return array.map((item) => <li key={item.date}>{JSON.stringify(item)}</li>);
-    else
-      return array.map((item) => <li>{JSON.stringify(item)}</li>);
+
+    return array.map((item, i) => <li key={i}>{JSON.stringify(item)}</li>);
+
 
   }
 
