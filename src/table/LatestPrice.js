@@ -314,8 +314,10 @@ function LatestPrice (props) {
             <button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>getPrice()}>price </button> &nbsp;
             
             {/* {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>} */}
-             {<button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>preMarket </button>}
- 
+             {<button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>preMarket </button>} &nbsp;
+        
+            {props.eliHome && <div style={{display: 'flex'}}><input  type="checkbox" checked={ignoreSaved}  onChange={() => setIgnoreSaved (! ignoreSaved)} />&nbsp;ignoreSaved</div>} &nbsp;
+
             {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; &nbsp;{price} &nbsp; <div style={{color: changepct >= 0 ? '#82b74b': 'red'}}> 
               {changepct>0 ? '+': ''}{changepct}% </div> </div>}
 
