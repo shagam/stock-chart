@@ -11,6 +11,72 @@ import { finnhub } from './Finnhub'
 import { el } from 'date-fns/locale';
 
 
+
+    // * use marketData
+    function getPrice (symbol, rows, stockChartYValues, refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, setErr, errorAdd) {
+      const TOKEN = process.env.REACT_APP_MARKETDATA;
+      var url = 'https://api.marketdata.app/v1/stocks/quotes/' + symbol
+      url += '/?token=' + TOKEN
+      url += '&extended=true'
+      axios.get (url)
+      .then ((result) => {
+        if (result.data.s !== 'ok') {
+          console.log (symbol, 'option-fee error', result.data.s)
+          return 'fail status =' + result.data.s 
+        }
+      
+        const priceInfo = result.data
+        console.log (result.data)
+      
+      const price_ = priceInfo.mid[0]; 
+      setPrice(price_)
+      const changepct_ = priceInfo.changepct[0]
+      setChangepct((changepct_ * 100).toFixed(3))
+      const ratio = changepct_;
+      console.log (price_, changepct_)
+
+      var highestPrice = -1; // highest price
+      if (stockChartYValues.length > 0)
+      for (let i = 0; i < stockChartYValues.length; i++) {
+          const val = stockChartYValues[i];
+          if (val > highestPrice)
+              highestPrice = val;
+      }
+      else {
+        console.log ('missing stockChartYValues')
+      }
+
+      const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
+
+      rows[row_index].values.price = price_.toFixed(2);
+      rows[row_index].values.price_mili = Date.now();
+      if (highestPrice !== -1)
+        rows[row_index].values.priceDivHigh = (price_ / highestPrice).toFixed(4);
+      setPrice(price_)
+
+
+      // const ratio = price_ / stockChartYValues[0];
+      const sign = changepct_ >= 0 ? '+' : '' 
+      const color = changepct_ >= 0 ? '#82b74b': 'red' 
+      console.log (symbol, getDate(), 'price=' + price_, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price_ / highestPrice).toFixed(3), 'closePrice=' + stockChartYValues[0],
+        'price/close=' + ratio.toFixed(4))
+      const priceDivCloseObj = {symbol: symbol, price: price_, sign: sign, ratio: changepct_  , color: color};
+      console.log (priceDivCloseObj)
+      setPriceDivClose (priceDivCloseObj)
+      // if (false)
+      //   checkPriceColumnVisible()
+      refreshByToggleColumns()
+
+    })
+    .catch ((err) => {
+      console.log (err.message)
+      return ('fail latest price of ' + symbol+ ' ' + err.message)
+    })
+
+  }
+
+
+
 function LatestPrice (props) {
     const [LOG, setLOG] = useState(false)
     const {eliHome} = IpContext();
@@ -28,6 +94,11 @@ function LatestPrice (props) {
     const openInNewTab = (url) => {
         window.open(url, "_blank", "noreferrer");
       };
+
+    function getPrice_ () {
+      //  getPrice (symbol, rows, stockChartYValues, refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, setErr, errorAdd)
+      getPrice (props.symbol, props.rows, props.stockChartYValues, props.refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, props.setErr, props.errorAdd)
+    }
 
 
     function checkPriceColumnVisible () {
@@ -243,75 +314,12 @@ function LatestPrice (props) {
     // }
 
 
-    // * use marketData
-    function getPrice() {
-      const TOKEN = process.env.REACT_APP_MARKETDATA;
-      var url = 'https://api.marketdata.app/v1/stocks/quotes/' + props.symbol
-      url += '/?token=' + TOKEN
-      url += '&extended=true'
-      axios.get (url)
-      .then ((result) => {
-        if (result.data.s !== 'ok') {
-          console.log (props.symbol, 'option-fee error', result.data.s)
-          return 'fail status =' + result.data.s 
-        }
-      
-        const priceInfo = result.data
-        console.log (result.data)
-      
-      const price_ = priceInfo.mid[0]; 
-      setPrice(price_)
-      const changepct_ = priceInfo.changepct[0]
-      setChangepct((changepct_ * 100).toFixed(3))
-      const ratio = changepct_;
-      console.log (price_, changepct_)
-
-      var highestPrice = -1; // highest price
-      if (props.stockChartYValues.length > 0)
-      for (let i = 0; i < props.stockChartYValues.length; i++) {
-          const val = props.stockChartYValues[i];
-          if (val > highestPrice)
-              highestPrice = val;
-      }
-      else {
-        console.log ('missing props.stockChartYValues')
-      }
-
-      const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
-
-      props.rows[row_index].values.price = price_.toFixed(2);
-      props.rows[row_index].values.price_mili = Date.now();
-      if (highestPrice !== -1)
-        props.rows[row_index].values.priceDivHigh = (price_ / highestPrice).toFixed(4);
-      props.setPrice(price_)
-
-
-      // const ratio = price_ / props.stockChartYValues[0];
-      const sign = changepct_ >= 0 ? '+' : '' 
-      const color = changepct_ >= 0 ? '#82b74b': 'red' 
-      console.log (props.symbol, getDate(), 'price=' + price_, ' highest=' + highestPrice.toFixed(2), ' price/high=' + (price_ / highestPrice).toFixed(3), 'closePrice=' + props.stockChartYValues[0],
-        'price/close=' + ratio.toFixed(4))
-      const priceDivCloseObj = {symbol: props.symbol, price: price_, sign: sign, ratio: changepct_  , color: color};
-      console.log (priceDivCloseObj)
-      setPriceDivClose (priceDivCloseObj)
-      if (false)
-        checkPriceColumnVisible()
-      props.refreshByToggleColumns()
-      props.setErr()
-    })
-    .catch ((err) => {
-      console.log (err.message)
-      return ('fail latest price of ' + props.symbol+ ' ' + err.message)
-    })
-
-  }
-
 
 
     return (
         <div style={{display: 'flex'}}>
                       
-            <button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>getPrice()}>price </button> &nbsp;
+            <button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>getPrice_()}>price </button> &nbsp;
             
             {/* {priceDivClose && <div style={{display: 'flex'}} >&nbsp;&nbsp;{priceDivClose.symbol}&nbsp; <div style={{color: priceDivClose.color}}> {priceDivClose.sign}{priceDivClose.ratio}% </div> &nbsp;({priceDivClose.price})</div>} */}
             {props.eliHome && <button  style={{background: 'aqua', height:'28px'}} type="button" title="price during market closed (not ready)" onClick={()=>extendedHoursPrice()}>preMarket </button>} &nbsp;
@@ -327,4 +335,4 @@ function LatestPrice (props) {
 
 }
 
-export {LatestPrice}
+export {LatestPrice, getPrice}
