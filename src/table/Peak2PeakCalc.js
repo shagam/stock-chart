@@ -166,7 +166,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
           if (row_index !== -1) {
             rows[row_index].values.peak2Peak = yearlyGain;
-            rows[row_index].values.yearlyGain_source = 'no-bubbleLine';
+            const yearsDiff = yearsDifference (stockChartXValues[stockChartXValues.length - 1], stockChartXValues[0])
+            rows[row_index].values.yearlyGain_source = 'no-bubbleLine,   years=' + yearsDiff.toFixed(2);
           }
         }
 
