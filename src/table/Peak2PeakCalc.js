@@ -156,7 +156,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         if (row_index !== -1){
           rows[row_index].values.peak2Peak = yearlyGain;
           rows[row_index].values.bubblePrice  = bubblePrice.toFixed(2);
-          rows[row_index].values.yearlyGain_source = 'bubbleLine';
+          rows[row_index].values.yearlyGain_source = 'BubbleLine';
         }
       }
       else {
@@ -167,7 +167,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           if (row_index !== -1) {
             rows[row_index].values.peak2Peak = yearlyGain;
             const yearsDiff = yearsDifference (stockChartXValues[stockChartXValues.length - 1], stockChartXValues[0])
-            rows[row_index].values.yearlyGain_source = 'no-bubbleLine,   years=' + yearsDiff.toFixed(2);
+            rows[row_index].values.yearlyGain_source = 'Slope,   yearsRange=' + yearsDiff.toFixed(2);
           }
         }
 
