@@ -23,6 +23,7 @@ import StockInfo from './StockInfo'
 import  {StockGain, dividendCalc} from './StockGain'
 
 import {Holdings} from './Holdings'
+import {Ai} from './Ai'
 import {DropsCount} from './DropsCount'
 
 import LogFlags from '../utils/LogFlags'
@@ -745,6 +746,7 @@ const BasicTable = (props) => {
     None: 'None',
     DropRecovery: 'DropRecovery',
     Holdings: 'Holdings',
+    Ai: 'Ai',
     peak2Peak: 'peak2Peak',
     StockGainRaw: 'StockGainRaw',
     StockInfoRaw: 'StockInfoRaw', 
@@ -1019,6 +1021,11 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='options' id='3' checked={analyzeTool==='options'} onChange={onOptionChange}
                 title='stock options'/> 
               <div style={{color:'blue'}}> options  </div> 
+
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='ai' id='24' checked={analyzeTool==='ai'} onChange={onOptionChange}
+                title='AI'/> 
+              <div style={{color:'blue'}}> Ai  </div> 
+
             </div>
 
             <div style={{display:'flex'}}>              
@@ -1082,6 +1089,9 @@ const BasicTable = (props) => {
                   bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>}
 
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
+             logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
+
+            {analyzeTool ==='ai' && <Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
