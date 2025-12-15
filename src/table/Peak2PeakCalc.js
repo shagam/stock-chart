@@ -44,8 +44,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
     if (len < 2)
       return -1;
     const yearsDifff = yearsDifference (stockChartXValues[len - 1], stockChartXValues[0])
-    if (yearsDifff < 2)
-      return -2
+    // if (yearsDifff < 2)
+    //   return -2
     const gain = Number (stockChartYValues[0]/ stockChartYValues[len-1])
     const yearlyGain = Number (gain ** (1 / yearsDifff)).toFixed(3)
     return yearlyGain;
@@ -156,7 +156,7 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
         if (row_index !== -1){
           rows[row_index].values.peak2Peak = yearlyGain;
           rows[row_index].values.bubblePrice  = bubblePrice.toFixed(2);
-          rows[row_index].values.yearlyGain_source = 'bubbleLine';
+          rows[row_index].values.yearlyGain_source = 'BubbleLine';
         }
       }
       else {
@@ -166,7 +166,8 @@ const quasiTop = (symbol, initDate, stockChartXValues, stockChartYValues, logFla
           results['yearlyGainPercent'] = ((yearlyGain - 1) * 100).toFixed(2);
           if (row_index !== -1) {
             rows[row_index].values.peak2Peak = yearlyGain;
-            rows[row_index].values.yearlyGain_source = 'no-bubbleLine';
+            const yearsDiff = yearsDifference (stockChartXValues[stockChartXValues.length - 1], stockChartXValues[0])
+            rows[row_index].values.yearlyGain_source = 'Slope,   yearsRange=' + yearsDiff.toFixed(2);
           }
         }
 
