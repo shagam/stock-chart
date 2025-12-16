@@ -498,7 +498,7 @@ const StockChart = (props) => {
 
         {/* Correlation of 2 symbol values */}
         {Object.keys(props.gainMap).length === 2 && <div style={{display:'flex'}}>
-          <button onClick={() => calculateCorrelation()}> Correlate</button>&nbsp; 
+          <button style={{background: 'lightblue'}} onClick={() => calculateCorrelation()}> Correlate</button>&nbsp; 
          &nbsp; {Object.keys(props.gainMap)[0]}, &nbsp;   {Object.keys(props.gainMap)[1]} &nbsp; = {correlation}
         </div>}
 
