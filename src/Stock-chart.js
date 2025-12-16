@@ -50,8 +50,53 @@ const StockChart = (props) => {
   // props.gainMap
 
   const [oldestPrice, setOldestPrice] = useState()
+  const [correlation, setCorrelation] = useState()
+  
+  function pearsonCorrelation(x, y) {
+    if (x.length !== y.length) {
+      throw new Error("Vectors must be of same length");
+    }
 
+    const n = x.length;
 
+    // Calculate means
+    const meanX = x.reduce((sum, val) => sum + val, 0) / n;
+    const meanY = y.reduce((sum, val) => sum + val, 0) / n;
+
+    // Calculate numerator and denominators
+    let numerator = 0;
+    let denomX = 0;
+    let denomY = 0;
+
+    for (let i = 0; i < n; i++) {
+      const dx = x[i] - meanX;
+      const dy = y[i] - meanY;
+      numerator += dx * dy;
+      denomX += dx * dx;
+      denomY += dy * dy;
+    }
+
+  // Return correlation coefficient
+  return numerator / Math.sqrt(denomX * denomY);
+  }
+  
+  function calculateCorrelation() {
+    const keys = Object.keys(props.gainMap);
+    if (keys.length !== 2) {
+      console.log ('Need exactly 2 symbols to calculate correlation');
+      return;
+    }
+    const symbol1 = keys[0];
+    const symbol2 = keys[1];
+    const yValues1 = props.gainMap[symbol1];
+    const yValues2 = props.gainMap[symbol2];
+    const len = Math.min(yValues1.y.length, yValues2.y.length);
+    const yValues1Trimmed = yValues1.y.slice(0, len);
+    const yValues2Trimmed = yValues2.y.slice(0, len);
+    const correlation_ = pearsonCorrelation(yValues1Trimmed, yValues2Trimmed);
+    console.log ('Correlation between', symbol1, ' and ', symbol2, ' is ', correlation_.toFixed(4));
+    setCorrelation(correlation_.toFixed(4));
+  }
 
 
   if (props.stockChartYValues === undefined || props.stockChartYValues.length === 0)
@@ -450,6 +495,12 @@ const StockChart = (props) => {
             <button onClick={() => setDateRange(new Date(2025,0,1), new Date())}> 2025</button>&nbsp;
           </div>}
         </div>
+
+        {/* Correlation of 2 symbol values */}
+        {Object.keys(props.gainMap).length === 2 && <div style={{display:'flex'}}>
+          <button onClick={() => calculateCorrelation()}> Correlate</button>&nbsp; 
+         &nbsp; {Object.keys(props.gainMap)[0]}, &nbsp;   {Object.keys(props.gainMap)[1]} &nbsp; = {correlation}
+        </div>}
 
         <div id = 'chart_id'>
         {/* yaxis={'title': 'x-axis','fixedrange':True, 'autorange': false},
