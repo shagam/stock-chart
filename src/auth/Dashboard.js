@@ -95,9 +95,9 @@ export default function Dashboard (props) {
 
         <div className='btn btn-primery w-100 mt-3'>  <Link to="/update-profile" variant="primeray" >   Update Profile </Link></div>
         
-        <div className='w-100 text-center mt-2'> 
+        {currentUser &&<div className='w-100 text-center mt-2'> 
           <Button variant="link" onClick={handleLogout}>Log Out</Button>
-        </div>        
+        </div>}        
         </Card.Body>
 
       </Card>
