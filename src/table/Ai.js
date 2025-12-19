@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 // import OpenAI from 'openai'
 import axios from 'axios'
-import ChatGpt from './Ai_1'
+
 // import ChatGPT from './ChatGPT';
 
 
