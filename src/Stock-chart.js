@@ -88,8 +88,10 @@ const StockChart = (props) => {
     }
     const symbol1 = keys[0];
     const symbol2 = keys[1];
-    const yValues1 = props.gainMap[symbol1];
-    const yValues2 = props.gainMap[symbol2];
+    // const yValues1 = props.gainMap[symbol1];
+    const yValues1 = gainChart[0]
+    // const yValues2 = props.gainMap[symbol2];
+    const yValues2 = gainChart[1]
     const len = Math.min(yValues1.y.length, yValues2.y.length);
     const yValues1Trimmed = yValues1.y.slice(0, len);
     const yValues2Trimmed = yValues2.y.slice(0, len);
@@ -407,6 +409,7 @@ const StockChart = (props) => {
     // setMonthsBack (months);
     const dateStr = dateArray1[0] + '-' + dateArray1[1] + '-' + dateArray1[2];
     setChartDate (new Date(dateStr));
+    setCorrelation(undefined);
   }
 
   function setDateRange (start, end) {
