@@ -10,7 +10,9 @@ import axios from 'axios'
 // console.log(response.output_text);
 function Ai  (props) {
 
-  const [input, setInput] = useState('What is the ticker of Microsoft?');
+  const keys = props.gainMap ? Object.keys(props.gainMap) : [];
+  const inp = 'Tickers: ' + keys.join(', ') + ', please tell me about these stocks?';
+  const [input, setInput] = useState(inp);
   const [response, setResponse] = useState("");
 
   const callCopilot = async () => {
@@ -68,7 +70,7 @@ function Ai  (props) {
             const data = await res.json();
             setResponse(data.choices[0].message.content);
         } catch (error) {
-            console.error('OpenAi Error calling the API:', error);
+            console.error('OpenAi Error calling the API:', error.message);
             setResponse('OpenAi Error: Unable to fetch response' + error.message);
         }
     };
@@ -82,29 +84,35 @@ function Ai  (props) {
         <h6 style={{color: 'blue'}}> Ai API Example (under development) </h6>  &nbsp; &nbsp;
       </div>
 
+
+
       <h3>AI API Example</h3>
-      <form onSubmit={OpenAI_handleSubmit}>
-          <input style={{width: '400px'}}
+
+      <form>
+          <input style={{width: '600px'}}
               type="text"
               value={input}
               onChange={handleInputChange}
               placeholder="Ask something..."
               required
           />
-          <button type="submit"> OpenAI Send</button>
+          {/* <button type="submit"> OpenAI Send</button> */}
       </form>
-
+      <br />
+      <button onClick={callCopilot}>Copilot Send</button> &nbsp; 
+      <button onClick={OpenAI_handleSubmit}>OpenAI Send</button>
+      <br />
       <br />
       <h4>Ai response</h4>
       <textarea
         value={response}
         onChange={(e) => setInput(e.target.value)}
         // placeholder="Ask Copilot something..."
-        rows={4}
-        cols={50}
+        rows={5}
+        cols={80}
       />
       <br />
-      <button onClick={callCopilot}>Copilot Send</button>
+
       {/* <button onClick={ handleSubmit}>openAi Send</button> */}
 
       {/* <p>{response}</p> */}
