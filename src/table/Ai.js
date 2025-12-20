@@ -10,9 +10,9 @@ import axios from 'axios'
 // console.log(response.output_text);
 function Ai  (props) {
 
-  const keys = props.gainMap ? Object.keys(props.gainMap) : [];
-  const inp = 'Tickers: ' + keys.join(', ') + ', please tell me about these stocks?';
-  const [input, setInput] = useState(inp);
+  // const keys = props.gainMap ? Object.keys(props.gainMap) : [];
+  // const inp = 'Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names';
+  const [input, setInput] = useState('Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names');
   const [response, setResponse] = useState("");
 
   const callCopilot = async () => {
@@ -58,7 +58,7 @@ function Ai  (props) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: "gpt-4.1-nano", // Specify the model
+                    model: "gpt-5-nano", // Specify the model
                     messages: [{ role: "user", content: input }],
                 }),
             });
@@ -86,7 +86,7 @@ function Ai  (props) {
 
 
 
-      <h3>AI API Example</h3>
+      <h3>AI API Experiment </h3>
 
       <form>
           <input style={{width: '600px'}}
@@ -99,8 +99,8 @@ function Ai  (props) {
           {/* <button type="submit"> OpenAI Send</button> */}
       </form>
       <br />
-      <button onClick={callCopilot}>Copilot Send</button> &nbsp; 
-      <button onClick={OpenAI_handleSubmit}>OpenAI Send</button>
+      {<button onClick={callCopilot}>Copilot Send</button>} &nbsp; 
+      {props.eliHome && <button onClick={OpenAI_handleSubmit}>OpenAI Send</button>}
       <br />
       <br />
       <h4>Ai response</h4>
