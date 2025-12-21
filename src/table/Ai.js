@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 // import OpenAI from 'openai'
 import axios from 'axios'
 import { set } from 'date-fns';
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 // import ChatGPT from './ChatGPT';
 
@@ -20,7 +21,12 @@ function Ai  (props) {
     return JSON.parse(localStorage.getItem("openAiApiKey")) || "";
   });
 
-  
+  const models = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', 'gpt-5-micro', 'gpt-5-milli',
+    'gpt-5-16k', 'gpt-5.1-16k',
+    'gpt-4o-mini', 'gpt-4o-micro', 'gpt-4o-milli', 'gpt-4o-16k', 'gpt-3.5-turbo-16k',]
+
+  const [selectedModel, setSelectedModel] = useState(models[1]);
+
   const [log, setLog] = useState(false);
 
   const callCopilot = async () => {
@@ -66,7 +72,7 @@ function Ai  (props) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: "gpt-5-nano", // Specify the model
+                    model: selectedModel, //"gpt-5-nano", // Specify the model
                     messages: [{ role: "user", content: input }],
                 }),
             });
@@ -109,9 +115,12 @@ function Ai  (props) {
 
       <h3>AI API Experiment </h3>
       <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp; log
+      <br />       <br />
+
+      <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
+                title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp;
 
       {/* user openAI api key  */}
-      <br />       <br />
 
       <form>
           <h6>user openAI API Key</h6>
