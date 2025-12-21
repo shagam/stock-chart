@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 // import OpenAI from 'openai'
 import axios from 'axios'
+import { set } from 'date-fns';
 
 // import ChatGPT from './ChatGPT';
 
@@ -14,7 +15,13 @@ function Ai  (props) {
   // const inp = 'Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names';
   const [input, setInput] = useState('Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names');
   const [response, setResponse] = useState("");
-  const [apiKey, setApiKey] = useState("");
+
+  const [openAiApiKey, setOpenAiApiKey] = useState(() => {
+    return JSON.parse(localStorage.getItem("openAiApiKey")) || "";
+  });
+
+  
+  const [log, setLog] = useState(false);
 
   const callCopilot = async () => {
     try {
@@ -45,10 +52,10 @@ function Ai  (props) {
     };
 
     const OpenAI_handleSubmit = async (e) => {
-        e.preventDefault();
+         e.preventDefault();
         setResponse(''); // Clear previous response
 
-        const apiKey = process.env.REACT_APP_OPENAi_API_KEY; // Use environment variable
+        const apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
 
         try {
             console.log ('Calling OpenAI API with input:', input);
@@ -76,9 +83,19 @@ function Ai  (props) {
         }
     };
 
-   const apiKeyChange = (e) => {
-        setApiKey(e.target.value);
+    const apiKeyChange = (e) => {
+        setOpenAiApiKey(e.target.value);
     };
+
+    function apiKeySave() {
+      localStorage.setItem('openAiApiKey', JSON.stringify(openAiApiKey));
+    }
+
+    function apiKeyClear() {
+      localStorage.removeItem('openAiApiKey');
+      setOpenAiApiKey(null);
+      console.log ('openApiKey cleared');
+    }
 
 
  return (
@@ -95,14 +112,16 @@ function Ai  (props) {
       <form>
           <input style={{width: '600px'}}
               type="text"
-              value={apiKey}
+              value={openAiApiKey}
               onChange={apiKeyChange}
               placeholder="enter personal api-key"
               required
           />
           {/* <button type="submit"> save </button> */}
       </form>
-      <button onClick={() => setApiKey('')}>clear key</button>
+
+      <button onClick={() => apiKeySave()}>save key</button> &nbsp;
+      <button onClick={() => apiKeyClear()}>clear key</button>
 
       <br />
       <form>
