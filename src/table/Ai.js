@@ -92,8 +92,8 @@ function Ai  (props) {
     }
 
     function apiKeyClear() {
+      setOpenAiApiKey("");
       localStorage.removeItem('openAiApiKey');
-      setOpenAiApiKey(null);
       console.log ('openApiKey cleared');
     }
 
@@ -108,8 +108,13 @@ function Ai  (props) {
 
 
       <h3>AI API Experiment </h3>
+      <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp; log
+
+      {/* user openAI api key  */}
+      <br />       <br />
 
       <form>
+          <h6>user openAI API Key</h6>
           <input style={{width: '600px'}}
               type="text"
               value={openAiApiKey}
@@ -120,8 +125,8 @@ function Ai  (props) {
           {/* <button type="submit"> save </button> */}
       </form>
 
-      <button onClick={() => apiKeySave()}>save key</button> &nbsp;
-      <button onClick={() => apiKeyClear()}>clear key</button>
+      <button onClick={() => apiKeySave()}>save openAi api key</button> &nbsp;
+      <button onClick={() => apiKeyClear()}>clear openAi api key</button>
 
       <br />
       <form>
