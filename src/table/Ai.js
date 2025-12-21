@@ -142,7 +142,7 @@ function Ai  (props) {
       </form>
       <br />
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
-      {props.eliHome && <button onClick={OpenAI_handleSubmit}>OpenAI Send</button>}
+      {props.eliHome && <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button>}
       <br />
       <br />
       <h4>Ai response</h4>
