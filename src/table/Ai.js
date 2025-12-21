@@ -134,8 +134,8 @@ function Ai  (props) {
           {/* <button type="submit"> save </button> */}
       </form>
 
-      <button onClick={() => apiKeySave()}>save openAi api key</button> &nbsp;
-      <button onClick={() => apiKeyClear()}>clear openAi api key</button>
+      <button onClick={() => apiKeySave()}>save</button> &nbsp;
+      <button onClick={() => apiKeyClear()}>clear</button>
 
       <br />  <br />
       <form>
@@ -151,7 +151,7 @@ function Ai  (props) {
       </form>
       <br />
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
-      {props.eliHome && <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button>}
+      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button>
       <br />
       <br />
       <h4>Ai response</h4>
