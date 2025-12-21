@@ -487,6 +487,7 @@ function OptionQuote (props) {
       }
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
+      props.setOptionQuote(OptionQuoteFiltered);
       if (log)
         console.log ('maxYearlyYield=', bestYearlyYield_)
 
@@ -877,6 +878,7 @@ function OptionQuote (props) {
 
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
+      props.setOptionQuote(OptionQuoteFiltered);
       if (logExtra)
         console.log ('maxYearlyYield=', bestYearlyYield_)
 

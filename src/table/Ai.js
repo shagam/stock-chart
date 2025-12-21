@@ -136,8 +136,9 @@ function Ai  (props) {
 
       <button onClick={() => apiKeySave()}>save</button> &nbsp;
       <button onClick={() => apiKeyClear()}>clear</button>
-
       <br />  <br />
+
+      {Object.keys(props.optionQuote).length > 0 && <h6 style={{color: 'magenta'}} >Option Quote Data</h6>}
       <form>
           <h6>Edit question</h6>
           <input style={{width: '600px'}}
