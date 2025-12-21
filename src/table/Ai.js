@@ -128,8 +128,9 @@ function Ai  (props) {
       <button onClick={() => apiKeySave()}>save openAi api key</button> &nbsp;
       <button onClick={() => apiKeyClear()}>clear openAi api key</button>
 
-      <br />
+      <br />  <br />
       <form>
+          <h6>Edit question</h6>
           <input style={{width: '600px'}}
               type="text"
               value={input}
