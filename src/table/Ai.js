@@ -14,6 +14,7 @@ function Ai  (props) {
   // const inp = 'Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names';
   const [input, setInput] = useState('Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names');
   const [response, setResponse] = useState("");
+  const [apiKey, setApiKey] = useState("");
 
   const callCopilot = async () => {
     try {
@@ -75,6 +76,9 @@ function Ai  (props) {
         }
     };
 
+   const apiKeyChange = (e) => {
+        setApiKey(e.target.value);
+    };
 
 
  return (
@@ -91,6 +95,19 @@ function Ai  (props) {
       <form>
           <input style={{width: '600px'}}
               type="text"
+              value={apiKey}
+              onChange={apiKeyChange}
+              placeholder="enter personal api-key"
+              required
+          />
+          {/* <button type="submit"> save </button> */}
+      </form>
+      <button onClick={() => setApiKey('')}>clear key</button>
+
+      <br />
+      <form>
+          <input style={{width: '600px'}}
+              type="text"
               value={input}
               onChange={handleInputChange}
               placeholder="Ask something..."
@@ -99,7 +116,7 @@ function Ai  (props) {
           {/* <button type="submit"> OpenAI Send</button> */}
       </form>
       <br />
-      {<button onClick={callCopilot}>Copilot Send</button>} &nbsp; 
+      {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
       {props.eliHome && <button onClick={OpenAI_handleSubmit}>OpenAI Send</button>}
       <br />
       <br />
