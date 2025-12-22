@@ -14,7 +14,9 @@ function Ai  (props) {
 
   // const keys = props.gainMap ? Object.keys(props.gainMap) : [];
   // const inp = 'Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names';
-  const [input, setInput] = useState('Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names');
+  const [input, setInput] = useState('');
+  const [requestInput, setRequestInput] = useState('');
+  const stockList =  Object.keys(props.gainMap).join(', ')
   const [response, setResponse] = useState("");
 
   const [openAiApiKey, setOpenAiApiKey] = useState(() => {
@@ -28,6 +30,8 @@ function Ai  (props) {
   const [selectedModel, setSelectedModel] = useState(models[1]);
 
   const [log, setLog] = useState(false);
+
+  const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
 
   const callCopilot = async () => {
     try {
@@ -64,7 +68,12 @@ function Ai  (props) {
         const apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
 
         try {
-            console.log ('Calling OpenAI API with input:', input);
+            var requestInput_ = '';
+            if (includeStocksInRequest) {
+              requestInput_ = 'Tickers: ' + stockList + '. ' + input;
+            }
+            setRequestInput(requestInput_);
+            console.log ('Calling OpenAI API with input:',  requestInput_);
             const res = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
@@ -73,7 +82,7 @@ function Ai  (props) {
                 },
                 body: JSON.stringify({
                     model: selectedModel, //"gpt-5-nano", // Specify the model
-                    messages: [{ role: "user", content: input }],
+                    messages: [{ role: "user", content: requestInput_ }],
                 }),
             });
 
@@ -139,6 +148,13 @@ function Ai  (props) {
       <br />  <br />
 
       {Object.keys(props.optionQuote).length > 0 && <h6 style={{color: 'magenta'}} >Option Quote Data</h6>}
+
+      <div style={{display: 'flex'}}>
+        <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
+          &nbsp;  includeStocksInRequest: &nbsp;
+        <div> &nbsp; {stockList }</div>
+      </div>
+
       <form>
           <h6>Edit question</h6>
           <input style={{width: '600px'}}
@@ -150,9 +166,16 @@ function Ai  (props) {
           />
           {/* <button type="submit"> OpenAI Send</button> */}
       </form>
+      
+      {/* <button onClick={() => apiKeySave()}>save</button> &nbsp; */}
+      <button onClick={() => setInput("")}>clear</button>
+
+      
+      <br />
       <br />
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
-      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button>
+     
+      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button> &nbsp;  {requestInput}
       <br />
       <br />
       <h4>Ai response</h4>
