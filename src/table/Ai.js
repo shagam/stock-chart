@@ -14,7 +14,10 @@ function Ai  (props) {
 
   // const keys = props.gainMap ? Object.keys(props.gainMap) : [];
   // const inp = 'Tickers: ' + Object.keys(props.gainMap).join(', ') + ', please tell me company names';
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(() => {
+    return JSON.parse(localStorage.getItem("openAiInput")) || "";
+  });
+
   const [requestInput, setRequestInput] = useState('');
   const stockList =  Object.keys(props.gainMap).join(', ')
   const [response, setResponse] = useState("");
@@ -33,33 +36,29 @@ function Ai  (props) {
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
 
-  const callCopilot = async () => {
-    try {
-      const res = await axios.post(
-        "https://api.copilot.microsoft.com/chat/completions",
-        {
-          messages: [{ role: "user", content: input }],
-          max_tokens: 200,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.REACT_APP_COPILOT_API_KEY}`,
-          },
-        }
-      );
+  // const callCopilot = async () => {
+  //   try {
+  //     const res = await axios.post(
+  //       "https://api.copilot.microsoft.com/chat/completions",
+  //       {
+  //         messages: [{ role: "user", content: input }],
+  //         max_tokens: 200,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Authorization": `Bearer ${process.env.REACT_APP_COPILOT_API_KEY}`,
+  //         },
+  //       }
+  //     );
 
-      setResponse(res.data.choices[0].message.content);
-    } catch (err) {
-      console.error(err);
-      setResponse("Error calling Copilot API " + err.message);
-    }
-  };
+  //     setResponse(res.data.choices[0].message.content);
+  //   } catch (err) {
+  //     console.error(err);
+  //     setResponse("Error calling Copilot API " + err.message);
+  //   }
+  // };
 
-
-     const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
 
     const OpenAI_handleSubmit = async (e) => {
          e.preventDefault();
@@ -98,6 +97,8 @@ function Ai  (props) {
         }
     };
 
+
+    // user openAI api key support
     const apiKeyChange = (e) => {
         setOpenAiApiKey(e.target.value);
     };
@@ -113,6 +114,22 @@ function Ai  (props) {
     }
 
 
+    // openAI input request support
+    const handleInputChange = (e) => {
+        setInput(e.target.value);
+    };
+
+    function inputSave() {
+      localStorage.setItem('openAiInput', JSON.stringify(input));
+    }
+
+    function inputClear() {
+      setInput("");
+      localStorage.removeItem('openAiInput');
+      console.log ('input cleared');
+    }
+
+
  return (
     <div style = {{border: '2px solid blue'}} >
       <div style = {{display: 'flex'}}>
@@ -123,12 +140,14 @@ function Ai  (props) {
 
 
       <h3>AI API Experiment </h3>
-      <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp; log
-      <br />       <br />
 
-      <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
-                title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp;
+      <div style={{display: 'flex'}}>
+        <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
+                  title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp; &nbsp;
+        <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log
+      </div>
 
+      <br /> 
       {/* user openAI api key  */}
 
       <form>
@@ -151,12 +170,12 @@ function Ai  (props) {
 
       <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
-          &nbsp;  includeStocksInRequest: &nbsp;
+          &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>
       </div>
 
       <form>
-          <h6>Edit question</h6>
+          <h6>Edit request</h6>
           <input style={{width: '600px'}}
               type="text"
               value={input}
@@ -167,9 +186,8 @@ function Ai  (props) {
           {/* <button type="submit"> OpenAI Send</button> */}
       </form>
       
-      {/* <button onClick={() => apiKeySave()}>save</button> &nbsp; */}
-      <button onClick={() => setInput("")}>clear</button>
-
+      <button onClick={() => inputSave()}>save</button> &nbsp;
+      <button onClick={() => inputClear()}>clear</button>
       
       <br />
       <br />
@@ -183,7 +201,7 @@ function Ai  (props) {
         value={response}
         onChange={(e) => setInput(e.target.value)}
         // placeholder="Ask Copilot something..."
-        rows={5}
+        rows={8}
         cols={80}
       />
       <br />
