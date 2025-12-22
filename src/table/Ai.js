@@ -18,6 +18,7 @@ function Ai  (props) {
     return JSON.parse(localStorage.getItem("openAiInput")) || "";
   });
 
+  const [showRequest, setShowRequest] = useState(false);
   const [requestInput, setRequestInput] = useState('');
   const stockList =  Object.keys(props.gainMap).join(', ')
   const [response, setResponse] = useState("");
@@ -35,6 +36,7 @@ function Ai  (props) {
   const [log, setLog] = useState(false);
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
+  const [analyzeStockOptions, setAnalyzeStockOptions] = useState(false);
 
   // const callCopilot = async () => {
   //   try {
@@ -67,10 +69,15 @@ function Ai  (props) {
         const apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
 
         try {
-            var requestInput_ = '';
-            if (includeStocksInRequest) {
-              requestInput_ = 'Tickers: ' + stockList + '. ' + input;
+            var requestInput_ = input;
+            if (analyzeStockOptions && Object.keys (props.optionQuote).length >0) {
+              requestInput_ += ' Stock Options Data: ' + JSON.stringify (props.optionQuote) + '. ';
             }
+            else if (includeStocksInRequest) {
+              requestInput_ = 'Tickers: ' + stockList + '. ' ;
+            }
+
+
             setRequestInput(requestInput_);
             console.log ('Calling OpenAI API with input:',  requestInput_);
             const res = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -144,7 +151,8 @@ function Ai  (props) {
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
                   title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp; &nbsp;
-        <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log
+        <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
+        <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;showRequest
       </div>
 
       <br /> 
@@ -166,13 +174,15 @@ function Ai  (props) {
       <button onClick={() => apiKeyClear()}>clear</button>
       <br />  <br />
 
-      {Object.keys(props.optionQuote).length > 0 && <h6 style={{color: 'magenta'}} >Option Quote Data</h6>}
+      {Object.keys(props.optionQuote).length > 0 && <h6 style={{color: 'magenta'}} >
+        <input  type="checkbox" checked={analyzeStockOptions}  onChange={()=>setAnalyzeStockOptions(! analyzeStockOptions)} /> &nbsp;analyzeStockOptions
+      </h6>}
 
-      <div style={{display: 'flex'}}>
+      {! props.optionQuote && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>
-      </div>
+      </div>}
 
       <form>
           <h6>Edit request</h6>
@@ -193,7 +203,8 @@ function Ai  (props) {
       <br />
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
      
-      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button> &nbsp;  {requestInput}
+      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button> &nbsp; 
+       {showRequest && requestInput}
       <br />
       <br />
       <h4>Ai response</h4>
@@ -201,7 +212,7 @@ function Ai  (props) {
         value={response}
         onChange={(e) => setInput(e.target.value)}
         // placeholder="Ask Copilot something..."
-        rows={8}
+        rows={16}
         cols={80}
       />
       <br />
