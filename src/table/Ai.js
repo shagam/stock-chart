@@ -120,8 +120,8 @@ function Ai  (props) {
       console.log ('openApiKey cleared');
     }
 
-
-    // openAI input request support
+    
+    //** openAI input request support */
     const handleInputChange = (e) => {
         setInput(e.target.value);
     };
