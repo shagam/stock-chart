@@ -120,7 +120,7 @@ function Ai  (props) {
       console.log ('openApiKey cleared');
     }
 
-    
+     
     //** openAI input request support */
     const handleInputChange = (e) => {
         setInput(e.target.value);
@@ -178,7 +178,7 @@ function Ai  (props) {
         <input  type="checkbox" checked={analyzeStockOptions}  onChange={()=>setAnalyzeStockOptions(! analyzeStockOptions)} /> &nbsp;analyzeStockOptions
       </h6>}
 
-      {! props.optionQuote && <div style={{display: 'flex'}}>
+      {Object.keys(props.optionQuote).length === 0 && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>
