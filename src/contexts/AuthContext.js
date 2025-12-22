@@ -89,6 +89,7 @@ export function AuthProvider ({ children }) {
         || user.email === process.env.REACT_APP_j321 
         || user.email === process.env.REACT_APP_DAN
         || user.email === process.env.REACT_APP_MICHA
+        || user.email === process.env.REACT_APP_MOSHE
         ) {
           setAdmin(true)
           console.log ('logged email:', user.email, ' (admin)', ) 
