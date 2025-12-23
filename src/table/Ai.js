@@ -159,7 +159,7 @@ function Ai  (props) {
       {/* user openAI api key  */}
 
       <form>
-          <h6>user openAI API Key</h6>
+          <h6><strong style={{color: '#7ccae2'}}>user openAI API Key</strong></h6>
           <input style={{width: '600px'}}
               type="text"
               value={openAiApiKey}
@@ -185,7 +185,7 @@ function Ai  (props) {
       </div>}
 
       <form>
-          <h6>Edit request</h6>
+         <h6> <strong style={{color: '#7ccae2'}}>Edit request</strong></h6>
           <input style={{width: '600px'}}
               type="text"
               value={input}
