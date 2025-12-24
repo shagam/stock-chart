@@ -36,7 +36,7 @@ function Ai  (props) {
   const [log, setLog] = useState(false);
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
-  const [analyzeStockOptions, setAnalyzeStockOptions] = useState(false);
+  const [pageAnalyse_checkbox, setPageAnalyse_checkbox] = useState(false);
 
   // const callCopilot = async () => {
   //   try {
@@ -70,8 +70,8 @@ function Ai  (props) {
 
         try {
             var requestInput_ = input;
-            if (analyzeStockOptions && Object.keys (props.optionQuote).length >0) {
-              requestInput_ += ' Stock Options Data: ' + JSON.stringify (props.optionQuote) + '. ';
+            if (pageAnalyse_checkbox && Object.keys (props.pageForAnalysis).length >0) {
+              requestInput_ += ' Stock Options Data: ' + JSON.stringify (props.pageForAnalysis) + '. ';
             }
             else if (includeStocksInRequest) {
               requestInput_ = 'Tickers: ' + stockList + '. ' ;
@@ -146,7 +146,7 @@ function Ai  (props) {
 
 
 
-      <h3>AI API Experiment </h3>
+      <h3>OpenAI API Experiment </h3>
 
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
@@ -172,13 +172,15 @@ function Ai  (props) {
 
       <button onClick={() => apiKeySave()}>save</button> &nbsp;
       <button onClick={() => apiKeyClear()}>clear</button>
-      <br />  <br />
+      <hr/> 
+      <br />  
 
-      {Object.keys(props.optionQuote).length > 0 && <h6 style={{color: 'magenta'}} >
-        <input  type="checkbox" checked={analyzeStockOptions}  onChange={()=>setAnalyzeStockOptions(! analyzeStockOptions)} /> &nbsp;analyzeStockOptions
+
+      {Object.keys(props.pageForAnalysis).length > 0 && <h6 style={{color: 'magenta'}} >
+        <input  type="checkbox" checked={pageAnalyse_checkbox}  onChange={()=>setPageAnalyse_checkbox(! pageAnalyse_checkbox)} /> &nbsp;pageForAnalysis
       </h6>}
 
-      {Object.keys(props.optionQuote).length === 0 && <div style={{display: 'flex'}}>
+      {Object.keys(props.pageForAnalysis).length === 0 && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>
