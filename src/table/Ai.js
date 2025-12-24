@@ -37,7 +37,7 @@ function Ai  (props) {
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
   const [pageAnalyse_checkbox, setPageAnalyse_checkbox] = useState(false);
-
+  const [latency, setLatency] = useState()
   // const callCopilot = async () => {
   //   try {
   //     const res = await axios.post(
@@ -67,6 +67,8 @@ function Ai  (props) {
         setResponse(''); // Clear previous response
 
         const apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
+        const mili = Date.now()
+        setLatency('OpenAI request sent')
 
         try {
             var requestInput_ = input;
@@ -91,6 +93,9 @@ function Ai  (props) {
                     messages: [{ role: "user", content: requestInput_ }],
                 }),
             });
+            
+            const latency = Date.now() - mili
+            setLatency('Ai response, latency(msec)=' + latency)
 
             if (!res.ok) {
                 throw new Error('Network status: ' + res.status);
@@ -147,7 +152,7 @@ function Ai  (props) {
 
 
       <h3>OpenAI API Experiment </h3>
-
+      {latency && <div style={{color: '#aa3333'}}>{latency}</div>}
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
                   title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp; &nbsp;
