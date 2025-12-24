@@ -177,7 +177,7 @@ function Ai  (props) {
 
       <button onClick={() => apiKeySave()}>save</button> &nbsp;
       <button onClick={() => apiKeyClear()}>clear</button>
-      <hr/> 
+      <hr style={{color: 'red', 'border-top': '8px solid #7ccae2'}}/> 
       <br />  
 
 
