@@ -460,7 +460,7 @@ const BasicTable = (props) => {
   function gainAll() {
     var count = 0;
     for (let i = 0; i < rows.length; i ++) {
-      if (rows[i].values.mon3) {
+      if (rows[i].values.gain_mili && Date.now() - rows[i].values.gain_mili < 1000 * 3600) {  // skip if gained within last hour
         continue;
       }
       handleGainClick (rows[i].values.symbol, false) 
