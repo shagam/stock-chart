@@ -112,7 +112,9 @@ const BasicTable = (props) => {
   const [stockChartYValues, setStockChartYValues] = useState ([]);
   const [gainData, setGainData] = useState();
   const [showUrl, setShowUrl] = useState();
-  const [optionQuote, setOptionQuote] = useState({});
+  const [pageForAi, setPageForAi] = useState();
+  const [pageForAiText, setPageForAiText] = useState();
+
   const LOG_FLAG = props.logFlags && props.logFlags.includes('aux');
   const LOG_API = props.logFlags && props.logFlags.includes('api');
   const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
@@ -1092,7 +1094,7 @@ const BasicTable = (props) => {
              {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
-            {analyzeTool ==='ai' && <Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap = {gainMap} pageForAnalysis={optionQuote}
+            {analyzeTool ==='ai' && <Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
@@ -1139,7 +1141,7 @@ const BasicTable = (props) => {
             {analyzeTool ==='options' && <OptionQuote symbol = {chartSymbol} stockPrice = {stockChartYValues[0]}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
                 stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={props.logFlags}
-                optionQuote={optionQuote} setOptionQuote={setOptionQuote} />}
+                PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />}
 
           </div>}
           </div>}        

@@ -72,8 +72,8 @@ function Ai  (props) {
 
         try {
             var requestInput_ = input;
-            if (pageAnalyse_checkbox && Object.keys (props.pageForAnalysis).length >0) {
-              requestInput_ += ' Stock Options Data: ' + JSON.stringify (props.pageForAnalysis) + '. ';
+            if (pageAnalyse_checkbox && props.pageForAi) {
+              requestInput_ += JSON.stringify (props.pageForAi) + '. ';
             }
             else if (includeStocksInRequest) {
               requestInput_ = 'Tickers: ' + stockList + '. ' ;
@@ -81,7 +81,7 @@ function Ai  (props) {
 
 
             setRequestInput(requestInput_);
-            console.log ('Calling OpenAI API with input:',  requestInput_);
+            // console.log ('Calling OpenAI API with input:',  requestInput_);
             const res = await fetch('https://api.openai.com/v1/chat/completions', {
                 method: 'POST',
                 headers: {
@@ -177,15 +177,16 @@ function Ai  (props) {
 
       <button onClick={() => apiKeySave()}>save</button> &nbsp;
       <button onClick={() => apiKeyClear()}>clear</button>
-      <hr style={{color: 'red', 'border-top': '8px solid #7ccae2'}}/> 
+      <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
       <br />  
 
-
-      {Object.keys(props.pageForAnalysis).length > 0 && <h6 style={{color: 'magenta'}} >
-        <input  type="checkbox" checked={pageAnalyse_checkbox}  onChange={()=>setPageAnalyse_checkbox(! pageAnalyse_checkbox)} /> &nbsp;pageForAnalysis
-      </h6>}
-
-      {Object.keys(props.pageForAnalysis).length === 0 && <div style={{display: 'flex'}}>
+      {props.pageForAiText && 
+       <div style={{display: 'flex'}}>
+          <input  type="checkbox" checked={pageAnalyse_checkbox}  onChange={()=>setPageAnalyse_checkbox(! pageAnalyse_checkbox)} /> &nbsp;
+          &nbsp;pageForAi: &nbsp; &nbsp; <div style={{color: 'magenta'}} >{props.pageForAiText } </div>
+      </div>}
+      <br />
+      {!props.pageForAI && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>

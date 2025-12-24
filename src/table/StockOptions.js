@@ -487,7 +487,8 @@ function OptionQuote (props) {
       }
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
-      props.setOptionQuote(OptionQuoteFiltered);
+      props.setPageForAi(OptionQuoteFiltered);
+      props.setPageForAiText('options symbol=' + props.symbol);
       if (log)
         console.log ('maxYearlyYield=', bestYearlyYield_)
 
@@ -878,7 +879,8 @@ function OptionQuote (props) {
 
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
-      props.setOptionQuote(OptionQuoteFiltered);
+      props.setPageForAi(OptionQuoteFiltered);
+      props.setPageForAiText('options symbol=' + props.symbol);
       if (logExtra)
         console.log ('maxYearlyYield=', bestYearlyYield_)
 
