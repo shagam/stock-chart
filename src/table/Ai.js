@@ -36,7 +36,7 @@ function Ai  (props) {
   const [log, setLog] = useState(false);
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
-  const [pageAnalyse_checkbox, setPageAnalyse_checkbox] = useState(false);
+  const [pageAI_checkbox, setPageAI_checkbox] = useState(false);
   const [latency, setLatency] = useState()
   // const callCopilot = async () => {
   //   try {
@@ -72,7 +72,7 @@ function Ai  (props) {
 
         try {
             var requestInput_ = input;
-            if (pageAnalyse_checkbox && props.pageForAi) {
+            if (pageAI_checkbox && props.pageForAi) {
               requestInput_ += JSON.stringify (props.pageForAi) + '. ';
             }
             else if (includeStocksInRequest) {
@@ -182,11 +182,11 @@ function Ai  (props) {
 
       {props.pageForAiText && 
        <div style={{display: 'flex'}}>
-          <input  type="checkbox" checked={pageAnalyse_checkbox}  onChange={()=>setPageAnalyse_checkbox(! pageAnalyse_checkbox)} /> &nbsp;
+          <input  type="checkbox" checked={pageAI_checkbox}  onChange={()=>setPageAI_checkbox(! pageAI_checkbox)} /> &nbsp;
           &nbsp;pageForAi: &nbsp; &nbsp; <div style={{color: 'magenta'}} >{props.pageForAiText } </div>
       </div>}
       <br />
-      {! pageAnalyse_checkbox && <div style={{display: 'flex'}}>
+      {! pageAI_checkbox && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>
