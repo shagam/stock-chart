@@ -67,11 +67,11 @@ function OptionQuote (props) {
   const [strikeShow, setStrikeShow] = useState(false);
   const [configShow, setConfigShow] = useState(false);
 
-  const [focusGroup, setFocusGroup] = useState({}); // keep group of optionQuote in focus
-  const [focusGroupKeys, setFocusGroupKeys] = useState([]); // keys of focus group
-  const [focusGroupShow, setFocusGroupShow] = useState(false); // name of focus group
+  const [AIGroup, setAIGroup] = useState({}); // keep group of optionQuote in AI
+  const [AIGroupKeys, setAIGroupKeys] = useState([]); // keys of AI group
+  const [AIGroupShow, setAIGroupShow] = useState(true); // name of AI group
   const [optionSymbolShow, setOptionSymbolShow] = useState(false); 
-  // const [focusGroupSelected, setFocusGroupSelected] = useState(-1); // row number of selected
+  // const [AIGroupSelected, setAIGroupSelected] = useState(-1); // row number of selected
 
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
@@ -256,27 +256,31 @@ function OptionQuote (props) {
     return null
   }
 
-  function focusGroupAdd () {
+  function AIGroupAdd () {
     if (premiumSelected === -1) {
-      setErr('no row selected to add to focus group')
+      setErr('no row selected to add to AI group')
       beep2()
       return;
     }
 
-    // add the selected premium to focusGroup
+    // add the selected premium to AIGroup
     const option = {}
 
-    // build the focusGroup object
+    // build the AIGroup object
     Object.keys(optionQuote).forEach((key) => { 
       option[key] = optionQuote[key][premiumSelected];
     })
     option.yearlyGain = estimatedYearlyGain;
 
     const symbol = props.symbol
-    focusGroup[option.optionSymbol] = option;
-    setFocusGroupKeys(Object.keys(focusGroup))
+    AIGroup[option.optionSymbol] = option;
+    setAIGroupKeys(Object.keys(AIGroup))
+
+    props.setPageForAi(AIGroup);
+    props.setPageForAiText('options symbol=' + props.symbol);    
+    
     if (log)
-      console.log ('focusGroupAdd', symbol, option, focusGroup )
+      console.log ('AIGroupAdd', symbol, option, AIGroup )
   }
 
 
@@ -487,8 +491,6 @@ function OptionQuote (props) {
       }
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
-      props.setPageForAi(OptionQuoteFiltered);
-      props.setPageForAiText('options symbol=' + props.symbol);
       if (log)
         console.log ('maxYearlyYield=', bestYearlyYield_)
 
@@ -879,8 +881,6 @@ function OptionQuote (props) {
 
       setBestYearlyYield(bestYearlyYield_); // set maxYearlyYield
       setOptionQuote(OptionQuoteFiltered); // take the first one, there could be more
-      props.setPageForAi(OptionQuoteFiltered);
-      props.setPageForAiText('options symbol=' + props.symbol);
       if (logExtra)
         console.log ('maxYearlyYield=', bestYearlyYield_)
 
@@ -1001,7 +1001,7 @@ function OptionQuote (props) {
     
   }
 
- function cellColorFocus (line, attrib) {
+ function cellColorAI (line, attrib) {
     if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
       setErr ("cellColor  line='0' string", attrib, line)
       line = 0
@@ -1059,8 +1059,6 @@ function OptionQuote (props) {
         </div>}
 
         {/* {config.action === 'sell' && <div  style={{color: 'red'}}> 'yield not defined, for selling options bacause of unlimited risk' </div>} */}
-        {err && <div style={{color: 'red'}}>Error: {err} </div>}
-        {latency && <div style={{color: 'green'}}> {latency} </div>}
         {props.eliHome && logExtra && compareStatus && <div style={{color: 'orange'}}> compareStatus={compareStatus} </div>}
 
         <div>&nbsp;</div>
@@ -1260,15 +1258,66 @@ function OptionQuote (props) {
           {premiumSelected !== -1 && <div>selected-row={premiumSelected}</div>}
 
           <hr/> 
-          {premiumSelected !== -1 && <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
+          {/* {premiumSelected !== -1 && <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp;
+          </div>} */}
+
+          <hr/> 
+          {/* AI Group Add button */}
+          {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>AIGroupAdd()}> AI-group-Add </button>  </div>}
+
+          {AIGroupKeys.length > 0 &&
+          <div style = {{display: 'flex'}}>
+            <input type="checkbox" checked={AIGroupShow} 
+                onChange={()=>setAIGroupShow (! AIGroupShow)}  />&nbsp;AIGroupShow &nbsp; &nbsp; count={AIGroupKeys.length}  &nbsp;  &nbsp; &nbsp;  &nbsp;
+              <input type="checkbox" checked={optionSymbolShow} 
+                onChange={()=>setOptionSymbolShow (! optionSymbolShow)}  />&nbsp;optionSymbolShow &nbsp; &nbsp; 
           </div>}
 
-          {premiumSelected !== -1 && props.eliHome && <div>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
-              historical option primium </button> &nbsp; &nbsp;
-              watch 'update' column to see price-change over time
-            </div>} 
+          {/* premium quote table */}
+          {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
+            <table>
+                <thead>
+                  <tr style={ROW_SPACING}>
+                    <th style={{...ROW_SPACING, width: '20px'}}> N</th>
+                    {optionSymbolShow && <th style={{...ROW_SPACING, width: '20px'}}>optionSymbol</th>}
+                    {optionKeys.map((key, keyI) => {
+                      return columnShow.includes (key) && (
+                        <th style={ROW_SPACING} key={keyI}>{key}</th>
+                      )
+                    })}
+                  </tr> 
+                </thead> 
+                  
+                  {/* top, right, bottom, left */} 
+
+                <tbody>
+                    {Object.keys(AIGroup).map((sym, row) => {
+                    return (
+                      <tr key={row} style={ROW_SPACING}>
+                      <td style={{...ROW_SPACING, width: '20px'}}> {row}</td>
+                      {optionSymbolShow && <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>}
+                      {Object.keys(AIGroup[sym]).map((key, keyI) => {
+                      return columnShow.includes (key) &&  (
+                        <td key={keyI} style={{...ROW_SPACING, ...cellColorAI(row, key)}}> {AIGroup[sym][key]}{percentSign(key, AIGroup[sym][key])}</td>
+                      )
+                    })}
+
+                    </tr>
+                    )
+                  })}
+                </tbody>
+            </table>
+        </div>}
+
+        <hr/>
+
+        {/* OptionHistory button    */}
+        {premiumSelected !== -1 && <div>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
+            historical option primium </button> &nbsp; &nbsp;
+            watch 'update' column to see price-change over time
+          </div>} 
 
         {/* OptionHistiory table */}
          {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '780px', overflow:'auto'}}>
@@ -1305,55 +1354,6 @@ function OptionQuote (props) {
                 </tbody>
             </table>
           </div>}
-
-          <hr/> 
-
-          {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>focusGroupAdd()}> focus-group-Add </button>  </div>}
-        <hr/>
-
-        {focusGroupKeys.length > 0 &&
-         <div style = {{display: 'flex'}}>
-           <input type="checkbox" checked={focusGroupShow} 
-              onChange={()=>setFocusGroupShow (! focusGroupShow)}  />&nbsp;focusGroupShow &nbsp; &nbsp; count={focusGroupKeys.length}  &nbsp;  &nbsp; &nbsp;  &nbsp;
-            <input type="checkbox" checked={optionSymbolShow} 
-              onChange={()=>setOptionSymbolShow (! optionSymbolShow)}  />&nbsp;optionSymbolShow &nbsp; &nbsp; 
-         </div>}
-
-         {/* premium quote table */}
-          {focusGroupKeys.length > 0 && focusGroupShow && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
-            <table>
-                <thead>
-                  <tr style={ROW_SPACING}>
-                    <th style={{...ROW_SPACING, width: '20px'}}> N</th>
-                    {optionSymbolShow && <th style={{...ROW_SPACING, width: '20px'}}>optionSymbol</th>}
-                    {optionKeys.map((key, keyI) => {
-                      return columnShow.includes (key) && (
-                        <th style={ROW_SPACING} key={keyI}>{key}</th>
-                      )
-                    })}
-                  </tr> 
-                </thead> 
-                  
-                  {/* top, right, bottom, left */} 
-
-                <tbody>
-                    {Object.keys(focusGroup).map((sym, row) => {
-                    return (
-                      <tr key={row} style={ROW_SPACING}>
-                      <td style={{...ROW_SPACING, width: '20px'}}> {row}</td>
-                      {optionSymbolShow && <td style={{...ROW_SPACING, width: '20px'}}> {sym}</td>}
-                      {Object.keys(focusGroup[sym]).map((key, keyI) => {
-                      return columnShow.includes (key) &&  (
-                        <td key={keyI} style={{...ROW_SPACING, ...cellColorFocus(row, key)}}> {focusGroup[sym][key]}{percentSign(key, focusGroup[sym][key])}</td>
-                      )
-                    })}
-
-                    </tr>
-                    )
-                  })}
-                </tbody>
-            </table>
-        </div>}
     </div>
   )
 }

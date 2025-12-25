@@ -212,7 +212,10 @@ function Ai  (props) {
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
      
       <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button> &nbsp; 
-       {showRequest && requestInput}
+      {showRequest && requestInput}
+      {/* {err && <div style={{color: 'red'}}>Error: {err} </div>} */}
+      {latency && <div style={{color: 'green'}}> {latency} </div>}
+     
       <br />
       <br />
       <h4>Ai response</h4>
@@ -220,14 +223,10 @@ function Ai  (props) {
         value={response}
         onChange={(e) => setInput(e.target.value)}
         // placeholder="Ask Copilot something..."
-        rows={16}
-        cols={80}
+        rows={50}
+        cols={120}
       />
       <br />
-
-      {/* <button onClick={ handleSubmit}>openAi Send</button> */}
-
-      {/* <p>{response}</p> */}
 
       <br /> 
 
