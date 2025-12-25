@@ -186,7 +186,7 @@ function Ai  (props) {
           &nbsp;pageForAi: &nbsp; &nbsp; <div style={{color: 'magenta'}} >{props.pageForAiText } </div>
       </div>}
       <br />
-      {!props.pageForAI && <div style={{display: 'flex'}}>
+      {! pageAnalyse_checkbox && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
         <div> &nbsp; {stockList }</div>
