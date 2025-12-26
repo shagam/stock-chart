@@ -18,6 +18,7 @@ function Ai  (props) {
     return JSON.parse(localStorage.getItem("openAiInput")) || "";
   });
 
+  const [aiPageShow_checkbox, setAiPageShow_checkbox] = useState(false);
   const [showRequest, setShowRequest] = useState(false);
   const [requestInput, setRequestInput] = useState('');
   const stockList =  Object.keys(props.gainMap).join(', ')
@@ -183,8 +184,15 @@ function Ai  (props) {
       {props.pageForAiText && 
        <div style={{display: 'flex'}}>
           <input  type="checkbox" checked={pageAI_checkbox}  onChange={()=>setPageAI_checkbox(! pageAI_checkbox)} /> &nbsp;
-          &nbsp;pageForAi: &nbsp; &nbsp; <div style={{color: 'magenta'}} >{props.pageForAiText } </div>
+          &nbsp;AiPage add to request: &nbsp; &nbsp; <div style={{color: 'magenta'}} >{props.pageForAiText } </div>
       </div>}
+
+      {props.pageForAi && <div><input  type="checkbox" checked={aiPageShow_checkbox}  onChange={()=>setAiPageShow_checkbox(! aiPageShow_checkbox)} /> &nbsp; AiPage show &nbsp; &nbsp;
+        {aiPageShow_checkbox && <div style={{maxHeight:'300px', maxWidth: '800px', overflow:'auto', border: '1px solid gray', background: '#f0f0f0'}}>
+        <pre> {props.pageForAi && JSON.stringify (props.pageForAi, null, 2)} </pre>
+      </div>}
+      </div>}
+
       <br />
       {! pageAI_checkbox && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
