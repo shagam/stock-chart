@@ -1221,6 +1221,7 @@ function OptionQuote (props) {
           </div>}
 
           {/* premium quote table */}
+          {optionKeys.length > 0 && <h6 style={{color: 'blue'}}> Option Premium Table (click row to select for AI analysis) </h6>}
           {optionKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
@@ -1275,7 +1276,8 @@ function OptionQuote (props) {
           </div>}
 
           {/* ai page table */}
-          {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'200px', maxWidth: '1400px', overflow:'auto'}}>
+          {AIGroupKeys.length > 0 && AIGroupShow && <h6 style={{color: 'blue'}}> AI Group for Option Premium Table </h6>}
+          {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'100px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr style={ROW_SPACING}>
