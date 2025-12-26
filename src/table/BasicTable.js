@@ -467,7 +467,7 @@ const BasicTable = (props) => {
       }
       handleGainClick (rows[i].values.symbol, false) 
       count ++
-      if (count >= 25) {      
+      if (count >= 5) {      
         console.log ('geinAll exit after ', count, ' symbols')
         break; // exit forEach 
       }
