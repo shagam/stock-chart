@@ -76,7 +76,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
     else
       periodTag = "Time Series (Daily)"
 
-    const LOG_FLAG = logFlags && logFlags.includes('gain');
+    const LOG_FLAG = true; // logFlags && logFlags.includes('gain');
     const LOG_API = logFlags && logFlags.includes('api');
 
     const LOG_DROP = logFlags && logFlags.includes('drop_');
@@ -128,6 +128,10 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               const dataStr = JSON.stringify(chartData);
               if (dataStr === "{}") {
                 errorAdd([sym, 'Invalid symbol, or fail to fetch historical data'])
+                return;
+              }
+              if (dataStr && dataStr.includes('Burst pattern detected')) {
+                errorAdd([sym, dataStr.substring(0, 100)]);
                 return;
               }
               if (LOG_API) {
