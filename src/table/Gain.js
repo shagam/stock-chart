@@ -76,7 +76,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
     else
       periodTag = "Time Series (Daily)"
 
-    const LOG_FLAG = true; // logFlags && logFlags.includes('gain');
+    const LOG_FLAG = logFlags && logFlags.includes('gain');
     const LOG_API = logFlags && logFlags.includes('api');
 
     const LOG_DROP = logFlags && logFlags.includes('drop_');
