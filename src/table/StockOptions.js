@@ -1255,14 +1255,14 @@ function OptionQuote (props) {
                 </tbody>
             </table>
           </div>}
-          {premiumSelected !== -1 && <div>selected-row={premiumSelected}</div>}
+          {premiumSelected !== -1 && <div>selected-row={premiumSelected} <hr/> </div>}
 
-          <hr/> 
+
           {/* {premiumSelected !== -1 && <div  > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"lg"}} 
                 dateFormat="yyyy-LLL-dd" selected={searchDate} onChange={(date) => setSearchDate(date)} /> &nbsp; &nbsp;
           </div>} */}
 
-          <hr/> 
+          {/* <hr/>  */}
           {/* AI Group Add button */}
           {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>AIGroupAdd()}> AI-group-Add </button>  </div>}
 
@@ -1274,8 +1274,8 @@ function OptionQuote (props) {
                 onChange={()=>setOptionSymbolShow (! optionSymbolShow)}  />&nbsp;optionSymbolShow &nbsp; &nbsp; 
           </div>}
 
-          {/* premium quote table */}
-          {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'500px', maxWidth: '1400px', overflow:'auto'}}>
+          {/* ai page table */}
+          {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'200px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr style={ROW_SPACING}>
@@ -1310,18 +1310,18 @@ function OptionQuote (props) {
             </table>
         </div>}
 
-        <hr/>
+
 
         {/* OptionHistory button    */}
         {premiumSelected !== -1 && <div>
+          <hr/>
           <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
             historical option primium </button> &nbsp; &nbsp;
-            watch 'update' column to see price-change over time
           </div>} 
 
         {/* OptionHistiory table */}
          {optionHistoryKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '780px', overflow:'auto'}}>
-
+            watch 'updated' column to see price-change over time
             <table>
                 <thead>
                   <tr style={ROW_SPACING}>
