@@ -23,7 +23,7 @@ import {getDate, } from '../utils/Date'
         div_ratio_sum += div_ratio
         div_count += 1
         if (div_ratio > 0.01 && log){
-          console.log ('i=', i, 'div_ratio=', div_ratio.toFixed(4), 'div=', div, 'closePrice=', closePrice)
+          console.log (symbol, 'i=', i, 'div_ratio=', div_ratio.toFixed(4), 'div=', div, 'closePrice=', closePrice)
         }
       }
     }

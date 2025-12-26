@@ -353,7 +353,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 short = -1
 
               if (LOG_FLAG)
-              console.log ('sym short gain,  agrgate=', short.toFixed(3), 'mon=', mon_.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
+              console.log (sym, 'sym short gain,  agrgate=', short.toFixed(3), 'mon=', mon_.toFixed(3), '3mon=', mon3_.toFixed(3), '6mon=', mon6_.toFixed(3), 'year=', year_.toFixed(3), '2year=', year2_.toFixed(3),
                '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3), 'count=', count)
               rows[row_index].values.short = short.toFixed(3);
             
