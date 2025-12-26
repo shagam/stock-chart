@@ -131,7 +131,8 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 return;
               }
               if (dataStr && dataStr.includes('Burst pattern detected')) {
-                errorAdd([sym, dataStr.substring(0, 100)]);
+                errorAdd([sym, dataStr.substring(0, 130)]);
+                console.log (sym, dataStr);
                 return;
               }
               if (LOG_API) {
