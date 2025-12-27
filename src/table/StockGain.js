@@ -103,9 +103,10 @@ const StockGain = (props) => {
       </div>
       <button style={{background: 'aqua'}} type="button" onClick={()=>
         dividendCalc(props.symbol, setYearly_div_ratio, log, props.chartData, props.rows, props.refreshByToggleColumns)}> dividend-calc </button> &nbsp; &nbsp; 
-      {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
-      {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={divRowsOnly}  onChange={()=>setDivRowsOnly (! divRowsOnly)}  />&nbsp;divRowsOnly &nbsp; &nbsp; </div>}
-
+      <div style={{display: 'flex', flexDirection: 'row', marginTop: '5px', marginBottom: '5px'}}>
+        {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
+        {<div style = {{display: 'flex'}}> <input type="checkbox" checked={divRowsOnly}  onChange={()=>setDivRowsOnly (! divRowsOnly)}  />&nbsp;divRowsOnly &nbsp; &nbsp; </div>}
+      </div>
       {/* Stock gain list */}
 
 
@@ -124,17 +125,19 @@ const StockGain = (props) => {
               </thead>
               <tbody>
                   {Object.keys(props.chartData).map((date, s1) =>{
-                      return (
+                      if (divRowsOnly && ! rowWithDiv (date))
+                        return null
+                       return (
                        <tr key={s1}>
-                        <td  style={{padding: '2px', margin: '2px', width: '110px'}} >{dateReplaceDash(date)}</td>
-                        <td style={{padding: '2px', margin: '2px'}}>{s1}</td>
+                        <td style={{padding: '2px', margin: '2px', width: '110px'}} >{dateReplaceDash(date)}</td>
+                        <td style={{padding: '2px', margin: '2px', width: '55px'}}>{s1}</td>
                           {Object.keys(props.chartData[date]).map((attrib,a1) => {
                               return (
                                 <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[date][attrib], date, attrib)}</td>
                               )
                           })}
                       </tr>
-                      )
+                      ) 
                   })}
               </tbody>
 
