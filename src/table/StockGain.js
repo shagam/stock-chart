@@ -64,9 +64,12 @@ const StockGain = (props) => {
   }, [props.symbol, props.chartData]) 
 
   //** clear dividand if zero, so non zero stick out */
-  function isZero (s) {
+  function isZero (s, attrib) {
     if (Number(s) === 0)
       return '';
+    if (attrib === '5. adjusted close') {
+      return Number(s).toFixed(3);
+    }
     else return s
   }
 
@@ -113,7 +116,7 @@ const StockGain = (props) => {
                         <td style={{padding: '2px', margin: '2px'}}>{s1}</td>
                           {Object.keys(props.chartData[s]).map((a,a1) => {
                               return (
-                                <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[s][a])}</td>
+                                <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[s][a], a)}</td>
                               )
                           })}
                       </tr>
