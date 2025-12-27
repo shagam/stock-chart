@@ -52,6 +52,7 @@ import {getDate, } from '../utils/Date'
 const StockGain = (props) => {
   const [yearly_div_ratio, setYearly_div_ratio] = useState(0) 
   const [log, setLog] = useState (false); // default to true if eliHome is true
+  const [divRowsOnly, setDivRowsOnly] = useState (false); // default to true if eliHome is true
   const {eliHome} = IpContext();
 
   //** replace dash by underscore so date in header doex not split in 2 lines */
@@ -63,14 +64,24 @@ const StockGain = (props) => {
     setYearly_div_ratio(0)
   }, [props.symbol, props.chartData]) 
 
+
+  function rowWithDiv (date) {
+    if (props.chartData[date]['7. dividend amount'] !== '0.0000') {
+      return true;
+    }
+    else return false;
+  }
   //** clear dividand if zero, so non zero stick out */
-  function isZero (s, attrib) {
-    if (Number(s) === 0)
+  function isZero (value, date, attrib) {
+    // if (divRowsOnly && props.chartData[date]['7. dividend amount'] === '0.0000') {
+    //   return ''; // skip zero rows with no div
+    // }
+    if (Number(value) === 0)
       return '';
     if (attrib === '5. adjusted close') {
-      return Number(s).toFixed(3);
+      return Number(value).toFixed(3);
     }
-    else return s
+    else return value
   }
 
 /**
@@ -93,7 +104,10 @@ const StockGain = (props) => {
       <button style={{background: 'aqua'}} type="button" onClick={()=>
         dividendCalc(props.symbol, setYearly_div_ratio, log, props.chartData, props.rows, props.refreshByToggleColumns)}> dividend-calc </button> &nbsp; &nbsp; 
       {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
+      {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={divRowsOnly}  onChange={()=>setDivRowsOnly (! divRowsOnly)}  />&nbsp;divRowsOnly &nbsp; &nbsp; </div>}
+
       {/* Stock gain list */}
+
 
       {Object.keys(props.chartData).length > 0 && <div  style={{height:'400px', overflow:'auto'}}> 
           <table>
@@ -109,14 +123,14 @@ const StockGain = (props) => {
                   </tr>
               </thead>
               <tbody>
-                  {Object.keys(props.chartData).map((s, s1) =>{
+                  {Object.keys(props.chartData).map((date, s1) =>{
                       return (
-                      <tr key={s1}>
-                        <td  style={{padding: '2px', margin: '2px', width: '110px'}} >{dateReplaceDash(s)}</td>
+                       <tr key={s1}>
+                        <td  style={{padding: '2px', margin: '2px', width: '110px'}} >{dateReplaceDash(date)}</td>
                         <td style={{padding: '2px', margin: '2px'}}>{s1}</td>
-                          {Object.keys(props.chartData[s]).map((a,a1) => {
+                          {Object.keys(props.chartData[date]).map((attrib,a1) => {
                               return (
-                                <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[s][a], a)}</td>
+                                <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[date][attrib], date, attrib)}</td>
                               )
                           })}
                       </tr>
