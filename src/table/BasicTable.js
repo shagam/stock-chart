@@ -1011,7 +1011,7 @@ const BasicTable = (props) => {
 
               <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}
                  title='calc line that connect major stock market bubbles (2008,2022)'/>
-              <div style={{color:'blue', fontWeight: gainMap.bubbleLine? "bolder": 'normal'}}> bubble-line  </div> 
+              <div style={{color:'blue', background: gainMap.bubbleLine?'lightgreen':'white'}}> bubble-line  </div> 
               
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}
                   title='calc value drop of a symbol during market crash, and the recovery time (weeks or dayes) '/>         
@@ -1027,7 +1027,7 @@ const BasicTable = (props) => {
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='ai' id='24' checked={analyzeTool==='ai'} onChange={onOptionChange}
                 title='AI'/> 
-              <div style={{color:'blue'}}> Ai  </div> 
+              <div style={{color: pageForAi?'blue':'blue', background: pageForAi?'lightgreen':'white'}}> Ai  </div> 
 
             </div>
 

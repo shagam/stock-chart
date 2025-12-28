@@ -256,19 +256,14 @@ function OptionQuote (props) {
     return null
   }
 
-  function AIGroupAdd () {
-    if (premiumSelected === -1) {
-      setErr('no row selected to add to AI group')
-      beep2()
-      return;
-    }
-
+  function AIGroupAdd (rowId) {
+ 
     // add the selected premium to AIGroup
     const option = {}
 
     // build the AIGroup object
     Object.keys(optionQuote).forEach((key) => { 
-      option[key] = optionQuote[key][premiumSelected];
+      option[key] = optionQuote[key][rowId];
     })
     option.yearlyGain = estimatedYearlyGain;
 
@@ -643,9 +638,29 @@ function OptionQuote (props) {
 
   function premiumRowClick(rowId)  { 
     setPremiumSelected(rowId)
+    AIGroupAdd (rowId)
     if (log)
       console.log('premium Row clicked:', rowId);
     // strikePrices ();
+
+    // // add the selected premium to AIGroup
+    // const option = {}
+
+    // // build the AIGroup object
+    // Object.keys(optionQuote).forEach((key) => { 
+    //   option[key] = optionQuote[key][rowId];
+    // })
+    // option.yearlyGain = estimatedYearlyGain;
+
+    // const symbol = props.symbol
+    // AIGroup[option.optionSymbol] = option;
+    // setAIGroupKeys(Object.keys(AIGroup))
+
+    // props.setPageForAi(AIGroup);
+    // props.setPageForAiText('options symbol=' + props.symbol);    
+    
+    // if (log)
+    //   console.log ('AIGroupAdd', symbol, option, AIGroup )
   }
 
 
@@ -1264,9 +1279,7 @@ function OptionQuote (props) {
           </div>} */}
 
           {/* <hr/>  */}
-          {/* AI Group Add button */}
-          {premiumSelected !== -1 && <div><button style={{background: 'aqua'}} type="button" onClick={()=>AIGroupAdd()}> AI-group-Add </button>  </div>}
-
+      
           {AIGroupKeys.length > 0 &&
           <div style = {{display: 'flex'}}>
             <input type="checkbox" checked={AIGroupShow} 
@@ -1276,7 +1289,7 @@ function OptionQuote (props) {
           </div>}
 
           {/* ai page table */}
-          {AIGroupKeys.length > 0 && AIGroupShow && <h6 style={{color: 'blue'}}> AI Group for Option Premium Table </h6>}
+          {AIGroupKeys.length > 0 && AIGroupShow && <h6 style={{color: 'blue'}}> AI Group from Option Premium Table </h6>}
           {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'100px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>

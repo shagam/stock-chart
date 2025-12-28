@@ -36,7 +36,7 @@ function Ai  (props) {
 
   const [log, setLog] = useState(false);
 
-  const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
+  const [includeStocksInRequest, setIncludeStocksInRequest] = useState(false);
   const [pageAI_checkbox, setPageAI_checkbox] = useState(false);
   const [latency, setLatency] = useState()
   // const callCopilot = async () => {
@@ -179,7 +179,7 @@ function Ai  (props) {
       <button onClick={() => apiKeySave()}>save</button> &nbsp;
       <button onClick={() => apiKeyClear()}>clear</button>
       <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
-      <br />  
+      {/* <br />   */}
 
       {props.pageForAiText && 
        <div style={{display: 'flex'}}>
