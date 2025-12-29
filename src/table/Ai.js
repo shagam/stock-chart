@@ -38,6 +38,7 @@ function Ai  (props) {
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(false);
   const [pageAI_checkbox, setPageAI_checkbox] = useState(false);
+  const [apiKeyShow_checkbox, setApiKeyShow_checkbox] = useState(false);
   const [latency, setLatency] = useState()
   // const callCopilot = async () => {
   //   try {
@@ -158,26 +159,30 @@ function Ai  (props) {
         <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
                   title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp; &nbsp;
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
-        <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;showRequest
+        <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;Request show
       </div>
 
-      <br /> 
+      {/* <br />  */}
       {/* user openAI api key  */}
+      <input  type="checkbox" checked={apiKeyShow_checkbox}  onChange={()=>setApiKeyShow_checkbox(! apiKeyShow_checkbox)} /> &nbsp;personal openAI apiKey  &nbsp; &nbsp;
 
-      <form>
-          <h6><strong style={{color: '#7ccae2'}}>user openAI API Key</strong></h6>
-          <input style={{width: '600px'}}
-              type="text"
-              value={openAiApiKey}
-              onChange={apiKeyChange}
-              placeholder="enter personal api-key"
-              required
-          />
-          {/* <button type="submit"> save </button> */}
-      </form>
+      {apiKeyShow_checkbox && <div>
+        <form>
+            <h6><strong style={{color: '#7ccae2'}}>user openAI API Key</strong></h6>
+            <input style={{width: '600px'}}
+                type="text"
+                value={openAiApiKey}
+                onChange={apiKeyChange}
+                placeholder="enter personal api-key"
+                required
+            />
+            {/* <button type="submit"> save </button> */}
+        </form>
 
-      <button onClick={() => apiKeySave()}>save</button> &nbsp;
-      <button onClick={() => apiKeyClear()}>clear</button>
+        <button onClick={() => apiKeySave()}>save</button> &nbsp;
+        <button onClick={() => apiKeyClear()}>clear</button>
+      </div>}
+
       <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
       {/* <br />   */}
 
