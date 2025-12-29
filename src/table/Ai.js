@@ -168,7 +168,6 @@ function Ai  (props) {
 
       {apiKeyShow_checkbox && <div>
         <form>
-            <h6><strong style={{color: '#7ccae2'}}>user openAI API Key</strong></h6>
             <input style={{width: '600px'}}
                 type="text"
                 value={openAiApiKey}
