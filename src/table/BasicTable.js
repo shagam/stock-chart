@@ -1040,9 +1040,9 @@ const BasicTable = (props) => {
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropCount' id='14' checked={analyzeTool==='dropCount'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}> dropCount  </div>
 
-               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
+              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
                   title='Calc average month and week gain over the last 24 years'/>  
-              <div style={{color:'blue', fontWeight: monthGainData.weekGainArray? "bolder" : 'normal'}}> monthGain   </div>
+              <div style={{color:'blue', background: monthGainData.weekGainArray?'lightgreen':'white'}}> monthGain   </div>
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
