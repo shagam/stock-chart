@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { set } from 'date-fns';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+// import { OpenAI } from 'openai/client.js';
 
 // import ChatGPT from './ChatGPT';
 
@@ -28,11 +29,14 @@ function Ai  (props) {
     return JSON.parse(localStorage.getItem("openAiApiKey")) || "";
   });
 
-  const models = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', 'gpt-5-micro', 'gpt-5-milli',
-    'gpt-5-16k', 'gpt-5.1-16k',
-    'gpt-4o-mini', 'gpt-4o-micro', 'gpt-4o-milli', 'gpt-4o-16k', 'gpt-3.5-turbo-16k',]
+  const aiBrand = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
+  const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrand[0]);
 
-  const [selectedModel, setSelectedModel] = useState(models[1]);
+  const OPEN_AI_MODELS = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', //  'gpt-5-micro',  'gpt-5-milli',
+    //'gpt-5-16k', 'gpt-5.1-16k',  'gpt-4o-mili',
+    'gpt-4o-mini', 'gpt-3.5-turbo-16k',]//'gpt-4o-micro',  'gpt-4o-16k',
+
+  const [openAi_selectedModel, set_openAi_SelectedModel] = useState(OPEN_AI_MODELS[1]);
 
   const [log, setLog] = useState(false);
 
@@ -91,7 +95,7 @@ function Ai  (props) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: selectedModel, //"gpt-5-nano", // Specify the model
+                    model: openAi_selectedModel, //"gpt-5-nano", // Specify the model
                     messages: [{ role: "user", content: requestInput_ }],
                 }),
             });
@@ -117,11 +121,11 @@ function Ai  (props) {
         setOpenAiApiKey(e.target.value);
     };
 
-    function apiKeySave() {
+    function openAiApiKeySave() {
       localStorage.setItem('openAiApiKey', JSON.stringify(openAiApiKey));
     }
 
-    function apiKeyClear() {
+    function openAiApiKeyClear() {
       setOpenAiApiKey("");
       localStorage.removeItem('openAiApiKey');
       console.log ('openApiKey cleared');
@@ -156,8 +160,11 @@ function Ai  (props) {
       <h3>OpenAI API Experiment </h3>
       {latency && <div style={{color: '#aa3333'}}>{latency}</div>}
       <div style={{display: 'flex'}}>
-        <ComboBoxSelect serv={selectedModel} nameList={models} setSelect={setSelectedModel}
-                  title='openAi-model' options={models} defaultValue={selectedModel}/> &nbsp; &nbsp; &nbsp;
+        <ComboBoxSelect serv={openAi_selectedModel} nameList={aiBrand} setSelect={setSelectedAiBrand}
+          title='aiBrand' options={aiBrand} defaultValue={selectedAiBrand}/> &nbsp; &nbsp; &nbsp;
+
+        {selectedAiBrand === 'OpenAI' && <ComboBoxSelect serv={openAi_selectedModel} nameList={OPEN_AI_MODELS} setSelect={set_openAi_SelectedModel}
+                  title='openAi-model' options={OPEN_AI_MODELS} defaultValue={openAi_selectedModel}/>} &nbsp; &nbsp; &nbsp;
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
         <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;Request show
       </div>
@@ -178,8 +185,8 @@ function Ai  (props) {
             {/* <button type="submit"> save </button> */}
         </form>
 
-        <button onClick={() => apiKeySave()}>save</button> &nbsp;
-        <button onClick={() => apiKeyClear()}>clear</button>
+        <button onClick={() => openAiApiKeySave()}>save</button> &nbsp;
+        <button onClick={() => openAiApiKeyClear()}>clear</button>
       </div>}
 
       <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
