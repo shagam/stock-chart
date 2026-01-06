@@ -134,8 +134,8 @@ function Ai  (props) {
             const data = await res.json();
             setResponse(data.choices[0].message.content);
         } catch (error) {
-            console.error('OpenAi Error calling the API:', error.message);
-            setResponse('OpenAi Error: Unable to fetch response' + error.message);
+            console.error(selectedAiBrand, ' Ai api fail:', error.message);
+            setResponse(selectedAiBrand + ' Ai api fail: ' + error.message);
         }
     };
 
@@ -200,7 +200,6 @@ function Ai  (props) {
 
 
       <h3>OpenAI API Experiment </h3>
-      {latency && <div style={{color: '#aa3333'}}>{latency}</div>}
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={selectedAiBrand} nameList={aiBrand} setSelect={setSelectedAiBrand}
           title='aiBrand' options={aiBrand} defaultValue={aiBrand[0]}/> &nbsp; &nbsp; &nbsp;
@@ -304,7 +303,7 @@ function Ai  (props) {
       <br />
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
      
-      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>OpenAI Send</button> &nbsp; 
+      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>AI request Send</button> &nbsp; 
       {showRequest && requestInput}
       {/* {err && <div style={{color: 'red'}}>Error: {err} </div>} */}
       {latency && <div style={{color: 'green'}}> {latency} </div>}
