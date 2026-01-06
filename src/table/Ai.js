@@ -82,7 +82,21 @@ function Ai  (props) {
          e.preventDefault();
         setResponse(''); // Clear previous response
 
-        const apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
+        var apiKey;
+        var fetchUrl;
+        var aiModel
+        if (selectedAiBrand === 'OpenAI') {
+          apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
+          fetchUrl = 'https://api.openai.com/v1/chat/completions';
+          aiModel = openAi_selectedModel;
+        } else if (selectedAiBrand === 'DeepSeek') {
+          apiKey = deepSeekApiKey || process.env.REACT_APP_DEEPSEEK_API_KEY; // Use state variable or environment variable
+          fetchUrl = 'https://api.deepseek.com/chat/completions';
+          aiModel = 'deepseek-chat';
+        } else {
+          setResponse('Error: Unsupported AI brand selected');
+          return;
+        }
         const mili = Date.now()
         setLatency('OpenAI request sent')
 
@@ -98,14 +112,14 @@ function Ai  (props) {
 
             setRequestInput(requestInput_);
             // console.log ('Calling OpenAI API with input:',  requestInput_);
-            const res = await fetch('https://api.openai.com/v1/chat/completions', {
+            const res = await fetch(fetchUrl, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    model: openAi_selectedModel, //"gpt-5-nano", // Specify the model
+                    model: aiModel, //"gpt-5-nano", // Specify the model
                     messages: [{ role: "user", content: requestInput_ }],
                 }),
             });
