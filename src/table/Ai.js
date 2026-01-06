@@ -25,24 +25,34 @@ function Ai  (props) {
   const stockList =  Object.keys(props.gainMap).join(', ')
   const [response, setResponse] = useState("");
 
+  const aiBrand = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
+  const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrand[0]);
+
+
+  const [openAi_apiKeyShow_checkbox, setOpenAi_ApiKeyShow_checkbox] = useState(false);
   const [openAiApiKey, setOpenAiApiKey] = useState(() => {
     return JSON.parse(localStorage.getItem("openAiApiKey")) || "";
   });
 
-  const aiBrand = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
-  const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrand[0]);
-
-  const OPEN_AI_MODELS = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', //  'gpt-5-micro',  'gpt-5-milli',
+    const OPEN_AI_MODELS = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', //  'gpt-5-micro',  'gpt-5-milli',
     //'gpt-5-16k', 'gpt-5.1-16k',  'gpt-4o-mili',
     'gpt-4o-mini', 'gpt-3.5-turbo-16k',]//'gpt-4o-micro',  'gpt-4o-16k',
 
   const [openAi_selectedModel, set_openAi_SelectedModel] = useState(OPEN_AI_MODELS[1]);
 
+
+  const [deepSeek_apiKeyShow_checkbox, setDeepSeek_ApiKeyShow_checkbox] = useState(false);
+  const [deepSeekApiKey, setDeepSeekApiKey] = useState(() => {
+    return JSON.parse(localStorage.getItem("deepSeekApiKey")) || "";
+  });
+
+
+
   const [log, setLog] = useState(false);
 
   const [includeStocksInRequest, setIncludeStocksInRequest] = useState(false);
   const [pageAI_checkbox, setPageAI_checkbox] = useState(false);
-  const [apiKeyShow_checkbox, setApiKeyShow_checkbox] = useState(false);
+
   const [latency, setLatency] = useState()
   // const callCopilot = async () => {
   //   try {
@@ -131,6 +141,24 @@ function Ai  (props) {
       console.log ('openApiKey cleared');
     }
 
+
+    // user deepSeek api key support
+    const deepSeekApiKeyChange = (e) => {
+        setDeepSeekApiKey(e.target.value);
+    };
+
+    function deepSeekApiKeySave() {
+      localStorage.setItem('deepSeekApiKey', JSON.stringify(deepSeekApiKey));
+    }
+
+    function deepSeekApiKeyClear() {
+      setDeepSeekApiKey("");
+      localStorage.removeItem('deepSeekApiKey');
+      console.log ('deepSeekApiKey cleared');
+    }
+
+
+
      
     //** openAI input request support */
     const handleInputChange = (e) => {
@@ -160,37 +188,69 @@ function Ai  (props) {
       <h3>OpenAI API Experiment </h3>
       {latency && <div style={{color: '#aa3333'}}>{latency}</div>}
       <div style={{display: 'flex'}}>
-        <ComboBoxSelect serv={openAi_selectedModel} nameList={aiBrand} setSelect={setSelectedAiBrand}
-          title='aiBrand' options={aiBrand} defaultValue={selectedAiBrand}/> &nbsp; &nbsp; &nbsp;
+        <ComboBoxSelect serv={selectedAiBrand} nameList={aiBrand} setSelect={setSelectedAiBrand}
+          title='aiBrand' options={aiBrand} defaultValue={aiBrand[0]}/> &nbsp; &nbsp; &nbsp;
 
-        {selectedAiBrand === 'OpenAI' && <ComboBoxSelect serv={openAi_selectedModel} nameList={OPEN_AI_MODELS} setSelect={set_openAi_SelectedModel}
-                  title='openAi-model' options={OPEN_AI_MODELS} defaultValue={openAi_selectedModel}/>} &nbsp; &nbsp; &nbsp;
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
         <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;Request show
       </div>
 
+      <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
+      
       {/* <br />  */}
       {/* user openAI api key  */}
-      <input  type="checkbox" checked={apiKeyShow_checkbox}  onChange={()=>setApiKeyShow_checkbox(! apiKeyShow_checkbox)} /> &nbsp;personal openAI apiKey  &nbsp; &nbsp;
+      {selectedAiBrand === 'OpenAI' && <div>
+        <ComboBoxSelect serv={openAi_selectedModel} nameList={OPEN_AI_MODELS} setSelect={set_openAi_SelectedModel}
+          title='openAi-model' options={OPEN_AI_MODELS} defaultValue={openAi_selectedModel}/>
 
-      {apiKeyShow_checkbox && <div>
-        <form>
-            <input style={{width: '600px'}}
-                type="text"
-                value={openAiApiKey}
-                onChange={apiKeyChange}
-                placeholder="enter personal api-key"
-                required
-            />
-            {/* <button type="submit"> save </button> */}
-        </form>
+        <input  type="checkbox" checked={openAi_apiKeyShow_checkbox}  onChange={()=>setOpenAi_ApiKeyShow_checkbox(! openAi_apiKeyShow_checkbox)} /> &nbsp;personal openAI apiKey  &nbsp; &nbsp;
+        {openAi_apiKeyShow_checkbox && <div>
+          <form>
+              <input style={{width: '600px'}}
+                  type="text"
+                  value={openAiApiKey}
+                  onChange={apiKeyChange}
+                  placeholder="enter personal openAi api-key"
+                  required
+              />
+              {/* <button type="submit"> save </button> */}
+          </form>
 
-        <button onClick={() => openAiApiKeySave()}>save</button> &nbsp;
-        <button onClick={() => openAiApiKeyClear()}>clear</button>
+          <button onClick={() => openAiApiKeySave()}>save</button> &nbsp;
+          <button onClick={() => openAiApiKeyClear()}>clear</button>
+        </div>}
+        <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
       </div>}
 
-      <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
+
       {/* <br />   */}
+
+      {/* user openAI api key  */}
+
+      {selectedAiBrand === 'DeepSeek' && <div>
+        <input  type="checkbox" checked={deepSeek_apiKeyShow_checkbox}  onChange={()=> setDeepSeek_ApiKeyShow_checkbox(! deepSeek_apiKeyShow_checkbox)} /> &nbsp;personal deepSeek apiKey  &nbsp; &nbsp;
+        {deepSeek_apiKeyShow_checkbox && <div>
+          <form>
+              <input style={{width: '600px'}}
+                  type="text"
+                  value={deepSeekApiKey}  
+                  onChange={deepSeekApiKeyChange}
+                  placeholder="enter personal deepSeek api-key"
+                  required
+              />
+              {/* <button type="submit"> save </button> */}
+          </form>
+
+          <button onClick={() => deepSeekApiKeySave()}>save</button> &nbsp;
+          <button onClick={() => deepSeekApiKeyClear()}>clear</button>
+        </div>}
+        <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
+      </div>}
+
+
+      {/* <br />   */}
+
+
 
       {props.pageForAiText && 
        <div style={{display: 'flex'}}>
@@ -204,7 +264,7 @@ function Ai  (props) {
       </div>}
       </div>}
 
-      <br />
+      {/* <br /> */}
       {! pageAI_checkbox && <div style={{display: 'flex'}}>
         <input  type="checkbox" checked={includeStocksInRequest}  onChange={()=>setIncludeStocksInRequest(! includeStocksInRequest)} /> 
           &nbsp;  include-Stocks-In-Request: &nbsp;
