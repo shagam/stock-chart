@@ -98,7 +98,7 @@ function Ai  (props) {
           return;
         }
         const mili = Date.now()
-        setLatency('OpenAI request sent')
+        setLatency('OpenAI request sent ...')
 
         try {
             var requestInput_ = input;
@@ -106,13 +106,13 @@ function Ai  (props) {
               requestInput_ += JSON.stringify (props.pageForAi) + '. ';
             }
             else if (includeStocksInRequest) {
-              requestInput_ = 'Tickers: ' + stockList + '. ' ;
+              requestInput_ +=  ' ' + stockList;
             }
 
 
             setRequestInput(requestInput_);
             // console.log ('Calling OpenAI API with input:',  requestInput_);
-            const res = await fetch(fetchUrl, {
+            const request = {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${apiKey}`,
@@ -122,7 +122,10 @@ function Ai  (props) {
                     model: aiModel, //"gpt-5-nano", // Specify the model
                     messages: [{ role: "user", content: requestInput_ }],
                 }),
-            });
+            }
+            if (log)
+              console.log ('AP request:', fetchUrl, request)
+            const res = await fetch(fetchUrl, request);
             
             const latency = Date.now() - mili
             setLatency('Ai response, latency(msec)=' + latency)
