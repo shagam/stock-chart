@@ -1023,11 +1023,11 @@ const BasicTable = (props) => {
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='options' id='3' checked={analyzeTool==='options'} onChange={onOptionChange}
                 title='stock options'/> 
-              <div style={{color:'blue'}}> options  </div> 
+              <div style={{color:'blue', background: pageForAi?'lightgreen':'white'}}> options  </div> 
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='ai' id='24' checked={analyzeTool==='ai'} onChange={onOptionChange}
                 title='AI'/> 
-              <div style={{color: pageForAi?'blue':'blue', background: pageForAi?'lightgreen':'white'}}> Ai  </div> 
+              <div style={{color: 'blue', background: pageForAi?'lightgreen':'white'}}> Ai  </div> 
 
             </div>
 

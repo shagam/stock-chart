@@ -1249,8 +1249,8 @@ function OptionQuote (props) {
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <h6 style={{color: 'blue'}}> Option Premium Table (click row to select for AI analysis) </h6>}
-           <input type="checkbox" checked={calculated_Attributes} 
-                onChange={()=>setCalculated_Attributes (! calculated_Attributes)}  />&nbsp;AI attrivutes includes calculated_Attributes&nbsp; &nbsp; 
+          {optionKeys.length > 0 && <div><input type="checkbox" checked={calculated_Attributes} 
+                onChange={()=>setCalculated_Attributes (! calculated_Attributes)}  />&nbsp;AIGroup: includes calculated_Attributes&nbsp; &nbsp; </div>}
 
           {optionKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
