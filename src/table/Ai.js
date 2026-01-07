@@ -313,19 +313,19 @@ function Ai  (props) {
      
       <br />
       <br />
-      <h4>Ai response</h4>
-      <textarea
-        value={response}
-        onChange={(e) => setInput(e.target.value)}
-        // placeholder="Ask Copilot something..."
-        rows={50}
-        cols={120}
-      />
-      <br />
+      {response && <div>
+        <h4>Ai response</h4>
+        <textarea
+          value={response}
+          onChange={(e) => setInput(e.target.value)}
+          // placeholder="Ask Copilot something..."
+          rows={50}
+          cols={120}
+        />
+        <br />
+      </div>}
 
       <br /> 
-
-
     </div>
   );}
 
