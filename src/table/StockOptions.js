@@ -71,6 +71,7 @@ function OptionQuote (props) {
   const [AIGroupKeys, setAIGroupKeys] = useState([]); // keys of AI group
   const [AIGroupShow, setAIGroupShow] = useState(true); // name of AI group
   const [optionSymbolShow, setOptionSymbolShow] = useState(false); 
+  const [calculated_Attributes, setCalculated_Attributes] = useState(false); // whether to include calculated attributes in AIGroup
   // const [AIGroupSelected, setAIGroupSelected] = useState(-1); // row number of selected
 
   // const [arr, setArr] = useState([]);
@@ -260,12 +261,23 @@ function OptionQuote (props) {
  
     // add the selected premium to AIGroup
     const option = {}
-
-    // build the AIGroup object
+    // build the AIGroup object     (filter calculated attributes if needed)
     Object.keys(optionQuote).forEach((key) => { 
-      option[key] = optionQuote[key][rowId];
+      if (calculated_Attributes ||
+          (key !== "yield_"
+        && key !== "yearlyYield"
+        && key !== "breakEven"
+        && key !== "expectedPrice"
+        && key !== "profit"
+        && key !== "mid/price"
+        // && key !== "yearlyGain"
+      )
+      )
+
+        option[key] = optionQuote[key][rowId];
     })
-    option.yearlyGain = estimatedYearlyGain;
+    if (calculated_Attributes)
+      option.yearlyGain = estimatedYearlyGain;
 
     const symbol = props.symbol
     AIGroup[option.optionSymbol] = option;
@@ -1237,6 +1249,9 @@ function OptionQuote (props) {
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <h6 style={{color: 'blue'}}> Option Premium Table (click row to select for AI analysis) </h6>}
+           <input type="checkbox" checked={calculated_Attributes} 
+                onChange={()=>setCalculated_Attributes (! calculated_Attributes)}  />&nbsp;AI attrivutes includes calculated_Attributes&nbsp; &nbsp; 
+
           {optionKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
