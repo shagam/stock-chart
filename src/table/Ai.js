@@ -77,6 +77,9 @@ function Ai  (props) {
   //   }
   // };
 
+    function estimateTokens(text) {
+      return Math.ceil(text.split(/\s+/).length * 1.3);
+    }
 
     const OpenAI_handleSubmit = async (e) => {
          e.preventDefault();
@@ -109,6 +112,7 @@ function Ai  (props) {
               requestInput_ +=  ' ' + stockList;
             }
 
+            const tokenCount = estimateTokens(requestInput_);
 
             setRequestInput(requestInput_);
             // console.log ('Calling OpenAI API with input:',  requestInput_);
@@ -124,7 +128,7 @@ function Ai  (props) {
                 }),
             }
             if (log)
-              console.log ('AP request:', fetchUrl, request)
+              console.log ('AP request:', fetchUrl, 'tokens=' + tokenCount, request)
             const res = await fetch(fetchUrl, request);
             
             const latency = Date.now() - mili
