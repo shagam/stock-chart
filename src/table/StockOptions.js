@@ -279,7 +279,13 @@ function OptionQuote (props) {
     if (calculated_Attributes)
       option.yearlyGain = estimatedYearlyGain;
 
-    const symbol = props.symbol
+    // clear other options
+    if (! props.eliHome || true) {
+      const AIGroupKeys = Object.keys(AIGroup)
+      if (AIGroupKeys.length > 0)
+      delete AIGroup[AIGroupKeys[0]]
+    }
+
     AIGroup[option.optionSymbol] = option;
     setAIGroupKeys(Object.keys(AIGroup))
 
@@ -287,7 +293,7 @@ function OptionQuote (props) {
     props.setPageForAiText('options symbol=' + props.symbol);    
     
     if (log)
-      console.log ('AIGroupAdd', symbol, option, AIGroup )
+      console.log ('AIGroupAdd', props.symbol, option, AIGroup )
   }
 
 
