@@ -1,5 +1,6 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
-
+import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
+  searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 
 // new functionality
 function News (props) {
@@ -8,26 +9,36 @@ function News (props) {
     console.log (image_url)
     const [QQQ_call_option_image, setQQQ_call_ption_image] = useState(image_url) 
     const NEWS = 'news'; // localStorage file name
-
-    // const newsDefault = {
-    //     option_mili: new Date().getTime()
-
-    // }
+    const [newEvent, setNewEvent] = useState ({ })
 
 
-    var news = JSON.parse(localStorage.getItem(NEWS))
-    if (! news) {
-        news = {init: new Date().getTime(), optionCount: 0};
-        console.log (NEWS, news)
-        localStorage.setItem(NEWS, JSON.stringify(news))
-    }
+    useEffect(() => {
+        const NEWS = 'news';
+        var news
+        var change = false;
+        const news_ = localStorage.getItem(NEWS)
+        if (news_)
+            news = JSON.parse(news_)
+        else {
+            news = {}  
+            change = true;
+        }
+        
 
- 
-    function news_Option_increment_count () {
-        news.option_mili = new Date().getTime()
-        news.optionCount++
-        localStorage.setItem(NEWS, JSON.stringify(news))
-    }
+
+        if (! news.options_date) {
+            news.options_date = getDate()
+            console.log(getDate(), "Running initialization, count =", news.options_date);
+            change = true;
+            newEvent.options = true
+
+        }
+
+        if (change) {
+            localStorage.setItem(NEWS, JSON.stringify(news));
+        }
+
+    }, [newEvent]);
 
     function newsClear () {
         localStorage.removeItem(NEWS)
@@ -37,7 +48,7 @@ function News (props) {
   return (
     <div>
         {props.eliHome && <button onClick={() => newsClear()}> news-rfresh </button> } 
-        {(props.eliHome && news.optionCount < 8) && <div style={{ border:'2px solid magenta'}}>
+        {props.eliHome && newEvent.options && <div style={{ border:'2px solid magenta'}}>
             <div>
                 <hr/> 
                 < h5> &nbsp; Update: New page  <strong style={{color:'magenta'}}>Call options</strong> &nbsp; &nbsp; </h5>
@@ -60,7 +71,7 @@ function News (props) {
                 <div> &nbsp;</div>
                 <button onClick={() => window.location.reload()}> <strong style={{color: 'turquoise'}}>abort-page</strong> </button> 
 
-                {news_Option_increment_count ()}
+
 
                 {/*
                 // If image is imported from src
