@@ -140,6 +140,35 @@ function Ai  (props) {
 
             const data = await res.json();
             setResponse(data.choices[0].message.content);
+
+
+            // send request to backend for logging
+            if (log) {
+              var corsUrl;
+
+
+              corsUrl = "https://";
+              corsUrl += props.corsServer+ ":" + props.PORT + "/ai?record=true"; 
+
+              corsUrl +=  '&symbol=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand + '&tokens=' + tokenCount;
+              corsUrl +=  '&ip=' + props.ip + '&city=' + props.city + '&countryName=' + props.countryName + '&countryCode=' + props.countryCode + '&regionName=' + props.regionName;
+              if (log || true) {
+                corsUrl += '&log=true';
+                console.log ('Logging Ai request to back-end:', corsUrl)
+              }
+
+
+              axios.get (corsUrl)
+                // getDate()
+                .then ((result) => {
+                  // setErr()
+                  if (result.status !== 200) {
+                    console.log (props.chartSymbol, 'status=', result)
+                    return;
+                  }
+                })
+            }
+
         } catch (error) {
             console.error(selectedAiBrand, ' Ai api fail:', error.message);
             setResponse(selectedAiBrand + ' Ai api fail: ' + error.message);
