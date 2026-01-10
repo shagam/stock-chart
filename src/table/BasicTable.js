@@ -1095,6 +1095,7 @@ const BasicTable = (props) => {
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool ==='ai' && <Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
+            city = {city} countryName = {countryName} countryCode = {countryCode} regionName = {regionName} ip = {ip} os = {os}
              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
 
             {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}

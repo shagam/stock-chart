@@ -150,8 +150,9 @@ function Ai  (props) {
               corsUrl = "https://";
               corsUrl += props.corsServer+ ":" + props.PORT + "/ai?record=true"; 
 
-              corsUrl +=  '&symbol=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand + '&tokens=' + tokenCount;
-              corsUrl +=  '&ip=' + props.ip + '&city=' + props.city + '&countryName=' + props.countryName + '&countryCode=' + props.countryCode + '&regionName=' + props.regionName;
+              corsUrl +=  '&stock=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand + '&tokens=' + tokenCount + '&ip=' + props.ip ;
+              corsUrl +=  '&city=' + props.city + '&countryName=' + props.countryName;
+               corsUrl += '&countryCode=' + props.countryCode + '&regionName=' + props.regionName + '&request=' + requestInput_;
               if (log || true) {
                 corsUrl += '&log=true';
                 console.log ('Logging Ai request to back-end:', corsUrl)
