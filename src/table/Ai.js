@@ -5,6 +5,7 @@ import axios from 'axios'
 import { set } from 'date-fns';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import {beep2} from '../utils/ErrorList'
+import {getDate} from '../utils/Date'
 // import { OpenAI } from 'openai/client.js';
 
 // import ChatGPT from './ChatGPT';
@@ -92,7 +93,7 @@ function Ai  (props) {
         setResponse(''); // Clear previous response
         setErr('');
 
-        if (tokenCountSum > 100000) {
+        if (tokenCountSum > 1000) {
           setErr('Token limit exceeded. Please contact support.', tokenCountSum);
           beep2()
           return;
@@ -158,28 +159,33 @@ function Ai  (props) {
 
 
             // send request to backend for logging
-            if (log) {
+            if (true)
+               {
               var corsUrl;
 
 
               corsUrl = "https://";
               corsUrl += props.corsServer+ ":" + props.PORT + "/ai?record=true"; 
 
-              corsUrl +=  '&stock=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand + '&tokens=' + tokenCount + '&ip=' + props.ip ;
+              corsUrl +=  '&stock=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand 
+              corsUrl +=  '&ip=' + props.ip +'&tokens=' + tokenCount + 'toalCount=' + tokenCountSum_ ;
               corsUrl +=  '&city=' + props.city + '&countryName=' + props.countryName;
-               corsUrl += '&countryCode=' + props.countryCode + '&regionName=' + props.regionName + '&request=' + requestInput_;
+              corsUrl += '&countryCode=' + props.countryCode + '&regionName=' + props.regionName ;
               if (log || true) {
                 corsUrl += '&log=true';
                 console.log ('Logging Ai request to back-end:', corsUrl)
               }
-
+              corsUrl += + '&request=' + requestInput_.substring(0, 500);
+              corsUrl += + '&response=' + data.choices[0].message.content.substring(0, 500);
 
               axios.get (corsUrl)
-                // getDate()
                 .then ((result) => {
-                  // setErr()
+                  if (log)
+                    console.log (getDate(), props.chartSymbol, result.status, result.data );
                   if (result.status !== 200) {
-                    console.log (props.chartSymbol, 'status=', result)
+                    setErr(result.status + ' ' + result.message + ' ' + result.data );
+                    beep2();
+                    // console.log (getDate(), props.chartSymbol, 'status=', result)
                     return;
                   }
                 })
@@ -249,7 +255,7 @@ function Ai  (props) {
         <h6 style={{color: 'blue'}}> Ai API Example (under development) </h6>  &nbsp; &nbsp;
         <div style={{color: 'green'}} > Total tokens used: {tokenCountSum}  </div>
       </div>
-      {err != '' && <div style={{color: 'red'}}>err: {err}</div>}
+      {err !== '' && <div style={{color: 'red'}}>err: {err}</div>}
 
 
       <h3>OpenAI API Experiment </h3>
