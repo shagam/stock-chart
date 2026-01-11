@@ -34,6 +34,10 @@ function Ai  (props) {
     return JSON.parse(localStorage.getItem("openAiApiKey")) || "";
   });
 
+  const [tokenCountSum, setTokenCountSum] = useState(() => {
+    return JSON.parse(localStorage.getItem("tokenCountSum")) || 0;
+  });
+
     const OPEN_AI_MODELS = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', //  'gpt-5-micro',  'gpt-5-milli',
     //'gpt-5-16k', 'gpt-5.1-16k',  'gpt-4o-mili',
     'gpt-4o-mini', 'gpt-3.5-turbo-16k',]//'gpt-4o-micro',  'gpt-4o-16k',
@@ -113,7 +117,10 @@ function Ai  (props) {
             }
 
             const tokenCount = estimateTokens(requestInput_);
-
+            const tokenCountSaved = JSON.parse(localStorage.getItem("tokenCountSum")) || 0;
+            const tokenCountSum_ = tokenCount + tokenCountSaved
+            localStorage.setItem("tokenCountSum", JSON.stringify(tokenCountSum_));
+    
             setRequestInput(requestInput_);
             // console.log ('Calling OpenAI API with input:',  requestInput_);
             const request = {
@@ -127,7 +134,7 @@ function Ai  (props) {
                     messages: [{ role: "user", content: requestInput_ }],
                 }),
             }
-            if (log)
+            // if (log)
               console.log ('AP request:', fetchUrl, 'tokens=' + tokenCount, request)
             const res = await fetch(fetchUrl, request);
             
