@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { set } from 'date-fns';
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+import {beep2} from '../utils/ErrorList'
 // import { OpenAI } from 'openai/client.js';
 
 // import ChatGPT from './ChatGPT';
@@ -24,6 +25,7 @@ function Ai  (props) {
   const [requestInput, setRequestInput] = useState('');
   const stockList =  Object.keys(props.gainMap).join(', ')
   const [response, setResponse] = useState("");
+  const [err, setErr] = useState("");
 
   const aiBrand = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
   const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrand[0]);
@@ -88,7 +90,13 @@ function Ai  (props) {
     const OpenAI_handleSubmit = async (e) => {
          e.preventDefault();
         setResponse(''); // Clear previous response
+        setErr('');
 
+        if (tokenCountSum > 100000) {
+          setErr('Token limit exceeded. Please contact support.', tokenCountSum);
+          beep2()
+          return;
+        }
         var apiKey;
         var fetchUrl;
         var aiModel
@@ -239,8 +247,9 @@ function Ai  (props) {
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>  &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> Ai API Example (under development) </h6>  &nbsp; &nbsp;
+        <div style={{color: 'green'}} > Total tokens used: {tokenCountSum}  </div>
       </div>
-
+      {err != '' && <div style={{color: 'red'}}>err: {err}</div>}
 
 
       <h3>OpenAI API Experiment </h3>
@@ -249,7 +258,6 @@ function Ai  (props) {
           title='aiBrand' options={aiBrand} defaultValue={aiBrand[0]}/> &nbsp; &nbsp; &nbsp;
 
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
-        <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;Request show
       </div>
 
       <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
@@ -348,6 +356,7 @@ function Ai  (props) {
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
      
       <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>AI request Send</button> &nbsp; 
+      <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;Request show  &nbsp; &nbsp;
       {showRequest && requestInput}
       {/* {err && <div style={{color: 'red'}}>Error: {err} </div>} */}
       {latency && <div style={{color: 'green'}}> {latency} </div>}
