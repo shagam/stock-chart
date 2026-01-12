@@ -260,7 +260,7 @@ function Ai  (props) {
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>  &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> Ai API Example (under development) </h6>  &nbsp; &nbsp;
-        <div style={{color: 'green'}} > Total tokens used openAi: {openAiTokenCount}  deepSeek: {deepseekTokenCount}  </div>
+        <div style={{color: 'green'}} > User tokens used, &nbsp; openAi: {openAiTokenCount} &nbsp; deepSeek: {deepseekTokenCount}  </div>
       </div>
       {err !== '' && <div style={{color: 'red'}}>err: {err}</div>}
 
