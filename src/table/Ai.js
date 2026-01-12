@@ -29,7 +29,7 @@ function Ai  (props) {
   const [err, setErr] = useState("");
 
   const aiBrandList = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
-  const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrandList[0]);
+  const [aiBrand, setAiBrand] = useState(aiBrandList[0]);
 
 
   const [openAi_apiKeyShow_checkbox, setOpenAi_ApiKeyShow_checkbox] = useState(false);
@@ -101,11 +101,11 @@ function Ai  (props) {
         var apiKey;
         var fetchUrl;
         var aiModel
-        if (selectedAiBrand === 'OpenAI') {
+        if (aiBrand === 'OpenAI') {
           apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
           fetchUrl = 'https://api.openai.com/v1/chat/completions';
           aiModel = openAi_selectedModel;
-        } else if (selectedAiBrand === 'DeepSeek') {
+        } else if (aiBrand === 'DeepSeek') {
           apiKey = deepSeekApiKey || process.env.REACT_APP_DEEPSEEK_API_KEY; // Use state variable or environment variable
           fetchUrl = 'https://api.deepseek.com/chat/completions';
           aiModel = 'deepseek-chat';
@@ -168,18 +168,19 @@ function Ai  (props) {
               corsUrl = "https://";
               corsUrl += props.corsServer+ ":" + props.PORT + "/ai?record=true"; 
 
-              corsUrl +=  '&stock=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand 
-              corsUrl +=  '&ip=' + props.ip 
-              corsUrl +=  '&city=' + props.city + '&countryName=' + props.countryName;
+              corsUrl += '&stock=' + props.chartSymbol  + '&brand=' + aiBrand
+              if (aiBrand === 'OpenAI') 
+                corsUrl += '&model=' + aiModel
+              corsUrl += '&ip=' + props.ip 
+              corsUrl += '&city=' + props.city + '&countryName=' + props.countryName;
               corsUrl += '&countryCode=' + props.countryCode + '&regionName=' + props.regionName ;
-              corsUrl +=  selectedAiBrand === 'OpenAI'? '&openAiTokens=': '&deepSeekTokens='
-              corsUrl +=  tokenCount;
+              corsUrl += '&tokenCount=' + tokenCount;
 
               if (log || true) {
                 corsUrl += '&log=true';
                 console.log ('Logging Ai request to back-end:', corsUrl)
               }
-              corsUrl += + '&request=' + requestInput_.substring(0, 500);
+              // corsUrl += + '&request=' + requestInput_.substring(0, 500);
               // corsUrl += + '&response=' + data.choices[0].message.content.substring(0, 500);
 
               axios.get (corsUrl)
@@ -196,8 +197,8 @@ function Ai  (props) {
             }
 
         } catch (error) {
-            console.error(selectedAiBrand, ' Ai api fail:', error.message);
-            setResponse(selectedAiBrand + ' Ai api fail: ' + error.message);
+            console.error(aiBrand, ' Ai api fail:', error.message);
+            setResponse(aiBrand + ' Ai api fail: ' + error.message);
         }
     };
 
@@ -264,7 +265,7 @@ function Ai  (props) {
 
       <h3>OpenAI API Experiment </h3>
       <div style={{display: 'flex'}}>
-        <ComboBoxSelect serv={selectedAiBrand} nameList={aiBrandList} setSelect={setSelectedAiBrand}
+        <ComboBoxSelect serv={aiBrand} nameList={aiBrandList} setSelect={setAiBrand}
           title='aiBrand' options={aiBrandList} defaultValue={aiBrandList[0]}/> &nbsp; &nbsp; &nbsp;
 
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
@@ -274,7 +275,7 @@ function Ai  (props) {
       
       {/* <br />  */}
       {/* user openAI api key  */}
-      {selectedAiBrand === 'OpenAI' && <div>
+      {aiBrand === 'OpenAI' && <div>
         <ComboBoxSelect serv={openAi_selectedModel} nameList={OPEN_AI_MODELS} setSelect={set_openAi_SelectedModel}
           title='openAi-model' options={OPEN_AI_MODELS} defaultValue={openAi_selectedModel}/>
 
@@ -302,7 +303,7 @@ function Ai  (props) {
 
       {/* user openAI api key  */}
 
-      {selectedAiBrand === 'DeepSeek' && <div>
+      {aiBrand === 'DeepSeek' && <div>
         <input  type="checkbox" checked={deepSeek_apiKeyShow_checkbox}  onChange={()=> setDeepSeek_ApiKeyShow_checkbox(! deepSeek_apiKeyShow_checkbox)} /> &nbsp;personal deepSeek apiKey  &nbsp; &nbsp;
         {deepSeek_apiKeyShow_checkbox && <div>
           <form>
