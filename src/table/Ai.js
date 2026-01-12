@@ -28,8 +28,8 @@ function Ai  (props) {
   const [response, setResponse] = useState("");
   const [err, setErr] = useState("");
 
-  const aiBrand = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
-  const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrand[0]);
+  const aiBrandList = ['OpenAI', 'DeepSeek',];// 'Anthropic', 'Cohere', 'AI21', 'Mistral', 'Google PaLM2'];
+  const [selectedAiBrand, setSelectedAiBrand] = useState(aiBrandList[0]);
 
 
   const [openAi_apiKeyShow_checkbox, setOpenAi_ApiKeyShow_checkbox] = useState(false);
@@ -264,8 +264,8 @@ function Ai  (props) {
 
       <h3>OpenAI API Experiment </h3>
       <div style={{display: 'flex'}}>
-        <ComboBoxSelect serv={selectedAiBrand} nameList={aiBrand} setSelect={setSelectedAiBrand}
-          title='aiBrand' options={aiBrand} defaultValue={aiBrand[0]}/> &nbsp; &nbsp; &nbsp;
+        <ComboBoxSelect serv={selectedAiBrand} nameList={aiBrandList} setSelect={setSelectedAiBrand}
+          title='aiBrand' options={aiBrandList} defaultValue={aiBrandList[0]}/> &nbsp; &nbsp; &nbsp;
 
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
       </div>
