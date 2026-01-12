@@ -145,7 +145,7 @@ function Ai  (props) {
                 language: 'en',
             }
             // if (log)
-              console.log ('AP request:', fetchUrl, 'tokens=' + tokenCount, request)
+              console.log ('AI  request:', fetchUrl, 'tokens=' + tokenCount, request)
             const res = await fetch(fetchUrl, request);
             
             const latency = Date.now() - mili
