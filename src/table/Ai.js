@@ -37,10 +37,9 @@ function Ai  (props) {
     return JSON.parse(localStorage.getItem("openAiApiKey")) || "";
   });
 
-  const [tokenCountSum, setTokenCountSum] = useState(() => {
-    return JSON.parse(localStorage.getItem("tokenCountSum")) || 0;
-  });
-
+  const [openAiTokenCount, setOpenAiTokenCount] = useState(0);
+  const [deepseekTokenCount, setDeepSeekTokenCount] = useState(0);
+  
     const OPEN_AI_MODELS = ['gpt-4o', 'gpt-5-nano', 'gpt-3.5-turbo', 'gpt-5.1', 'gpt-5-mini', //  'gpt-5-micro',  'gpt-5-milli',
     //'gpt-5-16k', 'gpt-5.1-16k',  'gpt-4o-mili',
     'gpt-4o-mini', 'gpt-3.5-turbo-16k',]//'gpt-4o-micro',  'gpt-4o-16k',
@@ -93,8 +92,8 @@ function Ai  (props) {
         setResponse(''); // Clear previous response
         setErr('');
 
-        if (tokenCountSum > 1000) {
-          setErr('Token limit exceeded. Please contact support.', tokenCountSum);
+        if (openAiTokenCount + deepseekTokenCount > 1000) {
+          setErr('Token limit exceeded. Please contact support.', openAiTokenCount + deepseekTokenCount);
           beep2()
           return;
         }
@@ -187,12 +186,15 @@ function Ai  (props) {
                 .then ((result) => {
                   if (log)
                     console.log (getDate(), props.chartSymbol, result.status, result.data );
-                  if (result.status !== 200) {
+                  if (result.status !== 200 || result.data.status !== 'ok') {
                     setErr(result.status + ' ' + result.message + ' ' + result.data );
                     beep2();
                     // console.log (getDate(), props.chartSymbol, 'status=', result)
                     return;
                   }
+
+                  setOpenAiTokenCount (result.data.openAi);
+                  setDeepSeekTokenCount (result.data.deepseek);
                 })
             }
 
@@ -258,7 +260,7 @@ function Ai  (props) {
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>  &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> Ai API Example (under development) </h6>  &nbsp; &nbsp;
-        <div style={{color: 'green'}} > Total tokens used: {tokenCountSum}  </div>
+        <div style={{color: 'green'}} > Total tokens used openAi: {openAiTokenCount}  deepSeek: {deepseekTokenCount}  </div>
       </div>
       {err !== '' && <div style={{color: 'red'}}>err: {err}</div>}
 
