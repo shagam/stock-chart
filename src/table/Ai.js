@@ -142,6 +142,7 @@ function Ai  (props) {
                     model: aiModel, //"gpt-5-nano", // Specify the model
                     messages: [{ role: "user", content: requestInput_ }],
                 }),
+                language: 'en',
             }
             // if (log)
               console.log ('AP request:', fetchUrl, 'tokens=' + tokenCount, request)
@@ -168,15 +169,18 @@ function Ai  (props) {
               corsUrl += props.corsServer+ ":" + props.PORT + "/ai?record=true"; 
 
               corsUrl +=  '&stock=' + props.chartSymbol + '&model=' + aiModel + '&brand=' + selectedAiBrand 
-              corsUrl +=  '&ip=' + props.ip +'&tokens=' + tokenCount + 'toalCount=' + tokenCountSum_ ;
+              corsUrl +=  '&ip=' + props.ip 
               corsUrl +=  '&city=' + props.city + '&countryName=' + props.countryName;
               corsUrl += '&countryCode=' + props.countryCode + '&regionName=' + props.regionName ;
+              corsUrl +=  selectedAiBrand === 'OpenAI'? '&openAiTokens=': '&deepSeekTokens='
+              corsUrl +=  tokenCount;
+
               if (log || true) {
                 corsUrl += '&log=true';
                 console.log ('Logging Ai request to back-end:', corsUrl)
               }
               corsUrl += + '&request=' + requestInput_.substring(0, 500);
-              corsUrl += + '&response=' + data.choices[0].message.content.substring(0, 500);
+              // corsUrl += + '&response=' + data.choices[0].message.content.substring(0, 500);
 
               axios.get (corsUrl)
                 .then ((result) => {
