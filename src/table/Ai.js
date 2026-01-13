@@ -222,8 +222,8 @@ function Ai  (props) {
                     return;
                   }
 
-                  setOpenAiTokenCount (result.data.openAi);
-                  setDeepSeekTokenCount (result.data.deepseek);
+                  setOpenAiTokenCount (result.data.openAi? result.data.openAi : 0);
+                  setDeepSeekTokenCount (result.data.deepseek ? result.data.deepseek : 0);
                 })
             }
 
@@ -289,7 +289,7 @@ function Ai  (props) {
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>  &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> Ai API  </h6>  &nbsp; &nbsp;
-        <div style={{color: 'green'}} > User tokens used, &nbsp; openAi: {openAiTokenCount} &nbsp; deepSeek: {deepseekTokenCount}  </div>
+        <div style={{color: 'green'}} > User tokens used, &nbsp; openAi: {openAiTokenCount} &nbsp; deepSeek: {deepseekTokenCount} &nbsp; </div>
       </div>
       {err !== '' && <div style={{color: 'red'}}>err: {err}</div>}
 
@@ -311,8 +311,8 @@ function Ai  (props) {
         {props.eliHome && <div> <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp; </div>}
       </div>
 
-      <hr style={{ border: '3px solid #000000'}}/> 
-      
+      {/* <hr style={{ border: '3px solid #000000'}}/>  */}
+      <div>&nbsp;</div>
       {/* <br />  */}
       {/* user openAI api key  */}
       {aiBrand === 'OpenAI' && <div>
