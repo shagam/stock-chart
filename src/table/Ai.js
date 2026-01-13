@@ -56,7 +56,7 @@ function Ai  (props) {
 
   const [log, setLog] = useState(false);
 
-  const [includeStocksInRequest, setIncludeStocksInRequest] = useState(false);
+  const [includeStocksInRequest, setIncludeStocksInRequest] = useState(true);
   const [pageAI_addToRequest_checkbox, setPageAI_addToRequest_checkbox] = useState(props.pageForAi? true: false);
 
   const [latency, setLatency] = useState()
@@ -297,17 +297,18 @@ function Ai  (props) {
       <div  style = {{display: 'flex'}}><h3>AI API  </h3>  &nbsp; &nbsp; (under development) </div>
       <hr style={{ border: '3px solid #000000'}}/>  
 
-    {/* token usage get button */}
-      {props.eliHome && <button  style={{background: 'aqua'}} onClick={tokenUsageGet}>token usage get</button>} &nbsp; 
-      {props.eliHome && usageInfo && <pre style={{color: 'blue'}}>Usage Info: {JSON.stringify(usageInfo, null, 2)}</pre> }
-      {/* <hr style={{color: 'red', border: '8px solid #7ccae2'}}/>  */}
-      <hr style={{ border: '3px solid #000000'}}/> 
+      {/* token usage get button */}
+      {props.eliHome && <div>    
+        <button  style={{background: 'aqua'}} onClick={tokenUsageGet}>token usage get</button> &nbsp; 
+        {usageInfo && <pre style={{color: 'blue'}}>Usage Info: {JSON.stringify(usageInfo, null, 2)}</pre> }
+        <hr style={{ border: '3px solid #000000'}}/>
+      </div>}
 
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={aiBrand} nameList={aiBrandList} setSelect={setAiBrand}
           title='aiBrand' options={aiBrandList} defaultValue={aiBrandList[0]}/> &nbsp; &nbsp; &nbsp;
 
-        <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
+        {props.eliHome && <div> <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp; </div>}
       </div>
 
       <hr style={{ border: '3px solid #000000'}}/> 
