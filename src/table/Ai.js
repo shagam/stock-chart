@@ -60,6 +60,8 @@ function Ai  (props) {
   const [pageAI_addToRequest_checkbox, setPageAI_addToRequest_checkbox] = useState(props.pageForAi? true: false);
 
   const [latency, setLatency] = useState()
+  const [usageInfo, setUsageInfo] = useState();
+
   // const callCopilot = async () => {
   //   try {
   //     const res = await axios.post(
@@ -82,6 +84,33 @@ function Ai  (props) {
   //     setResponse("Error calling Copilot API " + err.message);
   //   }
   // };
+
+  //** get token usage */
+  function tokenUsageGet() {
+    var corsUrl;
+
+    corsUrl = "https://";
+    corsUrl += props.corsServer+ ":" + props.PORT + "/ai?read=true"; 
+    corsUrl += '&ip=' + props.ip 
+
+    if (log || true) {
+      corsUrl += '&log=true';
+      console.log ('Getting token usage from back-end:', corsUrl)
+    }
+
+    axios.get (corsUrl)
+      .then ((result) => {
+        if (log)
+          console.log (getDate(), result.status, result.data );
+        if (result.status !== 200) {
+          setErr(result.status + ' ' + result.message + ' ' + result.data );
+          beep2();
+          // console.log (getDate(), props.chartSymbol, 'status=', result)
+          return;
+        }
+        setUsageInfo(result.data);
+      })
+    }
 
     function estimateTokens(text) {
       return Math.ceil(text.split(/\s+/).length * 1.3);
@@ -259,13 +288,21 @@ function Ai  (props) {
     <div style = {{border: '2px solid blue'}} >
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div>  &nbsp; &nbsp;
-        <h6 style={{color: 'blue'}}> Ai API Example (under development) </h6>  &nbsp; &nbsp;
+        <h6 style={{color: 'blue'}}> Ai API  </h6>  &nbsp; &nbsp;
         <div style={{color: 'green'}} > User tokens used, &nbsp; openAi: {openAiTokenCount} &nbsp; deepSeek: {deepseekTokenCount}  </div>
       </div>
       {err !== '' && <div style={{color: 'red'}}>err: {err}</div>}
 
 
-      <h3>OpenAI API Experiment </h3>
+      <div  style = {{display: 'flex'}}><h3>AI API  </h3>  &nbsp; &nbsp; (under development) </div>
+      <hr style={{ border: '3px solid #000000'}}/>  
+
+    {/* token usage get button */}
+      {props.eliHome && <button  style={{background: 'aqua'}} onClick={tokenUsageGet}>token usage get</button>} &nbsp; 
+      {props.eliHome && usageInfo && <pre style={{color: 'blue'}}>Usage Info: {JSON.stringify(usageInfo, null, 2)}</pre> }
+      {/* <hr style={{color: 'red', border: '8px solid #7ccae2'}}/>  */}
+      <hr style={{ border: '3px solid #000000'}}/> 
+
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={aiBrand} nameList={aiBrandList} setSelect={setAiBrand}
           title='aiBrand' options={aiBrandList} defaultValue={aiBrandList[0]}/> &nbsp; &nbsp; &nbsp;
@@ -273,7 +310,7 @@ function Ai  (props) {
         <input  type="checkbox" checked={log}  onChange={()=>setLog(! log)} /> &nbsp;log  &nbsp; &nbsp;
       </div>
 
-      <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
+      <hr style={{ border: '3px solid #000000'}}/> 
       
       {/* <br />  */}
       {/* user openAI api key  */}
@@ -297,7 +334,7 @@ function Ai  (props) {
           <button onClick={() => openAiApiKeySave()}>save</button> &nbsp;
           <button onClick={() => openAiApiKeyClear()}>clear</button>
         </div>}
-        <hr style={{color: 'red', border: '8px solid #7ccae2'}}/> 
+      <hr style={{ border: '3px solid #000000'}}/> 
       </div>}
 
 
@@ -368,8 +405,8 @@ function Ai  (props) {
       <br />
       {/* {<button onClick={callCopilot}>Copilot Send</button>} &nbsp;  */}
      
-      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>AI request Send</button> &nbsp; 
-      <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} /> &nbsp;Request show  &nbsp; &nbsp;
+      <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>AI request Send</button>  &nbsp; (usage info collected)  &nbsp; &nbsp;
+      <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} />&nbsp;Request show  &nbsp; &nbsp;
       {showRequest && requestInput}
       {/* {err && <div style={{color: 'red'}}>Error: {err} </div>} */}
       {latency && <div style={{color: 'green'}}> {latency} </div>}
