@@ -155,7 +155,7 @@ function PriceAlert (props) {
 
             {/* Add remove buttons  */}
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             <div>&nbsp;</div>
             {showDel && <button  style={{background: '#ffccff'}} type="button" onClick={()=>del()}> price-alert-delete {props.symbol} </button>}
             <div>&nbsp;</div>

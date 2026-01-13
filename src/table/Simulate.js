@@ -950,7 +950,7 @@ const Simulate = (props) => {
                 <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>Proximity --- Portion: </div> &nbsp;&nbsp;&nbsp;
                     price / bubblePrice=<div style={{color: 'black', fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}>{todayPriceDivBubbleLine.toFixed(2)}  </div> &nbsp;&nbsp;
                 Calculated portion= <div style={{ fontSize:'14px', fontStyle: "italic", fontWeight: "bold"}}> {portionBubble_calc(todayPriceDivBubbleLine).toFixed(2)} </div>
-                <hr/> 
+                <hr style={{ border: '3px solid #000000'}}/> 
             </div>}
 
 
@@ -972,13 +972,14 @@ const Simulate = (props) => {
             </div>  
  
             {! optimizeBubble && ! optimizeWeekGain && <div style = {{display:'flex'}}>
-            <hr/> 
+                
+                <hr style={{ border: '3px solid #000000'}}/> 
                 {<div  style={{color: 'green' }}> keep aggressive portion % </div>} &nbsp;&nbsp;&nbsp;
                 {<GetInt init={portionPercent} callBack={setPortionPercent} title='' type='Number' pattern="[0-9]+" width = '20%'/>}
             </div>}
 
             {/* Bubble proximity */}
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             <div style = {{ backgroundColor: '#FFE4E1'}}>
                 {props.gainMap.bubbleLine && <div style = {{display:'flex'}}>
                     <input  type="checkbox" checked={optimizeBubble}  onChange={() => setOptimizeBubble (! optimizeBubble)} /> &nbsp;
@@ -1005,7 +1006,7 @@ const Simulate = (props) => {
                     xaxis: {title: {text: 'price / bubblePrice'}}, yaxis: {title: {text: 'stock portion'}}}} config={{staticPlot: true, 'modeBarButtonsToRemove': []}}  />}
             </div>
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* week gain params */}
             <div style = {{backgroundColor: '#AFEEEE'}}>
                 {props.monthGainData.monthGainArray && <div style = {{display:'flex'}}>
@@ -1021,7 +1022,7 @@ const Simulate = (props) => {
                     </div>}
             </div>
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
 
             <div style = {{display:'flex', width: '600px'}}>
                 &nbsp; <GetInt init={thresholdUp} callBack={setThresholdUp} title='thresholdUp %' type='text' pattern="[\\.0-9]+" width = '15%'/>
@@ -1057,7 +1058,7 @@ const Simulate = (props) => {
             {<button style={{background: 'lightGreen', fontSize: '22px'}} type="button"  onClick={() => {simulateTrade (props.stockChartXValues, props.stockChartYValues)}}> Simulate trade </button>}&nbsp;
             <div> &nbsp;</div>
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* account-gain vs stock-gain */}
 
             {logRecordsKeys.length > 0 && <div> <input type="checkbox" checked={tradeChartShow} onChange={() => setTradeChartShow (! tradeChartShow)} />&nbsp;trade_chart&nbsp;&nbsp; </div>}
@@ -1068,7 +1069,7 @@ const Simulate = (props) => {
 
             {/* Simulation results */}
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {Object.keys(resultsArray).length > 0 && <div> <input type="checkbox" checked={tradeInfoShow}  onChange={() => setTradeInfoShow (! tradeInfoShow)} /> &nbsp;tradeInfoShow &nbsp; </div>}
             {tradeInfoShow && <div style={{maxHeight:'300px', maxWidth:'100%', overflow:'auto'}}>
             <table>
@@ -1095,7 +1096,7 @@ const Simulate = (props) => {
             </div>}
 
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {eliHome && results && <div> Last simulation info &nbsp;</div>}
             {eliHome && <pre>{JSON.stringify(results, null, 2)}</pre>}
 

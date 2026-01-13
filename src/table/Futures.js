@@ -278,8 +278,8 @@ function Futures (props) {
           </div>}
 
             {NQ && futuresArray.length > 0 &&<div>expectedGain={(futureArrLastVal / NQ.replace(/,/,'')).toFixed(3)}  </div>}
-
-            <hr/> 
+      
+            <hr style={{ border: '3px solid #000000'}}/> 
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get today NDX nasdaq 100  &nbsp; </h6>
             {<div style={{display:'flex'}}> <ComboBoxSelect serv={urlGetSym} nameList={googFinanceSymList} setSelect={setUrlGetSym} 
               title='urlGetSym' options={googFinanceSymList} defaultValue={urlGetSym}/> </div>}   {/* Select urlGetSym */}

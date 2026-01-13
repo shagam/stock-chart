@@ -26,7 +26,8 @@ const Disclaimer = (props) => {
             <div>
                 {disclaimer.count === 2 && <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
                     <h1 style={{color: 'red'}}>Disclaimer</h1>
-                    <hr/>
+                    
+                    <hr style={{ border: '3px solid #000000'}}/> 
                     <h5>This web site is provided as is.</h5>
                     <h5>We make a big effort to provide accurate info. No guarantee.</h5>
                     <h5>Please review other sites, before making an investment decision.</h5>
@@ -41,7 +42,8 @@ const Disclaimer = (props) => {
                     <h6>This disclaimer appears once in a while on each platform/browser</h6>
                     <h6>Reload page to clear</h6>
                 </div>}
-                <hr/>
+                
+                <hr style={{ border: '3px solid #000000'}}/> 
             </div>
         );
     }

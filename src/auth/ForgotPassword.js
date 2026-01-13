@@ -41,7 +41,8 @@ import React, { useState, useRef } from 'react'
               {currentUser && <div>{currentUser.email}</div> }
               {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
             </div>
-            <hr/>   
+            
+            <hr style={{ border: '3px solid #000000'}}/> 
             {error && <Alert variant="danger"> {error} </Alert>}
             {message && <Alert variant="success"> {message} </Alert>}
   
@@ -50,7 +51,8 @@ import React, { useState, useRef } from 'react'
                 <Form.Label>Email</Form.Label>
                 <Form.Control type="email" ref= {emailRef} required />
               </Form.Group>
-              <hr/>
+                
+              <hr style={{ border: '3px solid #000000'}}/> 
               <Button disabled={loading} className="w-100" type="submit"> Reset password </Button>
             </Form>
             <div className='w-100 text-center mt-3'>   <Link to="/login" >

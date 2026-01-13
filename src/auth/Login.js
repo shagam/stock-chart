@@ -50,7 +50,8 @@ export default function Login (props)  {
 
 
           {error && <Alert variant="danger"> {error} </Alert>}
-          <hr/> 
+          
+          <hr style={{ border: '3px solid #000000'}}/> 
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
@@ -68,7 +69,8 @@ export default function Login (props)  {
             onChange={toggleShowPassword}
             /> Show password  
            </div>
-           <hr/>
+            <hr style={{ border: '3px solid #000000'}}/> 
+            
             <Button disabled={loading} className="w-100" type="submit"> Log in </Button>
           </Form>
         </Card.Body>

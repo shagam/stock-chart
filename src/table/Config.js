@@ -82,7 +82,7 @@ const  Config = (props) => {
             <button onClick={props.refreshByToggleColumns} > Refresh table </button> &nbsp;
           </div>
           
-          <hr/> 
+          <hr style={{ border: '3px solid #000000'}}/> 
           <div style={{display:'flex'}}>
             <button onClick={disclaimerPurge} > disclaimer refresh </button> &nbsp;
             <button onClick={disclaimerGetDate} > disclaimer date </button> &nbsp;
@@ -90,7 +90,7 @@ const  Config = (props) => {
              <div>{disclaimerDate.date} </div>}
           </div>
 
-          <hr/>
+          <hr style={{ border: '3px solid #000000'}}/> 
           <div style={{display: 'flex'}}>Url:  &nbsp;  <div style={{color: '#0077ff'}}> {window.location.href} </div> </div>
 
           {eliHome && <div><input  type="checkbox" checked={serviceInfo}  onChange={() => setServiceInfo(! serviceInfo)} />  service-info </div>}

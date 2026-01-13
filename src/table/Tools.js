@@ -40,29 +40,29 @@ function Tools (props) {
               <h6 style={{color: 'blue'}}> Tools </h6> &nbsp;  &nbsp; 
             </div>               
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* <br></br> */}
             <VerifyGain symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                   stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
 
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* <br></br>  */}
             <Splits symbol = {props.symbol} rows = {props.rows} allColumns={props.allColumns} stockChartXValues = {props.stockChartXValues} 
                   stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns} 
                     logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
             
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* <br></br>  */}
             <TargetPriceGui  symbol = {props.symbol} rows = {props.rows} logFlags = {props.logFlags} errorAdd={props.errorAdd} gainMap = {props.gainMap}
              ssl={props.ssl} PORT={props.PORT} servSelect={props.servSelect}/>
             
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             <Spikes symbol = {props.symbol} rows = {props.rows} stockChartXValues = {props.stockChartXValues} 
                 stockChartYValues = {props.stockChartYValues} refreshByToggleColumns = {props.refreshByToggleColumns}
                  logFlags = {props.logFlags} servSelect={props.servSelect} ssl={props.ssl} PORT={props.PORT} errorAdd={props.errorAdd}/>
             
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {eliHome &&  <IpSearchGui/>}
 
         </div>

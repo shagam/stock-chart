@@ -1017,7 +1017,7 @@ function CommonDatabase (props) {
             })}
         </div>}
  
-        <hr/> 
+        <hr style={{ border: '3px solid #000000'}}/> 
         <div> filteredSymbols (count={resObjects.length}) &nbsp; factor={factor} &nbsp; period-years={period} </div>        
         {resObjects && resObjects.length > 1 &&  <div  style={{width: '300px', height: '35vh', 'overflowY': 'scroll'}}>
         <table>
@@ -1053,7 +1053,7 @@ function CommonDatabase (props) {
 
         </div>}
 
-        <hr/>     
+        <hr style={{ border: '3px solid #000000'}}/> 
         {/* readOneSym info admin only */}
         <pre>{JSON.stringify(infoJson, null, 2)}</pre>
 

@@ -241,7 +241,7 @@ function Tutorials () {
         <div className='w-100 text-left mt-2'>
             <Link to="/" > Home </Link>
         </div>
-        <hr/> 
+        <hr style={{ border: '3px solid #000000'}}/> 
         <h4 style={{color:'Green'}}>Tutorials</h4>
 
         <div className='w-100 text-left mt-2' style={{color:'magenta'}}>
@@ -253,7 +253,7 @@ function Tutorials () {
                 <ComboBoxSelect serv={language} nameList={languageList} setSelect={setLanguage} title='' TITLE='Choose language ' options={[false,true]} defaultValue={false} /> &nbsp; &nbsp; &nbsp;&nbsp;
                 {/* <ComboBoxSelect serv={mobile} nameList={platformList} setSelect={setMobile} title='' TITLE='Mobile or desktop ' options={[false,true]} defaultValue={false} /> &nbsp; */}
                 {eliHome && <GetInt init={searchText} callBack={setSearchText} title='search/Filter  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '35%'/>}
-                <hr/> 
+                <hr style={{ border: '3px solid #000000'}}/> 
             </div>
         </div>         
 

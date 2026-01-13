@@ -412,7 +412,7 @@ function StockLists (props) {
                     </div>
                 </div>
 
-                <hr/> 
+                <hr style={{ border: '3px solid #000000'}}/> 
                 {/* shared Back-end */}
                 <div  style= {{background: '#aaffdd'}}>
                     <h5 style={{color: 'green'}}> Shared backend </h5>
@@ -441,7 +441,7 @@ function StockLists (props) {
                     </div>}
                 </div>
                 {/* LOcal lists */}
-                <hr/> 
+                <hr style={{ border: '3px solid #000000'}}/> 
                 {stockLists && <h6>Local stock-lists &nbsp; ({Object.keys(stockLists).length}) </h6>}
                 {/* <h6> local stock listNames: {JSON.stringify(Object.keys(stockLists))} </h6> */}
                 {/* <pre> names {JSON.stringify(nameArray, null, 2)}</pre> */}

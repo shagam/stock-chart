@@ -50,9 +50,9 @@ function News (props) {
         {props.eliHome && <button onClick={() => newsClear()}> news-rfresh </button> } 
         {props.eliHome && newEvent.options && <div style={{ border:'2px solid magenta'}}>
             <div>
-                <hr/> 
+                <hr style={{ border: '3px solid #000000'}}/> 
                 < h5> &nbsp; Update: New page  <strong style={{color:'magenta'}}>Call options</strong> &nbsp; &nbsp; </h5>
-                <hr/>
+                <hr style={{ border: '3px solid #000000'}}/> 
 
                 {/* // If image is in public folder */}
                 {/* <h5>Call option page example </h5>

@@ -31,13 +31,13 @@ const Manual = (props) => {
 try {
   return <div className='upload-expense'>
     <div className='txt'>
-    <hr/> 
+      <hr style={{ border: '3px solid #000000'}}/> 
       <h4 style={{color:'Green'}}>Manual</h4>
 
       <div>
           <Link to="/" > Home </Link>
       </div>
-      <hr/> 
+      <hr style={{ border: '3px solid #000000'}}/> 
      
       <div className='text'> 
         <div id = "pdf_id">       

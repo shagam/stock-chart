@@ -329,7 +329,7 @@ const Peak2PeakGui = (props) => {
 
 
           {/* Single peak and estimate yearly gaiin bubble override gain */}
-          <hr/>
+          <hr style={{ border: '3px solid #000000'}}/> 
           {((eliHome &&  row_index_eeee !== -1) || (results && ! results.timeUnitGain)) && <div>
             <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {props.symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
             <div style={{display: 'flex'}}>
@@ -374,8 +374,8 @@ const Peak2PeakGui = (props) => {
              {results.yearlyGainPercent && <div   style={{ color: 'green'}} >  <hr/> &nbsp;yearlyGain: {results.yearlyGain} &nbsp;&nbsp; ({results.yearlyGainPercent}%) </div>}
              {/* <div> gain={results.gain} &nbsp;yearsDiff={results.yearsDiff}  &nbsp; from={results.from} ({results.fromValue}) &nbsp; to={results.to} ({results.toValue}) </div> */}
            </div>}
-
-           <hr/>
+            
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* Histogram of bubble proximity */}
 
             {Object.keys(histogram).length > 0 &&<div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Bubble proximity Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>}
@@ -412,7 +412,7 @@ const Peak2PeakGui = (props) => {
             {/* Historical compare price/bubble */}
 
            {props.gainMap.bubbleLine && <div>
-            <hr/>
+            <hr style={{ border: '3px solid #000000'}}/> 
             <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Hisorical {props.symbol} price / bubble_price  &nbsp;  </h6>
             <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
            </div>}
@@ -446,10 +446,10 @@ const Peak2PeakGui = (props) => {
           </div>}  
 
           {/* Bubble info */}
-          <hr/>
+          <hr style={{ border: '3px solid #000000'}}/> 
           {eliHome && results && <div><input type="checkbox" checked={peaksShow}  onChange={() => setPeaksShow (! peaksShow)} /> &nbsp;peaks list&nbsp; </div>}
           {eliHome && peaksShow && results && <div> 
-           <hr/> 
+          <hr style={{ border: '3px solid #000000'}}/> 
 
 
             {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
@@ -469,7 +469,7 @@ const Peak2PeakGui = (props) => {
 
 
            </div>}
-           <hr/>
+          <hr style={{ border: '3px solid #000000'}}/> 
         </div>
     </div>
   )

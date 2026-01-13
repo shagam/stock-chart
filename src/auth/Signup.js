@@ -48,7 +48,8 @@ export default function Signup ()  {
               {admin && <div> &nbsp; <strong>(admin)</strong> </div>}
             </div>
           {error && <Alert variant="danger"> {error} </Alert>}
-          <hr/>   
+
+          <hr style={{ border: '3px solid #000000'}}/> 
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
@@ -71,7 +72,8 @@ export default function Signup ()  {
             onChange={toggleShowPassword}
             /> Show password  
            </div>
-           <hr/>   
+            
+            <hr style={{ border: '3px solid #000000'}}/> 
             <Button disabled={loading} className="w-100" type="submit"> Sign Up </Button>
           </Form>
         </Card.Body>

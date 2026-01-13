@@ -21,9 +21,9 @@ function AuxilaryLinks () {
         <div className='w-100 text-left mt-2'>
             <Link to="/" > Home </Link>
         </div>
-        <hr/> 
+        <hr style={{ border: '3px solid #000000'}}/> 
         <h4 style={{color:'Green'}}>Auxilary links</h4>
-        <hr/>
+        <hr style={{ border: '3px solid #000000'}}/> 
 
         {/* <div className='w-100 text-left mt-2' style={{color:'magenta'}}>
            <h5> &nbsp; Start with The first tutorial. (lasts 2.5 minutes.) </h5>

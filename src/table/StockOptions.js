@@ -1151,7 +1151,7 @@ function OptionQuote (props) {
                   </tbody>
               </table>
           </div>}
-          <hr/> 
+          <hr style={{ border: '3px solid #000000'}}/> 
         </div>}
         
         {/* strikes */}
@@ -1199,7 +1199,7 @@ function OptionQuote (props) {
                 </tbody>
             </table>
           </div>} 
-          <hr/>  
+          <hr style={{ border: '3px solid #000000'}}/> 
 
           {config.expirationBum !== -1 && strikeNumCalc ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
@@ -1221,7 +1221,7 @@ function OptionQuote (props) {
           </div>} */}
 
           {columnHideFlag && <div >    
-            <hr/> 
+            <hr style={{ border: '3px solid #000000'}}/> 
             {/* columnShow  */}
             {/* <div style={{hight: '400px', color:'#119933', fontWeight: 'bold', fontStyle: "italic"}}> column-select  </div> */}
 
@@ -1243,7 +1243,7 @@ function OptionQuote (props) {
              {/* {log && <p>Selected: {optionKeys.join(", ")}</p>}   */}
             </div>}
 
-            <hr/> 
+          <hr style={{ border: '3px solid #000000'}}/> 
 
           {optionQuote && optionQuote.expiration && 
           <div style={{display: 'flex'}}>
@@ -1350,7 +1350,8 @@ function OptionQuote (props) {
 
         {/* OptionHistory button    */}
         {premiumSelected !== -1 && <div>
-          <hr/>
+          
+          <hr style={{ border: '3px solid #000000'}}/> 
           <button style={{background: 'aqua'}} type="button" onClick={()=>historecalOptionQuote (premiumSelected)}>
             historical option primium </button> &nbsp; &nbsp;
           </div>} 

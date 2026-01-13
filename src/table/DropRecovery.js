@@ -551,7 +551,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       
             {/* Results table */}
 
-          <hr/> 
+          <hr style={{ border: '3px solid #000000'}}/> 
           {dropRecoveryInfo && <div style={{width: '300px'}}>
             <h5> DropRecovery Result for {props.StockSymbol} </h5>
             <table border="1" >
@@ -566,7 +566,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             </table>
           </div>}
 
-          <hr/> 
+          <hr style={{ border: '3px solid #000000'}}/> 
           <div><input  type="checkbox" checked={summeryShow}  onChange={()=> setSummeryShow (!summeryShow)} />&nbsp; showExtra </div>
           {/* {summeryShow && <pre>{JSON.stringify(dropRecoveryInfoExtra, null, 2)}</pre>} */}
 
