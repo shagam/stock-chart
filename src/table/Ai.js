@@ -123,7 +123,7 @@ function Ai  (props) {
         setResponse(''); // Clear previous response
         setErr('');
 
-        if (openAiTokenCount + deepseekTokenCount > 1000) {
+        if (openAiTokenCount + deepseekTokenCount > 500) {
           setErr('Token limit exceeded. Please contact support.', openAiTokenCount + deepseekTokenCount);
           beep2()
           return;
@@ -144,7 +144,6 @@ function Ai  (props) {
           return;
         }
         const mili = Date.now()
-        setLatency('OpenAI request sent ...')
 
         try {
             var requestInput_ = input;
@@ -155,6 +154,13 @@ function Ai  (props) {
               requestInput_ +=  ' ' + stockList;
             }
 
+            if (requestInput_.length > 200) {
+              setErr('Request too long, please shorten it.', requestInput_.length);
+              beep2();
+              return;
+            }
+
+            setLatency('OpenAI request sent ...')
             const tokenCount = estimateTokens(requestInput_);
             const tokenCountSaved = JSON.parse(localStorage.getItem("tokenCountSum")) || 0;
             const tokenCountSum_ = tokenCount + tokenCountSaved
