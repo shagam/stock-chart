@@ -24,7 +24,9 @@ function Ai  (props) {
   const [aiPageShow_checkbox, setAiPageShow_checkbox] = useState(false);
   const [showRequest, setShowRequest] = useState(false);
   const [requestInput, setRequestInput] = useState('');
-  const stockList =  Object.keys(props.gainMap).join(', ')
+  var stockList =  Object.keys(props.gainMap)
+  stockList = stockList.filter(item => item.name !== 'bubbleLine');
+  stockList = stockList.join(', ');
   const [response, setResponse] = useState("");
   const [err, setErr] = useState("");
 
