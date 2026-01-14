@@ -1082,7 +1082,7 @@ function OptionQuote (props) {
         </div>
         {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}
         {config.side === 'put' && <h6  style={{color: '#c760ff'}}>  &nbsp;  <strong style={{color: 'red'}}>put options, not supported. and never tested</strong> </h6>}
-
+        {err && <div style={{color: 'red'}}> {err} </div>}
         {/* flags checkboxes */}
         {props.eliHome && <div style = {{display: 'flex'}}>
           <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>
