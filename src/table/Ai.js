@@ -118,6 +118,15 @@ function Ai  (props) {
       return Math.ceil(text.split(/\s+/).length * 1.3);
     }
 
+   function countApproxTokensFromJSON(json) {
+      const text = typeof json === "string" ? json : JSON.stringify(json);
+      // Rough tokenizer: words + punctuation
+      const tokens = text.match(/[\w]+|[^\s\w]/g);
+
+      return tokens ? tokens.length : 0;
+    }
+
+
     const OpenAI_handleSubmit = async (e) => {
          e.preventDefault();
         setResponse(''); // Clear previous response
@@ -382,7 +391,11 @@ function Ai  (props) {
           &nbsp;AiPage add to request: &nbsp; &nbsp; <div style={{color: 'magenta'}} >{props.pageForAiText } </div>
       </div>}
 
-      {props.pageForAi && <div><input  type="checkbox" checked={aiPageShow_checkbox}  onChange={()=>setAiPageShow_checkbox(! aiPageShow_checkbox)} /> &nbsp; AiPage show &nbsp; &nbsp;
+      {props.pageForAi && <div>
+        <div style={{display: 'flex'}}>
+          <input  type="checkbox" checked={aiPageShow_checkbox}  onChange={()=>setAiPageShow_checkbox(! aiPageShow_checkbox)} /> &nbsp; AiPage show &nbsp; &nbsp;
+          <div style={{color: '#22c538'}}>tokens={props.pageForAi && countApproxTokensFromJSON(JSON.stringify (props.pageForAi))}  </div>
+      </div>
         {aiPageShow_checkbox && <div style={{maxHeight:'300px', maxWidth: '800px', overflow:'auto', border: '1px solid gray', background: '#f0f0f0'}}>
         <pre> {props.pageForAi && JSON.stringify (props.pageForAi, null, 2)} </pre>
       </div>}
@@ -416,6 +429,7 @@ function Ai  (props) {
      
       <button  style={{background: 'aqua'}} onClick={OpenAI_handleSubmit}>AI request Send</button>  &nbsp; (usage info collected)  &nbsp; &nbsp;
       <input  type="checkbox" checked={showRequest}  onChange={()=>setShowRequest(! showRequest)} />&nbsp;Request show  &nbsp; &nbsp;
+      {showRequest && <div> tokens={countApproxTokensFromJSON(props.pageForAi)} </div>}
       {showRequest && requestInput}
       {/* {err && <div style={{color: 'red'}}>Error: {err} </div>} */}
       {latency && <div style={{color: 'green'}}> {latency} </div>}
