@@ -66,7 +66,7 @@ function StockOptionsConfig (props) {
         <form onSubmit = {formSubmit}>
 
           <label> Days-to-expire: &nbsp;
-            <input style={{width: '50px'}} type="number" name="expirationNum" // required="required"
+            <input style={{width: '60px'}} type="number" name="expirationNum" // required="required"
               placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={expirationNum} />
           </label>&nbsp; &nbsp; 
 
