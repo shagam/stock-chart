@@ -161,7 +161,7 @@ function OptionQuote (props) {
     .then ((result) => {
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(getDate() + ' option status from server:  ' + result.data)
+        setErr('Option server status:  ' + result.data)
         beep2()
         console.log (props.symbol, result.data)
         return;
@@ -775,7 +775,7 @@ function OptionQuote (props) {
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-        setErr(getDate() + ' option status from server:  ' + result.data)
+        setErr('Option server status:  ' + result.data)
         beep2()
         console.log (props.symbol, result.data)
         return;
