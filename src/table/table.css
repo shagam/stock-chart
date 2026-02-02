@@ -89,7 +89,7 @@ table tbody {
 #stockTable {
   border: 2px solid green;
   display: block;
-  max-height: 40vh;
+  /* max-height: 40vh; */
   min-height: 20vh;
   width: 100%;
   /* min-width: 1900px; */

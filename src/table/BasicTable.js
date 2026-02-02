@@ -160,6 +160,8 @@ const BasicTable = (props) => {
   //** default start date for drop recovery  Mon 0-11 */
   const [deepStartDate, setDropStartDate] = useState(new Date(2024, 6, 1));  // 2024 jul 1  // new Date(2021, 8, 1 2021 sep 1  
 
+  const tblHightOPtions = ['20vh','30vh', '40vh', '50vh','60vh', '75vh'];
+  const [tablHight, setTablHight] = useState(tblHightOPtions[2]);
   const useData = false;
 
   const cols =      ["symbol", "percent","Exchange","Industry","Sector","Cap","PE","ForwPE","TrailPE","PEG","Div","BETA",
@@ -716,16 +718,16 @@ const BasicTable = (props) => {
     console.log (row.id, row.values.symbol)
   }
 
-  const stockTableStyle = {
-    border: '2px solid green',
-    display: 'block',
-    height: '55vh',
-    width: '100%',
-    /* min-width: 1900px; */
-    'overflowy': 'scroll',
-    /* background: yellow; */
-    'textAlign': 'center'
-  }
+  // const stockTableStyle = {
+  //   border: '2px solid green',
+  //   display: 'block',
+  //   height: '55vh',
+  //   width: '100%',
+  //   /* min-width: 1900px; */
+  //   'overflowy': 'scroll',
+  //   /* background: yellow; */
+  //   'textAlign': 'center'
+  // }
   
   function gainButtonColor (sym) {
     var col = {};
@@ -889,12 +891,11 @@ const BasicTable = (props) => {
           {stockChartYValues.length > 0 && isDailyXArray(stockChartXValues) !== daily && <div style={{color:'red'}}>mode missmatch, press gain</div>}
           
           <ComboBoxSelect serv={yearlyPercent} nameList={['gain_factor','year_percent',]} setSelect={setYearlyPercent_wrapper} 
-            TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} />
+            TITLE={'table entries: yearly-percent gain vs gain-factor (1.5 means 50% gain)'} options={[false,true]} defaultValue={false} /> &nbsp; &nbsp;
 
           {/* <div style={{display:'flex'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> &nbsp;column_select  </div>&nbsp; */}
-
-     
+          <ComboBoxSelect serv={tablHight} nameList={tblHightOPtions} setSelect={setTablHight} title='tableHeight' options={tblHightOPtions} defaultValue={tablHight}/>
           <div></div>
          </div>
 
@@ -938,7 +939,7 @@ const BasicTable = (props) => {
 
       {/* stock Table */}
 
-      <table style={{marginTop: '4px'}} id="stockTable" {...getTableProps()}>
+      <table style={{marginTop: '4px', 'max-height': tablHight, overflowY: 'auto'}} id="stockTable" {...getTableProps()}>
       <thead>
 
         {headerGroups.map ((headerGroup) => (
