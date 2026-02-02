@@ -465,9 +465,12 @@ const BasicTable = (props) => {
       if (rows[i].values.gain_mili && Date.now() - rows[i].values.gain_mili < 1000 * 3600) {  // skip if gained within last hour
         continue;
       }
+      if (rows[i].values.year !== undefined) { // skip if no price
+        continue;
+      }
       handleGainClick (rows[i].values.symbol, false) 
       count ++
-      if (count >= 5) {      
+      if (count >= 4) {      
         console.log ('geinAll exit after ', count, ' symbols')
         break; // exit forEach 
       }
