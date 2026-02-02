@@ -939,7 +939,7 @@ const BasicTable = (props) => {
 
       {/* stock Table */}
 
-      <table style={{marginTop: '4px', 'max-height': tablHight, overflowY: 'auto'}} id="stockTable" {...getTableProps()}>
+      <table style={{marginTop: '4px', maxHeight: tablHight, overflowY: 'auto'}} id="stockTable" {...getTableProps()}>
       <thead>
 
         {headerGroups.map ((headerGroup) => (
