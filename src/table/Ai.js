@@ -87,6 +87,10 @@ function Ai  (props) {
   //   }
   // };
 
+
+
+
+
   //** get token usage */
   function tokenUsageGet() {
     var corsUrl;
@@ -113,6 +117,36 @@ function Ai  (props) {
         setUsageInfo(result.data);
       })
     }
+
+  async function getUsage(startDate, endDate) {
+    setErr('');
+    var apiKey;
+    var fetchUrl;
+    if (aiBrand === 'OpenAI') {
+        apiKey = openAiApiKey || process.env.REACT_APP_OPENAi_API_KEY; // Use state variable or environment variable
+        fetchUrl = `https://api.openai.com/v1/usage?start_date=${startDate}&end_date=${endDate}`;
+    }
+    else {
+        setErr('getUsage: only OpenAI supported');
+        return;
+    }
+
+    const res = await fetch(
+      fetchUrl,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+    if (data.error)
+      setErr('getUsage error: ' + data.error);
+    else
+      setUsageInfo(data);
+    console.log("Usage data:", data);
+  }
 
     function estimateTokens(text) {
       return Math.ceil(text.split(/\s+/).length * 1.3);
@@ -315,11 +349,17 @@ function Ai  (props) {
       <hr style={{ border: '3px solid #000000'}}/>  
 
       {/* token usage get button */}
-      {props.eliHome && <div>    
-        <button  style={{background: 'aqua'}} onClick={tokenUsageGet}>token usage get</button> &nbsp; 
+      {props.eliHome && aiBrand === 'OpenAI' && <div style={{ display: 'flex'}}>
+        token usage   &nbsp; &nbsp; 
+        <button  style={{background: 'aqua'}} onClick={tokenUsageGet}>from backEnd</button> &nbsp;&nbsp; 
         {usageInfo && <pre style={{color: 'blue'}}>Usage Info: {JSON.stringify(usageInfo, null, 2)}</pre> }
-        <hr style={{ border: '3px solid #000000'}}/>
+        {/* <hr style={{ border: '3px solid #000000'}}/> */}
+        { <div>
+          <button  style={{background: 'aqua'}} onClick={() => getUsage("2026-02-01", "2026-02-28")}> from openAi</button>
+
+        </div>}
       </div>}
+      <hr style={{ border: '3px solid #000000'}}/>
 
       <div style={{display: 'flex'}}>
         <ComboBoxSelect serv={aiBrand} nameList={aiBrandList} setSelect={setAiBrand}
