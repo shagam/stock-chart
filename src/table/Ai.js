@@ -355,7 +355,7 @@ function Ai  (props) {
         {usageInfo && <pre style={{color: 'blue'}}>Usage Info: {JSON.stringify(usageInfo, null, 2)}</pre> }
         {/* <hr style={{ border: '3px solid #000000'}}/> */}
         { <div>
-          <button  style={{background: 'aqua'}} onClick={() => getUsage("2026-02-01", "2026-02-28")}> from openAi</button>
+          <button  style={{background: 'aqua'}} onClick={() => getUsage("2026-02-01", getDate().substring(0,10))}>from OpenAI</button> &nbsp;&nbsp;
 
         </div>}
       </div>}
