@@ -75,7 +75,17 @@ function AuxilaryLinks () {
             {<button role="link" onClick={() => openInNewTab('https://charts.bitbo.io/price/')}>bitcoin chart</button>} &nbsp;  
         </div>
 
-     <div >
+               <div>&nbsp;</div>
+        <div>
+            <div>Precious Metals</div>
+            {/* {<button role="link" onClick={() => openInNewTab('https://goldprice.org/live-gold-price.html')}>Gold price chart</button>} &nbsp; */}
+            {<button role="link" onClick={() => openInNewTab('https://silverprice.org/gold-price-history.html')}>Gold price chart</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://silverprice.org/silver-price-history.html')}>Silver price chart</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://www.macrotrends.net/1476/copper-prices-historical-chart-data')}>Copper price chart</button>} &nbsp;
+
+        </div>
+
+        <div >
             {/* <a href="https://www.google.com/search?q=vix">VIX</a> &nbsp; */}
             {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
             <div>&nbsp;</div>
