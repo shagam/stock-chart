@@ -70,7 +70,9 @@ function AuxilaryLinks () {
             {/* {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
             {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;           */}
             {/* {<button role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;   */}
-            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp;           
+            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/ETH/')}>ETH iterium ETF</button>} &nbsp;
+            {<button role="link" onClick={() => openInNewTab('https://charts.bitbo.io/price/')}>bitcoin chart</button>} &nbsp;  
         </div>
 
      <div >
