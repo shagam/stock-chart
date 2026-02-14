@@ -547,7 +547,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
             <button style={{background: colorButton(2008)}} type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
             <button style={{background: colorButton(2020)}} type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
             <button style={{background: colorButton(2021)}} type="button" onClick={()=>swap_period_2021()}>  2021   </button> &nbsp;
-            <button style={{background: colorButton(2024)}} type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; 
+            {/* <button style={{background: colorButton(2024)}} type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp;  */}
             <button style={{background: colorButton(2025)}} type="button" onClick={()=>swap_period_2025()}>  2025   </button> &nbsp; &nbsp;
           </div>
      
