@@ -406,7 +406,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     // setEndDate (new Date(2020, 4, 15));
   }
 
-  function swap_period_2022() {
+  function swap_period_2021() {
     setDropStartDate (new Date(2021, 8, 1));  // 2022 sep 1 
     // setEndDate (new Date(2020, 4, 15));
   }
@@ -508,6 +508,16 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       }
   }
 
+  function colorButton (title) {
+    console.log ('colorButton', title, dropStartDate, props.StockSymbol)
+    const year = dropStartDate.getFullYear()
+    if (year === title) {
+        return 'lightGreen';
+    }
+    return 'white'; 
+  }
+
+
     const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
 
   return (
@@ -533,12 +543,12 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <div style={{display:'flex', }}> 
             <div style={{color: 'black'}}>Drop period: &nbsp; </div>
-            <button type="button" onClick={()=>swap_period_2001()}>  2001   </button> &nbsp;
-            <button type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
-            <button type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
-            <button type="button" onClick={()=>swap_period_2022()}>  2022   </button> &nbsp;
-            <button type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; 
-            <button type="button" onClick={()=>swap_period_2025()}>  2025   </button> &nbsp; &nbsp;
+            <button style={{background: colorButton(2000)}} type="button" onClick={()=>swap_period_2001()}>  2000   </button> &nbsp;
+            <button style={{background: colorButton(2008)}} type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
+            <button style={{background: colorButton(2020)}} type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
+            <button style={{background: colorButton(2021)}} type="button" onClick={()=>swap_period_2021()}>  2021   </button> &nbsp;
+            <button style={{background: colorButton(2024)}} type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp; 
+            <button style={{background: colorButton(2025)}} type="button" onClick={()=>swap_period_2025()}>  2025   </button> &nbsp; &nbsp;
           </div>
      
 
