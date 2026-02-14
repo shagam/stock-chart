@@ -569,7 +569,8 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
                 {Object.entries(dropRecoveryInfo).map(([key, value]) => (   
                   <tr key={key}>
                     <td style={{...ROW_SPACING, fontWeight: 'bold', background: '#ddddff'}}>{key}</td>
-                    <td style={{...ROW_SPACING, textAlign: 'right',}}>{value}</td>
+                    <td style={{...ROW_SPACING, textAlign: 'right',
+                      background: (key==='drop_percent' || key==='recoverWeeks')? 'lightGreen': 'white'}}>{value}</td>
                   </tr>
                 ))}
               </tbody>
