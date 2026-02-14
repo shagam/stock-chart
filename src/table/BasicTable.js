@@ -660,7 +660,12 @@ const BasicTable = (props) => {
   }
 
   function test () {
-
+    console.log ('test  ' + getDate())
+    for (let j = 2; j < 20; j++) {
+      const stocks = j * 10000;
+      const fee = stocks ** 0.4 //; Math.log(stocks) / Math.log(7); // example fee calculation
+      console.log (j, 'stocks=' + stocks, ' Fee=' + fee.toFixed(2), (Math.log(stocks) / Math.log(1.1)).toFixed(2), (stocks ** 0.4).toFixed(3)) // , 'feePer1000Stock=', (fee / stocks *1000).toFixed(3)  )
+    }
   }
 
   function marketStackCompare () {
@@ -864,13 +869,14 @@ const BasicTable = (props) => {
      
           {/* {admin && <div style={{display:'flex'}}> <ServerSelect serv={tblHight} setServSelect={setTblHight} title='tblHight' options={tblHightList} defaultValue={tblHight}/> </div>} */}
 
-          {/* {admin && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>} */}
+          {/* {eliHome && <div> &nbsp; <button onClick={test} > test </button> &nbsp; </div>} */}
         </div>
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
           {eliHome && ! showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
+          {eliHome && <div> <button style={{backgroundColor: '#bbffbb'}} onClick={test} title='test' > test </button> </div>} &nbsp;&nbsp;
         </div>
 
         {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
