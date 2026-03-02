@@ -36,7 +36,7 @@ function AuxilaryLinks () {
             <div>Aux</div>
             <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp;      
             {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button>} &nbsp; 
-            <button role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans </button> &nbsp;  
+            <button style={{color:'red'}} role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans </button> &nbsp;  
         </div>
 
         <div>&nbsp;</div>
