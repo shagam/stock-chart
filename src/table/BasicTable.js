@@ -87,6 +87,8 @@ import {News} from '../utils/News'
 import { UrlGetParse } from '../utils/UrlGetParse'
 
 import { CandlestickChart, CandleStick} from './CandleStick'
+import { Polymarket } from './Ploymarket'
+
 
 const BasicTable = (props) => {
 
@@ -774,6 +776,7 @@ const BasicTable = (props) => {
     config:        'config',
     stockLists:    'stockLists',
     futures:       'futures',
+    Polymarket:    'Polymarket',
     priceAlert:    'priceAlert',
     urlGetParse:   'urlGetParse',
     candleStick: 'candleStick',
@@ -1180,7 +1183,14 @@ const BasicTable = (props) => {
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}
              title='ETF futures contracts'/>
           <div style={{color:'#9932CC'}}> futures  </div>             
+        
         </div>
+
+        { eliHome && <div style={{display:'flex'}}>
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='polymarket' id='5' checked={nonSymTool==='polymarket'} onChange={nonSymChange}
+             title='Polymarket contracts'/>
+          <div style={{color:'#9932CC'}}> polymarket  </div>   
+        </div>}
 
 
         {/* select non sym tool */}
@@ -1199,7 +1209,10 @@ const BasicTable = (props) => {
 
         {nonSymTool ==='futures' && <Futures symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
           stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} 
-          logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}        
+          logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}    
+
+        {nonSymTool === 'polymarket' && <Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}
          {/* <hr/> */}
     </div> 
     </>
