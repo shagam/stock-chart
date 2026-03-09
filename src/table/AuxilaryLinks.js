@@ -36,7 +36,7 @@ function AuxilaryLinks () {
             <div>Aux</div>
             <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp;      
             {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button>} &nbsp; 
-            <button style={{color:'red'}} role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans </button> &nbsp;  
+            <button style={{color:'red'}} role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans (IBI)</button> &nbsp;  
         </div>
 
         <div>&nbsp;</div>
@@ -97,6 +97,12 @@ function AuxilaryLinks () {
             <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVXO/")}> VXO </button> &nbsp;
             <button role="link" onClick={() => openInNewTab("https://www.gurufocus.com/economic_indicators/56/sp-500-shiller-cape-ratio")}>Shiller CAPE </button> &nbsp;
 
+        </div>
+
+        <div>
+            <div>&nbsp;</div>
+            <div>Prediction markets</div>
+            <button role="link" onClick={() => openInNewTab("https://polymarket.com")}> Plymarket bet </button> &nbsp;     
         </div>
 
         <hr/> 
