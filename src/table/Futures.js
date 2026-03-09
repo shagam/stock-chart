@@ -20,15 +20,15 @@ function Futures (props) {
     const [futuresArray, setFuturesArray] = useState ([]);
     const [futureArrLastVal, setVutureArrLastVal] = useState ();
 
-    const [ignoreSaved, setIgnoreSaved] = useState ();
-    const [logBackEnd, setLogBackEnd] = useState ();
-    const [saveInFile, setSaveInFile] = useState ();
+    const [ignoreSaved, setIgnoreSaved] = useState (false);
+    const [log, setLog] = useState (false);
+    const [saveInFile, setSaveInFile] = useState (false);
     const [latency, setLatency] = useState ();
   
     const [NQ, set_NQ] = useState();
     const [subPages, setSubPages] = useState(false);
 
-    const LOG = logBackEnd; // props.logFlags.includes("futures");
+    const LOG = log; // props.logFlags.includes("futures");
 
     //** selevt future sym */
     const futuresSymList = 
@@ -40,12 +40,15 @@ function Futures (props) {
 
 
       // NQZ24: '20 Dec 2024',
-      NQH25: '21_Mar 2025',
-      // NQI25: "????",
-      NQM25: '20 Jun 2025',
-      NQU25: '19 Sep 2025',
-      NQZ25: '19 Dec 2025',
       NQH26: '20 Mar 2026',
+      NQM26: '20 Jun 2026',
+      NQU26: '19 Sep 2026',
+      NQZ26: '19 Dec 2026',
+      NQH27: '20 Mar 2027',
+      NQM27: '20 Jun 2027',
+      NQU27: '19 Sep 2027',
+      NQZ27: '19 Dec 2027',
+
       '$IUXX': '',
       // NQW00: '????',
     }
@@ -88,7 +91,7 @@ function Futures (props) {
       url += props.servSelect + ":" + props.PORT + "/futures?stock=" + futureSym
       if (saveInFile)
         url += '&saveInFile=true';
-      if (logBackEnd)
+      if (log)
         url += '&LOG=true';
   
         //corsUrl = "http://localhost:5000/price?stock=" + sym
@@ -170,7 +173,7 @@ function Futures (props) {
 
       if (saveInFile)
         url += '&saveInFile=true';
-      if (logBackEnd)
+      if (log)
         url += '&LOG=true';
      
       if (ignoreSaved)
@@ -230,7 +233,7 @@ function Futures (props) {
 
             <div style={{display:'flex'}}>
                 {eliHome && <div>  &nbsp; <input  type="checkbox" checked={ignoreSaved}  onChange={()=> setIgnoreSaved(! ignoreSaved)}  />  &nbsp;IgnoreSaved  &nbsp; </div>}
-                {eliHome &&  <div> <input type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd( !logBackEnd)}  />  &nbsp;LogBackend &nbsp; &nbsp; </div>}
+                {eliHome &&  <div> <input type="checkbox" checked={log}  onChange={()=> setLog( !log)}  />  &nbsp;log &nbsp; &nbsp; </div>}
                 {eliHome &&  <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  />  }&nbsp;SaveInFile &nbsp; &nbsp;
             </div>
 
