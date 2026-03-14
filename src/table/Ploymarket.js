@@ -21,6 +21,7 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
     var url = 'https://polymarket.com/event/ndx-above-dec-2026' + '-15000/trend'
     url =  'https://polymarket.com/event/ndx-above-dec-2026' 
     const mili = Date.now()
+    setError(null)
     // try {
 
      var corsUrl = "https://";
@@ -39,16 +40,19 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
             if (result.status !== 200)
                 return;
             const dat = result.data
-            if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
-                error([dat])
+            if (dat.message) {
+                setError(dat.message)
                 setResults(null)
+                setLoading(false)
                 return;
             }
             if (log) {
                 console.log('result', result.data)
             }
 
-            setResults(result.data)
+            if (dat.data)
+              setResults(dat.data)
+
             setLoading(false)
 
             const latency = Date.now() - mili
