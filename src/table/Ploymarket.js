@@ -101,9 +101,9 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
         ))}
       </ul>
       {results && <pre style={{color:'green'}}>  {results.length} </pre> }
-      {results && <b> {results.data}</b> }
-       {results.data && <div   dangerouslySetInnerHTML={{ __html:results.data }}/>}
-    />
+      {results && results.data && <b> {results.data}</b> }
+      {results && results.data && <div dangerouslySetInnerHTML={{ __html:results.data }}/>}
+
     </div>
   );
 }
