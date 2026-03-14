@@ -13,33 +13,41 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
   const [loading, setLoading] = useState(false);
   const [log, setLog] = useState(false)
   const [error, setError] = useState(null)
-  const [results, setResults] = useState(null)
   const [latency, setLatency] = useState('')
+
+  const [results, setResults] = useState(null)
+  const [url, setUrl] = useState('')
+  const [question, setQuestion] = useState('')
+  const [resultsKeys, setResultsKeys] = useState([])
+
 
   const fetchTrend = async () => {
     setLoading(true);
-    var url = 'https://polymarket.com/event/ndx-above-dec-2026' + '-15000/trend'
-    url =  'https://polymarket.com/event/ndx-above-dec-2026' 
+    // var url = 'https://polymarket.com/event/ndx-above-dec-2026' + '-15000/trend'
+    const url_ = "https://gamma-api.polymarket.com/events?slug=ndx-above-dec-2026&limit=2"
+    setUrl(url_)
+
     const mili = Date.now()
     setError(null)
     // try {
 
      var corsUrl = "https://";
-        corsUrl += props.servSelect+ ":" + props.PORT + '/polymarket'; 
-        corsUrl += '?url=' + url
-        if (log)
-            corsUrl += '&log=1'
+    corsUrl += props.servSelect+ ":" + props.PORT + '/polymarket'; 
+      corsUrl += '?url=' + url_
+    corsUrl += '&index=0'
+    if (log)
+        corsUrl += '&log=1'
 
 
         if (log)
-        console.log (getDate(), 'gainFilter', corsUrl)
+        console.log (getDate(), 'params', corsUrl)
 
         axios.get (corsUrl)
         // getDate()
         .then ((result) => {
             if (result.status !== 200)
                 return;
-            const dat = result.data
+             const dat = result.data 
             if (dat.message) {
                 setError(dat.message)
                 setResults(null)
@@ -47,25 +55,35 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
                 return;
             }
             if (log) {
-                console.log('result', result.data)
+                console.log(getDate(), 'result', result.data)
             }
 
-            if (dat.data)
+            if (dat.data) {
+              // question =
+              // 'Will Nasdaq 100 (NDX) close over $38,000 on the final trading day of December 2026?'
+              // slug =
+              // 'ndx-above-38000-dec-2026'
+              // yesPrice =
+              // '0.08'
+
+              setQuestion(dat.data[0].question)
+              for (let i = 0; i < dat.data.length; i++) {
+                delete dat.data[i].question 
+              }
               setResults(dat.data)
+              setResultsKeys(Object.keys(dat.data[0]))
+            }
 
             setLoading(false)
-
             const latency = Date.now() - mili
             setLatency('polymarket done, latency(msec)=' + latency)
             // beep2();
         }).catch ((err) => {
-
             setError(getDate() + ' ' + err.message)
             console.log(getDate(), err.message)
+            setLoading(false)
         })
 
-
-      // const res = await axios.get( url,
 
         // "https://polymarket.com/event/ndx-above-dec-2026-15000/trend",
         // {
@@ -78,13 +96,44 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
       // );
 
  
-    // } catch (err) {
-    //   console.error("Error fetching QQQ trend:", err);
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
+      // {resultsKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '780px', overflow:'auto'}}>
+      //   <table>
+      //       <thead>
+      //         <tr style={ROW_SPACING}>
+      //           <th style={{...ROW_SPACING, width: '20px'}}> N</th>
+      //           {resultsKeys.map((key, keyI) => {
+      //             return  (
+      //               <th style={ROW_SPACING} key={keyI}>{key}</th>
+      //             )
+      //           })}
+      //         </tr> 
+      //       </thead>
+              
+      //         {/* top, right, bottom, left */} 
+      //       <tbody>
+      //         {results.map((quote, index) => {
+      //           return (
+      //             <tr key={index} style={ROW_SPACING}>
+      //             <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
+      //             {resultsKeys.map((key, keyI) => {
+      //             return  (
+      //               <td key={keyI} style={{...ROW_SPACING,}}> 
+      //               {(results[key][index])}</td>
+      //             )
+      //           })}
+
+      //           </tr>
+      //           )
+      //         })}
+      //       </tbody>
+      //   </table>
+      // </div>}
+
+
+  const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
+ 
   return (
     <div style={{border: '2px solid green'  }}>
         <h6 style={{color: 'blue'}}> ploymarket &nbsp;  </h6>
@@ -104,9 +153,14 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
           </li>
         ))}
       </ul>
-      {results && <pre style={{color:'green'}}>  {results.length} </pre> }
+      {/* {results && <pre style={{color:'green'}}>  {results.length} </pre> } */}
       {results && results.data && <b> {results.data}</b> }
       {results && results.data && <div dangerouslySetInnerHTML={{ __html:results.data }}/>}
+ 
+      {url && <div>url: &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;{url}</div>}
+      {question && <div>question: &nbsp; &nbsp; &nbsp; {question}</div>}
+      <div>&nbsp;</div>
+      {results && <pre> bets {results.length} {JSON.stringify(results, null, 2)}</pre>}
 
     </div>
   );
