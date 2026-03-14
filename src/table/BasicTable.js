@@ -1178,15 +1178,14 @@ const BasicTable = (props) => {
         
           <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}
              title='Share stock-lists with other users of the tool'/>
-          <div style={{color:'#9932CC'}}> stockLists </div>   
+          <div style={{color:'#9932CC'}}> stockLists </div>           
+        </div>
 
+        {eliHome && <div style={{display:'flex'}}>
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}
              title='ETF futures contracts'/>
           <div style={{color:'#9932CC'}}> futures  </div>             
-        
-        </div>
 
-        { eliHome && <div style={{display:'flex'}}>
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='polymarket' id='5' checked={nonSymTool==='polymarket'} onChange={nonSymChange}
              title='Polymarket contracts'/>
           <div style={{color:'#9932CC'}}> polymarket  </div>   
@@ -1212,7 +1211,8 @@ const BasicTable = (props) => {
           logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}    
 
         {nonSymTool === 'polymarket' && <Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}
+          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {props.logFlags} eliHome={eliHome}
+          servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}
          {/* <hr/> */}
     </div> 
     </>
