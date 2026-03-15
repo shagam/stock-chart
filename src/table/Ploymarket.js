@@ -32,7 +32,32 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
     'dow-jones-above-40000-by-end-of-year-2026',
   ]
 
-  const [slug, setSlug] = useState(slugList[0])
+  const [slugSelect, setSlugSelect] = useState(slugList[0]) // for combobox
+  
+  const [slug, setSlug] =  useState(() => {
+    return JSON.parse(localStorage.getItem("polymarketSlug")) || 'ndx-above-dec-2026';
+  });
+
+  // slug support
+  const slugChange = (e) => {
+      setSlug(e.target.value);
+  };
+
+  function slugSave() {
+    localStorage.setItem("polymarketSlug", JSON.stringify(slug));
+    console.log ('slug saved'); 
+  }
+
+  function slugClear() {
+    setSlug("");
+    localStorage.removeItem("polymarketSlug");
+    console.log ('slug cleared');
+  }
+
+  function slugGetFromComboBox() {
+    setSlug(slugSelect);
+  } 
+
   const fetchTrend = async () => {
     setLoading(true);
     // var url = 'https://polymarket.com/event/ndx-above-dec-2026' + '-15000/trend'
@@ -164,8 +189,25 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
         {latency}
       {props.eliHome && <div style={{display:'flex'}}> <input  type="checkbox" checked={log}  onChange={()=> setLog(! log)} />  log &nbsp; </div>}
 
-      {<div style={{display:'flex'}}> <ComboBoxSelect serv={slug} nameList={slugList} setSelect={setSlug} 
-              title='polymarket slugs' options={slugList} defaultValue={slug}/> </div>} 
+      {<div style={{display:'flex'}}> <ComboBoxSelect serv={slugSelect} nameList={slugList} setSelect={setSlugSelect} 
+              title='polymarket slug list' options={slugList} defaultValue={slugList[0]}/> </div>} 
+
+      <form>
+         <h6> <strong style={{color: '#7ccae2'}}>Edit slug</strong></h6>
+          <input style={{width: '600px'}}
+              type="text"
+              value={slug}
+              onChange={slugChange}
+              placeholder="Ask something..."
+              required
+          />
+          {/* <button type="submit"> OpenAI Send</button> */}
+      </form>
+      
+      <button onClick={() => slugSave()}>save</button> &nbsp;
+      <button onClick={() => slugClear()}>clear</button> &nbsp;
+      <button onClick={() => slugGetFromComboBox()}>GetFromComboBox</button>
+
       
       <div>&nbsp;</div>
       <button onClick={fetchTrend} disabled={loading}>
