@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import {getDate} from '../utils/Date'
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 // const QQQ_MARKET_ID = "YOUR_QQQ_MARKET_ID_HERE"; 
 const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
@@ -20,11 +21,24 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
   const [question, setQuestion] = useState('')
   const [resultsKeys, setResultsKeys] = useState([])
 
+  const slugList = [
+    'ndx-above-dec-2026',
+    'ndx-above-38000-dec-2026',
 
+    'spx-above-dec-2026',
+    'spx-above-5500-by-end-of-year-2026',
+
+    'nasdaq-100-above-20000-by-2026',
+    'dow-jones-above-40000-by-end-of-year-2026',
+  ]
+
+  const [slug, setSlug] = useState(slugList[0])
   const fetchTrend = async () => {
     setLoading(true);
     // var url = 'https://polymarket.com/event/ndx-above-dec-2026' + '-15000/trend'
-    const url_ = "https://gamma-api.polymarket.com/events?slug=ndx-above-dec-2026&limit=2"
+    var url_ = "https://gamma-api.polymarket.com/events?slug=" + slug
+    // url_ += '&limit=1'
+
     setUrl(url_)
 
     const mili = Date.now()
@@ -82,6 +96,11 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
             setError(getDate() + ' ' + err.message)
             console.log(getDate(), err.message)
             setLoading(false)
+            setSlug(slugList[0])
+            setResults(null)
+            setUrl('')
+             setQuestion('')
+             setResultsKeys([]) 
         })
 
 
@@ -142,8 +161,12 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
         {latency}
       {props.eliHome && <div style={{display:'flex'}}> <input  type="checkbox" checked={log}  onChange={()=> setLog(! log)} />  log &nbsp; </div>}
 
+      {<div style={{display:'flex'}}> <ComboBoxSelect serv={slug} nameList={slugList} setSelect={setSlug} 
+              title='polymarket slugs' options={slugList} defaultValue={slug}/> </div>} 
+      
+      <div>&nbsp;</div>
       <button onClick={fetchTrend} disabled={loading}>
-        {loading ? "Loading…" : "Load QQQ Trend"}
+        {loading ? "Loading…" : "Get slug Trend"}
       </button>
 
       <ul style={{ marginTop: 20 }}>
