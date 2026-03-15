@@ -82,7 +82,10 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
 
               setQuestion(dat.data[0].question)
               for (let i = 0; i < dat.data.length; i++) {
-                delete dat.data[i].question 
+                delete dat.data[i].question
+                delete dat.data[i].noPrice; 
+                if (! dat.data[i].volume)
+                    dat.data[i].volume = 0
               }
               setResults(dat.data)
               setResultsKeys(Object.keys(dat.data[0]))
