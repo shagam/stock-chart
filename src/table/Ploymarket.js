@@ -80,7 +80,7 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
 
         if (log)
         console.log (getDate(), 'params', corsUrl)
-
+        setLatency('polymarket sending request...')
         axios.get (corsUrl)
         // getDate()
         .then ((result) => {
@@ -124,7 +124,7 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
             setError(getDate() + ' ' + err.message)
             console.log(getDate(), err.message)
             setLoading(false)
-            setSlug(slugList[0])
+            // setSlug(slugList[0])
             setResults(null)
              setQuestion('')
              setResultsKeys([]) 
