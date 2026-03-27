@@ -126,7 +126,6 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
             setLoading(false)
             setSlug(slugList[0])
             setResults(null)
-            setUrl('')
              setQuestion('')
              setResultsKeys([]) 
         })
@@ -210,7 +209,7 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
 
       
       <div>&nbsp;</div>
-      <button onClick={fetchTrend} disabled={loading}>
+      <button style={{background: 'aqua'}} onClick={fetchTrend} disabled={loading}>
         {loading ? "Loading…" : "Get slug Trend"}
       </button>
 
