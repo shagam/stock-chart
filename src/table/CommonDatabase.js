@@ -989,7 +989,9 @@ function CommonDatabase (props) {
         {props.eliHome && <div> 
             <button style={{background: 'aqua'}} type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
             {next === 'del' &&  <button style={{background: 'Chartreuse'}} type="button" onClick={()=>{del()}}>Delete </button>} &nbsp;
-            <div> &nbsp; </div> 
+            {/* <div> &nbsp; </div>  */}
+                    <hr/>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>ping()}>ping </button>&nbsp;
         </div>}
 
         {/* Active id sym gain selected */}
