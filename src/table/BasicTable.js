@@ -87,7 +87,7 @@ import {News} from '../utils/News'
 import { UrlGetParse } from '../utils/UrlGetParse'
 
 import { CandlestickChart, CandleStick} from './CandleStick'
-import { Polymarket } from './Ploymarket'
+import { Polymarket } from './Polymarket'
 
 
 const BasicTable = (props) => {

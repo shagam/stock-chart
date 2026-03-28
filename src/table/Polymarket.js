@@ -182,8 +182,8 @@ const QQQ_MARKET_ID = "0x1234567890abcdef1234567890abcdef12345678";
  
   return (
     <div style={{border: '2px solid green'  }}>
-        <h6 style={{color: 'blue'}}> ploymarket &nbsp;  </h6>
-        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; ploymarket &nbsp; </h6>
+        <h6 style={{color: 'blue'}}> polymarket &nbsp;  </h6>
+        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; polymarket &nbsp; </h6>
         {error && <div style={{color:'red'}}> {error} </div>}
         {latency}
       {props.eliHome && <div style={{display:'flex'}}> <input  type="checkbox" checked={log}  onChange={()=> setLog(! log)} />  log &nbsp; </div>}
