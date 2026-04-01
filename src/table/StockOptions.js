@@ -754,7 +754,6 @@ function OptionQuote (props) {
       console.log (getDate(), props.symbol, 'getOptionsInfoFromServer', corsUrl)
 
     setDat()
-    setLatency('request sent ...')
 
     const mili = Date.now()
     setLatency('request sent to server ...')
@@ -1107,6 +1106,7 @@ function OptionQuote (props) {
 
         {/*  buttons  */}
         <div>
+          {latency && <div style={{color: 'green'}}> {latency} </div>}
           <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
           {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
           {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
