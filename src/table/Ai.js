@@ -63,6 +63,7 @@ function Ai  (props) {
 
   const [latency, setLatency] = useState()
   const [usageInfo, setUsageInfo] = useState();
+  const [tokenLimit, setTokenLimit] = useState(400);
 
   // const callCopilot = async () => {
   //   try {
@@ -197,8 +198,9 @@ function Ai  (props) {
               requestInput_ +=  ' ' + stockList;
             }
 
-            if (requestInput_.length > 200) {
-              setErr('Request too long, please shorten it.', requestInput_.length);
+            const tokenCount_ = countApproxTokensFromJSON(props.pageForAi) ;
+            if ( tokenCount_ > tokenLimit) {
+              setErr('Request too long, please shorten. tokenCount=' +  tokenCount_);
               beep2();
               return;
             }
@@ -434,7 +436,7 @@ function Ai  (props) {
       {props.pageForAi && <div>
         <div style={{display: 'flex'}}>
           <input  type="checkbox" checked={aiPageShow_checkbox}  onChange={()=>setAiPageShow_checkbox(! aiPageShow_checkbox)} /> &nbsp; AiPage show &nbsp; &nbsp;
-          <div style={{color: '#22c538'}}>tokens={props.pageForAi && countApproxTokensFromJSON(JSON.stringify (props.pageForAi))}  </div>
+          <div style={{color: '#22c538'}}>tokens={props.pageForAi && countApproxTokensFromJSON(JSON.stringify (props.pageForAi))} &nbsp; &nbsp; tokenLimit={tokenLimit} </div>
       </div>
         {aiPageShow_checkbox && <div style={{maxHeight:'300px', maxWidth: '800px', overflow:'auto', border: '1px solid gray', background: '#f0f0f0'}}>
         <pre> {props.pageForAi && JSON.stringify (props.pageForAi, null, 2)} </pre>
