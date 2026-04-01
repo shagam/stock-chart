@@ -5,6 +5,7 @@ import {getDate} from '../utils/Date'
 const Disclaimer = (props) => {
     const log = props.logFlags.includes('aux')
     var disclaimer  = useMemo(() => localStorage.getItem('disclaimer'), []);
+    const [close, setClose] = React.useState(false)
 
     if (disclaimer === null || disclaimer === 'undefined') 
         disclaimer = {count: 0, date: getDate(), msec: Date.now()}
@@ -24,7 +25,9 @@ const Disclaimer = (props) => {
             return null
         return (
             <div>
-                {disclaimer.count === 2 && <div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
+                <div style={{display:'flex', color: 'blue'}}><input  type="checkbox" checked={close}  onChange={()=>setClose(! close)} />&nbsp;<h4>close</h4> </div>
+             
+                {disclaimer.count === 2 && !close &&<div style={{ border: '2px solid red', background: '#FFf4f4'}}> 
                     <h1 style={{color: 'red'}}>Disclaimer</h1>
                     
                     <hr style={{ border: '3px solid #000000'}}/> 
