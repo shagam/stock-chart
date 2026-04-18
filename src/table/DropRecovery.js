@@ -385,41 +385,37 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
       // setEndDate (new Date(2009, 1, 1));
   }
 
-  function swap_period_2008() {
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2008, 0, 1], props.StockSymbol, props.logFlags, setErr)  
-    if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
-      props.errorAdd([props.StockSymbol, '[2008, 0, 1]', 'Date before available data'])
-      return;
-    }
+  // function swap_period_2008() {
+  //   var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2008, 0, 1], props.StockSymbol, props.logFlags, setErr)  
+  //   if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
+  //     props.errorAdd([props.StockSymbol, '[2008, 0, 1]', 'Date before available data'])
+  //     return;
+  //   }
 
-    setDropStartDate (new Date(2008, 1, 15)); // 2007 Oct 15  
-      // setEndDate (new Date(2009, 1, 1));
-  }
+  //   setDropStartDate (new Date(2008, 1, 15)); // 2007 Oct 15  
+  //     // setEndDate (new Date(2009, 1, 1));
+  // }
 
-  function swap_period_2020() {
-    var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2020, 0, 1], props.StockSymbol, props.logFlags, setErr)  
-    if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
-      props.errorAdd([props.StockSymbol, '[2020, 0, 1]', 'Date before available data'])
-      return;
-    }
-    setDropStartDate (new Date(2020, 0, 1));  // 2020 jan 1
-    // setEndDate (new Date(2020, 4, 15));
-  }
+  // function swap_period_2020() {
+  //   var startBeforeDropIndex = searchDateInArray (props.stockChartXValues, [2020, 0, 1], props.StockSymbol, props.logFlags, setErr)  
+  //   if (startBeforeDropIndex === -1 || props.stockChartYValues.length <= startBeforeDropIndex) {
+  //     props.errorAdd([props.StockSymbol, '[2020, 0, 1]', 'Date before available data'])
+  //     return;
+  //   }
+  //   setDropStartDate (new Date(2020, 0, 1));  // 2020 jan 1
+  // }
 
-  function swap_period_2021() {
-    setDropStartDate (new Date(2021, 8, 1));  // 2022 sep 1 
-    // setEndDate (new Date(2020, 4, 15));
-  }
+  // function swap_period_2021() {
+  //   setDropStartDate (new Date(2021, 8, 1));  // 2022 sep 1 
+  // }
   
-  function swap_period_2024() {
-    setDropStartDate (new Date(2024, 6, 1));  // 2024 jul 1 
-    // setEndDate (new Date(2020, 4, 15));
-  }
+  // function swap_period_2024() {
+  //   setDropStartDate (new Date(2024, 6, 1));  // 2024 jul 1 
+  // }
 
-  function swap_period_2025() {
-    setDropStartDate (new Date(2025, 1, 1));  // 2025 jan 1 
-    // setEndDate (new Date(2020, 4, 15));
-  }
+  // function swap_period_2025() {
+  //   setDropStartDate (new Date(2025, 1, 1));  // 2025 jan 1 
+  // }
 
   function swap_period_8_mon() {
     var date = new Date();
@@ -543,14 +539,15 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
           {/* <DatePicker dateFormat="yyyy-LLL-dd" selected={endDate} onChange={(date) => setEndDate(date)} />  */}
           <div style={{display:'flex', }}> 
             <div style={{color: 'black'}}>Drop period: &nbsp; </div>
-            <button style={{background: colorButton(2000)}} type="button" onClick={()=>swap_period_2001()}>  2000   </button> &nbsp;
-            <button style={{background: colorButton(2008)}} type="button" onClick={()=>swap_period_2008()}>  2008   </button> &nbsp;
-            <button style={{background: colorButton(2020)}} type="button" onClick={()=>swap_period_2020()}>  2020   </button> &nbsp;
-            <button style={{background: colorButton(2021)}} type="button" onClick={()=>swap_period_2021()}>  2021   </button> &nbsp;
-            {/* <button style={{background: colorButton(2024)}} type="button" onClick={()=>swap_period_2024()}>  2024   </button> &nbsp;  */}
-            <button style={{background: colorButton(2025)}} type="button" onClick={()=>swap_period_2025()}>  2025   </button> &nbsp; &nbsp;
+            <button style={{background: colorButton(2000)}} type="button" onClick={()=>setDropStartDate (new Date(2000, 0, 1))}>  2000   </button> &nbsp;
+            <button style={{background: colorButton(2008)}} type="button" onClick={()=>setDropStartDate (new Date(2008, 1, 15))}>  2008   </button> &nbsp;
+            <button style={{background: colorButton(2020)}} type="button" onClick={()=>setDropStartDate (new Date( 2020, 0, 1))}>  2020   </button> &nbsp;
+            <button style={{background: colorButton(2021)}} type="button" onClick={()=>setDropStartDate (new Date(2021, 8, 1))}>  2021   </button> &nbsp;
+            {/* <button style={{background: colorButton(2024)}} type="button" onClick={()=>setDropStartDate (new Date(2024, 6, 1))}>  2024   </button> &nbsp;  */}
+            <button style={{background: colorButton(2025)}} type="button" onClick={()=>setDropStartDate (new Date(2025,1, 1))}>  2025   </button> &nbsp;
+            <button style={{background: colorButton(2026)}} type="button" onClick={()=>setDropStartDate (new Date(2026,2, 1))}>  2026   </button> &nbsp;
           </div>
-     
+     {/* */}
 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
             dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button> &nbsp;
