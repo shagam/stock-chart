@@ -277,10 +277,12 @@ function CommonDatabase (props) {
         const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
         if (row_index === -1) {
             setErr('Missing QQQ. Add symbol QQQ, and click gain')
+            beep2()
             return;
         }
         if (! props.rows[row_index].values.mon) {
             setErr('Missing QQQ info. Click gain for symbol QQQ')
+            beep2()
             return;
         }
         const mili = Date.now()
