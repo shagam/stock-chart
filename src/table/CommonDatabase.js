@@ -274,8 +274,15 @@ function CommonDatabase (props) {
     function filterForInsertFrontEnd (filter) {
         clear();
         const LOG = props.logFlags.includes('gain'); 
-        // const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
-    
+        const row_index = props.rows.findIndex((row)=> row.values.symbol === 'QQQ');
+        if (row_index === -1) {
+            setErr('Missing QQQ. Add symbol QQQ, and click gain')
+            return;
+        }
+        if (! props.rows[row_index].values.mon) {
+            setErr('Missing QQQ info. Click gain for symbol QQQ')
+            return;
+        }
         const mili = Date.now()
 
         var corsUrl;
