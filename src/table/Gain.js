@@ -18,7 +18,7 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns) {
+     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber, count) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -29,6 +29,8 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
       errorAdd  ([sym, 'stock-table, history call back, invalid chartSymbol  trying to updatehistory values'] );
       return;
     }
+
+    console.log ('gain nextSym:', sym, 'sequenceNumber:', sequenceNumber, 'count:', count)
 
     function spikesSmooth (sym, stockChartXValues, stockChartYValues, logFlags) {
       for (let i = 0; i <  stockChartYValues.length - 2; i++) {
@@ -484,5 +486,14 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
           // console.log (sym, 'gain', error.message)
       })
 
+      // chin gain for next stock, to speed up loading, if not first time
+      if (sequenceNumber >= 0  && sequenceNumber < rows.length - 1 && count > 0) { //** if not first time, then update gain for next stock, to speed up loading */
+        const nextSym = rows[sequenceNumber + 1].values.symbol;
+        if (! rows[sequenceNumber + 1].values.mon)  // burst avoid filled with gain value from previous stock, if gain not updated yet 
+        // console.log ('gain nextSym:', nextSym, 'sequenceNumber:', sequenceNumber, 'count:', count)
+        gain (nextSym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
+          splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
+           os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber + 1, count - 1) 
+      }
 
   }

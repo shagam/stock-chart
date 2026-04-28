@@ -421,7 +421,7 @@ const BasicTable = (props) => {
   }
 
   //** gain click for sym pressed. */
-  const handleGainClick = (sym, singleSym) => {
+  const handleGainClick = (sym, singleSym, tableSequence, count) => {
     setErr()
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
@@ -453,7 +453,7 @@ const BasicTable = (props) => {
 
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
-      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns)
+      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, tableSequence, count)
     
     setPrice (rows[row_index].values.price)
  
@@ -464,22 +464,8 @@ const BasicTable = (props) => {
 
    // get all info for targetPrice
   function gainAll() {
-    var count = 0;
-    for (let i = 0; i < rows.length; i ++) {
-      if (rows[i].values.gain_mili && Date.now() - rows[i].values.gain_mili < 1000 * 3600) {  // skip if gained within last hour
-        continue;
-      }
-      if (rows[i].values.year !== undefined) { // skip if no price
-        continue;
-      }
-      handleGainClick (rows[i].values.symbol, false) 
-      count ++
-      if (count >= 4) {      
-        console.log ('geinAll exit after ', count, ' symbols')
-        break; // exit forEach 
-      }
-    }
-    saveTable();
+      const index = rows.findIndex((row)=> row.values.symbol === chartSymbol);
+      handleGainClick (rows[0].values.symbol, false, index, 4) 
   }
 
   const handleDeleteClick = (symbol) => {
@@ -985,7 +971,7 @@ const BasicTable = (props) => {
                   <div style={{display:'flex'}}>
                     <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
                     {/* <button type="button" onClick={()=>handleInfoClick(row.values.symbol, true)}>info</button>      */}
-                    <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true)}>gain</button> 
+                    <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button> 
                   </div>
               </tr>
             )
