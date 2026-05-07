@@ -370,15 +370,23 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                        
               //** Compare latest price to highest  */
               var highestPrice = -1; // highest price
-              for (let i = 0; i < stockChartYValuesFunction.length; i++) {
+              var highestPriceDate = '';
+              var historyLength = stockChartYValuesFunction.length;
+              if (historyLength > 1000)
+                historyLength = 1000; // limit to recent 1000 points, about 5 years
+
+              for (let i = 0; i < historyLength; i++) {
                 const val = stockChartYValuesFunction[i];
                 if (val > highestPrice)
                   highestPrice = val;
+                  highestPriceDate = stockChartXValuesFunction[i];
               }
               var priceDivHigh = -1
               if (highestPrice !== -1)
                 priceDivHigh = (price/ highestPrice).toFixed(4)
             
+              if (LOG_FLAG)
+                console.log (sym, 'price=', price, 'highestPrice=', highestPrice.toFixed(2), 'priceDivHigh=', priceDivHigh, 'highestPriceDate=', highestPriceDate, 'highDate=', highestPriceDate)
               //console.log (`historyValues:  ${childData} chartSymbol  ${sym}`);
                
               rows[row_index].values.gain_mili = updateMili;
