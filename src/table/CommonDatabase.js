@@ -151,7 +151,7 @@ function CommonDatabase (props) {
 
     
     
-    const [period, setPeriod] = useState(1)
+    const [period, setPeriod] = useState(100)
 
     const [nameFilter, setNameFilter] = useState ();
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
@@ -214,6 +214,9 @@ function CommonDatabase (props) {
                 break;
             case 10:
                 qqqValue = props.QQQ_gain.year10; // props.rows[row_index].values.year10;
+                break;
+            case 100:
+
                 break;
             default: {
                 error(['gainFilter ', 'invalidPeriod'])
@@ -359,11 +362,38 @@ function CommonDatabase (props) {
                         qqqVal = Number(dat['QQQ'].year10);
                         qqqValFactor = Number(dat['QQQ'].year10 * factor);
                         break;
+                    case 100: // any
+                        var symIn = false
+                        if (Number(dat[sym].year10 > Number(dat['QQQ'].year10 * factor))) {
+                            symIn = true;
+                            if (logBackEnd)
+                                console.log ('sym', sym, 'year10', dat[sym].year10, dat['QQQ'].year10)
+                        }
+                        if (Number(dat[sym].year5 > Number(dat['QQQ'].year5 * factor))){
+                            symIn = true;
+                                console.log ('sym', sym, 'year5', dat[sym].year5, dat['QQQ'].year5)
+                        }
+                        if (Number(dat[sym].year2 > Number(dat['QQQ'].year2 * factor))) {
+                            symIn = true;
+                            if (logBackEnd)
+                                console.log ('sym', sym, 'year2', dat[sym].year2, dat['QQQ'].year2)
+                        }
+                        if (Number(dat[sym].year > Number(dat['QQQ'].year * factor))){
+                            symIn =true
+                            if (logBackEnd)
+                                console.log ('sym', sym, 'year', dat[sym].year, dat['QQQ'].year)
+                        }
+                        if (symIn){
+                            resArray.push(sym + ': ' + ratio + ', ')    
+                            resObjArray.push({sym: sym, 'ratio-above-qqq': ratio})             
+                        }
+                        break;
                     default: {
                         error(['gainFilter ', 'invalidPeriod'])
                         console.log(getDate(), 'gainFilter ', 'invalidPeriod')       
-                    }
+                    } 
                 }
+
                 if (!filter || symVal > qqqValFactor) {
                     if (symVal !== -1)
                         ratio = (symVal / qqqVal).toFixed(2)
@@ -959,6 +989,7 @@ function CommonDatabase (props) {
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='2' id='2' checked={period===2} onChange={onOptionChange}/> 2_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='5' id='5' checked={period===5} onChange={onOptionChange}/> 5_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='10' checked={period===10} onChange={onOptionChange}/> 10_years
+          <input style={{marginLeft: '5px'}}  type="radio" name="years" value='100' id='100' checked={period===100} onChange={onOptionChange}/> any
         </div>
 
         <div style={{display:'flex'}}>
