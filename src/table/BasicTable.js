@@ -453,7 +453,8 @@ const BasicTable = (props) => {
 
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
-      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, tableSequence, count)
+      saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
+       priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol)
     
     setPrice (rows[row_index].values.price)
  
@@ -472,7 +473,7 @@ const BasicTable = (props) => {
   
       if (index <= rows.length -1)
         index ++;
-      handleGainClick (rows[index].values.symbol, false, index, 8) 
+      handleGainClick (rows[index].values.symbol, false, index, 10, setChartSymbol) 
   }
 
   const handleDeleteClick = (symbol) => {

@@ -18,12 +18,13 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber, count) {
+     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber, count, setChartSymbol) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
     }
 
+    setChartSymbol(sym) // save for nexr iteration
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
       errorAdd  ([sym, 'stock-table, history call back, invalid chartSymbol  trying to updatehistory values'] );
@@ -504,7 +505,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
 
           gain (nextSym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
           splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-           os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber + 1, count - 1) 
+           os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber + 1, count - 1, setChartSymbol) 
         }, 250);
       }
 
