@@ -509,7 +509,10 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
           gain (nextSym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
           splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
            os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber, count - 1, setChartSymbol) 
-        }, 250);
+        }, 300);
       }
-
+      else {
+        if (sequenceNumber !== -1)
+          saveTable(sym);
+      }
   }
