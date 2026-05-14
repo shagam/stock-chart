@@ -465,15 +465,25 @@ const BasicTable = (props) => {
 
    // get all info for targetPrice
   function gainAll() {
-      var index = rows.findIndex((row)=> row.values.symbol === chartSymbol);
+    var index = 0
+    var sym;
+    if (chartSymbol === '') {
+      sym = rows[0].values.symbol        
+    }
+    else {
+      sym = chartSymbol;
+      index = rows.findIndex((row)=> row.values.symbol === sym);
       if (index === -1) {
         setErr(`symbol not found, gainAll ${chartSymbol}`);
         return;
       }
-  
       if (index <= rows.length -1)
         index ++;
-      handleGainClick (rows[index].values.symbol, false, index, 10, setChartSymbol) 
+        sym = rows[index].values.symbol    
+    }
+
+
+    handleGainClick (sym, false, index, 10) 
   }
 
   const handleDeleteClick = (symbol) => {

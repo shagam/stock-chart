@@ -497,15 +497,18 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
 
       // chin gain for next stock, to speed up loading, if not first time
       if (sequenceNumber >= 0  && sequenceNumber < rows.length - 1 && count > 1) { //** if not first time, then update gain for next stock, to speed up loading */
-        const nextSym = rows[sequenceNumber + 1].values.symbol;
-        if (! rows[sequenceNumber + 1].values.mon)  // burst avoid filled with gain value from previous stock, if gain not updated yet 
+        sequenceNumber ++
+        const nextSym = rows[sequenceNumber].values.symbol;
+
+
+        // if (! rows[sequenceNumber + 1].values.mon)  // burst avoid filled with gain value from previous stock, if gain not updated yet 
 
         setTimeout(() => {
           // console.log ('gain nextSym:', nextSym, 'sequenceNumber:', sequenceNumber, 'count:', count)
 
           gain (nextSym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
           splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-           os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber + 1, count - 1, setChartSymbol) 
+           os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber, count - 1, setChartSymbol) 
         }, 250);
       }
 
