@@ -906,14 +906,14 @@ function CommonDatabase (props) {
                   console.log (JSON.stringify(result.data))
       
               if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-                  props.errorAdd([getDate(), delCommands[i] + ' Delete symbol', result.data])
+                  props.errorAdd([getDate(), props.symbol, delCommands[i] + ' Delete symbol', result.data])
               }
-              console.log(getDate(), delCommands[i]+ ' arrived', result.data)        
+              console.log(getDate(), props.symbol, delCommands[i]+ ' arrived', result.data)        
           } )
           .catch ((err) => {
             clear()
-            error([getDate(), 'backEnd sym del', err.message])
-            console.log(getDate(), 'targetPrice', err.message)
+            error([getDate(), 'backEnd sym del', props.symbol, err.message])
+            console.log(getDate(), 'targetPrice', props.symbol, err.message)
           }) 
         }
         const latency = Date.now() - mili
