@@ -11,6 +11,7 @@ import GetInt from '../utils/GetInt'
 import Toggle from '../utils/Toggle'
 import {searchDateInArray, } from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+import { createRoutesFromElements } from 'react-router-dom';
 
 function DropsCount (props) {
       //** for counting drops */
@@ -207,7 +208,7 @@ function DropsCount (props) {
             chartClippedX_temp[i] = props.stockChartXValues[i];
             chartClippedY_temp[i] = props.stockChartYValues[i];
         }
-        setRawArrayLength (chartClippedX_temp.length)
+        // setRawArrayLength (chartClippedX_temp.length)
 
         // collect streakArray
         var streakArray = []
@@ -229,14 +230,14 @@ function DropsCount (props) {
         }
         console.log ('bigDropCount=', bigDropCount_, ' bigRiseCount=', bigRiseCount_, ' thershold=', streakThreshold)
 
-        setDropsArray(streakArray)
-        setBigDropsCount(bigDropCount_)
-        setBigRiseCount(bigRiseCount_)
+        // setDropsArray(streakArray)
+        // setBigDropsCount(bigDropCount_)
+        // setBigRiseCount(bigRiseCount_)
 
         // years_span
         var years_span = (new Date(chartClippedX_temp[0]) - new Date(chartClippedX_temp[chartClippedX_temp.length -1])) / (1000 * 60 * 60 * 24 * 365)
-        setBigDropsPerYear ( (bigDropCount_ / years_span).toFixed(2))
-        setBigRisesPerYear ( (bigRiseCount_ / years_span).toFixed(2))
+        // setBigDropsPerYear ( (bigDropCount_ / years_span).toFixed(2))
+        // setBigRisesPerYear ( (bigRiseCount_ / years_span).toFixed(2))
 
         const dat =
         [
@@ -268,11 +269,36 @@ function DropsCount (props) {
             mode: 'markers',
             marker: { color: 'red', size: 2 },       
         },
-
-
         ]
-        setChartData(dat)
+
+
+        // setChartData(dat)
+
+        const results = {
+            dat: dat,
+            streakArray: streakArray,
+            bigDropCount: bigDropCount_,
+            bigRiseCount: bigRiseCount_,
+            BigDropsPerYear: (bigDropCount_ / years_span).toFixed(2),
+            BigRisesPerYear: (bigRiseCount_ / years_span).toFixed(2),
+            length: chartClippedX_temp.length,
+        }
+        return results
+    } // end of fuunction countDrops
+
+    function countDrops_wrapper () {
+        const results = countDrops ()
+        setChartData(results.dat)
+
+        setDropsArray(results.streakArray)
+        setBigDropsCount(results.bigDropCount_)
+        setBigRiseCount(results.bigRiseCount_)
+
+        setBigDropsPerYear (results.BigDropsPerYear)
+        setBigRisesPerYear (results.BigRisesPerYear)
+        setRawArrayLength (results.length)
     }
+
 
     function colorChange (col, change) {
         if (col !== 'change')
@@ -332,7 +358,7 @@ function DropsCount (props) {
         </div>
         <div>&nbsp;</div>
 
-        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops()}> Count streaks of drops, rises   </button>  &nbsp; 
+        <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops_wrapper()}> Count streaks of drops, rises   </button>  &nbsp; 
        <div>&nbsp;</div>
 
         {chartData && <div>rise_streaks={bigRiseCount} &nbsp; &nbsp; rises_per_year={bigRisesPerYear}  </div>}
