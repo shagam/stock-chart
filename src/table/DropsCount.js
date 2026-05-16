@@ -13,49 +13,11 @@ import {searchDateInArray, } from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { createRoutesFromElements } from 'react-router-dom';
 
-function DropsCount (props) {
-      //** for counting drops */
-    const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
-    const [err, setErr] = useState();
-    const [log, setLog] = useState (false);
-    const [logExtra, setLogExtra] = useState (false);
-
-    //** input */
-    const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
-    const [streakThreshold, setStreakThreshold] = useState(6) // drop percentage, used for count number of drops
-    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(2) // percentage to reverse the streak
-    const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
-    const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
-
-    const [tableShow, setTableShow] = useState(false)
-    const [chartData, setChartData] = useState()
-
-    //** output display */
-    const [dropsArray, setDropsArray] = useState([])
-    
-    const [bigDropCount, setBigDropsCount] = useState()
-    const [bigRiseCount, setBigRiseCount] = useState();
-    const [bigDropsPerYear, setBigDropsPerYear] = useState();
-    const [bigRisesPerYear, setBigRisesPerYear] = useState();
-
-    const [rawArrayLength, setRawArrayLength] = useState()
 
 
-    var bigDropCount_ = 0;
-    var bigRiseCount_ = 0;
-
-    var dropRiseRatioX = []
-    var dropRiseRatioY = []
-    var zigzagx_rise = []
-    var zigzagx_drop = []
-    var zigzagy_rise = [] 
-    var zigzagy_drop = [] 
-
-    useEffect (() => { 
-        setDropsArray([])
-      }, [props.symbol,  props.daily]) 
-
-    function extractOneStreak (dateArray, valArray, searchIndex, changeThreshold, streakArray) {
+    function extractOneStreak (dateArray, valArray, searchIndex, changeThreshold, streakArray, stockChartXValues, stockChartYValues,
+        zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop, streakEndReverseThreshold, logExtra
+    ) {
         // if (searchIndex === 1432) {
         //     console.log ('breakpoint searchIndex at 1432')  
         // }
@@ -159,15 +121,15 @@ function DropsCount (props) {
             
 
                 if (rise_or_fall === 1) {
-                    zigzagx_rise.push(props.stockChartXValues[next])
-                    zigzagy_rise.push(props.stockChartYValues[next])
+                    zigzagx_rise.push(stockChartXValues[next])
+                    zigzagy_rise.push(stockChartYValues[next])
                 }
                 else {
-                    zigzagx_drop.push(props.stockChartXValues[next])
-                    zigzagy_drop.push(props.stockChartYValues[next])
+                    zigzagx_drop.push(stockChartXValues[next])
+                    zigzagy_drop.push(stockChartYValues[next])
                 }
                 if (len === 1) {
-                    console.log ('1-day streak, index=' + searchIndex,  '  ', props.stockChartXValues[searchIndex], '  ratio=', results.ratio)
+                    console.log ('1-day streak, index=' + searchIndex,  '  ', stockChartXValues[searchIndex], '  ratio=', results.ratio)
                 }
                 return next; // last index of this streak
             }
@@ -176,8 +138,10 @@ function DropsCount (props) {
     }
 
 
-    //** main */ 
-    function countDrops () {
+  //** main */ 
+    function countDrops (streakThreshold, setErr, log, startDate, bigDropCount_, bigRiseCount_, zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop, 
+        highIndex, stockChartXValues, stockChartYValues, symbol, streakEndReverseThreshold, logExtra
+    ) {
 
     
         if (streakThreshold >= 100 || streakThreshold < 0) {
@@ -188,16 +152,16 @@ function DropsCount (props) {
       
         // first high before drop calc by dropRecovery    
         if (log)
-            console.log ('highndex=', props.highIndex)  // found by dropRecovery
+            console.log ('highndex=', highIndex)  // found by dropRecovery
 
         //startDate
 
         if (log)
             console.log ('startDate', startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate())
         const startDateArray = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()];// // [1..31]
-        const chartIndex = searchDateInArray (props.stockChartXValues, startDateArray, props.symbol, /*logFlags*/[])
+        const chartIndex = searchDateInArray (stockChartXValues, startDateArray, symbol, /*logFlags*/[])
 
-        var searchIndex = chartIndex !== -1? chartIndex: props.stockChartXValues.length -1 //protect for date beyond array
+        var searchIndex = chartIndex !== -1? chartIndex: stockChartXValues.length -1 //protect for date beyond array
         var nextIndex; 
         var dropsArray_ = []
 
@@ -205,8 +169,8 @@ function DropsCount (props) {
         var chartClippedX_temp = [];
         var chartClippedY_temp = [];
         for (let i = 0; i < searchIndex; i++) {
-            chartClippedX_temp[i] = props.stockChartXValues[i];
-            chartClippedY_temp[i] = props.stockChartYValues[i];
+            chartClippedX_temp[i] = stockChartXValues[i];
+            chartClippedY_temp[i] = stockChartYValues[i];
         }
         // setRawArrayLength (chartClippedX_temp.length)
 
@@ -214,7 +178,9 @@ function DropsCount (props) {
         var streakArray = []
         var next_ = searchIndex - 1
         while (next_ !== -1) {
-            next_ =  extractOneStreak (chartClippedX_temp, chartClippedY_temp, next_, streakThreshold, streakArray)
+            next_ =  extractOneStreak (chartClippedX_temp, chartClippedY_temp, next_, streakThreshold, streakArray, stockChartXValues, stockChartYValues,
+             zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop, streakEndReverseThreshold, logExtra
+            )
             // console.log ('nextIndex=', next_)
         }
         if (log)
@@ -242,7 +208,7 @@ function DropsCount (props) {
         const dat =
         [
         {
-            name: props.symbol,
+            name: symbol,
             x: chartClippedX_temp,
             y: chartClippedY_temp,
             type: 'scatter',
@@ -286,8 +252,55 @@ function DropsCount (props) {
         return results
     } // end of fuunction countDrops
 
+
+
+function DropsCount (props) {
+      //** for counting drops */
+    const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+    const [err, setErr] = useState();
+    const [log, setLog] = useState (false);
+    const [logExtra, setLogExtra] = useState (false);
+
+    //** input */
+    const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
+    const [streakThreshold, setStreakThreshold] = useState(6) // drop percentage, used for count number of drops
+    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(2) // percentage to reverse the streak
+    const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
+    const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
+
+    const [tableShow, setTableShow] = useState(false)
+    const [chartData, setChartData] = useState()
+
+    //** output display */
+    const [dropsArray, setDropsArray] = useState([])
+    
+    const [bigDropCount, setBigDropsCount] = useState()
+    const [bigRiseCount, setBigRiseCount] = useState();
+    const [bigDropsPerYear, setBigDropsPerYear] = useState();
+    const [bigRisesPerYear, setBigRisesPerYear] = useState();
+
+    const [rawArrayLength, setRawArrayLength] = useState()
+
+
+    var bigDropCount_ = 0;
+    var bigRiseCount_ = 0;
+
+    var dropRiseRatioX = []
+    var dropRiseRatioY = []
+    var zigzagx_rise = []
+    var zigzagx_drop = []
+    var zigzagy_rise = [] 
+    var zigzagy_drop = [] 
+
+    useEffect (() => { 
+        setDropsArray([])
+      }, [props.symbol,  props.daily]) 
+
+
+  
     function countDrops_wrapper () {
-        const results = countDrops ()
+        const results = countDrops (streakThreshold, setErr, log, startDate, bigDropCount_, bigRiseCount_, zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop,
+        props.highIndex, props.stockChartXValues, props.stockChartYValues, props.symbol, streakEndReverseThreshold, logExtra)
         setChartData(results.dat)
 
         setDropsArray(results.streakArray)
