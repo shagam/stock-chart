@@ -152,7 +152,7 @@ import { createRoutesFromElements } from 'react-router-dom';
       
         // first high before drop calc by dropRecovery    
         if (log)
-            console.log ('highndex=', highIndex)  // found by dropRecovery
+            console.log ('highIndex=', highIndex)  // found by dropRecovery
 
         //startDate
 
@@ -300,7 +300,7 @@ function DropsCount (props) {
   
     function countDrops_wrapper () {
         const results = countDrops (streakThreshold, setErr, log, startDate, bigDropCount_, bigRiseCount_, zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop,
-        props.highIndex, props.stockChartXValues, props.stockChartYValues, props.symbol, streakEndReverseThreshold, logExtra)
+        props.stockChartXValues.length, props.stockChartXValues, props.stockChartYValues, props.symbol, streakEndReverseThreshold, logExtra)
         setChartData(results.dat)
 
         setDropsArray(results.streakArray)
