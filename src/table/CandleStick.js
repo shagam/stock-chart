@@ -149,6 +149,10 @@ const CandlestickChart = (props) => {
           // setChartData(chartData[periodTag]);
 
           prepareChart (close, high, low, open, dates)
+          const candleSticks = {close: close, high: high, low: low, open: open, xClipped: dates }
+          props.setPageForAi (candleSticks)
+          props.setPageForAiText ("candleStick what percentages will be up, same, down")
+          // PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText
 
         })
         // .catch((error) => {console.log(error.message) })

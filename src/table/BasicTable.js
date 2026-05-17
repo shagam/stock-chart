@@ -1040,7 +1040,7 @@ const BasicTable = (props) => {
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='options' id='3' checked={analyzeTool==='options'} onChange={onOptionChange}
                 title='stock options'/> 
-              <div style={{color:'blue', background: pageForAi?'lightgreen':'white'}}> options  </div> 
+              <div style={{color:'blue', background: pageForAiText && pageForAiText.startsWith('options')?'lightgreen':'white'}}> options  </div> 
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='ai' id='24' checked={analyzeTool==='ai'} onChange={onOptionChange}
                 title='AI'/> 
@@ -1067,7 +1067,8 @@ const BasicTable = (props) => {
 
             <div style={{display:'flex'}}>              
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candleStick' id='13' checked={analyzeTool==='candleStick'} onChange={onOptionChange}/>
-                <div style={{color:'blue'}}> candleStick  </div>   
+               <div style={{color:'blue', background: pageForAiText && pageForAiText.startsWith('candleStick')?'lightgreen':'white'}}> candleStick  </div> 
+                {/* <div style={{color:'blue'}}> candleStick  </div>    */}
 
               <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
               <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
@@ -1150,7 +1151,8 @@ const BasicTable = (props) => {
             {analyzeTool ==='urlGetParse' && <div><UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> </div>}
 
             {analyzeTool ==='candleStick' && <CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
-               errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns}/>}
+               errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns} 
+                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText} />}
 
             {analyzeTool ==='dropCount' && <DropsCount symbol = {chartSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}

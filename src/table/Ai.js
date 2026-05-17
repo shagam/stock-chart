@@ -63,7 +63,7 @@ function Ai  (props) {
 
   const [latency, setLatency] = useState()
   const [usageInfo, setUsageInfo] = useState();
-  const [tokenLimit, setTokenLimit] = useState(400);
+  const [tokenLimit, setTokenLimit] = useState(2000);
 
   // const callCopilot = async () => {
   //   try {
