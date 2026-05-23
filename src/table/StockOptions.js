@@ -72,7 +72,8 @@ function OptionQuote (props) {
   const [AIGroupShow, setAIGroupShow] = useState(true); // name of AI group
   const [optionSymbolShow, setOptionSymbolShow] = useState(false); 
   const [calculated_Attributes, setCalculated_Attributes] = useState(false); // whether to include calculated attributes in AIGroup
-  // const [AIGroupSelected, setAIGroupSelected] = useState(-1); // row number of selected
+  const [price, setPrice] = useState(-1); // current price of the stock, for yield calculation
+  const [priceDivHigh, setPriceDivHigh] = useState(-1); // price divided by 52 week high, for yield calculation
 
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
@@ -82,7 +83,7 @@ function OptionQuote (props) {
     "expiration","firstTraded","updated","underlying","side","strike","dte","bid","bidSize","mid","ask",
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
- const columnsDefault = [
+  const columnsDefault = [
     "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",'mid/price']
 
 
@@ -971,6 +972,23 @@ function OptionQuote (props) {
     // setOptionKeys([]);
     // if (! err)
     //  getOptionsInfoFromServer () 
+
+       // pull info from rows, e.g. price, for yield calculation and display
+    var price_ = -1;
+    var priceDivHigh_ = -1
+    const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+    if (row_index === -1) {
+        setErr ('stock missing: ' + props.symbol)
+        // return;
+    }
+    else {
+      price_ = props.rows[row_index].values.price;
+      setPrice(price_)
+      priceDivHigh_ = props.rows[row_index].values.priceDivHigh;
+      if (priceDivHigh_ !== undefined)
+        setPriceDivHigh(Number(priceDivHigh_).toFixed(3))
+    }
+
   }, [props.symbol, props.rows, props.stockPrice, config.percent]); 
 
 
@@ -988,7 +1006,7 @@ function OptionQuote (props) {
   }
 
   const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price'];
-  const CALCULATED_COLUMNS_COLOR = '#e4ece2ff'
+  const CALCULATED_COLUMNS_COLOR = 'rgb(216, 253, 239)'
 
   function cellColor (line, attrib) {
     if (line === '0' || attrib === '0' || attrib === undefined || optionQuote[attrib] === undefined) {
@@ -1245,12 +1263,15 @@ function OptionQuote (props) {
 
           <hr style={{ border: '3px solid #000000'}}/> 
 
-          {optionQuote && optionQuote.expiration && 
-          <div style={{display: 'flex'}}>
-            <div style={{color: 'magenta'}}>{props.symbol}</div>&nbsp; &nbsp; count={optionQuote.expiration.length} &nbsp; &nbsp;
-            stockPrice={props.stockPrice} &nbsp; &nbsp; price/bubblePrice={belowBubble.toFixed(3)} &nbsp; &nbsp;
-            bestYieldIndex={bestYearlyYieldIndex} &nbsp; &nbsp; 
-            <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div>
+          {optionQuote && optionQuote.expiration && <div>
+              <div style={{display: 'flex', fontWeight: 'bold'}}>
+                <div style={{color: 'magenta'}}>{props.symbol} </div> &nbsp; &nbsp; 
+                stockPrice={price} &nbsp; &nbsp; belowHigh={priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>} &nbsp; &nbsp;
+              </div>
+              <div style={{display: 'flex', fontWeight: 'bold'}}>
+                count={optionQuote.expiration.length} &nbsp; &nbsp; bestYieldIndex={bestYearlyYieldIndex}  &nbsp; &nbsp;
+                <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div> 
+              </div>
           </div>}
 
           {/* premium quote table */}
