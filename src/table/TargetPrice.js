@@ -67,8 +67,8 @@ async  function targetPriceAdd (symbol, targetRaw, price, logFlags, errorAdd, sr
             console.log(symbol, getDate(), 'targetPrice arrived', result.data, 'from:', src, symTargetOne)          
     } )
     .catch ((err) => {
-        errorAdd([symbol, 'target', err.message])
-        console.log(getDate(), symbol, 'targetPrice', err.message)
+        errorAdd([symbol, 'target price backend write:', err.message])
+        console.log(getDate(), symbol, 'targetPrice backend write', err.message)
     })
 }
 

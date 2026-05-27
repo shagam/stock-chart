@@ -127,8 +127,8 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
 
     })
     .catch ((err) => {
-    setError([sym, 'gainWrite', err.message])
-    console.log(getDate(), 'gainWrite', err.message)
+    setError([sym, 'gainWrite backend write:', err.message])
+    console.log(getDate(), 'gainWrite backend write:', err.message)
     })     
 }
 
