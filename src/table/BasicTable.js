@@ -104,7 +104,7 @@ const BasicTable = (props) => {
   const servNameList = ['production', 'test','local_win']//, 'production_'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
-  const [servSelect, setServSelect] = useState(servList[0]);
+  const [servSelect, setServSelect] = useState(servList[1]);
 
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
@@ -843,7 +843,7 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
-        <div style={{color: 'red', fontWeight: "bold", fontSize: "1.4em"}}>Still working on backend server problem; use test backEnd (very slow)</div>
+        <div style={{color: 'red', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (very slow)</div>
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
@@ -884,7 +884,7 @@ const BasicTable = (props) => {
           { !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
-          {eliHome && <div> <button style={{backgroundColor: '#bbffbb'}} onClick={test} title='test' > test </button> </div>} &nbsp;&nbsp;
+          {/* {eliHome && <div> <button style={{backgroundColor: '#bbffbb'}} onClick={test} title='test' > test </button> </div>} &nbsp;&nbsp; */}
         </div>
 
         {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
