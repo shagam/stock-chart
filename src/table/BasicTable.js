@@ -105,6 +105,8 @@ const BasicTable = (props) => {
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[1]);
+  const [PORT, setPORT] = useState(5000);
+  const portArray = [5000, 5001]
 
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
@@ -121,11 +123,11 @@ const BasicTable = (props) => {
   const LOG_API = props.logFlags && props.logFlags.includes('api');
   const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
 
-  var PORT;
-  if (servSelect === process.env.REACT_APP_LOCAL_SERV_IP)
-    PORT = 5000;
-  else
-    PORT = 5000
+  // var PORT;
+  // if (servSelect === process.env.REACT_APP_LOCAL_SERV_IP)
+  //   PORT = 5000;
+  // else
+  //   PORT = 5000
 
   // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
   const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
@@ -882,6 +884,7 @@ const BasicTable = (props) => {
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
           { !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
+          {eliHome && !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={PORT} nameList={portArray} setSelect={setPORT} title='' options={portArray} defaultValue={PORT}/> &nbsp;&nbsp;</div>} 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
           {/* {eliHome && <div> <button style={{backgroundColor: '#bbffbb'}} onClick={test} title='test' > test </button> </div>} &nbsp;&nbsp; */}
