@@ -4,7 +4,7 @@ import axios from 'axios';
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 // import {IpContext} from '../contexts/IpContext';
-// import GetInt from '../utils/GetInt'
+import GetInt from '../utils/GetInt'
 import {format, set} from "date-fns"
 import {searchDateInArray} from '../utils/Date'
 import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
@@ -75,6 +75,7 @@ function OptionQuote (props) {
   const [price, setPrice] = useState(-1); // current price of the stock, for yield calculation
   const [priceDivHigh, setPriceDivHigh] = useState(-1); // price divided by 52 week high, for yield calculation
 
+  const [premium, setPremium] = useState(-1); // for display only, premium of selected option
   // const [arr, setArr] = useState([]);
   const [dat, setDat] = useState({});
 
@@ -157,12 +158,13 @@ function OptionQuote (props) {
 
     // var url = 'https://www.marketdata.app/api/v1/options/quotes/' + optionSymbol;
     // const url = 'https://www.marketdata.app/api/v1/options/' + optionSymbol + '/token=' + TOKEN;
-
+    setOptionQuote({})
     axios.get (corsUrl)
     .then ((result) => {
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr('Option server status:  ' + result.data)
+        setOptionQuote({})
         beep2()
         console.log (props.symbol, result.data)
         return;
@@ -619,14 +621,14 @@ function OptionQuote (props) {
     setErr()
     setDat()
     setLatency('request sent ...')
-
+    const mili1 = Date.now()
     axios.get (url)
       .then ((result) => {
         if (log)
           console.log ('expirations', result.data)
         const mili = result.data.updated
         const status = result.data.s
-
+        setLatency('get expirations done, Latency(msec)=' + (Date.now() - mili1))
         if (result.data.s !== 'ok') {
           props.errorAdd ([props.symbol, 'expiration error', result.data.s])
           console.log (props.symbol, 'expiration error', result.data.s)
@@ -639,6 +641,7 @@ function OptionQuote (props) {
 
       })
       .catch ((err) => {
+        setLatency('get expirations failed, Latency(msec)=' + (Date.now() - mili1))
         console.log(err.message, url)
         props.errorAdd ([props.symbol, 'expiration error', err.message])
       })
@@ -960,6 +963,11 @@ function OptionQuote (props) {
 
   }
 
+  function updatedPremium (row) {
+  
+  
+  }
+
 
   useEffect (() => { 
     console.log ('useEffect symbol change', props.symbol)
@@ -1150,7 +1158,7 @@ function OptionQuote (props) {
         </div>
         {expirationShow && <div>
  
-          {props.eliHome && <div style = {{display: 'flex'}}>
+          {<div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
           </div>}
 
@@ -1378,6 +1386,18 @@ function OptionQuote (props) {
                   })}
                 </tbody>
             </table>
+        </div>}
+
+
+        {/* selected row info  */}
+        {premiumSelected !== -1 && <div>
+          <div style={{color: 'magenta'}}>Selected option premium row: {premiumSelected} </div>
+          <GetInt title='check premium' placeHolder={premium} init={premium} value={premium} pattern={undefined}
+            type='Real' callBack={setPremium} width = '15%'/> &nbsp;&nbsp;
+
+          updatedPremium() {optionQuote && optionQuote.expiration && optionQuote.expiration[premiumSelected]
+           ? optionQuote.expiration[premiumSelected] : 'N/A'} &nbsp; &nbsp;
+
         </div>}
 
 
