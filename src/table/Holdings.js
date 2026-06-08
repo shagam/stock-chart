@@ -194,7 +194,7 @@ function Holdings (props) {
       console.log (corsUrl)
 
     setUrlLast(corsUrl)
-    setLatency('holdings request sent to server')
+    setLatency('holdings request sent to server ...')
     const mili = Date.now()
 
     axios.get (corsUrl)
@@ -288,6 +288,7 @@ function Holdings (props) {
     } )
     .catch ((err) => {
       setErr(err.message)
+      setLatency ('get holdings failed ');  
       // console.log(err.message)
     })
   }
@@ -314,7 +315,6 @@ function Holdings (props) {
       <div style = {{display: 'flex'}}>
         <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div> &nbsp; &nbsp;
         <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
-        {eliHome && <div style={{color: 'blue'}}> {latency}</div>}
       </div>
          
       {/* <div>&nbsp;</div> */}
@@ -343,6 +343,7 @@ function Holdings (props) {
 
 
           <div>  
+            {<div style={{color: 'blue'}}> {latency}</div>}
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  ({props.chartSymbol}) </button> &nbsp; 
             <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  ({props.chartSymbol}) </button> &nbsp;
             {/* {eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>holdingsMarketData ()}>marketData  ({props.chartSymbol}) </button> &nbsp;</div>} */}
