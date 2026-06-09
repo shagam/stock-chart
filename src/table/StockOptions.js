@@ -63,7 +63,7 @@ function OptionQuote (props) {
   const [latency, setLatency] = useState();
   const [compareStatus, setCompareStatus] = useState();
 
-  const [expirationShow, setExpirationShow] = useState(false);
+  const [expirationShow, setExpirationShow] = useState(true);
   const [strikeShow, setStrikeShow] = useState(false);
   const [configShow, setConfigShow] = useState(false);
 
@@ -637,7 +637,7 @@ function OptionQuote (props) {
         setExpirationsArray(result.data.expirations);
 
 
-        strikePricesGet (result.data.expirations) 
+        // strikePricesGet (result.data.expirations) 
 
       })
       .catch ((err) => {
@@ -740,6 +740,14 @@ function OptionQuote (props) {
       corsUrl = "https://";
     else
       corsUrl = "http://";
+
+    if (expirationSelected !== -1) {
+      const dat = new Date(expirationsArray[expirationSelected])
+      const daysToExpire = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
+      config.expirationNum = daysToExpire.toFixed(0);
+      if (log)
+        console.log ('expirationSelected=', expirationSelected, 'expiration=', expirationsArray[expirationSelected], 'expirationNum=', config.expirationNum, 'aa=', daysToExpire)
+    }
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
     corsUrl += "&expirationNum=" + config.expirationNum
@@ -1143,28 +1151,21 @@ function OptionQuote (props) {
         <div>&nbsp;</div>
         {/* <hr/> */}
 
-        {/*  buttons  */}
-        <div>
-          {latency && <div style={{color: 'green'}}> {latency} </div>}
-          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
-          {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
-          {/* <hr/>  */}
-        </div>
+
+        {latency && <div style={{color: 'green'}}> {latency} </div>}
+
+
+        {<div style = {{display: 'flex'}}>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
+        </div>}
 
         <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
           <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) </div>  &nbsp; &nbsp; 
-        </div>
-        {expirationShow && <div>
- 
-          {<div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
-          </div>}
-
+        </div>         
           
           {/* Expiration table */}
-          {expirationsArray.length > 0  && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
+          {expirationShow && expirationsArray.length > 0  && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
               <table>
                   <thead>
                     <tr>
@@ -1191,10 +1192,16 @@ function OptionQuote (props) {
               </table>
           </div>}
           <hr style={{ border: '3px solid #000000'}}/> 
-        </div>}
+
+      {/*  buttons  */}
+        <div>
+          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
+          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
+          {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
+          {/* <hr/>  */}
+        </div>
         
         {/* strikes */}
-
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
            &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>   &nbsp; &nbsp; 
@@ -1239,6 +1246,7 @@ function OptionQuote (props) {
             </table>
           </div>} 
           <hr style={{ border: '3px solid #000000'}}/> 
+
 
           {config.expirationBum !== -1 && strikeNumCalc ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
