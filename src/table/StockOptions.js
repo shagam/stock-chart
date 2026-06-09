@@ -64,7 +64,7 @@ function OptionQuote (props) {
   const [compareStatus, setCompareStatus] = useState();
 
   const [expirationShow, setExpirationShow] = useState(true);
-  const [strikeShow, setStrikeShow] = useState(false);
+  const [strikeShow, setStrikeShow] = useState(true);
   const [configShow, setConfigShow] = useState(false);
 
   const [AIGroup, setAIGroup] = useState({}); // keep group of optionQuote in AI
@@ -566,7 +566,7 @@ function OptionQuote (props) {
 
 
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationSelect + '&token=' + TOKEN
+        + expirationsArray[expirationSelected] + '&token=' + TOKEN
         // + '?token=' + TOKEN;
     if (log)
       console.log (getDate(), props.symbol, url)
@@ -747,6 +747,11 @@ function OptionQuote (props) {
       config.expirationNum = daysToExpire.toFixed(0);
       if (log)
         console.log ('expirationSelected=', expirationSelected, 'expiration=', expirationsArray[expirationSelected], 'expirationNum=', config.expirationNum, 'aa=', daysToExpire)
+    }
+
+    if (strikeNumCalc !== -1) {
+      const a = strikeArray[strikeNumCalc] 
+      config.strikeNum = ((strikeArray[strikeNumCalc] / props.stockPrice - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
     }
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
@@ -1193,31 +1198,25 @@ function OptionQuote (props) {
           </div>}
           <hr style={{ border: '3px solid #000000'}}/> 
 
-      {/*  buttons  */}
-        <div>
-          <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
-          {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
-          {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
-          {/* <hr/>  */}
-        </div>
-        
+          
         {/* strikes */}
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
-           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>   &nbsp; &nbsp; 
-        </div>
-        
-        {strikeShow && expirationsArray.length > 0 && <div>
+            
+        {expirationsArray.length > 0 && <div>
 
-          {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}
-          {props.eliHome && config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
+          { config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strike-price   </button> &nbsp; &nbsp;
 
-          </div>}
+          {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
+        </div>}
+
+        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
+          &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
+            <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>   &nbsp; &nbsp; 
+        </div>
 
 
           {/* Strike-list table */}
-          {strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '400px', overflow:'auto'}}>
+          {strikeShow && strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '400px', overflow:'auto'}}>
             <table>
                 <thead>
                   <tr>
@@ -1250,12 +1249,19 @@ function OptionQuote (props) {
 
           {config.expirationBum !== -1 && strikeNumCalc ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
 
-          {strikeNumCalc !== -1 && <div style = {{display: 'flex'}}>
+          {/* {strikeNumCalc !== -1 && <div style = {{display: 'flex'}}>
             {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(expirationsArray, strikeArray)}>  option-primium   </button>}  &nbsp; &nbsp;  &nbsp;
                {optionQuote && optionQuote.expiration && <h6> count={optionQuote.expiration.length} &nbsp;</h6>}  &nbsp; &nbsp;&nbsp;  
-          </div>}
+          </div>} */}
           </div>}
 
+          {/*   get-option-premium   */}
+          <div>
+            <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
+            {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
+            {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
+            {/* <hr/>  */}
+          </div>
 
 
           {/* select columns */}
