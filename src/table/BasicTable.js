@@ -106,7 +106,7 @@ const BasicTable = (props) => {
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[1]);
   const [PORT, setPORT] = useState(5000);
-  const portArray = [5000, 5001]
+  const portArray = [5000, 5001, 5002]
 
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
