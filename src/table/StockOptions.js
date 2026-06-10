@@ -39,7 +39,7 @@ function OptionQuote (props) {
 
   const [strikeArray, setStrikeArray] = useState([]);
 
-  const [strikeNumCalc,setStrikeNumCalc] = useState(-1) // for display only
+  const [strikeSelected,setStrikeSelected] = useState(-1) // for display only
   
   // const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
 
@@ -555,14 +555,14 @@ function OptionQuote (props) {
     // var expirationSelect = "";
     // const strikePrice = props.stockPrice * (1 + config.strikeNum / 100); // e.g. 150/10 = 15
     var expirationSelect = "";
-    var mili = new Date().getTime()
-    mili += config.expirationNum * 24 * 3600 * 1000; // now + expirationNum days
-    for (let i = 0; i < expirationsArray.length; i++) { 
-      if (new Date(expirationsArray[i]).getTime() > mili) {
-        expirationSelect = expirationsArray[i];
-        break;
-      }
-    }
+    // var mili = new Date().getTime()
+    // mili += config.expirationNum * 24 * 3600 * 1000; // now + expirationNum days
+    // for (let i = 0; i < expirationsArray.length; i++) { 
+    //   if (new Date(expirationsArray[i]).getTime() > mili) {
+    //     expirationSelect = expirationsArray[i];
+    //     break;
+    //   }
+    // }
 
 
     const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
@@ -584,8 +584,16 @@ function OptionQuote (props) {
         props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
         console.log (props.symbol, 'strike-price error', result.data.s)
       }
-
+      expirationSelect = expirationsArray[expirationSelected]
       const arr = result.data[expirationSelect]
+
+      if (! arr || arr.length === 0) {
+        console.log ('fail, strike price array is empty', expirationSelect, result.data)
+        setStrikeArray([]);
+        setStrikeSelected(-1);
+        setErr('fail, strike price array is empty for expiration ' + expirationSelect)
+        return;
+      }
       if(log)
         console.log ('strike-array', arr)
 
@@ -593,16 +601,16 @@ function OptionQuote (props) {
       // setSelectedStrike(-1); // clear selected strike
       var selectedStrike_ = -1; // for local use, during computation
       //** default select just above current price*/
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i] > props.stockPrice) {
-          // setSelectedStrike(i);
-          selectedStrike_ = i
-          setStrikeNumCalc (i)
-          if (log)
-            console.log ('default strike selected', i, 'price=', arr[i])
-          break;
-        }
-      }
+      // for (let i = 0; i < arr.length; i++) {
+      //   if (arr[i] > props.stockPrice) {
+      //     // setSelectedStrike(i);
+      //     selectedStrike_ = i
+      //     setStrikeSelected (i)
+      //     if (log)
+      //       console.log ('default strike selected', i, 'price=', arr[i])
+      //     break;
+      //   }
+      // }
       // console.log ('ptionPremiumGet', selectedExpiration, expirationsArray, selectedStrike_, arr)
       // optionPremium (expirationsArray, selectedExpiration, selectedStrike_, arr)
     })
@@ -671,7 +679,7 @@ function OptionQuote (props) {
   }
 
  function strikeRowClick(rowId)  { 
-    setStrikeNumCalc(rowId)
+    setStrikeSelected(rowId)
     // config.strikeNum = rowId;
     if (log)
       console.log('Strike Row clicked:', rowId);
@@ -762,9 +770,9 @@ function OptionQuote (props) {
         console.log ('expirationSelected=', expirationSelected, 'expiration=', expirationsArray[expirationSelected], 'expirationNum=', config.expirationNum, 'aa=', daysToExpire)
     }
 
-    if (strikeNumCalc !== -1) {
-      const a = strikeArray[strikeNumCalc] 
-      config.strikeNum = ((strikeArray[strikeNumCalc] / props.stockPrice - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
+    if (strikeSelected !== -1) {
+      const a = strikeArray[strikeSelected] 
+      config.strikeNum = ((strikeArray[strikeSelected] / props.stockPrice - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
     }
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
@@ -818,7 +826,7 @@ function OptionQuote (props) {
       }
 
       if (result.data.strikeNum ) {
-        setStrikeNumCalc (result.data.strikeNum)   // from server
+        setStrikeSelected (result.data.strikeNum)   // from server
       }
 
       if (result.data.compareStatus && props.eliHome) {
@@ -1001,7 +1009,7 @@ function OptionQuote (props) {
     setExpirationsArray([]);
     setOptionQuote({});
     setExpirationSelected(-1)
-    setStrikeNumCalc(-1)
+    setStrikeSelected(-1)
 
     const row_index_ = props.rows.findIndex((row)=> row.values.symbol === props.symbol) // nsymbol change
     if (row_index_ === -1) {
@@ -1223,9 +1231,9 @@ function OptionQuote (props) {
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
         </div>}
 
-        {config.expirationNum !== -1 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
+        {config.expirationNum !== -1 && strikeSelected === -1 && strikeArray.length > 0 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>}   &nbsp; &nbsp; 
+            {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeSelected})</div>}   &nbsp; &nbsp; 
             <div style={{color: 'magenta'}}> Please select an strike price </div>
         </div>}
 
@@ -1246,7 +1254,7 @@ function OptionQuote (props) {
                     <tr key={index}
                       onClick={() => strikeRowClick(index)}
                       style={{
-                          ...ROW_SPACING, backgroundColor: strikeNumCalc === index ? '#d3e5ff' : 'white',
+                          ...ROW_SPACING, backgroundColor: strikeSelected === index ? '#d3e5ff' : 'white',
                           cursor: 'pointer',
                         }}                      
                       >
@@ -1262,7 +1270,7 @@ function OptionQuote (props) {
           <hr style={{ border: '3px solid #000000'}}/> 
 
 
-          {config.expirationBum !== -1 && strikeNumCalc ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>}
+          {/* {config.expirationBum !== -1 && strikeSelected ===-1 && strikeArray.length > 0 && <div style={{color: 'red'}}>Please select a strike-price first</div>} */}
 
           {/* {strikeNumCalc !== -1 && <div style = {{display: 'flex'}}>
             {props.eliHome && <button style={{background: 'aqua'}} type="button" onClick={()=>optionPremium(expirationsArray, strikeArray)}>  option-primium   </button>}  &nbsp; &nbsp;  &nbsp;
@@ -1271,7 +1279,7 @@ function OptionQuote (props) {
           </div>}
 
           {/*   get-option-premium   */}
-          {strikeNumCalc > 0 && <div>
+          {strikeSelected > 0 && <div>
             <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
             {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
             {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
