@@ -1177,11 +1177,11 @@ function OptionQuote (props) {
           <button style={{background: 'aqua'}} type="button" onClick={()=>expirationsGet()}>  expirations   </button> &nbsp;&nbsp;
         </div>}
 
-        <div style = {{display: 'flex'}}>
+        {expirationsArray.length > 0 && <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
           <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) </div>  &nbsp; &nbsp; 
-          <div style={{color: 'green'}}> Please select an expiration date </div>
-        </div>         
+          <div style={{color: 'magenta'}}> Please select an expiration date </div>
+        </div>}        
           
           {/* Expiration table */}
           {expirationShow && expirationsArray.length > 0  && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
@@ -1223,10 +1223,11 @@ function OptionQuote (props) {
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
         </div>}
 
-        <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
+        {config.expirationNum !== -1 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>}   &nbsp; &nbsp; 
-        </div>
+            <div style={{color: 'magenta'}}> Please select an strike price </div>
+        </div>}
 
 
           {/* Strike-list table */}
