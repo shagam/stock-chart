@@ -1211,7 +1211,7 @@ function OptionQuote (props) {
 
         <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>   &nbsp; &nbsp; 
+            {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeNumCalc})</div>}   &nbsp; &nbsp; 
         </div>
 
 
