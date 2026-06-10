@@ -634,6 +634,19 @@ function OptionQuote (props) {
           console.log (props.symbol, 'expiration error', result.data.s)
         }
         
+
+        const dat = new Date(expirationsArray[expirationSelected])
+
+        const daysArray = result.data.expirations.map((expiration, index) => {
+          const daysToExpire = Number((((new Date(expiration)).getTime() - new Date().getTime()) / 1000 / 3600 / 24).toFixed(0));
+          return {index: index, expiration: expiration, daysToExpire: daysToExpire}
+        })
+        // if (log)
+         console.log (daysArray)
+        // const daysToExpire = ((new Date(expirationsArray[index])).getTime() - new Date().getTime()) / 1000 / 3600 / 24
+
+
+
         setExpirationsArray(result.data.expirations);
 
 
@@ -1167,6 +1180,7 @@ function OptionQuote (props) {
         <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
           <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) </div>  &nbsp; &nbsp; 
+          <div style={{color: 'green'}}> Please select an expiration date </div>
         </div>         
           
           {/* Expiration table */}
@@ -1203,7 +1217,7 @@ function OptionQuote (props) {
             
         {expirationsArray.length > 0 && <div>
 
-          { config.expirationNum >= 0  && <div style = {{display: 'flex'}}>
+          { config.expirationNum >= 0 && expirationSelected !== -1 && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strike-price   </button> &nbsp; &nbsp;
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
@@ -1256,12 +1270,12 @@ function OptionQuote (props) {
           </div>}
 
           {/*   get-option-premium   */}
-          <div>
+          {strikeNumCalc > 0 && <div>
             <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
             {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
             {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
             {/* <hr/>  */}
-          </div>
+          </div>}
 
 
           {/* select columns */}
