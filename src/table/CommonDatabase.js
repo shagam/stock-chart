@@ -958,7 +958,7 @@ function CommonDatabase (props) {
               const latency = Date.now() - mili
               console.log(getDate(), ' arrived', result.data, latency) 
               setLatency('Ping  done, latency(msec)=' + latency) 
-              beep(10,300,50)        // (vol, freq, duration)
+            //   beep(10,300,50)        // (vol, freq, duration)
           } )
           .catch ((err) => {
             clear()
@@ -1030,9 +1030,10 @@ function CommonDatabase (props) {
             <button style={{background: 'aqua'}} type="button" onClick={()=>FilterForRemove()}>FilterForDeleteBad </button>&nbsp;
             {next === 'del' &&  <button style={{background: 'Chartreuse'}} type="button" onClick={()=>{del()}}>Delete </button>} &nbsp;
             {/* <div> &nbsp; </div>  */}
-                    <hr/>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>ping()}>ping </button>&nbsp;
         </div>}
+        <hr/>
+
+        <button style={{background: 'aqua'}} type="button" onClick={()=>ping()}>ping </button>&nbsp;
 
         {/* Active id sym gain selected */}
         <div style={{display: 'flex'}}>
