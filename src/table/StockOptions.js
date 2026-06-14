@@ -260,6 +260,7 @@ function OptionQuote (props) {
     if (header === "profit") return 'profit $,  expirationDateValue - breakEven, profit at expiration'
     if (header === "mid/price") return 'option_mid_price / share_price'
     if (header === "askDiff") return 'Difference between ask and previous row ask price'
+    if (header === "deltaLavarage") return 'Percentage change in delta for percent change in share price'
 
     return null
   }
@@ -277,7 +278,8 @@ function OptionQuote (props) {
         && key !== "expectedPrice"
         && key !== "profit"
         && key !== "mid/price"
-        && key !== "askDiff"
+        && key !== "deltaLavarage"
+    
         // && key !== "yearlyGain"
       )
       )
@@ -494,7 +496,8 @@ function OptionQuote (props) {
         columnShow.push ('breakEven');
       if (!columnShow.includes('askDiff')) // if askDiff is not in columnShow, add it
         columnShow.push ('askDiff');   
-
+      if (!columnShow.includes('deltaLavarage')) // if deltaLavarage is not in columnShow, add it
+        columnShow.push ('deltaLavarage');   
 
 
       const keys = Object.keys(OptionQuoteFiltered);
@@ -877,6 +880,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.profit = [];
       OptionQuoteFiltered['mid/price'] = [];
       OptionQuoteFiltered['askDiff'] = [];
+      OptionQuoteFiltered['deltaLavarage'] = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -921,6 +925,7 @@ function OptionQuote (props) {
           if (i > 0 && OptionQuoteFiltered.expiration[i] === OptionQuoteFiltered.expiration[i-1]) { // same expiration, calculate askDiff
             OptionQuoteFiltered['askDiff'][i] = (premiumArray.ask[i] - premiumArray.ask[i - 1]).toFixed(2); // ask price minus previous row's ask price
           }
+          OptionQuoteFiltered['deltaLavarage'][i] = ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2); // delta divided by mid price, percentage change in delta for percent change in share price
         }
         if (logExtra)
           console.log ('i=', i,
@@ -1097,7 +1102,7 @@ function OptionQuote (props) {
       return {background: '#d3e5ff'}
     
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
-              attrib === 'mid/price' || attrib === 'profit'|| attrib === 'askDiff')
+              attrib === 'mid/price' || attrib === 'profit'|| attrib === 'askDiff' || attrib === 'deltaLavarage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
 
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
@@ -1123,7 +1128,7 @@ function OptionQuote (props) {
     }
 
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
-          attrib === 'mid/price' || attrib === 'profit' || attrib === 'askDiff')
+          attrib === 'mid/price' || attrib === 'profit' || attrib === 'askDiff' || attrib === 'deltaLavarage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};  
   }
@@ -1226,7 +1231,7 @@ function OptionQuote (props) {
         {expirationsArray.length > 0 && <div>
 
           { config.expirationNum >= 0 && expirationSelected !== -1 && <div style = {{display: 'flex'}}>
-            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strike-price   </button> &nbsp; &nbsp;
+            <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strikes   </button> &nbsp; &nbsp;
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
         </div>}
@@ -1279,7 +1284,7 @@ function OptionQuote (props) {
           </div>}
 
           {/*   get-option-premium   */}
-          {strikeSelected > 0 && <div>
+          {<div>
             <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
             {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
             {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
