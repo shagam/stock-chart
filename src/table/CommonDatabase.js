@@ -937,7 +937,7 @@ function CommonDatabase (props) {
           var corsUrl = ''
 
           corsUrl = 'https://'
-          corsUrl += props.corsServer + ':' + 5000 + '/ping'
+          corsUrl += props.corsServer + ':' + props.PORT + '/ping'
         //   corsUrl += 'localhost:' + 5001 + '/ping'
           
           setLatency(' ping request sent')  
@@ -977,7 +977,7 @@ function CommonDatabase (props) {
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
-        {eliHome && latency && <div style={{color: '#aa3333'}}>{latency}</div>}
+        {latency && <div style={{color: '#aa3333'}}>{latency}</div>}
         {/* <hr/> */}
 
         {eliHome && <div style={{display:'flex'}}> <input  type="checkbox" checked={logBackEnd}  onChange={()=> setLogBackEnd(! logBackEnd)} />  log &nbsp; 
