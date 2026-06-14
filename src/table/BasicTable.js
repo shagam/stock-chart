@@ -845,7 +845,7 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
-        <div style={{color: 'red', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div>
+        <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div>
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
