@@ -759,7 +759,7 @@ function OptionQuote (props) {
 
     // find the previous expiration index range.
     var expirationPrevLastIndex = undefined;
-    for (let row_search = rowStart - 1; row_search >= 0; row_search--) {
+    for (let row_search = rowStart; row_search >= 0; row_search--) {
       if (premiumArray.expiration[row_search] !== premiumArray.expiration[rowStart]) {
         expirationPrevLastIndex = row_search;
         break;
@@ -775,9 +775,8 @@ function OptionQuote (props) {
     // find the one before previous expiration index range.
     var expirationPrevFirstIndex = undefined;
     for (let row_search = expirationPrevLastIndex; row_search >= 0; row_search--) {
-      if (premiumArray.expiration[row_search] !== premiumArray.expiration[expirationPrevLastIndex]) {
-        expirationPrevFirstIndex = row_search + 1;
-        break;
+      if (premiumArray.expiration[row_search] === premiumArray.expiration[expirationPrevLastIndex]) {
+        expirationPrevFirstIndex = row_search;
       }
     }  
 
@@ -792,6 +791,12 @@ function OptionQuote (props) {
     for (let row = expirationPrevFirstIndex; row <= expirationPrevLastIndex; row++) {
       if (premiumArray.strike[row] === premiumArray.strike[rowStart] ) { // same strike price
         OptionQuoteFiltered['exprDiff'][rowStart] = (premiumArray.ask[rowStart] - premiumArray.ask[row]).toFixed(2); 
+        if (log)
+          console.log ('expitrationDiffCalc', 'rowStart=', rowStart, 'expiration=', premiumArray.expiration[rowStart], 'strike=', premiumArray.strike[rowStart],
+            // 'ask=', premiumArray.ask[rowStart], 'prev expiration=', premiumArray.expiration[row], 'prev ask=', premiumArray.ask[row],
+            'exprDiff=', OptionQuoteFiltered['exprDiff'][rowStart],
+            'first='+ expirationPrevFirstIndex, 'last=' + expirationPrevLastIndex
+          )
         return;
       }
     }
