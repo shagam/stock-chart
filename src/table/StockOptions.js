@@ -1292,7 +1292,7 @@ function OptionQuote (props) {
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
         </div>}
 
-        {config.expirationNum !== -1 && strikeSelected === -1 && strikeArray.length > 0 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
+        {strikeArray.length > 0 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
             {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeSelected})</div>}   &nbsp; &nbsp; 
             <div style={{color: 'magenta'}}> Please select an strike price </div>
