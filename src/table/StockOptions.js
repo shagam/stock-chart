@@ -85,7 +85,7 @@ function OptionQuote (props) {
     "askSize","last","openInterest","volume","inTheMoney","intrinsicValue","extrinsicValue",
     "underlyingPrice","iv","delta","gamma","theta","vega"]
   const columnsDefault = [
-    "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",'mid/price', "askDiff",]
+    "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",'mid/price', "askDiff","exprDiff"]
 
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
@@ -179,7 +179,7 @@ function OptionQuote (props) {
         optionHistoryFiltered.stockPrice = []
         optionHistoryFiltered['mid/price'] = []
         optionHistoryFiltered['askDiff'] = []
-
+        optionHistoryFiltered['exprDiff'] = []
         for (let i = 0; i < optionHistoryFiltered.expiration.length; i++) {
           const date = optionHistoryFiltered.updated[i]
           const dateSplit = date.split('_')
@@ -189,6 +189,7 @@ function OptionQuote (props) {
           optionHistoryFiltered['mid/price'][i] = (optionHistoryFiltered.mid[i] / optionHistoryFiltered.stockPrice[i]).toFixed(3)
           if (i > 0)
             optionHistoryFiltered['askDiff'][i] = (optionHistoryFiltered.ask[i] - optionHistoryFiltered.ask[i - 1]).toFixed(3)
+          // expitrationDiffCalc (OptionQuoteFiltered, i)
         }
 
         setOptionHistory(optionHistoryFiltered);
@@ -196,7 +197,7 @@ function OptionQuote (props) {
         setOptionHistoryKeys(keys);
 
         if (! columnShow.includes('updated'))
-           setColumnShow ([...columnShow, 'updated', 'stockPrice','mid/price','askDiff'])
+           setColumnShow ([...columnShow, 'updated', 'stockPrice','mid/price','askDiff','exprDiff'])
      })
     .catch ((err) => {
       console.log(err.message)
@@ -259,7 +260,8 @@ function OptionQuote (props) {
     if (header === "expectedPrice") return 'expected price on expiration.  current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
     if (header === "profit") return 'profit $,  expirationDateValue - breakEven, profit at expiration'
     if (header === "mid/price") return 'option_mid_price / share_price'
-    if (header === "askDiff") return 'Difference between ask and previous row ask price'
+    if (header === "askDiff") return 'Difference of between ask and previous row ask price'
+    if (header === "exprDiff") return 'Difference between ask premium0, of different expiration dates'
     if (header === "deltaLavarage") return 'Percentage change in delta for percent change in share price'
 
     return null
@@ -496,6 +498,8 @@ function OptionQuote (props) {
         columnShow.push ('breakEven');
       if (!columnShow.includes('askDiff')) // if askDiff is not in columnShow, add it
         columnShow.push ('askDiff');   
+      if (!columnShow.includes('exprDiff')) // if exprDiff is not in columnShow, add it
+        columnShow.push ('exprDiff');   
       if (!columnShow.includes('deltaLavarage')) // if deltaLavarage is not in columnShow, add it
         columnShow.push ('deltaLavarage');   
 
@@ -744,6 +748,56 @@ function OptionQuote (props) {
   }
 
 
+   // search for previous expiration with same strike price, then calculate the difference of ask price,
+   //  if no previous expiration with same strike price, return undefined 
+  function expitrationDiffCalc (premiumArray, OptionQuoteFiltered, rowStart) {
+    if (rowStart === 0) {
+      OptionQuoteFiltered['exprDiff'][rowStart] = undefined;
+      return undefined; // first row, no previous row to compare
+    }
+
+
+    // find the previous expiration index range.
+    var expirationPrevLastIndex = undefined;
+    for (let row_search = rowStart - 1; row_search >= 0; row_search--) {
+      if (premiumArray.expiration[row_search] !== premiumArray.expiration[rowStart]) {
+        expirationPrevLastIndex = row_search;
+        break;
+      }
+    }
+
+    if (expirationPrevLastIndex === undefined) {
+      OptionQuoteFiltered['exprDiff'][rowStart] = undefined;
+      return;
+    }
+
+
+    // find the one before previous expiration index range.
+    var expirationPrevFirstIndex = undefined;
+    for (let row_search = expirationPrevLastIndex; row_search >= 0; row_search--) {
+      if (premiumArray.expiration[row_search] !== premiumArray.expiration[expirationPrevLastIndex]) {
+        expirationPrevFirstIndex = row_search + 1;
+        break;
+      }
+    }  
+
+    if (expirationPrevFirstIndex === undefined) {
+      OptionQuoteFiltered['exprDiff'][rowStart] = undefined;
+      return;
+    } 
+
+
+
+    // search for previous expiration with same strike price, then calculate the difference of ask price, if no previous expiration with same strike price, return undefined 
+    for (let row = expirationPrevFirstIndex; row <= expirationPrevLastIndex; row++) {
+      if (premiumArray.strike[row] === premiumArray.strike[rowStart] ) { // same strike price
+        OptionQuoteFiltered['exprDiff'][rowStart] = (premiumArray.ask[rowStart] - premiumArray.ask[row]).toFixed(2); 
+        return;
+      }
+    }
+    OptionQuoteFiltered['exprDiff'][rowStart] = undefined;
+  }
+
   //** get from coirsServer */
   function  getOptionsInfoFromServer () {
     setErr()
@@ -880,6 +934,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered.profit = [];
       OptionQuoteFiltered['mid/price'] = [];
       OptionQuoteFiltered['askDiff'] = [];
+      OptionQuoteFiltered['exprDiff'] = [];
       OptionQuoteFiltered['deltaLavarage'] = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
@@ -926,6 +981,7 @@ function OptionQuote (props) {
             OptionQuoteFiltered['askDiff'][i] = (premiumArray.ask[i] - premiumArray.ask[i - 1]).toFixed(2); // ask price minus previous row's ask price
           }
           OptionQuoteFiltered['deltaLavarage'][i] = ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2); // delta divided by mid price, percentage change in delta for percent change in share price
+          expitrationDiffCalc (premiumArray, OptionQuoteFiltered, i); // calculate exprDiff, difference of ask price between different expiration date
         }
         if (logExtra)
           console.log ('i=', i,
@@ -1063,7 +1119,7 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow)); // set default columnShow
   }
 
-  const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price','askDiff'];
+  const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price','askDiff', 'exprDiff', 'deltaLavarage'];
   const CALCULATED_COLUMNS_COLOR = 'rgb(216, 253, 239)'
 
   function cellColor (line, attrib) {
@@ -1090,7 +1146,7 @@ function OptionQuote (props) {
       return { color: 'red', fontWeight: 'bold'};        
     }
 
-    else if (attrib === 'ask' || attrib === 'askDiff' || attrib === 'bid' || attrib === 'mid' || attrib==='last') {
+    else if (attrib === 'ask' || attrib === 'askDiff' || attrib === 'exprDiff' || attrib === 'bid' || attrib === 'mid' || attrib==='last') {
       if (line > 0 && optionQuote.expiration[line] === optionQuote.expiration[line - 1] ) {
         if (optionQuote.mid[line] > optionQuote.mid[line - 1]) 
           return { color: 'blue', fontWeight: 'bold'};
@@ -1102,7 +1158,7 @@ function OptionQuote (props) {
       return {background: '#d3e5ff'}
     
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
-              attrib === 'mid/price' || attrib === 'profit'|| attrib === 'askDiff' || attrib === 'deltaLavarage')
+              attrib === 'mid/price' || attrib === 'profit'|| attrib === 'askDiff' || attrib === 'exprDiff' || attrib === 'deltaLavarage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
 
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
@@ -1128,7 +1184,7 @@ function OptionQuote (props) {
     }
 
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
-          attrib === 'mid/price' || attrib === 'profit' || attrib === 'askDiff' || attrib === 'deltaLavarage')
+          attrib === 'mid/price' || attrib === 'profit' || attrib === 'askDiff' || attrib === 'exprDiff' || attrib === 'deltaLavarage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};  
   }
