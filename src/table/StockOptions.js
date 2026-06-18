@@ -260,8 +260,8 @@ function OptionQuote (props) {
     if (header === "expectedPrice") return 'expected price on expiration.  current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
     if (header === "profit") return 'profit $,  expirationDateValue - breakEven, profit at expiration'
     if (header === "mid/price") return 'option_mid_price / share_price'
-    if (header === "strikeDiff") return 'Difference of between mid and previous row mid price'
-    if (header === "exprDiff") return 'Difference between mid premium0, of different expiration dates'
+    if (header === "strikeDiff") return 'Ratio of mid premiumto previous row mid premium, for same expiration date, different strike price'
+    if (header === "exprDiff") return 'Ratio of mid premium, to previous expiration dates with same strike price, for same strike price, different expiration date'
     if (header === "deltaLavarage") return 'Percentage change in delta for percent change in share price'
 
     return null
@@ -790,7 +790,7 @@ function OptionQuote (props) {
     // search for previous expiration with same strike price, then calculate the difference of mid price, if no previous expiration with same strike price, return undefined 
     for (let row = expirationPrevFirstIndex; row <= expirationPrevLastIndex; row++) {
       if (premiumArray.strike[row] === premiumArray.strike[rowStart] ) { // same strike price
-        OptionQuoteFiltered['exprDiff'][rowStart] = (premiumArray.mid[rowStart] - premiumArray.mid[row]).toFixed(2); 
+        OptionQuoteFiltered['exprDiff'][rowStart] = ((premiumArray.mid[rowStart] - premiumArray.mid[row]) / premiumArray.mid[row] * 100).toFixed(2) + '_%'; 
         if (log)
           console.log ('expitrationDiffCalc', 'rowStart=', rowStart, 'expiration=', premiumArray.expiration[rowStart], 'strike=', premiumArray.strike[rowStart],
             // 'mid=', premiumArray.mid[rowStart], 'prev expiration=', premiumArray.expiration[row], 'prev mid=', premiumArray.mid[row],
@@ -983,7 +983,7 @@ function OptionQuote (props) {
           OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
           OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
           if (i > 0 && OptionQuoteFiltered.expiration[i] === OptionQuoteFiltered.expiration[i-1]) { // same expiration, calculate strikeDiff
-            OptionQuoteFiltered['strikeDiff'][i] = (premiumArray.mid[i] - premiumArray.mid[i - 1]).toFixed(2); // mid price minus previous row's mid price
+            OptionQuoteFiltered['strikeDiff'][i] = ((premiumArray.mid[i] - premiumArray.mid[i - 1]) / premiumArray.mid[i] * 100).toFixed(2) + '_%'; // mid price minus previous row's mid price
           }
           OptionQuoteFiltered['deltaLavarage'][i] = ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2); // delta divided by mid price, percentage change in delta for percent change in share price
           expitrationDiffCalc (premiumArray, OptionQuoteFiltered, i); // calculate exprDiff, difference of mid price between different expiration date
