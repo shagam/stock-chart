@@ -104,7 +104,7 @@ const BasicTable = (props) => {
   const servNameList = ['production', 'test','local_win']//, 'production_'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
-  const [servSelect, setServSelect] = useState(servList[1]);
+  const [servSelect, setServSelect] = useState(servList[0]);
   const [PORT, setPORT] = useState(5000);
   const portArray = [5000, 5001, 5002]
 
@@ -845,7 +845,7 @@ const BasicTable = (props) => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
     <>
-        <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div>
+        {/* <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div> */}
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
@@ -883,7 +883,8 @@ const BasicTable = (props) => {
         </div>
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
-          { !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp;</div>} 
+          { !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp; 
+            <div style={{color: '#bb8899', fontWeight: "bold"}}>Choose backEnd (production or test</div></div>} 
           {eliHome && !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={PORT} nameList={portArray} setSelect={setPORT} title='' options={portArray} defaultValue={PORT}/> &nbsp;&nbsp;</div>} 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
