@@ -1061,6 +1061,8 @@ function OptionQuote (props) {
     //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
     // })
 
+    setExpirationShow(false)
+    setStrikeShow(false)
   }
 
   function updatedPremium (row) {
