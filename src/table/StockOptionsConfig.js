@@ -51,6 +51,7 @@ function StockOptionsConfig (props) {
         if (props.logExtra)
           console.log("final data is: ", newConfig);
         props.setConfig (newConfig);
+        props.setConfigShow(false); // hide the config form after submit
     }
 
     function clearKey () {

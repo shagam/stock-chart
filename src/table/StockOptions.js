@@ -1241,7 +1241,8 @@ function OptionQuote (props) {
        <div style = {{display: 'flex'}}> <input type="checkbox" checked={configShow}  onChange={()=>setConfigShow (! configShow)} 
         />&nbsp;<strong> <FaCog style={{ fontSize: '24px', color: '#0078D4' }} /> config </strong> &nbsp; &nbsp; </div>
         {configShow && 
-        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain} setEstimatedYearlyGain={setEstimatedYearlyGain} yearlyGainSource={yearlyGainSource}/>}
+        <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain}
+           setEstimatedYearlyGain={setEstimatedYearlyGain} yearlyGainSource={yearlyGainSource} setConfigShow={setConfigShow}/>}
         <div>&nbsp;</div>
         {/* <hr/> */}
 
