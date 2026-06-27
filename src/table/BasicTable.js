@@ -883,8 +883,10 @@ const BasicTable = (props) => {
         </div>
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
-          { !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp; 
-            <div style={{color: '#bb8899', fontWeight: "bold"}}>Choose backEnd (production or test</div></div>} 
+          { !showUrl && <div style={{display:'flex'}}>
+            <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp; 
+            {/* <div style={{color: '#bb8899', fontWeight: "bold"}}>Choose backEnd (production or test</div> */}
+          </div>} 
           {eliHome && !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={PORT} nameList={portArray} setSelect={setPORT} title='' options={portArray} defaultValue={PORT}/> &nbsp;&nbsp;</div>} 
           {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
           {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
