@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import {IpContext} from '../contexts/IpContext';
 
 const globalTechUrl = 'https://www.as-invest.co.il/media/tdmprbse/%D7%9E%D7%A1%D7%9C%D7%95%D7%9C-%D7%9E%D7%9E%D7%95%D7%A7%D7%93-%D7%97%D7%95%D7%9C-%D7%A4%D7%90%D7%A1%D7%99%D7%91%D7%99-%D7%9E%D7%93%D7%93%D7%99-%D7%9E%D7%A0%D7%99%D7%95%D7%AA_global-tech.pdf'
-
+const snpYearly = 'https://www.instagram.com/p/DZqkE5WBJuu/?igsh=ZjFkYzMzMDQzZg=='
 
 const openInNewTab = (url) => {
     window.open(url, "_blank", "noreferrer");
@@ -34,8 +34,9 @@ function AuxilaryLinks () {
           <div>
             <div>&nbsp;</div>
             <div>Aux</div>
-            <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp;      
-            {<button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button>} &nbsp; 
+            <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp; 
+            <button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button> &nbsp;      
+            <button role="link" onClick={() => openInNewTab(snpYearly)}> Yearly masrket return </button> &nbsp; 
             <button style={{color:'red'}} role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans (IBI)</button> &nbsp;  
         </div>
 
