@@ -351,11 +351,14 @@ function OptionQuote (props) {
   function getExpirationDayIndex (expirationsArray) {
     var expirationDayIndex = -1;
     const todayDays = new Date().getTime() / 1000 / 3600 / 24
-    // console.log ('today=' + todayDays)
+    const today = new Date() 
     for (let i = 0; i < expirationsArray.length; i++) {
-      const expirationDays = new Date(expirationsArray[i]).getTime() / 1000 / 3600 / 24
+      // const date = new Date(expirationsArray[i])
+
+      // const seconds = date.getTime() / 1000
+      const expirationDays = ((new Date(expirationsArray[i]).getTime() - today.getTime()) / 1000 / 3600 / 24).toFixed(0)
       if (logExtra)
-        console.log (i, 'today=' + todayDays.toFixed(2), expirationsArray[i],  'expirationDays=' + expirationDays)
+        console.log (i, 'today=' + todayDays.toFixed(0), expirationsArray[i],  'expirationDays=' + expirationDays.toFixed(0))
       if (expirationDays > todayDays + Number(config.expirationNum)) {
         expirationDayIndex = i;  // found requre expiration
         setExpirationSelected(i) // for display only
