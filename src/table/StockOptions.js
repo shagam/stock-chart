@@ -357,11 +357,12 @@ function OptionQuote (props) {
 
       // const seconds = date.getTime() / 1000
       const expirationDays = ((new Date(expirationsArray[i]).getTime() - today.getTime()) / 1000 / 3600 / 24).toFixed(0)
-      if (logExtra)
-        console.log (i, 'today=' + todayDays.toFixed(0), expirationsArray[i],  'expirationDays=' + expirationDays.toFixed(0))
-      if (expirationDays > todayDays + Number(config.expirationNum)) {
+      if (log)
+        console.log (i, 'today=' + todayDays.toFixed(0), expirationsArray[i],  'expirationDays=' + expirationDays)
+      if (expirationDays > Number(config.expirationNum)) {
         expirationDayIndex = i;  // found requre expiration
-        setExpirationSelected(i) // for display only
+        if (expirationSelected === -1)
+          setExpirationSelected(i) // for display only
         return i;
       }
     }
