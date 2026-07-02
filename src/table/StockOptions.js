@@ -610,19 +610,7 @@ function OptionQuote (props) {
       setStrikeArray(arr);
       // setSelectedStrike(-1); // clear selected strike
       var selectedStrike_ = -1; // for local use, during computation
-      //** default select just above current price*/
-      // for (let i = 0; i < arr.length; i++) {
-      //   if (arr[i] > props.stockPrice) {
-      //     // setSelectedStrike(i);
-      //     selectedStrike_ = i
-      //     setStrikeSelected (i)
-      //     if (log)
-      //       console.log ('default strike selected', i, 'price=', arr[i])
-      //     break;
-      //   }
-      // }
-      // console.log ('ptionPremiumGet', selectedExpiration, expirationsArray, selectedStrike_, arr)
-      // optionPremium (expirationsArray, selectedExpiration, selectedStrike_, arr)
+      setStrikeShow(true)
     })
     .catch ((err) => {
       console.log(err.message)
@@ -667,7 +655,7 @@ function OptionQuote (props) {
 
         setExpirationsArray(result.data.expirations);
 
-
+        setExpirationShow(true)
         // strikePricesGet (result.data.expirations) 
 
       })
@@ -683,6 +671,7 @@ function OptionQuote (props) {
 
   function expirationRowClick(rowId)  { 
     setExpirationSelected(rowId)
+    setExpirationShow(false)
     if (log)
       console.log('Expiration Row clicked:', rowId);
     // strikePrices ();
@@ -690,6 +679,7 @@ function OptionQuote (props) {
 
  function strikeRowClick(rowId)  { 
     setStrikeSelected(rowId)
+    setStrikeShow(false)
     // config.strikeNum = rowId;
     if (log)
       console.log('Strike Row clicked:', rowId);
@@ -806,7 +796,7 @@ function OptionQuote (props) {
     OptionQuoteFiltered['exprDiff'][rowStart] = undefined;
   }
 
-  //** get from coirsServer */
+  //** get from coirsServer main */
   function  getOptionsInfoFromServer () {
     setErr()
     if (config.expirationNum < 0 || config.expirationCount < 0 || config.strikeCount < 0) {
