@@ -74,6 +74,8 @@ function OptionQuote (props) {
   const [calculated_Attributes, setCalculated_Attributes] = useState(false); // whether to include calculated attributes in AIGroup
   const [price, setPrice] = useState(-1); // current price of the stock, for yield calculation
   const [priceDivHigh, setPriceDivHigh] = useState(-1); // price divided by 52 week high, for yield calculation
+  const EXPECTED_PRICE_ADJUSTMENT = 0.3; //  priceDivHigh ** 0.3
+
 
   const [premium, setPremium] = useState(-1); // for display only, premium of selected option
   // const [arr, setArr] = useState([]);
@@ -948,7 +950,7 @@ function OptionQuote (props) {
         const dte = premiumArray.dte[i];
 
         const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
-        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365); 
+        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / priceDivHigh ** EXPECTED_PRICE_ADJUSTMENT; // priceDivHgh is used to adjust the expected price, to avoid too high expected price for long term options, e.g. 1 year or more
 
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid, breakEven, expirationDateValue)
         // if (yield_ < 0)
