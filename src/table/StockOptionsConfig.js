@@ -14,6 +14,8 @@ function StockOptionsConfig (props) {
   const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
   const  sideLIst = ['call', 'put'];
   const [side, setSide] = useState(props.config.side); // default to call options
+  const [priceDivHighFactor, setPriceDivHighFactor] = useState(props.config.priceDivHighFactor); // default to call options
+
 
   const [action, setAction] = useState(props.config.action); // highest gain or lowest gain
   const actionList = ['buy', 'sell'];
@@ -46,7 +48,7 @@ function StockOptionsConfig (props) {
 
       const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
          strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
-        side: side, percent: percent, compoundYield: compoundYield, action: action};
+        side: side, percent: percent, compoundYield: compoundYield, action: action, priceDivHighFactor: Number(priceDivHighFactor)};
 
         if (props.logExtra)
           console.log("final data is: ", newConfig);
@@ -91,13 +93,17 @@ function StockOptionsConfig (props) {
           <label> StrikeCount &nbsp;
             <input style={{width: '50px'}} type="number" name="strikeCount" // required="required"
               placeholder="strikeCount"  onChange={(e) => setStrikeCount(e.target.value)} value={strikeCount} />
-          </label>&nbsp; &nbsp; 
-
+          </label>&nbsp; &nbsp;           
 
           <br/>          <br/>
         <div style = {{display: 'flex'}}>
           <ComboBoxSelect serv={side} nameList={sideLIst} setSelect={setSide} title='side=' options={sideLIst} defaultValue={side}/> &nbsp; &nbsp;  &nbsp; 
           <ComboBoxSelect serv={action} nameList={actionList} setSelect={setAction} title='action=' options={actionList} defaultValue={action}/> &nbsp; &nbsp;  &nbsp; 
+          <label style={{margin: '0px', padding: '0px'}}> &nbsp; &nbsp; priceDivHighFactor (adjust expected price): &nbsp;
+            <input style={{width: '70px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
+              placeholder={priceDivHighFactor} 
+               onChange={(e) => setPriceDivHighFactor (e.target.value)} value={priceDivHighFactor}  />
+          </label>
         </div>
         <div>&nbsp;</div>
         <div style = {{display: 'flex'}}>        
