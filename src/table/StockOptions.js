@@ -823,7 +823,7 @@ function OptionQuote (props) {
     if (expirationSelected !== -1) {
       const dat = new Date(expirationsArray[expirationSelected])
       const daysToExpire = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
-      config.expirationNum = daysToExpire.toFixed(0);
+      // config.expirationNum = daysToExpire.toFixed(0);
       if (log)
         console.log ('expirationSelected=', expirationSelected, 'expiration=', expirationsArray[expirationSelected], 'expirationNum=', config.expirationNum, 'aa=', daysToExpire)
     }
