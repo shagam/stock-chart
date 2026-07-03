@@ -950,7 +950,8 @@ function OptionQuote (props) {
         const dte = premiumArray.dte[i];
 
         const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
-        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / priceDivHigh ** config.priceDivHighFactor; // priceDivHgh is used to adjust the expected price, to avoid too high expected price for long term options, e.g. 1 year or more
+        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / (priceDivHigh ** config.priceDivHighFactor); 
+        // priceDivHgh is used to compensate the expected price, to avoid too high expected price for long term options, e.g. 1 year or more
 
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid, breakEven, expirationDateValue)
         // if (yield_ < 0)
