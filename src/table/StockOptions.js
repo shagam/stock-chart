@@ -1250,10 +1250,10 @@ function OptionQuote (props) {
 
         {expirationsArray.length > 0 && <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
-          <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) </div>  &nbsp; &nbsp; 
-          <div style={{color: 'magenta'}}> Please select an expiration date </div>
+          <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) &nbsp; expiration={expirationsArray[expirationSelected]}</div>  &nbsp; &nbsp; 
         </div>}        
-          
+        {expirationSelected === -1 && expirationsArray.length > 0 &&<div style={{color: 'magenta'}}> Please select an expiration date </div>}
+
           {/* Expiration table */}
           {expirationShow && expirationsArray.length > 0  && <div style={{maxHeight:'250px', width: '300px', overflow:'auto'}}>
               <table>
@@ -1296,10 +1296,9 @@ function OptionQuote (props) {
 
         {strikeArray.length > 0 && <div style = {{display: 'flex'}}> <input type="checkbox" checked={strikeShow}  onChange={()=>setStrikeShow(! strikeShow)}  />&nbsp;<strong>strike-show </strong>
           &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp;
-            {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeSelected})</div>}   &nbsp; &nbsp; 
-            <div style={{color: 'magenta'}}> Please select an strike price </div>
+            {strikeArray && <div> (count={strikeArray.length} &nbsp; selected={strikeSelected})</div>} &nbsp; strike={strikeArray[strikeSelected]}  &nbsp; &nbsp; 
         </div>}
-
+        {strikeSelected === -1 && strikeArray.length > 0 && <div style={{color: 'magenta'}}> Please select an strike price </div>}
 
           {/* Strike-list table */}
           {strikeShow && strikeArray.length > 0 && <div style={{maxHeight:'250px', width: '400px', overflow:'auto'}}>
