@@ -35,6 +35,7 @@ function OptionQuote (props) {
 
   const [expirationsArray, setExpirationsArray] = useState([]); 
   const [expirationSelected, setExpirationSelected] = useState(-1) // for display only
+  const [daysToExpire, setDaysToExpire] = useState(-1) // for display only
   const [premiumSelected, setPremiumSelected] = useState(-1) // index of selected premium
 
   const [strikeArray, setStrikeArray] = useState([]);
@@ -822,10 +823,10 @@ function OptionQuote (props) {
 
     if (expirationSelected !== -1) {
       const dat = new Date(expirationsArray[expirationSelected])
-      const daysToExpire = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
+      const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
       // config.expirationNum = daysToExpire.toFixed(0);
       if (log)
-        console.log ('expirationSelected=', expirationSelected, 'expiration=', expirationsArray[expirationSelected], 'expirationNum=', config.expirationNum, 'aa=', daysToExpire)
+        console.log ('expirationSelected=', expirationSelected, 'expiration=', expirationsArray[expirationSelected], 'expirationNum=', config.expirationNum, 'aa=', daysToExpire_)
     }
 
     if (strikeSelected !== -1) {
@@ -837,8 +838,9 @@ function OptionQuote (props) {
     
     if (expirationSelected !== -1) {  // if expirationSelected
       const dat = new Date(expirationsArray[expirationSelected])
-      const daysToExpire = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
-      corsUrl += "&expirationNum=" + daysToExpire; 
+      const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
+      setDaysToExpire(daysToExpire_.toFixed(0))
+      corsUrl += "&expirationNum=" + (daysToExpire_ - 1); 
     }
     else
       corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
@@ -895,9 +897,9 @@ function OptionQuote (props) {
         return;
       }
 
-      if (result.data.strikeNum ) {
-        setStrikeSelected (result.data.strikeNum)   // from server
-      }
+      // if (result.data.strikeNum ) {
+      //   setStrikeSelected (result.data.strikeNum)   // from server
+      // }
 
       if (result.data.compareStatus && props.eliHome) {
         console.log ('compareStatus=', result.data.compareStatus)
@@ -979,7 +981,7 @@ function OptionQuote (props) {
 
         if (logExtra)
           console.log ('i=', i, 'mid=' + mid, 'strike=' + premiumArray.strike[i], 'breakEven=' + breakEven.toFixed(2),
-          'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i])
+          'yield_=' + yield_.toFixed(2), 'yearlyYield=' + yearlyYield, 'expiration=' + OptionQuoteFiltered.expiration[i], 'dte=' + daysToExpire, 'expectedPrice=' + expirationDateValue.toFixed(2), 'profit=' + (expirationDateValue - breakEven).toFixed(2))
 
         if (config.side !== 'put') {
           OptionQuoteFiltered.yield_[i] = ! config.percent ? yield_.toFixed(2) : ((yield_) * 100).toFixed(2); 
@@ -1265,7 +1267,7 @@ function OptionQuote (props) {
 
         {expirationsArray.length > 0 && <div style = {{display: 'flex'}}>
           <input type="checkbox" checked={expirationShow}  onChange={()=>setExpirationShow (! expirationShow)}  />&nbsp;<strong>expiration-show</strong> &nbsp; &nbsp;
-          <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) &nbsp; expiration={expirationsArray[expirationSelected]}</div>  &nbsp; &nbsp; 
+          <div > (count={expirationsArray.length} &nbsp; selected={expirationSelected}) &nbsp; expiration={expirationsArray[expirationSelected]} &nbsp; dte={daysToExpire} </div>  &nbsp; &nbsp; 
         </div>}        
         {expirationSelected === -1 && expirationsArray.length > 0 &&<div style={{color: 'magenta'}}> Please select an expiration date </div>}
 
