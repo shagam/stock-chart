@@ -834,8 +834,20 @@ function OptionQuote (props) {
     }
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
-    corsUrl += "&expirationNum=" + config.expirationNum
-    corsUrl += "&strikeNum=" + config.strikeNum
+    
+    if (expirationSelected !== -1) {  // if expirationSelected
+      const dat = new Date(expirationsArray[expirationSelected])
+      const daysToExpire = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
+      corsUrl += "&expirationNum=" + daysToExpire; 
+    }
+    else
+      corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
+
+    if (strikeSelected !== -1) // if strikeSelected
+      corsUrl += "&strikePrice=" + (strikeArray[strikeSelected] / props.stockPrice * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+    else
+      corsUrl += "&strikeNum=" + config.strikeNum  // default use config.strikeNum
+    
     corsUrl += '&expirationCount=' + config.expirationCount
     corsUrl += '&strikeCount=' + config.strikeCount
     corsUrl += "&side=" + config.side

@@ -120,7 +120,7 @@ function StockOptionsConfig (props) {
         <div>YearlyGain % &nbsp;
           <input style={{width: '100px', backgroundColor: '#e5d333ff'}} type="number" name="YearlyGain" // required="required"
             placeholder="YearlyGain" step="any" onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
-            &nbsp;&nbsp; <strong style={{color: 'red'}}>Please adjust to your future estimate </strong>  
+            &nbsp;&nbsp; <strong style={{color: 'magenta'}}>Please adjust to your future estimate </strong>  
         </div>
         <div>yearlyGain_source={props.yearlyGainSource}</div>
 
