@@ -106,7 +106,7 @@ function StockOptionsConfig (props) {
           <input style={{width: '50px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
             placeholder={priceDivHighFactor} 
               onChange={(e) => setPriceDivHighFactor (e.target.value)} value={priceDivHighFactor}  />
-              &nbsp; 0 (No compensation), 1 (Full compensation) 
+              &nbsp; 0 (No compensation), &nbsp; 1 (Full compensation) 
         </label> 
 
         <br/> 
