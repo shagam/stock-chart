@@ -360,7 +360,7 @@ function OptionQuote (props) {
 
       // const seconds = date.getTime() / 1000
       const expirationDays = ((new Date(expirationsArray[i]).getTime() - today.getTime()) / 1000 / 3600 / 24).toFixed(0)
-      if (log)
+      if (logExtra)
         console.log (i, 'today=' + todayDays.toFixed(0), expirationsArray[i],  'expirationDays=' + expirationDays)
       if (expirationDays > Number(config.expirationNum)) {
         expirationDayIndex = i;  // found requre expiration
@@ -842,9 +842,9 @@ function OptionQuote (props) {
       setDaysToExpire(daysToExpire_.toFixed(0))
       corsUrl += "&expirationNum=" + (daysToExpire_ - 1); 
     }
-    else
+    else {
       corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
-
+    }
     if (strikeSelected !== -1) // if strikeSelected
       corsUrl += "&strikePrice=" + (strikeArray[strikeSelected] / props.stockPrice * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
     else
