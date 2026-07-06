@@ -102,10 +102,11 @@ function StockOptionsConfig (props) {
           <ComboBoxSelect serv={action} nameList={actionList} setSelect={setAction} title='action=' options={actionList} defaultValue={action}/> &nbsp; &nbsp;  &nbsp; 
         </div>
         <br/> 
-        <label style={{margin: '0px', padding: '0px'}}> &nbsp; &nbsp; price/High (adjust expected price):  0 (Ignore), 1 (full compensation) &nbsp;
-          <input style={{width: '70px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
+        <label style={{margin: '0px', padding: '0px'}}> &nbsp; &nbsp; price/High (adjust expected price) &nbsp;
+          <input style={{width: '50px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
             placeholder={priceDivHighFactor} 
               onChange={(e) => setPriceDivHighFactor (e.target.value)} value={priceDivHighFactor}  />
+              &nbsp; 0 (Ignore), 1 (full compensation) 
         </label> 
 
         <br/> 
