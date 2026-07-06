@@ -844,12 +844,15 @@ function OptionQuote (props) {
     }
     else {
       corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
+      setDaysToExpire(config.expirationNum.toFixed(0))
     }
     if (strikeSelected !== -1) // if strikeSelected
       corsUrl += "&strikePrice=" + (strikeArray[strikeSelected] / props.stockPrice * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
-    else
+    else {
       corsUrl += "&strikeNum=" + config.strikeNum  // default use config.strikeNum
-    
+      // setStrikePrice((props.stockPrice * (1 + config.strikeNum / 100)).toFixed(2)) // convert to price, e.g. 15% above current price
+    }
+
     corsUrl += '&expirationCount=' + config.expirationCount
     corsUrl += '&strikeCount=' + config.strikeCount
     corsUrl += "&side=" + config.side
@@ -1413,9 +1416,7 @@ function OptionQuote (props) {
 
           {/* premium quote table */}
           {optionKeys.length > 0 && <h6 style={{color: 'blue'}}> Option Premium Table (click row to select for AI analysis) </h6>}
-          {optionKeys.length > 0 && <div><input type="checkbox" checked={calculated_Attributes} 
-                onChange={()=>setCalculated_Attributes (! calculated_Attributes)}  />&nbsp;AIGroup: includes calculated_Attributes&nbsp; &nbsp; </div>}
-
+     
           {optionKeys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
@@ -1459,6 +1460,9 @@ function OptionQuote (props) {
 
           {/* <hr/>  */}
       
+          {optionKeys.length > 0 && <div><input type="checkbox" checked={calculated_Attributes} 
+                onChange={()=>setCalculated_Attributes (! calculated_Attributes)}  />&nbsp;AIGroup: includes calculated_Attributes&nbsp; &nbsp; </div>}
+
           {AIGroupKeys.length > 0 &&
           <div style = {{display: 'flex'}}>
             <input type="checkbox" checked={AIGroupShow} 
@@ -1466,7 +1470,7 @@ function OptionQuote (props) {
               <input type="checkbox" checked={optionSymbolShow} 
                 onChange={()=>setOptionSymbolShow (! optionSymbolShow)}  />&nbsp;optionSymbolShow &nbsp; &nbsp; 
           </div>}
-
+      
           {/* ai page table */}
           {AIGroupKeys.length > 0 && AIGroupShow && <h6 style={{color: 'blue'}}> AI Group from Option Premium Table </h6>}
           {AIGroupKeys.length > 0 && AIGroupShow && <div style={{height:'100px', maxWidth: '1400px', overflow:'auto'}}>
