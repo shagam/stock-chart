@@ -214,7 +214,8 @@ function OptionQuote (props) {
   const [config, setConfig_] = useState(() => {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
-      side: 'call', percent: true, compoundYield: true, action: 'buy', ignoreDepreciatedStocks: false, priceDivHighFactor: EXPECTED_PRICE_ADJUSTMENT, hideNegativeYield: false, calculatedAttributes: false};
+      side: 'call', percent: true, compoundYield: true, action: 'buy', ignoreDepreciatedStocks: false, 
+      priceDivHighFactor: EXPECTED_PRICE_ADJUSTMENT, hideNegativeYield: false, calculatedAttributes: false};
   });
 
   function setConfig (newConfig) {
@@ -814,6 +815,13 @@ function OptionQuote (props) {
       beep2()
     }
 
+    if (config.priceDivHighFactor === undefined || isNaN(config.priceDivHighFactor)) {
+      props.errorAdd ([props.symbol, 'warning. config.priceDivHighFactor is required for calculationg expected yield'])
+      // beep2()
+      config.priceDivHighFactor = EXPECTED_PRICE_ADJUSTMENT
+      setConfig (config)
+    }
+
 
     var corsUrl;
     if (props.ssl)
@@ -840,14 +848,15 @@ function OptionQuote (props) {
       const dat = new Date(expirationsArray[expirationSelected])
       const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
       setDaysToExpire(daysToExpire_.toFixed(0))
-      corsUrl += "&expirationNum=" + (daysToExpire_ - 1); 
+      corsUrl += "&expirationNum=" + (daysToExpire_ - 1).toFixed(0); 
     }
     else {
       corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
       setDaysToExpire(config.expirationNum.toFixed(0))
     }
-    if (strikeSelected !== -1) // if strikeSelected
-      corsUrl += "&strikePrice=" + (strikeArray[strikeSelected] / props.stockPrice * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+    if (strikeSelected !== -1) {// if strikeSelected
+      corsUrl += "&strikePrice=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+    }
     else {
       corsUrl += "&strikeNum=" + config.strikeNum  // default use config.strikeNum
       // setStrikePrice((props.stockPrice * (1 + config.strikeNum / 100)).toFixed(2)) // convert to price, e.g. 15% above current price
@@ -870,9 +879,10 @@ function OptionQuote (props) {
     if (ignoreSaved)
       corsUrl += "&ignoreSaved=1"
 
-    if (log)
+    if (log) {
       console.log (getDate(), props.symbol, 'getOptionsInfoFromServer', corsUrl)
-
+      console.dir (corsUrl)
+    }
     setDat()
 
     const mili = Date.now()
