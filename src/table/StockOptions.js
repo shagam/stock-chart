@@ -789,7 +789,7 @@ function OptionQuote (props) {
     for (let row = expirationPrevFirstIndex; row <= expirationPrevLastIndex; row++) {
       if (premiumArray.strike[row] === premiumArray.strike[rowStart] ) { // same strike price
         OptionQuoteFiltered['exprDiff'][rowStart] = ((premiumArray.mid[rowStart] - premiumArray.mid[row]) / premiumArray.mid[row] * 100).toFixed(2) + '_%'; 
-        if (log)
+        if (logExtra)
           console.log ('expitrationDiffCalc', 'rowStart=', rowStart, 'expiration=', premiumArray.expiration[rowStart], 'strike=', premiumArray.strike[rowStart],
             // 'mid=', premiumArray.mid[rowStart], 'prev expiration=', premiumArray.expiration[row], 'prev mid=', premiumArray.mid[row],
             'exprDiff=', OptionQuoteFiltered['exprDiff'][rowStart],
