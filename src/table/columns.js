@@ -201,7 +201,8 @@ export const GROUPED_COLUMNS = [
   {
     Header: 'Info',
     Footer: 'Info',
-    accessor: 'Info',       
+    accessor: 'Info',
+    disableSortBy: true,       
     columns: [
       {
         Header: 'symbol',
@@ -294,7 +295,8 @@ export const GROUPED_COLUMNS = [
   {
     Header: 'gain: (factor, yearPercent)',
     Footer: 'gain: (factor, yearPercent)',
-    accessor: 'gain',   
+    accessor: 'gain',
+    disableSortBy: true,       
     columns: [
       {
         Header: '-',
@@ -362,7 +364,8 @@ export const GROUPED_COLUMNS = [
   {
     Header: 'gain-yearly',
     Footer: 'gain-yearly',
-    accessor: 'yearly',   
+    accessor: 'yearly', 
+    disableSortBy: true,      
     columns: [
       {
         Header: 'Short',
@@ -380,7 +383,8 @@ export const GROUPED_COLUMNS = [
   {
     Header: 'deep-recover',
     Footer: 'deep-recover',
-    accessor: 'deep-recover',   
+    accessor: 'deep-recover', 
+    disableSortBy: true,      
     columns: [
       {
         Header: 'deep',
@@ -418,7 +422,8 @@ export const GROUPED_COLUMNS = [
   {
     Header: '',
     Footer: '',
-    accessor: 'sym',   
+    accessor: 'sym',
+    disableSortBy: true,       
     columns: [
       {
         Header: 'sym',
