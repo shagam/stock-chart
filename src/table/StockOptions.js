@@ -266,7 +266,7 @@ function OptionQuote (props) {
     if (header === "mid/price") return 'option_mid_price / share_price'
     if (header === "strikeDiff") return 'Ratio of mid premiumto previous row mid premium, for same expiration date, different strike price'
     if (header === "exprDiff") return 'Ratio of mid premium, to previous expiration dates with same strike price, for same strike price, different expiration date'
-    if (header === "deltaLavarage") return 'Percentage change in delta for percent change in share price'
+    if (header === "deltaLeverage") return 'Percentage change in delta for percent change in share price'
 
     return null
   }
@@ -284,7 +284,7 @@ function OptionQuote (props) {
         && key !== "expectedPrice"
         && key !== "profit"
         && key !== "mid/price"
-        && key !== "deltaLavarage"
+        && key !== "deltaLeverage"
     
         // && key !== "yearlyGain"
       )
@@ -508,8 +508,8 @@ function OptionQuote (props) {
         columnShow.push ('strikeDiff');   
       if (!columnShow.includes('exprDiff')) // if exprDiff is not in columnShow, add it
         columnShow.push ('exprDiff');   
-      if (!columnShow.includes('deltaLavarage')) // if deltaLavarage is not in columnShow, add it
-        columnShow.push ('deltaLavarage');   
+      if (!columnShow.includes('deltaLeverage')) // if deltaLeverage is not in columnShow, add it
+        columnShow.push ('deltaLeverage');   
 
 
       const keys = Object.keys(OptionQuoteFiltered);
@@ -963,7 +963,7 @@ function OptionQuote (props) {
       OptionQuoteFiltered['mid/price'] = [];
       OptionQuoteFiltered['strikeDiff'] = [];
       OptionQuoteFiltered['exprDiff'] = [];
-      OptionQuoteFiltered['deltaLavarage'] = [];
+      OptionQuoteFiltered['deltaLeverage'] = [];
 
       //* only calculate yield for call or buy put, sell put is too risky */  
       if (config.action === 'sell') { // sell put is risky, do not calculate yield
@@ -1009,7 +1009,7 @@ function OptionQuote (props) {
           if (i > 0 && OptionQuoteFiltered.expiration[i] === OptionQuoteFiltered.expiration[i-1]) { // same expiration, calculate strikeDiff
             OptionQuoteFiltered['strikeDiff'][i] =  premiumArray.mid[i] > 0 ?((premiumArray.mid[i] - premiumArray.mid[i - 1]) / premiumArray.mid[i] * 100).toFixed(2) + '_%' : 0; // mid price minus previous row's mid price
           }
-          OptionQuoteFiltered['deltaLavarage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
+          OptionQuoteFiltered['deltaLeverage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
           expitrationDiffCalc (premiumArray, OptionQuoteFiltered, i); // calculate exprDiff, difference of mid price between different expiration date
         }
         if (logExtra)
@@ -1150,7 +1150,7 @@ function OptionQuote (props) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow)); // set default columnShow
   }
 
-  const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price','strikeDiff', 'exprDiff', 'deltaLavarage'];
+  const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price','strikeDiff', 'exprDiff', 'deltaLeverage'];
   const CALCULATED_COLUMNS_COLOR = 'rgb(216, 253, 239)'
 
   function cellColor (line, attrib) {
@@ -1189,7 +1189,7 @@ function OptionQuote (props) {
       return {background: '#d3e5ff'}
     
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
-              attrib === 'mid/price' || attrib === 'profit'|| attrib === 'strikeDiff' || attrib === 'exprDiff' || attrib === 'deltaLavarage')
+              attrib === 'mid/price' || attrib === 'profit'|| attrib === 'strikeDiff' || attrib === 'exprDiff' || attrib === 'deltaLeverage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
 
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};
@@ -1215,7 +1215,7 @@ function OptionQuote (props) {
     }
 
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
-          attrib === 'mid/price' || attrib === 'profit' || attrib === 'strikeDiff' || attrib === 'exprDiff' || attrib === 'deltaLavarage')
+          attrib === 'mid/price' || attrib === 'profit' || attrib === 'strikeDiff' || attrib === 'exprDiff' || attrib === 'deltaLeverage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
     return {backgroundColor: 'white', color: 'black', fontWeight: 'normal'};  
   }
