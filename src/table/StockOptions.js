@@ -931,7 +931,7 @@ function OptionQuote (props) {
 
       var expirationDayIndex = getExpirationDayIndex (result.data.expirationArray)
       if (expirationDayIndex === -1) { // expirationIndex not found
-        console.log ('fail, expirationDayIndex not found')
+        console.log ('fail, expirationDayIndex not found ', result.data.expirationArray, 'expirationNum=', config.expirationNum)
         setErr('fail, expirationDayIndex not found')
         beep2()
         return;
