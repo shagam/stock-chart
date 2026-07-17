@@ -966,7 +966,7 @@ const BasicTable = (props) => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               <th style= {{padding: "0px 3px 0px 3px", margin: "0px 3px 0px 3px"}}>N</th>
               {headerGroup.headers.map((column) => (
-                  <th style= {{padding: "0px 3px 0px 3px", margin: "0px 3px 0px 3px"}}{...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')} 
+                  <th style= {{padding: "0px 3px 0px 3px", margin: "0px 3px 0px 3px"}}{...column.getHeaderProps(column.canSort ? column.getSortByToggleProps() : {})}>{column.render('Header')} 
                   <span>
                     {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
                   </span>
