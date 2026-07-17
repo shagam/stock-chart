@@ -1009,7 +1009,7 @@ function OptionQuote (props) {
           if (i > 0 && OptionQuoteFiltered.expiration[i] === OptionQuoteFiltered.expiration[i-1]) { // same expiration, calculate strikeDiff
             OptionQuoteFiltered['strikeDiff'][i] =  premiumArray.mid[i] > 0 ?((premiumArray.mid[i] - premiumArray.mid[i - 1]) / premiumArray.mid[i] * 100).toFixed(2) + '_%' : 0; // mid price minus previous row's mid price
           }
-          OptionQuoteFiltered['deltaLavarage'][i] = ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2); // delta divided by mid price, percentage change in delta for percent change in share price
+          OptionQuoteFiltered['deltaLavarage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
           expitrationDiffCalc (premiumArray, OptionQuoteFiltered, i); // calculate exprDiff, difference of mid price between different expiration date
         }
         if (logExtra)
