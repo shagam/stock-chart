@@ -855,7 +855,7 @@ function OptionQuote (props) {
       setDaysToExpire(config.expirationNum.toFixed(0))
     }
     if (strikeSelected !== -1) {// if strikeSelected
-      corsUrl += "&strikePrice=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+      corsUrl += "&strikeNum=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
     }
     else {
       corsUrl += "&strikeNum=" + config.strikeNum  // default use config.strikeNum
