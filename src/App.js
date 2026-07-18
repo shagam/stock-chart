@@ -57,6 +57,7 @@ function App() {
     setCount (count + 1);
   }
 
+
   //  Firebase: Error (auth/account-exists-with-different-credential).
   // ngrok http 3000
   // <Route path="/contact" element={<Contact  />}/>
@@ -67,7 +68,16 @@ function App() {
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
       <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  >
         <div> 
-        <h2  style={{display:'flex', color:'#2caa2c'}}> <strong>ShareCompare</strong> <div style={{fontSize: '15px', paddingTop: '10px'}}>.org</div>  </h2> 
+        <h2  style={{display:'flex', fontStyle: "italic"}}>
+          <strong style={{color:'#2caa2c'}}>Share</strong>
+          <strong style={{color:'#b3be18'}}>Compare</strong> 
+          <div style={{fontSize: '15px', paddingTop: '10px'}}>.org</div> 
+         </h2> 
+        {/* <div className="logo">ShareCompare<span>.org</span></div> */}
+
+
+
+    
         <AuthProvider>
 
             <div style={{display:'flex'}}>
