@@ -724,7 +724,7 @@ function OptionQuote (props) {
    
     var  yield_;
       if (config.action === 'sell' && config.ignoreStocksDepreciated) {
-        yield_ = (mid / stockPrice);
+        yield_ = (mid / breakEven);
       }
       else {  // buy call or put
         const profit = expirationDateValue - breakEven;
