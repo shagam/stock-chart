@@ -45,7 +45,7 @@ const  Config = (props) => {
   function disclaimerGetDate() {
     const disclaimerDate_ = getDisclaimerDate()
     setDisclaimerDate(disclaimerDate_)
-    console.log ('disclaimer', disclaimerDate_)
+    console.log ('disclaimer', disclaimerDate_, disclaimerDate_.count);
     return disclaimerDate_;
   }
 
@@ -87,7 +87,7 @@ const  Config = (props) => {
             <button onClick={disclaimerPurge} > disclaimer refresh </button> &nbsp;
             <button onClick={disclaimerGetDate} > disclaimer date </button> &nbsp;
             {disclaimerDate &&
-             <div>{disclaimerDate.date} </div>}
+             <div>{disclaimerDate.date}, Count: {disclaimerDate.count} </div>}
           </div>
 
           <hr style={{ border: '3px solid #000000'}}/> 
