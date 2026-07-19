@@ -942,7 +942,7 @@ const BasicTable = (props) => {
           &nbsp;&nbsp;
 
         <div style={{display:'flex', paddingTop: '20px'}}>
-          <button type="button" onClick={()=>hiddenColsSetDefault()}>columns_default</button> &nbsp; &nbsp; 
+          <button style={{height: '27px'}}type="button" onClick={()=>hiddenColsSetDefault()}>columns_default</button> &nbsp; &nbsp; 
           <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> </div>&nbsp;
               <div style={{paddingTop: '20px'}}>column_select </div>
