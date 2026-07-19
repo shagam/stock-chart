@@ -188,6 +188,11 @@ const BasicTable = (props) => {
       console.log ('hiddenColumns', hiddenCols)
   }
 
+  function hiddenColsSetDefault () {
+    localStorage.setItem('columnsHidden', JSON.stringify(hiddenColsDefault));
+    window.location.reload();
+  }
+
   const columns = useMemo(() => GROUPED_COLUMNS, []);
   var  data;// = useMemo(() => MOCK_DATA, []);
   var stocksFromLocalStorage = localStorage.getItem("stocks");
@@ -936,7 +941,9 @@ const BasicTable = (props) => {
         <GlobalFilter style={{marginTop: '10px'}} className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile} marginTop={'17px'}/>
           &nbsp;&nbsp;
 
-        <div style={{display:'flex', paddingTop: '20px'}}> <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
+        <div style={{display:'flex', paddingTop: '20px'}}>
+          <button type="button" onClick={()=>hiddenColsSetDefault()}>columns_default</button> &nbsp; &nbsp; 
+          <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> </div>&nbsp;
               <div style={{paddingTop: '20px'}}>column_select </div>
       </div>
