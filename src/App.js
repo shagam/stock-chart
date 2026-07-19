@@ -71,7 +71,7 @@ function App() {
         <h2  style={{display:'flex', fontStyle: "italic"}}>
           <strong style={{color:'#2caa2c'}}>Share</strong>
           <strong style={{color:'#b3be18'}}>Compare</strong> 
-          <div style={{fontSize: '15px', paddingTop: '10px'}}>.org   &nbsp;  &nbsp; (New domain still in development)</div> 
+          <div style={{fontSize: '15px', paddingTop: '10px'}}>.org   &nbsp;  &nbsp; (New domain for the same site)</div> 
          </h2> 
         {/* <div className="logo">ShareCompare<span>.org</span></div> */}
 
