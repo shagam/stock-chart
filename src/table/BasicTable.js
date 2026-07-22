@@ -1197,7 +1197,11 @@ const BasicTable = (props) => {
         
           <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}
              title='Share stock-lists with other users of the tool'/>
-          <div style={{color:'#9932CC'}}> stockLists </div>           
+          <div style={{color:'#9932CC'}}> stockLists </div>    
+          
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='6' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
+             title='Contact us'/>
+          <div style={{color:'#9932CC'}}> contactUs  </div>   
         </div>
 
         {eliHome && <div style={{display:'flex'}}>
@@ -1208,10 +1212,6 @@ const BasicTable = (props) => {
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='polymarket' id='5' checked={nonSymTool==='polymarket'} onChange={nonSymChange}
              title='Polymarket contracts'/>
           <div style={{color:'#9932CC'}}> polymarket  </div>   
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='6' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
-             title='Contact us'/>
-          <div style={{color:'#9932CC'}}> contactUs  </div>   
 
         </div>}
 
