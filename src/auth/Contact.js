@@ -8,6 +8,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
 import {IpContext, getIpInfo} from '../contexts/IpContext';
 import {beep2} from '../utils/ErrorList'
 
+
 export default function ContactUs (props)  {
 
   const nameRef = useRef()
@@ -50,8 +51,8 @@ export default function ContactUs (props)  {
     // console.log (form.current)
     // console.log (localIpv4, city, countryName, countryCode)
 
-    const ssl = true
-    const PORT = 5000
+    const ssl = props.ssl === undefined ? true : props.ssl
+    const PORT = props.PORT === undefined ? 5000 : props.PORT
     const corsServer = props.server //'dinagold.net'
     var corsUrl;
     if (ssl)
@@ -91,7 +92,7 @@ export default function ContactUs (props)  {
         console.log (getDate() +  ' msg from=' + emailRef.current.value )
         const latency = miliEnd - miliStart
         setInfo()
-        setLatency(getDate() + ' msg reeived (latency=' + latency + ')')
+        setLatency(getDate() + ' msg received (latency=' + latency + ')')
 
         const response = Date.now() - mili
         setError()// 'delay(msec)=' + response)
@@ -111,7 +112,7 @@ export default function ContactUs (props)  {
     <Card>
     <Card.Body>
       <h2 className='text-center mb-4'>Contact Us</h2>
-      &nbsp; <Link to="/" >Home</Link>
+
       {error && <Alert variant="danger"> {error} </Alert>}
       <Form onSubmit={sendContact}>
 

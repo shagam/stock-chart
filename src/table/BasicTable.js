@@ -88,7 +88,7 @@ import { UrlGetParse } from '../utils/UrlGetParse'
 
 import { CandlestickChart, CandleStick} from './CandleStick'
 import { Polymarket } from './Polymarket'
-
+import Contact from '../auth/Contact'
 
 const BasicTable = (props) => {
 
@@ -793,6 +793,7 @@ const BasicTable = (props) => {
     candleStick: 'candleStick',
     dropCount:    'dropCount',
     Options:      'Options',
+    contactUs:     'contactUs',
   };
   // marginLeft: '3px', marginRight: '3px', 
   const [analyzeTool, setAnalyzeTool] = useState('none')
@@ -854,17 +855,15 @@ const BasicTable = (props) => {
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
-        {(admin || (eliHome && ! isMobile)) && (! contactGetReminder || Date.now() - contactGetReminder.mili > 1000 * 3600 * 24 * 3) && <div style={{color:'red'}}>ContactGet reminder</div>} 
-
+      
         <Link to="/tutorials">Tutorials</Link> &nbsp; 
         <Link to="/about">About</Link>&nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
         {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
 
-        {<Link to="/contactUs">Contact US</Link>}  &nbsp;
         {<Link to="/generalLinks">Auxilary links</Link>} &nbsp;
-        {eliHome && ! showUrl &&<Link to="/contactGet">ContactGet</Link>}
+
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong style={{color: 'red'}}>(admin)</strong>  &nbsp; </div>}
@@ -1209,6 +1208,11 @@ const BasicTable = (props) => {
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='polymarket' id='5' checked={nonSymTool==='polymarket'} onChange={nonSymChange}
              title='Polymarket contracts'/>
           <div style={{color:'#9932CC'}}> polymarket  </div>   
+
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='6' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
+             title='Contact us'/>
+          <div style={{color:'#9932CC'}}> contactUs  </div>   
+
         </div>}
 
 
@@ -1233,6 +1237,9 @@ const BasicTable = (props) => {
         {nonSymTool === 'polymarket' && <Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
           stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {props.logFlags} eliHome={eliHome}
           servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}
+
+        {nonSymTool === 'contactUs' &&  <Contact server={servSelect} ssl={ssl} PORT={PORT} />}
+
          {/* <hr/> */}
     </div> 
     </>

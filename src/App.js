@@ -17,7 +17,7 @@ import LogFlags from './utils/LogFlags'
 import About from './About'
 import Tutorials from './Tutorials'
 import {TargetPrice} from './table/TargetPrice'
-import Contact from './auth/Contact'
+
 import ContactGet from './auth/ContactGet'
 
 import AuxilaryLinks from './table/AuxilaryLinks'
@@ -99,8 +99,7 @@ function App() {
                 <Route path="/about" element={<About  />}/>
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/manual" element={<Manual  />}/>
-                <Route path="/contactUs" element={<Contact server={server} logFlags={logFlags} />}/>
-                <Route path="/contactGet" element={<ContactGet server={server} logFlags={logFlags} />}/>
+
                 <Route path="/generalLinks" element={< AuxilaryLinks />}/>
                
                 {/* <Route path="/contact" element={<Contact  />}/> */}
