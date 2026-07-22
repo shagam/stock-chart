@@ -6,7 +6,17 @@ const StockInfo = (props) => {
 
   const infoFlagChange = () => {setInfoFlag (! infoFlag)}
 
-
+  function numberWithCommas(x) {
+    const isIntegerString = (str) => /^-?\d+$/.test(str);
+    if (! isIntegerString(x)) {
+      return x; // Return the original value if it's not an integer string
+    }
+    x = x.toString();
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+        x = x.replace(pattern, "$1,$2");
+    return x;
+  }
 
   return (
     <div style = {{ border: '2px solid blue'}} >
@@ -35,7 +45,9 @@ const StockInfo = (props) => {
                       <tr  key={i}>
                         <td  style={{padding: '2px', margin: '2px'}}>{i}</td>
                         <td style={{padding: '2px', margin: '2px', color: 'ForestGreen', minWidth: '14rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
-                        <td style={{padding: '2px', margin: '2px', border: `none`}} > {props.stockInfo[infoName]} </td> 
+                        <td style={{padding: '2px', margin: '2px', border: `none`}} > 
+                            <div>{numberWithCommas(props.stockInfo[infoName])} </div>
+                          </td> 
                       </tr>
                   )
                 })
