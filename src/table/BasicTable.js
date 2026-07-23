@@ -1201,7 +1201,7 @@ const BasicTable = (props) => {
           
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='6' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
              title='Contact us'/>
-          <div style={{color:'#9932CC'}}> contactUs  </div>   
+          <div style={{color:'#32cc84', fontWeight: "bold"}}> contactUs  </div>   
         </div>
 
         {eliHome && <div style={{display:'flex'}}>
