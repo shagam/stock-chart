@@ -381,9 +381,9 @@ export const GROUPED_COLUMNS = [
   },
 
   {
-    Header: 'deep-recover',
-    Footer: 'deep-recover',
-    accessor: 'deep-recover', 
+    Header: 'deep_recover',
+    Footer: 'deep_recover',
+    accessor: 'deep_recover', 
     disableSortBy: true,      
     columns: [
       {

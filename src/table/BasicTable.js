@@ -887,13 +887,13 @@ const BasicTable = (props) => {
         </div>
         {/* {eliHome && <ServerSelect />} */}
         <div style={{display:'flex'}}>
-          { !showUrl && <div style={{display:'flex'}}>
+          <div style={{display:'flex'}}>
             <ComboBoxSelect serv={servSelect} nameList={servNameList} setSelect={setServSelect} title='backEnd' options={servList} defaultValue={servSelect}/> &nbsp;&nbsp; 
             {/* <div style={{color: '#bb8899', fontWeight: "bold"}}>Choose backEnd (production or test</div> */}
-          </div>} 
+          </div> 
           {eliHome && !showUrl && <div style={{display:'flex'}}> <ComboBoxSelect serv={PORT} nameList={portArray} setSelect={setPORT} title='' options={portArray} defaultValue={PORT}/> &nbsp;&nbsp;</div>} 
-          {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp;
-          {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>}
+          {/* {eliHome && !isMobile && <div>&nbsp;<input  type="checkbox" checked={showUrl}  onChange={()=> setShowUrl(! showUrl)} />URL&nbsp;</div>} &nbsp; */}
+          {/* {showUrl &&  <h5 style={{'color':'green', fontWeight: "bold"}}>stocks-compare.netlify.app</h5>} */}
           {/* {eliHome && <div> <button style={{backgroundColor: '#bbffbb'}} onClick={test} title='test' > test </button> </div>} &nbsp;&nbsp; */}
         </div>
 
@@ -924,24 +924,23 @@ const BasicTable = (props) => {
          </div>
 
       {/* insert sym, filter */}
-
       <div style={{display:'flex'}} id="add_stock_id">
         <form className='w-00 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
-          <input style={{width:'105px'}}
+          <input style={{width:'105px', height:'27px'}}
             type="text"
             name="symbol"
             required="required"
             placeholder="stock symbol"
             onChange={handleAddFormChange}
           />
-          <button style={{backgroundColor: '#ff55'}} type="submit"> Add  ({rows.length})  </button>
+          <button style={{backgroundColor: '#ff55', whiteSpace:'nowrap', height:'27px'}} type="submit">Add  ({rows.length})  </button>
         </form>&nbsp;&nbsp;
 
         <GlobalFilter style={{marginTop: '10px'}} className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile} marginTop={'17px'}/>
           &nbsp;&nbsp;
 
         <div style={{display:'flex', paddingTop: '20px'}}>
-          <button style={{height: '27px'}}type="button" onClick={()=>hiddenColsSetDefault()}>columns_default</button> &nbsp; &nbsp; 
+          <button style={{height: '27px'}}type="button" onClick={()=>hiddenColsSetDefault()}>columns_default</button> &nbsp; 
           <input type="checkbox" checked={columnHideFlag}  onChange={ columnHideFlagChange} 
               title='select which columns are visible and which are hidden'/> </div>&nbsp;
               <div style={{paddingTop: '20px'}}>column_select </div>
