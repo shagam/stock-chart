@@ -43,7 +43,11 @@ import {ServerSelect, server, PORT, ssl} from  '../utils/Server'
 
 import { Link, useNavigate } from 'react-router-dom'
 
-import { FaArrowDown, FaArrowUp, FaSlideshare, FaVenusMars } from 'react-icons/fa'
+import { FaArrowDown, FaArrowUp, FaAngleUp, FaCaretUp, FaSlideshare, FaVenusMars, FaChevronUp, FaChevronDown} from 'react-icons/fa'
+import { IoIosArrowUp,  IoIosArrowDown } from "react-icons/io";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+
+
 //import {} from "https:///www.gstatc"
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr, isDailyXArray} from '../utils/Date'
@@ -100,13 +104,13 @@ const BasicTable = (props) => {
   const [bubbleLine, setBubbleLine] = useState();
 
   
-  const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP, process.env.REACT_APP_LOCAL_WIN_IP]// , process.env.REACT_APP_AWS_IP];
+  const servList = [process.env.REACT_APP_AWS_IP, process.env.REACT_APP_LOCAL_SERV_IP]//, process.env.REACT_APP_LOCAL_WIN_IP]// , process.env.REACT_APP_AWS_IP];
   const servNameList = ['production', 'test','local_win']//, 'production_'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);
   const [PORT, setPORT] = useState(5000);
-  const portArray = [5000, 5001, 5002]
+  const portArray = [5000, 5001]
 
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
