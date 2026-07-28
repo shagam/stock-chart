@@ -1528,7 +1528,7 @@ function StockOptions (props) {
           <GetInt title='check premium' placeHolder={premium} init={premium} value={premium} pattern={undefined}
             type='Real' callBack={setPremium} width = '15%'/> &nbsp;&nbsp;
 
-          updatedPremium() {optionQuote && optionQuote.expiration && optionQuote.expiration[premiumSelected]&& optionQuote.mid[index] > 0
+          updatedPremium() {optionQuote && optionQuote.expiration && optionQuote.expiration[premiumSelected]
            ? optionQuote.expiration[premiumSelected] : 'N/A'} &nbsp; &nbsp;
 
         </div>}
