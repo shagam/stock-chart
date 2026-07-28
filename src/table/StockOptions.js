@@ -1448,7 +1448,7 @@ function StockOptions (props) {
                 <tbody>
                   {optionQuote && optionQuote.expiration && optionQuote.expiration.map((quote, index) => {
                     return (
-                    (! hideNegativeYield || optionQuote.yield_[index] >= 0)  && 
+                    (! hideNegativeYield || optionQuote.yield_[index] >= 0)  && optionQuote.mid[index] > 0 && 
                       <tr key={index} style={ROW_SPACING} onClick={() => premiumRowClick(index)}>
                       <td style={{...ROW_SPACING, width: '20px'}}> {index}</td>
                       {optionKeys.map((key, keyI) => {
