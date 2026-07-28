@@ -1128,7 +1128,7 @@ function StockOptions (props) {
     }
     else {
       price_ = props.rows[row_index].values.price;
-      if (price_ == undefined) {
+      if (price_ === undefined) {
         price_ = props.stockChartYValues[0].toFixed(2) // use latest value of stockChartYValues as price
       }
       setStockPrice(price_)
@@ -1137,7 +1137,7 @@ function StockOptions (props) {
         setPriceDivHigh(Number(priceDivHigh_).toFixed(3))
     }
 
-  }, [props.symbol, props.rows, stockPrice, config.percent]); 
+  }, [props.symbol, props.rows, stockPrice, config.percent, props.stockChartYValues]); 
 
 
 
@@ -1560,7 +1560,7 @@ function StockOptions (props) {
                   
                   {/* top, right, bottom, left */} 
                 <tbody>
-                  {optionHistoryKeys && optionQuote.expiration
+                  {optionHistoryKeys && optionQuote.expiration  && optionQuote.mid.length > 0
                    && optionHistory.expiration.map((quote, index) => {
                     return (
                       <tr key={index} style={ROW_SPACING} onClick={() => premiumRowClick(index)}>
