@@ -72,7 +72,7 @@ import Config from './Config'
 import StockLists from './StockLists'
 
 import MarketStackApi from  './MarketStackApi'
-import {OptionQuote} from  './StockOptions'
+import {StockOptions} from  './StockOptions'
 
 
 import Manual from '../manual/Manual';
@@ -1174,7 +1174,7 @@ const BasicTable = (props) => {
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>}
 
-            {analyzeTool ==='options' && <OptionQuote symbol = {chartSymbol} stockPrice = {price}
+            {analyzeTool ==='options' && <StockOptions symbol = {chartSymbol} stockPrice = {price}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
                 stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={props.logFlags}
                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />}

@@ -21,7 +21,7 @@ import { FaCog } from 'react-icons/fa';
 // 
 
 
-function OptionQuote (props) {
+function StockOptions (props) {
 
   // const [quote, setQuote] = useState(null);
   // const optionSymbol = 'AAPL'+'250817C00' + '150000'; // Jan 2025 $150 AAPL Call
@@ -1607,4 +1607,4 @@ function OptionQuote (props) {
 
 
 
-export {OptionQuote};
+export {StockOptions};
