@@ -1128,6 +1128,9 @@ function StockOptions (props) {
     }
     else {
       price_ = props.rows[row_index].values.price;
+      if (price_ == undefined) {
+        price_ = props.stockChartYValues[0].toFixed(2) // use latest value of stockChartYValues as price
+      }
       setStockPrice(price_)
       priceDivHigh_ = props.rows[row_index].values.priceDivHigh;
       if (priceDivHigh_ !== undefined)
