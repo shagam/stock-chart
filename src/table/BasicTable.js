@@ -108,7 +108,7 @@ const BasicTable = (props) => {
   const servNameList = ['production', 'test']; //,'local_win']//, 'production_'];
   //   'localhost', process.env.REACT_APP_SERV_EXT, process.env.REACT_APP_ELI_HOME_IP];
   const [ssl, setSsl] = useState(true)
-  const [servSelect, setServSelect] = useState(servList[1]);  // default test server
+  const [servSelect, setServSelect] = useState(servList[0]);  // default test server
   const [PORT, setPORT] = useState(5000);
   const portArray = [5000, 5001]
 
