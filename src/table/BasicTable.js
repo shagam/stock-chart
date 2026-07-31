@@ -155,6 +155,7 @@ const BasicTable = (props) => {
   const [saveMili, setSaveMili] = useState();
   const [gainRawDividand, setGainRawDividand] = useState (true);
   const [price, setPrice] = useState();
+  const [priceDivHigh, setPriceDivHigh] = useState();
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
   // const gainRef = collection(db, "stock-gain_")
@@ -405,7 +406,10 @@ const BasicTable = (props) => {
     if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined) {
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
       targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
-      setPrice(rows[index].values.price)
+      if (rows[index].values.price !== price) {
+        setPrice(rows[index].values.price)
+        setPriceDivHigh(rows[index].values.priceDivHigh)
+      }
     }
     // childData.Address = '';   // Clear some data to decrese traffic
     // childData.Description = '';
@@ -416,9 +420,9 @@ const BasicTable = (props) => {
     const graham = Math.sqrt(22.5 * EPS * BookValue).toFixed(2)
 
     var grahamTxt =`grahamPrice=${graham}`
-    const price=rows[index].values.price
-    if (price) 
-      grahamTxt += '  CurrentPrice=' + price;
+    const price_=rows[index].values.price
+    if (price_) 
+      grahamTxt += '  CurrentPrice=' + price_;
     grahamTxt  +=  `   ( EPS=${EPS}  BookValue=${BookValue} )`
     if (LOG_FLAG)
       console.log (symbol, grahamTxt)
@@ -467,7 +471,8 @@ const BasicTable = (props) => {
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
        priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol)
     
-    setPrice (rows[row_index].values.price)
+    if (rows[row_index].values.price !== undefined && ! price)
+      setPrice (rows[row_index].values.price)
  
      if (singleSym)
       saveTable(sym);
@@ -903,7 +908,7 @@ const BasicTable = (props) => {
 
         {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} allColumns={allColumns} 
-                setPrice={setPrice} />} 
+                price={price} setPrice={setPrice} setPriceDivHigh={setPriceDivHigh}/>} 
 
         <div id="buttons_id" style={{display:'flex'}}>
           {/* {admin && <div> <input  type="checkbox" checked={splitsCalcFlag}  onChange={calcChange} /> calc_splits &nbsp;</div>}      */}
@@ -1174,7 +1179,7 @@ const BasicTable = (props) => {
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>}
 
-            {analyzeTool ==='options' && <StockOptions symbol = {chartSymbol} stockPrice = {price}
+            {analyzeTool ==='options' && <StockOptions symbol = {chartSymbol} stockPrice = {price} priceDivHigh = {priceDivHigh}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
                 stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={props.logFlags}
                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />}

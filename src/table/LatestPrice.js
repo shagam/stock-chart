@@ -188,7 +188,10 @@ function LatestPrice (props) {
           props.rows[row_index].values.price = price.toFixed(2);
           props.rows[row_index].values.price_mili = Date.now();
           props.rows[row_index].values.priceDivHigh = (price / highestPrice).toFixed(4);
-          props.setPrice(price)
+          if (price !== props.price) {
+            props.setPrice(price)
+            props.setPriceDivHigh(props.rows[row_index].values.priceDivHigh)
+          }
           setPrice(price)
           if (! props.stockChartYValues[0]) {
               props.setErr('price not found, Try again')

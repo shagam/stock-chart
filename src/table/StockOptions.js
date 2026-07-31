@@ -73,8 +73,8 @@ function StockOptions (props) {
   const [AIGroupShow, setAIGroupShow] = useState(true); // name of AI group
   const [optionSymbolShow, setOptionSymbolShow] = useState(false); 
   const [calculated_Attributes, setCalculated_Attributes] = useState(false); // whether to include calculated attributes in AIGroup
-  const [stockPrice, setStockPrice] = useState(-1); // current price of the stock, for yield calculation
-  const [priceDivHigh, setPriceDivHigh] = useState(-1); // price divided by 52 week high, for yield calculation
+  // const [stockPrice, setStockPrice] = useState(-1); // current price of the stock, for yield calculation
+  // const [priceDivHigh, setPriceDivHigh] = useState(-1); // price divided by 52 week high, for yield calculation
   const EXPECTED_PRICE_ADJUSTMENT = 0.25; //  priceDivHigh ** 0.2 is used to adjust the expected price, to avoid too high expected price for long term options, e.g. 1 year or more
 
 
@@ -839,7 +839,7 @@ function StockOptions (props) {
 
     if (strikeSelected !== -1) {
       const a = strikeArray[strikeSelected] 
-      config.strikeNum = ((strikeArray[strikeSelected] / stockPrice - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
+      config.strikeNum = ((strikeArray[strikeSelected] / props.stockPrice - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
     }
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
@@ -855,7 +855,7 @@ function StockOptions (props) {
       setDaysToExpire(config.expirationNum.toFixed(0))
     }
     if (strikeSelected !== -1) {// if strikeSelected
-      corsUrl += "&strikeNum=" + (((strikeArray[strikeSelected] / stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+      corsUrl += "&strikeNum=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
     }
     else {
       corsUrl += "&strikeNum=" + config.strikeNum  // default use config.strikeNum
@@ -867,7 +867,7 @@ function StockOptions (props) {
     corsUrl += "&side=" + config.side
     // corsUrl += "&percent=" + (percent ? 1 : 0)
     // corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
-    corsUrl += "&stockPrice=" + stockPrice
+    corsUrl += "&stockPrice=" + props.stockPrice
     // corsUrl += "&func=" + "expirations" // expirations, strikes, optionPremium
 
 
@@ -977,7 +977,7 @@ function StockOptions (props) {
         const dte = premiumArray.dte[i];
 
         const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
-        const expirationDateValue = stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / (priceDivHigh ** config.priceDivHighFactor); 
+        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / (props.priceDivHigh ** config.priceDivHighFactor); 
         // priceDivHgh is used to compensate the expected price, to avoid too high expected price for long term options, e.g. 1 year or more
 
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid, breakEven, expirationDateValue)
@@ -1005,11 +1005,11 @@ function StockOptions (props) {
           OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
           OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
           OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
-          OptionQuoteFiltered['mid/price'][i] = (mid / stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
+          OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
           if (i > 0 && OptionQuoteFiltered.expiration[i] === OptionQuoteFiltered.expiration[i-1]) { // same expiration, calculate strikeDiff
             OptionQuoteFiltered['strikeDiff'][i] =  premiumArray.mid[i] > 0 ?((premiumArray.mid[i] - premiumArray.mid[i - 1]) / premiumArray.mid[i] * 100).toFixed(2) + '_%' : 0; // mid price minus previous row's mid price
           }
-          OptionQuoteFiltered['deltaLeverage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / stockPrice)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
+          OptionQuoteFiltered['deltaLeverage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
           expitrationDiffCalc (premiumArray, OptionQuoteFiltered, i); // calculate exprDiff, difference of mid price between different expiration date
         }
         if (logExtra)
@@ -1109,7 +1109,7 @@ function StockOptions (props) {
     } 
     else {
       // setRow_index(row_index_)
-      setBelowBubble (stockPrice / props.rows[row_index_].values.bubblePrice) ;
+      setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
       setEstimatedYearlyGain (((props.rows[row_index_].values.peak2Peak - 1) * 100).toFixed(2))
       setYearlyGainSource (props.rows[row_index_].values.yearlyGain_source);
     }
@@ -1127,17 +1127,17 @@ function StockOptions (props) {
         // return;
     }
     else {
-      price_ = props.rows[row_index].values.price;
-      if (price_ === undefined) {
-        price_ = props.stockChartYValues[0].toFixed(2) // use latest value of stockChartYValues as price
-      }
-      setStockPrice(price_)
-      priceDivHigh_ = props.rows[row_index].values.priceDivHigh;
-      if (priceDivHigh_ !== undefined)
-        setPriceDivHigh(Number(priceDivHigh_).toFixed(3))
+      // price_ = props.rows[row_index].values.price;
+      // if (price_ === undefined) {
+      //   price_ = props.stockChartYValues[0].toFixed(2) // use latest value of stockChartYValues as price
+      // }
+      // setStockPrice(price_)
+      // priceDivHigh_ = props.rows[row_index].values.priceDivHigh;
+      // if (priceDivHigh_ !== undefined)
+      //   setPriceDivHigh(Number(priceDivHigh_).toFixed(3))
     }
 
-  }, [props.symbol, props.rows, stockPrice, config.percent, props.stockChartYValues]); 
+  }, [props.symbol, props.rows, props.stockPrice, config.percent, props.stockChartYValues]); 
 
 
 
@@ -1245,7 +1245,7 @@ function StockOptions (props) {
           <div style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
         </div>
-        <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={stockPrice} &nbsp; &nbsp; price/High={priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
+        <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={props.stockPrice} &nbsp; &nbsp; price/High={props.priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
 
         {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}
         {config.side === 'put' && <h6  style={{color: '#c760ff'}}>  &nbsp;  <strong style={{color: 'red'}}>put options, not supported. and never tested</strong> </h6>}
@@ -1355,7 +1355,7 @@ function StockOptions (props) {
                       >
                       <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
                       <td style={{...ROW_SPACING, width: '100px'}}>{strike.toFixed(2)}  </td> 
-                      <td style={{...ROW_SPACING, width: '100px'}}>{(strike/stockPrice).toFixed(2)}  </td> 
+                      <td style={{...ROW_SPACING, width: '100px'}}>{(strike/props.stockPrice).toFixed(2)}  </td> 
                     </tr>
                     )
                   })}
@@ -1419,7 +1419,7 @@ function StockOptions (props) {
           {optionQuote && optionQuote.expiration && <div>
               <div style={{display: 'flex', fontWeight: 'bold'}}>
                 <div style={{color: 'magenta'}}>{props.symbol} </div> &nbsp; &nbsp; 
-                stockPrice={stockPrice} &nbsp; &nbsp; price/High={priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>} &nbsp; &nbsp;
+                stockPrice={props.stockPrice} &nbsp; &nbsp; price/High={props.priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>} &nbsp; &nbsp;
               </div>
               <div style={{display: 'flex', fontWeight: 'bold'}}>
                 count={optionQuote.expiration.length} &nbsp; &nbsp; bestYieldIndex={bestYearlyYieldIndex}  &nbsp; &nbsp;
