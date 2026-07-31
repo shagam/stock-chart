@@ -471,8 +471,10 @@ const BasicTable = (props) => {
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
        priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol)
     
-    if (rows[row_index].values.price !== undefined && ! price)
+    if (rows[row_index].values.price !== undefined && ! price) {
       setPrice (rows[row_index].values.price)
+      setPriceDivHigh(rows[row_index].values.priceDivHigh)
+    }
  
      if (singleSym)
       saveTable(sym);
