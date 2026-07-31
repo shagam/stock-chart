@@ -13,7 +13,8 @@ import { el } from 'date-fns/locale';
 
 
     // * use marketData
-    function getPrice (symbol, rows, stockChartYValues, refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, setErr, errorAdd) {
+    function getPrice (symbol, rows, stockChartYValues, refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, 
+      setErr, errorAdd, setPrice_, setPriceDivHigh_) {
       const TOKEN = process.env.REACT_APP_MARKETDATA;
       var url = 'https://api.marketdata.app/v1/stocks/quotes/' + symbol
       url += '/?token=' + TOKEN
@@ -30,17 +31,21 @@ import { el } from 'date-fns/locale';
       
       const price_ = priceInfo.mid[0]; 
       setPrice(price_)
+      setPrice_(price_)
       const changepct_ = priceInfo.changepct[0]
       setChangepct((changepct_ * 100).toFixed(3))
       const ratio = changepct_;
       console.log (price_, changepct_)
 
       var highestPrice = -1; // highest price
-      if (stockChartYValues.length > 0)
-      for (let i = 0; i < stockChartYValues.length; i++) {
-          const val = stockChartYValues[i];
-          if (val > highestPrice)
-              highestPrice = val;
+      if (stockChartYValues.length > 0) {
+        for (let i = 0; i < stockChartYValues.length; i++) {
+            const val = stockChartYValues[i];
+            if (val > highestPrice)
+                highestPrice = val;
+        }
+        const priceDivHigh = (price_ / highestPrice).toFixed(4);
+        setPriceDivHigh_(priceDivHigh)
       }
       else {
         console.log ('missing stockChartYValues')
@@ -97,7 +102,9 @@ function LatestPrice (props) {
 
     function getPrice_ () {
       //  getPrice (symbol, rows, stockChartYValues, refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, setErr, errorAdd)
-      getPrice (props.symbol, props.rows, props.stockChartYValues, props.refreshByToggleColumns, setPrice, setChangepct, setPriceDivClose, props.setErr, props.errorAdd)
+      getPrice (props.symbol, props.rows, props.stockChartYValues, props.refreshByToggleColumns, setPrice, setChangepct,
+         setPriceDivClose, props.setErr, props.errorAdd, props.setPrice, props.setPriceDivHigh)
+
     }
 
 
