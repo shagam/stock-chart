@@ -1114,28 +1114,6 @@ function StockOptions (props) {
       setYearlyGainSource (props.rows[row_index_].values.yearlyGain_source);
     }
 
-    // setOptionKeys([]);
-    // if (! err)
-    //  getOptionsInfoFromServer () 
-
-       // pull info from rows, e.g. price, for yield calculation and display
-    var price_ = -1;
-    var priceDivHigh_ = -1
-    const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
-    if (row_index === -1) {
-        setErr ('stock missing: ' + props.symbol)
-        // return;
-    }
-    else {
-      // price_ = props.rows[row_index].values.price;
-      // if (price_ === undefined) {
-      //   price_ = props.stockChartYValues[0].toFixed(2) // use latest value of stockChartYValues as price
-      // }
-      // setStockPrice(price_)
-      // priceDivHigh_ = props.rows[row_index].values.priceDivHigh;
-      // if (priceDivHigh_ !== undefined)
-      //   setPriceDivHigh(Number(priceDivHigh_).toFixed(3))
-    }
 
   }, [props.symbol, props.rows, props.stockPrice, config.percent, props.stockChartYValues]); 
 

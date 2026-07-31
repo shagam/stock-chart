@@ -18,7 +18,8 @@ const HIGH_LIMIT_KEY = process.env.REACT_APP_ALPHAVANTAGE_KEY
 
 export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
     splitsCalcFlag, saveTabl, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect, saveTable,
-     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable, refreshByToggleColumns, sequenceNumber, count, setChartSymbol) {
+     os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable,
+      refreshByToggleColumns, sequenceNumber, count, setChartSymbol, setPrice, setPriceDivHigh) {
 
     function isAdjusted () {
       return (API_KEY === HIGH_LIMIT_KEY) 
@@ -385,6 +386,8 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
               var priceDivHigh = -1
               if (highestPrice !== -1)
                 priceDivHigh = (price/ highestPrice).toFixed(4)
+              setPrice (price)
+              setPriceDivHigh (priceDivHigh)
             
               if (LOG_FLAG)
                 console.log (sym, 'price=', price, 'highestPrice=', highestPrice.toFixed(2), 'priceDivHigh=', priceDivHigh, 'highestPriceDate=', highestPriceDate, 'highDate=', highestPriceDate)

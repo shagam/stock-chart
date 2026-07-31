@@ -469,12 +469,7 @@ const BasicTable = (props) => {
     gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
-       priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol)
-    
-    if (rows[row_index].values.price !== undefined && ! price) {
-      setPrice (rows[row_index].values.price)
-      setPriceDivHigh(rows[row_index].values.priceDivHigh)
-    }
+       priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol, setPrice, setPriceDivHigh)
  
      if (singleSym)
       saveTable(sym);
