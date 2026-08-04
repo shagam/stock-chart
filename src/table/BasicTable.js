@@ -451,7 +451,8 @@ const BasicTable = (props) => {
       return;
     }
 
-     rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
+    rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
+    rows[row_index].values.gain_date = getDate();
 
     if (singleSym && props.logFlags.includes('gain'))
       console.log(sym, getDate(), 'handleGainClick  singleSym=', singleSym)
