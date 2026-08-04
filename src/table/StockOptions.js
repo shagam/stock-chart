@@ -334,6 +334,8 @@ function StockOptions (props) {
   //** check if there is irregular premium, e.g. higher strike with lower mis premium */
   // strikes are ordered from low to high
   function irregularPremium () {
+    if (! optionQuote.expiration)
+      return;
     var irregularCount = 0;
     // console.log (optionQuote.length, optionQuote)
     var expiration = optionQuote.expiration[0];
@@ -1354,7 +1356,7 @@ function StockOptions (props) {
           {/*   get-option-premium   */}
           {<div>
             <button style={{background: 'aqua'}} type="button" onClick={()=>getOptionsInfoFromServer()}>  get-option-premium   </button> &nbsp;&nbsp;
-            {props.eliHome && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp;
+            {/* {props.eliHome && optionQuote.expiration && <button style={{background: 'lightblue'}} type="button" onClick={()=>irregularPremium()}>  verify-descending-premium   </button>} &nbsp;&nbsp; */}
             {/* {dat && Object.keys(dat).length > 0 && <div>options from corsServer: {JSON.stringify(dat)} </div> } */}
             {/* <hr/>  */}
           </div>}
