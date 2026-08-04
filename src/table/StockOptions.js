@@ -1131,6 +1131,7 @@ function StockOptions (props) {
   
   function saveColumnChecked (item) {
     localStorage.setItem(COLUMNS, JSON.stringify(columnShow)); // set default columnShow
+    setColumnHideFlag (false)
   }
 
   const CALCULATED_COLUMNS  = ['yield_', 'yearlyYield', 'breakEven', 'expectedPrice', 'profit', 'mid/price','strikeDiff', 'exprDiff', 'deltaLeverage'];
