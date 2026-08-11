@@ -1305,9 +1305,9 @@ function StockOptions (props) {
           
         {/* strikes */}
             
-        {expirationsArray.length > 0 && <div>
+        {(expirationsArray.length > 0  || config.expirationNum === -11 || config.expirationNum === -12) && <div>
 
-          { config.expirationNum >= 0 && expirationSelected !== -1 && <div style = {{display: 'flex'}}>
+          { ((config.expirationNum >= 0 && expirationSelected !== -1) || config.expirationNum === -11 || config.expirationNum === -12) && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strikes   </button> &nbsp; &nbsp;
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
