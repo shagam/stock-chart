@@ -72,7 +72,8 @@ function StockOptionsConfig (props) {
         <h5  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>StockOptions config: </h5>
         <form onSubmit = {formSubmit}>
 
-          <label> Days-to-expire: &nbsp;
+          <label style={{display: 'flex'}}> Days-to-expire: &nbsp; &nbsp; &nbsp;
+             <div style={{color: 'blue', fontWeight: 'bold'}}>{expirationNum === -11 ? 'last' : expirationNum === -12 ? 'one before last' : expirationNum}</div> &nbsp; &nbsp; &nbsp;
             <input style={{width: '60px'}} type="number" name="expirationNum" // required="required"
               placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={expirationNum} />
           </label>&nbsp; &nbsp; 

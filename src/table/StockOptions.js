@@ -806,7 +806,7 @@ function StockOptions (props) {
   //** get from coirsServer main */
   function  getOptionsInfoFromServer () {
     setErr()
-    if (config.expirationNum < 0 || config.expirationCount < 0 || config.strikeCount < 0) {
+    if (config.expirationCount < 0 || config.strikeCount < 0) {
       setErr('option config error, negative number')
       beep2()
       return;
@@ -846,7 +846,12 @@ function StockOptions (props) {
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
     
-    if (expirationSelected !== -1) {  // if expirationSelected
+    if (config.expirationNum === -11) {
+      corsUrl += "&expirationNum=" + -11; 
+    } else if (config.expirationNum === -12) {
+      corsUrl += "&expirationNum=" + -12; 
+    }
+    else if (expirationSelected !== -1) {  // if expirationSelected
       const dat = new Date(expirationsArray[expirationSelected])
       const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
       setDaysToExpire(daysToExpire_.toFixed(0))
