@@ -875,7 +875,7 @@ function StockOptions (props) {
     if (config.expir_last) {
       corsUrl += "&expir_last=true"
     } else if (config.expir_oneBeforeLast) {
-      corsUrl += "&expir_oneBeforeLastationLast=true"
+      corsUrl += "&expir_oneBeforeLast=true"
     }
     else if (expirationSelected !== -1) {  // if expirationSelected
       const dat = new Date(expirationsArray[expirationSelected])
