@@ -215,7 +215,8 @@ function StockOptions (props) {
     const stored = localStorage.getItem(CONFIG_KEY);
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
       side: 'call', percent: true, compoundYield: true, action: 'buy', ignoreDepreciatedStocks: false, 
-      priceDivHighFactor: EXPECTED_PRICE_ADJUSTMENT, hideNegativeYield: false, calculatedAttributes: false};
+      priceDivHighFactor: EXPECTED_PRICE_ADJUSTMENT, hideNegativeYield: false, calculatedAttributes: false,
+       expir_last: false, expir_oneBeforeLast: false};
   });
 
   function setConfig (newConfig) {
@@ -582,9 +583,20 @@ function StockOptions (props) {
     // }
 
 
-    const url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol + '/?expiration=' 
-        + expirationsArray[expirationSelected] + '&token=' + TOKEN
-        // + '?token=' + TOKEN;
+    var url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol
+
+    if (expirationsArray.length > 0 && config.expirationCount > 0 ) {
+        url += "?expiration=" + expirationsArray[expirationSelected]
+    }
+    else
+      url += "?filler=0" // get all strikes
+    if (config.expir_last) {
+      url += "&expir_last=true"
+    } else if (config.expir_oneBeforeLast) {
+      url += "&expir_oneBeforeLast=true"
+    }
+    url += '&token=' + TOKEN;
+
     if (log)
       console.log (getDate(), props.symbol, url)
     setErr()
@@ -601,8 +613,22 @@ function StockOptions (props) {
         props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
         console.log (props.symbol, 'strike-price error', result.data.s)
       }
-      expirationSelect = expirationsArray[expirationSelected]
-      const arr = result.data[expirationSelect]
+
+      var arr = []
+      if (config.expir_last) {
+        const keys = Object.keys(result.data)
+        const expiration = keys[keys.length - 1]
+        arr = result.data[expiration]
+      }
+      else if (config.expir_oneBeforeLast) {
+        const keys = Object.keys(result.data)
+        const expiration = keys[keys.length - 2]
+        arr = result.data[expiration]
+      }
+      else {
+        expirationSelect = expirationsArray[expirationSelected]
+        arr = result.data[expirationSelect]
+      }
 
       if (! arr || arr.length === 0) {
         console.log ('fail, strike price array is empty', expirationSelect, result.data)
@@ -846,10 +872,10 @@ function StockOptions (props) {
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
     
-    if (config.expirationNum === -11) {
-      corsUrl += "&expirationNum=" + -11; 
-    } else if (config.expirationNum === -12) {
-      corsUrl += "&expirationNum=" + -12; 
+    if (config.expir_last) {
+      corsUrl += "&expir_last=true"
+    } else if (config.expir_oneBeforeLast) {
+      corsUrl += "&expir_oneBeforeLastationLast=true"
     }
     else if (expirationSelected !== -1) {  // if expirationSelected
       const dat = new Date(expirationsArray[expirationSelected])
@@ -1255,7 +1281,9 @@ function StockOptions (props) {
         />&nbsp;<strong> <FaCog style={{ fontSize: '24px', color: '#0078D4' }} /> config </strong> &nbsp; &nbsp; </div>
         {configShow && 
         <StockOptionsConfig config={config} setConfig={setConfig} logExtra={logExtra} estimatedYearlyGain={estimatedYearlyGain}
-           setEstimatedYearlyGain={setEstimatedYearlyGain} yearlyGainSource={yearlyGainSource} setConfigShow={setConfigShow}/>}
+           setEstimatedYearlyGain={setEstimatedYearlyGain} yearlyGainSource={yearlyGainSource} setConfigShow={setConfigShow}
+            //  expirationLast={expirationLast} expirationOneBeforeLast={expirationOneBeforeLast}
+                />}
         <div>&nbsp;</div>
         {/* <hr/> */}
 
@@ -1305,9 +1333,9 @@ function StockOptions (props) {
           
         {/* strikes */}
             
-        {(expirationsArray.length > 0  || config.expirationNum === -11 || config.expirationNum === -12) && <div>
+        {(expirationsArray.length > 0  || config.expir_last || config.expir_oneBeforeLast) && <div>
 
-          { ((config.expirationNum >= 0 && expirationSelected !== -1) || config.expirationNum === -11 || config.expirationNum === -12) && <div style = {{display: 'flex'}}>
+          { ((config.expirationNum >= 0 && expirationSelected !== -1) || config.expir_last || config.expir_oneBeforeLast) && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strikes   </button> &nbsp; &nbsp;
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
