@@ -136,7 +136,7 @@ function StockOptionsConfig (props) {
 
         <div>&nbsp;</div>
           {/* <br/>          <br/> */}
-          <button style={{background: 'aqua'}} type="submit"> save-config</button> &nbsp;&nbsp;
+          <button style={{background: '#00ff00'}} type="submit"> save-config</button> &nbsp;&nbsp;
           <button type="button" onClick={()=>configClear()}> set defaults  &nbsp;&nbsp; (and restart)   </button> 
         </form>
         
