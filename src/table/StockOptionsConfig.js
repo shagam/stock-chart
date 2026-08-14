@@ -10,9 +10,9 @@ function StockOptionsConfig (props) {
     console.log(props.config)
   const [expirationCount, setExpirationCount] = useState(props.config.expirationCount);
   const [expirationNum, setExpirationNum] = useState(props.config.expirationNum);
-  const [expir_last, setExpir_last] = useState(props.config.expir_last);
-  const [expir_oneBeforeLast, setExpir_oneBeforeLast] = useState(props.config.expir_oneBeforeLast);
-
+  const expirationModeList = ['daysToExpire', 'expir_last', 'expir_oneBeforeLast'];
+  const [expirationMode, setExpirationMode] = useState(props.config.expirationMode);
+ 
   const [strikeCount, setStrikeCount] = useState(props.config.strikeCount);
   const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
   const  sideLIst = ['call', 'put'];
@@ -52,7 +52,7 @@ function StockOptionsConfig (props) {
       const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
          strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
         side: side, percent: percent, compoundYield: compoundYield, action: action, priceDivHighFactor: Number(priceDivHighFactor),
-        expir_last: expir_last, expir_oneBeforeLast: expir_oneBeforeLast
+        expirationMode: expirationMode,
       };
 
         if (props.logExtra)
@@ -77,7 +77,7 @@ function StockOptionsConfig (props) {
         <h5  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>StockOptions config: </h5>
         <form onSubmit = {formSubmit}>
 
-          {! expir_last && !expir_oneBeforeLast && <label style={{display: 'flex'}}> Days-to-expire: &nbsp; 
+          {expirationMode !== 'expir_last' && expirationMode !== 'expir_oneBeforeLast' && <label style={{display: 'flex'}}> Days-to-expire: &nbsp; 
             <input style={{width: '60px'}} type="number" name="expirationNum" // required="required"
               placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={expirationNum} />
           </label>}
@@ -89,8 +89,8 @@ function StockOptionsConfig (props) {
 
           <br/>          <br/>
           <div style = {{display: 'flex'}}>
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={expir_last}  onChange={()=>setExpir_last(!expir_last)} />&nbsp;expir-last &nbsp; &nbsp; </div>
-            <div style = {{display: 'flex'}}> <input type="checkbox" checked={expir_oneBeforeLast}  onChange={()=>setExpir_oneBeforeLast(!expir_oneBeforeLast)} />&nbsp;expir-one-before-last  &nbsp; &nbsp; </div>
+            <ComboBoxSelect serv={expirationMode} nameList={expirationModeList} setSelect={setExpirationMode} title='expiration mode=' options={expirationModeList} defaultValue={expirationMode}/> &nbsp; &nbsp;  &nbsp; 
+            
           </div>
  
           <br/>       

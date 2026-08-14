@@ -216,7 +216,7 @@ function StockOptions (props) {
     return stored ? JSON.parse(stored) : {expirationCount: 3, expirationNum:250, strikeCount: 3, strikeNum: 3,
       side: 'call', percent: true, compoundYield: true, action: 'buy', ignoreDepreciatedStocks: false, 
       priceDivHighFactor: EXPECTED_PRICE_ADJUSTMENT, hideNegativeYield: false, calculatedAttributes: false,
-       expir_last: false, expir_oneBeforeLast: false};
+       expirationMode: 'daysToExpire'};
   });
 
   function setConfig (newConfig) {
@@ -590,9 +590,9 @@ function StockOptions (props) {
     }
     else
       url += "?filler=0" // get all strikes
-    if (config.expir_last) {
+    if (config.expirationMode === 'expir_last') {
       url += "&expir_last=true"
-    } else if (config.expir_oneBeforeLast) {
+    } else if (config.expirationMode === 'expir_oneBeforeLast') {
       url += "&expir_oneBeforeLast=true"
     }
     url += '&token=' + TOKEN;
@@ -615,12 +615,12 @@ function StockOptions (props) {
       }
 
       var arr = []
-      if (config.expir_last) {
+      if (config.expirationMode === 'expir_last') {
         const keys = Object.keys(result.data)
         const expiration = keys[keys.length - 1]
         arr = result.data[expiration]
       }
-      else if (config.expir_oneBeforeLast) {
+      else if (config.expirationMode === 'expir_oneBeforeLast') {
         const keys = Object.keys(result.data)
         const expiration = keys[keys.length - 2]
         arr = result.data[expiration]
@@ -872,9 +872,9 @@ function StockOptions (props) {
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
     
-    if (config.expir_last) {
+    if (config.expirationMode === 'expir_last') {
       corsUrl += "&expir_last=true"
-    } else if (config.expir_oneBeforeLast) {
+    } else if (config.expirationMode === 'expir_oneBeforeLast') {
       corsUrl += "&expir_oneBeforeLast=true"
     }
     else if (expirationSelected !== -1) {  // if expirationSelected
@@ -1333,9 +1333,9 @@ function StockOptions (props) {
           
         {/* strikes */}
             
-        {(expirationsArray.length > 0  || config.expir_last || config.expir_oneBeforeLast) && <div>
+        {(expirationsArray.length > 0  || config.expirationMode === 'expir_last' || config.expirationMode === 'expir_oneBeforeLast') && <div>
 
-          { ((config.expirationNum >= 0 && expirationSelected !== -1) || config.expir_last || config.expir_oneBeforeLast) && <div style = {{display: 'flex'}}>
+          { ((config.expirationNum >= 0 && expirationSelected !== -1) || config.expirationMode === 'expir_last' || config.expirationMode === 'expir_oneBeforeLast') && <div style = {{display: 'flex'}}>
             <button style={{background: 'aqua'}} type="button" onClick={()=>strikePricesGet(config.expirationNum)}>  strikes   </button> &nbsp; &nbsp;
 
           {config.expirationNum === -1 && <div style={{color: 'red'}}>Please select an expiration date first</div>}      
