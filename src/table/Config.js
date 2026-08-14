@@ -58,7 +58,7 @@ const  Config = (props) => {
   //   
   return (
 
-    <div style = {{border: '2px solid maroon'}}>
+    <div style = {{border: '2px solid maroon', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
 
       <h6 style={{color: 'blue'}}> Config &nbsp;  </h6>
     

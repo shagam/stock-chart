@@ -970,7 +970,7 @@ function CommonDatabase (props) {
 
    
   return (
-    <div style = {{ border: '2px solid green'}}>
+    <div style = {{ border: '2px solid green', backgroundColor: '#f0f0f0', padding: '5px', margin: '5px'}}>
       {<div>
         <h6 style={{color: 'blue'}}> CommonDatabase &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get stock symbols according to GAIN from common backEnd &nbsp; </h6>

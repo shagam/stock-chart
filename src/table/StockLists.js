@@ -384,7 +384,7 @@ function StockLists (props) {
 
 
     return (
-        <div style={{border:'2px solid blue'}}>
+        <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
 
             {<div>
                 <h6 style={{color: 'blue'}}> Stock-lists.  &nbsp;  </h6>
