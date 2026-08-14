@@ -63,7 +63,7 @@ const LogFlags = (props) => {
      checked.includes(item) ? "checked-item" : "not-checked-item";
  
     return (
-      <div style={{ border: '2px solid magenta', padding: '0px'}}>
+      <div style={{ border: '2px solid magenta', padding: '0px', background: '#f0f0e0', margin: '5px'}} >
         <hr/> 
         <div>
             <Link to="/" > Home </Link>
