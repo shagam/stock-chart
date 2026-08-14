@@ -71,7 +71,7 @@ function StockOptionsConfig (props) {
     //console.log('AlphaVantage render');
 
     return (
-      <div style={{border:'2px solid magenta'}} className = 'alpha'>
+      <div style={{border:'2px solid magenta', background: '#e0e0e0'}} className = 'alpha'>
         {/* <div style={{border:'2px solid blue'}}></div> */}
         {/* <div>&nbsp;</div> */}
         <h5  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>StockOptions config: </h5>
