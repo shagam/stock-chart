@@ -90,7 +90,7 @@ const StockGain = (props) => {
 
 
   return (
-    <div style={{border:'2px solid blue'}}>
+    <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
       <div> 
        
         <div style = {{display: 'flex'}}>

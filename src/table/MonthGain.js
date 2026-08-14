@@ -389,7 +389,7 @@ function MonthGain (props) {
   const ROW_SPACING = {padding: '2px', margin: '2px'}
 
   return (
-    <div style={{border:'2px solid blue'}}>
+    <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
         <div style = {{display: 'flex'}}>
           <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>  &nbsp; &nbsp;

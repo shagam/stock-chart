@@ -517,7 +517,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
     const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
 
   return (
-    <div style = {{border: '2px solid blue'}} id='deepRecovery_id' > 
+    <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' > 
         <div>
           <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>  &nbsp; &nbsp;

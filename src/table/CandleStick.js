@@ -387,7 +387,7 @@ const CandlestickChart = (props) => {
 
 
   return (
-    <div style = {{ border: '2px solid green'}}>
+    <div style = {{ border: '2px solid green', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
         <h6 style={{color: 'blue'}}>candleStick  &nbsp;  </h6>
         <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Under development (Experimental) &nbsp; </h6>
         <div  style={{color: 'magenta' }}>  {props.symbol} </div> 

@@ -329,7 +329,8 @@ function DropsCount (props) {
     // const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px', gap: '0', boarderSpacing: '0', boarderCollapse: 'collapse'};
    const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px'}
     return (
-        <div>
+        <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' > 
+        {/* <div> */}
     {/* <hr/>  */}
         <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp; &nbsp;

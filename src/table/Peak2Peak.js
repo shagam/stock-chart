@@ -296,7 +296,7 @@ const Peak2PeakGui = (props) => {
   const ROW_SPACING = {padding: '2px', margin: '2px'}
 
   return (
-    <div style = {{border: '2px solid blue'}} id='deepRecovery_id' >
+    <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
         <div> 
 
             <div style = {{display: 'flex'}}>

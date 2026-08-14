@@ -19,7 +19,7 @@ const StockInfo = (props) => {
   }
 
   return (
-    <div style = {{ border: '2px solid blue'}} >
+    <div style = {{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
       <div id="textarea_id"> 
       {/* {! props.stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
       <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock technical raw info. (etf not Supported)  &nbsp; </h6>
