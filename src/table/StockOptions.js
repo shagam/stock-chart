@@ -1252,7 +1252,7 @@ function StockOptions (props) {
   const ROW_SPACING = {padding: "0px 7px 0px 7px", margin: 0}
 
   return (
-    <div style = {{ border: '2px solid blue'}} >
+    <div style = {{ border: '2px solid blue', backgroundColor: '#f0f0e0'}} >
         <div style = {{display: 'flex'}}>
           <div style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;

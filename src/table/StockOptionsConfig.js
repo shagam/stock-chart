@@ -71,11 +71,16 @@ function StockOptionsConfig (props) {
     //console.log('AlphaVantage render');
 
     return (
-      <div style={{border:'2px solid magenta', background: '#f0f0e0'}} className = 'alpha'>
+      <div style={{border:'2px solid magenta', background: '#f0e0f0'}} className = 'alpha'>
         {/* <div style={{border:'2px solid blue'}}></div> */}
         {/* <div>&nbsp;</div> */}
         <h5  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>StockOptions config: </h5>
         <form onSubmit = {formSubmit}>
+
+          <div style = {{display: 'flex'}}>
+            <ComboBoxSelect serv={expirationMode} nameList={expirationModeList} setSelect={setExpirationMode} title='expiration mode=' options={expirationModeList} defaultValue={expirationMode}/> &nbsp; &nbsp;  &nbsp; 
+            
+          </div>
 
           {expirationMode !== 'expir_last' && expirationMode !== 'expir_oneBeforeLast' && <label style={{display: 'flex'}}> Days-to-expire: &nbsp; 
             <input style={{width: '60px'}} type="number" name="expirationNum" // required="required"
@@ -87,13 +92,8 @@ function StockOptionsConfig (props) {
               placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={expirationCount} />
           </label>&nbsp; &nbsp; 
 
-          <br/>          <br/>
-          <div style = {{display: 'flex'}}>
-            <ComboBoxSelect serv={expirationMode} nameList={expirationModeList} setSelect={setExpirationMode} title='expiration mode=' options={expirationModeList} defaultValue={expirationMode}/> &nbsp; &nbsp;  &nbsp; 
-            
-          </div>
- 
-          <br/>       
+        
+          <br/> <br/>  
           <label> Strike-%-AbovePrice: &nbsp;
             <input style={{width: '50px'}} type="number" name="strikeNum" // required="required"
               placeholder="strikeNum"  onChange={(e) => setStrikeNum(e.target.value)} value={strikeNum} />
@@ -102,7 +102,7 @@ function StockOptionsConfig (props) {
           <label> StrikeCount &nbsp;
             <input style={{width: '50px'}} type="number" name="strikeCount" // required="required"
               placeholder="strikeCount"  onChange={(e) => setStrikeCount(e.target.value)} value={strikeCount} />
-          </label>&nbsp; &nbsp;           
+          </label>         
 
           <br/>          <br/>
 
