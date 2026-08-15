@@ -614,23 +614,23 @@ function StockOptions (props) {
         console.log (props.symbol, 'strike-price error', result.data.s)
       }
 
-      var arr = []
+      var strikeArray = []
       if (config.expirationMode === 'expir_last') {
         const keys = Object.keys(result.data)
-        const expiration = keys[keys.length - 1]
-        arr = result.data[expiration]
+        const expiration = keys[2]
+        strikeArray = result.data[expiration]
       }
       else if (config.expirationMode === 'expir_oneBeforeLast') {
         const keys = Object.keys(result.data)
-        const expiration = keys[keys.length - 2]
-        arr = result.data[expiration]
+        const expiration = keys[2]
+        strikeArray = result.data[expiration]
       }
       else {
         expirationSelect = expirationsArray[expirationSelected]
-        arr = result.data[expirationSelect]
+        strikeArray = result.data[expirationSelect]
       }
 
-      if (! arr || arr.length === 0) {
+      if (! strikeArray || strikeArray.length === 0) {
         console.log ('fail, strike price array is empty', expirationSelect, result.data)
         setStrikeArray([]);
         setStrikeSelected(-1);
@@ -638,9 +638,9 @@ function StockOptions (props) {
         return;
       }
       if(log)
-        console.log ('strike-array', arr)
+        console.log ('strike-array', strikeArray)
 
-      setStrikeArray(arr);
+      setStrikeArray(strikeArray);
       // setSelectedStrike(-1); // clear selected strike
       var selectedStrike_ = -1; // for local use, during computation
       setStrikeShow(true)
