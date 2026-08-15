@@ -33,7 +33,8 @@ import { el } from 'date-fns/locale';
       setPrice(price_)
       setPrice_(price_)
       const changepct_ = priceInfo.changepct[0]
-      setChangepct((changepct_ * 100).toFixed(3))
+      if (setChangepct)
+        setChangepct((changepct_ * 100).toFixed(3))
       const ratio = changepct_;
       console.log (price_, changepct_)
 
@@ -148,7 +149,8 @@ function LatestPrice (props) {
 
         if (log)
           console.log (u, p) // log the url
-        props.setErr ()
+        if (props.setErr)
+          props.setErr ()
         setLatency('request sent to server')
         const mili = Date.now()
         // setResults('waiting for response')
@@ -166,15 +168,17 @@ function LatestPrice (props) {
           if (log)
               console.log ('result=', result.data)
           if (result.data && result.data === 'read ETIMEDOUT'){ //} || result.data+''.includes('fail')) {
+            if (props.setError)
               props.setError([props.symbol + ' LatestPrice ' + result.data])
             //   setResults()
-              return;
+            return;
           }
   
           const dat = result.data
           if (dat && typeof dat === 'string' && dat.startsWith('fail')) {
               console.log(props.symbol, getDate(), 'latestPrice', dat)
-              props.setErr(props.symbol + ' ' +  getDate() + ' latestPrice ' + dat)
+              if (props.setErr)
+                props.setErr(props.symbol + ' ' +  getDate() + ' latestPrice ' + dat)
               return;
           }
         //   if (log)
@@ -201,6 +205,7 @@ function LatestPrice (props) {
           }
           setPrice(price)
           if (! props.stockChartYValues[0]) {
+            if (props.setErr)
               props.setErr('price not found, Try again')
               return;
           }
@@ -216,6 +221,7 @@ function LatestPrice (props) {
           if (false)
             checkPriceColumnVisible()
           props.refreshByToggleColumns()
+          if (props.setErr)
           props.setErr()
 
         })

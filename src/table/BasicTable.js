@@ -143,7 +143,7 @@ const BasicTable = (props) => {
   if (LOG_alpha)
     console.log (API_KEY)
 
-  
+  const [priceDivClose, setPriceDivClose] = useState();
   const [splitsCalcFlag, setSplitsCalcFlag] = useState(true);
   const [openMarketFlag, setOpenMaretFlag] = useState(false);
   const [smoothSpikes, setSmoothSpikes] = useState(true);
