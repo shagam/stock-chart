@@ -608,7 +608,7 @@ function StockOptions (props) {
       if (log)
         console.log ('strike-prices', result.data)
       const mili = result.data.updated
-      setLatency('get expirations done, Latency(msec)=' + (Date.now() - mili1))
+      setLatency('get strikes done, Latency(msec)=' + (Date.now() - mili1))
       if (result.data.s !== 'ok') {
         props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
         console.log (props.symbol, 'strike-price error', result.data.s)
