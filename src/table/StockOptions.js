@@ -871,17 +871,16 @@ function StockOptions (props) {
     }
 
     corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
-    
-    if (config.expirationMode === 'expir_last') {
-      corsUrl += "&expir_last=true"
-    } else if (config.expirationMode === 'expir_oneBeforeLast') {
-      corsUrl += "&expir_oneBeforeLast=true"
-    }
-    else if (expirationSelected !== -1) {  // if expirationSelected
+    if (expirationSelected !== -1) {  // if expirationSelected
       const dat = new Date(expirationsArray[expirationSelected])
       const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
       setDaysToExpire(daysToExpire_.toFixed(0))
       corsUrl += "&expirationNum=" + (daysToExpire_ - 1).toFixed(0); 
+    }
+    else if (config.expirationMode === 'expir_last') {
+      corsUrl += "&expir_last=true"
+    } else if (config.expirationMode === 'expir_oneBeforeLast') {
+      corsUrl += "&expir_oneBeforeLast=true"
     }
     else {
       corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
