@@ -3,15 +3,23 @@
 
 .wobble-text {
   display: inline-block;          /* keeps the text from shifting */
-  animation: wobble 1s ease-in-out infinite;
+  animation: wobble 3s ease-in-out infinite;
   transform-origin: center center;
 }
 
 @keyframes wobble {
-  0%   { transform: rotate(0deg); }
-  25%  { transform: rotate(3deg); }
-  50%  { transform: rotate(-3deg); }
-  75%  { transform: rotate(2deg); }
-  100% { transform: rotate(1deg); }
+  0%   { transform: rotate(0deg);  color: #0b7eac; }
+  25%  { transform: rotate(3deg);  color: #ffd65c;}
+  50%  { transform: rotate(-3deg); color: #ff7eb6;}
+  75%  { transform: rotate(2deg);  color: #7ef671;  }
+  100% { transform: rotate(1deg);  color: #af6464; }
 }
 
+/* gentle color cycling */
+@keyframes colorShift {
+  0%   { color: #ffffff; }
+  25%  { color: #ffd65c; }
+  50%  { color: #ff7eb6; }
+  75%  { color: #7ec8ff; }
+  100% { color: #ffffff; }
+}
