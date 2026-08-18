@@ -93,6 +93,7 @@ import { UrlGetParse } from '../utils/UrlGetParse'
 import { CandlestickChart, CandleStick} from './CandleStick'
 import { Polymarket } from './Polymarket'
 import Contact from '../auth/Contact'
+import '../utils/styles.css'
 
 const BasicTable = (props) => {
 
@@ -1017,8 +1018,8 @@ const BasicTable = (props) => {
     </table>
 
     {/* Machanizms not for spacific sym */}
-    {! chartSymbol && <div style={{display: 'flex'}}>Press &nbsp;
-      <div style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}}>gain</div> &nbsp; for one or more symbols</div>}  
+    {! chartSymbol && <div> press <h6 style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}} className="wobble-text">Gain</h6>   &nbsp; for one or more symbols</div>}  
+    
     <div id='trailer_id'>
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
