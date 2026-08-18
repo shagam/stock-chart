@@ -479,7 +479,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                   rows[row_index].values.year10 = ((year10 ** (1/10) - 1) * 100).toFixed(1);
                 } else
                   delete rows[row_index].values.year10
-
+ 
                 if (year20 !== -1){
                   rows[row_index].values.year20 = ((year20 ** (1/20) - 1) * 100).toFixed(1);
                 } else
