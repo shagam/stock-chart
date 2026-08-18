@@ -875,7 +875,7 @@ function StockOptions (props) {
       const dat = new Date(expirationsArray[expirationSelected])
       const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
       setDaysToExpire(daysToExpire_.toFixed(0))
-      corsUrl += "&expirationNum=" + (daysToExpire_ - 1).toFixed(0); 
+      corsUrl += "&dte=" + (daysToExpire_ - 1).toFixed(0); 
     }
     else if (config.expirationMode === 'expir_last') {
       corsUrl += "&expir_last=true"
@@ -883,14 +883,14 @@ function StockOptions (props) {
       corsUrl += "&expir_oneBeforeLast=true"
     }
     else {
-      corsUrl += "&expirationNum=" + config.expirationNum // default use config.expirationNum 
+      corsUrl += "&dte=" + config.expirationNum // default use config.expirationNum 
       setDaysToExpire(config.expirationNum.toFixed(0))
     }
     if (strikeSelected !== -1) {// if strikeSelected
-      corsUrl += "&strikeNum=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+      corsUrl += "&strikePercent=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
     }
     else {
-      corsUrl += "&strikeNum=" + config.strikeNum  // default use config.strikeNum
+      corsUrl += "&strikePercent=" + config.strikeNum  // default use config.strikeNum
       // setStrikePrice((stockPrice * (1 + config.strikeNum / 100)).toFixed(2)) // convert to price, e.g. 15% above current price
     }
 
