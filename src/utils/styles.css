@@ -1,0 +1,35 @@
+/* styles.css */
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0b1020;
+}
+
+.moving-rotating-text {
+  font-size: 3rem;
+  color: #ffdd57;
+  animation: moveRotate 4s linear infinite;
+}
+
+@keyframes moveRotate {
+  0% {
+    transform: translateX(-100px) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    transform: translateX(0) rotate(90deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(100px) rotate(180deg);
+  }
+  75% {
+    transform: translateX(0) rotate(270deg);
+  }
+  100% {
+    transform: translateX(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
