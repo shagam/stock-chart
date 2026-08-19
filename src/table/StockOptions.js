@@ -259,7 +259,7 @@ function StockOptions (props) {
     if (header === "theta") return 'Theta sensitivity, time decay of option price'
     if (header === "vega") return 'Vega sensitivity, change in option price for 1% change in implied volatility'
 
-    if (header === 'yield_') return 'Yield, (expected price on expiration date - breakEven) / mid'  
+    if (header === 'yield_') return 'Yield, (expected_price_on_expiration_date - breakEven) / mid * 100'  
     if (header === "yearlyYield") return 'Estimated yearly yield based on estimated yearly gain'
     if (header === "breakEven") return 'Above this price $, means profit, strike + premium, price at expiration to break even'
     if (header === "expectedPrice") return 'expected price on expiration.  current_share_price * (1 + estimatedYearlyGain)^(dte/365) '
@@ -1439,7 +1439,7 @@ function StockOptions (props) {
                 <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div> <div> &nbsp; &nbsp; yield := (expectedPrice - breakEven) / mid * 100 </div>
               </div>
 
-            <div><input type="checkbox" checked={definitionsShow}  onChange={()=>setDefinitionsShow (! definitionsShow)}  />&nbsp;show-definitions &nbsp; &nbsp; </div>
+            {/* <div><input type="checkbox" checked={definitionsShow}  onChange={()=>setDefinitionsShow (! definitionsShow)}  />&nbsp;show-definitions </div> */}
             {definitionsShow && 
               <div>
                 <div>yield := (expectedPrice - breakEven) / mid * 100</div>
