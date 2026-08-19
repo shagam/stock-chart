@@ -112,7 +112,7 @@ function StockOptionsConfig (props) {
         </div>
         <br/> 
         <label style={{margin: '0px', padding: '0px'}}> &nbsp; &nbsp; adjust expected price (price/High) &nbsp;
-          <input style={{width: '50px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
+          <input style={{width: '70px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
             placeholder={priceDivHighFactor} 
               onChange={(e) => setPriceDivHighFactor (e.target.value)} value={priceDivHighFactor}  />
               &nbsp; 0 (No compensation), &nbsp; 1 (Full compensation) 
@@ -128,7 +128,7 @@ function StockOptionsConfig (props) {
         </div>
 
         <div>YearlyGain % &nbsp;
-          <input style={{width: '100px', backgroundColor: '#e5d333ff'}} type="number" name="YearlyGain" // required="required"
+          <input style={{width: '80px', backgroundColor: '#e5d333ff'}} type="number" name="YearlyGain" // required="required"
             placeholder="YearlyGain" step="any" onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
             &nbsp;&nbsp; <strong style={{color: 'magenta'}}>Please adjust to your future estimate </strong>  
         </div>

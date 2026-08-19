@@ -67,7 +67,7 @@ function StockOptions (props) {
   const [expirationShow, setExpirationShow] = useState(true);
   const [strikeShow, setStrikeShow] = useState(true);
   const [configShow, setConfigShow] = useState(false);
-
+  const [definitionsShow, setDefinitionsShow] = useState(false);
   const [AIGroup, setAIGroup] = useState({}); // keep group of optionQuote in AI
   const [AIGroupKeys, setAIGroupKeys] = useState([]); // keys of AI group
   const [AIGroupShow, setAIGroupShow] = useState(true); // name of AI group
@@ -267,7 +267,7 @@ function StockOptions (props) {
     if (header === "mid/price") return 'option_mid_price / share_price'
     if (header === "strikeDiff") return 'Ratio of mid premiumto previous row mid premium, for same expiration date, different strike price'
     if (header === "exprDiff") return 'Ratio of mid premium, to previous expiration dates with same strike price, for same strike price, different expiration date'
-    if (header === "deltaLeverage") return 'Percentage change in delta for percent change in share price'
+    if (header === "deltaLeverage") return 'Percent change in option-price for percent change in share price'
 
     return null
   }
@@ -1436,8 +1436,17 @@ function StockOptions (props) {
               </div>
               <div style={{display: 'flex', fontWeight: 'bold'}}>
                 count={optionQuote.expiration.length} &nbsp; &nbsp; bestYieldIndex={bestYearlyYieldIndex}  &nbsp; &nbsp;
-                <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div> 
+                <div style={{backgroundColor: CALCULATED_COLUMNS_COLOR}}> CALCULATED  </div> <div> &nbsp; &nbsp; yield := (expectedPrice - breakEven) / mid * 100 </div>
               </div>
+
+            <div><input type="checkbox" checked={definitionsShow}  onChange={()=>setDefinitionsShow (! definitionsShow)}  />&nbsp;show-definitions &nbsp; &nbsp; </div>
+            {definitionsShow && 
+              <div>
+                <div>yield := (expectedPrice - breakEven) / mid * 100</div>
+                <div>leverage_delta := (delta / mid) / (1 / stockPrice)  </div>
+                <div>  &nbsp; &nbsp; &nbsp; &nbsp;percentage change in option-price for percent change in share price</div>
+              </div>
+            }
           </div>}
 
           {/* premium quote table */}
