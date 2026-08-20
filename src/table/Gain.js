@@ -367,7 +367,11 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                '5year=', year5_.toFixed(3), '10year=', year10_.toFixed(3), '20year=', (year20_ ).toFixed(3), 'count=', count)
               rows[row_index].values.short = short.toFixed(3);
             
-              var price = stockChartYValuesFunction[0];
+              var price = rows[row_index].values.price
+              if (price)
+                console.log (sym, 'gain, price from rows table', price)
+              else
+                price = stockChartYValuesFunction[0];
               if (price === undefined)
                 price = -1;
                        
