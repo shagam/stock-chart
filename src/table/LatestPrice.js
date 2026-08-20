@@ -36,7 +36,7 @@ import { el } from 'date-fns/locale';
       if (setChangepct)
         setChangepct((changepct_ * 100).toFixed(3))
       const ratio = changepct_;
-      console.log (price_, changepct_)
+      console.log (symbol, 'lastPrice=', price_, 'changepct=', changepct_)
 
       var highestPrice = -1; // highest price
       if (stockChartYValues.length > 0) {
