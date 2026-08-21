@@ -132,8 +132,8 @@ function StockOptions (props) {
   //* get historical option quote */
   function historecalOptionQuote (row) { 
     // https://api.marketdata.app/v1/options/quotes/AAPL250117C00250000/?from=2024-01-01&to=2024-12-31
-    var optionSymbol = 'AAPL280121C00230000'; // Jan 2025 $150 AAPL Call
-    if (row)
+    var optionSymbol// = 'AAPL280121C00230000'; // Jan 2025 $150 AAPL Call
+    // if (row)
       optionSymbol = optionQuote.optionSymbol[row]
 
     var corsUrl;
@@ -161,7 +161,7 @@ function StockOptions (props) {
 
     // var url = 'https://www.marketdata.app/api/v1/options/quotes/' + optionSymbol;
     // const url = 'https://www.marketdata.app/api/v1/options/' + optionSymbol + '/token=' + TOKEN;
-    setOptionQuote({})
+    // setOptionQuote({})
     axios.get (corsUrl)
     .then ((result) => {
 
