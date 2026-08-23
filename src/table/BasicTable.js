@@ -1018,7 +1018,7 @@ const BasicTable = (props) => {
     </table>
 
     {/* Machanizms not for spacific sym */}
-    {! chartSymbol && <div> press <h6 style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}} className="wobble-text">Gain</h6>   &nbsp; for one or more symbols</div>}  
+    {! chartSymbol && <div> press <h6 style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}} className="wobble-text">gain</h6>   &nbsp; for one or more symbols</div>}  
     
     <div id='trailer_id'>
         {chartSymbol && stockChartXValues.length > 0 && 
