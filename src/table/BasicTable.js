@@ -230,7 +230,7 @@ const BasicTable = (props) => {
 
 
       // const cafeList = document.querySelector("#gain-history")
-  function errorAdd (err) {
+  function errorAdd (err, supressBeep) {
     const currentTime = getDateSec();
     // if (errors.length > 1 && err === errors[0][1] && currentTime === errors[0][0])
     //   return
@@ -241,7 +241,9 @@ const BasicTable = (props) => {
     refreshByToggleColumns()
     navigator.vibrate(500) // celular only
     //beep(100, 1000, 50) // beep(vol, freq, duration)
-    beep2();
+    if (! supressBeep) {
+      beep2();
+    }
   }
 
   const { login, currentUser, admin } = useAuth();
@@ -362,7 +364,7 @@ const BasicTable = (props) => {
         )
         .catch(error => {
           // Do something on error 
-          errorAdd ([symbol, 'info', error.message])
+          errorAdd ([symbol, 'info', error.message], true)
           // console.log(symbol + ' info ' + error.message)
       })
   }
@@ -463,7 +465,7 @@ const BasicTable = (props) => {
   
     //** avoid bubbleline while another symbol except a prious sym*/
     if (gainMap['bubbleLine'] && ! gainMap[sym]) {
-      errorAdd([sym, 'delete bubbleLine, avoid bubbleline while another symbol'])
+      errorAdd([sym, 'delete bubbleLine, avoid bubbleline while another symbol'], true)
       // console.log (sym, 'delete bubbleLine, avoid bubbleline while another symbol', Object.keys(gainMap))
       delete gainMap['bubbleLine']
     }
