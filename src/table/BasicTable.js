@@ -45,7 +45,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { FaArrowDown, FaArrowUp, FaAngleUp, FaCaretUp, FaSlideshare, FaVenusMars, FaChevronUp, FaChevronDown} from 'react-icons/fa'
 import { IoIosArrowUp,  IoIosArrowDown } from "react-icons/io";
-import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdSystemSecurityUpdateWarning } from "react-icons/md";
 
 
 //import {} from "https:///www.gstatc"
@@ -94,6 +94,8 @@ import { CandlestickChart, CandleStick} from './CandleStick'
 import { Polymarket } from './Polymarket'
 import Contact from '../auth/Contact'
 import '../utils/styles.css'
+
+import {SymSearch} from './SymSearch'
 
 const BasicTable = (props) => {
 
@@ -803,6 +805,7 @@ const BasicTable = (props) => {
     candleStick: 'candleStick',
     dropCount:    'dropCount',
     Options:      'Options',
+    symSearch:     'symSearch',
     contactUs:     'contactUs',
   };
   // marginLeft: '3px', marginRight: '3px', 
@@ -1207,11 +1210,16 @@ const BasicTable = (props) => {
           <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}
              title='Share stock-lists with other users of the tool'/>
           <div style={{color:'#9932CC'}}> stockLists </div>    
-          
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='6' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
+
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='symSearch' id='6' checked={nonSymTool==='symSearch'} onChange={nonSymChange}
+             title='Contact us'/>
+          <div style={{color:'#9932CC', }}> symSearch  </div>   
+     
+          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='7' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
              title='Contact us'/>
           <div style={{color:'#32cc84', fontWeight: "bold"}}> contactUs  </div>   
         </div>
+
 
         {eliHome && <div style={{display:'flex'}}>
           <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}
@@ -1246,6 +1254,8 @@ const BasicTable = (props) => {
         {nonSymTool === 'polymarket' && <Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
           stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {props.logFlags} eliHome={eliHome}
           servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}
+
+        {nonSymTool === 'symSearch' &&  <SymSearch />} 
 
         {nonSymTool === 'contactUs' &&  <Contact server={servSelect} ssl={ssl} PORT={PORT} />}
 
