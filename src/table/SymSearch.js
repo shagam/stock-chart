@@ -58,7 +58,7 @@ function SymSearch() {
     return (
         <div  style = {{ border: '2px solid green', backgroundColor: '#f0f0f0', padding: '5px', margin: '5px'}} >
             <h6 style={{color: 'blue'}}> symbol search (AlphaVantage) &nbsp;  </h6>
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp;Search pattern for symbol  &nbsp; </h6>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp;Search pattern (symbol) in AlphaVantage repository  &nbsp; </h6>
 
 
             <div style={{display: 'flex', alignItems: 'left'}}>
