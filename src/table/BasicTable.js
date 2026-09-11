@@ -506,6 +506,10 @@ const BasicTable = (props) => {
   }
 
   const handleDeleteClick = (symbol) => {
+    if (symbol === 'QQQ') {
+      alert ('QQQ is a must have, cannot delete')
+      return;
+    }
     if (chartSymbol === symbol){
       setChartSymbol()
     }
