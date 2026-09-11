@@ -33,57 +33,63 @@ function AuxilaryLinks () {
         {/* <hr/> */}
           <div>
             <div>&nbsp;</div>
-            <div>Aux</div>
-            <button role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp; 
-            <button role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button> &nbsp;      
-            <button role="link" onClick={() => openInNewTab(snpYearly)}> Yearly masrket return </button> &nbsp; 
-            <button style={{color:'red'}} role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans (IBI)</button> &nbsp;  
+            <div>Long term market gain</div>
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://www.crews.bank/blog/charts/stocks-for-the-long-run")}> stocks gain - long run </button> &nbsp; 
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab(snpYearly)}> Yearly masrket return </button> &nbsp; 
         </div>
+
+        <div>
+            <div>&nbsp;</div>
+            <div>Israelis specific</div>
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab(globalTechUrl)}> globalTech (Israeli mix) </button> &nbsp;      
+            <button style={{color:'red'}} role="link" onClick={() => openInNewTab("https://www.ibi.co.il/investments/60000-tax-limit/")}> Estate tax: 40% for non americans (IBI.co.il)</button> &nbsp;  
+        </div>
+
 
         <div>&nbsp;</div>
         <div>
             <div>Politician trading</div>
-            {<button role="link" onClick={() => openInNewTab('https://www.quiverquant.com')}>Quiver-trade</button>} &nbsp;  
-            {<button role="link" onClick={() => openInNewTab('https://www.capitoltrades.com/trades')}> Capitol-trade</button>} &nbsp;  
-            {<button role="link" onClick={() => openInNewTab('https://www.integrityindex.us')}> IntegrityIndex</button>}
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.quiverquant.com')}>Quiver-trade</button>} &nbsp;  
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.capitoltrades.com/trades')}> Capitol-trade</button>} &nbsp;  
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.integrityindex.us')}> IntegrityIndex</button>}
         </div>
 
         <div>&nbsp;</div>
         <div>
             <div>Stock market info</div>
-            {<button role="link" onClick={() => openInNewTab('https://www.google.com/finance/quote/QQQ:NASDAQ')}> google-finance qqq</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/QQQ/')}> yahoo-finance qqq</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/qqq')}> barchart qqq</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.google.com/finance/quote/QQQ:NASDAQ')}> google-finance qqq</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}}role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/QQQ/')}> yahoo-finance qqq</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.barchart.com/etfs-funds/quotes/qqq')}> barchart qqq</button>} &nbsp;
             </div>
 
         <div>&nbsp;</div>
         <div>
-            {<button role="link" onClick={() => openInNewTab('https://bigcharts.marketwatch.com/historical/default.asp?symb=qqq')}>bigchart.marketwatch qqq</button>} &nbsp; 
-            {<button role="link" onClick={() => openInNewTab('https://www.nasdaq.com/market-activity/etf/qqq/after-hours')}>nasdaq qqq</button>} &nbsp; 
-            {/* {<button role="link" onClick={() => openInNewTab('https://www.cnbc.com/markets/')}>cnbc</button>} &nbsp;  */}
-            {<button role="link" onClick={() => openInNewTab('https://www.cnbc.com/quotes/QQQ?qsearchterm=qqq')}>cnbc qqq</button>} &nbsp; 
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://bigcharts.marketwatch.com/historical/default.asp?symb=qqq')}>bigchart.marketwatch qqq</button>} &nbsp; 
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.nasdaq.com/market-activity/etf/qqq/after-hours')}>nasdaq qqq</button>} &nbsp; 
+            {/* {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.cnbc.com/markets/')}>cnbc</button>} &nbsp;  */}
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.cnbc.com/quotes/QQQ?qsearchterm=qqq')}>cnbc qqq</button>} &nbsp; 
                     
         </div>
 
         <div>&nbsp;</div>
         <div>
             <div>Crypto</div>
-            {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/')}>Crypto list</button>} &nbsp;         
-            {/* {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
-            {<button role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;           */}
-            {/* {<button role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;   */}
-            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/ETH/')}>ETH iterium ETF</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://charts.bitbo.io/price/')}>bitcoin chart</button>} &nbsp;  
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://coinmarketcap.com/')}>Crypto list</button>} &nbsp;         
+            {/* {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/bitcoin/')}>bitcoin</button>} &nbsp; 
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://coinmarketcap.com/currencies/ethereum//')}>iterium</button>} &nbsp;           */}
+            {/* {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://calendar.bitbo.io/price/')}>bitcoin</button>} &nbsp;   */}
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/BTC/')}>BTC bitcoin ETF</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://finance.yahoo.com/quote/ETH/')}>ETH iterium ETF</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://charts.bitbo.io/price/')}>bitcoin chart</button>} &nbsp;  
         </div>
 
                <div>&nbsp;</div>
         <div>
             <div>Precious Metals</div>
             {/* {<button role="link" onClick={() => openInNewTab('https://goldprice.org/live-gold-price.html')}>Gold price chart</button>} &nbsp; */}
-            {<button role="link" onClick={() => openInNewTab('https://silverprice.org/gold-price-history.html')}>Gold price chart</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://silverprice.org/silver-price-history.html')}>Silver price chart</button>} &nbsp;
-            {<button role="link" onClick={() => openInNewTab('https://www.macrotrends.net/1476/copper-prices-historical-chart-data')}>Copper price chart</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}}role="link" onClick={() => openInNewTab('https://silverprice.org/gold-price-history.html')}>Gold price chart</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://silverprice.org/silver-price-history.html')}>Silver price chart</button>} &nbsp;
+            {<button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab('https://www.macrotrends.net/1476/copper-prices-historical-chart-data')}>Copper price chart</button>} &nbsp;
 
         </div>
 
@@ -92,18 +98,18 @@ function AuxilaryLinks () {
             {/* <a href="https://finance.yahoo.com/quote/%5EVIX/">VIX </a> &nbsp; */}
             <div>&nbsp;</div>
             <div>Volatility</div>
-            <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
-            <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=VIXY")}> VIXY </button> &nbsp;
-            <button role="link" onClick={() => openInNewTab("https://www.google.com/search?q=UVXY")}> UVXY </button> &nbsp;
-            <button role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVXO/")}> VXO </button> &nbsp;
-            <button role="link" onClick={() => openInNewTab("https://www.gurufocus.com/economic_indicators/56/sp-500-shiller-cape-ratio")}>Shiller CAPE </button> &nbsp;
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVIX/")}> VIX </button> &nbsp;
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://www.google.com/search?q=VIXY")}> VIXY </button> &nbsp;
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://www.google.com/search?q=UVXY")}> UVXY </button> &nbsp;
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://finance.yahoo.com/quote/%5EVXO/")}> VXO </button> &nbsp;
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://www.gurufocus.com/economic_indicators/56/sp-500-shiller-cape-ratio")}>Shiller CAPE </button> &nbsp;
 
         </div>
 
         <div>
             <div>&nbsp;</div>
             <div>Prediction markets</div>
-            <button role="link" onClick={() => openInNewTab("https://polymarket.com")}> Plymarket bet </button> &nbsp;     
+            <button style={{backgroundColor: '#bbffbb'}} role="link" onClick={() => openInNewTab("https://polymarket.com")}> Plymarket bet </button> &nbsp;     
         </div>
 
         <hr/> 
