@@ -100,7 +100,7 @@ function App() {
                 <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/manual" element={<Manual  />}/>
 
-                <Route path="/generalLinks" element={< AuxilaryLinks />}/>
+                <Route path="/auxilaryLinks" element={< AuxilaryLinks />}/>
                
                 {/* <Route path="/contact" element={<Contact  />}/> */}
 
