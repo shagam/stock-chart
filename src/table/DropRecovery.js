@@ -505,7 +505,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   }
 
   function colorButton (title) {
-    console.log ('colorButton', title, dropStartDate, props.StockSymbol)
+    // console.log ('colorButton', title, dropStartDate, props.StockSymbol)
     const year = dropStartDate.getFullYear()
     if (year === title) {
         return 'lightGreen';
