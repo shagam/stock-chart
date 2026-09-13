@@ -50,8 +50,8 @@ export const MarketstackApi = (props) => {
     // & limit = 100
     // & offset = 0
 
-    //const API_KEY = '46bea3e9fabc17363dbbe15839cb0fe3';  // eli.shagam.gmail.com
-    const API_KEY = '2b5394f2ced526a03a5a7886403a22ce'; // Goldstein.dina@gmail.com
+    //const API_KEY = '46bea3e9fabc17363dbbe15839cb0fe3';  // eli
+    const API_KEY = '2b5394f2ced526a03a5a7886403a22ce'; // Goldstein
     var DATE = '2021-07-15'
     //var DATE = startDate;
     const startYear = startDate.getFullYear();

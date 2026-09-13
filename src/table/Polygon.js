@@ -16,9 +16,9 @@ import {format} from "date-fns"
 const LOG = true;
 
 export function polygon (sym, rows, date1, date2, freq, limit) {
-// const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  // eli.shagam
+// const apikey= 'apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  // e.......
 // const apikey = '_JxNU63UZg5QpyMpqQiomqbTeZwgRJqw'
-const apikey = '_kvdb0t_WnviFFV2TsT1gJ6ir6YANlpe' // j321111
+const apikey = '_kvdb0t_WnviFFV2TsT1gJ6ir6YANlpe' // j..1111
 
   // var url = 'https://api.polygon.io/v2/aggs/ticker/'+ sym + '/range/1/' + freq + '/' + date1 + '/' + date2 +
   // '?adjusted=true&sort=asc&limit=120?apiKey=bh3xFki_SFP0L5Tf0iRmGakkChakq47_'  

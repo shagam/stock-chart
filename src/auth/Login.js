@@ -28,7 +28,7 @@ export default function Login (props)  {
       await login (emailRef.current.value, passwordRef.current.value)
       navigate ('/')
 
-      if (currentUser && currentUser.email === 'eli.shagam.gmail.com') {
+      if (currentUser && currentUser.email === process.env.REACT_APP_eli) {
         props.setAdmin (true)
       }
 

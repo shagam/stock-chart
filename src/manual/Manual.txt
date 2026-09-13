@@ -114,6 +114,6 @@ USED PACKAGES
 
 BUG REPORT AND ENHANCEMENTS 
 
-The tool was developed by Eli Shagam, Please send any bug report, or enhancement request to eli.shagam@gmail.com 
+Use ContacktUs  link
 
 
