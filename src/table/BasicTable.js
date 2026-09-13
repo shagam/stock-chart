@@ -1,6 +1,10 @@
 // git log --pretty=format:"%h%x09%an%x09%ad%x09%s" 
 // force recompile
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
+
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -1196,6 +1200,104 @@ const BasicTable = (props) => {
           </div>}        
           <hr/> 
 
+
+
+        {chartSymbol && eliHome && <div>
+          {/* <Tabs /> */}
+            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze: &nbsp; </div>
+
+            <Link to="/*">none</Link> &nbsp; 
+            <Link to="/bubbleLine">bubbleLine</Link> &nbsp; 
+            <Link to="/dropRecovery">dropRecovery</Link> &nbsp; 
+            <Link to="/holdings">holdings</Link> &nbsp; 
+            <Link to="/options">options</Link> &nbsp; 
+            <Link to="/ai">ai</Link> &nbsp; 
+
+            <Link to="/simulateTrade">simulateTrade </Link> &nbsp; 
+            <Link to="/dropsCount">dropsCount </Link> &nbsp; 
+            <Link to="/monthGain">monthGain </Link> &nbsp; 
+            <Link to="/movingAverage">movingAverage </Link> &nbsp;
+            <Link to="/candleStick">candleStick </Link> &nbsp; 
+            <Link to="/priceAlert">priceAlert </Link> &nbsp; 
+            <Link to="/stockGain">gainRaw </Link> &nbsp; 
+            <Link to="/stockInfo">infoRaw </Link> &nbsp; 
+            <Link to="/tools">tools </Link> &nbsp; 
+            
+            <div>
+              {eliHome && ! showUrl && <Link to="/urlGetParse">urlGetParse </Link>} &nbsp; 
+              {eliHome && <Link to="/leveragaETF">leveragaETF </Link>} &nbsp; 
+              {eliHome && <Link to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
+          </div>
+
+          <Routes>
+            <Route path="bubbleLine" element={ <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
+                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
+                  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>} />
+
+            <Route path="dropRecovery" element={<DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
+             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>} />
+
+            <Route path="holdings" element={<Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
+             logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>} />
+
+            <Route path="options" element={<StockOptions symbol = {chartSymbol} stockPrice = {price} priceDivHigh = {priceDivHigh}
+                errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
+                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={props.logFlags}
+                PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />} />
+
+            <Route path="ai" element={<Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
+              city = {city} countryName = {countryName} countryCode = {countryCode} regionName = {regionName} ip = {ip} os = {os}
+              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}/>
+
+
+
+            <Route path="simulateTrade" element={<Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
+                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
+                 errorAdd={errorAdd} saveTable={props.saveTable} monthGainData={monthGainData} daily={daily}/>}/>
+
+            <Route path="dropsCount" element={<DropsCount symbol = {chartSymbol}  
+                setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+                errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>}  />  
+
+            <Route path="monthGain" element={ <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
+                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} daily={daily}/>}/>
+
+            <Route path="movingAverage" element={<MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
+              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}/>
+
+            <Route path="candlestick" element={<CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
+               errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns} 
+                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText} />}/>
+
+            <Route path="priceAlert" element={<PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} setPriceAlertTable = {setPriceAlertTable}
+              gainMap = {gainMap}
+              errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
+               stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> }/>
+
+            <Route path="stockGain" element={ <StockGain stockGain = {gainData} symbol={chartSymbol} //gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
+              daily={daily} chartData={chartData} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns} /> }/>
+
+            <Route path="stockInfo" element={<StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} /> } />
+
+            <Route path="tools" element={<Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
+                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
+                servSelect={servSelect} ssl={ssl} PORT={PORT} daily={daily} /> } />
+
+            <Route path="urlGetParse" element={<UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> } />
+
+            <Route path="leveragaETF" element={<LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd}  daily={daily} />} />
+
+            <Route path="marketOpenPrice" element={<MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
+              setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
+              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily} />} />
+
+          </Routes>
+        </div>}
+  
+        <hr/> 
+
           {/* radio buttond for no sym tools */}
 
           <div style={{display:'flex'}}>
@@ -1235,6 +1337,7 @@ const BasicTable = (props) => {
           <div style={{color:'#9932CC'}}> polymarket  </div>   
 
         </div>}
+
 
 
         {/* select non sym tool */}

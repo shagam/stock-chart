@@ -87,7 +87,7 @@ function App() {
                    {/* <hr/>  */}
             <Router>
               <Routes>
-                <Route exact path="/" element={<BasicTable refreshCallBack = {refreshCallBack} logFlags={logFlags} setServer={setServer}/>}/>
+                <Route exact path="/*" element={<BasicTable refreshCallBack = {refreshCallBack} logFlags={logFlags} setServer={setServer}/>}/>
                 <Route path ="/dashBoard"  element={<Dashboard />}/>
                       {/* <Route path="/" element={<Dashboard/>}   /> */}
                 <Route path="/signup" element={<Signup/> } />
