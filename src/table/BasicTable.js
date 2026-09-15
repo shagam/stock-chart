@@ -1202,34 +1202,43 @@ const BasicTable = (props) => {
 
 
 
-        {chartSymbol && eliHome && <div>
+        {eliHome && <div>
           {/* <Tabs /> */}
-            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze: &nbsp; </div>
 
-            <Link to="/*">none</Link> &nbsp; 
-            <Link to="/bubbleLine">bubbleLine</Link> &nbsp; 
-            <Link to="/dropRecovery">dropRecovery</Link> &nbsp; 
-            <Link to="/holdings">holdings</Link> &nbsp; 
-            <Link to="/options">options</Link> &nbsp; 
-            <Link to="/ai">ai</Link> &nbsp; 
-
-            <Link to="/simulateTrade">simulateTrade </Link> &nbsp; 
-            <Link to="/dropsCount">dropsCount </Link> &nbsp; 
-            <Link to="/monthGain">monthGain </Link> &nbsp; 
-            <Link to="/movingAverage">movingAverage </Link> &nbsp;
-            <Link to="/candleStick">candleStick </Link> &nbsp; 
-            <Link to="/priceAlert">priceAlert </Link> &nbsp; 
-            <Link to="/stockGain">gainRaw </Link> &nbsp; 
-            <Link to="/stockInfo">infoRaw </Link> &nbsp; 
-            <Link to="/tools">tools </Link> &nbsp; 
+            {/* <Link to="/tutorials">Tutorials</Link> &nbsp; 
+            <Link to="/about">About</Link>&nbsp; 
+            {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp; */}
             
-            <div>
-              {eliHome && ! showUrl && <Link to="/urlGetParse">urlGetParse </Link>} &nbsp; 
-              {eliHome && <Link to="/leveragaETF">leveragaETF </Link>} &nbsp; 
-              {eliHome && <Link to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
-          </div>
+            {chartSymbol && <div>
+            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze: &nbsp; </div>
+              <Link to="/*">none</Link> &nbsp; 
+              <Link to="/bubbleLine">bubbleLine</Link> &nbsp; 
+              <Link to="/dropRecovery">dropRecovery</Link> &nbsp; 
+              <Link to="/holdings">holdings</Link> &nbsp; 
+              <Link to="/options">options</Link> &nbsp; 
+              <Link to="/ai">ai</Link> &nbsp; 
 
+              <Link to="/simulateTrade">simulateTrade </Link> &nbsp; 
+              <Link to="/dropsCount">dropsCount </Link> &nbsp; 
+              <Link to="/monthGain">monthGain </Link> &nbsp; 
+              <Link to="/movingAverage">movingAverage </Link> &nbsp;
+              <Link to="/candleStick">candleStick </Link> &nbsp; 
+              <Link to="/priceAlert">priceAlert </Link> &nbsp; 
+              <Link to="/stockGain">gainRaw </Link> &nbsp; 
+              <Link to="/stockInfo">infoRaw </Link> &nbsp; 
+              <Link to="/tools">tools </Link> &nbsp; 
+              
+              <div>
+                {eliHome && ! showUrl && <Link to="/urlGetParse">urlGetParse </Link>} &nbsp; 
+                {eliHome && <Link to="/leveragaETF">leveragaETF </Link>} &nbsp; 
+                {eliHome && <Link to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
+            </div>
+          </div>}
           <Routes>
+
+            {/* <Route path="/tutorials" element={<Tutorials  /> } /> */}
+            {/* <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>  */}
+
             <Route path="bubbleLine" element={ <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
                 stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
                   bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>} />
