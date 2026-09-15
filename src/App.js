@@ -36,6 +36,11 @@ const Manual = lazy(() => import ('./manual/Manual'))
 const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "verify_1", "splits",
 "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","target","gain","backEnd","simulateTrade","stockLists", "month"];
 
+ const navigation = performance.getEntriesByType("navigation")[0];
+
+if (navigation?.type === "reload") {
+  window.history.replaceState(null, "", "/");
+}
 
 function App() {
   const [count, setCount] = useState (0);
