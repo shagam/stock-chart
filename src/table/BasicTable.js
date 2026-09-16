@@ -1,7 +1,7 @@
 // git log --pretty=format:"%h%x09%an%x09%ad%x09%s" 
 // force recompile
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 // import Tabs from '@mui/material/Tabs';
 // import Tab from '@mui/material/Tab';
 
@@ -870,8 +870,15 @@ const BasicTable = (props) => {
   }
   
   return (
-    <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>
+    <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>          
     <>
+        <h2  style={{display:'flex', fontStyle: "italic"}}>
+          <strong style={{color:'#2caa2c'}}>Share</strong>
+          <strong style={{color:'#b3be18'}}>Compare</strong> 
+          <div style={{fontSize: '15px', paddingTop: '10px'}}>.org </div> 
+          <div style={{fontSize: '15px', paddingTop: '10px'}}>{useLocation ().pathname}</div>
+         </h2> 
+
         {/* <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div> */}
         <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
 
