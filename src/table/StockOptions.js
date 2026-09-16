@@ -13,6 +13,7 @@ import {beep2} from '../utils/ErrorList'
 import StockOptionsConfig from './StockOptionsConfig';
 import { FaCheckSquare } from 'react-icons/fa';
 import { FaCog } from 'react-icons/fa';
+import { Helmet } from "react-helmet";
 // 
 // Zuberi Moshe
 
@@ -1255,6 +1256,16 @@ function StockOptions (props) {
         <div style = {{display: 'flex'}}>
           <div style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
+
+          <Helmet>
+            <title>Options Analyzer – ShareCompare</title>
+            <meta
+              name="description"
+              content="Analyse options strategies, compare Greeks, visualize risk, and evaluate trades."
+            />
+            <meta name="keywords" content="options, greeks, stock analysis, sharecompare" />
+            <link rel="canonical" href="https://sharecompare.org/options" />
+          </Helmet>
         </div>
         <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={props.stockPrice} &nbsp; &nbsp; price/High={props.priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
 
