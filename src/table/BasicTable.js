@@ -1209,7 +1209,7 @@ const BasicTable = (props) => {
             {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp; */}
             
             {chartSymbol && <div>
-            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze: &nbsp; </div>
+            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp; </div>
               <Link to="/*">none</Link> &nbsp; 
               <Link to="/bubbleLine">bubbleLine</Link> &nbsp; 
               <Link to="/dropRecovery">dropRecovery</Link> &nbsp; 
