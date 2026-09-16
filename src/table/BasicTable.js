@@ -1042,7 +1042,7 @@ const BasicTable = (props) => {
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
         {/* Machanizms  for spacific sym (chartSymbol) */}
-        <hr/>
+        {/* <hr/> */}
         
          
         {/* Analyze tools for specific sym */}
@@ -1197,8 +1197,7 @@ const BasicTable = (props) => {
                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />}
 
           </div>}
-          </div>}        
-          <hr/>     
+          </div>}         
 
 
         {<div>
@@ -1209,6 +1208,7 @@ const BasicTable = (props) => {
             {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp; */}
             
             {chartSymbol && <div>
+              <hr/>    
             <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp; </div>
               <Link to="/*">none</Link> &nbsp; 
               <Link to="/bubbleLine">bubbleLine</Link> &nbsp; 
