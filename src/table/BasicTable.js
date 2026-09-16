@@ -1046,7 +1046,7 @@ const BasicTable = (props) => {
         
          
         {/* Analyze tools for specific sym */}
-        {chartSymbol && <div>
+        {chartSymbol && false && <div>
           
           {/* <div>&nbsp;</div> */}
           {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
@@ -1198,11 +1198,10 @@ const BasicTable = (props) => {
 
           </div>}
           </div>}        
-          <hr/> 
+          <hr/>     
 
 
-
-        {eliHome && <div>
+        {<div>
           {/* <Tabs /> */}
 
             {/* <Link to="/tutorials">Tutorials</Link> &nbsp; 
