@@ -2,6 +2,7 @@
   publish = "build"
   node_version = "20"
 
+
 # --- SEO SSR ROUTES (STATIC) ---
 # These routes forward to your backend SSR server.
 
