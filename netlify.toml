@@ -1,4 +1,122 @@
+[build]
+  publish = "build"
+
+# --- SEO SSR ROUTES (STATIC) ---
+# These routes forward to your backend SSR server.
+
 [[redirects]]
-from = "/*"
-to = "index.html"
-status=200
+  from = "/stock/:symbol"
+  to = "https://shareCompare.org/stock/:symbol"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/compare/:a/:b"
+  to = "https://shareCompare.org/compare/:a/:b"
+  status = 200
+  force = true
+
+
+# routes only
+
+[[redirects]]
+  from = "/bubbleLine"
+  to = "https://shareCompare.org/bubbleLine"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dropRecovery"
+  to = "https://shareCompare.org/dropRecovery"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/holdings"
+  to = "https://shareCompare.org/holdings"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/options"
+  to = "https://shareCompare.org/options"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/simulateTrade"
+  to = "https://shareCompare.org/simulateTrade"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/dropCount"
+  to = "https://shareCompare.org/dropCount"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/monthGain"
+  to = "https://shareCompare.org/monthGain"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/movingAverage"
+  to = "https://shareCompare.org/movingAverage"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/candleStick"
+  to = "https://shareCompare.org/candleStick"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/priceAlert"
+  to = "https://shareCompare.org/priceAlert"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/gainRaw"
+  to = "https://shareCompare.org/gainRaw"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/infoRaw"
+  to = "https://shareCompare.org/infoRaw"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/config"
+  to = "https://shareCompare.org/config"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/commonDataBase"
+  to = "https://shareCompare.org/commonDataBase"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/stockLists"
+  to = "https://shareCompare.org/stockLists"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/contactUs"
+  to = "https://shareCompare.org/contactUs"
+  status = 200
+  force = true
+
+# --- REACT SPA CATCH-ALL ---
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
