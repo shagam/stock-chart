@@ -26,7 +26,10 @@ import {getDate, } from '../utils/Date'
           console.log (symbol, 'i=', i, 'div_ratio=', div_ratio.toFixed(4), 'div=', div, 'closePrice=', closePrice)
         }
       }
+      chartData[keys[i]]['2. high'] = Number(chartData[keys[i]]['2. high']).toFixed(3)
+      chartData[keys[i]]['3. low'] = Number(chartData[keys[i]]['3. low']).toFixed(3)
     }
+
      //** calculate average dividend */
     const year_old = keys[keys.length - 1].split('-')[0]
     const year_new = keys[0].split('-')[0]
@@ -87,7 +90,7 @@ const StockGain = (props) => {
 /**
  * calculate average dividend
  */
-
+    const ROW_SPACING = {padding: "0px 5px 0px 8px", margin: '0px'}
 
   return (
     <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
@@ -110,15 +113,15 @@ const StockGain = (props) => {
       {/* Stock gain list */}
 
 
-      {Object.keys(props.chartData).length > 0 && <div  style={{height:'400px', overflow:'auto'}}> 
+      {Object.keys(props.chartData).length > 0 && <div  style={{height:'400px', overflow:'auto', width:'700px', border: '1px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}}> 
           <table>
               <thead>
                   <tr>
-                  <th style={{width: '110px'}}>date</th>
-                  <th>n</th>
+                  <th style={{...ROW_SPACING, width: '60px'}}>date</th>
+                  <th style={{...ROW_SPACING, width: '30px'}}>n</th>
                       {Object.keys(props.chartData[Object.keys(props.chartData)[0]]).map((h,h1) => {
                           return (
-                            <th style={{width: '80px'}} key={h1}>{h}</th>
+                            <th style={{...ROW_SPACING, width: '80px'}} key={h1}>{h}</th>
                           )
                       })}
                   </tr>
