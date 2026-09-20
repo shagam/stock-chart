@@ -102,7 +102,7 @@ import '../utils/styles.css'
 import {SymSearch} from './SymSearch'
 
 const BasicTable = (props) => {
-
+  const location = useLocation(); 
   const [errors, setErrors] = useState([]);
   const [error, setErr] = useState();
   const [chartSymbol, setChartSymbol] = useState("");
@@ -869,6 +869,13 @@ const BasicTable = (props) => {
     return 'black'
   }
   
+  function routeColor (rout) {
+    if (location.pathname === rout) {
+      return 'pink'
+    }
+    return 'white'
+  }
+
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>          
     <>
@@ -1218,26 +1225,26 @@ const BasicTable = (props) => {
               <hr/>    
             <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp; </div>
               <Link to="/*">none</Link> &nbsp; 
-              <Link to="/bubbleLine">bubbleLine</Link> &nbsp; 
-              <Link to="/dropRecovery">dropRecovery</Link> &nbsp; 
-              <Link to="/holdings">holdings</Link> &nbsp; 
-              <Link to="/options">options</Link> &nbsp; 
-              <Link to="/ai">ai</Link> &nbsp; 
+              <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
+              <Link style={{background: routeColor('/dropRecovery')}} to="/dropRecovery"> dropRecovery</Link> &nbsp; 
+              <Link style={{background: routeColor('/holdings')}} to="/holdings">holdings</Link> &nbsp; 
+              <Link style={{background: routeColor('/options')}} to="/options">options</Link> &nbsp; 
+              <Link style={{background: routeColor('/ai')}} to="/ai">ai</Link> &nbsp; 
 
-              <Link to="/simulateTrade">simulateTrade </Link> &nbsp; 
-              <Link to="/dropsCount">dropsCount </Link> &nbsp; 
-              <Link to="/monthGain">monthGain </Link> &nbsp; 
-              <Link to="/movingAverage">movingAverage </Link> &nbsp;
-              <Link to="/candleStick">candleStick </Link> &nbsp; 
-              <Link to="/priceAlert">priceAlert </Link> &nbsp; 
-              <Link to="/stockGain">gainRaw </Link> &nbsp; 
-              <Link to="/stockInfo">infoRaw </Link> &nbsp; 
-              <Link to="/tools">tools </Link> &nbsp; 
+              <Link style={{background: routeColor('/simulateTrade')}} to="/simulateTrade">simulateTrade </Link> &nbsp; 
+              <Link style={{background: routeColor('/dropsCount')}} to="/dropsCount">dropsCount </Link> &nbsp; 
+              <Link style={{background: routeColor('/monthGain')}} to="/monthGain">monthGain </Link> &nbsp; 
+              <Link style={{background: routeColor('/movingAverage')}} to="/movingAverage">movingAverage </Link> &nbsp;
+              <Link style={{background: routeColor('/candleStick')}} to="/candleStick">candleStick </Link> &nbsp; 
+              <Link style={{background: routeColor('/priceAlert')}} to="/priceAlert">priceAlert </Link> &nbsp; 
+              <Link style={{background: routeColor('/gainRaw')}} to="/gainRaw">gainRaw </Link> &nbsp; 
+              <Link style={{background: routeColor('/infoRaw')}} to="/infoRaw">infoRaw </Link> &nbsp; 
+              <Link style={{background: routeColor('/tools')}} to="/tools">tools </Link> &nbsp; 
               
               <div>
-                {eliHome && ! showUrl && <Link to="/urlGetParse">urlGetParse </Link>} &nbsp; 
-                {eliHome && <Link to="/leveragaETF">leveragaETF </Link>} &nbsp; 
-                {eliHome && <Link to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
+                {eliHome && <Link style={{background: routeColor('/urlGetParse')}} to="/urlGetParse">urlGetParse </Link>} &nbsp; 
+                {eliHome && <Link style={{background: routeColor('/leveragaETF')}} to="/leveragaETF">leveragaETF </Link>} &nbsp; 
+                {eliHome && <Link style={{background: routeColor('/marketOpenPrice')}} to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
             </div>
           </div>}
           <Routes>
@@ -1291,10 +1298,10 @@ const BasicTable = (props) => {
               errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> }/>
 
-            <Route path="stockGain" element={ <StockGain stockGain = {gainData} symbol={chartSymbol} //gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
+            <Route path="gainRaw" element={ <StockGain stockGain = {gainData} symbol={chartSymbol} //gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
               daily={daily} chartData={chartData} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns} /> }/>
 
-            <Route path="stockInfo" element={<StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} /> } />
+            <Route path="infoRaw" element={<StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} /> } />
 
             <Route path="tools" element={<Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
                 stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
