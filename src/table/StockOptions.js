@@ -1257,16 +1257,7 @@ function StockOptions (props) {
           <div style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
 
-          <Helmet>
-            <title>Options Analyzer – ShareCompare</title>
-            <meta
-              name="description"
-              content="Analyse options strategies, compare Greeks, visualize risk, and evaluate trades."
-            />
-            <meta name="keywords" content="options, greeks, stock analysis, sharecompare" />
-            <link rel="canonical" href="https://sharecompare.org/options" />
-          </Helmet>
-        </div>
+          </div>
         <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={props.stockPrice} &nbsp; &nbsp; price/High={props.priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
 
         {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}
