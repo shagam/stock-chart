@@ -93,7 +93,7 @@ const StockGain = (props) => {
  */
     const ROW_SPACING = {padding: "0px 5px 0px 8px", margin: '0px'}
   //  top, right, bottom, left 
-  
+
   return (
     <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
       <div> 
@@ -134,11 +134,11 @@ const StockGain = (props) => {
                         return null
                        return (
                        <tr key={s1}>
-                        <td style={{padding: '2px', margin: '2px', width: '110px'}} >{dateReplaceDash(date)}</td>
-                        <td style={{padding: '2px', margin: '2px', width: '55px'}}>{s1}</td>
+                        <td style={{...ROW_SPACING,  width: '110px'}} >{dateReplaceDash(date)}</td>
+                        <td style={{...ROW_SPACING, width: '55px'}}>{s1}</td>
                           {Object.keys(props.chartData[date]).map((attrib,a1) => {
                               return (
-                                <td key={a1} style={{padding: '2px', margin: '2px'}} >{isZero(props.chartData[date][attrib], date, attrib)}</td>
+                                <td key={a1} style={{...ROW_SPACING}} >{isZero(props.chartData[date][attrib], date, attrib)}</td>
                               )
                           })}
                       </tr>
