@@ -35,7 +35,8 @@ function SymSearch() {
             const latency = miliEnd - miliStart
 
             setSearchResults(result.data)
-            setKeys(Object.keys(result.data.bestMatches[0]))
+            if (result.data.bestMatches && result.data.bestMatches.length > 0)
+              setKeys(Object.keys(result.data.bestMatches[0]))
 
             console.log (getDate(), 'sym search', searchStr, result.data, latency)
          
@@ -62,13 +63,13 @@ function SymSearch() {
 
 
             <div style={{display: 'flex', alignItems: 'left'}}>
-                <GetInt init={searchText} callBack={setSearchText} title='pattern  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.]+" width = '25%'/>
+                <GetInt init={searchText} callBack={setSearchText} title='pattern  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.\-]+" width = '25%'/>
                 <button style={{background: 'aqua'}} onClick={() => searchSymbols(searchText)}> sym search</button>&nbsp;
             </div>
 
 
             <hr/> 
-
+            count = {searchResults.bestMatches && searchResults.bestMatches.length} &nbsp; &nbsp;
             {keys.length > 0 && <div style={{maxHeight:'500px', maxWidth: '1400px', overflow:'auto'}}>
             <table>
                 <thead>
