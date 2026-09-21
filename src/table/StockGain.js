@@ -26,6 +26,7 @@ import {getDate, } from '../utils/Date'
           console.log (symbol, 'i=', i, 'div_ratio=', div_ratio.toFixed(4), 'div=', div, 'closePrice=', closePrice)
         }
       }
+      chartData[keys[i]]['1. open'] = Number(chartData[keys[i]]['1. open']).toFixed(3)
       chartData[keys[i]]['2. high'] = Number(chartData[keys[i]]['2. high']).toFixed(3)
       chartData[keys[i]]['3. low'] = Number(chartData[keys[i]]['3. low']).toFixed(3)
     }
@@ -91,7 +92,8 @@ const StockGain = (props) => {
  * calculate average dividend
  */
     const ROW_SPACING = {padding: "0px 5px 0px 8px", margin: '0px'}
-
+  //  top, right, bottom, left 
+  
   return (
     <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
       <div> 
