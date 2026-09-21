@@ -1060,169 +1060,13 @@ const BasicTable = (props) => {
         
          
         {/* Analyze tools for specific sym */}
-        {chartSymbol && false && <div>
+        {chartSymbol && <div>
           
-          {/* <div>&nbsp;</div> */}
-          {(! analyzeTool || analyzeTool === 'none') && <div style={{display: 'flex'}}> 
-            <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; Analyze &nbsp;
-            {/* <div style={{color: 'blue'}}> (Choose):</div> */}
-          </div>}
-
-          {<div>
-            <div style={{display:'flex'}}>
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='none' id='11' checked={analyzeTool==='none'} onChange={onOptionChange}/> 
-              <div style={{color:'blue'}}>none</div> &nbsp; 
-
-              <input style={{'color':'magenta', marginLeft: '5px'}}  type="radio" name="day" value='peak2peak' id='0' checked={analyzeTool==='peak2peak'} onChange={onOptionChange}
-                 title='calc line that connect major stock market bubbles (2008,2022)'/>
-              <div style={{color:'blue', background: gainMap.bubbleLine?'lightgreen':'white'}}> bubble-line  </div> 
-              
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropRecovery' id='1' checked={analyzeTool==='dropRecovery'} onChange={onOptionChange}
-                  title='calc value drop of a symbol during market crash, and the recovery time (weeks or dayes) '/>         
-              <div style={{color:'blue'}}>  dropRecovery   </div> 
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='holdings' id='2' checked={analyzeTool==='holdings'} onChange={onOptionChange}
-                title='Get ETF holdings '/> 
-              <div style={{color:'blue'}}> holdings  </div> 
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='options' id='3' checked={analyzeTool==='options'} onChange={onOptionChange}
-                title='stock options'/> 
-              <div style={{color:'blue', background: pageForAiText && pageForAiText.startsWith('options')?'lightgreen':'white'}}> options  </div> 
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='ai' id='24' checked={analyzeTool==='ai'} onChange={onOptionChange}
-                title='AI'/> 
-              <div style={{color: 'blue', background: pageForAi?'lightgreen':'white'}}> Ai  </div> 
-
-            </div>
-
-            <div style={{display:'flex'}}>              
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='simulateTrade' id='6' checked={analyzeTool==='simulateTrade'} onChange={onOptionChange}
-                  title='simulate optimized trade based on week gain or bubble-line proximety'/>  
-              <div style={{color:'blue'}}> simulateTrade   </div>    
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='dropCount' id='14' checked={analyzeTool==='dropCount'} onChange={onOptionChange}/>
-              <div style={{color:'blue'}}> dropCount  </div>
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='monthGain' id='7' checked={analyzeTool==='monthGain'} onChange={onOptionChange}
-                  title='Calc average month and week gain over the last 24 years'/>  
-              <div style={{color:'blue', background: monthGainData.weekGainArray?'lightgreen':'white'}}> monthGain   </div>
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='movingAverage' id='10' checked={analyzeTool==='movingAverage'} onChange={onOptionChange}/>
-              <div style={{color:'blue'}}  title='Moving average, for market trend'> movAverage  </div>
-            </div>
-
-            <div style={{display:'flex'}}>              
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='candleStick' id='13' checked={analyzeTool==='candleStick'} onChange={onOptionChange}/>
-               <div style={{color:'blue', background: pageForAiText && pageForAiText.startsWith('candleStick')?'lightgreen':'white'}}> candleStick  </div> 
-                {/* <div style={{color:'blue'}}> candleStick  </div>    */}
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='priceAlert' id='11' checked={analyzeTool==='priceAlert'} onChange={onOptionChange}/>
-              <div style={{color:'blue'}}  title='Moving average, for market trend'> priceAlert </div>
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockGain' id='4' checked={analyzeTool==='stockGain'} onChange={onOptionChange}
-                title='Raw gain data as fetched by provider' /> 
-              <div style={{color:'blue'}}> gainRaw  </div> 
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='stockInfo' id='5' checked={analyzeTool==='stockInfo'} onChange={onOptionChange}
-                title='Raw basic company data as fetched by provider'/>  
-              <div style={{color:'blue'}}> infoRaw   </div> 
-            
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='tools' id='20' checked={analyzeTool==='tools'} onChange={onOptionChange}/>  
-              <div style={{color:'blue'}}  title='auxilery tools'>  tools       </div>               
-            </div>
-
-            {eliHome && ! showUrl && <div style={{display:'flex'}}>
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='urlGetParse' id='12' checked={analyzeTool==='urlGetParse'} onChange={onOptionChange}/>  
-              <div style={{color:'blue'}}  title='urlGetParse'> urlGetParse </div> 
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='leveragaETF' id='8' checked={analyzeTool==='leveragaETF'} onChange={onOptionChange}
-                title='Strategy for Lavarage ETF like TQQQ (tripple QQQ)'/>
-                {<div style={{color:'blue'}}> leveragaETF  </div>}
-
-              <input style={{marginLeft: '5px'}}  type="radio" name="day" value='marketOpenPrice' id='9' checked={analyzeTool==='marketOpenPrice'} onChange={onOptionChange}/>
-              {<div style={{color:'blue'}}> marketOpenPrice  </div>}
-              
-            </div>}
-            
-            {/* <hr/>  */}
-            {/* pans  */}
-            {/* <div> &nbsp; </div> */}
-            {analyzeTool ==='dropRecovery' && <DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
-             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
-
-            {analyzeTool==='peak2peak' && <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
-                  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>}
-
-             {analyzeTool ==='holdings' && <Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
-
-            {analyzeTool ==='ai' && <Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
-            city = {city} countryName = {countryName} countryCode = {countryCode} regionName = {regionName} ip = {ip} os = {os}
-             logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}
-
-            {analyzeTool ==='tools' && <Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
-            stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
-            servSelect={servSelect} ssl={ssl} PORT={PORT} daily={daily} /> }
-
-            {analyzeTool ==='stockGain' &&  <StockGain stockGain = {gainData} symbol={chartSymbol} //gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
-            daily={daily} chartData={chartData} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns} />}
-
-            {analyzeTool ==='stockInfo' && <StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} />}
-         
-            {analyzeTool ==='simulateTrade' &&  <Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
-                 errorAdd={errorAdd} saveTable={props.saveTable} monthGainData={monthGainData} daily={daily}/>}
-
-            {analyzeTool ==='monthGain' && <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
-                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} daily={daily}/>}
-
-            {analyzeTool ==='marketOpenPrice' && <MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
-              setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily} />}
-
-            {/* {admin && <MarketStackApi symbol={chartSymbol} admin = {admin} errorAdd={errorAdd} logFlags={props.logFlags}/>} */}
-            {analyzeTool ==='leveragaETF' && <LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd}  daily={daily} />}
-
-            {analyzeTool ==='movingAverage' && <MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
-             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}
-
-            {analyzeTool ==='priceAlert' && <div> <PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} setPriceAlertTable = {setPriceAlertTable}
-              gainMap = {gainMap}
-              errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
-               stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> </div>}
-
-            {analyzeTool ==='urlGetParse' && <div><UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> </div>}
-
-            {analyzeTool ==='candleStick' && <CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
-               errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns} 
-                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText} />}
-
-            {analyzeTool ==='dropCount' && <DropsCount symbol = {chartSymbol}  
-                setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-                errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>}
-
-            {analyzeTool ==='options' && <StockOptions symbol = {chartSymbol} stockPrice = {price} priceDivHigh = {priceDivHigh}
-                errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
-                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={props.logFlags}
-                PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />}
-
-          </div>}
-          </div>}         
-
-
-        {<div>
-          {/* <Tabs /> */}
-
             {/* <Link to="/tutorials">Tutorials</Link> &nbsp; 
             <Link to="/about">About</Link>&nbsp; 
             {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp; */}
             
-            {chartSymbol && <div>
-              <hr/>    
+            <hr/>    
             <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp; </div>
               <Link to="/*">none</Link> &nbsp; 
               <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
@@ -1246,7 +1090,7 @@ const BasicTable = (props) => {
                 {eliHome && <Link style={{background: routeColor('/leveragaETF')}} to="/leveragaETF">leveragaETF </Link>} &nbsp; 
                 {eliHome && <Link style={{background: routeColor('/marketOpenPrice')}} to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
             </div>
-          </div>}
+
           <Routes>
 
             {/* <Route path="/tutorials" element={<Tutorials  /> } /> */}
