@@ -1068,23 +1068,27 @@ const BasicTable = (props) => {
             
             <hr/>    
             <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp; </div>
-              <Link to="/*">none</Link> &nbsp; 
-              <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
-              <Link style={{background: routeColor('/dropRecovery')}} to="/dropRecovery"> dropRecovery</Link> &nbsp; 
-              <Link style={{background: routeColor('/holdings')}} to="/holdings">holdings</Link> &nbsp; 
-              <Link style={{background: routeColor('/options')}} to="/options">options</Link> &nbsp; 
-              <Link style={{background: routeColor('/ai')}} to="/ai">ai</Link> &nbsp; 
+              <div>
+                <Link to="/*">none</Link> &nbsp; 
+                <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
+                <Link style={{background: routeColor('/dropRecovery')}} to="/dropRecovery"> dropRecovery</Link> &nbsp; 
+                <Link style={{background: routeColor('/holdings')}} to="/holdings">holdings</Link> &nbsp; 
+                <Link style={{background: routeColor('/options')}} to="/options">options</Link> &nbsp; 
+                <Link style={{background: routeColor('/dropsCount')}} to="/dropsCount">dropsCount </Link> &nbsp; 
+                <Link style={{background: routeColor('/monthGain')}} to="/monthGain">monthGain </Link> &nbsp; 
+              </div>
 
-              <Link style={{background: routeColor('/simulateTrade')}} to="/simulateTrade">simulateTrade </Link> &nbsp; 
-              <Link style={{background: routeColor('/dropsCount')}} to="/dropsCount">dropsCount </Link> &nbsp; 
-              <Link style={{background: routeColor('/monthGain')}} to="/monthGain">monthGain </Link> &nbsp; 
-              <Link style={{background: routeColor('/movingAverage')}} to="/movingAverage">movingAverage </Link> &nbsp;
-              <Link style={{background: routeColor('/candleStick')}} to="/candleStick">candleStick </Link> &nbsp; 
-              <Link style={{background: routeColor('/priceAlert')}} to="/priceAlert">priceAlert </Link> &nbsp; 
-              <Link style={{background: routeColor('/gainRaw')}} to="/gainRaw">gainRaw </Link> &nbsp; 
-              <Link style={{background: routeColor('/infoRaw')}} to="/infoRaw">infoRaw </Link> &nbsp; 
-              <Link style={{background: routeColor('/tools')}} to="/tools">tools </Link> &nbsp; 
-              
+              <div>
+                <Link style={{background: routeColor('/movingAverage')}} to="/movingAverage">movingAverage </Link> &nbsp;
+                <Link style={{background: routeColor('/ai')}} to="/ai">ai</Link> &nbsp; 
+                <Link style={{background: routeColor('/simulateTrade')}} to="/simulateTrade">simulateTrade </Link> &nbsp; 
+                <Link style={{background: routeColor('/candleStick')}} to="/candleStick">candleStick </Link> &nbsp; 
+                <Link style={{background: routeColor('/priceAlert')}} to="/priceAlert">priceAlert </Link> &nbsp; 
+                <Link style={{background: routeColor('/gainRaw')}} to="/gainRaw">gainRaw </Link> &nbsp; 
+                <Link style={{background: routeColor('/infoRaw')}} to="/infoRaw">infoRaw </Link> &nbsp; 
+                <Link style={{background: routeColor('/tools')}} to="/tools">tools </Link> &nbsp; 
+              </div>
+
               <div>
                 {eliHome && <Link style={{background: routeColor('/urlGetParse')}} to="/urlGetParse">urlGetParse </Link>} &nbsp; 
                 {eliHome && <Link style={{background: routeColor('/leveragaETF')}} to="/leveragaETF">leveragaETF </Link>} &nbsp; 
