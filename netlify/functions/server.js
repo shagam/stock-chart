@@ -14,7 +14,7 @@ function isGooglebot(req) {
 function getBubbleLineData() {
   return {
     title: "Bubble Line Analysis",
-    description: "Visual bubble line analysis for market trends.",
+    description: "bubble line is an exponential line that connect major bobbles (2008, 2022)",
     content: "<h1>Bubble Line</h1><p>Market bubble line analysis...</p>"
   };
 }
@@ -22,15 +22,15 @@ function getBubbleLineData() {
 function getDropRecoveryData() {
   return {
     title: "Drop Recovery",
-    description: "Analyze stock drop recovery patterns.",
+    description: "Analyze stock drop ratio (percent) recovery period",
     content: "<h1>Drop Recovery</h1><p>Recovery pattern analysis...</p>"
   };
 }
 
 function getHoldingsData() {
   return {
-    title: "Holdings Overview",
-    description: "Your holdings breakdown and performance.",
+    title: "Holdings of an ETF",
+    description: "holdings of an ETF, percentage of each stock held",
     content: "<h1>Holdings</h1><p>Holdings performance overview...</p>"
   };
 }
@@ -58,6 +58,7 @@ function buildHTML({ title, description, content }) {
 
 // --- ROUTE 1: /bubbleLine ---
 app.get('/bubbleLine', (req, res) => {
+  console.log("bubbleLine route hit");
   const data = getBubbleLineData();
 
   if (isGooglebot(req)) {
@@ -70,6 +71,7 @@ app.get('/bubbleLine', (req, res) => {
 
 // --- ROUTE 2: /dropRecovery ---
 app.get('/dropRecovery', (req, res) => {
+  console.log("dropRecovery route hit");
   const data = getDropRecoveryData();
 
   if (isGooglebot(req)) {
@@ -81,6 +83,7 @@ app.get('/dropRecovery', (req, res) => {
 
 // --- ROUTE 3: /holdings ---
 app.get('/holdings', (req, res) => {
+  console.log("holdings route hit");
   const data = getHoldingsData();
 
   if (isGooglebot(req)) {
