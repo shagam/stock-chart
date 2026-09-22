@@ -1202,7 +1202,10 @@ function StockOptions (props) {
 
     if (premiumSelected === line)
       return {background: '#d3e5ff'}
-    
+
+    if (line ===0 || optionQuote.expiration[line] !== optionQuote.expiration[line - 1])
+      return {backgroundColor: '#ffd3fbff', color: 'black', fontWeight: 'bold'};
+
     else if (attrib === 'yield_' || attrib === 'yearlyYield' || attrib === 'breakEven' || attrib === 'expectedPrice' ||
               attrib === 'mid/price' || attrib === 'profit'|| attrib === 'strikeDiff' || attrib === 'exprDiff' || attrib === 'deltaLeverage')
       return {backgroundColor: CALCULATED_COLUMNS_COLOR};
