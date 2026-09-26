@@ -8,7 +8,7 @@ import {ErrorList, beep, beep2} from '../utils/ErrorList'
 import {nanoid} from 'nanoid';
 import GetInt from '../utils/GetInt'
 import {Vix} from '../utils/Vix'
-import { capitalize } from '@material-ui/core'
+
 import {IpContext} from '../contexts/IpContext';
 import { useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
