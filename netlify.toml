@@ -1,6 +1,6 @@
 [build]
   publish = "build"
-  node_version = "18"
+  node_version = "20"
 
 
 # --- SEO SSR ROUTES (STATIC) ---
