@@ -1,6 +1,11 @@
+
 [build]
-  publish = "build"
+  command = "npm run build"
+  publish = ".next"
   node_version = "20"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 
 # --- SEO SSR ROUTES (STATIC) ---
