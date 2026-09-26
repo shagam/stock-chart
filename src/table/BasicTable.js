@@ -1001,47 +1001,60 @@ const BasicTable = (props) => {
 
       <table style={{marginTop: '4px', maxHeight: tablHight, overflowY: 'auto'}} id="stockTable" {...getTableProps()}>
       <thead>
-
-        {headerGroups.map ((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              <th style= {{padding: "0px 3px 0px 3px", margin: "0px 3px 0px 3px"}}>N</th>
-              {headerGroup.headers.map((column) => (
-                  <th style= {{padding: "0px 3px 0px 3px", margin: "0px 3px 0px 3px"}}{...column.getHeaderProps(column.canSort ? column.getSortByToggleProps() : {})}>{column.render('Header')} 
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''} 
-                  </span>
+        {headerGroups.map((headerGroup) => {
+          const { key: headerKey, ...headerRest } = headerGroup.getHeaderGroupProps();
+          return (
+            <tr key={headerKey} {...headerRest}>
+              <th style={{padding: "0px 3px", margin: "0px 3px"}}>N</th>
+              {headerGroup.headers.map((column) => {
+                const { key: colKey, ...colRest } = column.getHeaderProps(
+                  column.canSort ? column.getSortByToggleProps() : {}
+                );
+                return (
+                  <th key={colKey} style={{padding: "0px 3px", margin: "0px 3px"}} {...colRest}>
+                    {column.render('Header')}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? <FaArrowUp color='blue'/> : <FaArrowDown color='red'/>) : ''}
+                    </span>
                   </th>
-              ))}
+                );
+              })}
             </tr>
-        ))}
-      </thead>
-    
-      <tbody id="tableBodyId" {...getTableBodyProps()}>
-        {
-          rows.map((row, i) => {
-            // {style: (row.verify_1 > 1.1 || row.verify_1 < 0.9) ? {background: red}}
+          );
+        })}
+      </thead>  
 
-            prepareRow(row)
-            return (
-              <tr id='stock_row_id'
-              // <tr id='stock_row_id' key={row.id} onClick={() => clickedRow (row)}
-                {...row.getRowProps()}>
-                <td style= {{margin: '1px',  padding: '1px',}}>{i}</td>
-                {row.cells.map((cell) => {
-                  // if (cell.column.id === 'year') {
-                  //   console.log ('render', row.values.symbol, cell.value)
-                  // }
-                  return <td {...cell.getCellProps({style: {margin: '1px',  padding: '1px', color: getColor(cell.value, cell.column, row.values.symbol)}})}>{cell.render('Cell')}</td>
-                })}
-                  <div style={{display:'flex'}}>
-                    <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-                    {/* <button type="button" onClick={()=>handleInfoClick(row.values.symbol, true)}>info</button>      */}
-                    <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button> 
-                  </div>
-              </tr>
-            )
-          })}
-      </tbody>
+
+<tbody id="tableBodyId" {...getTableBodyProps()}>
+  {rows.map((row, i) => {
+    prepareRow(row);
+    const { key: rowKey, ...rowRest } = row.getRowProps();
+    return (
+      <tr id='stock_row_id' key={rowKey} {...rowRest}>
+        <td style={{margin: '1px', padding: '1px'}}>{i}</td>
+        {row.cells.map((cell) => {
+          const { key: cellKey, ...cellRest } = cell.getCellProps({
+            style: {
+              margin: '1px',
+              padding: '1px',
+              color: getColor(cell.value, cell.column, row.values.symbol)
+            }
+          });
+          return (
+            <td key={cellKey} {...cellRest}>
+              {cell.render('Cell')}
+            </td>
+          );
+        })}
+        <div style={{display:'flex'}}>
+          <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+          <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button>
+        </div>
+      </tr>
+    );
+  })}
+</tbody>
+
     </table>
 
     {/* Machanizms not for spacific sym */}
