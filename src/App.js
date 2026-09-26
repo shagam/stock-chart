@@ -58,11 +58,6 @@ function App() {
   console.log(nowStr  + '  %cstock compare start', 'background: #fff; color: #22ef11');
 
 
-  const refreshCallBack = (childData) => {
-    setCount (count + 1);
-  }
-
-
   //  Firebase: Error (auth/account-exists-with-different-credential).
   // ngrok http 3000
   // <Route path="/contact" element={<Contact  />}/>
@@ -83,7 +78,7 @@ function App() {
                    {/* <hr/>  */}
             <Router>
               <Routes>
-                <Route exact path="/*" element={<BasicTable refreshCallBack = {refreshCallBack} logFlags={logFlags} setServer={setServer}/>}/>
+                <Route exact path="/*" element={<BasicTable logFlags={logFlags} setServer={setServer}/>}/>
                 <Route path ="/dashBoard"  element={<Dashboard />}/>
                       {/* <Route path="/" element={<Dashboard/>}   /> */}
                 <Route path="/signup" element={<Signup/> } />
