@@ -51,7 +51,7 @@ function App() {
   // if (logFlags_ !== logFlags) 
   //   setLogFlags(logFlags_)
 
-  const [server, setServer] = useState(process.env.REACT_APP_AWS_IP)
+  
   // const { currentUser, logout } = useAuth();
   // const navigate = useNavigate();
   const nowStr = getDateSec()
@@ -78,7 +78,7 @@ function App() {
                    {/* <hr/>  */}
             <Router>
               <Routes>
-                <Route exact path="/*" element={<BasicTable logFlags={logFlags} setServer={setServer}/>}/>
+                <Route exact path="/*" element={<BasicTable logFlags={logFlags} />}/>
                 <Route path ="/dashBoard"  element={<Dashboard />}/>
                       {/* <Route path="/" element={<Dashboard/>}   /> */}
                 <Route path="/signup" element={<Signup/> } />
