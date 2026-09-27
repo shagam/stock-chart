@@ -1096,7 +1096,7 @@ const BasicTable = () => {
             
             <hr/>    
             <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp;  
-              <Link style ={{fontWeight: "bold", color: '#32cc84'}}to="/">none</Link>
+              <Link style ={{fontWeight: "bold", color: 'red'}}to="/">Route-clear </Link>
             </div> 
  
               {chartSymbol && <div>
