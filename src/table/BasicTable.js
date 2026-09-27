@@ -906,13 +906,13 @@ const BasicTable = () => {
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
       
-        <Link to="/tutorials">Tutorials</Link> &nbsp; 
-        <Link to="/about">About</Link>&nbsp; 
+        <Link style={{background: routeColor('/tutorials')}} to="/tutorials">Tutorials</Link> &nbsp; 
+        <Link style={{background: routeColor('/about')}} to="/about">About</Link>&nbsp; 
         {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
 
-        {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp;
+        {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} to="/logFlags">console-log-flags</Link>} &nbsp;
 
-        {<Link to="/auxilaryLinks">Auxilary links</Link>} &nbsp;
+        {<Link style={{background: routeColor('/auxilaryLinks')}} to="/auxilaryLinks">Auxilary links</Link>} &nbsp;
 
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
