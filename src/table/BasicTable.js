@@ -100,8 +100,23 @@ import Contact from '../auth/Contact'
 import '../utils/styles.css'
 
 import {SymSearch} from './SymSearch'
+import About from '../About'
+import Tutorials from '../Tutorials'
+import AuxilaryLinks from './AuxilaryLinks'
 
-const BasicTable = (props) => {
+const BasicTable = () => {
+
+  const Signup = lazy(() => import ('../auth/Signup'));
+  const Dashboard = lazy(() => import ('../auth/Dashboard'));
+  const Login = lazy(() => import ('../auth/Login'));
+  const ForgotPassword  = lazy(() => import ('../auth/ForgotPassword'));
+  const UpdateProfile = lazy(() => import ('../auth/UpdateProfile'));
+
+
+  const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "verify_1", "splits",
+    "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","target","gain","backEnd","simulateTrade","stockLists", "month"];
+  const [logFlags, setLogFlags] = useState([]);
+
   const location = useLocation(); 
   const [errors, setErrors] = useState([]);
   const [error, setErr] = useState();
@@ -130,9 +145,9 @@ const BasicTable = (props) => {
   const [pageForAi, setPageForAi] = useState();
   const [pageForAiText, setPageForAiText] = useState();
 
-  const LOG_FLAG = props.logFlags && props.logFlags.includes('aux');
-  const LOG_API = props.logFlags && props.logFlags.includes('api');
-  const LOG_alpha = props.logFlags && props.logFlags.includes('alpha');
+  const LOG_FLAG = logFlags && logFlags.includes('aux');
+  const LOG_API = logFlags && logFlags.includes('api');
+  const LOG_alpha = logFlags && logFlags.includes('alpha');
 
   // var PORT;
   // if (servSelect === process.env.REACT_APP_LOCAL_SERV_IP)
@@ -275,7 +290,7 @@ const BasicTable = (props) => {
       }
     }
     localStorage.setItem ('columnsHidden', JSON.stringify(hiddenArray))
-    if (props.logFlags && props.logFlags.includes('hiddenCols'))
+    if (logFlags && logFlags.includes('hiddenCols'))
       console.log ('hiddenColumnsSave', JSON.stringify(hiddenArray))
   }
 
@@ -414,7 +429,7 @@ const BasicTable = (props) => {
 
     if (rows[index].values.price !== undefined && rows[index].values.target_raw !== undefined) {
       rows[index].values.target = Number((rows[index].values.target_raw/rows[index].values.price).toFixed(2))
-      targetPriceAdd (symbol, targetRaw, rows[index].values.price, props.logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
+      targetPriceAdd (symbol, targetRaw, rows[index].values.price, logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
       if (rows[index].values.price !== price) {
         setPrice(rows[index].values.price)
         setPriceDivHigh(rows[index].values.priceDivHigh)
@@ -449,7 +464,7 @@ const BasicTable = (props) => {
     setErr()
     setChartSymbol (sym);
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);
-    // finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr, props.logFlags, errorAdd, ssl, PORT, servSelect) //latest price
+    // finnhub (chartSymbol, stockChartYValues, rows, refreshByToggleColumns, setErr, logFlags, errorAdd, ssl, PORT, servSelect) //latest price
     var avoidTooFrequentLimit = eliHome ? 2*1000 : 2*1000 //** allowed frequency of 2 sec */
     const lastGainMili = rows[row_index].values.gain_mili; //** save before change */
 
@@ -463,7 +478,7 @@ const BasicTable = (props) => {
     rows[row_index].values.gain_mili = Date.now() //**  prevent too frequent gain for sym */
     rows[row_index].values.gain_date = getDate();
 
-    if (singleSym && props.logFlags.includes('gain'))
+    if (singleSym && logFlags.includes('gain'))
       console.log(sym, getDate(), 'handleGainClick  singleSym=', singleSym)
 
     localStorage.setItem ('chartSymbol', sym);
@@ -476,14 +491,14 @@ const BasicTable = (props) => {
       delete gainMap['bubbleLine']
     }
 
-    gain (sym, rows, errorAdd, props.logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
+    gain (sym, rows, errorAdd, logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
        priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol, setPrice, setPriceDivHigh, setPriceDivClose)
  
      if (singleSym)
       saveTable(sym);
-    searchURL (props.logFlags)
+    searchURL (logFlags)
   }
 
    // get all info for targetPrice
@@ -887,7 +902,7 @@ const BasicTable = (props) => {
          </h2> 
 
         {/* <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div> */}
-        <Disclaimer eliHome={eliHome} logFlags = {props.logFlags}/>
+        <Disclaimer eliHome={eliHome} logFlags = {logFlags}/>
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
       
@@ -932,7 +947,7 @@ const BasicTable = (props) => {
           {/* {eliHome && <div> <button style={{backgroundColor: '#bbffbb'}} onClick={test} title='test' > test </button> </div>} &nbsp;&nbsp; */}
         </div>
 
-        {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
+        {chartSymbol && <LatestPrice symbol = {chartSymbol} rows={rows} logFlags={logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT}  eliHome={eliHome} 
                 errorAdd={errorAdd} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} setErr={setErr} allColumns={allColumns} 
                 price={price} setPrice={setPrice} setPriceDivHigh={setPriceDivHigh}/>} 
 
@@ -1064,7 +1079,7 @@ const BasicTable = (props) => {
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} daily = {daily}
-           logFlags = {props.logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
+           logFlags = {logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
 
         {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
 
@@ -1073,25 +1088,27 @@ const BasicTable = (props) => {
         
          
         {/* Analyze tools for specific sym */}
-        {chartSymbol && <div>
+        {<div>
           
             {/* <Link to="/tutorials">Tutorials</Link> &nbsp; 
             <Link to="/about">About</Link>&nbsp; 
             {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp; */}
             
             <hr/>    
-            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp; </div>
-              <div>
-                <Link to="/*">none</Link> &nbsp; 
+            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp;  
+              <Link style ={{fontWeight: "bold", color: '#32cc84'}}to="/">none</Link>
+            </div> 
+ 
+              {chartSymbol && <div>
                 <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
                 <Link style={{background: routeColor('/dropRecovery')}} to="/dropRecovery"> dropRecovery</Link> &nbsp; 
                 <Link style={{background: routeColor('/holdings')}} to="/holdings">holdings</Link> &nbsp; 
                 <Link style={{background: routeColor('/options')}} to="/options">options</Link> &nbsp; 
                 <Link style={{background: routeColor('/dropsCount')}} to="/dropsCount">dropsCount </Link> &nbsp; 
                 <Link style={{background: routeColor('/monthGain')}} to="/monthGain">monthGain </Link> &nbsp; 
-              </div>
+              </div>}
 
-              <div>
+              {chartSymbol && <div>
                 <Link style={{background: routeColor('/movingAverage')}} to="/movingAverage">movingAverage </Link> &nbsp;
                 <Link style={{background: routeColor('/ai')}} to="/ai">ai</Link> &nbsp; 
                 <Link style={{background: routeColor('/simulateTrade')}} to="/simulateTrade">simulateTrade </Link> &nbsp; 
@@ -1100,13 +1117,29 @@ const BasicTable = (props) => {
                 <Link style={{background: routeColor('/gainRaw')}} to="/gainRaw">gainRaw </Link> &nbsp; 
                 <Link style={{background: routeColor('/infoRaw')}} to="/infoRaw">infoRaw </Link> &nbsp; 
                 <Link style={{background: routeColor('/tools')}} to="/tools">tools </Link> &nbsp; 
-              </div>
+              </div>}
 
-              <div>
+              {chartSymbol && <div>
                 {eliHome && <Link style={{background: routeColor('/urlGetParse')}} to="/urlGetParse">urlGetParse </Link>} &nbsp; 
                 {eliHome && <Link style={{background: routeColor('/leveragaETF')}} to="/leveragaETF">leveragaETF </Link>} &nbsp; 
                 {eliHome && <Link style={{background: routeColor('/marketOpenPrice')}} to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
-            </div>
+              </div>}
+
+              <hr/>
+              <div>
+                <Link style={{background: routeColor('/config'), color: '#9932CC'}} to="/config">config </Link> &nbsp;
+                <Link style={{background: routeColor('/commonDatabase'), color: '#9932CC'}} to="/commonDatabase">commonDatabase </Link> &nbsp; 
+                <Link style={{background: routeColor('/stockLists'), color: '#9932CC'}} to="/stockLists">stockLists </Link> &nbsp;
+                <Link style={{background: routeColor('/symSearch'), color: '#9932CC'}} to="/symSearch">symSearch </Link> &nbsp;
+                <Link style={{background: routeColor('/contactUs'), fontWeight: "bold", color: '#32cc84'}} to="/contactUs">contactUs </Link> &nbsp;
+              </div>
+              
+                {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} to="/futures">futures </Link>} &nbsp;
+                {eliHome && <Link style={{background: routeColor('/Polymarket'), color: '#9932CC'}} to="/Polymarket">Polymarket </Link>} &nbsp;
+
+              <hr/>
+        </div>}
+
 
           <Routes>
 
@@ -1114,41 +1147,41 @@ const BasicTable = (props) => {
             {/* <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>  */}
 
             <Route path="bubbleLine" element={ <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
+                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
                   bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>} />
 
             <Route path="dropRecovery" element={<DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>} />
+              errorAdd={errorAdd} logFlags={logFlags} chartData={chartData} daily={daily}/>} />
 
             <Route path="holdings" element={<Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>} />
+             logFlags={logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>} />
 
             <Route path="options" element={<StockOptions symbol = {chartSymbol} stockPrice = {price} priceDivHigh = {priceDivHigh}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
-                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={props.logFlags}
+                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={logFlags}
                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />} />
 
-            <Route path="ai" element={<Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
+            <Route path="ai" element={<Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap  = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
               city = {city} countryName = {countryName} countryCode = {countryCode} regionName = {regionName} ip = {ip} os = {os}
-              logFlags={props.logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}/>
+              logFlags={logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}/>
 
 
 
             <Route path="simulateTrade" element={<Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {props.logFlags}
-                 errorAdd={errorAdd} saveTable={props.saveTable} monthGainData={monthGainData} daily={daily}/>}/>
+                stockChartYValues = {stockChartYValues} logFlags = {logFlags}
+                 errorAdd={errorAdd} saveTable={saveTable} monthGainData={monthGainData} daily={daily}/>}/>
 
             <Route path="dropsCount" element={<DropsCount symbol = {chartSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
                 errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>}  />  
 
             <Route path="monthGain" element={ <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
-                  stockChartYValues = {stockChartYValues} logFlags = {props.logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} daily={daily}/>}/>
+                  stockChartYValues = {stockChartYValues} logFlags = {logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} daily={daily}/>}/>
 
             <Route path="movingAverage" element={<MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
               deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily}/>}/>
+              errorAdd={errorAdd} logFlags={logFlags} chartData={chartData} daily={daily}/>}/>
 
             <Route path="candlestick" element={<CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
                errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns} 
@@ -1164,93 +1197,69 @@ const BasicTable = (props) => {
 
             <Route path="infoRaw" element={<StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} /> } />
 
-            <Route path="tools" element={<Tools symbol = {chartSymbol} rows = {rows} logFlags = {props.logFlags} errorAdd={errorAdd} gainMap = {gainMap}
+            <Route path="tools" element={<Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap}
                 stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
                 servSelect={servSelect} ssl={ssl} PORT={PORT} daily={daily} /> } />
 
             <Route path="urlGetParse" element={<UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> } />
 
-            <Route path="leveragaETF" element={<LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {props.logFlags} errorAdd={errorAdd}  daily={daily} />} />
+            <Route path="leveragaETF" element={<LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {logFlags} errorAdd={errorAdd}  daily={daily} />} />
 
             <Route path="marketOpenPrice" element={<MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
               setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={props.logFlags} chartData={chartData} daily={daily} />} />
+              errorAdd={errorAdd} logFlags={logFlags} chartData={chartData} daily={daily} />} />
 
           </Routes>
-        </div>}
+
+   
+        </div>
   
+        {/* Service Routes */}
+         <Routes>
+            {eliHome && <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>}
+            <Route path="/tutorials" element={<Tutorials  />}/>
+            <Route path="/about" element={<About  />}/>
+            <Route path="/auxilaryLinks" element={< AuxilaryLinks />}/>
+
+
+            <Route path ="/dashBoard"  element={<Dashboard />}/>
+                                  {/* <Route path="/" element={<Dashboard/>}   /> */}
+            <Route path="/signup" element={<Signup/> } />
+            <Route path="/login" element={<Login/> }/>
+            <Route path="/forgotPassword" element={<ForgotPassword />}/>
+            <Route path="/update-profile" element={<UpdateProfile  />}/>
+
+
+            <Route path ='/commonDatabase' element= {<CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
+                admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
+                allColumns={allColumns} logFlags = {logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
+                yearlyPercent={yearlyPercent} QQQ_gain={QQQ_gain}/>}/>
+
+            <Route path ='/config' element = {<Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {logFlags} refreshByToggleColumns={refreshByToggleColumns}
+              smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
+              servSelect={servSelect} ssl={ssl} PORT={PORT}/>}/>
+
+            <Route path ='stockLists' element= {<StockLists ip={ip} rows = {rows} logFlags = {logFlags} saveTable={saveTable}
+              errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>}/>
+
+            <Route path='/futures' element={<Futures symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+              stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} 
+              logFlags = {logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>} />   
+
+            <Route path ='/polymarket' element = {<Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
+                stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {logFlags} eliHome={eliHome}
+                servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}/>
+
+            <Route path = '/symSearch' element ={<SymSearch />} />
+
+            <Route path = '/contactUs' element = {<Contact server={servSelect} ssl={ssl} PORT={PORT} />}/>
+        
+          </Routes>
+
         <hr/> 
 
           {/* radio buttond for no sym tools */}
 
-          <div style={{display:'flex'}}>
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='none' id='4' checked={nonSymTool==='none'} onChange={nonSymChange}
-            title='turn off other pans on line'/>
-          <div style={{color:'#9932CC'}}> none  </div> 
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='config' id='1' checked={nonSymTool==='config'} onChange={nonSymChange}
-             title='maintenance functios like purge table or default column selected'/>
-          <div style={{color:'#9932CC'}}> config  </div>   
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='commonDatabase' id='0' checked={nonSymTool==='commonDatabase'} onChange={nonSymChange}
-             title='get symbols with heigher than the hi-tech ETF QQQ'/>
-          <div style={{color:'#9932CC'}}> commonDatabase  </div>   
-        
-          <input style={{marginLeft: '5px'}}  type="radio" name="nonSym" value='stockLists' id='2' checked={nonSymTool==='stockLists'} onChange={nonSymChange}
-             title='Share stock-lists with other users of the tool'/>
-          <div style={{color:'#9932CC'}}> stockLists </div>    
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='symSearch' id='6' checked={nonSymTool==='symSearch'} onChange={nonSymChange}
-             title='Contact us'/>
-          <div style={{color:'#9932CC', }}> symSearch  </div>   
-     
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='contactUs' id='7' checked={nonSymTool==='contactUs'} onChange={nonSymChange}
-             title='Contact us'/>
-          <div style={{color:'#32cc84', fontWeight: "bold"}}> contactUs  </div>   
-        </div>
-
-
-        {eliHome && <div style={{display:'flex'}}>
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='futures' id='3' checked={nonSymTool==='futures'} onChange={nonSymChange}
-             title='ETF futures contracts'/>
-          <div style={{color:'#9932CC'}}> futures  </div>             
-
-          <input style={{ marginLeft: '5px'}}  type="radio" name="nonSym" value='polymarket' id='5' checked={nonSymTool==='polymarket'} onChange={nonSymChange}
-             title='Polymarket contracts'/>
-          <div style={{color:'#9932CC'}}> polymarket  </div>   
-
-        </div>}
-
-
-
-        {/* select non sym tool */}
-
-        {nonSymTool ==='commonDatabase' && <CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
-         admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
-         allColumns={allColumns} logFlags = {props.logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
-         yearlyPercent={yearlyPercent} QQQ_gain={QQQ_gain}/>}
-
-        {nonSymTool ==='config' && <Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {props.logFlags} refreshByToggleColumns={refreshByToggleColumns}
-        smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
-         servSelect={servSelect} ssl={ssl} PORT={PORT}/>}
-
-        {nonSymTool ==='stockLists' && <StockLists ip={ip} rows = {rows} logFlags = {props.logFlags} saveTable={saveTable}
-         errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>}
-
-        {nonSymTool ==='futures' && <Futures symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} 
-          logFlags = {props.logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}    
-
-        {nonSymTool === 'polymarket' && <Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-          stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {props.logFlags} eliHome={eliHome}
-          servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}
-
-        {nonSymTool === 'symSearch' &&  <SymSearch />} 
-
-        {nonSymTool === 'contactUs' &&  <Contact server={servSelect} ssl={ssl} PORT={PORT} />}
-
-         {/* <hr/> */}
-    </div> 
     </>
     </Suspense>
   )

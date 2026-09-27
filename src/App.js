@@ -13,28 +13,15 @@ import { Card, Button, Alert } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import {getDateSec} from './utils/Date'
 // import CookieConsent from "react-cookie-consent"
-import LogFlags from './utils/LogFlags'
-import About from './About'
-import Tutorials from './Tutorials'
-import {TargetPrice} from './table/TargetPrice'
 
-import ContactGet from './auth/ContactGet'
 
 import AuxilaryLinks from './table/AuxilaryLinks'
 // import {BasicTable} from './table/BasicTable' 
 const BasicTable  = lazy(() => import ( './table/BasicTable'));
 
-const Signup = lazy(() => import ('./auth/Signup'));
-const Dashboard = lazy(() => import ('./auth/Dashboard'));
-const Login = lazy(() => import ('./auth/Login'));
-const ForgotPassword  = lazy(() => import ('./auth/ForgotPassword'));
-const UpdateProfile = lazy(() => import ('./auth/UpdateProfile'));
+
 const Manual = lazy(() => import ('./manual/Manual'))
 
-
-
-const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "verify_1", "splits",
-"xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","target","gain","backEnd","simulateTrade","stockLists", "month"];
 
  const navigation = performance.getEntriesByType("navigation")[0];
 
@@ -44,7 +31,7 @@ if (navigation?.type === "reload") {
 
 function App() {
   const [count, setCount] = useState (0);
-  const [logFlags, setLogFlags] = useState([]);
+
   // var logFlags_  = useMemo(() => localStorage.getItem('logFlags'), []);
   // if (logFlags_ === null)
   //   logFlags_ = JSON.parse(logFlags_)
@@ -78,22 +65,14 @@ function App() {
                    {/* <hr/>  */}
             <Router>
               <Routes>
-                <Route exact path="/*" element={<BasicTable logFlags={logFlags} />}/>
-                <Route path ="/dashBoard"  element={<Dashboard />}/>
-                      {/* <Route path="/" element={<Dashboard/>}   /> */}
-                <Route path="/signup" element={<Signup/> } />
-                <Route path="/login" element={<Login/> }/>
-                <Route path="/forgotPassword" element={<ForgotPassword />}/>
-                <Route path="/update-profile" element={<UpdateProfile  />}/>
+                <Route exact path="/*" element={<BasicTable />}/>
+             
+                {/* <Route path="/tutorials" element={<Tutorials  />}/> */}
+               
 
-                <Route path="/tutorials" element={<Tutorials  />}/>
-                <Route path="/about" element={<About  />}/>
-                <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>
                 <Route path="/manual" element={<Manual  />}/>
 
-                <Route path="/auxilaryLinks" element={< AuxilaryLinks />}/>
-               
-                {/* <Route path="/contact" element={<Contact  />}/> */}
+
 
               </Routes>
             </Router>
@@ -101,10 +80,10 @@ function App() {
 
           </AuthProvider>
 
-          {/* <div>{count}</div> */}
+
         </div>
       </Container>
-      <label count = {count} />
+
     </div>
   </Suspense>
 

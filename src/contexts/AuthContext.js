@@ -45,10 +45,10 @@ export function AuthProvider ({ children }) {
     } catch (e) {console.log (e)}
   }
 
-  function logout () {
+  async function logout () {
     try {
       // return signInWithEmailAndPassword (auth, email, password)
-      const stat = signOut (auth);
+      const stat = await signOut (auth);
       setAdmin (false);
       return stat;
 
