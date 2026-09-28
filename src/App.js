@@ -40,29 +40,13 @@ function App() {
 
 
   return (
-    <Suspense>
-     
-          <AuthProvider>
 
-                   {/* <hr/>  */}
             <Router>
               <Routes>
                 <Route exact path="/*" element={<BasicTable />}/>
              
-              
-
-
-
               </Routes>
             </Router>
-
-
-          </AuthProvider>
-
-
-
-
-  </Suspense>
 
 );
 }
