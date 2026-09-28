@@ -1,6 +1,7 @@
 // git log --pretty=format:"%h%x09%an%x09%ad%x09%s" 
 // force recompile
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
+import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 // import Tabs from '@mui/material/Tabs';
 // import Tab from '@mui/material/Tab';
@@ -892,8 +893,9 @@ const BasicTable = () => {
   }
 
   return (
-    <Suspense fallback={<div>Loading ... (from BaseTable)</div>}>          
-    <>
+    <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
+      <Container style={{minWidth: "100%", minHeight: "50vh"}}  >         
+        {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
         <h2  style={{display:'flex', fontStyle: "italic"}}>
           <strong style={{color:'#2caa2c'}}>Share</strong>
           <strong style={{color:'#b3be18'}}>Compare</strong> 
@@ -1257,7 +1259,7 @@ const BasicTable = () => {
 
           {/* radio buttond for no sym tools */}
 
-    </>
+    </Container>
     </Suspense>
   )
 }
