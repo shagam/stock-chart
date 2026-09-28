@@ -51,7 +51,7 @@ function App() {
 
   return (
     <Suspense fallback={<div>Loading ... (from App) </div>}>
-    <div className="App-continer">
+
         {/* <CookieConsent debug={true}> Site uses localStorage, (equivalent to cookies)</CookieConsent> */}
            <div> 
      
@@ -83,7 +83,6 @@ function App() {
         </div>
 
 
-    </div>
   </Suspense>
 
 );
