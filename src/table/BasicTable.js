@@ -906,14 +906,6 @@ const BasicTable = () => {
 
         {/* <News  eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT}/> */}
       
-        <Link style={{background: routeColor('/tutorials')}} to="/tutorials">Tutorials</Link> &nbsp; 
-        <Link style={{background: routeColor('/about')}} to="/about">About</Link>&nbsp; 
-        {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
-
-        {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} to="/logFlags">console-log-flags</Link>} &nbsp;
-
-        {<Link style={{background: routeColor('/auxilaryLinks')}} to="/auxilaryLinks">Auxilary links</Link>} &nbsp;
-
         <div className='w-100 text-left mt-2 d-flex '>   
           {currentUser && <div><strong>   </strong> {currentUser.email}   &nbsp;  </div> }  
           {admin && <div> <strong style={{color: 'red'}}>(admin)</strong>  &nbsp; </div>}
@@ -1079,26 +1071,22 @@ const BasicTable = () => {
         {chartSymbol && stockChartXValues.length > 0 && 
          <StockChart StockSymbol ={chartSymbol} stockChartXValues = {stockChartXValues}  stockChartYValues = {stockChartYValues}
           gainMap = {gainMap} isMobile = {isMobile} daily = {daily}
-           logFlags = {logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}
-
-        {/* {! isMobile && eliHome && <LogFlags setLogFlags={setLogFlags} checkList={checkList}/>}   */}
-
-        {/* Machanizms  for spacific sym (chartSymbol) */}
-        {/* <hr/> */}
-        
+           logFlags = {logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}  
          
         {/* Analyze tools for specific sym */}
         {<div>
-          
-            {/* <Link to="/tutorials">Tutorials</Link> &nbsp; 
-            <Link to="/about">About</Link>&nbsp; 
-            {! isMobile && eliHome && <Link to="/logFlags">console-log-flags</Link>} &nbsp; */}
-            
+                      
             <hr/>    
-            <div style={{display: 'flex' }}><div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: &nbsp;  
-              <Link style ={{fontWeight: "bold", color: 'red'}}to="/">Route-clear </Link>
+            <div style={{display: 'flex' }}>
+              <Link style ={{fontWeight: "bold", color: 'red'}}to="/">Route-clear </Link> &nbsp;  &nbsp; &nbsp; &nbsp;
+              {chartSymbol && (
+                <div style={{display: 'flex' }}>
+                  <div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: 
+                </div>
+              )}
             </div> 
  
+              {/* Machanizms  for spacific sym (chartSymbol) */}
               {chartSymbol && <div>
                 <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
                 <Link style={{background: routeColor('/dropRecovery')}} to="/dropRecovery"> dropRecovery</Link> &nbsp; 
@@ -1134,8 +1122,17 @@ const BasicTable = () => {
                 <Link style={{background: routeColor('/contactUs'), fontWeight: "bold", color: '#32cc84'}} to="/contactUs">contactUs </Link> &nbsp;
               </div>
               
-                {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} to="/futures">futures </Link>} &nbsp;
-                {eliHome && <Link style={{background: routeColor('/Polymarket'), color: '#9932CC'}} to="/Polymarket">Polymarket </Link>} &nbsp;
+              <Link style={{background: routeColor('/tutorials'), fontWeight: "bold"}} to="/tutorials">Tutorials</Link> &nbsp; 
+              <Link style={{background: routeColor('/about')}} to="/about">About</Link>&nbsp; 
+              {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
+
+              {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} to="/logFlags">console-log-flags</Link>} &nbsp;
+
+              {<Link style={{background: routeColor('/auxilaryLinks')}} to="/auxilaryLinks">Auxilary links</Link>} &nbsp;
+
+
+              {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} to="/futures">futures </Link>} &nbsp;
+              {eliHome && <Link style={{background: routeColor('/Polymarket'), color: '#9932CC'}} to="/Polymarket">Polymarket </Link>} &nbsp;
 
               <hr/>
         </div>}
