@@ -23,14 +23,14 @@ const BasicTable  = lazy(() => import ( './table/BasicTable'));
 const Manual = lazy(() => import ('./manual/Manual'))
 
 
- const navigation = performance.getEntriesByType("navigation")[0];
+//  const navigation = performance.getEntriesByType("navigation")[0];
 
-if (navigation?.type === "reload") {
-  window.history.replaceState(null, "", "/");
-}
+// if (navigation?.type === "reload") {
+//   window.history.replaceState(null, "", "/");
+// }
 
 function App() {
-  const [count, setCount] = useState (0);
+
 
   // var logFlags_  = useMemo(() => localStorage.getItem('logFlags'), []);
   // if (logFlags_ === null)

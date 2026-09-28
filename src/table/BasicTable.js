@@ -106,6 +106,10 @@ import Tutorials from '../Tutorials'
 import AuxilaryLinks from './AuxilaryLinks'
 
 const BasicTable = () => {
+  const navigation = performance.getEntriesByType("navigation")[0];
+  if (navigation?.type === "reload") {
+    window.history.replaceState(null, "", "/");
+  }
 
   const Signup = lazy(() => import ('../auth/Signup'));
   const Dashboard = lazy(() => import ('../auth/Dashboard'));
