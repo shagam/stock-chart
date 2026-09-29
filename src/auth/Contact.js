@@ -105,9 +105,9 @@ export default function ContactUs (props)  {
       })     
     };
 
-
+// style = {{ border: '2px solid blue', backgroundColor: '#f0f0e0'}}
   return (
-    <div style={{width:'120%', fontSize: '18px'}}>
+    <div style={{width:'600px', fontSize: '18px'}}>
       {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
     <Card>
     <Card.Body>
