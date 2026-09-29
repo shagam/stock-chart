@@ -41,12 +41,24 @@ function App() {
 
   return (
 
+     
+          <AuthProvider>
+
+                   {/* <hr/>  */}
             <Router>
               <Routes>
                 <Route exact path="/*" element={<BasicTable />}/>
              
               </Routes>
             </Router>
+
+
+          </AuthProvider>
+
+
+
+
+
 
 );
 }
