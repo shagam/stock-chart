@@ -899,7 +899,7 @@ const BasicTable = () => {
   return (
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
         
-    <AuthProvider>
+
       <Container style={{minWidth: "100%", minHeight: "50vh"}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
         <h2  style={{display:'flex', fontStyle: "italic"}}>
@@ -1265,7 +1265,7 @@ const BasicTable = () => {
 
 
     </Container>
-    </AuthProvider>
+
     </Suspense>
   )
 }
