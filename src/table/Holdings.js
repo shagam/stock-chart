@@ -325,11 +325,12 @@ function Holdings (props) {
       {/* ====== Buttons */} 
       {props.chartSymbol && <div>
         {/* <div>&nbsp; </div> */}
-          <div style={{display: 'flex'}}>
-      
+          <div style={{display: 'flex'}}>      
             {eliHome && <div> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  /> &nbsp;IgnoreSaved &nbsp; &nbsp; </div> }
             {eliHome && <div> <input type="checkbox" checked={logBackEnd}  onChange={()=>setLogBackEnd (! logBackEnd)}  /> &nbsp;log &nbsp; &nbsp; </div>} 
             {eliHome && <div> <input type="checkbox" checked={saveInFile}  onChange={()=>setSaveInFile (! saveInFile)}  /> &nbsp;SaveInFile &nbsp; &nbsp; </div> }
+          </div>
+          <div style={{display: 'flex'}}>
             {<div> <input type="checkbox" checked={fullList}  onChange={()=>setFullList (! fullList)}  /> &nbsp;fullList &nbsp; &nbsp; </div> }
             <input type="checkbox" checked={ignoreMismatch}  onChange={() => setIgnoreMismatch (! ignoreMismatch)}  />  &nbsp;get-even-when-mismatch &nbsp; &nbsp; 
           </div>
