@@ -402,11 +402,12 @@ function StockLists (props) {
                         <button onClick={add} > new_list_from_table </button>   &nbsp; &nbsp;
                     </div>
 
-                    <div> &nbsp; </div>
-                    <div style={{display:'flex'}}>
-                    &nbsp; <div style={{display:'flex'}}> <ComboBoxSelect serv={listName} nameList={nameArray} setSelect={setListName}
+                    {/* <div> &nbsp; </div> */}
+                        <div style={{display:'flex'}}> <ComboBoxSelect serv={listName} nameList={nameArray} setSelect={setListName}
                             title='' options={nameArray} defaultValue={listName}/> </div>  &nbsp; &nbsp;
-                        <button style={{backgroundColor: '#ffccff', height:'35px'}} onClick={del} > delete </button>  &nbsp; &nbsp;
+    
+                    <div style={{display:'flex'}}>
+                                       <button style={{backgroundColor: '#ffccff', height:'35px'}} onClick={del} > delete </button>  &nbsp; &nbsp;
                         <button style={{backgroundColor: '#7FFF00', height: '35px'}} onClick={insert} > insertInTable </button> &nbsp; &nbsp; 
                         <button style={{backgroundColor: '#00eeff'}} onClick={backendShare} > share_to_backEnd </button> &nbsp; &nbsp; 
                     </div>
