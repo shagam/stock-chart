@@ -988,6 +988,9 @@ function CommonDatabase (props) {
           <input style={{marginLeft: '0px'}}  type="radio" name="years" value='1' id='1' checked={period===1} onChange={onOptionChange}/> 1_year
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='2' id='2' checked={period===2} onChange={onOptionChange}/> 2_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='5' id='5' checked={period===5} onChange={onOptionChange}/> 5_years
+        </div>
+
+        <div style={{display:'flex'}}>
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='10' id='10' checked={period===10} onChange={onOptionChange}/> 10_years
           <input style={{marginLeft: '5px'}}  type="radio" name="years" value='100' id='100' checked={period===100} onChange={onOptionChange}/> any
         </div>
