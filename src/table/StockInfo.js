@@ -18,6 +18,14 @@ const StockInfo = (props) => {
     return x;
   }
 
+  function colorAttribute (attribute) {
+    if (attribute === 'ForwardPE') {
+      return 'magenta';
+    }
+    return 'ForestGreen';
+  }
+
+
   return (
     <div style = {{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
       <div id="textarea_id"> 
@@ -49,7 +57,7 @@ const StockInfo = (props) => {
                   return (
                       <tr  key={i}>
                         <td  style={{padding: '2px', margin: '2px'}}>{i}</td>
-                        <td style={{padding: '2px', margin: '2px', color: 'ForestGreen', minWidth: '14rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
+                        <td style={{padding: '2px', margin: '2px', color: colorAttribute(infoName), minWidth: '16rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
                         <td style={{padding: '2px', margin: '2px', border: `none`}} > 
                             <div>{numberWithCommas(props.stockInfo[infoName])} </div>
                           </td> 
