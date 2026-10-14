@@ -3,10 +3,10 @@
 // force recompile
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import { Container } from 'react-bootstrap'
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
-
+import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
+import { usePathname } from "next/navigation";
+import { SharedContext } from "../components/SharedContext";
+import memoryStore from "../components/MemoryStore";
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -47,8 +47,8 @@ import {ServerSelect, server, PORT, ssl} from  '../utils/Server'
 
 // import {db} from '../firebaseConfig'
 
-import { Link, useNavigate } from 'react-router-dom'
-
+import {useNavigate } from 'react-router-dom'
+import Link from "next/link";
 import { FaArrowDown, FaArrowUp, FaAngleUp, FaCaretUp, FaSlideshare, FaVenusMars, FaChevronUp, FaChevronDown} from 'react-icons/fa'
 import { IoIosArrowUp,  IoIosArrowDown } from "react-icons/io";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdSystemSecurityUpdateWarning } from "react-icons/md";
@@ -106,16 +106,20 @@ import About from '../About'
 import Tutorials from '../Tutorials'
 import AuxilaryLinks from './AuxilaryLinks'
 
-const BasicTable = () => {
+const BasicTable = (children) => {
+
+
   // const navigation = performance.getEntriesByType("navigation")[0];
   // if (navigation?.type === "reload") {
   //   window.history.replaceState(null, "", "/");
   // }
-useEffect(() => {
-  const navigation = performance.getEntriesByType("navigation")[0];
-    if (navigation?.type === "reload") {
-      window.history.replaceState(null, "", "/");
-    }
+  const pathname = usePathname();
+  const activePage = pathname.split("/").filter(Boolean).pop() || "";
+  useEffect(() => {
+    const navigation = performance.getEntriesByType("navigation")[0];
+      if (navigation?.type === "reload") {
+        window.history.replaceState(null, "", "/");
+      }
   }, []);
 
   const Signup = lazy(() => import ('../auth/Signup'));
@@ -261,6 +265,50 @@ useEffect(() => {
     // setChartSymbol()
   }, [daily]) 
 
+
+  memoryStore.set('chartSymbol', chartSymbol);
+  memoryStore.set('setDropStartDate', setDropStartDate);
+  memoryStore.set('stockChartXValues', stockChartXValues);
+  memoryStore.set('stockChartYValues', stockChartYValues);
+  // memoryStore.set('gainObj',gainObj )
+  
+  memoryStore.set('errorAdd', errorAdd);
+  memoryStore.set('daily', daily);
+  memoryStore.set('eliHome', eliHome);
+  // memoryStore.set('rows', rows);
+  memoryStore.set('gainMap', gainMap);
+  memoryStore.set('logFlags', logFlags);
+
+  memoryStore.set('setBubbleLine', setBubbleLine);
+  memoryStore.set('bubbleLine', bubbleLine);
+  memoryStore.set('saveTable', saveTable);
+  memoryStore.set('price', price);
+
+  memoryStore.set('servSelect', servSelect);
+  memoryStore.set('ssl', ssl);
+  memoryStore.set('PORT', PORT);
+
+  memoryStore.set('prepareRow', prepareRow);
+  memoryStore.set('allColumns', allColumns);
+  memoryStore.set('monthGainData', monthGainData);
+
+  memoryStore.set('alphaCallBack', alphaCallBack);
+  memoryStore.set('ip', ip);
+  memoryStore.set('refreshByToggleColumns', refreshByToggleColumns);
+  memoryStore.set('smoothSpikes', smoothSpikes);
+  memoryStore.set('setSmoothSpikes', setSmoothSpikes);
+  memoryStore.set('openMarketFlag', openMarketFlag);
+  memoryStore.set('setOpenMarketFlag', setOpenMaretFlag);
+
+  memoryStore.set('yearlyPercent', yearlyPercent);
+  memoryStore.set('QQQ_gain', QQQ_gain);
+
+  memoryStore.set('API_KEY', API_KEY);
+  memoryStore.set('pageForAi', pageForAi);
+  memoryStore.set('setPageForAi', setPageForAi);
+  memoryStore.set('setPageForAiText', setPageForAiText)
+  memoryStore.set('checkList', checkList);
+  memoryStore.set('monthGainData', monthGainData);
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err, supressBeep) {
@@ -445,6 +493,8 @@ useEffect(() => {
       if (rows[index].values.price !== price) {
         setPrice(rows[index].values.price)
         setPriceDivHigh(rows[index].values.priceDivHigh)
+        memoryStore.set('price', rows[index].values.price)
+        memoryStore.set('priceDivHigh', rows[index].values.priceDivHigh)
       }
     }
     // childData.Address = '';   // Clear some data to decrese traffic
@@ -507,7 +557,8 @@ useEffect(() => {
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
        priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol, setPrice, setPriceDivHigh, setPriceDivClose)
- 
+
+
      if (singleSym)
       saveTable(sym);
     searchURL (logFlags)
@@ -637,6 +688,8 @@ useEffect(() => {
   //   })
   // }  
   )
+  
+  memoryStore.set('rows', rows);
 
   // first empty call handleGainClick for each: to show chart
   // useEffect (() => { 
@@ -904,6 +957,7 @@ useEffect(() => {
   }
 
   return (
+
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
         
 
@@ -913,7 +967,7 @@ useEffect(() => {
           <strong style={{color:'#2caa2c'}}>Share</strong>
           <strong style={{color:'#b3be18'}}>Compare</strong> 
           <div style={{fontSize: '15px', paddingTop: '10px'}}>.org </div> 
-          <div style={{fontSize: '15px', paddingTop: '10px'}}>{useLocation ().pathname}</div>
+          <div style={{fontSize: '15px', paddingTop: '10px'}}>{pathname}</div>
          </h2> 
 
         {/* <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div> */}
@@ -1047,35 +1101,37 @@ useEffect(() => {
       </thead>  
 
 
-<tbody id="tableBodyId" {...getTableBodyProps()}>
-  {rows.map((row, i) => {
-    prepareRow(row);
-    const { key: rowKey, ...rowRest } = row.getRowProps();
-    return (
-      <tr id='stock_row_id' key={rowKey} {...rowRest}>
-        <td style={{margin: '1px', padding: '1px'}}>{i}</td>
-        {row.cells.map((cell) => {
-          const { key: cellKey, ...cellRest } = cell.getCellProps({
-            style: {
-              margin: '1px',
-              padding: '1px',
-              color: getColor(cell.value, cell.column, row.values.symbol)
-            }
-          });
+      <tbody id="tableBodyId" {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          const { key: rowKey, ...rowRest } = row.getRowProps();
           return (
-            <td key={cellKey} {...cellRest}>
-              {cell.render('Cell')}
-            </td>
+            <tr id='stock_row_id' key={rowKey} {...rowRest}>
+              <td style={{margin: '1px', padding: '1px'}}>{i}</td>
+              {row.cells.map((cell) => {
+                const { key: cellKey, ...cellRest } = cell.getCellProps({
+                  style: {
+                    margin: '1px',
+                    padding: '1px',
+                    color: getColor(cell.value, cell.column, row.values.symbol)
+                  }
+                });
+                return (
+                  <td key={cellKey} {...cellRest}>
+                    {cell.render('Cell')}
+                  </td>
+                );
+              })}
+       
+
+              <div style={{display:'flex'}}>
+                <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
+                <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button>
+              </div>
+            </tr>
           );
         })}
-        <div style={{display:'flex'}}>
-          <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-          <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button>
-        </div>
-      </tr>
-    );
-  })}
-</tbody>
+      </tbody>
 
     </table>
 
@@ -1093,7 +1149,7 @@ useEffect(() => {
                       
             <hr/>    
             <div style={{display: 'flex' }}>
-              <Link style ={{fontWeight: "bold", color: 'red'}}to="/">Route-clear </Link> &nbsp;  &nbsp; &nbsp; &nbsp;
+              <Link style ={{fontWeight: "bold", color: 'red'}} href="/">route-clear </Link> &nbsp;  &nbsp; &nbsp; &nbsp;
               {chartSymbol && (
                 <div style={{display: 'flex' }}>
                   <div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: 
@@ -1103,170 +1159,59 @@ useEffect(() => {
  
               {/* Machanizms  for spacific sym (chartSymbol) */}
               {chartSymbol && <div>
-                <Link style={{background: routeColor('/bubbleLine')}} to="/bubbleLine"> bubbleLine </Link>&nbsp;
-                <Link style={{background: routeColor('/dropRecovery')}} to="/dropRecovery"> dropRecovery</Link> &nbsp; 
-                <Link style={{background: routeColor('/holdings')}} to="/holdings">holdings</Link> &nbsp; 
-                <Link style={{background: routeColor('/options')}} to="/options">options</Link> &nbsp; 
-                <Link style={{background: routeColor('/dropsCount')}} to="/dropsCount">dropsCount </Link> &nbsp; 
-                <Link style={{background: routeColor('/monthGain')}} to="/monthGain">monthGain </Link> &nbsp; 
+                <Link style={{background: routeColor('/bubbleLine')}} href="/bubbleLine"> bubbleLine </Link>&nbsp;
+                <Link style={{background: routeColor('/dropRecovery')}} href="/dropRecovery"> dropRecovery</Link> &nbsp; 
+                <Link style={{background: routeColor('/holdings')}} href="/holdings">holdings</Link> &nbsp; 
+                <Link style={{background: routeColor('/options')}} href="/options">options</Link> &nbsp; 
+                <Link style={{background: routeColor('/dropsCount')}} href="/dropsCount">dropsCount </Link> &nbsp; 
+                <Link style={{background: routeColor('/monthGain')}} href="/monthGain">monthGain </Link> &nbsp; 
               </div>}
 
               {chartSymbol && <div>
-                <Link style={{background: routeColor('/movingAverage')}} to="/movingAverage">movingAverage </Link> &nbsp;
-                <Link style={{background: routeColor('/ai')}} to="/ai">ai</Link> &nbsp; 
-                <Link style={{background: routeColor('/simulateTrade')}} to="/simulateTrade">simulateTrade </Link> &nbsp; 
-                <Link style={{background: routeColor('/candleStick')}} to="/candleStick">candleStick </Link> &nbsp; 
-                <Link style={{background: routeColor('/priceAlert')}} to="/priceAlert">priceAlert </Link> &nbsp; 
-                <Link style={{background: routeColor('/gainRaw')}} to="/gainRaw">gainRaw </Link> &nbsp; 
-                <Link style={{background: routeColor('/infoRaw')}} to="/infoRaw">infoRaw </Link> &nbsp; 
-                <Link style={{background: routeColor('/tools')}} to="/tools">tools </Link> &nbsp; 
+                <Link style={{background: routeColor('/movingAverage')}} href="/movingAverage">movingAverage </Link> &nbsp;
+                <Link style={{background: routeColor('/ai')}} href="/ai">ai</Link> &nbsp; 
+                <Link style={{background: routeColor('/simulateTrade')}} href="/simulateTrade">simulateTrade </Link> &nbsp; 
+                <Link style={{background: routeColor('/candleStick')}} href="/candleStick">candleStick </Link> &nbsp; 
+                <Link style={{background: routeColor('/priceAlert')}} href="/priceAlert">priceAlert </Link> &nbsp; 
+                <Link style={{background: routeColor('/gainRaw')}} href="/gainRaw">gainRaw </Link> &nbsp; 
+                <Link style={{background: routeColor('/infoRaw')}} href="/infoRaw">infoRaw </Link> &nbsp; 
+                <Link style={{background: routeColor('/tools')}} href="/tools">tools </Link> &nbsp; 
               </div>}
 
               {chartSymbol && <div>
-                {eliHome && <Link style={{background: routeColor('/urlGetParse')}} to="/urlGetParse">urlGetParse </Link>} &nbsp; 
-                {eliHome && <Link style={{background: routeColor('/leveragaETF')}} to="/leveragaETF">leveragaETF </Link>} &nbsp; 
-                {eliHome && <Link style={{background: routeColor('/marketOpenPrice')}} to="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
+                {eliHome && <Link style={{background: routeColor('/urlGetParse')}} href="/urlGetParse">urlGetParse </Link>} &nbsp; 
+                {eliHome && <Link style={{background: routeColor('/leveragaETF')}} href="/leveragaETF">leveragaETF </Link>} &nbsp; 
+                {eliHome && <Link style={{background: routeColor('/marketOpenPrice')}} href="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
               </div>}
 
               <hr/>
               <div>
-                <Link style={{background: routeColor('/config'), color: '#9932CC'}} to="/config">config </Link> &nbsp;
-                <Link style={{background: routeColor('/commonDatabase'), color: '#9932CC'}} to="/commonDatabase">commonDatabase </Link> &nbsp; 
-                <Link style={{background: routeColor('/stockLists'), color: '#9932CC'}} to="/stockLists">stockLists </Link> &nbsp;
-                <Link style={{background: routeColor('/symSearch'), color: '#9932CC'}} to="/symSearch">symSearch </Link> &nbsp;
-                <Link style={{background: routeColor('/contactUs'), fontWeight: "bold", color: '#32cc84'}} to="/contactUs">contactUs </Link> &nbsp;
+                <Link style={{background: routeColor('/config'), color: '#9932CC'}} href="/config">config </Link> &nbsp;
+                <Link style={{background: routeColor('/commonDatabase'), color: '#9932CC'}} href="/commonDatabase">commonDatabase </Link> &nbsp; 
+                <Link style={{background: routeColor('/stockLists'), color: '#9932CC'}} href="/stockLists">stockLists </Link> &nbsp;
+                <Link style={{background: routeColor('/symSearch'), color: '#9932CC'}} href="/symSearch">symSearch </Link> &nbsp;
+                <Link style={{background: routeColor('/contactUs'), fontWeight: "bold", color: '#32cc84'}} href="/contactUs">contactUs </Link> &nbsp;
               </div>
               
-              <Link style={{background: routeColor('/tutorials'), fontWeight: "bold"}} to="/tutorials">Tutorials</Link> &nbsp; 
-              <Link style={{background: routeColor('/about')}} to="/about">About</Link>&nbsp; 
-              {/* <Link to="/manual">Manual</Link> &nbsp; &nbsp; */}
+              <Link style={{background: routeColor('/tutorials'), fontWeight: "bold"}} href="/tutorials">Tutorials</Link> &nbsp; 
+              {/* <Link style={{background: routeColor('/about')}} href="/about">About</Link>&nbsp;  */}
+              {/* <Link href="/manual">Manual</Link> &nbsp; &nbsp; */}
 
-              {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} to="/logFlags">console-log-flags</Link>} &nbsp;
+              {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} href="/logFlags">console-log-flags</Link>} &nbsp;
 
-              {<Link style={{background: routeColor('/auxilaryLinks')}} to="/auxilaryLinks">Auxilary links</Link>} &nbsp;
+              {<Link style={{background: routeColor('/auxilaryLinks')}} href="/auxilaryLinks">Auxilary links</Link>} &nbsp;
 
 
-              {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} to="/futures">futures </Link>} &nbsp;
-              {eliHome && <Link style={{background: routeColor('/Polymarket'), color: '#9932CC'}} to="/Polymarket">Polymarket </Link>} &nbsp;
+              {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} href="/futures">futures </Link>} &nbsp;
+              {eliHome && <Link style={{background: routeColor('/Polymarket'), color: '#9932CC'}} href="/Polymarket">Polymarket </Link>} &nbsp;
 
               <hr/>
         </div>}
-
-
-          <Routes>
-
-            {/* <Route path="/tutorials" element={<Tutorials  /> } /> */}
-            {/* <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>  */}
-
-            <Route path="bubbleLine" element={ <Peak2PeakGui symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {logFlags} weekly={! daily} setBubbleLine={setBubbleLine}
-                  bubleLine={bubbleLine} errorAdd={errorAdd} saveTable={saveTable} price={price} eliHome={eliHome}/>} />
-
-            <Route path="dropRecovery" element={<DropRecoveryButtons StockSymbol = {chartSymbol} rows = {rows} allColumns={allColumns}
-             deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={logFlags} chartData={chartData} daily={daily}/>} />
-
-            <Route path="holdings" element={<Holdings chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd}
-             logFlags={logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>} />
-
-            <Route path="options" element={<StockOptions symbol = {chartSymbol} stockPrice = {price} priceDivHigh = {priceDivHigh}
-                errorAdd={errorAdd} daily={daily} eliHome={eliHome} corsServer={servSelect} ssl={ssl} PORT={PORT} rows = {rows}
-                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} logFlags={logFlags}
-                PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText}  />} />
-
-            <Route path="ai" element={<Ai chartSymbol = {chartSymbol} rows={rows} errorAdd={errorAdd} gainMap  = {gainMap} pageForAi={pageForAi} pageForAiText={pageForAiText}
-              city = {city} countryName = {countryName} countryCode = {countryCode} regionName = {regionName} ip = {ip} os = {os}
-              logFlags={logFlags} corsServer={servSelect} ssl={ssl} PORT={PORT} prepareRow={prepareRow} saveTable={saveTable} eliHome={eliHome} allColumns={allColumns}/>}/>
-
-
-
-            <Route path="simulateTrade" element={<Simulate symbol = {chartSymbol} rows = {rows} stockChartXValues = {stockChartXValues} gainMap = {gainMap}
-                stockChartYValues = {stockChartYValues} logFlags = {logFlags}
-                 errorAdd={errorAdd} saveTable={saveTable} monthGainData={monthGainData} daily={daily}/>}/>
-
-            <Route path="dropsCount" element={<DropsCount symbol = {chartSymbol}  
+        {activePage === "dropsCount" && (<DropsCount symbol = {chartSymbol}  
                 setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-                errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>}  />  
+                errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>)}   
 
-            <Route path="monthGain" element={ <MonthGain symbol = {chartSymbol}  gainMap = {gainMap}  stockChartXValues = {stockChartXValues} 
-                  stockChartYValues = {stockChartYValues} logFlags = {logFlags} errorAdd={errorAdd} setMonthGainData={setMonthGainData} daily={daily}/>}/>
-
-            <Route path="movingAverage" element={<MovingAverage symbol = {chartSymbol} rows = {rows} allColumns={allColumns}
-              deepStartDate={deepStartDate} setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={logFlags} chartData={chartData} daily={daily}/>}/>
-
-            <Route path="candlestick" element={<CandlestickChart symbol = {chartSymbol} chartData = {chartData} eliHome={eliHome} daily={daily}
-               errorAdd={errorAdd} API_KEY={API_KEY}  refreshByToggleColumns = {refreshByToggleColumns} 
-                 PageForAi={pageForAi} setPageForAi={setPageForAi} setPageForAiText={setPageForAiText} />}/>
-
-            <Route path="priceAlert" element={<PriceAlert  symbol = {chartSymbol} daily={daily} priceAlertTable = {priceAlertTable} setPriceAlertTable = {setPriceAlertTable}
-              gainMap = {gainMap}
-              errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns}
-               stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} /> }/>
-
-            <Route path="gainRaw" element={ <StockGain stockGain = {gainData} symbol={chartSymbol} //gainRawDividand = {gainRawDividand} setGainRawDividand = {setGainRawDividand}
-              daily={daily} chartData={chartData} rows = {rows} refreshByToggleColumns = {refreshByToggleColumns} /> }/>
-
-            <Route path="infoRaw" element={<StockInfo stockInfo = {stockInfo} chartSymbol = {chartSymbol} infoSymbol={infoSymbol} /> } />
-
-            <Route path="tools" element={<Tools symbol = {chartSymbol} rows = {rows} logFlags = {logFlags} errorAdd={errorAdd} gainMap = {gainMap}
-                stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns}
-                servSelect={servSelect} ssl={ssl} PORT={PORT} daily={daily} /> } />
-
-            <Route path="urlGetParse" element={<UrlGetParse symbol={chartSymbol} corsServer={servSelect} ssl={ssl} PORT={PORT}  /> } />
-
-            <Route path="leveragaETF" element={<LeverageETF  symbol = {chartSymbol} gainMap = {gainMap}  logFlags = {logFlags} errorAdd={errorAdd}  daily={daily} />} />
-
-            <Route path="marketOpenPrice" element={<MarketOpenPrice symbol = {chartSymbol} API_KEY={API_KEY}
-              setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-              errorAdd={errorAdd} logFlags={logFlags} chartData={chartData} daily={daily} />} />
-
-          </Routes>
-
-   
-        </div>
-  
-        {/* Service Routes */}
-         <Routes>
-            {eliHome && <Route path="/logFlags" element={<LogFlags setLogFlags={setLogFlags} checkList={checkList} />}/>}
-            <Route path="/tutorials" element={<Tutorials  />}/>
-            <Route path="/about" element={<About  />}/>
-            <Route path="/auxilaryLinks" element={< AuxilaryLinks />}/>
-
-
-            <Route path ="/dashBoard"  element={<Dashboard />}/>
-                                  {/* <Route path="/" element={<Dashboard/>}   /> */}
-            <Route path="/signup" element={<Signup/> } />
-            <Route path="/login" element={<Login/> }/>
-            <Route path="/forgotPassword" element={<ForgotPassword />}/>
-            <Route path="/update-profile" element={<UpdateProfile  />}/>
-
-
-            <Route path ='/commonDatabase' element= {<CommonDatabase localIp={localIp} rows={rows} prepareRow={prepareRow} symbol = {chartSymbol}
-                admin = {admin} eliHome = {eliHome} saveTable = {saveTable} refreshCallBack = {refreshByToggleColumns}
-                allColumns={allColumns} logFlags = {logFlags} ssl={ssl} PORT={PORT} errorAdd={errorAdd} corsServer={servSelect} 
-                yearlyPercent={yearlyPercent} QQQ_gain={QQQ_gain}/>}/>
-
-            <Route path ='/config' element = {<Config alphaCallBack = {alphaCallBack} ip={ip} rows = {rows} saveTable= {saveTable} logFlags = {logFlags} refreshByToggleColumns={refreshByToggleColumns}
-              smoothSpikes={smoothSpikes} setSmoothSpikes={setSmoothSpikes} openMarketFlag={openMarketFlag} setOpenMaretFlag={setOpenMaretFlag} errorAdd={errorAdd}
-              servSelect={servSelect} ssl={ssl} PORT={PORT}/>}/>
-
-            <Route path ='stockLists' element= {<StockLists ip={ip} rows = {rows} logFlags = {logFlags} saveTable={saveTable}
-              errorAdd={errorAdd} servSelect={servSelect} ssl={ssl} PORT={PORT}/>}/>
-
-            <Route path='/futures' element={<Futures symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-              stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} 
-              logFlags = {logFlags} servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>} />   
-
-            <Route path ='/polymarket' element = {<Polymarket symbol = {chartSymbol} rows = {rows} allColumns={allColumns} stockChartXValues = {stockChartXValues} 
-                stockChartYValues = {stockChartYValues} refreshByToggleColumns = {refreshByToggleColumns} logFlags = {logFlags} eliHome={eliHome}
-                servSelect={servSelect} ssl={ssl} PORT={PORT} errorAdd={errorAdd}/>}/>
-
-            <Route path = '/symSearch' element ={<SymSearch />} />
-
-            <Route path = '/contactUs' element = {<Contact server={servSelect} ssl={ssl} PORT={PORT} />}/>
-        
-          </Routes>
+      </div>
 
         <hr/> 
 
@@ -1274,6 +1219,7 @@ useEffect(() => {
     </Container>
 
     </Suspense>
+
   )
 }
 

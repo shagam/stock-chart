@@ -1,0 +1,116 @@
+table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+table tr:hover {background-color: #ddd;}
+
+/* table tr {
+  width: 100%!important;
+} */
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #04AA6D;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+table tbody {
+  /* background: pink; */
+  width: 100%!important;
+}
+
+
+.stock_button_class {
+  color:black;
+  float: left;
+  margin-left: 0px;
+  background: white;
+}
+
+#calc_splits_label_id {
+  height: 10px;
+  padding: 0px;
+  padding-bottom: 8px;
+  padding-right: 20px;
+  /* padding-top: 12px; */
+  border: 1px solid gray;
+  margin-right: 4px;
+  margin-bottom: -2px; 
+  margin-top: -2px;
+  margin-left: 15px;
+}
+
+#add_stock_id {
+  margin-top: -10px;
+   /* position: left; */
+   /* color: red; */
+}
+
+#columnToggle {
+  /* left: 10px; */
+  /* position: sticky; */
+  /* position: left; */
+  /* border: 1px solid gray; */
+  /* color: red; */
+  /* z-index: -10; */
+}
+/* #columnToggle_id {
+  background: blueviolet;
+} */
+#column_Label_id {
+  margin-right: 0px;
+  line-height: 0.7em;
+  /* color: red; */
+  /* background: yellow; */
+  /* float: left; */
+  /* margin-left: 0px; */
+
+  /* margin-top: -20px; */
+  /* margin-bottom: -10px;   */
+  /* padding-left: -10px; */
+  /* padding-left: 18px; */
+}
+
+#stockTable {
+  border: 2px solid green;
+  display: block;
+  /* max-height: 40vh; */
+  min-height: 20vh;
+  width: 100%;
+  /* min-width: 1900px; */
+  overflow-y: scroll;
+  /* background: yellow; */
+  text-align: center;
+}
+
+#tableBodyId {
+  /* background: lightblue; */
+  /* display: block; */
+}
+
+#stock_row_id {
+  /* width: 100%!important; */
+  /* color: red; */
+}
+
+/* #manual_id {
+  all: initial !important;
+  color: purple;
+  padding-left: 0px !important;
+  margin-left: 0px !important;
+} */

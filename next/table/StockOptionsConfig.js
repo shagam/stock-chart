@@ -1,0 +1,152 @@
+"use client";
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
+// import './App.css';
+import '../alphaVantage.css'
+import { ComboBoxSelect } from '../utils/ComboBoxSelect'
+
+
+function StockOptionsConfig (props) { 
+  if (props.logExtra)
+    console.log(props.config)
+  const [expirationCount, setExpirationCount] = useState(props.config.expirationCount);
+  const [expirationNum, setExpirationNum] = useState(props.config.expirationNum);
+  const expirationModeList = ['daysToExpire', 'expir_last', 'expir_oneBeforeLast'];
+  const [expirationMode, setExpirationMode] = useState(props.config.expirationMode);
+ 
+  const [strikeCount, setStrikeCount] = useState(props.config.strikeCount);
+  const [strikeNum, setStrikeNum] = useState(props.config.strikeNum);
+  const  sideLIst = ['call', 'put'];
+  const [side, setSide] = useState(props.config.side); // default to call options
+  const [priceDivHighFactor, setPriceDivHighFactor] = useState(props.config.priceDivHighFactor ? props.config.priceDivHighFactor : 0.3); // default to call options
+
+
+  const [action, setAction] = useState(props.config.action); // highest gain or lowest gain
+  const actionList = ['buy', 'sell'];
+
+  const [compoundYield, setCompoundYield] = useState(props.config.compoundYield); // true - compound gain, false - simple gain
+  const [percent, setPercent] = useState(props.config.percent); // true - percent, false - gain factor
+  const [ignoreDepreciatedStocks, setIgnoreDepreciatedStocks] = useState(props.config.ignoreDepreciatedStocks); // true - ignore depreciated stocks
+  // const [alpha, setAlpha] = useState();
+  
+  var flexConfig = localStorage.getItem('stockOptionsConfig');
+
+  function configClear()  {    
+    localStorage.removeItem('stockOptionsConfig');
+    window.location.reload(false);
+  }
+
+    const formChange = (event) => {
+        event.preventDefault();
+        const fieldName = event.target.getAttribute("name");
+        const fieldValue = event.target.value;
+
+        // console.log(event);
+        console.log('alpha key change', event.target.name + " " + event.target.value.toUpperCase());
+        // setAlpha (event.target.value.toUpperCase());
+    }
+
+    const formSubmit = (event) => {
+        event.preventDefault();
+
+
+      const newConfig = {expirationNum: Number(expirationNum), expirationCount: Number(expirationCount),
+         strikeNum: Number(strikeNum), strikeCount: Number(strikeCount),
+        side: side, percent: percent, compoundYield: compoundYield, action: action, priceDivHighFactor: Number(priceDivHighFactor),
+        expirationMode: expirationMode,
+      };
+
+        if (props.logExtra)
+          console.log("final data is: ", newConfig);
+        props.setConfig (newConfig);
+        props.setConfigShow(false); // hide the config form after submit
+    }
+
+    function clearKey () {
+      // console.log("clear");
+      localStorage.removeItem ('stockOptionsConfig');
+      // setAlpha(null)
+      // props.alphaCallBack(null)
+    }
+
+    //console.log('AlphaVantage render');
+
+    return (
+      <div style={{border:'2px solid magenta', background: '#f0e0f0'}} className = 'alpha'>
+        {/* <div style={{border:'2px solid blue'}}></div> */}
+        {/* <div>&nbsp;</div> */}
+        <h5  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>StockOptions config: </h5>
+        <form onSubmit = {formSubmit}>
+
+          <div style = {{display: 'flex'}}>
+            <ComboBoxSelect serv={expirationMode} nameList={expirationModeList} setSelect={setExpirationMode} title='expiration mode=' options={expirationModeList} defaultValue={expirationMode}/> &nbsp; &nbsp;  &nbsp; 
+            
+          </div>
+
+          {expirationMode !== 'expir_last' && expirationMode !== 'expir_oneBeforeLast' && <label style={{display: 'flex'}}> Days-to-expire: &nbsp; 
+            <input style={{width: '60px'}} type="number" name="expirationNum" // required="required"
+              placeholder="expirationNum"  onChange={(e) => setExpirationNum(e.target.value)} value={expirationNum} />
+          </label>}
+
+          <label> ExpirationCount &nbsp;
+            <input style={{width: '50px'}} type="number" name="expirationCount" // required="required"
+              placeholder="expirationCount"  onChange={(e) => setExpirationCount(e.target.value)} value={expirationCount} />
+          </label>&nbsp; &nbsp; 
+
+        
+          <br/> <br/>  
+          <label> Strike-%-AbovePrice: &nbsp;
+            <input style={{width: '50px'}} type="number" name="strikeNum" // required="required"
+              placeholder="strikeNum"  onChange={(e) => setStrikeNum(e.target.value)} value={strikeNum} />
+          </label>&nbsp; &nbsp; 
+
+          <label> StrikeCount &nbsp;
+            <input style={{width: '50px'}} type="number" name="strikeCount" // required="required"
+              placeholder="strikeCount"  onChange={(e) => setStrikeCount(e.target.value)} value={strikeCount} />
+          </label>         
+
+          <br/>          <br/>
+
+        <div style = {{display: 'flex'}}>
+          <ComboBoxSelect serv={side} nameList={sideLIst} setSelect={setSide} title='&nbsp;&nbsp;side=' options={sideLIst} defaultValue={side}/> &nbsp; &nbsp;  &nbsp; 
+          <ComboBoxSelect serv={action} nameList={actionList} setSelect={setAction} title='action=' options={actionList} defaultValue={action}/> &nbsp; &nbsp;  &nbsp; 
+        </div>
+        <br/> 
+        <label style={{margin: '0px', padding: '0px'}}> &nbsp; &nbsp; adjust expected price (price/High) &nbsp;
+          <input style={{width: '70px'}} type="number" step="0.01" name="priceDivHighFactor" // required="required"
+            placeholder={priceDivHighFactor} 
+              onChange={(e) => setPriceDivHighFactor (e.target.value)} value={priceDivHighFactor}  />
+              &nbsp; 0 (No compensation), &nbsp; 1 (Full compensation) 
+        </label> 
+
+        <br/> 
+
+        <div>&nbsp;</div>
+        <div style = {{display: 'flex'}}>        
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={percent}  onChange={()=>setPercent (! percent)}  />&nbsp;% &nbsp; (or yield-factor) &nbsp; &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={ignoreDepreciatedStocks}  onChange={()=>setIgnoreDepreciatedStocks (! ignoreDepreciatedStocks)} />&nbsp;ignore-depreciated-stocks &nbsp; &nbsp; </div>
+          <div style = {{display: 'flex'}}> <input type="checkbox" checked={compoundYield}  onChange={()=>setCompoundYield (! compoundYield)} />&nbsp;compound-yield &nbsp; &nbsp; </div> &nbsp; &nbsp;
+        </div>
+
+        <div>YearlyGain % &nbsp;
+          <input style={{width: '80px', backgroundColor: '#e5d333ff'}} type="number" name="YearlyGain" // required="required"
+            placeholder="YearlyGain" step="any" onChange={(e) =>  props.setEstimatedYearlyGain(e.target.value)} value={props.estimatedYearlyGain} />
+            &nbsp;&nbsp; <strong style={{color: 'magenta'}}>Please adjust to your future estimate </strong>  
+        </div>
+        <div>yearlyGain_source={props.yearlyGainSource}</div>
+
+        <div>&nbsp;</div>
+          {/* <br/>          <br/> */}
+          <button style={{background: '#00ff00'}} type="submit"> save-config</button> &nbsp;&nbsp;
+          <button type="button" onClick={()=>configClear()}> set defaults  &nbsp;&nbsp; (and restart)   </button> 
+        </form>
+        
+        <div>&nbsp;</div> 
+          {/* <div>&nbsp;</div> */}
+        {/* &nbsp;&nbsp;key: ({alpha}) */}
+        {/* &nbsp; <button type="button" onClick={()=>clearKey()}>Clear  </button>  */}
+
+      </div>
+    )
+}
+
+export default  StockOptionsConfig    

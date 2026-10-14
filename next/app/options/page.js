@@ -1,45 +1,41 @@
 "use client";
 
-import StockOptions from "../../table/StockOptions";   // adjust path if needed
+// export const metadata = {
+//   title: "Options | ShareCompare",
+//   description: "Analyze options chains, Greeks, volatility, and pricing models with ShareCompare’s advanced tools.",
+//   keywords: ["options", "greeks", "volatility", "options trading", "sharecompare"],
+//   openGraph: {
+//     title: "Options | ShareCompare",
+//     description: "Advanced options analytics including Greeks, IV, and pricing models.",
+//     url: "https://sharecompare.org/options",
+//     siteName: "ShareCompare",
+//     type: "website"
+//   }
+// };
 
+import {StockOptions} from "../../table/StockOptions";
+import memoryStore from "../../components/MemoryStore";
 export default function OptionsPage(props) {
-  const {
-    chartSymbol,
-    price,
-    priceDivHigh,
-    errorAdd,
-    daily,
-    eliHome,
-    servSelect,
-    ssl,
-    PORT,
-    rows,
-    stockChartXValues,
-    stockChartYValues,
-    logFlags,
-    pageForAi,
-    setPageForAi,
-    setPageForAiText
-  } = props;
+
 
   return (
     <StockOptions
-      symbol={chartSymbol}
-      stockPrice={price}
-      priceDivHigh={priceDivHigh}
-      errorAdd={errorAdd}
-      daily={daily}
-      eliHome={eliHome}
-      corsServer={servSelect}
-      ssl={ssl}
-      PORT={PORT}
-      rows={rows}
-      stockChartXValues={stockChartXValues}
-      stockChartYValues={stockChartYValues}
-      logFlags={logFlags}
-      PageForAi={pageForAi}
-      setPageForAi={setPageForAi}
-      setPageForAiText={setPageForAiText}
+      symbol={memoryStore.get('chartSymbol')}
+      price={memoryStore.get('price')}
+      priceDivHigh={memoryStore.get('priceDivHigh')}
+      errorAdd={memoryStore.get('errorAdd')}
+      daily={memoryStore.get('daily')}
+      eliHome={memoryStore.get('eliHome')}
+      corsServer={memoryStore.get('servSelect')}
+      ssl={memoryStore.get('ssl')}
+      PORT={memoryStore.get('PORT')}
+      rows={memoryStore.get('rows')}
+      stockChartXValues={memoryStore.get('stockChartXValues')}
+      stockChartYValues={memoryStore.get('stockChartYValues')}
+      logFlags={memoryStore.get('logFlags')}
+      PageForAi={memoryStore.get('pageForAi')}
+      setPageForAi={memoryStore.get('setPageForAi')}
+      setPageForAiText={memoryStore.get('setPageForAiText')}
     />
   );
 }
