@@ -446,6 +446,7 @@ const BasicTable = () => {
       targetPriceAdd (symbol, targetRaw, rows[index].values.price, logFlags, errorAdd, 'info', ssl, PORT, servSelect) 
       if (rows[index].values.price !== price) {
         setPrice(rows[index].values.price)
+        memoryStore.set('price', rows[index].values.price)
         setPriceDivHigh(rows[index].values.priceDivHigh)
       }
     }
