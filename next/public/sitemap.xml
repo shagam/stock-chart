@@ -77,6 +77,10 @@
     <url>
         <loc>https://shareCompare.org/auxilaryLinks</loc>
     </url>
+<!--
+    <url>
+        <loc>https://shareCompare.org/console-log-flags</loc>
+    </url>
 
     <url>
         <loc>https://shareCompare.org/leverageETF</loc>
@@ -93,7 +97,7 @@
     <url>
         <loc>https://shareCompare.org/futures</loc>
     </url>
-
+-->
     <url>
         <loc>https://sharecompare.org/stockTable</loc>
     </url>
