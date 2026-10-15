@@ -1217,7 +1217,7 @@ const BasicTable = (children) => {
 
               {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} href="/logFlags">console-log-flags</Link>} &nbsp;
 
-              {<Link style={{background: routeColor('/auxilaryLinks')}} href="/auxilaryLinks">Auxilary links</Link>} &nbsp;
+              {<Link style={{background: routeColor('/auxilaryLinks')}} href="/auxilaryLinks">Auxilary-links</Link>} &nbsp;
 
 
               {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} href="/futures">futures </Link>} &nbsp;
