@@ -282,7 +282,7 @@ const BasicTable = (children) => {
 
   memoryStore.set('setBubbleLine', setBubbleLine);
   memoryStore.set('bubbleLine', bubbleLine);
-  memoryStore.set('saveTable', saveTable);
+
   memoryStore.set('price', price);
 
   memoryStore.set('servSelect', servSelect);
@@ -762,7 +762,7 @@ const BasicTable = (children) => {
     refreshByToggleColumns ();
     // setError('')
   }
-
+  memoryStore.set('saveTable', saveTable);
 
   // css inline style="margin:-10 padding: -10 height: 13px overflow:hidden display:block float:left"
   const { globalFilter } = state
