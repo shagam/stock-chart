@@ -1,19 +1,17 @@
-"use client";
 
-import {DropsCount} from "../../table/DropsCount";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
+import Client from "./client";   // adjust path if needed
+
+// dropsCount
+export const metadata = {
+  title: "Stock Drop Statistics | Stock Analytics Platform",
+  description: "Track significant stock drops and identify recurring market weakness patterns and risk trends.",
+  keywords: ["stock drops", "market decline", "price drops", "bearish trends", "stock statistics"]
+};
 
 export default function DropsCountPage(props) {
 
   return (
-    <DropsCount
-      symbol= {memoryStore.get('chartSymbol')}
-      setDropStartDate={memoryStore.get('setDropStartDate')}
-      stockChartXValues={memoryStore.get('stockChartXValues')}
-      stockChartYValues={memoryStore.get('stockChartYValues')}
-      errorAdd={memoryStore.get('errorAdd')}
-      daily={memoryStore.get('daily')}
-      eliHome={memoryStore.get('eliHome')} 
-    />
+    <Client/>
+   
   );
 }

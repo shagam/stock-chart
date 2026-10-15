@@ -1,7 +1,7 @@
 "use client";
 import React, {useState, useMemo, useEffect} from 'react'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+
 // import {collection, getDocs, addDoc,  doc, deleteDoc, updateDoc, query, where} from "firebase/firestore";
 // import {db} from '../firebaseConfig'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 

@@ -1,6 +1,6 @@
 "use client";
 import React, {useState, useMemo, useEffect} from 'react'
-// import { Link, useNavigate } from 'react-router-dom'
+
 import Link from "next/link";
 
 // import "./logFlagaStyles.css";

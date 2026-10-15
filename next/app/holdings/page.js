@@ -1,23 +1,17 @@
+import Client from "./client";   // adjust path if needed
 
-"use client";
+// holdings
+export const metadata = {
+  title: "Portfolio Holdings Tracker | Stock Analytics Platform",
+  description: "Monitor your stock holdings, portfolio allocation, gains, losses, and investment performance.",
+  keywords: ["portfolio holdings", "investment tracker", "stock portfolio", "portfolio analysis", "asset allocation"]
+};
 
-import {Holdings} from "../../table/Holdings";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
 export default function HoldingsPage(props) {
 
   return (
-    <Holdings
-      chartSymbol={memoryStore.get('chartSymbol')}
-      rows={memoryStore.get('rows')}
-      errorAdd={memoryStore.get('errorAdd')}
-      logFlags={memoryStore.get('logFlags')}
-      corsServer={memoryStore.get('servSelect')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-      prepareRow={memoryStore.get('prepareRow')}
-      saveTable={memoryStore.get('saveTable')}
-      eliHome={memoryStore.get('eliHome')}
-      allColumns={memoryStore.get('allColumns') }
-    />
+    <Client />
   );
 }
+
+    

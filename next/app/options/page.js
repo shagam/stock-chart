@@ -1,4 +1,4 @@
-"use client";
+import Client from "./client";   // adjust path if needed
 
 // export const metadata = {
 //   title: "Options | ShareCompare",
@@ -13,29 +13,22 @@
 //   }
 // };
 
-import {StockOptions} from "../../table/StockOptions";
-import memoryStore from "../../components/MemoryStore";
+
+
+// options
+export const metadata = {
+  title: "Options Trading Analytics | Stock Analytics Platform",
+  description: "Analyze options contracts, implied volatility, Greeks, strike prices, and expiration opportunities.",
+  keywords: ["options trading", "stock options", "implied volatility", "options analytics", "Greeks"],
+  url: "https://sharecompare.org/options",
+  siteName: "ShareCompare",
+  type: "website"
+};
+
 export default function OptionsPage(props) {
-
-
   return (
-    <StockOptions
-      symbol={memoryStore.get('chartSymbol')}
-      price={memoryStore.get('price')}
-      priceDivHigh={memoryStore.get('priceDivHigh')}
-      errorAdd={memoryStore.get('errorAdd')}
-      daily={memoryStore.get('daily')}
-      eliHome={memoryStore.get('eliHome')}
-      corsServer={memoryStore.get('servSelect')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-      rows={memoryStore.get('rows')}
-      stockChartXValues={memoryStore.get('stockChartXValues')}
-      stockChartYValues={memoryStore.get('stockChartYValues')}
-      logFlags={memoryStore.get('logFlags')}
-      PageForAi={memoryStore.get('pageForAi')}
-      setPageForAi={memoryStore.get('setPageForAi')}
-      setPageForAiText={memoryStore.get('setPageForAiText')}
-    />
+    <Client/>
   );
 }
+
+     

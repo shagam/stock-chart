@@ -1,53 +1,13 @@
-"use client";
+import Client from "./client";
 
-import Ai from "../../table/Ai";   // adjust path if needed
+// ai
+export const metadata = {
+  title: "AI Stock Insights | Stock Analytics Platform",
+  description: "Get AI-powered stock analysis, trend detection, trading signals, and investment insights.",
+  keywords: ["AI stocks", "AI trading", "stock predictions", "investment AI", "market intelligence"]
+};
 
 export default function AiPage(props) {
-  const {
-    chartSymbol,
-    rows,
-    errorAdd,
-    gainMap,
-    pageForAi,
-    pageForAiText,
-    city,
-    countryName,
-    countryCode,
-    regionName,
-    ip,
-    os,
-    logFlags,
-    servSelect,
-    ssl,
-    PORT,
-    prepareRow,
-    saveTable,
-    eliHome,
-    allColumns
-  } = props;
 
-  return (
-    <Ai
-      chartSymbol={chartSymbol}
-      rows={rows}
-      errorAdd={errorAdd}
-      gainMap={gainMap}
-      pageForAi={pageForAi}
-      pageForAiText={pageForAiText}
-      city={city}
-      countryName={countryName}
-      countryCode={countryCode}
-      regionName={regionName}
-      ip={ip}
-      os={os}
-      logFlags={logFlags}
-      corsServer={servSelect}
-      ssl={ssl}
-      PORT={PORT}
-      prepareRow={prepareRow}
-      saveTable={saveTable}
-      eliHome={eliHome}
-      allColumns={allColumns}
-    />
-  );
+  return ( <Client/>)
 }

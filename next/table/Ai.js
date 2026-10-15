@@ -1,6 +1,7 @@
 "use client";
 import React, {useState, useMemo} from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+
+import Link from "next/link";
 // import OpenAI from 'openai'
 import axios from 'axios'
 import { set } from 'date-fns';

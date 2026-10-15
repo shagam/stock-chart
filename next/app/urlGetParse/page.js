@@ -1,21 +1,17 @@
 "use client";
 
-import UrlGetParse from "../../table/UrlGetParse";   // adjust path if needed
+import {UrlGetParse} from "../../utils/UrlGetParse";   // adjust path if needed
+import memoryStore from "../../components/MemoryStore"; // adjust path if needed
+
 
 export default function UrlGetParsePage(props) {
-  const {
-    chartSymbol,
-    servSelect,
-    ssl,
-    PORT
-  } = props;
 
   return (
     <UrlGetParse
-      symbol={chartSymbol}
-      corsServer={servSelect}
-      ssl={ssl}
-      PORT={PORT}
+      symbol={memoryStore.get('chartSymbol')}
+      corsServer={memoryStore.get('servSelect')}
+      ssl={memoryStore.get('ssl')}
+      PORT={memoryStore.get('PORT')}
     />
   );
 }

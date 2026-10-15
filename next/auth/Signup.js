@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useRef } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
+import Link from "next/link";
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 export default function Signup ()  {
   const emailRef = useRef();

@@ -1,19 +1,15 @@
-"use client";
 
-import {MonthGain} from "../../table/MonthGain";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
+import Client from "./Client";
+
+// monthGain
+export const metadata = {
+  title: "Monthly Stock Gain Analysis | Stock Analytics Platform",
+  description: "Review monthly gains, historical returns, and seasonal performance trends for stocks and ETFs.",
+  keywords: ["monthly returns", "stock gains", "market performance", "seasonal stocks", "investment analysis"]
+};
+
 export default function MonthGainPage(props) {
 
-  return (
-    <MonthGain
-      symbol={memoryStore.get('chartSymbol')}
-      gainMap={memoryStore.get('gainMap')}
-      stockChartXValues={memoryStore.get('stockChartXValues')}
-      stockChartYValues={memoryStore.get('stockChartYValues')}
-      logFlags={memoryStore.get('logFlags')}
-      errorAdd={memoryStore.get('errorAdd')}
-      setMonthGainData={memoryStore.get('setMonthGainData')}
-      daily={memoryStore.get('daily')}
-    />
-  );
+  return (<Client />);
+
 }

@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect} from 'react'
 import { Alert } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import Link from "next/link";
+
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
@@ -21,7 +22,7 @@ export default function ContactGet (props)  {
     const [error, setError] = useState ('');
     const [stat, setStat] = useState()
     const [textArray, setTextArray] = useState();
-    const navigate = useNavigate();
+
 
     // contact requests of last week
     const mili7DaysAgo = (Date.now() - 90 * 24 * 3600 * 1000) //** date 90 days back */

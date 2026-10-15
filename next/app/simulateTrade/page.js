@@ -1,33 +1,15 @@
-"use client";
+import Client from "./client";   // adjust path if needed
 
-import Simulate from "../../table/Simulate";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
+// simulateTrade
+export const metadata = {
+  title: "Trade Simulator | Stock Analytics Platform",
+  description: "Test stock trading strategies using historical market data and risk-free simulations.",
+  keywords: ["trade simulator", "paper trading", "backtesting", "strategy testing", "stock simulation"]
+};
+
 export default function SimulateTradePage(props) {
-  // const {
-  //   chartSymbol,
-  //   rows,
-  //   stockChartXValues,
-  //   gainMap,
-  //   stockChartYValues,
-  //   logFlags,
-  //   errorAdd,
-  //   saveTable,
-  //   monthGainData,
-  //   daily
-  // } = props;
 
   return (
-    <Simulate
-      symbol={memoryStore.get('chartSymbol')}
-      rows={memoryStore.get('rows')}
-      stockChartXValues={memoryStore.get('stockChartXValues')}
-      gainMap={memoryStore.get('gainMap')}
-      stockChartYValues={memoryStore.get('stockChartYValues')}
-      logFlags={memoryStore.get('logFlags')}
-      errorAdd={memoryStore.get('errorAdd')}
-      saveTable={memoryStore.get('saveTable')}
-      monthGainData={memoryStore.get('monthGainData')}
-      daily={memoryStore.get('daily')}
-    />
-  );
+    <Client/>
+  )   
 }

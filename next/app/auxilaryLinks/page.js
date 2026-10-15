@@ -1,7 +1,12 @@
-"use client";
+import Client from "./client";
 
-import AuxilaryLinks from "../../table/AuxilaryLinks";   // adjust path if needed
+// auxilaryLinks
+export const metadata = {
+  title: "Trading Resources & Links | Stock Analytics Platform",
+  description: "Access market resources, trading tools, financial references, and educational materials.",
+  keywords: ["trading resources", "finance links", "stock tools", "investment resources"]
+};
 
 export default function AuxilaryLinksPage() {
-  return <AuxilaryLinks />;
+  return <Client />;
 }

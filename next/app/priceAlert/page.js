@@ -1,39 +1,17 @@
-"use client";
 
-import PriceAlert from "../../table/PriceAlert";   // adjust path if needed
+import Client from "./client";   // adjust path if needed
+
+// priceAlert
+export const metadata = {
+  title: "Stock Price Alerts | Stock Analytics Platform",
+  description: "Set custom stock price alerts and monitor trading opportunities in real time.",
+  keywords: ["price alerts", "stock notifications", "market alerts", "stock monitoring", "trade signals"]
+};
 
 export default function PriceAlertPage(props) {
-  const {
-    chartSymbol,
-    daily,
-    priceAlertTable,
-    setPriceAlertTable,
-    gainMap,
-    errorAdd,
-    servSelect,
-    ssl,
-    PORT,
-    rows,
-    refreshByToggleColumns,
-    stockChartXValues,
-    stockChartYValues
-  } = props;
+
 
   return (
-    <PriceAlert
-      symbol={chartSymbol}
-      daily={daily}
-      priceAlertTable={priceAlertTable}
-      setPriceAlertTable={setPriceAlertTable}
-      gainMap={gainMap}
-      errorAdd={errorAdd}
-      servSelect={servSelect}
-      ssl={ssl}
-      PORT={PORT}
-      rows={rows}
-      refreshByToggleColumns={refreshByToggleColumns}
-      stockChartXValues={stockChartXValues}
-      stockChartYValues={stockChartYValues}
-    />
-  );
+    <Client />
+  )
 }

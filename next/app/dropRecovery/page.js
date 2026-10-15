@@ -1,28 +1,17 @@
 
-"use client";
 
-import {DropRecoveryButtons} from "../../table/DropRecovery";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
+import Client from "./client";   // adjust path if needed
+
+// dropRecovery
+export const metadata = {
+  title: "Stock Drop Recovery Analysis | Stock Analytics Platform",
+  description: "Identify how stocks recover after major declines and analyze recovery patterns, rebounds, and historical performance.",
+  keywords: ["drop recovery", "stock rebound", "market correction", "price recovery", "stock analysis"]
+};
+
 export default function DropRecoveryPage(props) {
-
-
   return (
-    <DropRecoveryButtons
-      StockSymbol={memoryStore.get('chartSymbol')}
-      rows={memoryStore.get('rows')}
-      errorAdd={memoryStore.get('errorAdd')}
-      logFlags={memoryStore.get('logFlags')}
-      corsServer={memoryStore.get('servSelect')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-      prepareRow={memoryStore.get('prepareRow')}
-      saveTable={memoryStore.get('saveTable')}
-      eliHome={memoryStore.get('eliHome')}
-      allColumns={memoryStore.get('allColumns')}
-      stockChartXValues={memoryStore.get('stockChartXValues')}
-      stockChartYValues={memoryStore.get('stockChartYValues')}
-      daily={memoryStore.get('daily')}
-      chartData={memoryStore.get('chartData')}
-    />
+    <Client/>
   );
 }
+    

@@ -1,23 +1,16 @@
-"use client";
+import Client from "./client";   // adjust path if needed
 
-import LeverageETF from "../../table/LeverageETF";   // adjust path if needed
+
+// leverageETF
+export const metadata = {
+  title: "Leveraged ETF Analysis | Stock Analytics Platform",
+  description: "Analyze leveraged ETFs, risk exposure, volatility, and historical performance trends.",
+  keywords: ["leveraged ETF", "ETF analysis", "leveraged funds", "ETF trading"]
+};
 
 export default function LeverageETFPage(props) {
-  const {
-    chartSymbol,
-    gainMap,
-    logFlags,
-    errorAdd,
-    daily
-  } = props;
 
   return (
-    <LeverageETF
-      symbol={chartSymbol}
-      gainMap={gainMap}
-      logFlags={logFlags}
-      errorAdd={errorAdd}
-      daily={daily}
-    />
+    <Client/>
   );
 }

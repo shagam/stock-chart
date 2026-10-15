@@ -1,7 +1,7 @@
 "use client";
 import React, {useState, useEffect, useMemo} from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 
+import Link from "next/link";
 // import txt from './Manual.txt'
 import './Manual.css'
 

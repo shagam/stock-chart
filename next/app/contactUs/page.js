@@ -1,15 +1,15 @@
-"use client";
+import Client from "./client";
 
-import Contact from "../../auth/Contact";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore"; // adjust path if needed
+// contactUs
+export const metadata = {
+  title: "Contact Us | Stock Analytics Platform",
+  description: "Contact our team for support, feedback, questions, and partnership opportunities.",
+  keywords: ["contact support", "customer service", "help center", "support"]
+};
+
 export default function ContactUsPage(props) {
 
-
   return (
-    <Contact
-      server={memoryStore.get('servSelect')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-    />
+    <Client />
   );
 }

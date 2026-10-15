@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useRef } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
 
+import Link from "next/link";
 import { useAuth } from '../contexts/AuthContext';
 
 

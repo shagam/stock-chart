@@ -1,19 +1,16 @@
-"use client";
+import Client from "./client";   // adjust path if needed
 
-import StockLists from "../../table/StockLists";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore"; // adjust path if needed
+// stockList
+export const metadata = {
+  title: "Stock List Directory | Stock Analytics Platform",
+  description: "Browse stocks, ETFs, sectors, and market opportunities in one searchable directory.",
+  keywords: ["stock list", "stock directory", "ETFs", "market sectors", "investments"]
+};
+
+
 export default function StockListsPage(props) {
 
   return (
-    <StockLists
-      ip={memoryStore.get('localIp')}
-      rows={memoryStore.get('rows')}
-      logFlags={memoryStore.get('logFlags')}
-      saveTable={memoryStore.get('saveTable')}
-      errorAdd={memoryStore.get('errorAdd')}
-      servSelect={memoryStore.get('servSelect')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-    />
-  );
+    <Client/>
+  )
 }

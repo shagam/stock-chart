@@ -4,7 +4,7 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
-import { usePathname } from "next/navigation";
+
 import { SharedContext } from "../components/SharedContext";
 import memoryStore from "../components/MemoryStore";
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
@@ -47,8 +47,9 @@ import {ServerSelect, server, PORT, ssl} from  '../utils/Server'
 
 // import {db} from '../firebaseConfig'
 
-import {useNavigate } from 'react-router-dom'
 import Link from "next/link";
+import { usePathname, useParams, useSearchParams } from 'next/navigation';
+
 import { FaArrowDown, FaArrowUp, FaAngleUp, FaCaretUp, FaSlideshare, FaVenusMars, FaChevronUp, FaChevronDown} from 'react-icons/fa'
 import { IoIosArrowUp,  IoIosArrowDown } from "react-icons/io";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown, MdSystemSecurityUpdateWarning } from "react-icons/md";
@@ -309,6 +310,22 @@ const BasicTable = (children) => {
   memoryStore.set('setPageForAiText', setPageForAiText)
   memoryStore.set('checkList', checkList);
   memoryStore.set('monthGainData', monthGainData);
+
+  memoryStore.set('deepStartDate', deepStartDate);
+  memoryStore.set('priceAlertTable', priceAlertTable);
+  memoryStore.set('setGainRawDividand', setGainRawDividand);
+  memoryStore.set('infoSymbol', infoSymbol);
+
+  memoryStore.set('pageForAi', pageForAi);
+  memoryStore.set('pageForAiText', pageForAiText);
+  memoryStore.set('city', city);
+  memoryStore.set('countryName', countryName);
+  memoryStore.set('countryCode', countryCode);
+  memoryStore.set('regionName', regionName);
+  memoryStore.set('ip', ip);
+  memoryStore.set('os', os);
+
+
 
       // const cafeList = document.querySelector("#gain-history")
   function errorAdd (err, supressBeep) {
@@ -950,7 +967,8 @@ const BasicTable = (children) => {
   }
   
   function routeColor (rout) {
-    if (location.pathname === rout) {
+     const pathname = usePathname()
+    if (pathname === rout) {
       return 'pink'
     }
     return 'white'

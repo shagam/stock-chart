@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from 'react'
 import { Form, Button, Card, Alert, Container } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
@@ -28,7 +28,7 @@ export default function ContactUs (props)  {
   const [info, setInfo] = useState()
   const [latency, setLatency] = useState ();
 
-  // const navigate = useNavigate();
+
   const {ip, localIp, localIpv4, eliHome, city, countryName, regionName, userAgent, os} = IpContext();
   const [logBackEnd, setLogBackEnd] = useState (false);
   const [mailingList, setMailingList] = useState (true)

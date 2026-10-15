@@ -1,23 +1,19 @@
-"use client";
 
-import {Futures} from "../../table/Futures";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
+import Client from "./client";   // adjust path if needed
+
+// futures
+export const metadata = {
+  title: "Futures Market Analysis | Stock Analytics Platform",
+  description: "Monitor futures markets including indexes, commodities, and global trading activity.",
+  keywords: ["futures trading", "index futures", "commodity futures", "futures market"]
+};
+
+
 export default function FuturesPage(props) {
 
-
   return (
-    <Futures
-      symbol={memoryStore.get('chartSymbol')}
-      rows={memoryStore.get('rows')}
-      allColumns={memoryStore.get('allColumns')}
-      stockChartXValues={memoryStore.get('stockChartXValues')}
-      stockChartYValues={memoryStore.get('stockChartYValues')}
-      refreshByToggleColumns={memoryStore.get('refreshByToggleColumns')}
-      logFlags={memoryStore.get('logFlags')}
-      servSelect={memoryStore.get('servSelect')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-      errorAdd={memoryStore.get('errorAdd')}
-    />
+    <Client />
   );
 }
+
+    

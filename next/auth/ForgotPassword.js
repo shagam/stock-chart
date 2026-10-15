@@ -3,7 +3,8 @@
   import { sendPasswordResetEmail } from 'firebase/auth';
   import React, { useState, useRef } from 'react'
   import { Form, Button, Card, Alert } from 'react-bootstrap'
-  import { Link, useNavigate } from 'react-router-dom'
+
+  import Link from "next/link";
   import { AuthProvider, useAuth } from '../contexts/AuthContext';
   import { db, app, projectStorage, auth } from '../firebase'    
   
@@ -56,7 +57,7 @@
               <hr style={{ border: '3px solid #000000'}}/> 
               <Button disabled={loading} className="w-100" type="submit"> Reset password </Button>
             </Form>
-            <div className='w-100 text-center mt-3'>   <Link to="/login" >
+            <div className='w-100 text-center mt-3'>   <Link href="/login" >
                Login </Link> 
             </div>
           </Card.Body>

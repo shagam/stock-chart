@@ -1,27 +1,15 @@
-"use client";
 
-import StockGain from "../../table/StockGain";   // adjust path if needed
+// gainRaw
+export const metadata = {
+  title: "Raw Gain Data | Stock Analytics Platform",
+  description: "Access raw stock gain metrics, performance data, and historical return information.",
+  keywords: ["stock gains data", "raw market data", "historical returns", "performance metrics"]
+};
 
 export default function GainRawPage(props) {
-  const {
-    gainData,
-    chartSymbol,
-    setGainRawDividand,
-    daily,
-    chartData,
-    rows,
-    refreshByToggleColumns
-  } = props;
 
   return (
-    <StockGain
-      stockGain={gainData}
-      symbol={chartSymbol}
-      setGainRawDividand={setGainRawDividand}
-      daily={daily}
-      chartData={chartData}
-      rows={rows}
-      refreshByToggleColumns={refreshByToggleColumns}
-    />
+    <Client/>
   );
 }
+      

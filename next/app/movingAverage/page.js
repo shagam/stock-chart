@@ -1,35 +1,18 @@
-"use client";
+import Client from "./client";   // adjust path if needed
 
-import MovingAverage from "../../table/MovingAverage";   // adjust path if needed
+// movingAverage
+export const metadata = {
+  title: "Moving Average Scanner | Stock Analytics Platform",
+  description: "Analyze stock trends using moving averages including SMA and EMA indicators.",
+  keywords: ["moving average", "SMA", "EMA", "technical analysis", "stock trends"]
+};
 
 export default function MovingAveragePage(props) {
-  const {
-    chartSymbol,
-    rows,
-    allColumns,
-    deepStartDate,
-    setDropStartDate,
-    stockChartXValues,
-    stockChartYValues,
-    errorAdd,
-    logFlags,
-    chartData,
-    daily
-  } = props;
+
 
   return (
-    <MovingAverage
-      symbol={chartSymbol}
-      rows={rows}
-      allColumns={allColumns}
-      deepStartDate={deepStartDate}
-      setDropStartDate={setDropStartDate}
-      stockChartXValues={stockChartXValues}
-      stockChartYValues={stockChartYValues}
-      errorAdd={errorAdd}
-      logFlags={logFlags}
-      chartData={chartData}
-      daily={daily}
-    />
+    <Client />
   );
 }
+
+    

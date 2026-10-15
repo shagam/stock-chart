@@ -1,31 +1,16 @@
-"use client";
+import Client from "./client";
 
+// commonDatabase
+export const metadata = {
+  title: "Stock Market Database | Stock Analytics Platform",
+  description: "Search and access a comprehensive stock market database with historical and fundamental data.",
+  keywords: ["stock database", "market database", "financial data", "stock information"]
+};
 
-import {CommonDatabase} from "../../table/CommonDatabase";   // adjust path if needed
-import memoryStore from "../../components/MemoryStore";
-  
 
 export default function CommonDatabasePage(props) {
 
+  return (<Client/>
 
-  return (
-    <CommonDatabase
-      localIp={memoryStore.get('localIp')}
-      rows={memoryStore.get('rows')}
-      prepareRow={memoryStore.get('prepareRow')}
-      symbol={memoryStore.get('chartSymbol')}
-      admin={memoryStore.get('admin')}
-      eliHome={memoryStore.get('eliHome')}
-      saveTable={memoryStore.get('saveTable')}
-      refreshCallBack={memoryStore.get('refreshByToggleColumns')}
-      allColumns={memoryStore.get('allColumns')}
-      logFlags={memoryStore.get('logFlags')}
-      ssl={memoryStore.get('ssl')}
-      PORT={memoryStore.get('PORT')}
-      errorAdd={memoryStore.get('errorAdd')}
-      corsServer={memoryStore.get('servSelect')}
-      yearlyPercent={memoryStore.get('yearlyPercent')}
-      QQQ_gain={memoryStore.get('QQQ_gain')}
-    />
   );
 }

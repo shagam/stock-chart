@@ -1,7 +1,35 @@
-"use client";
 
-import Tutorials from "../../Tutorials";   // adjust path if needed
+import Client from "./client";   // adjust path if needed
+
+// tutorials
+export const metadata = {
+  title: "Stock Trading Tutorials & Guides | Stock Analytics Platform",
+  description:
+    "Learn stock investing, technical analysis, trading strategies, portfolio management, and platform features with step-by-step tutorials.",
+  keywords: [
+    "stock tutorials",
+    "trading guides",
+    "technical analysis tutorial",
+    "investing education",
+    "stock market learning"
+  ],
+
+  alternates: {
+    canonical: "https://yourdomain.com/tutorials",
+  },
+
+  openGraph: {
+    title: "Stock Trading Tutorials & Guides | Stock Analytics Platform",
+    description: "Learn stock investing, trading strategies, portfolio management, and platform features.",
+    url: "https://yourdomain.com/tutorials",
+    siteName: "Stock Analytics Platform",
+    type: "article",
+  },
+
+  category: "Education",
+};
+
 
 export default function TutorialsPage() {
-  return <Tutorials />;
+  return <Client />;
 }

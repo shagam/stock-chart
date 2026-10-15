@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react'
-import { Link, useNavigate, jumpTo } from 'react-router-dom'
+import {useNavigate, jumpTo } from 'react-router-dom'
+import Link from "next/link";
 import { Card, Button, Alert } from 'react-bootstrap'
 
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, updateCurrentUser } from 'firebase/auth'
