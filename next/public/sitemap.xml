@@ -94,4 +94,36 @@
         <loc>https://shareCompare.org/futures</loc>
     </url>
 
+    <url>
+        <loc>https://sharecompare.org/stockTable</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/chart</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/tools</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/tutorials</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/loginDashBoard</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/login</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/signUp</loc>
+    </url>
+
+    <url>
+        <loc>https://sharecompare.org/forgotPassword</loc>
+    </url>
+
 </urlset>
