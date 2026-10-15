@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import {useRouter} from 'next/navigation'
 import Link from "next/link";
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 export default function Signup ()  {
@@ -16,7 +16,7 @@ export default function Signup ()  {
   
   const toggleShowPassword = () => {setShowPassword (! showPassword)}
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
   async function handleSubmit (e) {
     e.preventDefault();
@@ -29,7 +29,7 @@ export default function Signup ()  {
       setError('');
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value)
-      navigate ('/')
+      router.push('/')
     } catch (e) {setError (e.message)}
     setLoading (false);
   }

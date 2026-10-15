@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
-import {  useNavigate } from 'react-router-dom'
+
+import {useRouter} from 'next/navigation'
 import Link from "next/link";
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 
@@ -18,8 +19,7 @@ export default function Login (props)  {
 
   const toggleShowPassword = () => {setShowPassword (! showPassword)}
 
-  const navigate = useNavigate();
-  
+  const router = useRouter();
 
   async function handleSubmit (e) {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function Login (props)  {
       setError('');
       setLoading(true);
       await login (emailRef.current.value, passwordRef.current.value)
-      navigate ('/')
+      router.push('/')
 
       if (currentUser && currentUser.email === process.env.NEXT_PUBLIC_eli) {
         props.setAdmin (true)

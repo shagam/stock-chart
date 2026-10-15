@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from 'react'
-import {useNavigate, jumpTo } from 'react-router-dom'
+
 import Link from "next/link";
+// import {Router} from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Card, Button, Alert } from 'react-bootstrap'
 
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup, updateCurrentUser } from 'firebase/auth'
@@ -11,8 +13,8 @@ import {  useAuth, logout } from '../contexts/AuthContext';
 export default function Dashboard (props) {
   const [error, setError] = useState ('');
   const { currentUser, admin, logout } = useAuth();
-  const navigate = useNavigate();
 
+  const router = useRouter();
 
   const signInWithFacebook = async  () => {
     const provider = new FacebookAuthProvider();
@@ -63,7 +65,7 @@ export default function Dashboard (props) {
     try {
 
       await logout();
-      navigate('/')
+      router.push('/')
     } catch (e) {setError(e.message) && console.log (e)}
   }
 

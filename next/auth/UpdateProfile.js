@@ -18,8 +18,6 @@ export default function UpdateProfile ()  {
 
   const toggleShowPassword = () => {setShowPassword (! showPassword)}
 
-  const nvigate = useNavigate();
-
   async function handleSubmit (e) {
     e.preventDefault();
 
