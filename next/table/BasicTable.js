@@ -1221,7 +1221,7 @@ const BasicTable = (children) => {
 
 
               {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} href="/futures">futures </Link>} &nbsp;
-              {eliHome && <Link style={{background: routeColor('/Polymarket'), color: '#9932CC'}} href="/Polymarket">Polymarket </Link>} &nbsp;
+              {eliHome && <Link style={{background: routeColor('/polymarket'), color: '#9932CC'}} href="/polymarket">polymarket </Link>} &nbsp;
 
               <hr/>
         </div>}
