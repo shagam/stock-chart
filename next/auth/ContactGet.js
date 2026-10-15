@@ -169,7 +169,7 @@ export default function ContactGet (props)  {
         <div style={{width:'100%', fontSize: '20px'}}>
 
           <h2 className='text-center mb-4'>Contact get</h2>
-          &nbsp; <Link to="/" >Home</Link>
+          &nbsp; <Link href="/" >Home</Link>
           {error && <Alert variant="danger"> {error} </Alert>}
           <hr/> 
           {/* <br/> */}

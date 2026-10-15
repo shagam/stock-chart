@@ -1,4 +1,7 @@
 
+import Client from "./client";
+
+
 // updateProfile
 export const metadata = {
   title: "Update Profile Settings | Stock Analytics Platform",

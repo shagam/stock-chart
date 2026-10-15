@@ -79,14 +79,14 @@ export default function Login (props)  {
       </Card>
 
       <div className='w-100 text-center mt-2'>
-        Need an account? <Link to="/signup" > Sign Up </Link>
+        Need an account? <Link href="/signup" > Sign Up </Link>
       </div>
 
       <div className='w-100 text-center mt-2'>
-        Forgot Password? <Link to="/ForgotPassword" > Reset Password </Link>
+        Forgot Password? <Link href="/forgotPassword" > Reset Password </Link>
       </div>
       
-      <div className='w-100 text-center mt-2'>  <Link to="/dashboard" > Dashboard </Link> </div>
+      <div className='w-100 text-center mt-2'>  <Link href="/dashboard" > Dashboard </Link> </div>
 
     </>
   )

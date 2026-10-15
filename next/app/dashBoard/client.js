@@ -1,6 +1,6 @@
 "use client";
 
-import Dashboard from "../../components/Dashboard";   // adjust path if needed
+import Dashboard from "../../auth/Dashboard";   // adjust path if needed
 
 
 

@@ -1,6 +1,6 @@
 "use client";
 
-import ForgotPassword from "../../components/ForgotPassword";   // adjust path if needed
+import ForgotPassword from "../../auth/ForgotPassword";   // adjust path if needed
 
 // forgotPassword
 

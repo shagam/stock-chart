@@ -35,7 +35,7 @@ try {
       <h4 style={{color:'Green'}}>Manual</h4>
 
       <div>
-          <Link to="/" > Home </Link>
+          <Link href="/" > Home </Link>
       </div>
       <hr style={{ border: '3px solid #000000'}}/> 
      

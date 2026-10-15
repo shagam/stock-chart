@@ -98,7 +98,7 @@ export default function Dashboard (props) {
 
         <div className='w-100 text-center mt-2'> Need an account? <Link href="/signup" > Sign Up </Link> </div>
 
-        <div className='btn btn-primery w-100 mt-3'>  <Link href="/update-profile" variant="primeray" >   Update Profile </Link></div>
+        <div className='btn btn-primery w-100 mt-3'>  <Link href="/updateProfile" variant="primeray" >   Update Profile </Link></div>
         
         {currentUser &&<div className='w-100 text-center mt-2'> 
           <Button variant="link" onClick={handleLogout}>Log Out</Button>

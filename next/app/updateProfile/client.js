@@ -1,6 +1,6 @@
 "use client";
 
-import UpdateProfile from "../../components/UpdateProfile";   // adjust path if needed
+import UpdateProfile from "../../auth/UpdateProfile";   // adjust path if needed
 
 // updateProfile
 

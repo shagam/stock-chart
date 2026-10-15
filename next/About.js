@@ -10,7 +10,7 @@ const  col='#765739'// 'magenta
 return (
 <div>
     <div>
-        <Link to="/" > Home </Link>
+        <Link href="/" > Home </Link>
     </div>
     <div>
     

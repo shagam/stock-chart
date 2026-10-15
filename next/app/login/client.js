@@ -1,6 +1,6 @@
 "use client";
 
-import Login from "../../components/Login";   // adjust path if needed
+import Login from "../../auth/Login";   // adjust path if needed
 
 
 

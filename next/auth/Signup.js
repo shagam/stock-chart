@@ -78,10 +78,10 @@ export default function Signup ()  {
         </Card.Body>
       </Card>
       <div className='w-100 text-center mt-2'>
-        Already have an account?  <Link to="/login" > Log In </Link>
+        Already have an account?  <Link href="/login" > Log In </Link>
 
       </div>
-      <div className='w-100 text-center mt-2'>  <Link to="/dashboard" > Dashboard </Link> </div>
+      <div className='w-100 text-center mt-2'>  <Link href="/dashboard" > Dashboard </Link> </div>
     </>
   )
 }
