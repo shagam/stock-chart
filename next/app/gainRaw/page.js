@@ -1,4 +1,6 @@
 
+import Client from "./client";
+
 // gainRaw
 export const metadata = {
   title: "Raw Gain Data | Stock Analytics Platform",

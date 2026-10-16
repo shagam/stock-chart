@@ -6,7 +6,8 @@ import memoryStore from "../../components/MemoryStore";
 
 
 export default function Client(props) {
-
+  console.log('chartData:', memoryStore.get('chartData'));
+  console.log('gainData:', memoryStore.get('gainData'));
   return (
     <StockGain
       stockGain={memoryStore.get('gainData')}

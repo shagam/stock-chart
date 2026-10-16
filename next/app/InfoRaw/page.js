@@ -1,3 +1,5 @@
+import Client from "./client";
+
 
 // infoRaw
 export const metadata = {

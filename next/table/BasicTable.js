@@ -324,7 +324,7 @@ const BasicTable = (children) => {
   memoryStore.set('regionName', regionName);
   memoryStore.set('ip', ip);
   memoryStore.set('os', os);
-
+  memoryStore.set('stockInfo', stockInfo);
 
 
       // const cafeList = document.querySelector("#gain-history")
@@ -967,7 +967,6 @@ const BasicTable = (children) => {
   }
   
   function routeColor (rout) {
-     const pathname = usePathname()
     if (pathname === rout) {
       return 'pink'
     }
