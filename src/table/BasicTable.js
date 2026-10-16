@@ -1061,10 +1061,10 @@ const BasicTable = () => {
             </td>
           );
         })}
-        <div style={{display:'flex'}}>
-          <button type="button" onClick={()=>handleDeleteClick(row.values.symbol)}>del</button>
-          <button style={gainButtonColor(row.values.symbol)} type="button" onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button>
-        </div>
+        <td style={{margin: '1px', padding: '1px'}}> <button type="button" 
+            onClick={()=>handleDeleteClick(row.values.symbol)}>del</button></td>
+        <td style={{margin: '1px', padding: '1px'}}> <button style={gainButtonColor(row.values.symbol)} type="button" 
+            onClick={()=>handleGainClick(row.values.symbol, true, -1, 0)}>gain</button></td> 
       </tr>
     );
   })}
