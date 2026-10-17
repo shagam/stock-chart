@@ -1,6 +1,6 @@
 "use client";
 
-import StockInfo from "../../table/StockInfo";   // adjust path if needed
+import {StockInfo} from "../../table/StockInfo";   // adjust path if needed
 import memoryStore from "../../components/MemoryStore"; // adjust path if needed
 
 // infoRaw
