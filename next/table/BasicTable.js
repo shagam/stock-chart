@@ -359,7 +359,7 @@ const {chartSymbol, setChartSymbol,
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
 
   async function refreshByToggleColumns ()  {
-    var ind = allColumns.findIndex((column)=> column.Header === 'symbol');
+    var ind = allColumns.findIndex((column)=> column.Header === 'sym');
     const isInvisible_ = allColumns[ind].isVisible;
      
     // toggle twice force render refresh
