@@ -60,6 +60,11 @@ const StockGain = (props) => {
   const [divRowsOnly, setDivRowsOnly] = useState (false); // default to true if eliHome is true
   const {eliHome} = IpContext();
 
+  if (! props.chartData) {
+    console.log ('StockGain: chartData undefined')
+    return 
+  }
+
   //** replace dash by underscore so date in header doex not split in 2 lines */
   function dateReplaceDash (date) {
     return date.replace(/[-]/g,'_')
