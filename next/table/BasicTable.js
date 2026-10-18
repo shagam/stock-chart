@@ -5,7 +5,6 @@ import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 
-import { SharedContext } from "../contexts/SharedContext";
 import memoryStore from "../components/MemoryStore";
 import { useShared } from '../contexts/SharedContext';
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
@@ -110,8 +109,6 @@ import AuxilaryLinks from './AuxilaryLinks'
 
 const BasicTable = (children) => {
 
-const { symbol, setSymbol } = useShared();
-
 // console.log (symbol)
 
   // const navigation = performance.getEntriesByType("navigation")[0];
@@ -141,9 +138,6 @@ const { symbol, setSymbol } = useShared();
   //  const location = useLocation(); 
   const [errors, setErrors] = useState([]);
   const [error, setErr] = useState();
-  const [chartSymbol, setChartSymbol] = useState("");
-  const [infoSymbol, setInfoSymbol] = useState("");
-  const [gainMap, setGainMap] = useState([]);
   const [bubbleLine, setBubbleLine] = useState();
 
   
@@ -158,10 +152,9 @@ const { symbol, setSymbol } = useShared();
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
 
-  const [chartData, setChartData] = useState({});  //needed for dropREcovery
   const [stockChartXValues, setStockChartXValues] = useState ([]);
   const [stockChartYValues, setStockChartYValues] = useState ([]);
-  const [gainData, setGainData] = useState();
+
   const [showUrl, setShowUrl] = useState();
   const [pageForAi, setPageForAi] = useState();
   const [pageForAiText, setPageForAiText] = useState();
@@ -191,12 +184,12 @@ const { symbol, setSymbol } = useShared();
   const [openMarketFlag, setOpenMaretFlag] = useState(false);
   const [smoothSpikes, setSmoothSpikes] = useState(true);
 
-  const [stockInfo, setStockInfo] = useState ('');
+
 
   const [daily, setDaily] = useState (true);
   const [QQQ_gain, set_QQQ_gain] = useState({})
   const [saveMili, setSaveMili] = useState();
-  const [gainRawDividand, setGainRawDividand] = useState (true);
+
   const [price, setPrice] = useState();
   const [priceDivHigh, setPriceDivHigh] = useState();
   // const homeUrl = '84.95.84.236'
@@ -269,6 +262,18 @@ const { symbol, setSymbol } = useShared();
     // setGainMap([]);
     // setChartSymbol()
   }, [daily]) 
+
+
+const {chartSymbol, setChartSymbol,
+      infoSymbol, setInfoSymbol,
+      gainMap, setGainMap,
+      chartData, setChartData,
+      stockInfo, setStockInfo,
+      gainRawDividand, setGainRawDividand,
+      gainData, setGainData,
+    } = useShared();
+
+
 
 
   memoryStore.set('chartSymbol', chartSymbol);
@@ -980,7 +985,6 @@ const { symbol, setSymbol } = useShared();
   return (
 
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
-      const symbol_={symbol}
 
       <Container style={{minWidth: "100%", minHeight: "50vh"}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}

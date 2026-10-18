@@ -3,6 +3,7 @@ import { setYear } from 'date-fns';
 import React, {useState, useEffect} from 'react'
 import {IpContext} from '../contexts/IpContext';
 import {getDate, } from '../utils/Date'
+import { useShared } from '../contexts/SharedContext';
 
   function dividendCalc (symbol, setYearly_div_ratio, log, chartData, rows, refreshByToggleColumns ) {
 
@@ -55,12 +56,19 @@ import {getDate, } from '../utils/Date'
 
 
 const StockGain = (props) => {
+  const {chartSymbol, setChartSymbol,
+      // infoSymbol, setInfoSymbol,
+      // gainMap, setGainMap,
+      chartData, setChartData,
+      gainData, setGainData,
+    } = useShared();
+
   const [yearly_div_ratio, setYearly_div_ratio] = useState(0) 
   const [log, setLog] = useState (false); // default to true if eliHome is true
   const [divRowsOnly, setDivRowsOnly] = useState (false); // default to true if eliHome is true
   const {eliHome} = IpContext();
 
-  if (! props.chartData) {
+  if (! chartData) {
     console.log ('StockGain: chartData undefined')
     return 
   }
@@ -72,18 +80,18 @@ const StockGain = (props) => {
 
   useEffect (() => { 
     setYearly_div_ratio(0)
-  }, [props.symbol, props.chartData]) 
+  }, [chartSymbol, chartData]) 
 
 
   function rowWithDiv (date) {
-    if (props.chartData[date]['7. dividend amount'] !== '0.0000') {
+    if (chartData[date]['7. dividend amount'] !== '0.0000') {
       return true;
     }
     else return false;
   }
   //** clear dividand if zero, so non zero stick out */
   function isZero (value, date, attrib) {
-    // if (divRowsOnly && props.chartData[date]['7. dividend amount'] === '0.0000') {
+    // if (divRowsOnly && chartData[date]['7. dividend amount'] === '0.0000') {
     //   return ''; // skip zero rows with no div
     // }
     if (Number(value) === 0)
@@ -105,7 +113,7 @@ const StockGain = (props) => {
       <div> 
        
         <div style = {{display: 'flex'}}>
-          <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+          <div  style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}> GainRaw </h6>  &nbsp; &nbsp;
         </div>
         
@@ -113,7 +121,7 @@ const StockGain = (props) => {
         <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(5)}   &nbsp; &nbsp;  {(yearly_div_ratio *100).toFixed(3)}%</div>
       </div>
       <button style={{background: 'aqua'}} type="button" onClick={()=>
-        dividendCalc(props.symbol, setYearly_div_ratio, log, props.chartData, props.rows, props.refreshByToggleColumns)}> dividend-calc </button> &nbsp; &nbsp; 
+        dividendCalc(chartSymbol, setYearly_div_ratio, log, chartData, props.rows, props.refreshByToggleColumns)}> dividend-calc </button> &nbsp; &nbsp; 
       <div style={{display: 'flex', flexDirection: 'row', marginTop: '5px', marginBottom: '5px'}}>
         {eliHome && <div style = {{display: 'flex'}}> <input type="checkbox" checked={log}  onChange={()=>setLog (! log)}  />&nbsp;log &nbsp; &nbsp; </div>}
         {<div style = {{display: 'flex'}}> <input type="checkbox" checked={divRowsOnly}  onChange={()=>setDivRowsOnly (! divRowsOnly)}  />&nbsp;divRowsOnly &nbsp; &nbsp; </div>}
@@ -121,13 +129,13 @@ const StockGain = (props) => {
       {/* Stock gain list */}
 
 
-      {Object.keys(props.chartData).length > 0 && <div  style={{height:'400px', overflow:'auto', width:'700px', border: '1px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}}> 
+      {Object.keys(chartData).length > 0 && <div  style={{height:'400px', overflow:'auto', width:'700px', border: '1px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}}> 
           <table>
               <thead>
                   <tr>
                   <th style={{...ROW_SPACING, width: '60px'}}>date</th>
                   <th style={{...ROW_SPACING, width: '30px'}}>n</th>
-                      {Object.keys(props.chartData[Object.keys(props.chartData)[0]]).map((h,h1) => {
+                      {Object.keys(chartData[Object.keys(chartData)[0]]).map((h,h1) => {
                           return (
                             <th style={{...ROW_SPACING, width: '80px'}} key={h1}>{h}</th>
                           )
@@ -135,16 +143,16 @@ const StockGain = (props) => {
                   </tr>
               </thead>
               <tbody>
-                  {Object.keys(props.chartData).map((date, s1) =>{
+                  {Object.keys(chartData).map((date, s1) =>{
                       if (divRowsOnly && ! rowWithDiv (date))
                         return null
                        return (
                        <tr key={s1}>
                         <td style={{...ROW_SPACING,  width: '110px'}} >{dateReplaceDash(date)}</td>
                         <td style={{...ROW_SPACING, width: '55px'}}>{s1}</td>
-                          {Object.keys(props.chartData[date]).map((attrib,a1) => {
+                          {Object.keys(chartData[date]).map((attrib,a1) => {
                               return (
-                                <td key={a1} style={{...ROW_SPACING}} >{isZero(props.chartData[date][attrib], date, attrib)}</td>
+                                <td key={a1} style={{...ROW_SPACING}} >{isZero(chartData[date][attrib], date, attrib)}</td>
                               )
                           })}
                       </tr>

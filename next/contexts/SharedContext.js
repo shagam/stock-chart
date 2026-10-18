@@ -5,11 +5,22 @@ import { createContext, useContext, useState } from 'react';
 const SharedContext = createContext(null);
 
 export function SharedProvider({ children }) {
-  const [symbol, setSymbol] = useState('');
-
+  const [chartSymbol, setChartSymbol] = useState("");
+  const [infoSymbol, setInfoSymbol] = useState("");
+  const [gainMap, setGainMap] = useState([]);
+  const [chartData, setChartData] = useState({}); 
+  const [stockInfo, setStockInfo] = useState ('');
+  const [gainRawDividand, setGainRawDividand] = useState (true);
+  const [gainData, setGainData] = useState();
 
    const value = {
-    symbol, setSymbol,
+      chartSymbol, setChartSymbol,
+      infoSymbol, setInfoSymbol,
+      gainMap, setGainMap,
+      chartData, setChartData,
+      stockInfo, setStockInfo,
+      gainRawDividand, setGainRawDividand,
+      gainData, setGainData,
    };
 
 

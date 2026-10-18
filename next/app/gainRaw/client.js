@@ -6,11 +6,10 @@ import memoryStore from "../../components/MemoryStore";
 
 
 export default function Client(props) {
-  console.log('chartData:', memoryStore.get('chartData'));
-  console.log('gainData:', memoryStore.get('gainData'));
+  console.log(memoryStore.get('chartData'))
   return (
     <StockGain
-      stockGain={memoryStore.get('gainData')}
+      // stockGain={memoryStore.get('gainData')}
       symbol={memoryStore.get('chartSymbol')}
       setGainRawDividand={memoryStore.get('setGainRawDividand')}
       daily={memoryStore.get('daily')}

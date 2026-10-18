@@ -1,12 +1,21 @@
 "use client";
 import React, {useState, useEffect} from 'react'
+import { useShared } from '../contexts/SharedContext';
+
 
 const StockInfo = (props) => {
+
+    const {chartSymbol, setChartSymbol,
+        infoSymbol, setInfoSymbol,
+        // gainMap, setGainMap,
+        chartData, setChartData,
+        stockInfo, setStockInfo,
+      } = useShared();
+  
 
   const [infoFlag, setInfoFlag] = useState(false);
 
   const infoFlagChange = () => {setInfoFlag (! infoFlag)}
-
   function numberWithCommas(x) {
     const isIntegerString = (str) => /^-?\d+$/.test(str);
     if (! isIntegerString(x)) {
@@ -30,7 +39,7 @@ const StockInfo = (props) => {
     return (
         <div>
         <div style = {{display: 'flex'}}>
-          <div  style={{color: 'magenta' }}>  {props.chartSymbol} &nbsp; </div>
+          <div  style={{color: 'magenta' }}>  {chartSymbol} &nbsp; </div>
           <div  style={{color: 'blue' }}> infoRaw </div> 
         </div>
 
@@ -42,17 +51,17 @@ const StockInfo = (props) => {
   return (
     <div style = {{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
       <div> 
-      {/* {! props.stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
+      {/* {! stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
       
-      {pageHeader (props.chartSymbol, 'infoRaw', 'Stock technical raw info. (etf not Supported)' )}
+      {pageHeader (chartSymbol, 'infoRaw', 'Stock technical raw info. (etf not Supported)' )}
       
-      {props.chartSymbol !== props.infoSymbol && <h6 style={{color: 'red'}}> No info, (An ETF or data for a previous symbol)  </h6>}
+      {chartSymbol !== infoSymbol && <h6 style={{color: 'red'}}> No info, (An ETF or data for a previous symbol)  </h6>}
 
       {/* Table of symbol/stock attributes: value */}
-      { props.stockInfo &&
+      { stockInfo &&
         <div>
           <div style = {{display: 'flex'}}>
-            <div  style={{color: 'magenta' }}>  {props.infoSymbol} </div> &nbsp; &nbsp; 
+            <div  style={{color: 'magenta' }}>  {infoSymbol} </div> &nbsp; &nbsp; 
             <h4 style={{color: 'blue'}}> InfoRaw  </h4>
           </div>
 
@@ -60,14 +69,14 @@ const StockInfo = (props) => {
 
           <table>
             <tbody> 
-              {props.stockInfo && 
-                Object.keys(props.stockInfo).map((infoName,i)=>{
+              {stockInfo && 
+                Object.keys(stockInfo).map((infoName,i)=>{
                   return (
                       <tr  key={i}>
                         <td  style={{padding: '2px', margin: '2px'}}>{i}</td>
                         <td style={{padding: '2px', margin: '2px', color: colorAttribute(infoName), minWidth: '16rem', border: `none` }} > {infoName}: &nbsp;&nbsp; </td>
                         <td style={{padding: '2px', margin: '2px', border: `none`}} > 
-                            <div>{numberWithCommas(props.stockInfo[infoName])} </div>
+                            <div>{numberWithCommas(stockInfo[infoName])} </div>
                           </td> 
                       </tr>
                   )
