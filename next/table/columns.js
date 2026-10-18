@@ -1,7 +1,7 @@
 export const COLUMNS = [
   {
-    Header: 'symbol',
-    Footer: 'symbol',    
+    Header: 'sym',
+    Footer: 'sym',    
     accessor: 'symbol',
     sticky: 'left'
   },
@@ -205,8 +205,8 @@ export const GROUPED_COLUMNS = [
     disableSortBy: true,       
     columns: [
       {
-        Header: 'symbol',
-        Footer: 'symbol',    
+        Header: 'sym',
+        Footer: 'sym',    
         accessor: 'symbol',
         sticky: 'left'
       },
