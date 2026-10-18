@@ -10,10 +10,10 @@ export default function Client(props) {
   return (
     <StockGain
       // stockGain={memoryStore.get('gainData')}
-      symbol={memoryStore.get('chartSymbol')}
-      setGainRawDividand={memoryStore.get('setGainRawDividand')}
+      // symbol={memoryStore.get('chartSymbol')}
+      // setGainRawDividand={memoryStore.get('setGainRawDividand')}
       daily={memoryStore.get('daily')}
-      chartData={memoryStore.get('chartData')}
+      // chartData={memoryStore.get('chartData')}
       rows={memoryStore.get('rows')}
       refreshByToggleColumns={memoryStore.get('refreshByToggleColumns')}
     />

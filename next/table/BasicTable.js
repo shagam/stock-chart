@@ -186,7 +186,7 @@ const BasicTable = (children) => {
 
 
 
-  const [daily, setDaily] = useState (true);
+
   const [QQQ_gain, set_QQQ_gain] = useState({})
   const [saveMili, setSaveMili] = useState();
 
@@ -271,6 +271,7 @@ const {chartSymbol, setChartSymbol,
       stockInfo, setStockInfo,
       gainRawDividand, setGainRawDividand,
       gainData, setGainData,
+      daily, setDaily
     } = useShared();
 
 

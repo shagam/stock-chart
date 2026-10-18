@@ -61,6 +61,7 @@ const StockGain = (props) => {
       // gainMap, setGainMap,
       chartData, setChartData,
       gainData, setGainData,
+      daily, setDaily
     } = useShared();
 
   const [yearly_div_ratio, setYearly_div_ratio] = useState(0) 

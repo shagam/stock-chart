@@ -12,6 +12,7 @@ export function SharedProvider({ children }) {
   const [stockInfo, setStockInfo] = useState ('');
   const [gainRawDividand, setGainRawDividand] = useState (true);
   const [gainData, setGainData] = useState();
+  const [daily, setDaily] = useState (true);
 
    const value = {
       chartSymbol, setChartSymbol,
@@ -21,6 +22,7 @@ export function SharedProvider({ children }) {
       stockInfo, setStockInfo,
       gainRawDividand, setGainRawDividand,
       gainData, setGainData,
+      daily, setDaily
    };
 
 
