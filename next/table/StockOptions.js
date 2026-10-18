@@ -93,7 +93,12 @@ function StockOptions (props) {
   const columnsDefault = [
     "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",'mid/price', "breakEven"]
 
-const {chartSymbol, setChartSymbol,
+const {
+      errorAdd,
+      error, setError, 
+      refreshByToggleColumns,
+
+      chartSymbol, setChartSymbol,
       // infoSymbol, setInfoSymbol,
       // gainMap, setGainMap,
       chartData, setChartData,
@@ -114,6 +119,7 @@ const {chartSymbol, setChartSymbol,
       PORT, setPORT,
 
 
+      
     } = useShared();
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);

@@ -6,7 +6,7 @@ import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 
 import memoryStore from "../components/MemoryStore";
-import { useShared } from '../contexts/SharedContext';
+import { useShared, SharedContext } from '../contexts/SharedContext';
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -162,8 +162,34 @@ const BasicTable = (children) => {
   // else
   //   PORT = 5000
 
-  // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
-  const HIGH_LIMIT_KEY = process.env.NEXT_PUBLIC_ALPHAVANTAGE_KEY
+const {chartSymbol, setChartSymbol,
+      infoSymbol, setInfoSymbol,
+      gainMap, setGainMap,
+      chartData, setChartData,
+      stockInfo, setStockInfo,
+      gainRawDividand, setGainRawDividand,
+      gainData, setGainData,
+      
+      daily, setDaily,
+      logFlags, setLogFlags,
+
+      price, setPrice,
+      priceDivHigh, setPriceDivHigh,
+
+      stockChartXValues, setStockChartXValues,
+      stockChartYValues, setStockChartYValues,
+
+      servList,
+      servNameList, 
+      servSelect, setServSelect,
+      ssl, setSsl,
+      PORT, setPORT,
+      HIGH_LIMIT_KEY
+
+    } = useShared();
+
+
+
 
   var aleph = localStorage.getItem('alphaVantage');
   const [API_KEY, setAPI_KEY] = useState(aleph);
@@ -254,31 +280,6 @@ const BasicTable = (children) => {
     // setChartSymbol()
   }, [daily]) 
 
-
-const {chartSymbol, setChartSymbol,
-      infoSymbol, setInfoSymbol,
-      gainMap, setGainMap,
-      chartData, setChartData,
-      stockInfo, setStockInfo,
-      gainRawDividand, setGainRawDividand,
-      gainData, setGainData,
-      
-      daily, setDaily,
-      logFlags, setLogFlags,
-
-      price, setPrice,
-      priceDivHigh, setPriceDivHigh,
-
-      stockChartXValues, setStockChartXValues,
-      stockChartYValues, setStockChartYValues,
-
-      servList,
-      servNameList, 
-      servSelect, setServSelect,
-      ssl, setSsl,
-      PORT, setPORT,
-
-    } = useShared();
 
 
 
@@ -586,7 +587,7 @@ const {chartSymbol, setChartSymbol,
       delete gainMap['bubbleLine']
     }
 
-    gain (sym, rows, errorAdd, logFlags, API_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
+    gain (sym, rows, errorAdd, logFlags, HIGH_LIMIT_KEY, !daily, openMarketFlag, gainRawDividand, setGainData, smoothSpikes,
       splitsCalcFlag, singleSym, setStockChartXValues, setStockChartYValues, gainMap, deepStartDate, ssl, PORT, servSelect,
       saveTable, os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain,
        priceAlertTable, refreshByToggleColumns, tableSequence, count, setChartSymbol, setPrice, setPriceDivHigh, setPriceDivClose)
@@ -992,7 +993,7 @@ const {chartSymbol, setChartSymbol,
   return (
 
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
-
+      <SharedContext.Provider value={{errorAdd, error, setErr, refreshByToggleColumns}}>
       <Container style={{minWidth: "100%", minHeight: "50vh"}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
         <h2  style={{display:'flex', fontStyle: "italic"}}>
@@ -1249,6 +1250,7 @@ const {chartSymbol, setChartSymbol,
 
       </Container>
 
+      </SharedContext.Provider>
     </Suspense>
 
   )

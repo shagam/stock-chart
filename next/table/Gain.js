@@ -2,7 +2,8 @@
 import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
-  
+import { useShared, SharedContext } from '../contexts/SharedContext';
+
 import {peak2PeakCalc} from './Peak2PeakCalc'
 // import {dropRecovery, DropRecoveryButtons} from './DropRecovery'
 import searchURL from '../utils/SearchURL'
@@ -15,7 +16,6 @@ import memoryStore from '../components/MemoryStore'
 
 let periodTag;
 
-const HIGH_LIMIT_KEY = process.env.NEXT_PUBLIC_ALPHAVANTAGE_KEY
 
 
 
@@ -24,10 +24,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
      os, ip, city, countryName, countryCode, regionName, setChartData, yearlyPercent, set_QQQ_gain, priceAlertTable,
       refreshByToggleColumns, sequenceNumber, count, setChartSymbol, setPrice, setPriceDivHigh, setPriceDivClose) {
 
-    function isAdjusted () {
-      return (API_KEY === HIGH_LIMIT_KEY) 
-    }
-
+  
     setChartSymbol(sym) // save for nexr iteration
     const row_index = rows.findIndex((row)=> row.values.symbol === sym);            
     if (row_index === -1) {
@@ -63,18 +60,12 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
       const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']))
       const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']))
       var yValue;
-      if (isAdjusted()) {
-        const adjustedCloseValue = Number (Number (chartData[`${periodTag}`][key]['5. adjusted close']))
-        if (openMarketFlag)
-          yValue = adjustedCloseValue / closeVal * openVal;
-        else
-          yValue = adjustedCloseValue
-      } else { // not adjusted
-        if (openMarketFlag)
-          yValue = openVal;
-        else
-          yValue = closeVal;
-      }
+
+      if (openMarketFlag)
+        yValue = openVal;
+      else
+        yValue = closeVal;
+      
       return yValue;
     }
   
@@ -165,7 +156,6 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
                 return;
               }
               setChartData(chartData[periodTag]); 
-              memoryStore.set('chartData', chartData[periodTag]);
               var stockChartXValuesFunction = [];              
               var stockChartYValuesFunction = [];
       

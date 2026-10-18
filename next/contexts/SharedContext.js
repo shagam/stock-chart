@@ -28,7 +28,8 @@ export function SharedProvider({ children }) {
   const [ssl, setSsl] = useState(true)
   const [servSelect, setServSelect] = useState(servList[0]);  // default test server
   const [PORT, setPORT] = useState(5000);
-  
+  const HIGH_LIMIT_KEY = process.env.NEXT_PUBLIC_ALPHAVANTAGE_KEY
+    // ,'C542IZRPH683PFNZ','BC9UV9YUBWM3KQGF','QMV6KTIDIPRAQ9R0','Q6A0J5VH5720QBGR'
 
    const value = {
       chartSymbol, setChartSymbol,
@@ -55,6 +56,7 @@ export function SharedProvider({ children }) {
       ssl, setSsl,
       PORT, setPORT,
 
+      HIGH_LIMIT_KEY
    };
 
 
@@ -65,6 +67,8 @@ export function SharedProvider({ children }) {
   );
 }
 
-export function useShared() {
+function useShared() {
   return useContext(SharedContext);
 }
+
+export {useShared, SharedContext}
