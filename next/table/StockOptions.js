@@ -14,6 +14,7 @@ import StockOptionsConfig from './StockOptionsConfig';
 import { FaCheckSquare } from 'react-icons/fa';
 import { FaCog } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
+import { useShared } from '../contexts/SharedContext';
 // 
 // Zuberi Moshe
 
@@ -44,7 +45,7 @@ function StockOptions (props) {
 
   const [strikeSelected,setStrikeSelected] = useState(-1) // for display only
   
-  // const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === props.symbol)) // index of the stock in props.rows
+  // const [row_index, setRow_index] = useState(props.rows.findIndex((row)=> row.values.symbol === chartSymbol)) // index of the stock in props.rows
 
   const [belowBubble, setBelowBubble] = useState(-1) // stock price is below bubble line
   const [estimatedYearlyGain, setEstimatedYearlyGain] = useState(-1)// filled by useEffect
@@ -92,6 +93,28 @@ function StockOptions (props) {
   const columnsDefault = [
     "expiration","side","strike","mid","yield_", "yearlyYield", "expectedPrice",'mid/price', "breakEven"]
 
+const {chartSymbol, setChartSymbol,
+      // infoSymbol, setInfoSymbol,
+      // gainMap, setGainMap,
+      chartData, setChartData,
+      gainData, setGainData,
+      
+      daily, setDaily,
+      logFlags, setLogFlags,
+      eliHome, setEliHome,
+      
+      price, setPrice,
+      priceDivHigh, setPriceDivHigh,
+
+      stockChartXValues, setStockChartXValues,
+      stockChartYValues, setStockChartYValues,
+
+      servSelect, setServSelect,
+      ssl, setSsl,
+      PORT, setPORT,
+
+
+    } = useShared();
 
   var columnShow_= useMemo(() => JSON.parse (localStorage.getItem(COLUMNS )), []);
   if (! columnShow_  ) {
@@ -139,14 +162,14 @@ function StockOptions (props) {
       optionSymbol = optionQuote.optionSymbol[row]
 
     var corsUrl;
-    if (props.ssl)
+    if (ssl)
       corsUrl = "https://";
     else
       corsUrl = "http://";
 
     const d = new Date(searchDate);
     const startDate = format(d, "yyyy-MM-dd");
-    corsUrl += props.corsServer + ":" + props.PORT + "/stockOptionsHistory?stock=" + props.symbol;
+    corsUrl += servSelect + ":" + PORT + "/stockOptionsHistory?stock=" + chartSymbol;
     corsUrl += '&optionSymbol=' + optionSymbol;
     corsUrl += '&from=' + startDate;
     corsUrl += '&to=' + todayDate();
@@ -155,7 +178,7 @@ function StockOptions (props) {
       corsUrl += "&logExtra=1"
     if (log) {
       corsUrl += "&log=1"
-      console.log (getDate(), props.symbol, 'historecalOptionQuote', corsUrl)
+      console.log (getDate(), chartSymbol, 'historecalOptionQuote', corsUrl)
     }
 
     // if (ignoreSaved)
@@ -171,12 +194,12 @@ function StockOptions (props) {
         setErr('Option server status:  ' + result.data)
         setOptionQuote({})
         beep2()
-        console.log (props.symbol, result.data)
+        console.log (chartSymbol, result.data)
         return;
       }
 
       if (log)
-        console.log (getDate(), props.symbol, optionSymbol, 'primium history', result.data)
+        console.log (getDate(), chartSymbol, optionSymbol, 'primium history', result.data)
 
         var optionHistoryFiltered = translateDates (result.data)
     
@@ -188,8 +211,8 @@ function StockOptions (props) {
         for (let i = 0; i < optionHistoryFiltered.expiration.length; i++) {
           const date = optionHistoryFiltered.updated[i]
           const dateSplit = date.split('_')
-          const index = searchDateInArray(props.stockChartXValues, dateSplit, optionSymbol, props.logFlags, setErr)
-          const price = props.stockChartYValues[index]
+          const index = searchDateInArray(stockChartXValues, dateSplit, optionSymbol, logFlags, setErr)
+          const price = stockChartYValues[index]
           optionHistoryFiltered.stockPrice[i] = price.toFixed(2)
           optionHistoryFiltered['mid/price'][i] = (optionHistoryFiltered.mid[i] / optionHistoryFiltered.stockPrice[i]).toFixed(3)
           if (i > 0)
@@ -206,7 +229,7 @@ function StockOptions (props) {
      })
     .catch ((err) => {
       console.log(err.message)
-      props.errorAdd ([props.symbol, 'historical quotes error ', err.message])
+      props.errorAdd ([chartSymbol, 'historical quotes error ', err.message])
     })
 
   }
@@ -309,10 +332,10 @@ function StockOptions (props) {
     setAIGroupKeys(Object.keys(AIGroup))
 
     props.setPageForAi(AIGroup);
-    props.setPageForAiText('options symbol=' + props.symbol);    
+    props.setPageForAiText('options symbol=' + chartSymbol);    
     
     if (log)
-      console.log ('AIGroupAdd', props.symbol, option, AIGroup )
+      console.log ('AIGroupAdd', chartSymbol, option, AIGroup )
   }
 
 
@@ -329,7 +352,7 @@ function StockOptions (props) {
   //     console.log ('save columnShow', columnShow) 
   //   }
 
-  // }, [columnShow, log, logExtra, props.eliHome, props.symbol, props.errorAdd]); 
+  // }, [columnShow, log, logExtra, props.eliHome, chartSymbol, props.errorAdd]); 
 
 
 
@@ -347,12 +370,12 @@ function StockOptions (props) {
         continue; // different expiration, skip
         
         if (optionQuote.mid[i] > optionQuote.mid[i-1]) {
-          props.errorAdd ([props.symbol, 'irregular premium', 'indx=' + i, 'strike=' + optionQuote.strike[i-1], 'mid=' + optionQuote.mid[i-1],
+          props.errorAdd ([chartSymbol, 'irregular premium', 'indx=' + i, 'strike=' + optionQuote.strike[i-1], 'mid=' + optionQuote.mid[i-1],
              'strike=' + optionQuote.strike[i],  'mid=' + optionQuote.mid[i]])
           irregularCount++;
       }   
     }
-    console.log (props.symbol, 'irregular premium count=' + irregularCount)
+    console.log (chartSymbol, 'irregular premium count=' + irregularCount)
   }
 
 
@@ -421,17 +444,17 @@ function StockOptions (props) {
       console.log ('expirationGroup=', expirationGroup)
     }
     
-    // url = 'https://api.marketdata.app/v1/options/quotes/' + props.symbol
-    const url = 'https://api.marketdata.app/v1/options/chain/'+ props.symbol 
+    // url = 'https://api.marketdata.app/v1/options/quotes/' + chartSymbol
+    const url = 'https://api.marketdata.app/v1/options/chain/'+ chartSymbol 
         + expirationGroup
         + '&side=' + config.side + '&strike=' + strikeGroup + '&token=' + TOKEN
         // + '?human=true';
 
-    // console.log(props.symbol , 'expirations=', expirationGroup, '&side=' + side + '&strike=' + strikeGroup)
+    // console.log(chartSymbol , 'expirations=', expirationGroup, '&side=' + side + '&strike=' + strikeGroup)
     // const TEST = 'https://api.marketdata.app/v1/options/chain/AAPL/?expiration=2026-05-15&side=call&strike=25'
     // url = TEST;
     if (log)
-      console.log (getDate(), props.symbol, url)
+      console.log (getDate(), chartSymbol, url)
     setErr()
     setDat()
     setLatency('request sent ...')
@@ -442,8 +465,8 @@ function StockOptions (props) {
         console.log ('primium', result.data)
 
       if (result.data.s !== 'ok') {
-        props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
-        console.log (props.symbol, 'option-fee error', result.data.s)
+        props.errorAdd ([chartSymbol, 'option-fee error', result.data.s])
+        console.log (chartSymbol, 'option-fee error', result.data.s)
         return
       }
 
@@ -561,7 +584,7 @@ function StockOptions (props) {
      })
     .catch ((err) => {
       console.log(err.message)
-      props.errorAdd ([props.symbol, 'expiration error', err.message])
+      props.errorAdd ([chartSymbol, 'expiration error', err.message])
     })
 
   }
@@ -585,7 +608,7 @@ function StockOptions (props) {
     // }
 
 
-    var url = 'https://api.marketdata.app/v1/options/strikes/' + props.symbol
+    var url = 'https://api.marketdata.app/v1/options/strikes/' + chartSymbol
 
     if (expirationsArray.length > 0 && config.expirationCount > 0 ) {
         url += "?expiration=" + expirationsArray[expirationSelected]
@@ -600,7 +623,7 @@ function StockOptions (props) {
     url += '&token=' + TOKEN;
 
     if (log)
-      console.log (getDate(), props.symbol, url)
+      console.log (getDate(), chartSymbol, url)
     setErr()
     setDat()
     setLatency('request sent ...')
@@ -612,8 +635,8 @@ function StockOptions (props) {
       const mili = result.data.updated
       setLatency('get strikes done, Latency(msec)=' + (Date.now() - mili1))
       if (result.data.s !== 'ok') {
-        props.errorAdd ([props.symbol, 'strike-price error', result.data.s])
-        console.log (props.symbol, 'strike-price error', result.data.s)
+        props.errorAdd ([chartSymbol, 'strike-price error', result.data.s])
+        console.log (chartSymbol, 'strike-price error', result.data.s)
       }
 
       var strikeArray = []
@@ -649,16 +672,16 @@ function StockOptions (props) {
     })
     .catch ((err) => {
       console.log(err.message)
-      props.errorAdd ([props.symbol, 'expiration error', err.message])
+      props.errorAdd ([chartSymbol, 'expiration error', err.message])
     })
   }
  
 
 
   function expirationsGet () {
-    const url = 'https://api.marketdata.app/v1/options/expirations/' + props.symbol + '/?token=' + TOKEN
+    const url = 'https://api.marketdata.app/v1/options/expirations/' + chartSymbol + '/?token=' + TOKEN
     if (log)
-      console.log (getDate(), props.symbol, url)
+      console.log (getDate(), chartSymbol, url)
     setErr()
     setDat()
     setLatency('request sent ...')
@@ -671,8 +694,8 @@ function StockOptions (props) {
         const status = result.data.s
         setLatency('get expirations done, Latency(msec)=' + (Date.now() - mili1))
         if (result.data.s !== 'ok') {
-          props.errorAdd ([props.symbol, 'expiration error', result.data.s])
-          console.log (props.symbol, 'expiration error', result.data.s)
+          props.errorAdd ([chartSymbol, 'expiration error', result.data.s])
+          console.log (chartSymbol, 'expiration error', result.data.s)
         }
         
 
@@ -697,7 +720,7 @@ function StockOptions (props) {
       .catch ((err) => {
         setLatency('get expirations failed, Latency(msec)=' + (Date.now() - mili1))
         console.log(err.message, url)
-        props.errorAdd ([props.symbol, 'expiration error', err.message])
+        props.errorAdd ([chartSymbol, 'expiration error', err.message])
       })
 
   }
@@ -737,12 +760,12 @@ function StockOptions (props) {
     // })
     // option.yearlyGain = estimatedYearlyGain;
 
-    // const symbol = props.symbol
+    // const symbol = chartSymbol
     // AIGroup[option.optionSymbol] = option;
     // setAIGroupKeys(Object.keys(AIGroup))
 
     // props.setPageForAi(AIGroup);
-    // props.setPageForAiText('options symbol=' + props.symbol);    
+    // props.setPageForAiText('options symbol=' + chartSymbol);    
     
     // if (log)
     //   console.log ('AIGroupAdd', symbol, option, AIGroup )
@@ -841,12 +864,12 @@ function StockOptions (props) {
     }
 
     if (isNaN(estimatedYearlyGain)){
-      props.errorAdd ([props.symbol, 'warning. config.YearlyGain is required for calculationg expected yield'])
+      props.errorAdd ([chartSymbol, 'warning. config.YearlyGain is required for calculationg expected yield'])
       beep2()
     }
 
     if (config.priceDivHighFactor === undefined || isNaN(config.priceDivHighFactor)) {
-      props.errorAdd ([props.symbol, 'warning. config.priceDivHighFactor is required for calculationg expected yield'])
+      props.errorAdd ([chartSymbol, 'warning. config.priceDivHighFactor is required for calculationg expected yield'])
       // beep2()
       config.priceDivHighFactor = EXPECTED_PRICE_ADJUSTMENT
       setConfig (config)
@@ -854,7 +877,7 @@ function StockOptions (props) {
 
 
     var corsUrl;
-    if (props.ssl)
+    if (ssl)
       corsUrl = "https://";
     else
       corsUrl = "http://";
@@ -869,10 +892,10 @@ function StockOptions (props) {
 
     if (strikeSelected !== -1) {
       const a = strikeArray[strikeSelected] 
-      config.strikeNum = ((strikeArray[strikeSelected] / props.stockPrice - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
+      config.strikeNum = ((strikeArray[strikeSelected] / price - 1)* 100).toFixed(0); // convert to percentage, e.g. 15 means 15% above current price
     }
 
-    corsUrl += props.corsServer + ":" + props.PORT + "/stockOptions?stock=" + props.symbol;
+    corsUrl += servSelect + ":" + PORT + "/stockOptions?stock=" + chartSymbol;
     if (expirationSelected !== -1) {  // if expirationSelected
       const dat = new Date(expirationsArray[expirationSelected])
       const daysToExpire_ = (dat.getTime() - new Date().getTime()) / 1000 / 3600 / 24
@@ -889,7 +912,7 @@ function StockOptions (props) {
       setDaysToExpire(config.expirationNum.toFixed(0))
     }
     if (strikeSelected !== -1) {// if strikeSelected
-      corsUrl += "&strikePercent=" + (((strikeArray[strikeSelected] / props.stockPrice) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
+      corsUrl += "&strikePercent=" + (((strikeArray[strikeSelected] / price) -1) * 100).toFixed(0)  // convert to percentage, e.g. 15 means 15% above current price
     }
     else {
       corsUrl += "&strikePercent=" + config.strikeNum  // default use config.strikeNum
@@ -901,7 +924,7 @@ function StockOptions (props) {
     corsUrl += "&side=" + config.side
     // corsUrl += "&percent=" + (percent ? 1 : 0)
     // corsUrl += "&compoundYield=" + (compoundYield ? 1 : 0)
-    corsUrl += "&stockPrice=" + props.stockPrice
+    corsUrl += "&stockPrice=" + price
     // corsUrl += "&func=" + "expirations" // expirations, strikes, optionPremium
 
 
@@ -914,7 +937,7 @@ function StockOptions (props) {
       corsUrl += "&ignoreSaved=1"
 
     if (log) {
-      console.log (getDate(), props.symbol, 'getOptionsInfoFromServer', corsUrl)
+      console.log (getDate(), chartSymbol, 'getOptionsInfoFromServer', corsUrl)
       console.dir (corsUrl)
     }
     setDat()
@@ -927,12 +950,12 @@ function StockOptions (props) {
     .then ((result) => {
 
       if (result.status !== 200) {
-        console.log (props.chartSymbol, ' ', result)
+        console.log (chartSymbol, ' ', result)
         return;
       }
       // setDat(result.data)
       if (log)
-        console.log ('option-raw-from-server', props.symbol, result.data)
+        console.log ('option-raw-from-server', chartSymbol, result.data)
 
       const latency = Date.now() - mili
       setLatency ('getStockOptions done,  Latency(msec)=' + latency)    
@@ -940,7 +963,7 @@ function StockOptions (props) {
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr('Option server status:  ' + result.data)
         beep2()
-        console.log (props.symbol, result.data)
+        console.log (chartSymbol, result.data)
         return;
       }
 
@@ -972,8 +995,8 @@ function StockOptions (props) {
       }
 
       // if (result.data.s !== 'ok') {
-      //   props.errorAdd ([props.symbol, 'option-fee error', result.data.s])
-      //   console.log (props.symbol, 'option-fee error', result.data.s)
+      //   props.errorAdd ([chartSymbol, 'option-fee error', result.data.s])
+      //   console.log (chartSymbol, 'option-fee error', result.data.s)
       //   return
       // }
 
@@ -1011,12 +1034,12 @@ function StockOptions (props) {
         const dte = premiumArray.dte[i];
 
         const breakEven = (premiumArray.strike[i] + premiumArray.mid[i]);
-        const expirationDateValue = props.stockPrice * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / (props.priceDivHigh ** config.priceDivHighFactor); 
+        const expirationDateValue = price * ((estimatedYearlyGain) / 100 + 1) ** (dte / 365) / (priceDivHigh ** config.priceDivHighFactor); 
         // priceDivHgh is used to compensate the expected price, to avoid too high expected price for long term options, e.g. 1 year or more
 
         var  yield_ =  yieldCalc (premiumArray.strike[i], dte, mid, breakEven, expirationDateValue)
         // if (yield_ < 0)
-        //   props.errorAdd ([props.symbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
+        //   props.errorAdd ([chartSymbol, 'negative yield=' + yield_.toFixed(3), 'indx=' + i, 'strike/mid=', optionQuote.strike[i], '  ', mid])
         var yearlyYield = 0;
         if (yield_ > 0) {
             if (config.compoundYield)
@@ -1039,11 +1062,11 @@ function StockOptions (props) {
           OptionQuoteFiltered.breakEven[i] = breakEven.toFixed(2); // add breakEven to OptionQuoteFiltered
           OptionQuoteFiltered.expectedPrice[i] = expirationDateValue.toFixed(2); // expected price at expiration date
           OptionQuoteFiltered.profit[i] = (expirationDateValue - breakEven).toFixed(2); // expected profit at expiration date
-          OptionQuoteFiltered['mid/price'][i] = (mid / props.stockPrice * 100).toFixed(2); // mid divided by priceDivHigh
+          OptionQuoteFiltered['mid/price'][i] = (mid / price * 100).toFixed(2); // mid divided by priceDivHigh
           if (i > 0 && OptionQuoteFiltered.expiration[i] === OptionQuoteFiltered.expiration[i-1]) { // same expiration, calculate strikeDiff
             OptionQuoteFiltered['strikeDiff'][i] =  premiumArray.mid[i] > 0 ?((premiumArray.mid[i] - premiumArray.mid[i - 1]) / premiumArray.mid[i] * 100).toFixed(2) + '_%' : 0; // mid price minus previous row's mid price
           }
-          OptionQuoteFiltered['deltaLeverage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / props.stockPrice)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
+          OptionQuoteFiltered['deltaLeverage'][i] = premiumArray.mid[i] > 0 ? ((premiumArray.delta[i] / premiumArray.mid[i]) / ( 1 / price)).toFixed(2) : 0; // delta divided by mid price, percentage change in delta for percent change in share price
           expitrationDiffCalc (premiumArray, OptionQuoteFiltered, i); // calculate exprDiff, difference of mid price between different expiration date
         }
         if (logExtra)
@@ -1116,7 +1139,7 @@ function StockOptions (props) {
     // .catch ((err) => {
     //   setErr(err.message)
     //   console.log(err.message)
-    //   props.errorAdd ([props.symbol, ' getStockOptions', err.message])
+    //   props.errorAdd ([chartSymbol, ' getStockOptions', err.message])
     // })
 
     setExpirationShow(false)
@@ -1130,26 +1153,26 @@ function StockOptions (props) {
 
 
   useEffect (() => { 
-    console.log ('useEffect symbol change', props.symbol)
+    console.log ('useEffect symbol change', chartSymbol)
     setStrikeArray([]);
     setExpirationsArray([]);
     setOptionQuote({});
     setExpirationSelected(-1)
     setStrikeSelected(-1)
 
-    const row_index_ = props.rows.findIndex((row)=> row.values.symbol === props.symbol) // nsymbol change
+    const row_index_ = props.rows.findIndex((row)=> row.values.symbol === chartSymbol) // nsymbol change
     if (row_index_ === -1) {
-      console.log ('error, symbol not found in rows', props.symbol)
+      console.log ('error, symbol not found in rows', chartSymbol)
     } 
     else {
       // setRow_index(row_index_)
-      setBelowBubble (props.stockPrice / props.rows[row_index_].values.bubblePrice) ;
+      setBelowBubble (price / props.rows[row_index_].values.bubblePrice) ;
       setEstimatedYearlyGain (((props.rows[row_index_].values.peak2Peak - 1) * 100).toFixed(2))
       setYearlyGainSource (props.rows[row_index_].values.yearlyGain_source);
     }
 
 
-  }, [props.symbol, props.rows, props.stockPrice, config.percent, props.stockChartYValues]); 
+  }, [chartSymbol, props.rows, price, config.percent, stockChartYValues]); 
 
 
 
@@ -1258,11 +1281,11 @@ function StockOptions (props) {
   return (
     <div style = {{ border: '2px solid blue', backgroundColor: '#f0f0e0'}} >
         <div style = {{display: 'flex'}}>
-          <div style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
+          <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; &nbsp;
           <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
 
           </div>
-        <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={props.stockPrice} &nbsp; &nbsp; price/High={props.priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
+        <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={price} &nbsp; &nbsp; price/High={priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
 
         {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}
         {config.side === 'put' && <h6  style={{color: '#c760ff'}}>  &nbsp;  <strong style={{color: 'red'}}>put options, not supported. and never tested</strong> </h6>}
@@ -1374,7 +1397,7 @@ function StockOptions (props) {
                       >
                       <td style={{...ROW_SPACING, width: '20px'}}>{index}  </td>
                       <td style={{...ROW_SPACING, width: '100px'}}>{strike.toFixed(2)}  </td> 
-                      <td style={{...ROW_SPACING, width: '100px'}}>{(strike/props.stockPrice).toFixed(2)}  </td> 
+                      <td style={{...ROW_SPACING, width: '100px'}}>{(strike/price).toFixed(2)}  </td> 
                     </tr>
                     )
                   })}
@@ -1437,8 +1460,8 @@ function StockOptions (props) {
 
           {optionQuote && optionQuote.expiration && <div>
               <div style={{display: 'flex', fontWeight: 'bold'}}>
-                <div style={{color: 'magenta'}}>{props.symbol} </div> &nbsp; &nbsp; 
-                stockPrice={props.stockPrice} &nbsp; &nbsp; price/High={props.priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>} &nbsp; &nbsp;
+                <div style={{color: 'magenta'}}>{chartSymbol} </div> &nbsp; &nbsp; 
+                stockPrice={price} &nbsp; &nbsp; price/High={priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>} &nbsp; &nbsp;
               </div>
               <div style={{display: 'flex', fontWeight: 'bold'}}>
                 count={optionQuote.expiration.length} &nbsp; &nbsp; bestYieldIndex={bestYearlyYieldIndex}  &nbsp; &nbsp;
@@ -1449,7 +1472,7 @@ function StockOptions (props) {
             {definitionsShow && 
               <div>
                 <div>yield := (expectedPrice - breakEven) / mid * 100</div>
-                <div>leverage_delta := (delta / mid) / (1 / stockPrice)  </div>
+                <div>leverage_delta := (delta / mid) / (1 / {price})  </div>
                 <div>  &nbsp; &nbsp; &nbsp; &nbsp;percentage change in option-price for percent change in share price</div>
               </div>
             }

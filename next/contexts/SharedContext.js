@@ -12,7 +12,23 @@ export function SharedProvider({ children }) {
   const [stockInfo, setStockInfo] = useState ('');
   const [gainRawDividand, setGainRawDividand] = useState (true);
   const [gainData, setGainData] = useState();
+  
   const [daily, setDaily] = useState (true);
+  const [eliHome, setEliHome] = useState(false);
+  const [logFlags, setLogFlags] = useState([]);
+
+  const [price, setPrice] = useState();
+  const [priceDivHigh, setPriceDivHigh] = useState();
+
+  const [stockChartXValues, setStockChartXValues] = useState ([]);
+  const [stockChartYValues, setStockChartYValues] = useState ([]);
+
+  const servList = [process.env.NEXT_PUBLIC_AWS_IP, process.env.NEXT_PUBLIC_LOCAL_SERV_IP]
+  const servNameList = ['production', 'test']; //,'local_win']//, 'production_'];
+  const [ssl, setSsl] = useState(true)
+  const [servSelect, setServSelect] = useState(servList[0]);  // default test server
+  const [PORT, setPORT] = useState(5000);
+  
 
    const value = {
       chartSymbol, setChartSymbol,
@@ -22,7 +38,23 @@ export function SharedProvider({ children }) {
       stockInfo, setStockInfo,
       gainRawDividand, setGainRawDividand,
       gainData, setGainData,
-      daily, setDaily
+      
+      daily, setDaily,
+      eliHome, setEliHome,
+      logFlags, setLogFlags,
+
+      price, setPrice,
+      priceDivHigh, setPriceDivHigh,
+
+      stockChartXValues, setStockChartXValues,
+      stockChartYValues, setStockChartYValues,
+
+      servList,
+      servNameList, 
+      servSelect, setServSelect,
+      ssl, setSsl,
+      PORT, setPORT,
+
    };
 
 

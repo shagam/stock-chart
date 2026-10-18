@@ -133,27 +133,20 @@ const BasicTable = (children) => {
 
   const checkList = ["hiddenCols","drop", 'drop_', 'peak2Peak', "verify_1", "splits",
     "xyValue", "chart", 'chart1', 'alpha','api', "aux","date","spikes","target","gain","backEnd","simulateTrade","stockLists", "month"];
-  const [logFlags, setLogFlags] = useState([]);
+
 
   //  const location = useLocation(); 
   const [errors, setErrors] = useState([]);
   const [error, setErr] = useState();
   const [bubbleLine, setBubbleLine] = useState();
 
-  
-  const servList = [process.env.NEXT_PUBLIC_AWS_IP, process.env.NEXT_PUBLIC_LOCAL_SERV_IP]//, process.env.NEXT_PUBLIC_LOCAL_WIN_IP]// , process.env.NEXT_PUBLIC_AWS_IP];
-  const servNameList = ['production', 'test']; //,'local_win']//, 'production_'];
   //   'localhost', process.env.NEXT_PUBLIC_SERV_EXT, process.env.NEXT_PUBLIC_ELI_HOME_IP];
-  const [ssl, setSsl] = useState(true)
-  const [servSelect, setServSelect] = useState(servList[0]);  // default test server
-  const [PORT, setPORT] = useState(5000);
   const portArray = [5000, 5001]
 
   const tblHightList = ['25vh', '35vh', '45vh', '55vh'];
   const [tblHight, setTblHight] = useState(tblHightList[2]);
 
-  const [stockChartXValues, setStockChartXValues] = useState ([]);
-  const [stockChartYValues, setStockChartYValues] = useState ([]);
+
 
   const [showUrl, setShowUrl] = useState();
   const [pageForAi, setPageForAi] = useState();
@@ -190,8 +183,6 @@ const BasicTable = (children) => {
   const [QQQ_gain, set_QQQ_gain] = useState({})
   const [saveMili, setSaveMili] = useState();
 
-  const [price, setPrice] = useState();
-  const [priceDivHigh, setPriceDivHigh] = useState();
   // const homeUrl = '84.95.84.236'
   // const [corsServer, setCorsServer] = useState (homeUrl);
   // const gainRef = collection(db, "stock-gain_")
@@ -271,7 +262,22 @@ const {chartSymbol, setChartSymbol,
       stockInfo, setStockInfo,
       gainRawDividand, setGainRawDividand,
       gainData, setGainData,
-      daily, setDaily
+      
+      daily, setDaily,
+      logFlags, setLogFlags,
+
+      price, setPrice,
+      priceDivHigh, setPriceDivHigh,
+
+      stockChartXValues, setStockChartXValues,
+      stockChartYValues, setStockChartYValues,
+
+      servList,
+      servNameList, 
+      servSelect, setServSelect,
+      ssl, setSsl,
+      PORT, setPORT,
+
     } = useShared();
 
 
@@ -285,7 +291,7 @@ const {chartSymbol, setChartSymbol,
   
   memoryStore.set('errorAdd', errorAdd);
   memoryStore.set('daily', daily);
-  memoryStore.set('eliHome', eliHome);
+
   // memoryStore.set('rows', rows);
   memoryStore.set('gainMap', gainMap);
   memoryStore.set('logFlags', logFlags);
