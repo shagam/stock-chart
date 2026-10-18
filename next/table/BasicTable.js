@@ -5,8 +5,9 @@ import React, {useState, useMemo, useEffect, Suspense, lazy} from 'react'
 import { Container } from 'react-bootstrap'
 import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 
-import { SharedContext } from "../components/SharedContext";
+import { SharedContext } from "../contexts/SharedContext";
 import memoryStore from "../components/MemoryStore";
+import { useShared } from '../contexts/SharedContext';
 // import { useTable, useSortBy, useGlobalFilter, useRowSelect, useBlockLayout, useFlexLayout, useAbsoluteLayout } from 'react-table'
 import { useSticky } from 'react-table-sticky'
 //import styled from 'styled-components';
@@ -109,6 +110,9 @@ import AuxilaryLinks from './AuxilaryLinks'
 
 const BasicTable = (children) => {
 
+const { symbol, setSymbol } = useShared();
+
+// console.log (symbol)
 
   // const navigation = performance.getEntriesByType("navigation")[0];
   // if (navigation?.type === "reload") {
@@ -976,7 +980,7 @@ const BasicTable = (children) => {
   return (
 
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
-        
+      const symbol_={symbol}
 
       <Container style={{minWidth: "100%", minHeight: "50vh"}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
@@ -1232,11 +1236,11 @@ const BasicTable = (children) => {
         <hr/> 
 
 
-    </Container>
+      </Container>
 
     </Suspense>
 
   )
 }
 
-export default BasicTable
+export  {BasicTable, sharedState}
