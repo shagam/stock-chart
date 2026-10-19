@@ -3,6 +3,7 @@ import { setYear } from 'date-fns';
 import React, {useState, useEffect} from 'react'
 import {IpContext} from '../contexts/IpContext';
 import {getDate, } from '../utils/Date'
+import {pageHeader } from './StockInfo'
 import { useShared } from '../contexts/SharedContext';
 
   function dividendCalc (symbol, setYearly_div_ratio, log, chartData, rows, refreshByToggleColumns ) {
@@ -112,13 +113,8 @@ const StockGain = (props) => {
   return (
     <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
       <div> 
-       
-        <div style = {{display: 'flex'}}>
-          <div  style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}> GainRaw </h6>  &nbsp; &nbsp;
-        </div>
-        
-        <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Raw gain history as recieved from AlphaVantage </h6>
+        {pageHeader (chartSymbol, 'gainRaw', 'Raw price history' )}
+          
         <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(5)}   &nbsp; &nbsp;  {(yearly_div_ratio *100).toFixed(3)}%</div>
       </div>
       <button style={{background: 'aqua'}} type="button" onClick={()=>

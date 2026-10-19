@@ -2,10 +2,28 @@
 import React, {useState, useEffect} from 'react'
 import { useShared } from '../contexts/SharedContext';
 
+function pageHeader (symbol, route_, description, err) {
+    return (
+      <div>
+        <strong style = {{display: 'flex', fontSize: '18px', margin: '5px'}}>
+            <div  style={{color: 'magenta' }}>  {symbol} &nbsp; </div>
+            <div  style={{color: 'blue' }}> {route_}</div> 
+        </strong>
+
+        <h4  style={{padding: '0px', margin: '0px', color:'#3374ee', fontWeight: 'bold', fontStyle: "italic"}}> {description}  </h4>        
+        {err && <div style={{color: 'red'}}>err</div>}
+        <hr/> 
+        {/* <div> &nbsp;</div> */}
+      </div>)       
+  }
+  
+
+
 
 const StockInfo = (props) => {
 
-    const {chartSymbol, setChartSymbol,
+    const {
+      chartSymbol, setChartSymbol,
         infoSymbol, setInfoSymbol,
         // gainMap, setGainMap,
         chartData, setChartData,
@@ -35,35 +53,23 @@ const StockInfo = (props) => {
     return 'ForestGreen';
   }
 
-  function pageHeader ({symbol, route, description}) {
-    return (
-        <div>
-        <div style = {{display: 'flex'}}>
-          <div  style={{color: 'magenta' }}>  {chartSymbol} &nbsp; </div>
-          <div  style={{color: 'blue' }}> infoRaw </div> 
-        </div>
-
-        <h4  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock technical raw info. (etf not Supported)  &nbsp; </h4>
-      </div>)       
-  }
   
-
   return (
     <div style = {{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
       <div> 
       {/* {! stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
       
-      {pageHeader (chartSymbol, 'infoRaw', 'Stock technical raw info. (etf not Supported)' )}
+      {pageHeader (chartSymbol, 'infoRaw', 'Company raw metrics info. (etf not Supported)' )}
       
       {chartSymbol !== infoSymbol && <h6 style={{color: 'red'}}> No info, (An ETF or data for a previous symbol)  </h6>}
 
       {/* Table of symbol/stock attributes: value */}
       { stockInfo &&
         <div>
-          <div style = {{display: 'flex'}}>
+          {/* <div style = {{display: 'flex'}}>
             <div  style={{color: 'magenta' }}>  {infoSymbol} </div> &nbsp; &nbsp; 
             <h4 style={{color: 'blue'}}> InfoRaw  </h4>
-          </div>
+          </div> */}
 
           <div  style={{ maxHeight: '30vh', 'overflowY': 'scroll'}}  > 
 

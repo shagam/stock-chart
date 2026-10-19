@@ -15,7 +15,8 @@ import {miliDifferenceFromToday} from '../utils/Date'
 
 import LogFlags from '../utils/LogFlags'
 import {beep2} from '../utils/ErrorList'
-
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
 
 const Peak2PeakGui = (props) => {
 
@@ -31,6 +32,17 @@ const Peak2PeakGui = (props) => {
   // stockChartYValues
   // logFlags
   // weekly
+
+    const {chartSymbol, setChartSymbol,
+
+      gainMap, setGainMap,
+      chartData, setChartData,
+      gainData, setGainData,
+      daily, setDaily,
+      stockChartXValues, 
+      stockChartYValues,
+    } = useShared();
+
 
     const [d_2000_date, set_2000_date] =   useState(new Date(2000, 0, 1)); // 2000 dec 1
     const [startDate, setStartDate] =  useState(new Date(2007, 10, 1)); // 2007 dec 1  base 0
@@ -75,7 +87,7 @@ const Peak2PeakGui = (props) => {
       setErr()
       setBubbleLineFlag(false)
       setBubbleLineRatio()
-      delete props.gainMap.bubbleLine
+      delete gainMap.bubbleLine
     }
 
     useEffect(() => {
@@ -85,8 +97,8 @@ const Peak2PeakGui = (props) => {
       setErr()
       setBubbleLineFlag(false)
       setBubbleLineRatio()
-      delete props.gainMap.bubbleLine
-    },[props.symbol, props.gainMap]) 
+      delete gainMap.bubbleLine
+    },[props.symbol, gainMap]) 
    
   // style={{display:'flex'}}
 
@@ -299,14 +311,8 @@ const Peak2PeakGui = (props) => {
   return (
     <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
         <div> 
-
-            <div style = {{display: 'flex'}}>
-              <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-              <h6 style={{color: 'blue'}}> bubbleLine,  Peak2Peak (long term gain) &nbsp;  </h6> &nbsp; &nbsp;
-            </div>
-            
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> Calc {props.symbol} long-term-gain, and BubbleLine, according to 2008 & 2022 bubbles &nbsp;  </h6>
-
+            {pageHeader (chartSymbol, 'bubbleLine', 'Exponential line that passes through stock prices of last major bubbles (2008, 2021) (long term gain)' )}
+      
             <div style={{color: 'red'}}>{err}</div>
 
             {props.eliHome && <div><input type="checkbox" checked={log}  onChange={()=> setLog( ! log)}  />  &nbsp;Log &nbsp; &nbsp; </div>}

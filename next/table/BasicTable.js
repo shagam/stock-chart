@@ -25,7 +25,7 @@ import {Peak2PeakGui} from './Peak2Peak'
 import {MarketOpenPrice} from './MarketOpenPrice'
 
 
-import StockInfo from './StockInfo'
+import {pageHeader} from './StockInfo'
 import  {StockGain, dividendCalc} from './StockGain'
 
 import {Holdings} from './Holdings'
