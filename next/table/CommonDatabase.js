@@ -18,6 +18,10 @@ import {addStock} from './AddStock'
 
 import {Users}  from './Users'
 
+import {pageHeader } from './StockInfo'
+import { useShared } from '../contexts/SharedContext';
+
+
 function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip, city, countryName, countryCode, regionName) {
 
     const LOG = logFlags.includes('gain'); 
@@ -134,7 +138,7 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
 }
 
 
-function CommonDatabase (props) {
+function CommonDatabase (props) { 
     const [results, setResults] = useState()
     const [resObjects, setResObjects]  = useState([])
     const [infoJson, setInfoJson] = useState()
@@ -973,8 +977,7 @@ function CommonDatabase (props) {
   return (
     <div style = {{ border: '2px solid green', backgroundColor: '#f0f0f0', padding: '5px', margin: '5px'}}>
       {<div>
-        <h6 style={{color: 'blue'}}> CommonDatabase &nbsp;  </h6>
-        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Get stock symbols according to GAIN from common backEnd &nbsp; </h6>
+        {pageHeader ('', 'CommonDatabase', 'Get stocks symbols with better gain than QQQ, from common backEnd')}
 
         <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
