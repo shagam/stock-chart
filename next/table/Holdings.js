@@ -7,12 +7,24 @@ import GetInt from '../utils/GetInt'
 import {IpContext} from '../contexts/IpContext';
 
 import {addStock} from './AddStock'
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
+
 // corsUrl = "https://dinagold.org:5000/holdings?stock=qqq";
 
 // https://stockanalysis.com/etf/ivv/holdings/
 
 // (sym, rows, setError, corsServer, logFlags)
 function Holdings (props) {
+
+  const {
+      chartSymbol, setChartSymbol,
+      infoSymbol, setInfoSymbol,
+      // gainMap, setGainMap,
+      chartData, setChartData,
+      stockInfo, setStockInfo,
+    } = useShared();
+
   const [err, setErr] = useState();
   const [arr, setArr] = useState();
   const [dat, setDat] = useState();
@@ -312,14 +324,7 @@ function Holdings (props) {
   return (
     <div style={{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}}> 
 
-      {/* ====== Header titles */} 
-      <div style = {{display: 'flex'}}>
-        <div  style={{color: 'magenta' }}>  {props.chartSymbol} </div> &nbsp; &nbsp;
-        <h6 style={{color: 'blue'}}> ETF Holdings &nbsp;  </h6>
-      </div>
-         
-      {/* <div>&nbsp;</div> */}
-      <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Get holdings of an ETF. (Allow to insert holdings into stock-table) </h6>
+      {pageHeader (chartSymbol, 'holdings', 'Get holdings of an ETF. (Allow to insert holdings into stock-table) ' )} 
 
       {/* <div>&nbsp; </div> */}
       {/* <br></br> */}
