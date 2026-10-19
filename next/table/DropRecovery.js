@@ -12,18 +12,49 @@ import MobileContext from '../contexts/MobileContext'
 import GetInt from '../utils/GetInt'
 import {isDailyXArray} from '../utils/Date'
 import {DropsCount} from './DropsCount'
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
 
 // https://www.bing.com/images/search?view=detailV2&ccid=aFW4cHZW&id=6D049FD8DC50EB783F293095F4D2034FE7D10B27&thid=OIP.aFW4cHZWMQwqN8QwIHsY7gHaHa&mediaurl=https%3A%2F%2Fplay-lh.googleusercontent.com%2FR16wfSDOBRBrq_PqUU5QEpXRqolgkz7_uA1AfWHlwSf_YAtXmCZzJ2r_0gtoPAUQid0&cdnurl=https%3A%2F%2Fth.bing.com%2Fth%2Fid%2FR.6855b8707656310c2a37c430207b18ee%3Frik%3DJwvR508D0vSVMA%26pid%3DImgRaw%26r%3D0&exph=512&expw=512&q=javascript+color+palette&form=IRPRST&ck=BBE11C15A669D97D75821C870360A6A3&selectedindex=1&itb=0&ajaxhist=0&ajaxserp=0&vt=0&sim=11&pivotparams=insightsToken%3Dccid_CMIgOlHf*cp_AEE83D7224698DFA21F17F4EDB502DD7*mid_8754ECD265B6FA7F97B04B7FE5180D010BCA1E43*simid_608019528560619377*thid_OIP.CMIgOlHfVZ-tTBbH9y8bGgHaGJ&iss=VSI&ajaxhist=0&ajaxserp=0
 //import './DropRecovery.css'
 
 // visible part
 const DropRecoveryButtons = (props) => {
+
+const {chartSymbol, setChartSymbol,
+      infoSymbol, setInfoSymbol,
+      gainMap, setGainMap,
+      chartData, setChartData,
+      stockInfo, setStockInfo,
+      gainRawDividand, setGainRawDividand,
+      gainData, setGainData,
+      
+      daily, setDaily,
+      logFlags, setLogFlags,
+
+      price, setPrice,
+      priceDivHigh, setPriceDivHigh,
+
+      stockChartXValues,
+      stockChartYValues,
+
+      servList,
+      servNameList, 
+      servSelect, setServSelect,
+      ssl, setSsl,
+      PORT, setPORT,
+      HIGH_LIMIT_KEY
+
+    } = useShared();
+
+
   // props.StockSymbol
   // props.rows
   // props.allColumhs
   // props.deepStartDate
   // props.setDropStartDate
   // 
+
 
   const [LOG, setLOG] = useState (false);
   const [err, setErr] = useState();
@@ -520,15 +551,10 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   return (
     <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' > 
         <div>
-          <div style = {{display: 'flex'}}>
-            <div  style={{color: 'magenta' }}>  {props.StockSymbol} </div>  &nbsp; &nbsp;
-            <h6 style={{color: 'blue'}}> DropRecovery  </h6>  &nbsp; &nbsp;
-          </div>
-          
-          <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Calc drop from high before market crash. Calc weeks number to recover </h6>
-          {err && <div style={{display:'flex', }}> {props.StockSymbol} &nbsp; DropRecovery: &nbsp;
+          {pageHeader (chartSymbol, 'dropRecovery', 'Calc drop from high before market crash. Calc weeks number to recover ', err )}
+            {/* {err && <div style={{display:'flex', }}> {props.StockSymbol} &nbsp; DropRecovery: &nbsp;
              <div style={{color: 'red', fontWeight: 'bold'}}>{err}</div>
-          </div>}
+          </div>} */}
 
           <div  style={{display:'flex', }}> 
             <div style={{color: 'black'}}  > Date of High-before-drop:   </div>
@@ -551,7 +577,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
      {/* */}
 
           <button style={{background: 'aqua'}} type="button" onClick={()=>dropRecovery(props.rows, props.StockSymbol, props.stockChartXValues, props.stockChartYValues, 
-            dropStartDate, props.logFlags, ! props.daily, props.chartData, props.errorAdd)}>  DropRecoveryCalc    </button> &nbsp;
+            dropStartDate, props.logFlags, ! props.daily, chartData, props.errorAdd)}>  DropRecoveryCalc    </button> &nbsp;
           {dropRecoveryInfo && <button type="button" onClick={()=>toggleDropRecoveryColumns()}>Drop_recovery_columns  </button>}
           
           {/* <pre>{JSON.stringify(https://help.openai.com/en, null, 2)}</pre> */}
