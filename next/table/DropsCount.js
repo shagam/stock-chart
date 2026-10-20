@@ -286,8 +286,8 @@ function DropsCount (props) {
 
     //** input */
     const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
-    const [streakThreshold, setStreakThreshold] = useState(6) // drop percentage, used for count number of drops
-    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(2) // percentage to reverse the streak
+    const [streakThreshold, setStreakThreshold] = useState(15) // drop percentage, used for count number of drops
+    const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(5) // percentage to reverse the streak
     const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
@@ -355,7 +355,7 @@ function DropsCount (props) {
         {/* <div> */}
     {/* <hr/>  */}
 
-        {pageHeader (symbol, 'dropsCount', 'Count market drops and rises', err )}
+        {pageHeader (symbol, 'dropsCount', 'Count drops and rises', err )}
 
         {props.eliHome && <div style={{display:'flex'}}>
             {/* <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp; */}
@@ -397,7 +397,7 @@ function DropsCount (props) {
         
         <div>&nbsp;</div>
 
-       {chartData && <Plot  data={chartData} layout={{ margin: {l:40, r:0, t:0, b:40}, width: 750, height: 500, title: 'drop-rise-count',
+       {chartData && dropsArray.length > 0 && <Plot  data={chartData} layout={{ margin: {l:40, r:0, t:0, b:40}, width: 750, height: 500, title: 'drop-rise-count',
              autosixe: true,
              legend: {
                 orientation: 'v',
