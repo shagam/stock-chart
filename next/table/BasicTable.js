@@ -1238,10 +1238,7 @@ const {chartSymbol, setChartSymbol,
 
               <hr/>
         </div>}
-        {activePage === "dropsCount" && (<DropsCount symbol = {chartSymbol}  
-                setDropStartDate={setDropStartDate}  stockChartXValues = {stockChartXValues} stockChartYValues = {stockChartYValues}
-                errorAdd={errorAdd} daily={daily} eliHome={eliHome}/>)}   
-
+      
       </div>
 
         <hr/> 
