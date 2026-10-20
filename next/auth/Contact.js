@@ -8,7 +8,7 @@ import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import {IpContext, getIpInfo} from '../contexts/IpContext';
 import {beep2} from '../utils/ErrorList'
-
+import { pageHeader } from '../table/StockInfo'
 
 export default function ContactUs (props)  {
 
@@ -108,11 +108,15 @@ export default function ContactUs (props)  {
 
 // style = {{ border: '2px solid blue', backgroundColor: '#f0f0e0'}}
   return (
-    <div style={{width:'600px', fontSize: '18px'}}>
+    <div style = {{width:'600px', fontSize: '18px', border: '2px solid maroon', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
+
+  
+      {/* <h2 className='text-center mb-4'>Contact Us</h2> */}
+      {pageHeader ('', 'contactUs', 'send requests and bugs to developers' )}
       {eliHome && latency && <div style={{color: 'green'}}> {latency} </div>}
+
     <Card>
     <Card.Body>
-      <h2 className='text-center mb-4'>Contact Us</h2>
 
       {error && <Alert variant="danger"> {error} </Alert>}
       <Form onSubmit={sendContact}>
@@ -142,7 +146,7 @@ export default function ContactUs (props)  {
 
         <div style={{color: 'magenta'}}>Text</div>
         <Form.Group id="message" className="mb-3" controlId="text">
-          <Form.Control style={{fontSize: '20px', height: '20vh', backgroundColor: '	#c0e0c0'}} as="textarea" ref= {messageRef} required  type="text"
+          <Form.Control style={{fontSize: '20px', height: '20vh', width: '500px', backgroundColor: '	#c0e0c0'}} as="textarea" ref= {messageRef} required  type="text"
            placeholder=""  defaultValue={''}/>
         </Form.Group>
 

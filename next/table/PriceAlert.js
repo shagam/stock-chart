@@ -9,7 +9,8 @@ import {todaySplit, todayDate, dateSplit,} from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 
 import { beep2 } from '../utils/ErrorList';
-
+import { pageHeader } from './StockInfo'
+import { useShared } from '../contexts/SharedContext';
 
 function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXValues, stockChartYValues) {
     for (let i = 0; i < priceAlertTable.length; i++) {
@@ -31,6 +32,15 @@ function priceAlertCheck (symbol, priceAlertTable, price, errorAdd, stockChartXV
 
 
 function PriceAlert (props) {
+ const {
+    chartSymbol, setChartSymbol,
+    symbol,
+      // infoSymbol, setInfoSymbol,
+      // gainMap, setGainMap,
+      chartData, setChartData,
+      gainData, setGainData,
+      daily, setDaily
+    } = useShared();
 
     const [percent, setPercent] = useState(8)
     const [thresholdPrice, setThesholdPrice] = useState(props.stockChartYValues[0])
@@ -140,11 +150,7 @@ function PriceAlert (props) {
         <div style={{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
 
             {/* ====== Header titles */} 
-            <div style = {{display: 'flex'}}>
-                <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-                <h6 style={{color: 'blue'}}> Price Alert &nbsp;  </h6>
-            </div>
-            <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Price alert setting </h6>
+            {pageHeader (symbol, 'priceAlert', 'Price alert setting ', null)}
 
             <div>&nbsp;</div>
             <div style={{display:'flex'}}>

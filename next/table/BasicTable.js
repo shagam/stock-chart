@@ -1210,7 +1210,7 @@ const {chartSymbol, setChartSymbol,
                 <Link style={{background: routeColor('/tools')}} href="/tools">tools </Link> &nbsp; 
               </div>}
 
-              {chartSymbol && <div>
+              {chartSymbol && eliHome &&<div>
                 {eliHome && <Link style={{background: routeColor('/urlGetParse')}} href="/urlGetParse">urlGetParse </Link>} &nbsp; 
                 {eliHome && <Link style={{background: routeColor('/leveragaETF')}} href="/leveragaETF">leveragaETF </Link>} &nbsp; 
                 {eliHome && <Link style={{background: routeColor('/marketOpenPrice')}} href="/marketOpenPrice">marketOpenPrice </Link>} &nbsp;
@@ -1229,10 +1229,9 @@ const {chartSymbol, setChartSymbol,
               {/* <Link style={{background: routeColor('/about')}} href="/about">About</Link>&nbsp;  */}
               {/* <Link href="/manual">Manual</Link> &nbsp; &nbsp; */}
 
-              {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags')}} href="/logFlags">console-log-flags</Link>} &nbsp;
+              {! isMobile && eliHome && <Link style={{background: routeColor('/logFlags'), color: '#9932CC'}} href="/logFlags">console-log-flags</Link>} &nbsp;
 
-              {<Link style={{background: routeColor('/auxilaryLinks')}} href="/auxilaryLinks">Auxilary-links</Link>} &nbsp;
-
+              {<Link style={{background: routeColor('/auxilaryLinks'), color: '#9932CC'}} href="/auxilaryLinks">Auxilary-links</Link>} &nbsp;
 
               {eliHome && <Link style={{background: routeColor('/futures'), color: '#9932CC'}} href="/futures">futures </Link>} &nbsp;
               {eliHome && <Link style={{background: routeColor('/polymarket'), color: '#9932CC'}} href="/polymarket">polymarket </Link>} &nbsp;

@@ -7,7 +7,7 @@ import GetInt from '../utils/GetInt'
 import {todayDate, getDate_YYYY_mm_dd__, getDate} from '../utils/Date';
 import {beep2} from '../utils/ErrorList'
 import { useShared, SharedContext } from '../contexts/SharedContext';
-
+import { pageHeader } from './StockInfo'
 
 
 function SymSearch() {
@@ -89,9 +89,7 @@ function SymSearch() {
 
     return (
         <div  style = {{ border: '2px solid green', backgroundColor: '#f0f0f0', padding: '5px', margin: '5px'}} >
-            <h6 style={{color: 'blue'}}> symbol search (AlphaVantage) &nbsp;  </h6>
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp;Search pattern (symbol) in AlphaVantage repository  &nbsp; </h6>
-
+            {pageHeader ('', 'symSearch', 'Search pattern (symbol) in AlphaVantage repository')}
 
             <div style={{display: 'flex', alignItems: 'left'}}>
                 <GetInt init={searchText} callBack={setSearchText} title='pattern  &nbsp;' type='text' pattern="[0-9_a-zA-Z\\.\-]+" width = '25%'/>

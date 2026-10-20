@@ -9,6 +9,8 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import MobileContext from '../contexts/MobileContext'
 import {beep2, beep} from '../utils/ErrorList'
 import {disclaimerPurge, getDisclaimerDate} from './Disclaimer'
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
 
 
 const  Config = (props) => { 
@@ -62,12 +64,13 @@ const  Config = (props) => {
 
     <div style = {{border: '2px solid maroon', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
 
-      <h6 style={{color: 'blue'}}> Config &nbsp;  </h6>
+      {/* <h6 style={{color: 'blue'}}> Config &nbsp;  </h6> */}
     
       {
         <div id = "config_id">
 
-          <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Configuration, purge table and other activity  &nbsp; </h6>
+          {/* <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Configuration, purge table and other activity  &nbsp; </h6> */}
+          {pageHeader ('', 'config', 'Configuration state changes, purge table, login etc' )}
 
           <div>  &nbsp; <Link href="/dashboard" > Login Dashboard </Link>  </div>
 

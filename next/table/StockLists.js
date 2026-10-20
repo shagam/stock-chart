@@ -10,6 +10,9 @@ import {IpContext, getIpInfo} from '../contexts/IpContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import {ErrorList, beep, beep2} from '../utils/ErrorList'
 
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
+
 function StockLists (props) {
     const {localIp, localIpv4, eliHome} = IpContext();
     const {currentUser, admin} = useAuth();
@@ -386,10 +389,8 @@ function StockLists (props) {
 
     return (
         <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
-
+            {pageHeader ('', 'stockLists', 'Stock lists.  Save and Share lists')}
             {<div>
-                <h6 style={{color: 'blue'}}> Stock-lists.  &nbsp;  </h6>
-                <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Stock lists.  Save and Share lists &nbsp; </h6>
 
                 {err && <div style={{color:'red'}}>{err}</div>}
                 {eliHome && latency && <div style={{color: 'green'}}>{latency}</div>}

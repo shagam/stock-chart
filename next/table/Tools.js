@@ -18,6 +18,8 @@ import {VerifyGain} from './GainValidateMarketwatch'
 import {Splits} from './StockSplits'
 import {Spikes} from './Spikes'
 import {IpSearchGui } from '../utils/IpSearchGui';
+import { pageHeader } from './StockInfo'
+import { useShared } from '../contexts/SharedContext';
 
 
 // import axios from 'axios'
@@ -30,16 +32,20 @@ function Tools (props) {
     
   const LOG = props.logFlags.includes('month')
 
-
-
-       
+  const {
+    chartSymbol, setChartSymbol,
+    symbol,
+      // infoSymbol, setInfoSymbol,
+      // gainMap, setGainMap,
+      chartData, setChartData,
+      gainData, setGainData,
+      daily, setDaily
+    } = useShared();
+     
     return (
         <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} >
-
-            <div style = {{display: 'flex'}}>
-              <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
-              <h6 style={{color: 'blue'}}> Tools </h6> &nbsp;  &nbsp; 
-            </div>               
+             
+            {pageHeader (symbol, 'tools', '', '')}
 
             <hr style={{ border: '3px solid #000000'}}/> 
             {/* <br></br> */}

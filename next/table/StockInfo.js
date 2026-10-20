@@ -5,8 +5,8 @@ import { useShared } from '../contexts/SharedContext';
 function pageHeader (symbol, route_, description, err) {
     return (
       <div>
-        <strong style = {{display: 'flex', fontSize: '18px', margin: '5px'}}>
-            <div  style={{color: 'magenta' }}>  {symbol} &nbsp; </div>
+        <strong style = {{display: 'flex', fontSize: '20px', margin: '5px'}}>
+            <div  style={{color: 'magenta' }}>{symbol} &nbsp; </div>
             <div  style={{color: 'blue' }}> {route_}</div> 
         </strong>
 
