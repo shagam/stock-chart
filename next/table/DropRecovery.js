@@ -25,6 +25,7 @@ const {chartSymbol, setChartSymbol,
       infoSymbol, setInfoSymbol,
       gainMap, setGainMap,
       chartData, setChartData,
+      symbol,
       stockInfo, setStockInfo,
       gainRawDividand, setGainRawDividand,
       gainData, setGainData,
@@ -551,7 +552,7 @@ function dropRecovery (rows, StockSymbol, stockChartXValues, stockChartYValues, 
   return (
     <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' > 
         <div>
-          {pageHeader (chartSymbol, 'dropRecovery', 'Calc drop from high before market crash. Calc weeks number to recover ', err )}
+          {pageHeader (symbol, 'dropRecovery', 'Calc drop from high before market crash. Calc weeks number to recover ', err )}
             {/* {err && <div style={{display:'flex', }}> {props.StockSymbol} &nbsp; DropRecovery: &nbsp;
              <div style={{color: 'red', fontWeight: 'bold'}}>{err}</div>
           </div>} */}

@@ -21,8 +21,12 @@ import Toggle from '../utils/Toggle'
 import {searchDateInArray, } from '../utils/Date'
 import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { createRoutesFromElements } from 'react-router-dom';
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
 
-
+// 
+// Zuberi Moshe
+// 
 
     function extractOneStreak (dateArray, valArray, searchIndex, changeThreshold, streakArray, stockChartXValues, stockChartYValues,
         zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop, streakEndReverseThreshold, logExtra
@@ -267,6 +271,15 @@ function DropsCount (props) {
     // console.log ('next DropsCount props=', props)
       //** for counting drops */
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
+      const {chartSymbol, setChartSymbol,
+          symbol,
+            // infoSymbol, setInfoSymbol,
+            // gainMap, setGainMap,
+            chartData, setChartData,
+            gainData, setGainData,
+            daily, setDaily
+          } = useShared();
+    
     const [err, setErr] = useState();
     const [log, setLog] = useState (false);
     const [logExtra, setLogExtra] = useState (false);
@@ -279,7 +292,6 @@ function DropsCount (props) {
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
     const [tableShow, setTableShow] = useState(false)
-    const [chartData, setChartData] = useState()
 
     //** output display */
     const [dropsArray, setDropsArray] = useState([])
@@ -304,13 +316,13 @@ function DropsCount (props) {
 
     useEffect (() => { 
         setDropsArray([])
-      }, [props.symbol,  props.daily]) 
+      }, [symbol,  props.daily]) 
 
 
   
     function countDrops_wrapper () {
         const results = countDrops (streakThreshold, setErr, log, startDate, bigDropCount_, bigRiseCount_, zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop,
-        props.stockChartXValues.length, props.stockChartXValues, props.stockChartYValues, props.symbol, streakEndReverseThreshold, logExtra)
+        props.stockChartXValues.length, props.stockChartXValues, props.stockChartYValues, symbol, streakEndReverseThreshold, logExtra)
         setChartData(results.dat)
 
         setDropsArray(results.streakArray)
@@ -339,17 +351,11 @@ function DropsCount (props) {
     // const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px', gap: '0', boarderSpacing: '0', boarderCollapse: 'collapse'};
    const ROW_SPACING = {padding: "0px 2px 0px 2px", margin: '0px'}
     return (
-        <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' > 
+        <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id_' > 
         {/* <div> */}
     {/* <hr/>  */}
-        <div style = {{display: 'flex'}}>
-            <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp; &nbsp;
-            <h6 style={{color: 'blue'}}> DropsCount  </h6>  &nbsp; &nbsp;
-            <div>{ props.daily? '(daily)' : '(weekly)'}</div>
-          </div>
 
-        <h6 style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>Count market drops and rises</h6>
-        <div style={{color: 'red'}}>{err}</div>
+        {pageHeader (symbol, 'dropsCount', 'Count market drops and rises', err )}
 
         {props.eliHome && <div style={{display:'flex'}}>
             {/* <ComboBoxSelect serv={searchMode} nameList={['range','threshold',]} setSelect={setSearchMode} title='' options={[false, true]} defaultValue={true}/> &nbsp; &nbsp;  &nbsp; */}

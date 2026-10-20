@@ -22,7 +22,7 @@ const Peak2PeakGui = (props) => {
 
   const { currentUser, admin, logout } = useAuth();
   const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip, os} = IpContext();
-  // props.symbol
+  // symbol
   // props.rows
   // props.startDate
   // props.setStartDate
@@ -34,7 +34,7 @@ const Peak2PeakGui = (props) => {
   // weekly
 
     const {chartSymbol, setChartSymbol,
-
+      symbol,
       gainMap, setGainMap,
       chartData, setChartData,
       gainData, setGainData,
@@ -98,7 +98,7 @@ const Peak2PeakGui = (props) => {
       setBubbleLineFlag(false)
       setBubbleLineRatio()
       delete gainMap.bubbleLine
-    },[props.symbol, gainMap]) 
+    },[symbol, gainMap]) 
    
   // style={{display:'flex'}}
 
@@ -127,83 +127,83 @@ const Peak2PeakGui = (props) => {
     histogram['< 0.35'] = 0
 
     for (let i = bubbleline.y.length - 1; i >= 0; i --) {
-      const ratio = props.gainMap[props.symbol].y[i]  /  bubbleline.y[i]
+      const ratio = props.gainMap[symbol].y[i]  /  bubbleline.y[i]
 
       if (ratio >= 1.20) {
         histogram['> 1.20'] ++
-        histogramLast['> 1.20'] = props.gainMap[props.symbol].x[i] 
+        histogramLast['> 1.20'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio >= 1.15) {
         histogram['> 1.15'] ++
-        histogramLast['> 1.15'] = props.gainMap[props.symbol].x[i] 
+        histogramLast['> 1.15'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio >= 1.10) {
           histogram['> 1.10'] ++
-          histogramLast['> 1.10'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 1.10'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio >= 1.05) {
         histogram['> 1.05'] ++
-        histogramLast['> 1.05'] = props.gainMap[props.symbol].x[i] 
+        histogramLast['> 1.05'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio >= 1) {
         histogram['> 1.00'] ++
-        histogramLast['> 1.00'] = props.gainMap[props.symbol].x[i] 
+        histogramLast['> 1.00'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.95) {
           histogram['> 0.95'] ++
-          histogramLast['> 0.95'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.95'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.90) {
           histogram['> 0.90'] ++
-          histogramLast['> 0.90'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.90'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.85) {
           histogram['> 0.85'] ++
-          histogramLast['> 0.85'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.85'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.80) {
           histogram['> 0.80'] ++
-          histogramLast['> 0.80'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.80'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.75) {
           histogram['> 0.75'] ++
-          histogramLast['> 0.75'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.75'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.70) {
           histogram['> 0.70'] ++
-          histogramLast['> 0.70'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.70'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.65) {
           histogram['> 0.65'] ++
-          histogramLast['> 0.65'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.65'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.60) {
           histogram['> 0.60'] ++
-          histogramLast['> 0.60'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.60'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.55) {
           histogram['> 0.55'] ++
-          histogramLast['> 0.55'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.55'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.50) {
           histogram['> 0.50'] ++
-          histogramLast['> 0.50'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.50'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.45) {
           histogram['> 0.45'] ++
-          histogramLast['> 0.45'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.45'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.40) {
           histogram['> 0.40'] ++
-          histogramLast['> 0.40'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.40'] = props.gainMap[symbol].x[i] 
       }
       else if (ratio > 0.35) {
           histogram['> 0.35'] ++
-          histogramLast['> 0.35'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['> 0.35'] = props.gainMap[symbol].x[i] 
       }
       else {
           histogram['< 0.35'] ++
-          histogramLast['< 0.35'] = props.gainMap[props.symbol].x[i] 
+          histogramLast['< 0.35'] = props.gainMap[symbol].x[i] 
       }
     }
 
@@ -269,16 +269,16 @@ const Peak2PeakGui = (props) => {
       props.setBubbleLine (bubbleline)
       setBubbleLineFlag(true)
 
-    const row_index = props.rows.findIndex((row)=> row.values.symbol === props.symbol);
+    const row_index = props.rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index === -1) {
-      alert ('stock missing (bubbleLine): ' + props.symbol)
+      alert ('stock missing (bubbleLine): ' + symbol)
       return;
     }
     // const price_ = props.price;
     var price = props.rows[row_index].values.price;
     if (! price || props.rows[row_index].values.price_mili < props.rows[row_index].values.gain_mili) {
       price = YValues[0]
-      console.log (props.symbol, 'price missing, using latest close value')
+      console.log (symbol, 'price missing, using latest close value')
     }
     //** calc ratio latestValue/bubbleline */
     const bubbleLineOver = (price / yBubbleLine[0]).toFixed(3)
@@ -294,8 +294,8 @@ const Peak2PeakGui = (props) => {
       setBelowHighPercent(belowHigh.toFixed(2))
     if (results)
       results['CurrentPrice/bubbleLine'] = bubbleLineOver;
-    console.log (props.symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'price=', props.price, 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
-    // console.log  (props.symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
+    console.log (symbol, ' / bubbleLine  =', bubbleLineOver, ';  sym_val=', YValues[0], 'price=', props.price, 'bubbleLine_val=', yBubbleLine[0].toFixed(2))
+    // console.log  (symbol, ' / bubbleLine ',  '  ', bubbleLineOver)
 
     histogramBuild ()
   }
@@ -311,7 +311,7 @@ const Peak2PeakGui = (props) => {
   return (
     <div style = {{border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
         <div> 
-            {pageHeader (chartSymbol, 'bubbleLine', 'Exponential line that passes through stock prices of last major bubbles (2008, 2021) (long term gain)' )}
+            {pageHeader (symbol, 'bubbleLine', 'Exponential line that passes through stock prices of last major bubbles (2008, 2021) (long term gain)' )}
       
             <div style={{color: 'red'}}>{err}</div>
 
@@ -338,7 +338,7 @@ const Peak2PeakGui = (props) => {
           {/* Single peak and estimate yearly gaiin bubble override gain */}
           <hr style={{ border: '3px solid #000000'}}/> 
           {((row_index_eeee !== -1) || (results && ! results.timeUnitGain)) && <div>
-            <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {props.symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
+            <h6 style={{color:'#33ee33', fontWeight: 'bold'}}> Calc {symbol} bubble line based on 2022 peak and your estimated yearly gain &nbsp;  </h6>
             <div style={{display: 'flex'}}>
               <input  type="checkbox" checked={bubbleCalcSinglePeak}  onChange={() => {setBubbleCalcSinglePeak (! bubbleCalcSinglePeak)}} /> 
               <div style={{paddingTop: '6px'}}> &nbsp; single-Peak &nbsp;&nbsp; </div>
@@ -349,7 +349,7 @@ const Peak2PeakGui = (props) => {
 
           {/* Buttons peak2PeakCalc  */}
 
-            {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (props.symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
+            {! results && <div><button style={{background: 'aqua'}} type="button" onClick={()=>peak2PeakCalc (symbol, props.rows, props.stockChartXValues, props.stockChartYValues,
               props.weekly, props.logFlags, props.searchPeak, d_2000_date, startDate, endDate, props.errorAdd, setResults, props.saveTable, setErr)}>Calc peak2peak gain </button> &nbsp; &nbsp;</div>}
     
            <div style={{display_:'flex'}}> &nbsp; 
@@ -359,7 +359,7 @@ const Peak2PeakGui = (props) => {
                   type="button"  onClick={() => {calcBubbleLine (props.stockChartXValues, props.stockChartYValues)}}> calc Bubble-Line </button>
               }
 
-              {props.gainMap.bubbleLine  &&  <div>{props.symbol} price: {props.price} &nbsp;
+              {props.gainMap.bubbleLine  &&  <div>{symbol} price: {props.price} &nbsp;
                 <div style={{display: 'flex'}} >
                   belowBubbleLine= <div style={{color: 'magenta'}} >{bubbleLineRatio}  ({percentBelow}%)</div> &nbsp; &nbsp;
                   belowHigh= <div style={{color: 'magenta'}}>{belowHigh} ({belowHighPercent}%)</div>
@@ -385,7 +385,7 @@ const Peak2PeakGui = (props) => {
             <hr style={{ border: '3px solid #000000'}}/> 
             {/* Histogram of bubble proximity */}
 
-            {Object.keys(histogram).length > 0 &&<div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Bubble proximity Histogram  &nbsp; {props.symbol}_price / bubble_price;  &nbsp;</div>}
+            {Object.keys(histogram).length > 0 &&<div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Bubble proximity Histogram  &nbsp; {symbol}_price / bubble_price;  &nbsp;</div>}
 
             {Object.keys(histogram).length > 0 && <div><input type="checkbox" checked={histogramShow}  onChange={() => setHistogramShow (! histogramShow)} /> &nbsp;histogram&nbsp;</div> }
 
@@ -420,17 +420,17 @@ const Peak2PeakGui = (props) => {
 
            {props.gainMap.bubbleLine && <div>
             <hr style={{ border: '3px solid #000000'}}/> 
-            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Hisorical {props.symbol} price / bubble_price  &nbsp;  </h6>
+            <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> &nbsp; Hisorical {symbol} price / bubble_price  &nbsp;  </h6>
             <input  type="checkbox" checked={tableShowFlag}  onChange={() => setTableShowFlag (! tableShowFlag)} />&nbsp; compare Table &nbsp; 
            </div>}
 
-            {tableShowFlag && props.gainMap.bubbleLine && props.gainMap[props.symbol] && <div style={{height:'300px', width: '400px', overflow:'auto'}}>
+            {tableShowFlag && props.gainMap.bubbleLine && props.gainMap[symbol] && <div style={{height:'300px', width: '400px', overflow:'auto'}}>
               <table>
                 <thead>
                   <tr>
                     <th>N</th>
                     <th>date </th>
-                    <th>{props.symbol} price</th>
+                    <th>{symbol} price</th>
                     <th>bubbleLine price</th>
                     <th>ratio</th>
                   </tr>
@@ -441,10 +441,10 @@ const Peak2PeakGui = (props) => {
                         <tr key={s1}>
                           <td style={{padding: '2px', margin: '2px'}}>{s1}</td>
                             <td style={{padding: '2px', margin: '2px', width: '120px'}}>{props.gainMap.bubbleLine.x[s1]}  </td> 
-                            {<td style={{padding: '2px', margin: '2px'}}> {props.gainMap[props.symbol].y[s1].toFixed(2)}</td>}
+                            {<td style={{padding: '2px', margin: '2px'}}> {props.gainMap[symbol].y[s1].toFixed(2)}</td>}
                             {<td style={{padding: '2px', margin: '2px'}}>{props.gainMap.bubbleLine.y[s1].toFixed(2)}</td>}
-                            {<td style = {{padding: '2px', margin: '2px', color: colorHighRatio(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1])}}>
-                              {(props.gainMap[props.symbol].y[s1] / props.gainMap.bubbleLine.y[s1]).toFixed(3)}</td>}
+                            {<td style = {{padding: '2px', margin: '2px', color: colorHighRatio(props.gainMap[symbol].y[s1] / props.gainMap.bubbleLine.y[s1])}}>
+                              {(props.gainMap[symbol].y[s1] / props.gainMap.bubbleLine.y[s1]).toFixed(3)}</td>}
                         </tr>
                       )
                     })}
@@ -461,7 +461,7 @@ const Peak2PeakGui = (props) => {
 
             {/* <pre>{JSON.stringify(results, null, 2)}</pre> */}
             {results && <div style={{width: '300px'}}>
-              <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {props.symbol}  Peak list </div>
+              <div  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}> {symbol}  Peak list </div>
               <table border="1" >
                   <tbody>
                     {Object.entries(results).map(([key, value]) => (   

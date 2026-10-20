@@ -15,6 +15,8 @@ import { FaCheckSquare } from 'react-icons/fa';
 import { FaCog } from 'react-icons/fa';
 import { Helmet } from "react-helmet";
 import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
+    // {pageHeader (chartSymbol, 'options', 'Calc expected option gain, based on average yearly gain, and expected stock price', err )}
 // 
 // Zuberi Moshe
 
@@ -99,6 +101,7 @@ const {
       refreshByToggleColumns,
 
       chartSymbol, setChartSymbol,
+      symbol,
       // infoSymbol, setInfoSymbol,
       // gainMap, setGainMap,
       chartData, setChartData,
@@ -1286,11 +1289,9 @@ const {
 
   return (
     <div style = {{ border: '2px solid blue', backgroundColor: '#f0f0e0'}} >
-        <div style = {{display: 'flex'}}>
-          <div style={{color: 'magenta' }}>  {chartSymbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}>Option primium <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> </h6>  &nbsp; &nbsp;
+        {pageHeader (symbol, 'options', 'Calc expected option gain, based on average yearly gain, and expected stock price', err )}
+        <strong style={{color: 'red'}}>(Please consult other sources, before taking a decision) </strong> 
 
-          </div>
         <div style = {{display: 'flex', fontWeight: 'bold'}}> stockPrice={price} &nbsp; &nbsp; price/High={priceDivHigh}  &nbsp; &nbsp; {! isNaN(belowBubble) &&<div>price/bubblePrice={belowBubble.toFixed(3)}</div>}  </div>
 
         {config.action === 'sell' && <h6  style={{color: '#c760ff'}}>  &nbsp;  Zero sum game. <strong style={{color: 'red'}}>Selling options</strong>, has unlimited potitial loss </h6>}

@@ -19,6 +19,7 @@ function Holdings (props) {
 
   const {
       chartSymbol, setChartSymbol,
+      symbol,
       infoSymbol, setInfoSymbol,
       // gainMap, setGainMap,
       chartData, setChartData,
@@ -38,8 +39,8 @@ function Holdings (props) {
 
   const [count, setCount] =useState(25)
   const [urlLast, setUrlLast] = useState();
-  const urlCors = 'https://stockanalysis.com/etf/'+props.chartSymbol+'/holdings/';
-  const url_holdings_schwab = 'https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + props.chartSymbol ;
+  const urlCors = 'https://stockanalysis.com/etf/'+symbol+'/holdings/';
+  const url_holdings_schwab = 'https://www.schwab.wallst.com/schwab/Prospect/research/etfs/schwabETF/index.asp?type=holdings&symbol=' + symbol ;
   const [ignoreSaved, setIgnoreSaved] = useState (false);
   const [logBackEnd, setLogBackEnd] = useState (false);
   const [saveInFile, setSaveInFile] = useState (false);
@@ -58,7 +59,7 @@ function Holdings (props) {
     setErr();
     setArr();
     setDat();
-  }, [props.chartSymbol])
+  }, [symbol])
 
   function clearPercentColumn () {
     for (let i = 0; i < props.rows.length; i++)
@@ -67,25 +68,25 @@ function Holdings (props) {
   }
 
 
-  const row_index = props.rows.findIndex((row)=> row.values.symbol === props.chartSymbol);
+  const row_index = props.rows.findIndex((row)=> row.values.symbol === symbol);
   if (row_index === -1) {
 
-    setErr ('stock missing (Holdings): ' + props.chartSymbol)
+    setErr ('stock missing (Holdings): ' + symbol)
     return;
   }
 
   function holdingsMarketData () {
-    const url = 'https://api.marketdata.app/v1/etf/holdings?symbol=' + props.chartSymbol + '&token=' + TOKEN
+    const url = 'https://api.marketdata.app/v1/etf/holdings?symbol=' + symbol + '&token=' + TOKEN
       axios.get (url)
     // getDate()
     .then ((result) => {
       setErr()
       if (result.status !== 200) {
-        console.log (props.chartSymbol, 'status=', result)
+        console.log (symbol, 'status=', result)
         return;
       }
       if (LOG)
-        console.log (props.chartSymbol, JSON.stringify(result.data))
+        console.log (symbol, JSON.stringify(result.data))
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr(result.data)
@@ -98,7 +99,7 @@ function Holdings (props) {
     } )
     .catch ((err) => {
       setErr(err.message)
-      props.errorAdd ([props.chartSymbol, err.message])
+      props.errorAdd ([symbol, err.message])
       // console.log(err.message)
     })
   }
@@ -128,15 +129,15 @@ function Holdings (props) {
   }
 
   function holdingsInsertInTable () {    
-    if (holdingsRawObj[props.chartSymbol] === undefined) {
-      props.errorAdd ([props.chartSymbol,' need to <fetch> '])
-      console.log (props.chartSymbol + ' need to <fetch>')
+    if (holdingsRawObj[symbol] === undefined) {
+      props.errorAdd ([symbol,' need to <fetch> '])
+      console.log (symbol + ' need to <fetch>')
       return;
     }
 
     clearPercentColumn();     
     
-    const holdArr = holdingsRawObj[props.chartSymbol].holdArr;
+    const holdArr = holdingsRawObj[symbol].holdArr;
     const len = holdArr.length < Number(count)+1 ? holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
 
     for (let i = 1; i < len; i++) {
@@ -176,10 +177,10 @@ function Holdings (props) {
       corsUrl = "http://";
 
     if (srcNum === 0) {
-      corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + props.chartSymbol;
+      corsUrl += props.corsServer + ":" + props.PORT + "/holdings?stock=" + symbol;
     }
     else if (srcNum === 1) {
-      corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + props.chartSymbol;
+      corsUrl += props.corsServer + ":" + props.PORT + "/holdingsSch?stock=" + symbol;
     }
     if (logBackEnd)
       console.log (urlCors)
@@ -199,8 +200,8 @@ function Holdings (props) {
       corsUrl += '&ignoreMismatch=' + ignoreMismatch;
 
     else if (srcNum === 2) {
-        corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + props.chartSymbol;
-        // setUrlCors('https://finance.yahoo.com/quote/' + props.chartSymbol  
+        corsUrl += props.corsServer + ":" + props.PORT + "/holdingsMarketwatch?stock=" + symbol;
+        // setUrlCors('https://finance.yahoo.com/quote/' + symbol  
     }
 
     if (logBackEnd)
@@ -215,11 +216,11 @@ function Holdings (props) {
     .then ((result) => {
       setErr()
       if (result.status !== 200) {
-        console.log (props.chartSymbol, 'status=', result)
+        console.log (symbol, 'status=', result)
         return;
       }
       if (LOG)
-        console.log (props.chartSymbol, JSON.stringify(result.data))
+        console.log (symbol, JSON.stringify(result.data))
 
       if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
         setErr(result.data)
@@ -231,7 +232,7 @@ function Holdings (props) {
       if (result.data.holdArr === 'Request failed with status code 404') {
         setErr(result.data.holdArr + ", May be not an ETF")
         // console.log (result.data)
-        props.errorAdd ([props.chartSymbol,result.data.holdArr + ", May be not an ETF"])
+        props.errorAdd ([symbol,result.data.holdArr + ", May be not an ETF"])
         return;
       }
     
@@ -245,7 +246,7 @@ function Holdings (props) {
           etfArr_.push (etf)
         }
         
-        holdingsRawObj[props.chartSymbol] = result.data;
+        holdingsRawObj[symbol] = result.data;
 
         const len = result.data.holdArr.length < Number(count)+1 ? result.data.holdArr.length : Number(count)+1; // limit size.  (first is verification counters)
         var cnt = 0;
@@ -324,12 +325,12 @@ function Holdings (props) {
   return (
     <div style={{ border: '2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}}> 
 
-      {pageHeader (chartSymbol, 'holdings', 'Get holdings of an ETF. (Allow to insert holdings into stock-table) ' )} 
+      {pageHeader (symbol, 'holdings', 'Get holdings of an ETF. (Allow to insert holdings into stock-table) ' )} 
 
       {/* <div>&nbsp; </div> */}
       {/* <br></br> */}
       {/* ====== Buttons */} 
-      {props.chartSymbol && <div>
+      {symbol && <div>
         {/* <div>&nbsp; </div> */}
           <div style={{display: 'flex'}}>      
             {eliHome && <div> <input type="checkbox" checked={ignoreSaved}  onChange={()=>setIgnoreSaved (!ignoreSaved)}  /> &nbsp;IgnoreSaved &nbsp; &nbsp; </div> }
@@ -351,11 +352,11 @@ function Holdings (props) {
 
           <div>  
             {<div style={{color: 'blue'}}> {latency}</div>}
-            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  ({props.chartSymbol}) </button> &nbsp; 
-            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  ({props.chartSymbol}) </button> &nbsp;
-            {/* {eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>holdingsMarketData ()}>marketData  ({props.chartSymbol}) </button> &nbsp;</div>} */}
+            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (0)}>fetch50  ({symbol}) </button> &nbsp; 
+            <button style={{background: 'aqua'}} type="button" onClick={()=>fetchHoldings (1)}>fetch20  ({symbol}) </button> &nbsp;
+            {/* {eliHome && <div><button style={{background: 'aqua'}} type="button" onClick={()=>holdingsMarketData ()}>marketData  ({symbol}) </button> &nbsp;</div>} */}
             {/* <button type="button" onClick={()=>fetchHoldings (2)}>fetch10  </button> &nbsp; */}
-            {holdingsRawObj[props.chartSymbol] && Object.keys(heldMasterObj).length > 0 && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {props.chartSymbol} holdings</button> } &nbsp;
+            {holdingsRawObj[symbol] && Object.keys(heldMasterObj).length > 0 && <button style={{background: 'Chartreuse'}} type="button" onClick={()=>holdingsInsertInTable ()}>insert-in-table &nbsp; {symbol} holdings</button> } &nbsp;
           </div> 
           <div>&nbsp; </div>
         </div>
@@ -417,9 +418,9 @@ function Holdings (props) {
       <div>&nbsp;</div> 
       
       <h6>Holdings links </h6>
-      {<button onClick={() => openInNewTab(url_holdings_schwab)}> schwab ({props.chartSymbol})</button>} &nbsp;
-      {<button onClick={() => openInNewTab(urlCors)}>  stockAnalysis ({props.chartSymbol}) </button>} &nbsp;
-      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + props.chartSymbol)}> yahoo ({props.chartSymbol}) </button>} &nbsp; &nbsp; &nbsp; &nbsp;
+      {<button onClick={() => openInNewTab(url_holdings_schwab)}> schwab ({symbol})</button>} &nbsp;
+      {<button onClick={() => openInNewTab(urlCors)}>  stockAnalysis ({symbol}) </button>} &nbsp;
+      {<button onClick={() => openInNewTab('https://finance.yahoo.com/quote/' + symbol)}> yahoo ({symbol}) </button>} &nbsp; &nbsp; &nbsp; &nbsp;
       {<button onClick={() => openInNewTab('https://hedgefollow.com/')}> Hedge funds </button>} &nbsp; 
       <div>&nbsp;</div> 
     </div>

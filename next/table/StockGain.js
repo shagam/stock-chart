@@ -48,7 +48,7 @@ import { useShared } from '../contexts/SharedContext';
 
     const row_index = rows.findIndex((row)=> row.values.symbol === symbol);
     if (row_index !== -1) {
-      // if (props.rows[row_index].values.symbol === props.symbol) 
+      // if (props.rows[row_index].values.symbol === symbol) 
       rows[row_index].values.Div = (yearly_div_ratio_ * 100).toFixed(3);
       refreshByToggleColumns('Div');
     }
@@ -58,6 +58,7 @@ import { useShared } from '../contexts/SharedContext';
 
 const StockGain = (props) => {
   const {chartSymbol, setChartSymbol,
+    symbol,
       // infoSymbol, setInfoSymbol,
       // gainMap, setGainMap,
       chartData, setChartData,
@@ -113,7 +114,7 @@ const StockGain = (props) => {
   return (
     <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
       <div> 
-        {pageHeader (chartSymbol, 'gainRaw', 'Raw price history' )}
+        {pageHeader (symbol, 'gainRaw', 'Raw price history' )}
           
         <div style={{color:'green'}}>dividend/price average={yearly_div_ratio.toFixed(5)}   &nbsp; &nbsp;  {(yearly_div_ratio *100).toFixed(3)}%</div>
       </div>

@@ -139,6 +139,15 @@ function GainWrite (sym, rows, setError, corsServer, PORT, ssl, logFlags, os, ip
 
 
 function CommonDatabase (props) { 
+     const {chartSymbol, setChartSymbol,
+        symbol,
+          // infoSymbol, setInfoSymbol,
+          // gainMap, setGainMap,
+          chartData, setChartData,
+          gainData, setGainData,
+          daily, setDaily
+        } = useShared();
+    
     const [results, setResults] = useState()
     const [resObjects, setResObjects]  = useState([])
     const [infoJson, setInfoJson] = useState()
@@ -169,7 +178,7 @@ function CommonDatabase (props) {
     useEffect (() => { 
         setInfo()
         setInfoJson()
-    }, [props.symbol]) 
+    }, [symbol]) 
 
     const onOptionChange = e => {
         const t = e.target.value;
@@ -540,7 +549,7 @@ function CommonDatabase (props) {
         corsUrl = "https://";
         else 
             corsUrl = "http://"   
-        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=readOne' + '&stock=' + props.symbol
+        corsUrl += props.corsServer+ ":" + props.PORT + '/gain?cmd=readOne' + '&stock=' + symbol
         if (logBackEnd)
             corsUrl += '&LOG=1'
         setLatency('Read one gain request sent')
@@ -891,7 +900,7 @@ function CommonDatabase (props) {
               corsUrl = 'https://'
           else
               corsUrl = 'http://'
-          corsUrl += props.corsServer + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + props.symbol
+          corsUrl += props.corsServer + ":" + props.PORT + '/' + delCommands[i] + '?cmd=delOneSym' + '&stock=' + symbol
           if (logBackEnd)
             corsUrl += '&LOG=1'
 
@@ -911,14 +920,14 @@ function CommonDatabase (props) {
                   console.log (JSON.stringify(result.data))
       
               if (typeof(result.data) === 'string' && result.data.startsWith('fail')) {
-                  props.errorAdd([getDate(), props.symbol, delCommands[i] + ' Delete symbol', result.data])
+                  props.errorAdd([getDate(), symbol, delCommands[i] + ' Delete symbol', result.data])
               }
-              console.log(getDate(), props.symbol, delCommands[i]+ ' arrived', result.data)        
+              console.log(getDate(), symbol, delCommands[i]+ ' arrived', result.data)        
           } )
           .catch ((err) => {
             clear()
-            error([getDate(), 'backEnd sym del', props.symbol, err.message])
-            console.log(getDate(), 'targetPrice', props.symbol, err.message)
+            error([getDate(), 'backEnd sym del', symbol, err.message])
+            console.log(getDate(), 'targetPrice', symbol, err.message)
           }) 
         }
         const latency = Date.now() - mili
@@ -979,7 +988,7 @@ function CommonDatabase (props) {
       {<div>
         {pageHeader ('', 'CommonDatabase', 'Get stocks symbols with better gain than QQQ, from common backEnd')}
 
-        <div  style={{color: 'magenta' }}>  {props.symbol} </div>  &nbsp;  &nbsp; 
+        <div  style={{color: 'magenta' }}>  {symbol} </div>  &nbsp;  &nbsp; 
         {err && <div style={{color:'red'}}>{err}</div>}
         {latency && <div style={{color: '#aa3333'}}>{latency}</div>}
         {/* <hr/> */}
@@ -1044,8 +1053,8 @@ function CommonDatabase (props) {
 
         {/* Active id sym gain selected */}
         <div style={{display: 'flex'}}>
-            {props.symbol && eliHome && <button type="button" onClick={()=>readOneGain()}>readOneGain ({props.symbol}) </button>}&nbsp;
-            {eliHome && props.symbol && <button type="button" onClick={()=> delOneSym ()}>backend-delete-One{props.symbol} </button>}&nbsp;
+            {symbol && eliHome && <button type="button" onClick={()=>readOneGain()}>readOneGain ({symbol}) </button>}&nbsp;
+            {eliHome && symbol && <button type="button" onClick={()=> delOneSym ()}>backend-delete-One{symbol} </button>}&nbsp;
             {/* {eliHome && <button type="button" onClick={()=> ping ()}>ping  </button>} &nbsp;&nbsp; */}
         </div>
 

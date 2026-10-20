@@ -24,6 +24,7 @@ const StockInfo = (props) => {
 
     const {
       chartSymbol, setChartSymbol,
+      symbol,
         infoSymbol, setInfoSymbol,
         // gainMap, setGainMap,
         chartData, setChartData,
@@ -59,7 +60,7 @@ const StockInfo = (props) => {
       <div> 
       {/* {! stockInfo && <h6 style={{color: 'red'}}> No info (probably an ETF)  </h6>} */}
       
-      {pageHeader (chartSymbol, 'infoRaw', 'Company raw metrics info. (etf not Supported)' )}
+      {pageHeader (symbol, 'infoRaw', 'Company raw metrics info. (etf not Supported)' )}
       
       {chartSymbol !== infoSymbol && <h6 style={{color: 'red'}}> No info, (An ETF or data for a previous symbol)  </h6>}
 

@@ -9,8 +9,9 @@ import MobileContext from '../contexts/MobileContext'
 import {todaySplit, todayDate, todayDateSplit, dateSplit, rawDateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
     searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr} from '../utils/Date'
 import { beep2 } from '../utils/ErrorList';
-
-
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
+ 
 //** estimated week number in the year */
 // function getWeekNumber(d) {
 //     // Copy date so don't modify original
@@ -55,6 +56,15 @@ import { beep2 } from '../utils/ErrorList';
   
 
 function MonthGain (props) {
+   const {chartSymbol, setChartSymbol,
+      symbol,
+        // infoSymbol, setInfoSymbol,
+        // gainMap, setGainMap,
+        chartData, setChartData,
+        gainData, setGainData,
+        daily, setDaily
+      } = useShared();
+  
   const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
   const [status, setStatus] = useState (); 
   const {localIp, localIpv4, eliHome} = IpContext();
@@ -77,7 +87,7 @@ function MonthGain (props) {
   useEffect(() => {
     setStatus()
     setMgainObj({})
-  },[props.symbol]) 
+  },[symbol]) 
 
     function setLog_toggle_week () {
       setLOG_Week (! LOG_Week)
@@ -390,18 +400,14 @@ function MonthGain (props) {
   const ROW_SPACING = {padding: '2px', margin: '2px'}
 
   return (
-    <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
-        <div style = {{display: 'flex'}}>
-          <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-          <h6  style={{color: 'blue' }}> Week/Month-Gain </h6>  &nbsp; &nbsp;
-        </div>
+    <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id_' >
+        {pageHeader (symbol, 'monthGain', 'Average monthly & weekly gain, over many years', null)}
 
-        <h6  style={{color:'#33ee33', fontWeight: 'bold', fontStyle: "italic"}}>  &nbsp; {props.symbol}:  &nbsp; Average monthly & weekly gain  &nbsp; </h6>
 
         {/* &nbsp; &nbsp; */}
         <div style={{color:'red'}}>{status}</div>
         <div style = {{display: 'flex'}}>
-          {props.symbol && Object.keys(props.gainMap).length > 0 && <button style={{background: 'aqua'}}  type="button" 
+          {symbol && Object.keys(props.gainMap).length > 0 && <button style={{background: 'aqua'}}  type="button" 
             onClick={()=>monthGainCalc(props.gainMap, mGainObj, setMgainObj, setYearGain, props.logFlags, startDate)}>week-month-gain</button>}
             &nbsp; &nbsp;
           <div style={{display:'flex'}} > StartDate:&nbsp; <DatePicker style={{ margin: '0px', size:"md"}} 
