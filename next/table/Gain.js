@@ -58,7 +58,7 @@ export function gain (sym, rows, errorAdd, logFlags, API_KEY, weekly, openMarket
     
     function getYValue (chartData, key, openMarketFlag) {
       const openVal = Number (Number (chartData[`${periodTag}`][key]['1. open']))
-      const closeVal = Number (Number (chartData[`${periodTag}`][key]['4. close']))
+      const closeVal = Number (Number (chartData[`${periodTag}`][key]['5. adjusted close']))
       var yValue;
 
       if (openMarketFlag)
