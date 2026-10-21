@@ -11,8 +11,20 @@ import GetInt from '../utils/GetInt'
 import DatePicker, {moment} from 'react-datepicker';
 import {searchDateInArray} from '../utils/Date'
 import MobileContext from '../contexts/MobileContext'
+import { useShared } from '../contexts/SharedContext';
+import { pageHeader } from './StockInfo'
+
 
 function MovingAverage (props) {
+         const {chartSymbol, setChartSymbol,
+              symbol,
+                // infoSymbol, setInfoSymbol,
+                // gainMap, setGainMap,
+                // chartData, setChartData,
+                gainData, setGainData,
+                daily, setDaily
+              } = useShared();
+    
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
     
     const [average_long_length, setAverage_long_length] = useState(26)
@@ -23,7 +35,7 @@ function MovingAverage (props) {
     const [startDate, setStartDate] = useState(new Date(2021, 8, 1 )); 
     const [err, setErr] = useState();
 
-    const [chartData, setChartData] = useState()
+    const [plotData, setPLotData] = useState()
 
 
     const startYear = startDate.getFullYear();
@@ -33,10 +45,10 @@ function MovingAverage (props) {
 
 
     useEffect (() => { 
-        setChartData()
+        setPLotData()
         // setAveragePointsY([])
         // setAveragePointsX([])
-    }, [props.symbol, average_long_length, average_short_length, props.daily]) 
+    }, [symbol, average_long_length, average_short_length, props.daily]) 
   
 
     function calc_one_average(len, average_Y, startDateIndex) {
@@ -59,7 +71,7 @@ function MovingAverage (props) {
     function calc () {
 
 
-        var startDateIndex = searchDateInArray (props.stockChartXValues, [startYear, startMon, startDay], props.symbol, props.logFlags, setErr)  
+        var startDateIndex = searchDateInArray (props.stockChartXValues, [startYear, startMon, startDay], symbol, props.logFlags, setErr)  
         if (startDateIndex < 0) {
             setErr('invalid startDate')
             return;
@@ -83,7 +95,7 @@ function MovingAverage (props) {
         const dat =
           [
             {
-                name: props.symbol,
+                name: symbol,
                 x: dateArray_x,
                 y: priceArray_y,
                 type: 'scatter',
@@ -108,17 +120,15 @@ function MovingAverage (props) {
             },
         
         ]
-          setChartData(dat)
+          setPLotData(dat)
     } 
 
 
     return (
         <div style={{border:'2px solid blue', background: '#f0f0e0', padding: '5px', margin: '5px'}} id='deepRecovery_id' >
 
-            <div style = {{display: 'flex'}}>
-              <div  style={{color: 'magenta' }}>  {props.symbol} </div> &nbsp; &nbsp;
-              <h6 style={{color: 'blue'}}> Noving average &nbsp;  </h6> &nbsp; &nbsp;
-            </div>
+            {pageHeader (symbol, 'movingAverage', '', err )}
+
             <div> &nbsp;</div>
             <div style={{color: 'red'}}>{err}</div>
 
@@ -129,7 +139,7 @@ function MovingAverage (props) {
             <div> &nbsp;</div>
             <div><button style={{background: 'aqua'}} type="button" onClick={()=>calc()}>  calc-chart   </button> </div>
 
-            {chartData && <Plot  data={chartData} layout={{ width: 550, height: 400, title: 'moving-average',
+            {plotData && <Plot  data={plotData} layout={{ width: 550, height: 400, title: 'moving-average',
                 xaxis: {title: {text: 'date'}}, yaxis: {title: {text: 'price'}}}} config={{staticPlot: isMobile, 'modeBarButtonsToRemove': []}}  />}
         </div>
     )
