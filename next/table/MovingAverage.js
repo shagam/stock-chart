@@ -48,7 +48,7 @@ function MovingAverage (props) {
         setPLotData()
         // setAveragePointsY([])
         // setAveragePointsX([])
-    }, [symbol, average_long_length, average_short_length, props.daily]) 
+    }, [symbol, average_long_length, average_short_length, daily]) 
   
 
     function calc_one_average(len, average_Y, startDateIndex) {

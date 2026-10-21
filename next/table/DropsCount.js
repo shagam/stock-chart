@@ -23,6 +23,7 @@ import { ComboBoxSelect } from '../utils/ComboBoxSelect'
 import { createRoutesFromElements } from 'react-router-dom';
 import { useShared } from '../contexts/SharedContext';
 import { pageHeader } from './StockInfo'
+import {IpContext} from '../contexts/IpContext';
 
 // 
 // Zuberi Moshe
@@ -271,12 +272,14 @@ function DropsCount (props) {
     // console.log ('next DropsCount props=', props)
       //** for counting drops */
     const {userAgent, userAgentMobile, isAndroid, isIPhone, isMobile} = MobileContext();
-      const {chartSymbol, setChartSymbol,
+    const {localIp, localIpv4, eliHome, city, countryName, countryCode, regionName, ip, os} = IpContext();
+    const {chartSymbol, setChartSymbol,
           symbol,
             // infoSymbol, setInfoSymbol,
             // gainMap, setGainMap,
-            chartData, setChartData,
+            // chartData, setChartData,
             gainData, setGainData,
+            stockChartXValues, stockChartYValues,
             daily, setDaily
           } = useShared();
     
@@ -288,11 +291,12 @@ function DropsCount (props) {
     const [startDate, setStartDate] = useState(new Date(2019, 8, 1 ))   // start date for drop count
     const [streakThreshold, setStreakThreshold] = useState(15) // drop percentage, used for count number of drops
     const [streakEndReverseThreshold, setStreakEndReverseThreshold] = useState(5) // percentage to reverse the streak
-    const [searchRange, setSearchRange] = useState(props.daily? 400:80) // default a year search range
+    const [searchRange, setSearchRange] = useState(daily? 400:80) // default a year search range
     const [searchMode, setSearchMode] = useState (true) // 'range','threshold',
 
     const [tableShow, setTableShow] = useState(false)
-
+    const [plotData, setPlotData] = useState()
+    
     //** output display */
     const [dropsArray, setDropsArray] = useState([])
     
@@ -316,14 +320,14 @@ function DropsCount (props) {
 
     useEffect (() => { 
         setDropsArray([])
-      }, [symbol,  props.daily]) 
+      }, [symbol,  daily]) 
 
 
   
     function countDrops_wrapper () {
         const results = countDrops (streakThreshold, setErr, log, startDate, bigDropCount_, bigRiseCount_, zigzagx_rise, zigzagy_rise, zigzagx_drop, zigzagy_drop,
-        props.stockChartXValues.length, props.stockChartXValues, props.stockChartYValues, symbol, streakEndReverseThreshold, logExtra)
-        setChartData(results.dat)
+        stockChartXValues.length, stockChartXValues, stockChartYValues, symbol, streakEndReverseThreshold, logExtra)
+        setPlotData(results.dat)
 
         setDropsArray(results.streakArray)
         setBigDropsCount(results.bigDropCount_)
@@ -391,13 +395,13 @@ function DropsCount (props) {
         <button  style={{background: 'aqua'}} type="button" onClick={()=>countDrops_wrapper()}> Count streaks of drops, rises   </button>  &nbsp; 
        <div>&nbsp;</div>
 
-        {chartData && <div>rise_streaks={bigRiseCount} &nbsp; &nbsp; rises_per_year={bigRisesPerYear}  </div>}
-        {chartData && <div>drop_streaks={bigDropCount} &nbsp; &nbsp; drops_per_Year={bigDropsPerYear}  </div>}
+        {plotData && <div>rise_streaks={bigRiseCount} &nbsp; &nbsp; rises_per_year={bigRisesPerYear}  </div>}
+        {plotData && <div>drop_streaks={bigDropCount} &nbsp; &nbsp; drops_per_Year={bigDropsPerYear}  </div>}
 
         
         <div>&nbsp;</div>
 
-       {chartData && dropsArray.length > 0 && <Plot  data={chartData} layout={{ margin: {l:40, r:0, t:0, b:40}, width: 750, height: 500, title: 'drop-rise-count',
+       {plotData && dropsArray.length > 0 && <Plot  data={plotData} layout={{ margin: {l:40, r:0, t:0, b:40}, width: 750, height: 500, title: 'drop-rise-count',
              autosixe: true,
              legend: {
                 orientation: 'v',
@@ -418,7 +422,7 @@ function DropsCount (props) {
             <div> <input  type="checkbox" checked={tableShow}  onChange={() => setTableShow (! tableShow)} />  drop-rise-table (streaks) </div>
 
             {tableShow && <div style={{...ROW_SPACING, textAlign: 'left', height: '45vh', 'overflowY': 'scroll'}}>
-            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={props.stockChartXValues[rawArrayLength - 1]}</div>
+            <div> length={dropsArray.length} &nbsp;&nbsp; highIndex={rawArrayLength} &nbsp;&nbsp; startDate={stockChartXValues[rawArrayLength - 1]}</div>
             <table>
                 <thead>
                 <tr style={{...ROW_SPACING}}>
