@@ -994,7 +994,7 @@ const {chartSymbol, setChartSymbol,
 
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
       <SharedContext.Provider value={{errorAdd, error, setErr, refreshByToggleColumns}}>
-      <Container style={{minWidth: "100%", minHeight: "50vh"}}  >         
+      <Container style={{minWidth: "100%"}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
         <h2  style={{display:'flex', fontStyle: "italic"}}>
           <strong style={{color:'#2caa2c'}}>Share</strong>
@@ -1168,7 +1168,8 @@ const {chartSymbol, setChartSymbol,
     </table>
 
     {/* Machanizms not for spacific sym */}
-    {! chartSymbol && <div> press <h6 style={{color: 'red', fontSize:'18px', fontStyle: "italic", fontWeight: "bold"}} className="wobble-text">gain</h6>   &nbsp; for one or more symbols</div>}  
+    {! chartSymbol && <div style={{fontSize:'22px'}}> press <div style={{color: 'red', fontSize:'25px', fontStyle: "italic", fontWeight: "bold",  margin:'2px'}} 
+        className="wobble-text">gain</div>   &nbsp; for one or more symbols</div>}  
     
     <div id='trailer_id'>
         {chartSymbol && stockChartXValues.length > 0 && 
@@ -1177,11 +1178,11 @@ const {chartSymbol, setChartSymbol,
            logFlags = {logFlags} errorAdd = {errorAdd} bubbleLine = {bubbleLine} rows={rows}/>}  
          
         {/* Analyze tools for specific sym */}
-        {<div>
+        {<div style={{lineHeight: '23px'}} >
                       
             <hr/>    
-            <div style={{display: 'flex' }}>
-              <Link style ={{fontWeight: "bold", color: 'red'}} href="/">route-clear </Link> &nbsp;  &nbsp; &nbsp; &nbsp;
+            <div>
+              <Link style ={{fontWeight: "bold", color: 'red', fontSize: '23px'}} href="/">route-clear </Link> 
               {chartSymbol && (
                 <div style={{display: 'flex' }}>
                   <div style={{color: 'magenta' }}> {chartSymbol} </div> &nbsp; Analyze routes: 
