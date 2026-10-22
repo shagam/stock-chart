@@ -7,21 +7,21 @@ export const metadata = {
   description:
     "Securely access your personalized stock analytics dashboard, portfolio tracking tools, and market insights.",
   keywords: [
-    "dashboard login",
-    "stock dashboard",
+    "login dashboard",
     "portfolio dashboard",
     "user account",
     "member login"
   ],
+  url: "https://shareCompare.org/dashboard",
 
   alternates: {
-    canonical: "https://yourdomain.com/dashboard",
+    canonical: "https://shareCompare.org/dashboard",
   },
 
   openGraph: {
     title: "Dashboard Login | Stock Analytics Platform",
     description: "Securely access your personalized stock analytics dashboard.",
-    url: "https://yourdomain.com/dashboard",
+    url: "https://shareCompare.org/dashboard",
     siteName: "Stock Analytics Platform",
     type: "website",
   },

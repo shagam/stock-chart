@@ -1,18 +1,5 @@
 import Client from "./client";   // adjust path if needed
 
-// export const metadata = {
-//   title: "Options | ShareCompare",
-//   description: "Analyze options chains, Greeks, volatility, and pricing models with ShareCompare’s advanced tools.",
-//   keywords: ["options", "greeks", "volatility", "options trading", "sharecompare"],
-//   openGraph: {
-//     title: "Options | ShareCompare",
-//     description: "Advanced options analytics including Greeks, IV, and pricing models.",
-//     url: "https://sharecompare.org/options",
-//     siteName: "ShareCompare",
-//     type: "website"
-//   }
-// };
-
 
 
 // options

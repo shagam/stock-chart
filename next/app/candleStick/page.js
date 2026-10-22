@@ -4,7 +4,8 @@ import Client from "./client";
 export const metadata = {
   title: "Candlestick Chart Analysis | Stock Analytics Platform",
   description: "Explore candlestick patterns, support and resistance levels, and price action analysis.",
-  keywords: ["candlestick chart", "price action", "technical analysis", "stock patterns", "trading charts"]
+  keywords: ["candlestick chart", "price action", "technical analysis", "stock patterns", "trading charts"],
+  url: "https://shareCompare.org/candleStick",
 };
 
 export default function CandlestickPage(props) {

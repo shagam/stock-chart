@@ -14,13 +14,13 @@ export const metadata = {
   ],
 
   alternates: {
-    canonical: "https://yourdomain.com/forgotPassword",
+    canonical: "https://shareCompare.org/forgotPassword",
   },
 
   openGraph: {
     title: "Reset Password | Stock Analytics Platform",
     description: "Recover access to your account securely.",
-    url: "https://yourdomain.com/forgotPassword",
+    url: "https://shareCompare.org/forgotPassword",
     siteName: "Stock Analytics Platform",
     type: "website",
   },

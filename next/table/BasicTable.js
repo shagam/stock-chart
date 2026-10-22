@@ -994,7 +994,7 @@ const {chartSymbol, setChartSymbol,
 
     <Suspense fallback={<div>Loading ... (from BaseTable)</div>}> 
       <SharedContext.Provider value={{errorAdd, error, setErr, refreshByToggleColumns}}>
-      <Container style={{minWidth: "100%"}}  >         
+      <Container style={{minWidth: "100%", lineHight: '1.2'}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
         <h2  style={{display:'flex', fontStyle: "italic"}}>
           <strong style={{color:'#2caa2c'}}>Share</strong>

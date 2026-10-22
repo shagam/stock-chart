@@ -4,8 +4,9 @@ import Client from "./client";   // adjust path if needed
 // dropsCount
 export const metadata = {
   title: "Stock Drop Statistics | Stock Analytics Platform",
-  description: "Track significant stock drops and identify recurring market weakness patterns and risk trends.",
-  keywords: ["stock drops", "market decline", "price drops", "bearish trends", "stock statistics"]
+  description: "Count stock drops according to defined criteria.",
+  keywords: ["stock drops", "market decline", "price drops", "bearish trends", "stock statistics"],
+  url: "https://shareCompare.org/dropsCount",
 };
 
 export default function DropsCountPage(props) {

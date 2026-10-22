@@ -3,9 +3,10 @@ import Client from "./client";
 
 // infoRaw
 export const metadata = {
-  title: "Raw Stock Information | Stock Analytics Platform",
+  title: "Raw Stock historical prices | Stock Analytics Platform",
   description: "View detailed stock information including pricing, company data, and market statistics.",
-  keywords: ["stock information", "market data", "company details", "stock fundamentals"]
+  keywords: ["stock information", "market data", "company details", "stock fundamentals"],
+  url: "https://shareCompare.org/infoRaw",
 };
 
 

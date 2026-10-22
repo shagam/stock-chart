@@ -3,8 +3,9 @@ import Client from "./client";
 // bubbleLine
 export const metadata = {
   title: "Bubble Line Stock Analysis | Stock Analytics Platform",
-  description: "Visualize stock performance with interactive bubble line charts, market trends, volume insights, and comparative analytics.",
-  keywords: ["bubble chart stocks", "stock visualization", "market trends", "stock analytics", "trading charts"]
+  description: "BubbleLine - exponential line connecting the last 2 major bubbles (2008, 2021).",
+  keywords: ["bubble chart stocks", "stock visualization", "market trends", "stock analytics", "trading charts"],
+  url: "https://shareCompare.org/bubbleLine",
 };
 
 

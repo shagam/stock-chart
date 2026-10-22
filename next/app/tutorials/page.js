@@ -15,13 +15,13 @@ export const metadata = {
   ],
 
   alternates: {
-    canonical: "https://yourdomain.com/tutorials",
+    canonical: "https://shareCompare.org/tutorials",
   },
 
   openGraph: {
     title: "Stock Trading Tutorials & Guides | Stock Analytics Platform",
     description: "Learn stock investing, trading strategies, portfolio management, and platform features.",
-    url: "https://yourdomain.com/tutorials",
+    url: "https://shareCompare.org/tutorials",
     siteName: "Stock Analytics Platform",
     type: "article",
   },

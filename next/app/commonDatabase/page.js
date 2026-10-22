@@ -3,8 +3,9 @@ import Client from "./client";
 // commonDatabase
 export const metadata = {
   title: "Stock Market Database | Stock Analytics Platform",
-  description: "Search and access a comprehensive stock market database with historical and fundamental data.",
-  keywords: ["stock database", "market database", "financial data", "stock information"]
+  description: "Filter stocks with gain better than QQQ (i.e 2X fold times fold, since a year or 2 years ago), based on historical stock prices. ",
+  keywords: ["stock database", "market database", "financial data", "stock information"],
+  url: "https://shareCompare.org/commonDatabase",
 };
 
 
