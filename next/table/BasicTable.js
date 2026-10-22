@@ -1168,7 +1168,7 @@ const {chartSymbol, setChartSymbol,
     </table>
 
     {/* Machanizms not for spacific sym */}
-    {! chartSymbol && <div style={{fontSize:'22px'}}> press <div style={{color: 'red', fontSize:'25px', fontStyle: "italic", fontWeight: "bold",  margin:'2px'}} 
+    {! chartSymbol && <div style={{fontSize:'20px'}}> press <div style={{color: 'red', fontSize:'25px', fontStyle: "italic", fontWeight: "bold",  margin:'2px'}} 
         className="wobble-text">gain</div>   &nbsp; for one or more symbols</div>}  
     
     <div id='trailer_id'>
