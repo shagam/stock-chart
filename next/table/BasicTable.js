@@ -1251,4 +1251,4 @@ const {chartSymbol, setChartSymbol,
   )
 }
 
-export  {BasicTable, sharedState}
+export  {BasicTable}
