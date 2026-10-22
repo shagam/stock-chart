@@ -82,8 +82,6 @@ import MarketStackApi from  './MarketStackApi'
 import {StockOptions} from  './StockOptions'
 
 
-import Manual from '../manual/Manual';
-
 import {polygon} from './Polygon'
 
 import { LeverageETF } from './LeverageETF'
