@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/config",
 };
 
-export default function ConfigPage(props) {
+export default function ConfigPage() {
 
   return (<Client/>
   );

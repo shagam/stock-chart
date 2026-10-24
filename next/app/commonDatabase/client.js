@@ -5,7 +5,7 @@ import {CommonDatabase} from "../../table/CommonDatabase";   // adjust path if n
 import memoryStore from "../../components/MemoryStore";
   
 
-export default function Client(props) {
+export default function Client() {
 
 
   return (

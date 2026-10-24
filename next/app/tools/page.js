@@ -30,7 +30,7 @@ export const metadata = {
 };
 
 
-export default function ToolsPage(props) {
+export default function ToolsPage() {
 
 
   return (

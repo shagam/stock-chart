@@ -7,7 +7,7 @@ import memoryStore from "../../components/MemoryStore";
 // tools
 
 
-export default function Client(props) {
+export default function Client() {
 
 
   return (

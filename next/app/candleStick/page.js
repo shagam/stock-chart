@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/candleStick",
 };
 
-export default function CandlestickPage(props) {
+export default function CandlestickPage() {
 
   return (
     <Client  />

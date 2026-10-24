@@ -5,7 +5,7 @@ import {Ai} from "../../table/Ai";   // adjust path if needed
 import memoryStore from "../../components/MemoryStore"; // adjust path if needed
 
 
-export default function Client(props) {
+export default function Client() {
 
   return (
     <Ai

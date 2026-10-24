@@ -4,7 +4,7 @@ import {CandlestickChart} from "../../table/CandleStick";   // adjust path if ne
 import memoryStore from "../../components/MemoryStore"; // adjust path if needed
 
 
-export default function CandlestickPage(props) {
+export default function CandlestickPage() {
 
   return (
     <CandlestickChart

@@ -5,7 +5,7 @@ import {StockOptions} from "../../table/StockOptions";
 import memoryStore from "../../components/MemoryStore";
 
 
-export default function Client(props) {
+export default function Client() {
 
 
   return (

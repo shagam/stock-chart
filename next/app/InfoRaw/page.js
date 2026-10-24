@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 
-export default function InfoRawPage(props) {
+export default function InfoRawPage() {
 
   return (
     <Client/>

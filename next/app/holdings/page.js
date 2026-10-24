@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/holdings"
 };
 
-export default function HoldingsPage(props) {
+export default function HoldingsPage() {
 
   return (
     <Client />

@@ -10,7 +10,7 @@ export const metadata = {
   url: "https://shareCompare.org/dropRecovery",
 };
 
-export default function DropRecoveryPage(props) {
+export default function DropRecoveryPage() {
   return (
     <Client/>
   );

@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 
-export default function FuturesPage(props) {
+export default function FuturesPage() {
 
   return (
     <Client />

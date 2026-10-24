@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 
-export default function StockListsPage(props) {
+export default function StockListsPage() {
 
   return (
     <Client/>

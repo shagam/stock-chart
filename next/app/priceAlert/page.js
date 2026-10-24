@@ -9,7 +9,7 @@ export const metadata = {
   
 };
 
-export default function PriceAlertPage(props) {
+export default function PriceAlertPage() {
 
 
   return (

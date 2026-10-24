@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/contactUs",
 };
 
-export default function ContactUsPage(props) {
+export default function ContactUsPage() {
 
   return (
     <Client />

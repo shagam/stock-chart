@@ -8,7 +8,7 @@ export const metadata = {
   keywords: ["leveraged ETF", "ETF analysis", "leveraged funds", "ETF trading"]
 };
 
-export default function LeverageETFPage(props) {
+export default function LeverageETFPage() {
 
   return (
     <Client/>

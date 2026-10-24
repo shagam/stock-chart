@@ -4,7 +4,7 @@ import {Peak2PeakGui} from "../../table/Peak2Peak";   // adjust path if needed
 import memoryStore from "../../components/MemoryStore";
 
 
-export default function Client(props) {
+export default function Client() {
   
   return (
     <Peak2PeakGui

@@ -6,7 +6,7 @@ import {StockInfo} from "../../table/StockInfo";   // adjust path if needed
 // infoRaw
 
 
-export default function Client(props) {
+export default function Client() {
 
   return (
     <StockInfo

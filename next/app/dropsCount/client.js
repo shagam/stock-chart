@@ -4,7 +4,7 @@ import {DropsCount} from "../../table/DropsCount";   // adjust path if needed
 import memoryStore from "../../components/MemoryStore";
 
 
-export default function Client(props) {
+export default function Client() {
 
   return (
     <DropsCount

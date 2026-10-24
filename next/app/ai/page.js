@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/ai",
 };
 
-export default function AiPage(props) {
+export default function AiPage() {
 
   return ( <Client/>)
 }

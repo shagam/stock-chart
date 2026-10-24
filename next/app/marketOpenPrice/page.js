@@ -8,6 +8,6 @@ export const metadata = {
   keywords: ["market open", "opening price", "premarket stocks", "gap analysis"],
   url: "https://sharecompare.org/marketOpenPrice",
 };
-export default function MarketOpenPricePage(props) {
+export default function MarketOpenPricePage() {
   return (<Client />);
 }

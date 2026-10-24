@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 
-export default function CommonDatabasePage(props) {
+export default function CommonDatabasePage() {
 
   return (<Client/>
 

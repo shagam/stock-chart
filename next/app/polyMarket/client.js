@@ -6,7 +6,7 @@ import memoryStore from "../../components/MemoryStore";
 // polyMarket
 
 
-export default function Client (props) {
+export default function Client () {
 
   return (
     <Polymarket

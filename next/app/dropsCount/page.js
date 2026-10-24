@@ -9,7 +9,7 @@ export const metadata = {
   url: "https://shareCompare.org/dropsCount",
 };
 
-export default function DropsCountPage(props) {
+export default function DropsCountPage() {
 
   return (
     <Client/>

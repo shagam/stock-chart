@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/contactUs",
 };
 
-export default function SimulateTradePage(props) {
+export default function SimulateTradePage() {
 
   return (
     <Client/>

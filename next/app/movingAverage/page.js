@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://shareCompare.org/contactUs",
 };
 
-export default function MovingAveragePage(props) {
+export default function MovingAveragePage() {
 
 
   return (

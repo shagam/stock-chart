@@ -9,7 +9,7 @@ export const metadata = {
   url: "https://shareCompare.org/monthGain",
 };
 
-export default function MonthGainPage(props) {
+export default function MonthGainPage() {
 
   return (<Client />);
 

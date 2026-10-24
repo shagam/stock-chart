@@ -4,7 +4,7 @@ import {MovingAverage} from "../../table/MovingAverage";   // adjust path if nee
 import memoryStore from "../../components/MemoryStore";
 
 
-export default function Client(props) {
+export default function Client() {
 
 
   return (

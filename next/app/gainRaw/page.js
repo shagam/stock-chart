@@ -8,7 +8,7 @@ export const metadata = {
   keywords: ["stock gains data", "raw market data", "historical returns", "performance metrics"]
 };
 
-export default function GainRawPage(props) {
+export default function GainRawPage() {
 
   return (
     <Client/>

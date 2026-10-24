@@ -12,7 +12,7 @@ export const metadata = {
   type: "website"
 };
 
-export default function OptionsPage(props) {
+export default function OptionsPage() {
   return (
     <Client/>
   );

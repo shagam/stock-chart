@@ -8,7 +8,7 @@ export const metadata = {
   url: "https://sharecompare.org/polymarket",
 };
 
-export default function PolymarketPage(props) {
+export default function PolymarketPage() {
 
   return (
     <Client />
