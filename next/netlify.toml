@@ -1,4 +1,4 @@
-NEXT_PUBLIC_NEXT_PUBLIC_AWS_IPALPHAVANTAGE_KEY[build]
+[build]
   base = "next"
   command = "npm run build"
   publish = ".next"
