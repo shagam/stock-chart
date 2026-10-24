@@ -1,4 +1,5 @@
-[build]
+NEXT_PUBLIC_NEXT_PUBLIC_AWS_IPALPHAVANTAGE_KEY[build]
   base = "next"
   command = "npm run build"
   publish = ".next"
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_ALPHAVANTAGE_KEY,NEXT_PUBLIC_AWS_IP"
