@@ -5,7 +5,7 @@ import {format} from "date-fns"
 import DatePicker, {moment} from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-import "./StockChart.css";
+// import "./StockChart.css";
 
 import {todaySplit, todayDate, todayDateSplit, dateSplit, monthsBack, daysBack, compareDate, daysFrom1970, 
   searchDateInArray, monthsBackTest, daysBackTest, getDate, getDateSec, dateStr, year2Date} from './utils/Date';
@@ -512,7 +512,7 @@ const StockChart = (props) => {
          &nbsp; {Object.keys(props.gainMap)[0]}, &nbsp;   {Object.keys(props.gainMap)[1]} &nbsp; = {correlation}
         </div>}
 
-        <div id = 'chart_id'>
+        <div id = 'chart_id_'>
         {/* yaxis={'title': 'x-axis','fixedrange':True, 'autorange': false},
        yaxis={'title': 'y-axis','fixedrange':True}) */}
           {(props.isMobile || static_) && <Plot  data={gainChart} 
