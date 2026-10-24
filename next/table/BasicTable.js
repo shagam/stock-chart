@@ -994,12 +994,12 @@ const {chartSymbol, setChartSymbol,
       <SharedContext.Provider value={{errorAdd, error, setErr, refreshByToggleColumns}}>
       <Container style={{minWidth: "100%", lineHight: '1.2'}}  >         
         {/* <Container  className='d-flex align-items-left justify-content-left' style={{minHeight: "50vh", minWidth: "100%"}}  > */}
-        <h2  style={{display:'flex', fontStyle: "italic"}}>
+        <h2  style={{display:'flex', fontStyle: "italic", margin: '10px'}}>
           <strong style={{color:'#2caa2c'}}>Share</strong>
           <strong style={{color:'#b3be18'}}>Compare</strong> 
           <div style={{fontSize: '15px', paddingTop: '10px'}}>.net  </div> 
           <div style={{fontSize: '15px', paddingTop: '10px'}}>{pathname}</div> &nbsp; &nbsp; &nbsp;
-          <div style={{fontSize: '18px', paddingTop: '10px'}}>(new version of ShareCompare.org) </div>
+          <div style={{fontSize: '18px', paddingTop: '10px'}}>(new version for ShareCompare.org) </div>
          </h2> 
 
         {/* <div style={{color: '#bb8899', fontWeight: "bold", fontSize: "1.4em"}}>backend server problem; use test backEnd (slow)</div> */}
