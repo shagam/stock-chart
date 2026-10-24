@@ -1,0 +1,3 @@
+[build]
+  base = "next"
+  command = "npm run build"
