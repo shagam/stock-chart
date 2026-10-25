@@ -1069,14 +1069,14 @@ const {chartSymbol, setChartSymbol,
       {/* insert sym, filter */}
       <div style={{display:'flex'}} id="add_stock_id">
         <form className='w-00 text-left mt-2 d-flex ' onSubmit = {handleAddFormSubmit}>
-          <input style={{width:'105px', height:'27px'}}
+          <input style={{width:'85px', height:'27px'}}
             type="text"
             name="symbol"
             required="required"
             placeholder="stock symbol"
             onChange={handleAddFormChange}
           />
-          <button style={{backgroundColor: '#ff55', whiteSpace:'nowrap', height:'27px'}} type="submit">Add  ({rows.length})  </button>
+          <button style={{backgroundColor: 'rgba(85, 255, 227, 0.27)', whiteSpace:'nowrap', height:'27px'}} type="submit">Add  ({rows.length})  </button>
         </form>&nbsp;&nbsp;
 
         <GlobalFilter style={{marginTop: '10px'}} className="stock_button_class" filter={globalFilter} setFilter={setGlobalFilter} name='Search/Filter' isMobile={isMobile} marginTop={'17px'}/>
