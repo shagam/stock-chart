@@ -2,5 +2,4 @@
   base = "next"
   command = "npm run build"
   publish = ".next"
-  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_ALPHAVANTAGE_KEY,NEXT_PUBLIC_AWS_IP"
-  SECRETS_SCAN_ENABLED = false
+  
